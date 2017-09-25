@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>SCAM</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    </style>
+  </head>
+  <body class="template-projectsindexpage">
+		<div>My account(s)</div>
+		<div id="accounts"></div>
+		<script type="text/javascript" src="/static/web3.min.js"></script>
+		<script type="text/javascript">
+			var w = new Web3();
+			function setProvider (p) { 
+				w.setProvider(p); 
+				console.log("got provider");
+				console.log(w)
+				w.eth.getAccounts(function (e, a) {
+					if (e) return;
+					if (a.length === 0) return
+					document.getElementById("accounts").textContent = a;
+				})
+			}
+		</script>
+  </body>
+</html>
+
