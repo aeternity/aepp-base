@@ -3,6 +3,7 @@
 		<div v-if="needSetup" id="setup">
 			<div>
 				<span v-for="(it, idx) in seedList" v-bind:class="[idx % 2 ? '' : 'seed-odd', 'seed']">{{ it + ' ' }}</span>
+        <input id="seed-in" v-model="seed" width="250" required>
 			</div>
 			<div>
 				is your new wallet seed. Please write it down on paper or in a password manager, you will need it to access your wallet. Do not let anyone see this seed or they can take your Ether.
@@ -17,8 +18,8 @@
         </form>
 			</div>
 		</div>
-		<div><input v-model="iname"></div>
-		<iframe v-bind:src="iframe" ref="appframe"></iframe>
+		<div><input v-model="iname"><button v-on:click="loadIFrame">Load</button></div>
+		<iframe ref="appframe" id="appframe"></iframe>
 		<div class="status">{{ status }}</div>
     <div v-if="addrList.length > 0">
       Make this identity available to the loaded app.
@@ -28,7 +29,7 @@
       <button v-on:click="generateAddress">Generate Identity</button>
       <ul>
         <li v-for="(addr, idx) in addrList" v-bind:class="{ 'active-addr': addrIdx === idx}">
-          {{ addr }} <button @click="selectAddress(idx)">select</button>
+          {{ addr }} has {{ tokens[idx] }} AE <button @click="selectAddress(idx)">select</button>
         </li>
       </ul>
     </div>
@@ -38,7 +39,7 @@
 <script>
 import lightwallet from 'eth-lightwallet'
 import ZeroClientProvider from 'web3-provider-engine/zero'
-// import Web3 from 'web3'
+import Web3 from 'web3'
 // import RpcSubprovider from 'web3-provider-engine/subproviders/rpc'
 
 export default {
@@ -62,6 +63,12 @@ export default {
         if (err) throw err
         that.keystore.generateNewAddress(pwDerivedKey, 1)
         that.addrList = that.keystore.getAddresses().map(function (e) { return '0x' + e })
+        const off = that.addrList.length - 1
+        that.token.contract.balanceOf(that.addrList[off], function (err, bal) {
+          if (err) throw err
+          that.$set(that.tokens, off, bal.toString())
+          // [off] = bal.toString()
+        })
       })
     },
     mkProviderOpts: function () {
@@ -89,16 +96,35 @@ export default {
         that.providerOpts = opts
       })
     },
-    setProvider: function () {
-      console.log('sharing provider')
-      if (this.$refs.appframe.contentWindow.setProvider !== undefined) {
-        this.status = 'Found setProvider'
-        if (this.providerOpts !== undefined) {
-          this.$refs.appframe.contentWindow.setProvider(new ZeroClientProvider(this.providerOpts))
-        }
-      } else {
-        this.status = 'Could not find setProvider'
+    initWeb3: function () {
+      var that = this
+      const abi = JSON.parse('[{"constant":false,"inputs":[],"name":"launch","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"creator","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_addresses","type":"address[]"},{"name":"_values","type":"uint256[]"}],"name":"prefill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"transferableUntil","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"prefilled","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":false,"stateMutability":"nonpayable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}]')
+      const opts = {
+        getAccounts: function (cb) {
+          cb(null, that.addrList)
+        },
+        signTransaction: function (tx, cb) {
+          cb(new Error('cannot sign'), null)
+        },
+        approveTransaction: function (tx, cb) {
+          cb(null, false)
+        },
+        rpcUrl: 'https://kovan.infura.io'
       }
+      this.w3 = new Web3(new ZeroClientProvider(opts))
+      this.w3.eth.contract(abi).at(that.token.address, function (err, contract) {
+        if (err) throw err
+        that.token.contract = contract
+      })
+    },
+    loadIFrame: function () {
+      this.$refs.appframe.onload = function () { console.log('loaded iframe', this) }
+      console.log(this.$refs.appframe.readyState)
+      this.$refs.appframe.src = this.iframe
+      window.web3 = new Web3(new ZeroClientProvider(this.providerOpts))
+    },
+    setProvider: function () {
+      // noop for now until we figure out the exact flow.
     },
     savePassword: function () {
       if (this.password.length < 3) {
@@ -113,6 +139,7 @@ export default {
         that.keystore = ks
         that.needSetup = false
         that.mkProviderOpts()
+        that.initWeb3()
       })
     }
   },
@@ -120,10 +147,12 @@ export default {
     return {
       needSetup: true,
       status: 'Waiting…',
-      iname: 'static/sub',
+      iname: 'static/aepp',
       keystore: {},
+      token: {address: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9'},
       providerOpts: undefined,
       addrList: [],
+      tokens: [],
       addrIdx: 0,
       seed: '',
       password: ''
@@ -147,6 +176,13 @@ export default {
 }
 #setup > div {
 	width: 70vw;
+}
+#seed-in {
+  width: 100%;
+}
+#appframe {
+  width: 50vw;
+  height: 50vh;
 }
 .seed {
 	font-style: italic;
