@@ -1,19 +1,25 @@
 <template>
   <div id="app">
 		<div v-if="needSetup" id="setup">
-			<div>
-				<span v-for="(it, idx) in seedList" v-bind:class="[idx % 2 ? '' : 'seed-odd', 'seed']">{{ it + ' ' }}</span>
-        <input id="seed-in" v-model="seed" width="250" required>
+			<div v-if="!haveKeyStore">
+        <div>
+          <span v-for="(it, idx) in seedList" v-bind:class="[idx % 2 ? '' : 'seed-odd', 'seed']">{{ it + ' ' }}</span>
+          <input id="seed-in" v-model="seed" width="250" required>
+        </div>
+        <div>
+          is your new wallet seed. Please write it down on paper or in a password manager, you will need it to access your wallet. Do not let anyone see this seed or they can take your Ether.
+        </div>
 			</div>
-			<div>
-				is your new wallet seed. Please write it down on paper or in a password manager, you will need it to access your wallet. Do not let anyone see this seed or they can take your Ether.
+      <div v-else>
+        Found a saved keystore.
 			</div>
 			<div class="password-input">
         <form @submit.prevent>
-          <label>Please enter a password to encrypt your seed while in the browser.</label>
+          <label>Please enter your password to encrypt/decrypt your seed.</label>
           <div>
             <input v-model="password" type="password" pattern=".{4,}" title="4 characters minimum" required>
             <button v-on:click="savePassword">Save</button>
+            <div ref="pwdinfo" id=""></div>
           </div>
         </form>
 			</div>
@@ -50,7 +56,12 @@ export default {
     iframe: function () { return this.iname + '.html' }
   },
   created: function () {
-    this.seed = lightwallet.keystore.generateRandomSeed()
+    if (localStorage.getItem('ks')) {
+      this.haveKeyStore = true
+      this.keystore = lightwallet.keystore.deserialize(localStorage.getItem('ks'))
+    } else {
+      this.seed = lightwallet.keystore.generateRandomSeed()
+    }
   },
   methods: {
     selectAddress: function (idx) {
@@ -131,21 +142,42 @@ export default {
         return
       }
       var that = this
-      lightwallet.keystore.createVault({password: that.password, seedPhrase: that.seed}, function (err, ks) {
-        if (err) {
-          console.log(err)
-          return
-        }
-        that.keystore = ks
-        that.needSetup = false
-        that.mkProviderOpts()
-        that.initWeb3()
-      })
+
+      if (this.haveKeyStore) {
+        this.keystore.keyFromPassword(this.password, function (err, pwDerivedKey) {
+          if (err) {
+            console.log(err)
+            return
+          }
+          if (!that.keystore.isDerivedKeyCorrect(pwDerivedKey)) {
+            console.log('wrong password')
+            that.$refs.pwdinfo.textContent = 'wrong password'
+            return
+          }
+          that.needSetup = false
+          that.mkProviderOpts()
+          that.initWeb3()
+        })
+      } else {
+        lightwallet.keystore.createVault({password: that.password, seedPhrase: that.seed}, function (err, ks) {
+          if (err) {
+            console.log(err)
+            return
+          }
+          that.keystore = ks
+          localStorage.setItem('ks', ks.serialize())
+          that.needSetup = false
+          that.seed = that.seed.replace(/.*/, '\0')
+          that.mkProviderOpts()
+          that.initWeb3()
+        })
+      }
     }
   },
   data () {
     return {
       needSetup: true,
+      haveKeyStore: false,
       status: 'Waiting…',
       iname: 'static/aepp',
       keystore: {},
