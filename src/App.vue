@@ -41,6 +41,10 @@
       </ul>
     </div>
     <div>
+      <input v-model="message">
+      <button v-on:click="signMsg">sign message</button>
+    </div>
+    <div>
       <button v-on:click="logout">logout</button>
     </div>
   </div>
@@ -57,7 +61,7 @@ export default {
   name: 'app',
   computed: {
     seedList: function () { return this.seed.match(/\S+/g) },
-    iframe: function () { return this.iname + '.html' },
+    iframe: function () { return this.iname },
     tokenDisplay: function () { return this.tokens.map(function (e) { return e.toString() }) }
   },
   created: function () {
@@ -118,6 +122,12 @@ export default {
     transfer: function (to, amount) {
       this.transferFrom(this.addrList[this.addrIdx], to, amount)
     },
+    signMsg: function () {
+      this.w3.personal.sign(this.w3.toHex(this.message), this.addrList[this.addrIdx], function (err, signed) {
+        if (err) throw err
+        console.log(signed)
+      })
+    },
     logout: function () {
       this.keystore = {}
       this.needSetup = true
@@ -171,6 +181,16 @@ export default {
           approveTransaction: function (tx, cb) {
             console.log('approve', tx)
             cb(null, true)
+          },
+          signMessage: function (msg, cb) {
+            console.log(msg)
+            var signed = lightwallet.signing.signMsg(that.keystore, pwDerivedKey, msg.data, msg.from)
+            cb(null, lightwallet.signing.concatSig(signed))
+          },
+          signPersonalMessage: function (msg, cb) {
+            console.log(msg)
+            var signed = lightwallet.signing.signMsg(that.keystore, pwDerivedKey, msg.data, msg.from)
+            cb(null, lightwallet.signing.concatSig(signed))
           },
           rpcUrl: 'https://kovan.infura.io'
         }
@@ -230,6 +250,7 @@ export default {
       status: 'Waiting…',
       iname: 'static/aepp',
       keystore: {},
+      message: '',
       token: {address: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9', decimals: new BigNumber(10).pow(18)},
       tokenTransferValue: 0.0,
       providerOpts: undefined,
