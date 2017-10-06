@@ -74,7 +74,21 @@ export default {
   },
   methods: {
     selectAddress: function (idx) {
-      this.addrIdx = idx
+      this.makePrimary(idx)
+      this.addrIdx = 0
+    },
+    makePrimary: function (idx) {
+      this.swapArray(this.addrList, idx, 0)
+      this.swapArray(this.tokens, idx, 0)
+    },
+    swapArray: function (array, oldIndex, newIndex) {
+      if (newIndex >= array.length) {
+        var k = newIndex - array.length
+        while ((k--) + 1) {
+          this.push(undefined)
+        }
+      }
+      array.splice(newIndex, 0, array.splice(oldIndex, 1)[0])
     },
     updateBalances: function () {
       var that = this
@@ -248,7 +262,7 @@ export default {
       needSetup: true,
       haveKeyStore: false,
       status: 'Waiting…',
-      iname: 'static/aepp',
+      iname: '/static/aexistence/index.html',
       keystore: {},
       message: '',
       token: {address: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9', decimals: new BigNumber(10).pow(18)},
