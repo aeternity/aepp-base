@@ -1,0 +1,41 @@
+#setup {
+	width: 100vw;
+	height: 100vh;
+	background: rgba(255, 255, 255, 0.85);
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+#setup > div {
+	width: 70vw;
+}
+#seed-in {
+  width: 100%;
+}
+#appframe {
+  width: 50vw;
+  height: 50vh;
+}
+.seed {
+	font-style: italic;
+}
+.seed-odd {
+	font-weight: 700;
+}
+.password-input {
+}
+.active-addr {
+	font-weight: 700;
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
