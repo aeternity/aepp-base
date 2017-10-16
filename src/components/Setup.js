@@ -162,6 +162,10 @@ export default {
           if (err) throw err
           that.token.contract = contract
         })
+        if (typeof window.web3 === 'undefined') { // Metamask
+          window.web3 = that.w3;
+          that.$store.dispatch( 'initWeb3' )
+        }
       })
     },
     loadIFrame: function () {

@@ -115,6 +115,7 @@ const store = new Vuex.Store({
       let web3;
       if (typeof window.web3 !== 'undefined') { // Metamask
         web3 = new Web3(window.web3.currentProvider);
+        console.log('init');
       } else if (window.parent !== window && window.parent.web3 !== undefined) {
         // Parent has something for us.
         console.log('loaded with parent web3 instance');
