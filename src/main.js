@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router'
 import aeAbi from './abi/aeternity-token-abi.json'
+import BigNumber from 'bignumber.js'
 
 Vue.use(Vuex)
 
@@ -22,8 +23,12 @@ const store = new Vuex.Store({
     },
     identityCollapsed: true,
     hasWeb3: false,
-    tokenAddress: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9',
-    tokenContract : null
+    //tokenAddress: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9',
+    token : {
+      address: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9',
+      decimals: new BigNumber(10).pow(18)
+    },
+    rpcUrl: 'https://kovan.infura.io'
   },
   mutations: {
     title: function (state, newtitle) {
@@ -50,10 +55,10 @@ const store = new Vuex.Store({
     setHasTokens: function (state, hasTokens) {
       state.identity.hasTokens = hasTokens
     },
-    setTokenContract : function (state, tokenContract) {
-      console.log(tokenContract);
+    //setTokenContract : function (state, tokenContract) {
+      //console.log(tokenContract);
       //state.tokenContract = tokenContract
-    }
+    //}
   },
   actions : {
     changeUser({ commit, state }, address) {
@@ -87,9 +92,11 @@ const store = new Vuex.Store({
                 }
               });
 
-              //let tokenContract = window.globalTokenContract;
-              if (state.tokenContract) {
-                state.tokenContract.balanceOf(address, {}, (err, balance) => {
+              let tokenContract = window.globalTokenContract;
+              if (tokenContract) {
+              //if (state.tokenContract) {
+                //state.tokenContract.balanceOf(address, {}, (err, balance) => {
+                tokenContract.balanceOf(address, {}, (err, balance) => {
                   let readable = web3.fromWei(balance.toString(10), 'ether');
                   if(state.identity.tokenBalance !== readable) {
                     commit('setTokenBalance', readable);
@@ -122,8 +129,9 @@ const store = new Vuex.Store({
     },
     initTokenContract({ commit, state }, web3) {
       let TokenContract = web3.eth.contract(aeAbi);
-      TokenContract.at(state.tokenAddress, (err, contract) => {
-        commit('setTokenContract', contract);
+      TokenContract.at(state.token.address, (err, contract) => {
+        window.globalTokenContract = contract
+        //commit('setTokenContract', contract);
       });
     }
   }

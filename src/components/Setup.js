@@ -44,7 +44,7 @@ export default {
       for (var i in this.addrList) {
         that.token.contract.balanceOf(that.addrList[i], function (err, bal) {
           if (err) throw err
-          that.$set(that.tokens, i, bal.div(that.token.decimals))
+          that.$set(that.tokens, i, bal.div(that.$store.state.token.decimals))
         })
       }
     },
@@ -58,7 +58,7 @@ export default {
         const off = that.addrList.length - 1
         that.token.contract.balanceOf(that.addrList[off], function (err, bal) {
           if (err) throw err
-          that.$set(that.tokens, off, bal.div(that.token.decimals))
+          that.$set(that.tokens, off, bal.div(that.$store.state.token.decimals))
         })
       })
     },
@@ -66,7 +66,7 @@ export default {
       if (this.token.contract === undefined) return
       var that = this
       const tVal = this.tokenTransferValue
-      this.token.contract.transfer(to, this.w3.toBigNumber(tVal).mul(this.token.decimals), {from: from, gas: 100000}, function (err, txid) {
+      this.token.contract.transfer(to, this.w3.toBigNumber(tVal).mul(this.$store.state.token.decimals), {from: from, gas: 100000}, function (err, txid) {
         if (err) {
           console.log('transferFrom', err)
           throw err
@@ -121,7 +121,7 @@ export default {
             console.log('approve', tx)
             cb(null, true)
           },
-          rpcUrl: 'https://kovan.infura.io'
+          rpcUrl: that.$store.state.rpcUrl
         }
         that.providerOpts = opts
       })
@@ -154,11 +154,11 @@ export default {
             var signed = lightwallet.signing.signMsg(that.keystore, pwDerivedKey, msg.data, msg.from)
             cb(null, lightwallet.signing.concatSig(signed))
           },
-          rpcUrl: 'https://kovan.infura.io'
+          rpcUrl: that.$store.state.rpcUrl
         }
         that.providerOpts = opts
         that.w3 = new Web3(new ZeroClientProvider(opts))
-        that.w3.eth.contract(aeAbi).at(that.token.address, function (err, contract) {
+        that.w3.eth.contract(aeAbi).at(that.$store.state.token.address, function (err, contract) {
           if (err) throw err
           that.token.contract = contract
         })
@@ -217,7 +217,8 @@ export default {
       iname: '/static/aexistence/index.html',
       keystore: {},
       message: '',
-      token: {address: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9', decimals: new BigNumber(10).pow(18)},
+      token: {
+      },
       tokenTransferValue: 0.0,
       providerOpts: undefined,
       addrList: [],
