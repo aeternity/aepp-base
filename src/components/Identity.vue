@@ -1,4 +1,10 @@
-<template>
+<<template>
+  <div class="">
+  </div>
+</template>
+
+<script src='./'/>
+<style scoped src='./'/>template>
 	<div :class="{ 'identity-wrap' : true, 'show-payment-ui' : showPaymentUi }">
 
 		<div v-if='showPaymentUi' class="payment">
