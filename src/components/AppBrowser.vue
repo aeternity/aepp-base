@@ -4,4 +4,4 @@
 </template>
 
 <script src='./AppBrowser.js'/>
-<style scoped src='./AppBrowcwcssser.vue'/>
+<style scoped src='./AppBrowser.css'/>

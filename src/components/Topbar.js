@@ -17,12 +17,12 @@ export default {
 			showBack : false,
 			entris : [
 				{
-					label : 'My Proofs',
-					link : '/proofs',
+					label : 'Manage Identities',
+					link : '/id-manager',
 				},
 				{
-					label : 'Create a Proof',
-					link : '/chat',
+					label : 'Browse aepps',
+          link: '/app-browser',
 				},
 				//{
 				//label : 'Shared with me',

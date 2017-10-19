@@ -5,6 +5,7 @@ import Intro from '@/components/Intro.vue'
 import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import IdManager from '@/components/IdManager.vue'
+import AppBrowser from '@/components/AppBrowser.vue'
 
 Vue.use(Router)
 
@@ -44,6 +45,15 @@ let router = new Router({
       meta: {
         title: 'Id Manager',
         appClass: 'id-manager'
+      }
+    },
+    {
+      name : 'app-browser',
+      path: '/app-browser',
+      component: AppBrowser,
+      meta: {
+        title: 'App Browser',
+        appClass: 'app-browser'
       }
     },
   ]

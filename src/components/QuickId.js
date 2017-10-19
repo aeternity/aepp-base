@@ -4,6 +4,11 @@ export default {
   components : {
     'ae-identity' : aeIdentity,
   },
+  data() {
+    return {
+        showPaymentUi : false
+    }
+  },
   computed : {
     identity() {
       return this.$store.state.identity;
