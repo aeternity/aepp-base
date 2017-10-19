@@ -150,7 +150,6 @@ const store = (function(){
         }
       },
       mkWeb3ForApps() {
-        console.log('asd');
         web3ForApps = new Web3(new ZeroClientProvider(providerOptsForApps))
         window.web3 = web3ForApps;
       },
@@ -265,10 +264,8 @@ const store = (function(){
         })
         //dispatch('generateAddress', web3);
         //dispatch('setAcountInterval', web3);
-        console.log('1xxxxxxxxxxxxxx');
         dispatch('mkProviderOptsForApps');
         dispatch('mkWeb3ForApps');
-        console.log('2xxxxxxxxxxxxxx');
       },
       init({ commit, state }) {
         if (localStorage.getItem('ks')) {
