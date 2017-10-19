@@ -1,3 +1,4 @@
+import ZeroClientProvider from 'web3-provider-engine/zero'
 export default {
   name : 'app-browser',
   data(){
@@ -10,7 +11,6 @@ export default {
   },
   methods : {
     loadIFrame() {
-      window.web3 = this.$store.getters.web3
       this.$refs.appframe.src = this.iframe
     },
   }
