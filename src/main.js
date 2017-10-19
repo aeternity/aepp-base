@@ -82,6 +82,9 @@ const store = new Vuex.Store({
     //}
   },
   getters: {
+    web3() {
+      return web3;
+    },
     addresses: state => {
       if(!state.keystore) {
         return

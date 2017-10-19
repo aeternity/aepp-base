@@ -1,5 +1,5 @@
 <template>
-  <div class="id-manager">
+  <div class="id-manager screen">
 
     <ae-identity v-for='i in identities' :identity='i'/>
 

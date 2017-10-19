@@ -17,11 +17,11 @@
 			<div class="title center">{{title}}</div>
 
 			<div class="action right">
-				<router-link v-show='showAdd' to='/chat'>
-					<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-						<g fill="#4A4A4A" fill-rule="evenodd"><path d="M0 9h20v2H0z"/><path d="M11 0v20H9V0z"/></g>
-					</svg>
-				</router-link>
+				<!--<router-link v-show='showAdd' to='/chat'>-->
+					<!--<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
+						<!--<g fill="#4A4A4A" fill-rule="evenodd"><path d="M0 9h20v2H0z"/><path d="M11 0v20H9V0z"/></g>-->
+					<!--</svg>-->
+				<!--</router-link>-->
 			</div>
 		</header>
 		<quick-id/>
