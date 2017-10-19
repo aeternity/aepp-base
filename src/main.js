@@ -30,7 +30,6 @@ const store = new Vuex.Store({
     },
     selectedIdentityIdx : null,
     unlocked : false,
-    //identities : [],
     identityCollapsed: true,
     hasWeb3: false,
     addresses : [],
@@ -38,6 +37,8 @@ const store = new Vuex.Store({
       address: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9',
       decimals: new BigNumber(10).pow(18)
     },
+    balances : [
+    ],
     rpcUrl: 'https://kovan.infura.io',
     keystore : null
   },
@@ -71,6 +72,9 @@ const store = new Vuex.Store({
     },
     setUnlocked(state, unlocked) {
       state.unlocked = unlocked;
+    },
+    addBalance(state, balance) {
+      state.balances.push(balance);
     }
     //setTokenContract : function (state, tokenContract) {
       //console.log(tokenContract);
@@ -98,11 +102,18 @@ const store = new Vuex.Store({
         return
       }
       return state.keystore.getAddresses().map(e => {
+        let tokenBalance = null
+        if(state.balances) {
+          let x = state.balances.find(b => b.address === '0x'+e)
+          if(x) {
+            tokenBalance = x.tokenBalance;
+          }
+        }
         return {
           address : '0x' + e ,
           name : 'null',
           balance : 'null',
-          tokenBalance : 'null',
+          tokenBalance : tokenBalance,
           hasTokens : 'null',
           aeTokenBalance : 'null'
         }
@@ -110,43 +121,26 @@ const store = new Vuex.Store({
     }
   },
   actions : {
-    //selectAddress({ dispatch, commit, state },idx) {
-      //dispatch('makePrimary',idx)
-      //this.addrIdx = 0
-    //},
-    //makePrimary({ dispatch, commit, state },idx) {
-      //this.swapArray(this.addrList, idx, 0)
-      //this.swapArray(this.tokens, idx, 0)
-    //},
-    //swapArray({ dispatch, commit, state },array, oldIndex, newIndex) {
-      //if (newIndex >= array.length) {
-        //var k = newIndex - array.length
-        //while ((k--) + 1) {
-          //this.push(undefined)
-        //}
-      //}
-      //array.splice(newIndex, 0, array.splice(oldIndex, 1)[0])
-    //},
-    //updateBalances({ dispatch, commit, state },) {
-      //var that = this
-      //for (var i in this.addrList) {
-        //that.token.contract.balanceOf(that.addrList[i], function (err, bal) {
-          //if (err) throw err
-          //that.$set(that.tokens, i, bal.div(that.$store.state.token.decimals))
-        //})
-      //}
-    //},
+    updateBalances({ getters, dispatch, commit, state },) {
+      var that = this
+      for (var i in getters.address) {
+        aeContract.contract.balanceOf(getters.address[i], function (err, bal) {
+          if (err) throw err
+          //that.$set(that.tokens, i, bal.div(state.token.decimals))
+        })
+      }
+    },
     generateAddress({ dispatch, commit, state }) {
       if (state.keystore === null) { return }
       state.keystore.generateNewAddress(derivedKey, 1)
       let addrList = state.keystore.getAddresses().map(function (e) { return '0x' + e })
       const off = addrList.length - 1
-
-      console.log('XXX', addrList[off] );
-
       aeContract.balanceOf(addrList[off], (err, bal) =>{
         if (err) throw err
-        console.log(off, bal.div(state.token.decimals).toString())
+        commit('addBalance', {
+          address : addrList[off],
+          tokenBalance : bal.div(state.token.decimals).toString()
+        })
       })
     },
     changeUser({ commit, state }, address) {
@@ -168,46 +162,39 @@ const store = new Vuex.Store({
             return
           }
           let address = accounts[0];
-          if (address) {
-            let currentAddress = state.identity.address;
-            if (address != currentAddress) {
-              console.log('address changed');
-              dispatch('changeUser', address);
-            }
+          if (!address) {
+            return
+          }
 
-            web3.eth.getBalance(address, (err, balance) => {
-              let readable = parseFloat(web3.fromWei(balance.toString(10), 'ether')).toFixed(3);
-              if(state.identity.balance !== readable) {
-                console.log(err, readable);
-                commit('setBalance', readable);
-              }
-            });
+          web3.eth.getBalance(address, (err, balance) => {
+            let readable = parseFloat(web3.fromWei(balance.toString(10), 'ether')).toFixed(3);
+            console.log('eth', readable);
+            //if(state.identity.balance !== readable) {
+              //console.log(err, readable);
+              //commit('setBalance', readable);
+            //}
+          });
 
-            if (aeContract) {
-              //if (state.tokenContract) {
-              //state.tokenContract.balanceOf(address, {}, (err, balance) => {
-              tokenContract.balanceOf(address, {}, (err, balance) => {
-                let readable = web3.fromWei(balance.toString(10), 'ether');
-                if(state.identity.tokenBalance !== readable) {
-                  commit('setTokenBalance', readable);
-                }
-                if(state.identity.hasTokens !== balance > 0 ) {
-                  commit('setHasTokens', balance > 0);
-                }
-              });
-            }
+          if (aeContract) {
+            aeContract.balanceOf(address, {}, (err, balance) => {
+            let readable = web3.fromWei(balance.toString(10), 'ether');
+              console.log('ae', readable);
+            //if(state.identity.tokenBalance !== readable) {
+            //commit('setTokenBalance', readable);
+            //}
+            })
           }
         })
       }, 1000);
     },
-    initWeb3({ dispatch, commit, state }, pwDerivedKey ) {
+    initWeb3({ getters, dispatch, commit, state }, pwDerivedKey ) {
       if(!state.keystore) {
         return
       }
       derivedKey = pwDerivedKey;
       const opts = {
         getAccounts: function (cb) {
-          cb(null, state.addrList)
+          cb(null, getters.addresses)
         },
         signTransaction: function (tx, cb) {
           const t = new Transaction(tx)
@@ -243,7 +230,7 @@ const store = new Vuex.Store({
         window.globalTokenContract = contract
       })
       //dispatch('generateAddress', web3);
-      //dispatch('setAcountInterval', web3);
+      dispatch('setAcountInterval', web3);
     },
     init({ commit, state }) {
       if (localStorage.getItem('ks')) {

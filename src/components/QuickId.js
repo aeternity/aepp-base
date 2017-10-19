@@ -11,7 +11,7 @@ export default {
   },
   computed : {
     identity() {
-      return this.$store.state.identity;
+      return this.$store.getters.activeIdentity
     },
     collapsed() {
       return (!this.showPaymentUi) && this.$store.state.identityCollapsed;

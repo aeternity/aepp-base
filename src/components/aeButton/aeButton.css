@@ -1,2 +1,16 @@
 .ae-button {
+  /* Rectangle: */
+  border-radius: 76px;
+  /* Create First Proof: */
+  font-size: 18px;
+  letter-spacing: 0.45px;
+  padding:10px;
+  text-align:center;
+  max-width:75%;
+  margin:0 auto;
+  max-width:250px;
+}
+.pink.ae-button {
+  background: #F03C6E;
+  color: #FFFFFF;
 }
