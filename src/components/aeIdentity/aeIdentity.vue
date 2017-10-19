@@ -19,7 +19,7 @@
 			</div>
 		</div>
 
-		<div @click='toggle' :class="{identity:true, collapsed : collapsed, 'show-payment-ui' : showPaymentUi }">
+		<div @click='toggle' :class="{'ae-identity':true, collapsed : collapsed, 'show-payment-ui' : showPaymentUi }">
 			<div class="left">
 				<ae-identity-avatar :address='identity.address'/>
         <ae-identity-info :identity='identity'/>
@@ -37,5 +37,4 @@
 
 <script src='./aeIdentity.js'/>
 
-<style scoped>
-</style>
+<style scoped src='./aeIdentity.css'/>
