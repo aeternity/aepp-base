@@ -64,7 +64,7 @@ button {
   border: none;
   background: transparent;
 }
-.button {
+.ae-button {
   /* Rectangle: */
   border-radius: 76px;
   /* Create First Proof: */
@@ -94,7 +94,7 @@ button {
   height:23px;
   margin-bottom:30px;
 }
-.pink.button {
+.pink.ae-button {
   background: #F03C6E;
   color: #FFFFFF;
 }
@@ -208,24 +208,11 @@ h1 {
   left:50%;
   transform:translate(-50%,0);
 }
-.avatar ,
-.account-info {
+.avatar {
   display:inline-block;
   vertical-align:middle;
   /*position:absolute;*/
   /*bottom:20px;*/
-}
-.account-info .name {
-  font-size: 20px;
-  color: #FFFFFF;
-  letter-spacing: 0;
-}
-.account-info .address {
-  opacity: 0.5;
-  font-weight:300;
-  font-size: 15px;
-  color: #FFFFFF;
-  letter-spacing: 0.6px;
 }
 .identity-wrap.show-payment-ui {
   position:fixed;

@@ -1,13 +1,13 @@
-import Identity from './Identity.vue'
 import MenuEntry from './MenuEntry.vue'
-import Avatar from './Avatar.vue'
+import QuickId from './QuickId.vue'
+import aeIdentityAvatar from './aeIdentityAvatar/aeIdentityAvatar.vue'
 
 export default {
 	name: 'topbar',
 	components : {
-		'avatar': Avatar,
+    'ae-identity-avatar' : aeIdentityAvatar,
 		'menu-entry': MenuEntry,
-		'identity' : Identity
+    'quick-id': QuickId
 	},
 	data : function() {
 		return {

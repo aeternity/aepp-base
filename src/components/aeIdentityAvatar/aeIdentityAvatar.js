@@ -1,14 +1,17 @@
-import helperMixin from '../mixins/helper.js'
+const blockies = require('ethereum-blockies-png')
 
 export default {
 		name : 'avatar',
 		props : [
-			'image',
 			'address'
 		],
-		mixins: [
-			helperMixin
-		],
+    methods : {
+      blockie(address) {
+        return blockies.createDataURL({
+          seed: address
+        })
+      }
+    },
 		computed: {
 			style: function () {
 				if (this.address) {

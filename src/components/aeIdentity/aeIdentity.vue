@@ -1,10 +1,4 @@
-<<template>
-  <div class="">
-  </div>
-</template>
-
-<script src='./'/>
-<style scoped src='./'/>template>
+<template>
 	<div :class="{ 'identity-wrap' : true, 'show-payment-ui' : showPaymentUi }">
 
 		<div v-if='showPaymentUi' class="payment">
@@ -27,11 +21,8 @@
 
 		<div @click='toggle' :class="{identity:true, collapsed : collapsed, 'show-payment-ui' : showPaymentUi }">
 			<div class="left">
-				<avatar :image='identity.avatar' :address='identity.address'></avatar>
-				<div class="account-info">
-					<div class="name">{{identity.name}}</div>
-					<div class="address">{{identity.address}}</div>
-				</div>
+				<ae-identity-avatar :address='identity.address'/>
+        <ae-identity-info :identity='identity'/>
 			</div>
 			<div class="right">
 				<div class="balance">
@@ -44,7 +35,7 @@
 	</div>
 </template>
 
-<script src='./Identity.js'/>
+<script src='./aeIdentity.js'/>
 
 <style scoped>
 </style>

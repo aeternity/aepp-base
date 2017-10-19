@@ -10,14 +10,11 @@
 						<p class="text center">
               æternity gives access to the magic of Blockchain technology in an intuitive and easy way. Get access to it by generating a new account or Login to an existing.
 						</p>
-						<!--<div class="pink next button">-->
-							<!--Next-->
-						<!--</div>-->
-            <div class="pink button">
+            <ae-button>
               <router-link to="/setup">
                 Open Identity Manager
               </router-link>
-            </div>
+            </ae-button>
 					</div>
 				</div>
 				<div class="center notice">

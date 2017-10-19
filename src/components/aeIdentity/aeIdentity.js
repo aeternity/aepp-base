@@ -1,28 +1,21 @@
-import Avatar from './Avatar.vue'
+import aeIdentityAvatar from './../aeIdentityAvatar/aeIdentityAvatar.vue'
+import aeIdentityInfo from './../aeIdentityInfo/aeIdentityInfo.vue'
 export default {
-	name: 'identity',
+	name: 'ae-identity',
 	components : {
-		'avatar' : Avatar
+    'ae-identity-avatar' : aeIdentityAvatar,
+    'ae-identity-info' : aeIdentityInfo
 	},
 	data : function() {
 		return {
 			showPaymentUi : false
 		};
 	},
-	computed : {
-		identity : function() {
-			return this.$store.state.identity;
-		},
-		collapsed : function() {
-			return (!this.showPaymentUi) && this.$store.state.identityCollapsed;
-		},
-		paymentRequest : function() {
-			return this.$store.state.identity.paymentRequest;
-		},
-		blockie: function() {
-			return false // blockies.create();
-		}
-	},
+  props : [
+    'identity'
+  ],
+	//computed : {
+	//},
 	watch : {
 		paymentRequest : function(req) {
 			console.log(req);

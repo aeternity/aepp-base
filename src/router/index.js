@@ -3,12 +3,15 @@ import Router from 'vue-router'
 
 import Intro from '@/components/Intro.vue'
 import Setup from '@/components/Setup.vue'
+import Unlock from '@/components/Unlock.vue'
+import IdManager from '@/components/IdManager.vue'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     {
+      name : 'intro',
       path: '/',
       component: Intro,
       meta: {
@@ -17,6 +20,7 @@ export default new Router({
       }
     },
     {
+      name : 'setup',
       path: '/setup',
       component: Setup,
       meta: {
@@ -24,5 +28,25 @@ export default new Router({
         appClass: 'setup'
       }
     },
+    {
+      name : 'unlock',
+      path: '/unlock',
+      component: Unlock,
+      meta: {
+        title: 'Unlock',
+        appClass: 'unlock'
+      }
+    },
+    {
+      name : 'id-manager',
+      path: '/id-manager',
+      component: IdManager,
+      meta: {
+        title: 'Id Manager',
+        appClass: 'id-manager'
+      }
+    },
   ]
 })
+
+export default router

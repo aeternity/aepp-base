@@ -24,11 +24,11 @@
 				</router-link>
 			</div>
 		</header>
-		<identity/>
+		<quick-id/>
 		<nav>
 			<div class="inner">
 				<div class="center">
-					<avatar :address='identity.address'></avatar>
+          <ae-identity-avatar :address='identity.address'/>
 					<div class="name">
 						{{identity.name}}
 					</div>
