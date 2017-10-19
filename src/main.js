@@ -74,6 +74,7 @@ const store = new Vuex.Store({
       state.unlocked = unlocked;
     },
     addBalance(state, balance) {
+      //TODO: if not already there?
       state.balances.push(balance);
     }
     //setTokenContract : function (state, tokenContract) {
@@ -164,6 +165,7 @@ const store = new Vuex.Store({
             console.log('no accounts found');
             return
           }
+          //todo alle abfrage usw...
           let address = accounts[0];
           if (!address) {
             return
