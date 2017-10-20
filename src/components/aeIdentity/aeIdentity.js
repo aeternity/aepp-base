@@ -1,5 +1,6 @@
 import aeIdentityAvatar from './../aeIdentityAvatar/aeIdentityAvatar.vue'
 import aeIdentityInfo from './../aeIdentityInfo/aeIdentityInfo.vue'
+import helperMixin from './../../mixins/helper'
 export default {
 	name: 'ae-identity',
 	components : {
@@ -14,8 +15,14 @@ export default {
   props : [
     'identity'
   ],
-	//computed : {
-	//},
+	mixins: [
+		helperMixin
+	],
+	computed : {
+		collapsed: function() {
+			return this.$store.state.identityCollapsed;
+		}
+	},
 	watch : {
 		paymentRequest : function(req) {
 			console.log(req);

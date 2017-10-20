@@ -55,7 +55,7 @@ let router = new Router({
         title: 'App Browser',
         appClass: 'app-browser'
       }
-    },
+    }
   ]
 })
 

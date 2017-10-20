@@ -23,6 +23,14 @@ export default {
 			return blockies.createDataURL({
 				seed: address
 			})
+		},
+		readableToken: function(balance) {
+			let web3 = this.$store.getters.web3;
+			return parseFloat(web3.fromWei(balance.toString(10), 'ether')).toFixed(3);
+		},
+		readableEther: function(balance) {
+			let web3 = this.$store.getters.web3;
+			return parseFloat(web3.fromWei(balance.toString(10), 'ether')).toFixed(3);
 		}
 	}
 }

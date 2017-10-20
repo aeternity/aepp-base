@@ -26,12 +26,11 @@
 			</div>
 			<div class="right">
 				<div class="balance">
-					<span class="amount">{{identity.balance}}</span>
+					<span class="amount">{{readableEther(identity.balance)}}</span>
 					<span class="currency-symbol">ETH</span>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </template>
 

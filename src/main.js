@@ -60,9 +60,9 @@ const store = (function(){
       setName(state, name) {
         state.identity.name = name
       },
-      setBalance(state, balance) {
-        state.identity.balance = balance
-      },
+      // setBalance(state, balance) {
+      //   state.identity.balance = balance
+      // },
       setTokenBalance(state, balance) {
         state.identity.tokenBalance = balance
       },
@@ -75,10 +75,36 @@ const store = (function(){
       setUnlocked(state, unlocked) {
         state.unlocked = unlocked;
       },
-      addBalance(state, balance) {
-        //TODO: if not already there?
-        state.balances.push(balance);
-      }
+      // addBalance(state, balance) {
+      //   //TODO: if not already there?
+      //   state.balances.push(balance);
+      // },
+      selectIdentity(state, selectedIdentityIdx) {
+        state.selectedIdentityIdx = selectedIdentityIdx;
+      },
+      setBalance(state, {address, balance, tokenBalance}) {
+        if (!address) {
+          return;
+        }
+        let balanceObj = state.balances.find(b => b.address === address)
+        if(balanceObj) {
+          //TODO: detect changes
+          if (balance && balance !== balanceObj.balance) {
+            console.log('balance changed');
+            balanceObj.balance = balance
+          }
+          if (tokenBalance && tokenBalance !== balanceObj.tokenBalance) {
+            console.log('tokenBalance changed');
+            balanceObj.tokenBalance = tokenBalance
+          }
+        } else {
+          state.balances.push({
+            address: address,
+            balance: balance ? balance : 0,
+            tokenBalance: tokenBalance ? tokenBalance : 0
+          });
+        }
+      },
       //setTokenContract : function (state, tokenContract) {
         //console.log(tokenContract);
         //state.tokenContract = tokenContract
@@ -98,43 +124,47 @@ const store = (function(){
         if(!state.keystore || !getters.identities.length) {
           return
         }
-        if(!state.selectedIdentityIdx) {
+        if(!state.selectedIdentityIdx === null) {
           return
         }
         return getters.identities[state.selectedIdentityIdx]
       },
-      identities: state => {
+      identities: (state, getters) => {
         if(!state.keystore) {
           return
         }
         return state.keystore.getAddresses().map(e => {
-          let tokenBalance = null
-          if(state.balances) {
-            let x = state.balances.find(b => b.address === '0x'+e)
-            if(x) {
-              tokenBalance = x.tokenBalance;
-            }
-          }
           return {
             address : '0x' + e ,
             name : 'null',
-            balance : 'null',
-            tokenBalance : tokenBalance,
+            balance : getters.balanceByAddress('0x' + e),
+            tokenBalance : getters.tokenBalanceByAddress('0x' + e),
             hasTokens : 'null',
             aeTokenBalance : 'null'
           }
         })
-      }
+      },
+      balanceByAddress: (state, getters) => (address) => {
+        let balanceObj = state.balances.find(balance => balance.address === address);
+        if (balanceObj) {
+          return balanceObj.balance;
+        }
+        return 0;
+      },
+      tokenBalanceByAddress: (state, getters) => (address) => {
+        let balanceObj = state.balances.find(balance => balance.address === address);
+        if (balanceObj) {
+          return balanceObj.balance;
+        }
+        return 0;
+      },
     },
     actions : {
       mkProviderOptsForApps({getters, state}) {
         providerOptsForApps = {
           getAccounts: function (cb) {
             // Only show them the currently selected account.
-            //console.log('getAccounts', that.addrList, that.addrIdx)
-            //
-            //TODO: selected index
-            cb(null, [getters.addresses[0]])
+            cb(null, [getters.activeIdentity.address])
           },
           signTransaction: function (tx, cb) {
             const t = new Transaction(tx)
@@ -167,54 +197,51 @@ const store = (function(){
         state.keystore.generateNewAddress(derivedKey, 1)
         let addrList = state.keystore.getAddresses().map(function (e) { return '0x' + e })
         const off = addrList.length - 1
-        aeContract.balanceOf(addrList[off], (err, bal) =>{
-          if (err) throw err
-          commit('addBalance', {
-            address : addrList[off],
-            tokenBalance : bal.div(state.token.decimals).toString()
-          })
-        })
+
+        // aeContract.balanceOf(addrList[off], (err, bal) =>{
+        //   if (err) throw err
+        //   commit('addBalance', {
+        //     address : addrList[off],
+        //     tokenBalance : bal.div(state.token.decimals).toString()
+        //   })
+        // })
       },
       changeUser({ commit, state }, address) {
         commit('setAccount', address);
         commit('setName', address.substr(0, 6));
       },
-      setAcountInterval({ dispatch, commit, state }, web3) {
+      setAcountInterval({ dispatch, commit, state, getters }) {
         setInterval(() => {
           if (!web3) {
             return
           }
-          web3.eth.getAccounts((err, accounts) => {
-            if (err) {
-              console.log(err);
-              return;
-            }
-            if (accounts.length === 0) {
-              console.log('no accounts found');
-              return
-            }
-            //todo alle abfrage usw...
-            let address = accounts[0];
+          if (!getters.identities || getters.identities.length <= 0) {
+            console.log('no accounts found');
+            return;
+          }
+          getters.identities.forEach(identitiy => {
+            let address = identitiy.address;
             if (!address) {
               return
             }
-
             web3.eth.getBalance(address, (err, balance) => {
               let readable = parseFloat(web3.fromWei(balance.toString(10), 'ether')).toFixed(3);
-              console.log('eth', readable);
+              // console.log('eth', readable, address);
+              commit('setBalance', {address: address, balance: balance});
               //if(state.identity.balance !== readable) {
-                //console.log(err, readable);
-                //commit('setBalance', readable);
+              //console.log(err, readable);
+              //commit('setBalance', readable);
               //}
             });
 
             if (aeContract) {
               aeContract.balanceOf(address, {}, (err, balance) => {
-              let readable = web3.fromWei(balance.toString(10), 'ether');
-                console.log('ae', readable);
-              //if(state.identity.tokenBalance !== readable) {
-              //commit('setTokenBalance', readable);
-              //}
+                let readable = web3.fromWei(balance.toString(10), 'ether');
+                commit('setBalance', {address: address, tokenBalance: balance});
+                // console.log('ae', readable);
+                //if(state.identity.tokenBalance !== readable) {
+                //commit('setTokenBalance', readable);
+                //}
               })
             }
           })
@@ -263,7 +290,7 @@ const store = (function(){
           window.globalTokenContract = contract
         })
         //dispatch('generateAddress', web3);
-        //dispatch('setAcountInterval', web3);
+        dispatch('setAcountInterval');
         dispatch('mkProviderOptsForApps');
         dispatch('mkWeb3ForApps');
       },
