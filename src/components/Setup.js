@@ -11,7 +11,13 @@ export default {
   computed: {
     seedList: function () { return this.seed.match(/\S+/g) },
     iframe: function () { return this.iname },
-    tokenDisplay: function () { return this.tokens.map(function (e) { return e.toString() }) }
+    tokenDisplay: function () { return this.tokens.map(function (e) { return e.toString() }) },
+    displayPasswordInput () {
+      return (this.stepIndex === 1 && this.needSetup) || this.haveKeyStore
+    },
+    displayGeneratedSeed () {
+      return this.stepIndex === 0 && this.needSetup && !this.haveKeyStore
+    }
   },
   created: function () {
     if (localStorage.getItem('ks')) {
@@ -126,6 +132,9 @@ export default {
         that.providerOpts = opts
       })
     },
+    nextStep(){
+      this.stepIndex++
+    },
     initWeb3: function () {
       var that = this
       this.keystore.keyFromPassword(that.password, function (err, pwDerivedKey) {
@@ -218,6 +227,7 @@ export default {
       needSetup: true,
       haveKeyStore: false,
       status: 'Waiting…',
+      stepIndex: 0,
       iname: '/static/aexistence/index.html',
       keystore: {},
       message: '',

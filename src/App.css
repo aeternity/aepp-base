@@ -270,6 +270,7 @@ nav .avatar + .name{
   padding-left:20px;
   padding-right: 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.11);
+  cursor: pointer;
 }
 
 .action-button._primary{
@@ -281,4 +282,5 @@ nav .avatar + .name{
   width: 100%;
   line-height: 1.41;
   border-radius: 25px;
+  max-width: 250px;
 }

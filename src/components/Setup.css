@@ -55,6 +55,31 @@
 	font-weight: 700;
 }
 
-.action-button._primary{
+.next-step-button{
   margin-top: 140px;
+}
+
+.save-password-button{
+  margin-top: 135px;
+}
+
+.pin-input{
+  max-width: 257px;
+  width: 100%;
+  height: 45px;
+  font-family: RobotoMono, monospace;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.63;
+  text-align: center;
+  color: #989898;
+}
+
+.pin-input-label{
+  display: inline-block;
+  margin-top: 40px;
+}
+
+.password-info:empty{
+  display: none;
 }
