@@ -28,12 +28,12 @@
 		<nav>
 			<div class="inner">
 				<div class="center">
-          <ae-identity-avatar :address='identity.address'/>
+					<ae-identity-avatar :address='identity ? identity.address : ""'/>
 					<div class="name">
-						{{identity.name}}
+						{{identity ? identity.name : ""}}
 					</div>
 				</div>
-				<menu-entry :link='entry.link' :label='entry.label' v-for='entry in entris'></menu-entry>
+				<menu-entry :link='entry.link' :label='entry.label' v-for='(entry, index) in entries' :key='index'></menu-entry>
 			</div>
 		</nav>
 	</div>

@@ -21,12 +21,12 @@
 
 		<div @click='toggle' :class="{'ae-identity':true, collapsed : collapsed, 'show-payment-ui' : showPaymentUi }">
 			<div class="left">
-				<ae-identity-avatar :address='identity.address'/>
+				<ae-identity-avatar :address='identity ? identity.address : ""'/>
         <ae-identity-info :identity='identity'/>
 			</div>
 			<div class="right">
 				<div class="balance">
-					<span class="amount">{{readableEther(identity.balance)}}</span>
+					<span class="amount">{{identity ? readableEther(identity.balance) : 0}}</span>
 					<span class="currency-symbol">ETH</span>
 				</div>
 			</div>

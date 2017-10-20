@@ -15,7 +15,7 @@ export default {
 			showAdd : true,
 			showBurger : true,
 			showBack : false,
-			entris : [
+			entries : [
 				{
 					label : 'Manage Identities',
 					link : '/id-manager',
@@ -42,7 +42,7 @@ export default {
 			};
 		},
 		identity : function() {
-			return this.$store.state.identity;
+			return this.$store.getters.activeIdentity;
 		},
 		title : function() {
 			return this.$store.state.title;

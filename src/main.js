@@ -8,6 +8,7 @@ import aeAbi from './abi/aeternity-token-abi.json'
 import BigNumber from 'bignumber.js'
 import ZeroClientProvider from 'web3-provider-engine/zero'
 import lightwallet from 'eth-lightwallet'
+import Web3 from 'web3'
 
 Vue.use(Vuex)
 
@@ -22,25 +23,15 @@ const store = (function(){
   return new Vuex.Store({
     state : {
       title : '',
-      identity : {
-        address : null,
-        name : null,
-        balance : null,
-        tokenBalance : null,
-        hasTokens : null,
-        aeTokenBalance : null
-      },
       selectedIdentityIdx : 0,
       unlocked : false,
       identityCollapsed: true,
       hasWeb3: false,
-      addresses : [],
       token : {
         address: '0x35d8830ea35e6Df033eEdb6d5045334A4e34f9f9',
         decimals: new BigNumber(10).pow(18)
       },
-      balances : [
-      ],
+      balances : [],
       rpcUrl: 'https://kovan.infura.io',
       keystore : null
     },
@@ -57,44 +48,26 @@ const store = (function(){
       setAccount(state, account) {
         state.identity.address = account
       },
-      setName(state, name) {
-        state.identity.name = name
-      },
-      // setBalance(state, balance) {
-      //   state.identity.balance = balance
-      // },
-      setTokenBalance(state, balance) {
-        state.identity.tokenBalance = balance
-      },
-      setHasTokens(state, hasTokens) {
-        state.identity.hasTokens = hasTokens
-      },
       setKeystore(state, keystore) {
         state.keystore = keystore
       },
       setUnlocked(state, unlocked) {
         state.unlocked = unlocked;
       },
-      // addBalance(state, balance) {
-      //   //TODO: if not already there?
-      //   state.balances.push(balance);
-      // },
       selectIdentity(state, selectedIdentityIdx) {
         state.selectedIdentityIdx = selectedIdentityIdx;
       },
       setBalance(state, {address, balance, tokenBalance}) {
+        console.log('setBalance', address, balance, tokenBalance);
         if (!address) {
           return;
         }
         let balanceObj = state.balances.find(b => b.address === address)
         if(balanceObj) {
-          //TODO: detect changes
-          if (balance && balance !== balanceObj.balance) {
-            console.log('balance changed');
+          if (balance) {
             balanceObj.balance = balance
           }
-          if (tokenBalance && tokenBalance !== balanceObj.tokenBalance) {
-            console.log('tokenBalance changed');
+          if (tokenBalance) {
             balanceObj.tokenBalance = tokenBalance
           }
         } else {
@@ -131,7 +104,7 @@ const store = (function(){
       },
       identities: (state, getters) => {
         if(!state.keystore) {
-          return
+          return [];
         }
         return state.keystore.getAddresses().map(e => {
           return {
@@ -154,7 +127,7 @@ const store = (function(){
       tokenBalanceByAddress: (state, getters) => (address) => {
         let balanceObj = state.balances.find(balance => balance.address === address);
         if (balanceObj) {
-          return balanceObj.balance;
+          return balanceObj.tokenBalance;
         }
         return 0;
       },
@@ -225,29 +198,24 @@ const store = (function(){
               return
             }
             web3.eth.getBalance(address, (err, balance) => {
-              let readable = parseFloat(web3.fromWei(balance.toString(10), 'ether')).toFixed(3);
-              // console.log('eth', readable, address);
-              commit('setBalance', {address: address, balance: balance});
-              //if(state.identity.balance !== readable) {
-              //console.log(err, readable);
-              //commit('setBalance', readable);
-              //}
+              if (!balance.equals(getters.balanceByAddress(address))) {
+                commit('setBalance', {address: address, balance: balance});
+              }
             });
 
             if (aeContract) {
               aeContract.balanceOf(address, {}, (err, balance) => {
                 let readable = web3.fromWei(balance.toString(10), 'ether');
-                commit('setBalance', {address: address, tokenBalance: balance});
-                // console.log('ae', readable);
-                //if(state.identity.tokenBalance !== readable) {
-                //commit('setTokenBalance', readable);
-                //}
+                if (!balance.equals(getters.tokenBalanceByAddress(address))) {
+                  commit('setBalance', {address: address, tokenBalance: balance});
+                }
               })
             }
           })
         }, 1000);
       },
       initWeb3({ getters, dispatch, commit, state }, pwDerivedKey ) {
+        console.log('initWeb3');
         if(!state.keystore) {
           return
         }
