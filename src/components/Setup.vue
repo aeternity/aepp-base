@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <div v-if="needSetup" id="setup">
-      <div v-if="!haveKeyStore">
-        <div>
-          <span v-for="(it, idx) in seedList" v-bind:class="[idx % 2 ? '' : 'seed-odd', 'seed']">{{ it + ' ' }}</span>
-          <input id="seed-in" v-model="seed" width="250" required>
-        </div>
-        <div>
+  <div class="screen">
+    <div v-if="needSetup" id="setup" class="setup">
+      <div v-if="!haveKeyStore" class="wrapper">
+        <h1 class="title">Create Account</h1>
+          <textarea id="seed-in" class="seed-input" v-model="seed" required></textarea>
+        <button class="copy-phrase-button action-button">COPY PHRASE</button>
+        <p class="text center">
           is your new wallet seed. Please write it down on paper or in a password manager, you will need it to access your wallet. Do not let anyone see this seed or they can take your Ether.
-        </div>
+        </p>
+
+        <button v-on:click="savePassword" class="action-button _primary">Got it!</button>
       </div>
       <div v-else>
         Found a saved keystore.
       </div>
-      <div class="password-input">
+      <!--div class="password-input wrapper">
         <form @submit.prevent>
           <label>Please enter your password to encrypt/decrypt your seed.</label>
           <div>
@@ -22,7 +23,7 @@
             <div ref="pwdinfo" id=""></div>
           </div>
         </form>
-      </div>
+      </div-->
     </div>
     <div><input v-model="iname"><button v-on:click="loadIFrame">Load</button></div>
     <iframe ref="appframe" id="appframe"></iframe>
