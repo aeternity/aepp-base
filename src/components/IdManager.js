@@ -28,7 +28,7 @@ export default {
     if(!this.$store.state.unlocked) {
       this.$router.push({ path: 'unlock' })
     }
-    if(this.addresses.length < 1) {
+    if(this.addresses && this.addresses.length < 1) {
       this.generateFirstAddress()
     }
   }

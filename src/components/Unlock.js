@@ -61,9 +61,13 @@ export default {
       })
     },
   },
-  created() {
-    if(this.$store.state.unlocked) {
-      this.$router.push({ path: 'unlock' })
+  mounted() {
+    if (!this.haveKeyStore) {
+      console.log('no keystore');
+      this.$router.push({ name: 'intro' })
+    } else if (this.$store.state.unlocked) {
+      console.log('already unlocked');
+      this.$router.push({ name: 'app-browser' })
     }
   }
 }

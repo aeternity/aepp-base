@@ -156,7 +156,7 @@ const store = (function(){
         web3ForApps = new Web3(new ZeroClientProvider(providerOptsForApps))
         window.web3 = web3ForApps;
       },
-      updateBalances({ getters, dispatch, commit, state },) {
+      updateBalances({ getters, dispatch, commit, state }) {
         var that = this
         for (var i in getters.address) {
           aeContract.contract.balanceOf(getters.address[i], function (err, bal) {
@@ -165,11 +165,13 @@ const store = (function(){
           })
         }
       },
-      generateAddress({ dispatch, commit, state }) {
+      generateAddress({ dispatch, commit, state }, numAddresses = 1) {
         if (state.keystore === null) { return }
-        state.keystore.generateNewAddress(derivedKey, 1)
+        state.keystore.generateNewAddress(derivedKey, numAddresses)
         let addrList = state.keystore.getAddresses().map(function (e) { return '0x' + e })
-        const off = addrList.length - 1
+        localStorage.setItem("numUnlockedAddresses", addrList.length);
+        // const off = addrList.length - 1
+
 
         // aeContract.balanceOf(addrList[off], (err, bal) =>{
         //   if (err) throw err
@@ -213,6 +215,13 @@ const store = (function(){
             }
           })
         }, 1000);
+      },
+      restoreAddresses({getters, dispatch, commit, state}) {
+        let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses');
+        if (numUnlockedAddresses > 0) {
+          console.log('numUnlockedAddresses', numUnlockedAddresses);
+          dispatch('generateAddress', numUnlockedAddresses)
+        }
       },
       initWeb3({ getters, dispatch, commit, state }, pwDerivedKey ) {
         console.log('initWeb3');
@@ -261,6 +270,7 @@ const store = (function(){
         dispatch('setAcountInterval');
         dispatch('mkProviderOptsForApps');
         dispatch('mkWeb3ForApps');
+        dispatch('restoreAddresses');
       },
       init({ commit, state }) {
         if (localStorage.getItem('ks')) {
