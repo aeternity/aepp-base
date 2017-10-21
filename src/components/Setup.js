@@ -3,10 +3,15 @@ import Transaction from 'ethereumjs-tx'
 import ZeroClientProvider from 'web3-provider-engine/zero'
 import Web3 from 'web3'
 
+import PinInput from '@/components/PinInput.vue'
+
 import aeAbi from '../abi/aeternity-token-abi.json'
 
 export default {
   name: 'setup',
+  components: {
+    'pin-input': PinInput
+  },
   computed: {
     seedList: function () { return this.seed.match(/\S+/g) },
     iframe: function () { return this.iname },
@@ -131,7 +136,7 @@ export default {
         that.providerOpts = opts
       })
     },
-    nextStep(){
+    nextStep () {
       this.stepIndex++
     },
     initWeb3: function () {

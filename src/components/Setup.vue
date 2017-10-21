@@ -14,15 +14,7 @@
         <p class="text center" v-if="haveKeyStore"></p>
         <form @submit.prevent>
           <div>
-            <input
-              id="pin-input"
-              class="pin-input"
-              v-model="password"
-              type="password"
-              pattern=".{4,}"
-              title="4 characters minimum"
-              required placeholder="Enter PIN..."
-            >
+            <pin-input :id="'pin-input'" @change="password = $event.value"/>
             <div ref="pwdinfo" class="password-info"></div>
             <label for="pin-input" class="pin-input-label text center">Please enter your password to encrypt/decrypt your seed.</label>
             <button v-on:click="savePassword" class="save-password-button action-button _primary">Save</button>
