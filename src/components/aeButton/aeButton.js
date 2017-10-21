@@ -1,14 +1,27 @@
 export default {
   name: 'ae-button',
   props: {
-    primary: {
-      type: Boolean,
-      default: false
+    role: {
+      type: String,
+      default: 'standard'
     }
   },
   computed: {
     className () {
-      return this.primary ? 'pink ae-button' : 'ae-button'
+      const defaultValue = 'ae-button'
+      if (typeof this.role === 'string') {
+        switch (this.role.trim()) {
+          case 'primary':
+            return defaultValue + ' _role_primary'
+          case 'sub-primary':
+            return defaultValue + ' _role_sub-primary'
+          case 'standard':
+          default:
+            return defaultValue
+        }
+      } else {
+        return defaultValue
+      }
     }
   }
 }

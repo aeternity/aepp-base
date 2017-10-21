@@ -9,7 +9,7 @@
         <p class="text center">
           is your new wallet seed. Please write it down on paper or in a password manager, you will need it to access your wallet. Do not let anyone see this seed or they can take your Ether.
         </p>
-        <ae-button :primary="true" class="next-step-button">
+        <ae-button :role="'primary'" class="next-step-button">
           <button v-on:click="nextStep">Got it!</button>
         </ae-button>
       </div>
@@ -20,7 +20,7 @@
             <pin-input :id="'pin-input'" @change="password = $event.value"/>
             <div ref="pwdinfo" class="password-info"></div>
             <label for="pin-input" class="pin-input-label text center">Please enter your password to encrypt/decrypt your seed.</label>
-            <ae-button :primary="true" class="save-password-button">
+            <ae-button :role="'primary'" class="save-password-button">
               <button v-on:click="savePassword">Save</button>
             </ae-button>
           </div>

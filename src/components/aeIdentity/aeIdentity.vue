@@ -1,5 +1,5 @@
 <template>
-	<div :class="{ 'identity-wrap' : true, 'show-payment-ui' : showPaymentUi }">
+	<div :class="{ 'identity-wrap' : true, 'show-payment-ui' : showPaymentUi}">
 
 		<div v-if='showPaymentUi' class="payment">
 			<p class="center">
@@ -19,7 +19,14 @@
 			</div>
 		</div>
 
-		<div @click='toggle' :class="{'ae-identity':true, collapsed : collapsed, 'show-payment-ui' : showPaymentUi }">
+		<div @click='toggle'
+         :class="{
+		        'ae-identity':true,
+		        collapsed : collapsed,
+		        'show-payment-ui' : showPaymentUi,
+		        '_active_yes': active,
+		        '_active_no': !active
+		}">
 			<div class="left">
 				<ae-identity-avatar :address='identity ? identity.address : ""'/>
         <ae-identity-info :identity='identity'/>
@@ -30,7 +37,10 @@
 					<span class="currency-symbol">ETH</span>
 				</div>
 			</div>
-		</div>
+      <div class="bottom-inserted-elements">
+        <slot></slot>
+      </div>
+    </div>
 	</div>
 </template>
 

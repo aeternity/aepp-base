@@ -9,7 +9,7 @@
       <label class="explanation text center" for="unlock__pin-input">
         To access your account, please enter your secret Passphrase and the matching PIN.
       </label>
-      <ae-button :primary="true" class="unlock-button">
+      <ae-button :role="'primary'" class="unlock-button">
         <button @click="unlockSavedKeystore">
           Unlock
         </button>

@@ -20,7 +20,13 @@
   box-sizing: border-box;
 }
 
-.pink.ae-button > * {
+._role_sub-primary.ae-button > *, ._role_primary.ae-button > *{
+  background-image: none;
+  background-color: #F03C6E;
+  color: #FFFFFF;
+}
+
+._role_primary.ae-button > * {
   /* Rectangle: */
   border-radius: 76px;
   /* Create First Proof: */
@@ -30,9 +36,6 @@
   margin:0 auto;
   max-width:250px;
   width: 100%;
-  background-image: none;
-  background-color: #F03C6E;
-  color: #FFFFFF;
   line-height: 1.41;
   height: 45px;
 }

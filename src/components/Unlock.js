@@ -19,7 +19,7 @@ export default {
     }
   },
   computed : {
-    haveKeyStore() {
+    haveKeyStore () {
       return this.keystore !== null;
     },
     keystore() {
@@ -69,7 +69,7 @@ export default {
       console.log('no keystore');
       this.$router.push({ name: 'intro' })
     } else if (this.$store.state.unlocked) {
-      console.log('already unlocked');
+      console.log('already unlocked')
       this.$router.push({ name: 'app-browser' })
     }
   }

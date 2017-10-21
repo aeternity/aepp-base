@@ -12,9 +12,13 @@ export default {
 			showPaymentUi : false
 		};
 	},
-  props : [
-    'identity'
-  ],
+  props : {
+    'identity': Object,
+    'active': {
+      type: Boolean,
+      required: true
+    }
+  },
 	mixins: [
 		helperMixin
 	],

@@ -1,5 +1,7 @@
 import aeIdentity from './aeIdentity/aeIdentity.vue'
 import aeButton from './aeButton/aeButton.vue'
+import Swiper from 'swiper'
+
 export default {
   name : 'IdManager',
   components : {
@@ -7,21 +9,33 @@ export default {
     'ae-button' : aeButton
   },
   computed : {
-    addresses() {
+    activeIdentity () {
+      return this.$store.getters.activeIdentity
+    },
+    addresses () {
       return this.$store.getters.addresses
     },
-    identities() {
+    identities () {
       return this.$store.getters.identities
     }
   },
   methods : {
+    activateId (id) {
+      this.$store.commit('selectIdentity', this.identities.indexOf(id))
+    },
     generateFirstAddress() {
-      console.log( 'generateFirstAddress' )
+      console.log('generateFirstAddress')
       this.$store.dispatch('generateAddress')
     },
     generateNewIdentity() {
-      console.log( 'generateNewIdentity' )
+      console.log('generateNewIdentity')
       this.$store.dispatch('generateAddress')
+    },
+    goBack () {
+      this.$router.push('/app-browser')
+    },
+    isActive (id) {
+      return id.address === this.activeIdentity.address
     }
   },
   created() {
@@ -31,5 +45,13 @@ export default {
     if(this.addresses && this.addresses.length < 1) {
       this.generateFirstAddress()
     }
+  },
+  mounted() {
+    new Swiper('.swiper-container', {
+      pagination: '.swiper-pagination',
+      slidesPerView: 2,
+      spaceBetween: 100,
+      centeredSlides: true
+    })
   }
 }
