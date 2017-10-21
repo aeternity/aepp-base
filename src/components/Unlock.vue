@@ -8,7 +8,7 @@
           {{error}}
         </p>
         <p>To access your account, please enter your secret Passphrase and the matching PIN.</p>
-        <ae-button>
+        <ae-button :primary="true">
           <button @click="unlockSavedKeystore">
             Unlock
           </button>

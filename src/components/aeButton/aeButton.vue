@@ -1,5 +1,5 @@
 <template>
-    <div class="pink ae-button">
+    <div :class="className">
       <slot>
       </slot>
     </div>

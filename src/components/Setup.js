@@ -4,13 +4,15 @@ import ZeroClientProvider from 'web3-provider-engine/zero'
 import Web3 from 'web3'
 
 import PinInput from '@/components/PinInput.vue'
+import AEButton from '@/components/aeButton/aeButton.vue'
 
 import aeAbi from '../abi/aeternity-token-abi.json'
 
 export default {
   name: 'setup',
   components: {
-    'pin-input': PinInput
+    'pin-input': PinInput,
+    'ae-button': AEButton
   },
   computed: {
     seedList: function () { return this.seed.match(/\S+/g) },
