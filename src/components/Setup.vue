@@ -29,31 +29,6 @@
           </div>
         </form>
       </div>
-    <!--template v-else>
-          <div><input v-model="iname"><button v-on:click="loadIFrame">Load</button></div>
-          <iframe ref="appframe" id="appframe"></iframe>
-          <div class="status">{{ status }}</div>
-          <div v-if="addrList.length > 0">
-            Make this identity available to the loaded app.
-            <button v-on:click="setProvider">Share Identity</button>
-          </div>
-          <div>
-            <button v-on:click="generateAddress">Generate Identity</button>
-            <ul>
-              <li v-for="(addr, idx) in addrList" v-bind:class="{ 'active-addr': addrIdx === idx}">
-                {{ addr }} has {{ tokenDisplay[idx] }} AE <button @click="selectAddress(idx)">select</button>
-                <input v-model="tokenTransferValue" type="number" min="0.000000000000000001" v-if="addrIdx !== idx"><button v-if="addrIdx !== idx" @click="transfer(addr, tokenTransferValue)">send to</button>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <input v-model="message">
-            <button v-on:click="signMsg">sign message</button>
-          </div>
-          <div>
-            <button v-on:click="logout">logout</button>
-          </div>
-    </template-->
   </div>
 </template>
 <script src="./Setup.js"/>

@@ -1,6 +1,5 @@
 import lightwallet from 'eth-lightwallet'
 import Transaction from 'ethereumjs-tx'
-import BigNumber from 'bignumber.js'
 import ZeroClientProvider from 'web3-provider-engine/zero'
 import Web3 from 'web3'
 
@@ -172,8 +171,8 @@ export default {
           that.token.contract = contract
         })
         if (typeof window.web3 === 'undefined') { // Metamask
-          window.web3 = that.w3;
-          that.$store.dispatch( 'initWeb3' )
+          window.web3 = that.w3
+          that.$store.dispatch('initWeb3')
         }
       })
     },
@@ -189,11 +188,12 @@ export default {
 
       if (this.haveKeyStore) {
         this.keystore.keyFromPassword(this.password, function (err, pwDerivedKey) {
+          const passwordAccepted = that.keystore.isDerivedKeyCorrect(pwDerivedKey)
           if (err) {
             console.log(err)
             return
           }
-          if (!that.keystore.isDerivedKeyCorrect(pwDerivedKey)) {
+          if (!passwordAccepted) {
             console.log('wrong password')
             that.$refs.pwdinfo.textContent = 'wrong password'
             return
@@ -201,12 +201,15 @@ export default {
           that.needSetup = false
           that.mkProviderOpts()
           that.initWeb3()
+          if (passwordAccepted) {
+            this.$router.push('/app-browser')
+          }
         })
       } else {
         lightwallet.keystore.createVault({
           password: that.password,
           seedPhrase: that.seed,
-          hdPathString : "m/44'/60'/0'/0"
+          hdPathString: "m/44'/60'/0'/0"
         }, function (err, ks) {
           if (err) {
             console.log(err)
@@ -218,6 +221,7 @@ export default {
           that.seed = that.seed.replace(/.*/, '\0')
           that.mkProviderOpts()
           that.initWeb3()
+          that.$router.push('/app-browser')
         })
       }
     }
