@@ -1,12 +1,15 @@
 import aeButton from './aeButton/aeButton.vue'
+import PinInput from '@/components/PinInput.vue'
 import lightwallet from 'eth-lightwallet'
 import Web3 from 'web3'
 import aeAbi from '../abi/aeternity-token-abi.json'
 
+
 export default {
   name : 'unlock',
   components : {
-    'ae-button' : aeButton
+    'ae-button' : aeButton,
+    'pin-input': PinInput
   },
   data() {
     return {

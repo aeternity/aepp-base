@@ -1,20 +1,20 @@
 <template>
   <div class="unlock screen">
-    Unlock
-    <div class="password-input">
-      <form @submit.prevent>
-        <input v-model="password" type="password" pattern=".{4,}" title="4 characters minimum" required>
-        <p v-if='error' class="error">
-          {{error}}
-        </p>
-        <p>To access your account, please enter your secret Passphrase and the matching PIN.</p>
-        <ae-button :primary="true">
-          <button @click="unlockSavedKeystore">
-            Unlock
-          </button>
-        </ae-button>
-      </form>
-    </div>
+    <h1>Unlock</h1>
+    <form @submit.prevent class="unlock-form">
+      <pin-input @change="password = $event.value" :id="'unlock__pin-input'"/>
+      <p v-if='error' class="error">
+        {{error}}
+      </p>
+      <label class="explanation text center" for="unlock__pin-input">
+        To access your account, please enter your secret Passphrase and the matching PIN.
+      </label>
+      <ae-button :primary="true" class="unlock-button">
+        <button @click="unlockSavedKeystore">
+          Unlock
+        </button>
+      </ae-button>
+    </form>
   </div>
 </template>
 
