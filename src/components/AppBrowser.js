@@ -1,17 +1,13 @@
-import ZeroClientProvider from 'web3-provider-engine/zero'
+import QuickId from '@/components/QuickId.vue'
+
 export default {
-  name : 'app-browser',
-  data(){
+  name: 'app-browser',
+  data () {
     return {
-      iname: '/static/aexistence/index.html',
+      iframe: '/static/aexistence/index.html'
     }
   },
-  computed : {
-    iframe() { return this.iname },
-  },
-  methods : {
-    loadIFrame() {
-      this.$refs.appframe.src = this.iframe
-    },
+  components: {
+    'quick-id': QuickId
   }
 }

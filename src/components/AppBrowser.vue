@@ -1,7 +1,9 @@
 <template>
   <div class="app-browser screen">
-    <div><input v-model="iname"><button v-on:click="loadIFrame">Load</button></div>
-    <iframe ref="appframe" id="appframe"></iframe>
+    <iframe ref="appframe" id="appframe" :src="iframe"></iframe>
+    <router-link class="id-container" :to="'/id-manager'">
+      <quick-id :collapsed="true"></quick-id>
+    </router-link>
   </div>
 </template>
 
