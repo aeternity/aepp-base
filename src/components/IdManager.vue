@@ -6,25 +6,27 @@
       Currently you don't have an identity. Feel free to create one.
     </p>
     <template v-else>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <ae-identity v-for='i in identities' :identity='i' :key='i.address' class="swiper-slide" :active="isActive(i)">
+      <swiper class="swiper-container" :options="swiperOption" ref="mySwiper" :not-next-tick="notNextTick">
+        <swiper-slide v-for='i in identities' :key='i.address'>
+          <ae-identity :active="isActive(i)" :identity='i'>
             <ae-button :role="isActive(i) ? 'default' : 'sub-primary'">
               <button v-if="activeIdentity !== i" @click="activateId(i)">Activate</button>
               <button v-else @click="goBack">Go back</button>
             </ae-button>
           </ae-identity>
-        </div>
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+
+      <div class="explanation">
+        <p class="text center" v-if="identities.length === 1">This is your first Identity, it enables you to use our Æpps, get Tokens, trade them and much more!</p>
+        <p class="text center">You can create unlimited public IDs. Each has it's own address and Token balance.</p>
       </div>
 
-      <template v-if="identities.length === 1">
-        <p class="text center">This is your first Identity, it enables you to use our Æpps, get Tokens, trade them and much more!</p>
-      </template>
-      <p class="text center">You can create unlimited public IDs. Each has it's own address and Token balance.</p>
     </template>
 
 
-    <ae-button :role="'primary'">
+    <ae-button :role="'primary'" class="create-new-id-button">
       <button @click='generateNewIdentity'>
         Create new Identity
       </button>

@@ -1,12 +1,33 @@
 import aeIdentity from './aeIdentity/aeIdentity.vue'
 import aeButton from './aeButton/aeButton.vue'
-import Swiper from 'swiper'
+import { swiper as Swiper, swiperSlide as SwiperSlide} from 'vue-awesome-swiper'
 
 export default {
   name : 'IdManager',
+  data(){
+    return {
+      notNextTick: true,
+      swiperOption: {
+        direction: 'horizontal',
+        grabCursor: true,
+        setWrapperSize: true,
+        autoHeight: true,
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        mousewheelControl: true,
+        observeParents: true,
+        debugger: true,
+        slidesPerView: 2,
+        spaceBetween: 10,
+        centeredSlides: true
+      }
+    }
+  },
   components : {
     'ae-identity' : aeIdentity,
-    'ae-button' : aeButton
+    'ae-button' : aeButton,
+    'swiper': Swiper,
+    'swiper-slide': SwiperSlide
   },
   computed : {
     activeIdentity () {
@@ -45,13 +66,5 @@ export default {
     if(this.addresses && this.addresses.length < 1) {
       this.generateFirstAddress()
     }
-  },
-  mounted() {
-    new Swiper('.swiper-container', {
-      pagination: '.swiper-pagination',
-      slidesPerView: 2,
-      spaceBetween: 100,
-      centeredSlides: true
-    })
   }
 }
