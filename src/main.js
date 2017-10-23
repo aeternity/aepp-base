@@ -274,6 +274,32 @@ const store = (function(){
         if (localStorage.getItem('ks')) {
           commit('setKeystore' , lightwallet.keystore.deserialize(localStorage.getItem('ks')))
         }
+      },
+      createKeystore({commit, dispatch, state}, {seed, password}) {
+        lightwallet.keystore.createVault({
+          password: password,
+          seedPhrase: seed,
+          hdPathString: "m/44'/60'/0'/0"
+        }, function (err, keystore) {
+          if (err) {
+            console.log(err)
+            return
+          }
+          commit('setKeystore', keystore)
+          localStorage.setItem('ks', keystore.serialize())
+
+          keystore.keyFromPassword(password, (err, pwDerivedKey) => {
+            if (err) {
+              console.log(err)
+              return
+            }
+            if (!keystore.isDerivedKeyCorrect(pwDerivedKey)) {
+              console.log('wrong password')
+              return
+            }
+            dispatch('initWeb3', pwDerivedKey)
+          })
+        })
       }
     }
   })

@@ -2,9 +2,9 @@
   <div class="screen setup">
       <div v-if="displayGeneratedSeed" class="wrapper">
         <h1 class="title">Create Account</h1>
-          <textarea id="seed-in" class="seed-input" v-model="seed" required></textarea>
+          <textarea id="seed-in" class="seed-input" v-model="seed" ref="seed" required></textarea>
         <ae-button class="copy-phrase-button">
-          <button>COPY PHRASE</button>
+          <button @click="copySeed()">{{copyButtonText}}</button>
         </ae-button>
         <p class="text center">
           is your new wallet seed. Please write it down on paper or in a password manager, you will need it to access your wallet. Do not let anyone see this seed or they can take your Ether.
