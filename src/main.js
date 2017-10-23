@@ -219,12 +219,10 @@ const store = (function(){
       restoreAddresses({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses');
         if (numUnlockedAddresses > 0) {
-          console.log('numUnlockedAddresses', numUnlockedAddresses);
           dispatch('generateAddress', numUnlockedAddresses)
         }
       },
       initWeb3({ getters, dispatch, commit, state }, pwDerivedKey ) {
-        console.log('initWeb3');
         if(!state.keystore) {
           return
         }
