@@ -21,7 +21,7 @@
             <div ref="pwdinfo" class="password-info"></div>
             <label for="pin-input" class="pin-input-label text center">Please enter your password to encrypt/decrypt your seed.</label>
             <ae-button :role="'primary'" class="save-password-button">
-              <button v-on:click="savePassword">Save</button>
+              <button v-on:click="savePassword" :disabled="working">{{working ? 'Saving...' : 'Save'}}</button>
             </ae-button>
           </div>
         </form>

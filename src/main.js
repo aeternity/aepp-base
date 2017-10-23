@@ -109,11 +109,9 @@ const store = (function(){
         return state.keystore.getAddresses().map(e => {
           return {
             address : '0x' + e ,
-            name : 'null',
+            name : '0x' + e.substr(0,6),
             balance : getters.balanceByAddress('0x' + e),
-            tokenBalance : getters.tokenBalanceByAddress('0x' + e),
-            hasTokens : 'null',
-            aeTokenBalance : 'null'
+            tokenBalance : getters.tokenBalanceByAddress('0x' + e)
           }
         })
       },
@@ -170,16 +168,6 @@ const store = (function(){
         state.keystore.generateNewAddress(derivedKey, numAddresses)
         let addrList = state.keystore.getAddresses().map(function (e) { return '0x' + e })
         localStorage.setItem("numUnlockedAddresses", addrList.length);
-        // const off = addrList.length - 1
-
-
-        // aeContract.balanceOf(addrList[off], (err, bal) =>{
-        //   if (err) throw err
-        //   commit('addBalance', {
-        //     address : addrList[off],
-        //     tokenBalance : bal.div(state.token.decimals).toString()
-        //   })
-        // })
       },
       changeUser({ commit, state }, address) {
         commit('setAccount', address);
@@ -275,29 +263,28 @@ const store = (function(){
           commit('setKeystore' , lightwallet.keystore.deserialize(localStorage.getItem('ks')))
         }
       },
-      createKeystore({commit, dispatch, state}, {seed, password}) {
-        lightwallet.keystore.createVault({
-          password: password,
-          seedPhrase: seed,
-          hdPathString: "m/44'/60'/0'/0"
-        }, function (err, keystore) {
-          if (err) {
-            console.log(err)
-            return
-          }
-          commit('setKeystore', keystore)
-          localStorage.setItem('ks', keystore.serialize())
-
-          keystore.keyFromPassword(password, (err, pwDerivedKey) => {
+      createKeystore ({commit, dispatch, state}, {seed, password}) {
+        return new Promise(function (resolve, reject) {
+          lightwallet.keystore.createVault({
+            password: password,
+            seedPhrase: seed,
+            hdPathString: "m/44'/60'/0'/0"
+          }, function (err, keystore) {
             if (err) {
-              console.log(err)
-              return
+              return reject(err)
             }
-            if (!keystore.isDerivedKeyCorrect(pwDerivedKey)) {
-              console.log('wrong password')
-              return
-            }
-            dispatch('initWeb3', pwDerivedKey)
+            commit('setKeystore', keystore)
+            localStorage.setItem('ks', keystore.serialize())
+            keystore.keyFromPassword(password, (err, pwDerivedKey) => {
+              if (err) {
+                return reject(err)
+              }
+              if (!keystore.isDerivedKeyCorrect(pwDerivedKey)) {
+                return reject(new Error('Wrong password'))
+              }
+              dispatch('initWeb3', pwDerivedKey)
+              return resolve()
+            })
           })
         })
       }

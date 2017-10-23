@@ -9,6 +9,16 @@ export default {
     'pin-input': PinInput,
     'ae-button': AEButton
   },
+  data () {
+    return {
+      stepIndex: 0,
+      iname: '/static/aexistence/index.html',
+      seed: '',
+      password: '',
+      copyButtonText: 'COPY PHRASE',
+      working: false
+    }
+  },
   computed: {
     seedList: function () { return this.seed.match(/\S+/g) },
     iframe: function () { return this.iname },
@@ -74,15 +84,21 @@ export default {
     nextStep () {
       this.stepIndex++
     },
-    savePassword: function () {
+    savePassword: async function () {
       if (this.password.length < 3) {
         return
       }
-
-      this.$store.dispatch('createKeystore', {
-        seed: this.seed,
-        password: this.password
-      })
+      this.working = true
+      try {
+        await this.$store.dispatch('createKeystore', {
+          seed: this.seed,
+          password: this.password
+        })
+      } catch (err) {
+        // TODO: error handling
+        console.log(err)
+      }
+      this.working = false
 
       // var that = this
       // if (this.haveKeyStore) {
@@ -124,7 +140,7 @@ export default {
       //   })
       // }
     },
-    copySeed: function() {
+    copySeed: function () {
       try {
         let textArea = this.$refs.seed
         textArea.select()
@@ -135,17 +151,8 @@ export default {
       }
     }
   },
-  data () {
-    return {
-      stepIndex: 0,
-      iname: '/static/aexistence/index.html',
-      seed: '',
-      password: '',
-      copyButtonText: 'COPY PHRASE'
-    }
-  },
   watch: {
-    unlocked: function(newState, oldState) {
+    unlocked: function (newState, oldState) {
       if (newState) {
         this.$router.push({name: 'id-manager'})
       }
