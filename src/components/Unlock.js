@@ -34,8 +34,8 @@ export default {
       if(!now_unlocked)
         return
       if(this.$store.getters.addresses.length)
-        this.$router.push('/browser');
-      this.$router.push('/id-manager');
+        this.$router.push('/app-browser');
+      this.$router.push('/app-browser');
     }
   },
   methods : {

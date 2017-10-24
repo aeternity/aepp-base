@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-		<router-view></router-view>
+    <id-manager v-if="showIdManager"></id-manager>
+    <router-view></router-view>
   </div>
 </template>
 

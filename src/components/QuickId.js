@@ -9,11 +9,16 @@ export default {
     }
   },
   computed: {
-    identity() {
+    identity () {
       return this.$store.getters.activeIdentity
     },
-    collapsed() {
+    collapsed () {
       return (!this.showPaymentUi) && this.$store.state.identityCollapsed
+    }
+  },
+  methods: {
+    showIdManager () {
+      this.$store.commit('setShowIdManager', true)
     }
   }
 }

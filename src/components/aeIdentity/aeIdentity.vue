@@ -1,6 +1,6 @@
 <template>
 <div :class="{ 'identity-wrap' : true}">
-		<div @click='toggle' :class="classObject">
+		<div @click="$emit('click', $event)" :class="classObject">
 			<div class="left">
 				<ae-identity-avatar :address='identity ? identity.address : ""' />
 				<ae-identity-info :identity='identity' />

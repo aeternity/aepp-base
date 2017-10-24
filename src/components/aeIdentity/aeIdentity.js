@@ -49,7 +49,7 @@ export default {
   methods: {
     toggle: function () {
       if (this.$store.state.appClass !== 'home') {
-        this.$store.commit('identityCollapsed', !this.$store.state.identityCollapsed);
+        this.$store.commit('identityCollapsed', !this.$store.state.identityCollapsed)
       }
     }
   }

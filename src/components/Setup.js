@@ -154,7 +154,7 @@ export default {
   watch: {
     unlocked: function (newState, oldState) {
       if (newState) {
-        this.$router.push({name: 'id-manager'})
+        this.$router.push({name: 'app-browser'})
       }
     }
   }

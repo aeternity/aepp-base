@@ -53,7 +53,8 @@ export default {
       this.$store.dispatch('generateAddress')
     },
     goBack () {
-      this.$router.push('/app-browser')
+      // this.$router.push('/app-browser')
+      this.$store.commit('setShowIdManager', false)
     },
     isActive (id) {
       return id.address === this.activeIdentity.address
@@ -66,5 +67,8 @@ export default {
     if (this.addresses && this.addresses.length < 1) {
       this.generateFirstAddress()
     }
+  },
+  mounted () {
+    this.$refs.mySwiper.swiper.slideTo(this.$store.state.selectedIdentityIdx)
   }
 }
