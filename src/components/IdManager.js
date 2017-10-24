@@ -1,10 +1,10 @@
 import aeIdentity from './aeIdentity/aeIdentity.vue'
 import aeButton from './aeButton/aeButton.vue'
-import { swiper as Swiper, swiperSlide as SwiperSlide} from 'vue-awesome-swiper'
+import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 
 export default {
-  name : 'IdManager',
-  data(){
+  name: 'IdManager',
+  data () {
     return {
       notNextTick: true,
       swiperOption: {
@@ -23,13 +23,13 @@ export default {
       }
     }
   },
-  components : {
-    'ae-identity' : aeIdentity,
-    'ae-button' : aeButton,
+  components: {
+    'ae-identity': aeIdentity,
+    'ae-button': aeButton,
     'swiper': Swiper,
     'swiper-slide': SwiperSlide
   },
-  computed : {
+  computed: {
     activeIdentity () {
       return this.$store.getters.activeIdentity
     },
@@ -40,15 +40,15 @@ export default {
       return this.$store.getters.identities
     }
   },
-  methods : {
+  methods: {
     activateId (id) {
       this.$store.commit('selectIdentity', this.identities.indexOf(id))
     },
-    generateFirstAddress() {
+    generateFirstAddress () {
       console.log('generateFirstAddress')
       this.$store.dispatch('generateAddress')
     },
-    generateNewIdentity() {
+    generateNewIdentity () {
       console.log('generateNewIdentity')
       this.$store.dispatch('generateAddress')
     },
@@ -59,11 +59,11 @@ export default {
       return id.address === this.activeIdentity.address
     }
   },
-  created() {
-    if(!this.$store.state.unlocked) {
+  created () {
+    if (!this.$store.state.unlocked) {
       this.$router.push({ path: 'unlock' })
     }
-    if(this.addresses && this.addresses.length < 1) {
+    if (this.addresses && this.addresses.length < 1) {
       this.generateFirstAddress()
     }
   }
