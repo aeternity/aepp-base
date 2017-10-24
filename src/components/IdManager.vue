@@ -8,7 +8,7 @@
     <template v-else>
       <swiper class="swiper-container" :options="swiperOption" ref="mySwiper" :not-next-tick="notNextTick">
         <swiper-slide v-for='i in identities' :key='i.address'>
-          <ae-identity :active="isActive(i)" :identity='i'>
+          <ae-identity :active="isActive(i)" :identity='i' :size="'big'">
             <ae-button :role="isActive(i) ? 'default' : 'sub-primary'">
               <button v-if="activeIdentity !== i" @click="activateId(i)">Activate</button>
               <button v-else @click="goBack">Go back</button>
