@@ -277,6 +277,8 @@ const store = (function () {
               dispatch('initWeb3', pwDerivedKey)
               // generate the first address
               dispatch('generateAddress')
+              // since we created a new account, show the id manager
+              commit('setShowIdManager', true)
               return resolve()
             })
           })
