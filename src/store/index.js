@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import ZeroClientProvider from 'web3-provider-engine/zero'
 import lightwallet from 'eth-lightwallet'
 import Web3 from 'web3'
+import Transaction from 'ethereumjs-tx'
 
 Vue.use(Vuex)
 

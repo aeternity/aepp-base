@@ -323,14 +323,14 @@ module.exports = {"aes-128-ecb":{"cipher":"AES","key":128,"iv":0,"mode":"ECB","t
 		},
 		initWeb3: function initWeb3() {
 			var web3 = void 0;
-			if (typeof window.web3 !== 'undefined') {
-				// Metamask
-				web3 = new __WEBPACK_IMPORTED_MODULE_2_web3___default.a(window.web3.currentProvider);
-			} else if (window.parent !== window && window.parent.web3 !== undefined) {
+			if (window.parent !== window && window.parent.web3 !== undefined) {
 				// Parent has something for us.
 				console.log('loaded with parent web3 instance');
 				this.$store.commit('setHasParentWeb3', true);
 				web3 = new __WEBPACK_IMPORTED_MODULE_2_web3___default.a(window.parent.web3.currentProvider);
+			} else if (typeof window.web3 !== 'undefined') {
+				// Metamask
+				web3 = new __WEBPACK_IMPORTED_MODULE_2_web3___default.a(window.web3.currentProvider);
 			} else {
 				web3 = null;
 			}
@@ -2639,8 +2639,8 @@ var Component = normalizeComponent(
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"intro screen"},[_c('div',{staticClass:"nomargin inner"},[_c('div',{staticClass:"nomargin logo img",staticStyle:{"background-image":"url(/static/logo.png)"}}),_vm._v(" "),_c('div',{staticClass:"swiper-container"},[_c('div',{staticClass:"swiper-wrapper"},[_vm._m(0),_vm._v(" "),_vm._m(1),_vm._v(" "),_c('div',{staticClass:"swiper-slide"},[_c('div',{staticClass:"img",staticStyle:{"background-image":"url(/static/welcome-3.png)"}}),_vm._v(" "),_c('h1',{staticClass:"center"},[_vm._v("Welcome")]),_vm._v(" "),_c('p',{staticClass:"text center"},[_vm._v("\n\t\t\t\t\tIn order to create proofs you need to identify with the Identity Manager. Please download it from the App Store and set up your identity.\n\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"pink button"},[_c('router-link',{attrs:{"to":"/home"}},[_vm._v("\n\t\t\t\t\t\t\tOpen Identity Manager\n\t\t\t\t\t\t")])],1)])]),_vm._v(" "),_c('div',{staticClass:"center notice"},[_c('router-link',{attrs:{"to":"/home"}},[_vm._v("skip")])],1),_vm._v(" "),_c('div',{staticClass:"swiper-pagination"})])])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"swiper-slide"},[_c('div',{staticClass:"img",staticStyle:{"background-image":"url(/static/welcome-1.png)"}}),_vm._v(" "),_c('h1',{staticClass:"center"},[_vm._v("Welcome")]),_vm._v(" "),_c('p',{staticClass:"text center"},[_vm._v("\n\t\t\t\t\tThis is the æxistence. This æpp enables you to proof the existance of digital files on the æternity blockchain and share it with other poeple.\n\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"pink next button"},[_vm._v("\n\t\t\t\t\t\tNext\n\t\t\t\t\t")])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"swiper-slide"},[_c('div',{staticClass:"img",staticStyle:{"background-image":"url(/static/welcome-2.png)"}}),_vm._v(" "),_c('h1',{staticClass:"center"},[_vm._v("Proofs")]),_vm._v(" "),_c('p',{staticClass:"text center"},[_vm._v("\n\t\t\t\t\tProofs are unchallengeable evidence that a file existed at a specific time in the past. They are immutable and resistent to manipulation.\n\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"pink next button"},[_vm._v("\n\t\t\t\t\t\tNext\n\t\t\t\t\t")])])}]
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"intro screen"},[_c('div',{staticClass:"nomargin inner"},[_c('div',{staticClass:"nomargin logo img",staticStyle:{"background-image":"url(static/logo.png)"}}),_vm._v(" "),_c('div',{staticClass:"swiper-container"},[_c('div',{staticClass:"swiper-wrapper"},[_vm._m(0),_vm._v(" "),_vm._m(1),_vm._v(" "),_c('div',{staticClass:"swiper-slide"},[_c('div',{staticClass:"img",staticStyle:{"background-image":"url(static/welcome-3.png)"}}),_vm._v(" "),_c('h1',{staticClass:"center"},[_vm._v("Welcome")]),_vm._v(" "),_c('p',{staticClass:"text center"},[_vm._v("\n\t\t\t\t\tIn order to create proofs you need to identify with the Identity Manager. Please download it from the App Store and set up your identity.\n\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"pink button"},[_c('router-link',{attrs:{"to":"/home"}},[_vm._v("\n\t\t\t\t\t\t\tOpen Identity Manager\n\t\t\t\t\t\t")])],1)])]),_vm._v(" "),_c('div',{staticClass:"center notice"},[_c('router-link',{attrs:{"to":"/home"}},[_vm._v("skip")])],1),_vm._v(" "),_c('div',{staticClass:"swiper-pagination"})])])])}
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"swiper-slide"},[_c('div',{staticClass:"img",staticStyle:{"background-image":"url(static/welcome-1.png)"}}),_vm._v(" "),_c('h1',{staticClass:"center"},[_vm._v("Welcome")]),_vm._v(" "),_c('p',{staticClass:"text center"},[_vm._v("\n\t\t\t\t\tThis is the æxistence. This æpp enables you to proof the existance of digital files on the æternity blockchain and share it with other poeple.\n\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"pink next button"},[_vm._v("\n\t\t\t\t\t\tNext\n\t\t\t\t\t")])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"swiper-slide"},[_c('div',{staticClass:"img",staticStyle:{"background-image":"url(static/welcome-2.png)"}}),_vm._v(" "),_c('h1',{staticClass:"center"},[_vm._v("Proofs")]),_vm._v(" "),_c('p',{staticClass:"text center"},[_vm._v("\n\t\t\t\t\tProofs are unchallengeable evidence that a file existed at a specific time in the past. They are immutable and resistent to manipulation.\n\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"pink next button"},[_vm._v("\n\t\t\t\t\t\tNext\n\t\t\t\t\t")])])}]
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 
@@ -3167,4 +3167,4 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /***/ })
 
 },["NHnr"]);
-//# sourceMappingURL=app.ceae45458be06c109abc.js.map
+//# sourceMappingURL=app.d6a782da07744ae92903.js.map

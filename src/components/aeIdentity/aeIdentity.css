@@ -27,57 +27,6 @@
   top:70px;
   bottom:auto
 }
-.identity-wrap.show-payment-ui {
-  position:fixed;
-  width:100%;
-  height:100%;
-  z-index:1000;
-}
-.identity-wrap.show-payment-ui:after {
-  content:"";
-  background:rgba(255,255,255,.85);
-  width:100%;
-  height:100%;
-  position:absolute;
-  left:0;
-  z-index:-1;
-  top:-1px;
-}
-.identity-wrap.show-payment-ui .ae-identity {
-  top:30vh;
-}
-.identity-wrap.show-payment-ui .payment {
-  left:50%;
-  transform:translate(-50%,0);
-  width:100%;
-  max-width:400px;
-  top:calc(30vh - 180px);
-  padding:21px;
-  position:fixed;
-  color:black;
-}
-.payment .price {
-  display:block;
-  margin-top:10px;
-  font-size: 80px;
-  font-weight:300;
-  color: #4A4A4A;
-}
-.payment .price .amount {
-  /*background:red;*/
-  /* 1,00: */
-  letter-spacing: -2px;
-}
-.payment .price .currency-symbol {
-  font-size:0.4em;
-}
-.identity-wrap.show-payment-ui .payment .pay.button {
-  margin-top:250px;
-  margin-bottom:10px;
-}
-.collapsed .account-info .address {
-  display:none;
-}
 .balance {
 }
 .balance .amount {
@@ -106,18 +55,6 @@
   bottom:-145px;
   padding:6px 21px;
 }
-/*.ae-identity:after {
-  content:"";
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0;
-  left:0;*/
-  /*background-image:url(assets/identity-background.svg);*/
-  /*background-repeat:no-repeat;
-  background-position:center;
-  background-size:cover;
-}*/
 .ae-identity .left {
   float:left;
 }

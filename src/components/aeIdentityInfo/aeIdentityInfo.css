@@ -16,3 +16,6 @@
   color: #FFFFFF;
   letter-spacing: 0.6px;
 }
+.size_small .address {
+  display:none;
+}
