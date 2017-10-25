@@ -33,7 +33,7 @@ body{
 }
 .screen > :first-child:not(.nomargin) ,
 .screen >.inner > :first-child:not(.nomargin) {
-  margin-top:70px;
+  margin-top:30px;
 }
 .intro.screen {
   position:relative;

@@ -1,6 +1,6 @@
 .setup {
 	width: 100vw;
-	height: 100vh;
+	/*height: 100vh;*/
 	background: rgba(255, 255, 255, 0.85);
 	position: absolute;
 	left: 0;
@@ -12,7 +12,7 @@
   align-content: center;
 }
 .setup > .wrapper {
-	width: 70vw;
+	width: 85vw;
   text-align: center;
 }
 
@@ -32,17 +32,17 @@
 	font-weight: 700;
 }
 
-.seed-input{
+.seed-input {
   font-family: 'Roboto Mono', monospace;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  line-height: 1.63;
+  line-height: 1.33;
   text-align: center;
   color: #1e1e1e;
-  min-height: 100px;
+  min-height: 90px;
   border-radius: 10px;
   border: solid 2px #f5f5f5;
-  padding: 9px 24px 0;
+  padding: 15px 24px 0;
   width: 100%;
   resize: none;
   box-sizing: border-box;
@@ -56,7 +56,7 @@
 }
 
 .next-step-button{
-  margin-top: 140px;
+  margin-top: 40px;
 }
 
 .save-password-button{
