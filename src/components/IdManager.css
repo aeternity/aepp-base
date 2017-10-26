@@ -5,15 +5,31 @@
   right: 0;
   bottom: 0;
   background-color: rgba(255,255,255,0.9);
+  /*background-color: rgba(220,220,220,0.9);*/
   z-index: 2;
 }
 .id-manager .ae-identity {
   display:none;
 }
-
 .create-new-id-button{
+  margin-top:40px;
+}
+.close-id-manager-button{
   margin-top:40px;
 }
 .explanation {
   padding:0 20px;
+}
+.topbar {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 10px;
+}
+
+.ae-identity .bottom-inserted-elements div {
+  margin: 2px;
+}
+
+.ae-identity .ae-button {
+  overflow: hidden;
 }

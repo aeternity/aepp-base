@@ -1,5 +1,6 @@
 import aeIdentity from './aeIdentity/aeIdentity.vue'
 import aeButton from './aeButton/aeButton.vue'
+import aeButtonIcon from './aeButtonIcon/aeButtonIcon.vue'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 
 export default {
@@ -26,6 +27,7 @@ export default {
   components: {
     'ae-identity': aeIdentity,
     'ae-button': aeButton,
+    'ae-button-icon': aeButtonIcon,
     'swiper': Swiper,
     'swiper-slide': SwiperSlide
   },
@@ -58,6 +60,18 @@ export default {
     },
     isActive (id) {
       return id.address === this.activeIdentity.address
+    },
+    copyAddress (address) {
+      let textArea = document.createElement('textarea')
+      textArea.value = address
+      document.body.appendChild(textArea)
+      textArea.select()
+      try {
+        document.execCommand('copy')
+      } catch (err) {
+        console.log('Copy failed')
+      }
+      document.body.removeChild(textArea)
     }
   },
   created () {

@@ -1,5 +1,8 @@
 <template>
   <div class="id-manager screen">
+    <div class="topbar nomargin">
+      <ae-button-icon :icon='"add"' @click='generateNewIdentity'></ae-button-icon>
+    </div>
     <p v-if="identities.length === 0"
        class="text center"
     >
@@ -9,9 +12,11 @@
       <swiper class="swiper-container" :options="swiperOption" ref="mySwiper" :not-next-tick="notNextTick">
         <swiper-slide v-for='i in identities' :key='i.address'>
           <ae-identity :active="isActive(i)" :identity='i' :size="'big'">
-            <ae-button :role="isActive(i) ? 'default' : 'sub-primary'">
-              <button v-if="activeIdentity !== i" @click="activateId(i)">Activate</button>
-              <button v-else @click="goBack">Go back</button>
+            <ae-button :role="'default'">
+              <button @click="copyAddress(i.address)">Copy Address</button>
+            </ae-button>
+            <ae-button v-if="activeIdentity !== i" :role="'sub-primary'">
+              <button  @click="activateId(i)">Activate</button>
             </ae-button>
           </ae-identity>
         </swiper-slide>
@@ -26,9 +31,15 @@
     </template>
 
 
-    <ae-button :role="'primary'" class="create-new-id-button">
+    <!-- <ae-button :role="'primary'" class="create-new-id-button">
       <button @click='generateNewIdentity'>
         Create new Identity
+      </button>
+    </ae-button> -->
+
+    <ae-button :role="'primary'" class="close-id-manager-button">
+      <button @click='goBack'>
+        Close
       </button>
     </ae-button>
 
