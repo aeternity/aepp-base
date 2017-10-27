@@ -10,8 +10,8 @@
     </p>
     <template v-else>
       <swiper class="swiper-container" :options="swiperOption" ref="mySwiper" :not-next-tick="notNextTick">
-        <swiper-slide v-for='i in identities' :key='i.address'>
-          <ae-identity :active="isActive(i)" :identity='i' :size="'big'">
+        <swiper-slide v-for='(i, index) in identities' :key='i.address'>
+          <ae-identity :active="isActive(i)" :identity='i' :size="'big'" @click="swipeTo(index)">
             <ae-button :role="'default'">
               <button @click="copyAddress(i.address)">Copy Address</button>
             </ae-button>

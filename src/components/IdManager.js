@@ -72,6 +72,11 @@ export default {
         console.log('Copy failed')
       }
       document.body.removeChild(textArea)
+    },
+    swipeTo (index) {
+      if (index >= 0 && index < this.identities.length) {
+        this.$refs.mySwiper.swiper.slideTo(index)
+      }
     }
   },
   created () {
