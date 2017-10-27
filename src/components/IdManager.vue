@@ -27,7 +27,7 @@
 
       <div class="explanation">
         <p class="text center" v-if="identities.length === 1">This is your first Identity, it enables you to use our Æpps, get Tokens, trade them and much more!</p>
-        <p class="text center">You can create unlimited public IDs. Each has it's own address and Token balance.</p>
+        <p class="text center">Quickly activate another identity or instantly create one or multiple ID’s. Each has it’s own address and Token Balance</p>
       </div>
 
     </template>
