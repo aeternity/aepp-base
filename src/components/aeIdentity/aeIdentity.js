@@ -19,6 +19,10 @@ export default {
       type: Boolean,
       required: true
     },
+    collapsed: {
+      type: Boolean,
+      default: false
+    },
     size: {
       type: String,
       default: 'small',
@@ -31,8 +35,14 @@ export default {
     helperMixin
   ],
   computed: {
-    collapsed: function () {
-      return this.$store.state.identityCollapsed
+    amount () {
+      return this.identity ? helperMixin.methods.readableEther(this.identity.balance) : 0
+    },
+    address () {
+      return this.identity.address;
+    },
+    shortAddress () {
+      return this.identity.address.substr(0, 6).toUpperCase();
     },
     classObject: function () {
       let classes = {
@@ -44,13 +54,5 @@ export default {
       classes['size_' + this.size] = true
       return classes
     }
-  },
-  watch: {},
-  methods: {
-    toggle: function () {
-      if (this.$store.state.appClass !== 'home') {
-        this.$store.commit('identityCollapsed', !this.$store.state.identityCollapsed)
-      }
-    }
   }
-};
+}

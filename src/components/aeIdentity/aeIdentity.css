@@ -17,6 +17,11 @@
 .ae-identity * {
   transition:0.4s;
 }
+.ae-identity.collapsed {
+  top:auto;
+  bottom:-145px;
+  padding:6px 21px;
+}
 .ae-identity._active_yes{
   background-image: linear-gradient(-180deg, #F03C6E 0%, #FF96A0 100%);
 }
@@ -27,6 +32,23 @@
   top:70px;
   bottom:auto
 }
+
+.flex-row{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.identity-info{
+  text-overflow: ellipsis;
+}
+
+.identity-info._long{
+  width: calc(100% - 10px);
+  overflow: hidden;
+}
+
+
 .balance {
 }
 .balance .amount {
@@ -54,12 +76,6 @@
   top:auto;
   bottom:-145px;
   padding:6px 21px;
-}
-.ae-identity .left {
-  float:left;
-}
-.ae-identity .right {
-  float:right;
 }
 
 .bottom-inserted-elements{
