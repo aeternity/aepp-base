@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <id-manager v-if="showIdManager"></id-manager>
+    <id-manager v-if="showIdManager" :title="'Quick Id Manager'"></id-manager>
     <router-view></router-view>
   </div>
 </template>

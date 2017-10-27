@@ -24,6 +24,9 @@ export default {
       }
     }
   },
+  props: {
+    title: String
+  },
   components: {
     'ae-identity': aeIdentity,
     'ae-button': aeButton,

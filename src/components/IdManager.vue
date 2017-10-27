@@ -1,5 +1,6 @@
 <template>
   <div class="id-manager screen">
+    <h1 class="center" v-if="!!title">{{title}}</h1>
     <div class="topbar nomargin">
       <ae-button-icon :icon='"add"' @click='generateNewIdentity'></ae-button-icon>
     </div>
