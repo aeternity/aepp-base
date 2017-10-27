@@ -16,8 +16,9 @@
             <ae-button :role="'default'">
               <button @click="copyAddress(i.address)">Copy Address</button>
             </ae-button>
-            <ae-button v-if="activeIdentity !== i" :role="'sub-primary'">
-              <button  @click="activateId(i)">Activate</button>
+            <ae-button :role="'sub-primary'" :disabled="activeIdentity === i">
+              <button  @click="activateId(i)" v-if="activeIdentity !== i">Activate</button>
+              <button v-else>Activate</button>
             </ae-button>
           </ae-identity>
         </swiper-slide>

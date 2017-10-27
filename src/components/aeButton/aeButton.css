@@ -20,10 +20,19 @@
   box-sizing: border-box;
 }
 
-._role_sub-primary.ae-button > *, ._role_primary.ae-button > *{
+.ae-button._disabled, .ae-button._disabled > *{
+  cursor: not-allowed;
+}
+
+.ae-button._role_sub-primary > *, .ae-button._role_primary > *{
   background-image: none;
   background-color: #F03C6E;
   color: #FFFFFF;
+}
+
+.ae-button._role_sub-primary._disabled > *, .ae-button._role_primary._disabled > *{
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
 }
 
 ._role_primary.ae-button > * {
