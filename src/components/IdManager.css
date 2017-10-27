@@ -26,3 +26,63 @@
 .ae-identity .ae-button {
   overflow: hidden;
 }
+
+.swiper-sizer{
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-sizer{
+  height: 100%;
+  width:100%;
+}
+
+.swiper-sizer .swiper-slide{
+  text-align: center;
+}
+
+.swiper-sizer._direction_vertical{
+  display: none;
+}
+
+.swiper-sizer._direction_vertical > .swiper-container{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.swiper-sizer._direction_horizontal{
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .swiper-sizer._direction_vertical{
+    display: block;
+  }
+
+  .swiper-sizer._direction_horizontal{
+    display: none;
+  }
+
+  .swiper-sizer, .swiper-sizer > .swiper-container{
+    min-height: 190px;
+    max-height: 230px;
+  }
+
+  .swiper-slide{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .id-manager__identity{
+    display: inline-block;
+    position: relative;
+    width: auto;
+    transform: scale(0.7);
+  }
+}
+
+
+
+
+

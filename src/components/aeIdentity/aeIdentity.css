@@ -10,6 +10,7 @@
   color:white;
   z-index:5;
   margin:0 auto;
+  text-align: left;
 }
 .ae-identity ,
 .ae-identity * {

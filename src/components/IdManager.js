@@ -3,24 +3,40 @@ import aeButton from './aeButton/aeButton.vue'
 import aeButtonIcon from './aeButtonIcon/aeButtonIcon.vue'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 
+const commonSwiperOptions = {
+  grabCursor: true,
+  setWrapperSize: false,
+  autoHeight: false,
+  paginationClickable: true,
+  mousewheelControl: true,
+  observeParents: true,
+  debugger: true
+}
+
 export default {
   name: 'IdManager',
   data () {
     return {
       notNextTick: true,
-      swiperOption: {
-        direction: 'horizontal',
-        grabCursor: true,
-        setWrapperSize: true,
-        autoHeight: true,
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        mousewheelControl: true,
-        observeParents: true,
-        debugger: true,
-        slidesPerView: 2,
-        spaceBetween: 10,
-        centeredSlides: true
+      swiperOptions: {
+        '_direction_vertical': {
+          ...commonSwiperOptions,
+          direction: 'vertical',
+          spaceBetween: 0,
+          centeredSlides: false,
+          slidesPerView: 1.3,
+          roundLengths: true,
+          pagination: '.swiper-pagination._direction_vertical'
+        },
+        '_direction_horizontal': {
+          ...commonSwiperOptions,
+          direction: 'horizontal',
+          spaceBetween: 0,
+          centeredSlides: true,
+          slidesPerView: 2,
+          roundLengths: true,
+          pagination: '.swiper-pagination._direction_horizontal'
+        }
       }
     }
   },
