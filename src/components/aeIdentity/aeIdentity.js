@@ -39,10 +39,10 @@ export default {
       return this.identity ? helperMixin.methods.readableEther(this.identity.balance) : 0
     },
     address () {
-      return this.identity.address;
+      return this.identity.address
     },
     shortAddress () {
-      return this.identity.address.substr(0, 6).toUpperCase();
+      return this.identity.address.substr(0, 6).toUpperCase()
     },
     classObject: function () {
       let classes = {
@@ -53,6 +53,9 @@ export default {
       }
       classes['size_' + this.size] = true
       return classes
+    },
+    hasSlot () {
+      return this.$slots.default
     }
   }
 }

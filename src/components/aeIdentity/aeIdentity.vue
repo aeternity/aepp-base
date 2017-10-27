@@ -14,7 +14,7 @@
         <div>Public identity</div>
         <div class="identity-info _long">{{address}}</div>
       </div>
-      <div class="bottom-inserted-elements">
+      <div class="bottom-inserted-elements" v-if="hasSlot && !collapsed">
 				<slot></slot>
 			</div>
 		</div>
