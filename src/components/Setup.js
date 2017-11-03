@@ -35,21 +35,12 @@ export default {
     haveKeyStore () {
       return this.keystore !== null
     },
-    unlocked() {
-      return this.$store.state.unlocked;
+    unlocked () {
+      return this.$store.state.unlocked
     }
   },
   created: function () {
     this.seed = lightwallet.keystore.generateRandomSeed()
-  },
-  mounted: function() {
-    if (this.haveKeyStore && this.unlocked) {
-      console.log('already unlocked')
-      this.$router.push({ name: 'app-browser' })
-    } else if (this.haveKeyStore) {
-      console.log('already keystore')
-      this.$router.push({ name: 'unlock' })
-    }
   },
   methods: {
     // transferFrom: function (from, to, amount) {

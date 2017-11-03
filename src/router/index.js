@@ -67,12 +67,25 @@ const _actionHandlers = {
 }
 
 const _navigationHandlers = {}
-_navigationHandlers[PATHS.UNLOCK] = function (paths, state, from, to, next) {
+
+_navigationHandlers[PATHS.UNLOCK] = function (paths, state, from, next) {
   if (!state.keystore) {
-    next()
+    next({path: paths.ROOT, replace: true})
   } else if (state.unlocked) {
     next({path: paths.EMBEDDED_APP, replace: true})
   }
+  next()
+}
+
+_navigationHandlers[PATHS.SETUP] = function (paths, state, from, next) {
+  if (state.keystore) {
+    if (state.unlocked) {
+      next({path: paths.EMBEDDED_APP, replace: true})
+    } else {
+      next({path: paths.UNLOCK, replace: true})
+    }
+  }
+  next()
 }
 
 export const manageRouting = function (paths, vue, store, router) {
@@ -87,9 +100,9 @@ export const manageRouting = function (paths, vue, store, router) {
     if (from.path !== to.path) {
       const handler = _navigationHandlers[to.path]
       if (typeof handler === 'function') {
-        handler(paths, store.state, from, to, next)
+        handler(paths, store.state, from, next)
       } else {
-        next({...to, replace: false})
+        next()
       }
     }
   })
