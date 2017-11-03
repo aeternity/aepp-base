@@ -9,6 +9,12 @@ export default {
   computed: {
     showIdManager: () => {
       return store.state.showIdManager && store.state.unlocked
+    },
+    idManagerClassObject () {
+      return {
+        'app_id-manager': true,
+        '_open': store.state.showIdManager && store.state.unlocked
+      }
     }
   },
   created: function () {
