@@ -59,9 +59,14 @@ const router = new Router({
 export default router
 
 const _actionHandlers = {
-  'init': function (paths, state, router) {
+  'init': function (paths, router, state) {
     if (state.keystore) {
-      router.push({ path: paths.UNLOCK })
+      router.push(paths.UNLOCK)
+    }
+  },
+  'setUnlocked': function (paths, router, state) {
+    if (state.keystore && state.unlocked) {
+      router.push(paths.EMBEDDED_APP)
     }
   }
 }
@@ -71,8 +76,8 @@ const _pathResolvers = {}
 _pathResolvers[PATHS.EMBEDDED_APP] = function (paths, state) {
   if (!state.keystore) {
     return paths.SETUP
-  } else if (state.unlocked) {
-    return PATHS.UNLOCK
+  } else if (!state.unlocked) {
+    return paths.UNLOCK
   }
 }
 
@@ -95,21 +100,24 @@ _pathResolvers[PATHS.SETUP] = function (paths, state) {
 }
 
 export const manageRouting = function (paths, vue, store, router) {
-  store.subscribeAction(function (action, state) {
+  store.subscribe(function (action, state) {
     const handler = _actionHandlers[action.type]
     if (typeof handler === 'function') {
-      handler(state, router)
+      handler(paths, router, state)
     }
   })
 
   router.beforeEach(function (to, from, next) {
+    console.log(`route request from ${from.path} to ${to.path}`)
     if (from.path !== to.path) {
       const resolver = _pathResolvers[to.path]
       if (typeof resolver === 'function') {
         const result = resolver(paths, store.state, from)
-        const nextArgument = typeof result === 'string' ?
-          {path: result, replace: true} : result
-        next(nextArgument)
+        if (typeof result === 'string'){
+          next({path: result, replace: true})
+        } else {
+          next()
+        }
       } else {
         next()
       }

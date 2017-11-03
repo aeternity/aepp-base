@@ -25,15 +25,6 @@ export default {
       return this.$store.state.unlocked
     }
   },
-  watch: {
-    unlocked (nowUnlocked) {
-      if (!nowUnlocked) return
-      if (this.$store.getters.addresses.length) {
-        this.$router.push('/app-browser')
-      }
-      this.$router.push('/app-browser')
-    }
-  },
   methods: {
     unlockSavedKeystore () {
       if (this.password.length < 4) {

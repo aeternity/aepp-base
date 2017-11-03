@@ -141,12 +141,5 @@ export default {
         console.log('err', err)
       }
     }
-  },
-  watch: {
-    unlocked: function (newState, oldState) {
-      if (newState) {
-        this.$router.push({name: 'app-browser'})
-      }
-    }
   }
 }

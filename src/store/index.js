@@ -117,7 +117,7 @@ const store = (function () {
         return 0
       },
       tokenBalanceByAddress: (state, getters) => (address) => {
-        let balanceObj = state.balances.find(balance => balance.address === address);
+        let balanceObj = state.balances.find(balance => balance.address === address)
         if (balanceObj) {
           return balanceObj.tokenBalance
         }
@@ -146,14 +146,12 @@ const store = (function () {
       },
       mkWeb3ForApps () {
         web3ForApps = new Web3(new ZeroClientProvider(providerOptsForApps))
-        window.web3 = web3ForApps;
+        window.web3 = web3ForApps
       },
       updateBalances ({ getters, dispatch, commit, state }) {
-        var that = this
-        for (var i in getters.address) {
-          aeContract.contract.balanceOf(getters.address[i], function (err, bal) {
+        for (let i in getters.address) {
+          aeContract.contract.balanceOf(getters.address[i], function (err) {
             if (err) throw err
-            //that.$set(that.tokens, i, bal.div(state.token.decimals))
           })
         }
       },
@@ -161,11 +159,11 @@ const store = (function () {
         if (state.keystore === null) { return }
         state.keystore.generateNewAddress(derivedKey, numAddresses)
         let addrList = state.keystore.getAddresses().map(function (e) { return '0x' + e })
-        localStorage.setItem("numUnlockedAddresses", addrList.length)
+        localStorage.setItem('numUnlockedAddresses', addrList.length)
       },
       changeUser ({ commit, state }, address) {
-        commit('setAccount', address);
-        commit('setName', address.substr(0, 6));
+        commit('setAccount', address)
+        commit('setName', address.substr(0, 6))
       },
       setAcountInterval ({ dispatch, commit, state, getters }) {
         setInterval(() => {
@@ -182,23 +180,26 @@ const store = (function () {
               return
             }
             web3.eth.getBalance(address, (err, balance) => {
-              if (!balance.equals(getters.balanceByAddress(address))) {
-                commit('setBalance', {address: address, balance: balance});
+              if (balance !== null && !balance.equals(getters.balanceByAddress(address))) {
+                commit('setBalance', {address: address, balance: balance})
               }
             })
 
             if (aeContract) {
               aeContract.balanceOf(address, {}, (err, balance) => {
-                if (!balance.equals(getters.tokenBalanceByAddress(address))) {
+                if (balance !== null && !balance.equals(getters.tokenBalanceByAddress(address))) {
                   commit('setBalance', {address: address, tokenBalance: balance})
                 }
               })
             }
           })
-        }, 1000);
+        }, 1000)
+      },
+      setUnlocked ({ commit }, isUnlocked) {
+        commit('setUnlocked', isUnlocked)
       },
       restoreAddresses ({getters, dispatch, commit, state}) {
-        let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses');
+        let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
         if (numUnlockedAddresses > 0) {
           dispatch('generateAddress', numUnlockedAddresses)
         }
@@ -242,7 +243,7 @@ const store = (function () {
         let TokenContract = web3.eth.contract(aeAbi)
         TokenContract.at(state.token.address, (err, contract) => {
           aeContract = contract
-          commit('setUnlocked', true)
+          dispatch('setUnlocked', true)
           window.globalTokenContract = contract
         })
         // dispatch('generateAddress', web3);
