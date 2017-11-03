@@ -8,11 +8,18 @@ import AppBrowser from '@/components/AppBrowser.vue'
 
 Vue.use(Router)
 
-let router = new Router({
+export const PATHS = {
+  ROOT: '/',
+  SETUP: '/setup',
+  UNLOCK: '/unlock',
+  EMBEDDED_APP: '/app-browser'
+}
+
+const router = new Router({
   routes: [
     {
-      name : 'intro',
-      path: '/',
+      name: 'intro',
+      path: PATHS.ROOT,
       component: Intro,
       meta: {
         title: 'Welcome',
@@ -20,8 +27,8 @@ let router = new Router({
       }
     },
     {
-      name : 'setup',
-      path: '/setup',
+      name: 'setup',
+      path: PATHS.SETUP,
       component: Setup,
       meta: {
         title: 'Setup',
@@ -29,8 +36,8 @@ let router = new Router({
       }
     },
     {
-      name : 'unlock',
-      path: '/unlock',
+      name: 'unlock',
+      path: PATHS.UNLOCK,
       component: Unlock,
       meta: {
         title: 'Unlock',
@@ -38,8 +45,8 @@ let router = new Router({
       }
     },
     {
-      name : 'app-browser',
-      path: '/app-browser',
+      name: 'app-browser',
+      path: PATHS.EMBEDDED_APP,
       component: AppBrowser,
       meta: {
         title: 'App Browser',
@@ -50,3 +57,20 @@ let router = new Router({
 })
 
 export default router
+
+const _actionHandlers = {
+  'init': function (paths, state, router) {
+    if (state.keystore) {
+      router.push({ path: paths.UNLOCK })
+    }
+  }
+}
+
+export const manageRouting = function (paths, vue, store, router) {
+  store.subscribeAction(function (action, state) {
+    const handler = _actionHandlers[action.type]
+    if (typeof handler === 'function') {
+      handler(state, router)
+    }
+  })
+}
