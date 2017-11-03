@@ -18,6 +18,7 @@
   cursor: pointer;
   display: inline-block;
   box-sizing: border-box;
+  letter-spacing: 0.2px;
 }
 
 .ae-button._disabled, .ae-button._disabled > *{

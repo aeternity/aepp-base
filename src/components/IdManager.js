@@ -24,9 +24,14 @@ export default {
           direction: 'vertical',
           spaceBetween: 0,
           centeredSlides: false,
-          slidesPerView: 1.3,
           roundLengths: true,
-          pagination: '.swiper-pagination._direction_vertical'
+          pagination: '.swiper-pagination._direction_vertical',
+          slidesPerView: 1.08,
+          breakpoints: {
+            '360': {
+              slidesPerView: 1.2
+            }
+          }
         },
         '_direction_horizontal': {
           ...commonSwiperOptions,

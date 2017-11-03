@@ -42,7 +42,7 @@ export default {
       return this.identity.address
     },
     shortAddress () {
-      return this.identity.address.substr(0, 6).toUpperCase()
+      return this.identity.address.substr(0, 6)
     },
     classObject: function () {
       let classes = {

@@ -9,6 +9,7 @@
 }
 .close-id-manager-button{
   margin-top:40px;
+  margin-bottom: 15px;
 }
 .explanation {
   padding:0 20px;
@@ -27,18 +28,39 @@
   overflow: hidden;
 }
 
+.id-manager__ae-button + .id-manager__ae-button{
+  margin-left: 16px !important;
+  height: 30px !important;
+}
+
+.add-button-container{
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.id-added-button{
+  text-transform: uppercase;
+}
+
 .swiper-sizer{
   overflow: hidden;
   position: relative;
 }
 
-.swiper-sizer{
+.swiper-sizer._direction_vertical{
   height: 100%;
   width:100%;
 }
 
+.swiper-sizer._direction_horizontal{
+  height: auto;
+}
+
 .swiper-sizer .swiper-slide{
-  text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 .swiper-sizer._direction_vertical{
@@ -73,12 +95,21 @@
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (min-width: 600px) and (max-width: 720px) {
   .id-manager__identity{
     display: inline-block;
     position: relative;
     width: auto;
-    transform: scale(0.7);
+    transform: scale(0.8);
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .id-manager__identity{
+    display: inline-block;
+    position: relative;
+    width: auto;
+    transform: scale(0.8);
   }
 }
 

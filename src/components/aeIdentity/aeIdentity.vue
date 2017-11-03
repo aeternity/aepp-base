@@ -11,7 +11,7 @@
         </div>
       </div>
       <div v-if="!collapsed">
-        <div>Public identity</div>
+        <div class="public-id-title">Public identity</div>
         <div class="identity-info _long">{{address}}</div>
       </div>
       <div class="bottom-inserted-elements" v-if="hasSlot && !collapsed">

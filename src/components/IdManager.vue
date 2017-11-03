@@ -1,20 +1,22 @@
 <template>
   <div class="id-manager screen">
-    <h1 class="center" v-if="!!title">{{title}}</h1>
     <div class="topbar nomargin">
-      <ae-button-icon :icon='"add"' @click='generateNewIdentity'></ae-button-icon>
+      <div class="add-button-container">
+        <ae-button-icon :icon='"add"' @click='generateNewIdentity' />
+      </div>
+      <h1 class="center" v-if="!!title">{{title}}</h1>
     </div>
     <template v-if="identities.length > 0">
       <div :class="`swiper-sizer ${modifierClass}`" v-for="(options, modifierClass) in swiperOptions">
         <swiper class="swiper-container" :options="options" ref="mySwiper" :not-next-tick="notNextTick">
           <swiper-slide v-for='(i, index) in identities' :key='i.address'>
             <ae-identity :active="isActive(i)" :identity='i' :size="'big'" @click="swipeTo(index)" class="id-manager__identity" :collapsed="false">
-              <ae-button :role="'default'">
-                <button @click="copyAddress(i.address)">Copy Address</button>
+              <ae-button :role="'default'" class="id-manager__ae-button">
+                <button @click="copyAddress(i.address)" class="id-added-button">Copy Address</button>
               </ae-button>
-              <ae-button :role="'sub-primary'" :disabled="activeIdentity === i">
-                <button  @click="activateId(i)" v-if="activeIdentity !== i">Activate</button>
-                <button v-else>Activate</button>
+              <ae-button :role="'sub-primary'" :disabled="activeIdentity === i" class="id-manager__ae-button">
+                <button  @click="activateId(i)" v-if="activeIdentity !== i" class="id-added-button">Activate</button>
+                <button v-else="" class="id-added-button">Activate</button>
               </ae-button>
             </ae-identity>
           </swiper-slide>

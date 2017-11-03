@@ -2,7 +2,6 @@
   transition: height 500ms, opacity 500ms;
   height: 0 !important;
   opacity: 0;
-  overflow: hidden;
   pointer-events: none;
   position: fixed;
   bottom: 0;
