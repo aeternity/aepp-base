@@ -58,15 +58,17 @@ const router = new Router({
 
 export default router
 
-const _actionHandlers = {
-  'init': function (paths, router, state) {
-    if (state.keystore) {
-      router.push(paths.UNLOCK)
-    }
-  },
+const _actionHandlers = {}
+
+const _mutationHandlers = {
   'setUnlocked': function (paths, router, state) {
     if (state.keystore && state.unlocked) {
       router.push(paths.EMBEDDED_APP)
+    }
+  },
+  'setKeystore': function (paths, router, state) {
+    if (state.keystore) {
+      router.push(paths.UNLOCK)
     }
   }
 }
@@ -100,7 +102,25 @@ _pathResolvers[PATHS.SETUP] = function (paths, state) {
 }
 
 export const manageRouting = function (paths, vue, store, router) {
-  store.subscribe(function (action, state) {
+  router.onReady(function () {
+    const currentPath = router.currentRoute.path
+    const resolver = _pathResolvers[currentPath]
+    if (typeof resolver === 'function') {
+      const result = resolver(paths, store.state, currentPath)
+      if (typeof result === 'string') {
+        router.push(result)
+      }
+    }
+  })
+
+  store.subscribe(function (mutation, state) {
+    const handler = _mutationHandlers[mutation.type]
+    if (typeof handler === 'function') {
+      handler(paths, router, state)
+    }
+  })
+
+  store.subscribeAction(function (action, state) {
     const handler = _actionHandlers[action.type]
     if (typeof handler === 'function') {
       handler(paths, router, state)
@@ -113,7 +133,7 @@ export const manageRouting = function (paths, vue, store, router) {
       const resolver = _pathResolvers[to.path]
       if (typeof resolver === 'function') {
         const result = resolver(paths, store.state, from)
-        if (typeof result === 'string'){
+        if (typeof result === 'string') {
           next({path: result, replace: true})
         } else {
           next()
