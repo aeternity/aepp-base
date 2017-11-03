@@ -6,7 +6,7 @@ export default {
       default: 'standard'
     },
     disabled: {
-      type: String,
+      type: Boolean,
       default: false
     }
   },
