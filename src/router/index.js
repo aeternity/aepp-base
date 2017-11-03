@@ -68,6 +68,14 @@ const _actionHandlers = {
 
 const _pathResolvers = {}
 
+_pathResolvers[PATHS.EMBEDDED_APP] = function (paths, state) {
+  if (!state.keystore) {
+    return paths.SETUP
+  } else if (state.unlocked) {
+    return PATHS.UNLOCK
+  }
+}
+
 _pathResolvers[PATHS.UNLOCK] = function (paths, state) {
   if (!state.keystore) {
     return paths.ROOT
