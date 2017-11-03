@@ -112,6 +112,6 @@ export default {
     }
   },
   mounted () {
-    this.$refs.mySwiper.swiper.slideTo(this.$store.state.selectedIdentityIdx)
+    this.swipeTo(this.$store.state.selectedIdentityIdx)
   }
 }
