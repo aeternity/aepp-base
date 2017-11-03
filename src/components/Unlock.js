@@ -1,45 +1,41 @@
 import aeButton from './aeButton/aeButton.vue'
 import PinInput from '@/components/PinInput.vue'
-import lightwallet from 'eth-lightwallet'
-import Web3 from 'web3'
-import aeAbi from '../abi/aeternity-token-abi.json'
-
 
 export default {
-  name : 'unlock',
-  components : {
-    'ae-button' : aeButton,
+  name: 'unlock',
+  components: {
+    'ae-button': aeButton,
     'pin-input': PinInput
   },
-  data() {
+  data () {
     return {
-      password : '',
+      password: '',
       token: {},
-      error : false
+      error: false
     }
   },
-  computed : {
+  computed: {
     haveKeyStore () {
-      return this.keystore !== null;
+      return this.keystore !== null
     },
-    keystore() {
-      return this.$store.state.keystore;
+    keystore () {
+      return this.$store.state.keystore
     },
-    unlocked() {
-      return this.$store.state.unlocked;
+    unlocked () {
+      return this.$store.state.unlocked
     }
   },
-  watch : {
-    unlocked(now_unlocked,before_unlocked) {
-      if(!now_unlocked)
-        return
-      if(this.$store.getters.addresses.length)
-        this.$router.push('/app-browser');
-      this.$router.push('/app-browser');
+  watch: {
+    unlocked (nowUnlocked) {
+      if (!nowUnlocked) return
+      if (this.$store.getters.addresses.length) {
+        this.$router.push('/app-browser')
+      }
+      this.$router.push('/app-browser')
     }
   },
-  methods : {
-    unlockSavedKeystore() {
+  methods: {
+    unlockSavedKeystore () {
       if (this.password.length < 4) {
         return
       }
@@ -60,17 +56,8 @@ export default {
           return
         }
         this.error = false
-        this.$store.dispatch( 'initWeb3', pwDerivedKey)
+        this.$store.dispatch('initWeb3', pwDerivedKey)
       })
-    },
-  },
-  mounted() {
-    if (!this.haveKeyStore) {
-      console.log('no keystore');
-      this.$router.push({ name: 'intro' })
-    } else if (this.$store.state.unlocked) {
-      console.log('already unlocked')
-      this.$router.push({ name: 'app-browser' })
     }
   }
 }

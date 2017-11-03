@@ -66,11 +66,31 @@ const _actionHandlers = {
   }
 }
 
+const _navigationHandlers = {}
+_navigationHandlers[PATHS.UNLOCK] = function (paths, state, from, to, next) {
+  if (!state.keystore) {
+    next()
+  } else if (state.unlocked) {
+    next({path: paths.EMBEDDED_APP, replace: true})
+  }
+}
+
 export const manageRouting = function (paths, vue, store, router) {
   store.subscribeAction(function (action, state) {
     const handler = _actionHandlers[action.type]
     if (typeof handler === 'function') {
       handler(state, router)
+    }
+  })
+
+  router.beforeEach(function (to, from, next) {
+    if (from.path !== to.path) {
+      const handler = _navigationHandlers[to.path]
+      if (typeof handler === 'function') {
+        handler(paths, store.state, from, to, next)
+      } else {
+        next({...to, replace: false})
+      }
     }
   })
 }
