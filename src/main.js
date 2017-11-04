@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App.vue'
-import router, {PATHS, manageRouting} from './router/index'
+import router, {manageRouting} from './router/index'
 import store from './store'
 
 Vue.config.productionTip = false
@@ -34,5 +34,5 @@ const IdentityApp = Vue.extend({
   }
 })
 const vm = new IdentityApp()
-manageRouting(PATHS, store, router)
+manageRouting(store, router)
 vm.$mount('#app')

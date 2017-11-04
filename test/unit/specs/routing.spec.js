@@ -1,10 +1,9 @@
 import {manageRouting, PATHS} from '@/router/index'
 
-describe('router/index.js', () => {
-  const _manageRouting = manageRouting.bind(undefined, PATHS) // fixed first argument
+describe('router/index.js', function () {
   const NO_OP = () => {}
 
-  describe('guarding routes', () => {
+  describe('guarding routes', function () {
     const createStoreMock = () => {
       return {
         subscribe: NO_OP,
@@ -33,7 +32,7 @@ describe('router/index.js', () => {
             currentRoute: {path: currentPath}
           }
 
-          _manageRouting(storeMock, routerMock)
+          manageRouting(storeMock, routerMock)
           exposedHandler()
           expect(push).to.have.been.calledOnce
           expect(exposedPath).to.be.equal(expectedRedirect)
@@ -56,7 +55,7 @@ describe('router/index.js', () => {
             push,
             currentRoute: {path: currentPath}
           }
-          _manageRouting(storeMock, routerMock)
+          manageRouting(storeMock, routerMock)
           exposedHandler()
           expect(push).not.to.have.been.called
         }
@@ -65,7 +64,7 @@ describe('router/index.js', () => {
       it('registers handler for event', function () {
         let exposedHandler
 
-        const onReady = sinon.spy((handler) => {
+        const onReady = sinon.spy(handler => {
           exposedHandler = handler
         })
 
@@ -74,7 +73,7 @@ describe('router/index.js', () => {
           beforeEach: NO_OP
         }
 
-        _manageRouting(createStoreMock(), routerMock)
+        manageRouting(createStoreMock(), routerMock)
         expect(onReady).to.have.been.calledOnce
         expect(exposedHandler).to.be.a('function')
       })
@@ -167,7 +166,7 @@ describe('router/index.js', () => {
         const to = {path: toPath}
         const from = {path: fromPath || ''}
 
-        _manageRouting(storeMock, routerMock)
+        manageRouting(storeMock, routerMock)
         exposedHandler(to, from, next)
 
         return {next, exposedNextRoute}
@@ -202,7 +201,7 @@ describe('router/index.js', () => {
           beforeEach
         }
 
-        _manageRouting(createStoreMock(), routerMock)
+        manageRouting(createStoreMock(), routerMock)
         expect(beforeEach).to.have.been.calledOnce
         expect(exposedHandler).to.be.a('function')
       })
@@ -270,6 +269,105 @@ describe('router/index.js', () => {
           keystore: {}, unlocked: true
         }, PATHS.ROOT)()
       })
+    })
+  })
+
+  describe('listening on mutations', function () {
+    const createRouterMock = () => {
+      return {
+        onReady: NO_OP,
+        beforeEach: NO_OP,
+        push: sinon.spy()
+      }
+    }
+
+    const createRedirectTest = function (state, mutationType, expectedRedirect, currentPath) {
+      return function () {
+        let exposedHandler
+        const subscribe = sinon.spy(handler => {
+          exposedHandler = handler
+        })
+
+        const storeMock = {
+          subscribe,
+          subscribeAction: NO_OP
+        }
+        const routerMock = createRouterMock()
+        const mutation = {type: mutationType}
+        manageRouting(storeMock, routerMock)
+        exposedHandler(mutation, state, currentPath)
+        expect(routerMock.push).to.have.been.calledOnce
+        expect(routerMock.push).to.have.been.calledWith(expectedRedirect)
+      }
+    }
+
+    it('registers a listener for vuex mutations', function () {
+      let exposedHandler
+      const subscribe = sinon.spy(handler => {
+        exposedHandler = handler
+      })
+
+      const storeMock = {
+        subscribe,
+        subscribeAction: NO_OP
+      }
+
+      manageRouting(storeMock, createRouterMock())
+      expect(subscribe).to.have.been.calledOnce
+      expect(exposedHandler).to.be.a('function')
+    })
+
+    it(
+      'redirects to UNLOCK path when setKeystore mutation is triggered and keystore is present',
+      createRedirectTest(
+        {keystore: {}}, 'setKeystore', PATHS.UNLOCK
+      )
+    )
+
+    it(
+      'redirects to SETUP path when setKeystore mutation is triggered, keystore is NOT present and current path is EMBEDDED_APP',
+      createRedirectTest(
+        {keystore: {}}, 'setKeystore', PATHS.UNLOCK, PATHS.EMBEDDED_APP
+      )
+    )
+
+    it(
+      'redirects to EMBEDDED_APP path when setUnlocked mutation is triggered and keystore is present and unlocked',
+      createRedirectTest(
+        {keystore: {}, unlocked: true}, 'setUnlocked', PATHS.EMBEDDED_APP
+      )
+    )
+
+    it(
+      'redirects to UNLOCK path when setUnlocked mutation is triggered and keystore is present but locked',
+      createRedirectTest(
+        {keystore: {}, unlocked: false}, 'setUnlocked', PATHS.UNLOCK
+      )
+    )
+  })
+
+  describe('listening on actions', function () {
+    const createRouterMock = () => {
+      return {
+        onReady: NO_OP,
+        beforeEach: NO_OP
+      }
+    }
+
+    it('registers a listener for vuex actions', function () {
+      let exposedHandler
+      const subscribeAction = sinon.spy(handler => {
+        exposedHandler = handler
+      })
+
+      const storeMock = {
+        subscribe: NO_OP,
+        subscribeAction
+      }
+
+      manageRouting(storeMock, createRouterMock())
+      expect(subscribeAction).to.have.been.calledOnce
+      expect(exposedHandler).to.be.a('function')
     })
   })
 })
