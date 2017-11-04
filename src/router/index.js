@@ -85,7 +85,7 @@ _pathResolvers[PATHS.EMBEDDED_APP] = function (paths, state) {
 
 _pathResolvers[PATHS.UNLOCK] = function (paths, state) {
   if (!state.keystore) {
-    return paths.ROOT
+    return paths.SETUP
   } else if (state.unlocked) {
     return paths.EMBEDDED_APP
   }
@@ -101,7 +101,7 @@ _pathResolvers[PATHS.SETUP] = function (paths, state) {
   }
 }
 
-export const manageRouting = function (paths, vue, store, router) {
+export const manageRouting = function (paths, store, router) {
   router.onReady(function () {
     const currentPath = router.currentRoute.path
     const resolver = _pathResolvers[currentPath]

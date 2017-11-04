@@ -33,6 +33,6 @@ const IdentityApp = Vue.extend({
     console.log('mounted')
   }
 })
-const vueIstance = new IdentityApp()
-manageRouting(PATHS, vueIstance, store, router)
-vueIstance.$mount('#app')
+const vm = new IdentityApp()
+manageRouting(PATHS, store, router)
+vm.$mount('#app')
