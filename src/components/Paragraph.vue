@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Paragraph.js'/>
-<style scoped src='./Paragrcwcssaph.vue'/>
+<style scoped src='./Paragraph.css'/>
