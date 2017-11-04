@@ -128,7 +128,6 @@ export const manageRouting = function (paths, store, router) {
   })
 
   router.beforeEach(function (to, from, next) {
-    console.log(`route request from ${from.path} to ${to.path}`)
     if (from.path !== to.path) {
       const resolver = _pathResolvers[to.path]
       if (typeof resolver === 'function') {

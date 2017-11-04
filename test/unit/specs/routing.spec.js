@@ -1,4 +1,4 @@
-import {manageRouting, PATHS} from "@/router/index"
+import {manageRouting, PATHS} from '@/router/index'
 
 describe('router/index.js', () => {
   const _manageRouting = manageRouting.bind(undefined, PATHS) // fixed first argument
@@ -134,6 +134,134 @@ describe('router/index.js', () => {
       )
 
       it('does not interfere when current route is ROOT', function () {
+        createNoRedirectTest({}, PATHS.ROOT)()
+        createNoRedirectTest({
+          keystore: {}, unlocked: false
+        }, PATHS.ROOT)()
+        createNoRedirectTest({
+          keystore: {}, unlocked: true
+        }, PATHS.ROOT)()
+      })
+    })
+
+    describe('routing when route change is requested', function () {
+      const prepareTest = function (state, toPath, fromPath) {
+        const storeMock = createStoreMock()
+        storeMock.state = state
+
+        let exposedHandler
+        const beforeEach = handler => {
+          exposedHandler = handler
+        }
+
+        const routerMock = {
+          onReady: NO_OP,
+          beforeEach
+        }
+
+        let exposedNextRoute
+        const next = sinon.spy((nextRoute) => {
+          exposedNextRoute = nextRoute
+        })
+
+        const to = {path: toPath}
+        const from = {path: fromPath || ''}
+
+        _manageRouting(storeMock, routerMock)
+        exposedHandler(to, from, next)
+
+        return {next, exposedNextRoute}
+      }
+
+      const createRedirectTest = function (state, toPath, expectedRedirect, fromPath) {
+        return function () {
+          const {next, exposedNextRoute} = prepareTest(state, toPath, fromPath)
+          expect(next).to.have.been.calledOnce
+          expect(exposedNextRoute).to.be.a('object')
+          expect(exposedNextRoute.path).to.be.equal(expectedRedirect)
+        }
+      }
+
+      const createNoRedirectTest = function (state, toPath, fromPath) {
+        return function () {
+          const {next, exposedNextRoute} = prepareTest(state, toPath, fromPath)
+          expect(next).to.have.been.calledOnce
+          expect(exposedNextRoute).to.be.a('undefined')
+        }
+      }
+
+      it('registers handler for event', function () {
+        let exposedHandler
+
+        const beforeEach = sinon.spy((handler) => {
+          exposedHandler = handler
+        })
+
+        const routerMock = {
+          onReady: NO_OP,
+          beforeEach
+        }
+
+        _manageRouting(createStoreMock(), routerMock)
+        expect(beforeEach).to.have.been.calledOnce
+        expect(exposedHandler).to.be.a('function')
+      })
+
+      it(
+        'redirects to SETUP path when routing to EMBEDDED_APP is requested and no keystore is present',
+        createRedirectTest({}, PATHS.EMBEDDED_APP, PATHS.SETUP)
+      )
+
+      it(
+        'redirects to SETUP path when routing to UNLOCK is requested and no keystore is present',
+        createRedirectTest({}, PATHS.UNLOCK, PATHS.SETUP)
+      )
+
+      it(
+        'redirects to UNLOCK path when routing to EMBEDDED_APP is requested and keystore is present but not unlocked',
+        createRedirectTest({
+          keystore: {}, unlocked: false
+        }, PATHS.EMBEDDED_APP, PATHS.UNLOCK)
+      )
+
+      it(
+        'redirects to UNLOCK path when routing to SETUP is requested and keystore is present but not unlocked',
+        createRedirectTest({
+          keystore: {}, unlocked: false
+        }, PATHS.SETUP, PATHS.UNLOCK)
+      )
+
+      it(
+        'redirects to EMBEDDED_APP path when routing to UNLOCK is requested and keystore is present and unlocked',
+        createRedirectTest({
+          keystore: {}, unlocked: true
+        }, PATHS.UNLOCK, PATHS.EMBEDDED_APP)
+      )
+
+      it(
+        'redirects to EMBEDDED_APP path when routing to SETUP is requested  and keystore is present and unlocked',
+        createRedirectTest({
+          keystore: {}, unlocked: true
+        }, PATHS.SETUP, PATHS.EMBEDDED_APP)
+      )
+
+      it('does not interfere when requested route is EMBEDDED_APP and keystore is present and unlocked',
+        createNoRedirectTest({
+          keystore: {}, unlocked: true
+        }, PATHS.EMBEDDED_APP)
+      )
+
+      it('does not interfere when requested route is SETUP and no keystore is present',
+        createNoRedirectTest({}, PATHS.SETUP)
+      )
+
+      it('does not interfere when requested route is UNLOCK and keystore is present but unlocked',
+        createNoRedirectTest({
+          keystore: {}, unlocked: false
+        }, PATHS.UNLOCK)
+      )
+
+      it('does not interfere when requested route is ROOT', function () {
         createNoRedirectTest({}, PATHS.ROOT)()
         createNoRedirectTest({
           keystore: {}, unlocked: false
