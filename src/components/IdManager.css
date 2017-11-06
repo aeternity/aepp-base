@@ -1,12 +1,5 @@
-.id-manager {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255,255,255,0.9);
-  /*background-color: rgba(220,220,220,0.9);*/
-  z-index: 2;
+.id-manager{
+  background-color: #ffffff;
 }
 .id-manager .ae-identity {
   display:none;
@@ -16,6 +9,7 @@
 }
 .close-id-manager-button{
   margin-top:40px;
+  margin-bottom: 15px;
 }
 .explanation {
   padding:0 20px;
@@ -33,3 +27,93 @@
 .ae-identity .ae-button {
   overflow: hidden;
 }
+
+.id-manager__ae-button + .id-manager__ae-button{
+  margin-left: 16px !important;
+  height: 30px !important;
+}
+
+.add-button-container{
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.id-added-button{
+  text-transform: uppercase;
+}
+
+.swiper-sizer{
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-sizer._direction_vertical{
+  height: 100%;
+  width:100%;
+}
+
+.swiper-sizer._direction_horizontal{
+  height: auto;
+}
+
+.swiper-sizer .swiper-slide{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.swiper-sizer._direction_vertical{
+  display: none;
+}
+
+.swiper-sizer._direction_vertical > .swiper-container{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.swiper-sizer._direction_horizontal{
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .swiper-sizer._direction_vertical{
+    display: block;
+  }
+
+  .swiper-sizer._direction_horizontal{
+    display: none;
+  }
+
+  .swiper-sizer, .swiper-sizer > .swiper-container{
+    min-height: 190px;
+    max-height: 230px;
+  }
+
+  .swiper-slide{
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 720px) {
+  .id-manager__identity{
+    display: inline-block;
+    position: relative;
+    width: auto;
+    transform: scale(0.8);
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .id-manager__identity{
+    display: inline-block;
+    position: relative;
+    width: auto;
+    transform: scale(0.8);
+  }
+}
+
+
+
+
+

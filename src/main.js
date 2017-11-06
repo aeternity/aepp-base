@@ -2,24 +2,23 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router, {manageRouting} from './router/index'
 import store from './store'
 
 Vue.config.productionTip = false
 
-//router.beforeEach((to, from, next) => {
-  //console.log(to.name === 'id-manager' && !store.state.unlocked);
-  //if(to.name === 'id-manager' && !store.state.unlocked) {
-    //console.log(to.name, from.name);
-    //next(false)
-    ////console.log(to.name, from );
-    ////next({ replace: true, name: 'unlock' })
-  //}
-//})
+// router.beforeEach((to, from, next) => {
+//   console.log(to.name === 'id-manager' && !store.state.unlocked);
+//   if(to.name === 'id-manager' && !store.state.unlocked) {
+//     console.log(to.name, from.name);
+//     next(false)
+//     console.log(to.name, from );
+//     next({ replace: true, name: 'unlock' })
+//   }
+// })
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
+const IdentityApp = Vue.extend({
   render: h => h(App),
   components: { App },
   store,
@@ -32,8 +31,8 @@ new Vue({
   mounted: function () {
     this.$store.dispatch('init')
     console.log('mounted')
-    if (this.$store.state.keystore) {
-      router.push({ path: 'unlock' })
-    }
   }
 })
+const vm = new IdentityApp()
+manageRouting(store, router)
+vm.$mount('#app')

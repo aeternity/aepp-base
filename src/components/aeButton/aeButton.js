@@ -4,23 +4,19 @@ export default {
     role: {
       type: String,
       default: 'standard'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
-    className () {
-      const defaultValue = 'ae-button'
-      if (typeof this.role === 'string') {
-        switch (this.role.trim()) {
-          case 'primary':
-            return defaultValue + ' _role_primary'
-          case 'sub-primary':
-            return defaultValue + ' _role_sub-primary'
-          case 'standard':
-          default:
-            return defaultValue
-        }
-      } else {
-        return defaultValue
+    classObject () {
+      return {
+        'ae-button': true,
+        '_role_primary': this.role === 'primary',
+        '_role_sub-primary': this.role === 'sub-primary',
+        '_disabled': this.disabled
       }
     }
   }

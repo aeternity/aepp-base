@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Balance.js'/>
-<style scoped src='./Balacwcssnce.vue'/>
+<style scoped src='./Balance.css'/>

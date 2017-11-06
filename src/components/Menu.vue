@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Menu.js'/>
-<style scoped src='./Mcwcssenu.vue'/>
+<style scoped src='./Menu.css'/>

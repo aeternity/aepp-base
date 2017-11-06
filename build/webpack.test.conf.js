@@ -1,14 +1,32 @@
 // This is the webpack config used for unit tests.
 
-var utils = require('./utils')
-var webpack = require('webpack')
-var merge = require('webpack-merge')
-var baseConfig = require('./webpack.base.conf')
+const utils = require('./utils')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.base.conf')
+const additionalRules = []
+const {resolve} = require('path')
 
 var webpackConfig = merge(baseConfig, {
   // use inline sourcemap for karma-sourcemap-loader
   module: {
-    rules: utils.styleLoaders()
+    rules:[
+      ...utils.styleLoaders(),
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/ethereum-blockies-png'),
+          resolve('node_modules/web3-provider-engine'),
+          resolve('node_modules/dom7'),
+          resolve('node_modules/eth-sig-util'),
+          resolve('node_modules/pngjs'),
+          resolve('node_modules/swiper')
+        ]
+      },
+    ]
   },
   devtool: '#inline-source-map',
   resolveLoader: {

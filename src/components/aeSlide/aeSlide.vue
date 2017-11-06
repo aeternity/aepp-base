@@ -3,5 +3,5 @@
   </div>
 </template>
 
-<script src='./Slide.js'/>
-<style scoped src='./Slcwcsside.vue'/>
+<script src='./aeSlide.js'/>
+<style scoped src='./aeSlide.css'/>

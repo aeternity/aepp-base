@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Toggle.js'/>
-<style scoped src='./Togcwcssgle.vue'/>
+<style scoped src='./Toggle.css'/>

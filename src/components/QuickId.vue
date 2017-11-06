@@ -1,6 +1,6 @@
 <template>
   <div class="quick-id">
-    <ae-identity :identity='identity' :active="true" @click="showIdManager"/>
+    <ae-identity :identity='identity' :active="true" @click="showIdManager" :collapsed="true" class="quick-id__identity"/>
   </div>
 </template>
 
