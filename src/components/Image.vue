@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Image.js'/>
-<style scoped src='./Imcwcssage.vue'/>
+<style scoped src='./Image.css'/>

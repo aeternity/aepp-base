@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Transfer.js'/>
-<style scoped src='./Transcwcssfer.vue'/>
+<style scoped src='./Transfer.css'/>

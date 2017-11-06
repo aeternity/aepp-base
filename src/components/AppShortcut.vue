@@ -4,4 +4,4 @@
 </template>
 
 <script src='./AppShortcut.js'/>
-<style scoped src='./AppShortcwcsscut.vue'/>
+<style scoped src='./AppShortcut.css'/>

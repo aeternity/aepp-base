@@ -44,7 +44,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/ethereum-blockies-png')]
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/ethereum-blockies-png')
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

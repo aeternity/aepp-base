@@ -4,4 +4,4 @@
 </template>
 
 <script src='./IdentityCard.js'/>
-<style scoped src='./IdentityCcwcssard.vue'/>
+<style scoped src='./IdentityCard.css'/>

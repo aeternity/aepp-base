@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Label.js'/>
-<style scoped src='./Lacwcssbel.vue'/>
+<style scoped src='./Label.css'/>

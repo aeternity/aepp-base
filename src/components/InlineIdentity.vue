@@ -4,4 +4,4 @@
 </template>
 
 <script src='./InlineIdentity.js'/>
-<style scoped src='./InlineIdentcwcssity.vue'/>
+<style scoped src='./InlineIdentity.css'/>

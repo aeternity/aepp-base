@@ -4,4 +4,4 @@
 </template>
 
 <script src='./Pagination.js'/>
-<style scoped src='./Paginatcwcssion.vue'/>
+<style scoped src='./Pagination.css'/>

@@ -4,4 +4,4 @@
 </template>
 
 <script src='./SeedInput.js'/>
-<style scoped src='./SeedIncwcssput.vue'/>
+<style scoped src='./SeedInput.css'/>
