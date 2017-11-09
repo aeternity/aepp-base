@@ -132,6 +132,14 @@ const store = (function () {
       }
     },
     actions: {
+      logout({getters, dispatch, state, commit}) {
+        aeContract = null
+        derivedKey = null
+        web3 = null
+        web3ForApps = null
+        providerOptsForApps = null
+        dispatch('setUnlocked', false)
+      },
       mkProviderOptsForApps ({getters, state}) {
         providerOptsForApps = {
           getAccounts: function (cb) {

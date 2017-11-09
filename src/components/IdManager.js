@@ -101,6 +101,9 @@ export default {
       if (index >= 0 && index < this.identities.length) {
         this.$refs.mySwiper.swiper.slideTo(index)
       }
+    },
+    logout () {
+      this.$store.dispatch('logout')
     }
   },
   created () {
