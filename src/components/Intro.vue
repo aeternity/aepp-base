@@ -1,7 +1,6 @@
 <template>
 	<div class="intro screen">
 		<div class="nomargin inner">
-			<div class='nomargin logo img' style="background-image:url(/static/logo.png);"></div>
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
@@ -12,13 +11,10 @@
 						</p>
             <ae-button :role="'primary'">
               <router-link to="/setup">
-                Open Identity Manager
+                Account setup
               </router-link>
             </ae-button>
 					</div>
-				</div>
-				<div class="center notice">
-					<router-link to="/setup">Login to existing account.</router-link>
 				</div>
 				<div class="swiper-pagination"></div>
 			</div>
