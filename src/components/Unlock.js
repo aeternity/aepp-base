@@ -1,5 +1,7 @@
 import aeButton from './aeButton/aeButton.vue'
 import PinInput from '@/components/PinInput.vue'
+import router, { PATHS } from '../router/'
+console.log(PATHS)
 
 export default {
   name: 'unlock',
@@ -23,6 +25,12 @@ export default {
     },
     unlocked () {
       return this.$store.state.unlocked
+    }
+  },
+  mounted() {
+    if(this.$refs.pinInput) {
+      console.log(this.$refs.pinInput);
+      this.$refs.pinInput.focus()
     }
   },
   methods: {
@@ -49,6 +57,13 @@ export default {
         this.error = false
         this.$store.dispatch('initWeb3', pwDerivedKey)
       })
+    },
+    unlockDifferentKeystore () {
+      if (window.confirm("Your saved account will be overwritten. Please make sure you have a backup of the seed phrase. Do you want to continue?")) {
+        //window.open("exit.html", "Thanks for Visiting!");
+        this.$router.push(PATHS.SETUP)
+
+      }
     }
   }
 }

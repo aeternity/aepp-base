@@ -13,16 +13,20 @@
 }
 
 .unlock-form{
-  margin-top: 50px;
+  margin-top: 10px;
   width: 100%;
   text-align: center;
 }
 
 .explanation{
-  margin-top: 40px;
   display: block;
+  padding:0 10px 20px ;
 }
 
 .unlock-button{
-  padding-top: 142px;
+  padding-top: 20px;
+}
+
+.unlock-different-keystore {
+  margin-top:20px;
 }
