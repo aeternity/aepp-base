@@ -28,7 +28,14 @@ const store = (function () {
       },
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
-      keystore: null
+      keystore: null,
+      apps : [
+        {
+          name : 'Notary',
+          icon : 'static/icons/notary.svg',
+          main : 'static/aexistence/index.html'
+        },
+      ],
     },
     mutations: {
       title (state, newtitle) {
