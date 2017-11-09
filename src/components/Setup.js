@@ -1,4 +1,5 @@
 import lightwallet from 'eth-lightwallet'
+import r, {PATHS} from '../router'
 
 import PinInput from '@/components/PinInput.vue'
 import AEButton from '@/components/aeButton/aeButton.vue'
@@ -15,7 +16,8 @@ export default {
       iname: '/static/aexistence/index.html',
       seed: '',
       password: '',
-      copyButtonText: 'COPY PHRASE',
+      regenerateButtonText : 'generate new',
+      copyButtonText: 'COPY TO CLIPBOARD',
       working: false
     }
   },
@@ -27,7 +29,7 @@ export default {
       return (this.stepIndex === 1) || this.haveKeyStore
     },
     displayGeneratedSeed () {
-      return this.stepIndex === 0 && !this.haveKeyStore
+      return this.stepIndex === 0 //&& ! this.haveKeyStore
     },
     keystore () {
       return this.$store.state.keystore
@@ -40,9 +42,21 @@ export default {
     }
   },
   created: function () {
-    this.seed = lightwallet.keystore.generateRandomSeed()
+    this.generateRandomSeed();
   },
   methods: {
+    recoverWidthSeed() {
+      let seed = prompt('Seed phrase');
+      if(lightwallet.keystore.isSeedValid(seed)) {
+        this.seed = seed;
+        this.stepIndex++
+      } else {
+        alert('Invalid seed phrase')
+      }
+    },
+    generateRandomSeed() {
+      this.seed = lightwallet.keystore.generateRandomSeed()
+    },
     // transferFrom: function (from, to, amount) {
     //   if (this.token.contract === undefined) return
     //   var that = this
@@ -72,8 +86,17 @@ export default {
     //     console.log(signed)
     //   })
     // },
+    goToUnlock () {
+      this.$router.push( PATHS.UNLOCK )
+    },
     nextStep () {
-      this.stepIndex++
+      if(this.haveKeyStore && !window.confirm("Your saved account will be overwritten. Please make sure you have a backup of the seed phrase. Do you want to continue?")) {
+        return
+      }
+
+      if(confirm('Did you write down that seed phrase?')) {
+        this.stepIndex++
+      }
     },
     savePassword: async function () {
       if (this.password.length < 3) {
