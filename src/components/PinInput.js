@@ -8,7 +8,16 @@ export default {
     },
     'placeholder': {
       type: String,
-      default: 'Enter PIN...'
+      default: 'Enter Password...'
+    },
+    'focusOnMount' : {
+      type : Boolean,
+      default : false
+    }
+  },
+  mounted() {
+    if(this.focusOnMount) {
+      this.$refs.input.focus()
     }
   },
   methods: {
