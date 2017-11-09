@@ -8,7 +8,7 @@
   margin-top:40px;
 }
 .close-id-manager-button{
-  margin-top:40px;
+  margin-top:30px;
   margin-bottom: 15px;
 }
 .logout-button {
@@ -118,8 +118,3 @@
     transform: scale(0.8);
   }
 }
-
-
-
-
-
