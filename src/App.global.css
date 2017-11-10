@@ -33,7 +33,7 @@ body{
 }
 .screen > :first-child:not(.nomargin) ,
 .screen >.inner > :first-child:not(.nomargin) {
-  margin-top:30px;
+  margin-top:20px;
 }
 .intro.screen {
   position:relative;
@@ -68,6 +68,15 @@ button {
   border: none;
   background: transparent;
 }
+button.small-btn {
+  text-transform:uppercase;
+  color:#F03C6E;
+  font-weight:bold;
+  /*text-decoration:underline;*/
+}
+button.gray.small-btn {
+  color:#989898;
+}
 .img {
   width:100%;
   height:210px;
@@ -97,8 +106,8 @@ button {
 }
 
 h1, p {
-  max-width:calc(100% - 42px);
-  margin-left:21px;
+  /*max-width:calc(100% - 42px);*/
+  /*margin-left:21px;*/
 }
 h1 {
   font-size: 26px;

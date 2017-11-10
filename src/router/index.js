@@ -101,13 +101,13 @@ _pathResolvers[PATHS.UNLOCK] = function (state) {
 }
 
 _pathResolvers[PATHS.SETUP] = function (state) {
-  if (state.keystore) {
-    if (state.unlocked) {
-      return PATHS.EMBEDDED_APP
-    } else {
-      return PATHS.UNLOCK
-    }
-  }
+  //if (state.keystore) {
+    //if (state.unlocked) {
+      //return PATHS.EMBEDDED_APP
+    //} else {
+      //return PATHS.UNLOCK
+    //}
+  //}
 }
 
 export const manageRouting = function (store, router) {

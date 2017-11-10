@@ -21,8 +21,9 @@
 .ae-identity.collapsed{
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  padding:6px 21px 15px;
+  padding:6px 5px 5px;
   height: auto;
+  width:230px;
 }
 
 .ae-identity._active_yes{
@@ -37,6 +38,7 @@
 }
 
 .flex-row{
+  position:relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -58,6 +60,15 @@
   font-weight: 500;
   letter-spacing: 1px;
 }
+.collapsed .identity-info{
+  /*background-color:red;*/
+  font-size:10px;
+  align-self:flex-end;
+  display:none;
+  /*position:absolute;*/
+  /*top:3px;*/
+  /*right:5px*/
+}
 
 .identity-info._long{
   width: calc(100% - 65px);
@@ -74,11 +85,14 @@
   color: #FFFFFF;
   letter-spacing: 0;
 }
+.collapsed .balance {
+  align-self:flex-end;
+}
 .collapsed .balance .amount {
-  font-size: 35px;
+  font-size: 36px;
 }
 .balance .currency-symbol {
-  font-size: 0.8em;
+  font-size: 0.7em;
   color: #FFFFFF;
   letter-spacing: 2.4px;
 }
@@ -87,7 +101,7 @@
   height:40px;
 }
 .ae-identity .avatar {
-  margin-right:10px;
+  margin-right:2px;
 }
 
 .bottom-inserted-elements{

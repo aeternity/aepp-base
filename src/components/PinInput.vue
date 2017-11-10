@@ -1,6 +1,7 @@
 <template>
   <div class="pin-input-wrapper">
     <input
+       ref='input'
       :id="id"
       class="pin-input"
       type="password"

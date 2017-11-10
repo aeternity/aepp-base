@@ -8,8 +8,14 @@
   margin-top:40px;
 }
 .close-id-manager-button{
-  margin-top:40px;
+  margin-top:30px;
   margin-bottom: 15px;
+}
+.logout-button {
+  text-align:center;
+  display:block;
+  width:100%;
+  margin-top:30px;
 }
 .explanation {
   padding:0 20px;
@@ -112,8 +118,3 @@
     transform: scale(0.8);
   }
 }
-
-
-
-
-

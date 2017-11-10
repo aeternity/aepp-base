@@ -37,6 +37,9 @@
         Close
       </button>
     </ae-button>
+    <button class='small-btn logout-button' @click='logout'>
+      LOGOUT
+    </button>
 
   </div>
 </template>

@@ -28,7 +28,24 @@ const store = (function () {
       },
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
-      keystore: null
+      keystore: null,
+      apps : [
+        {
+          name : 'Notary',
+          icon : 'static/icons/notary.svg',
+          main : 'static/aexistence/index.html'
+        },
+        {
+          name : 'Notary2',
+          icon : 'static/icons/notary.svg',
+          main : 'http://localhost:8081/#/'
+        },
+        {
+          name : 'Notary Dev',
+          icon : 'static/icons/notary.svg',
+          main : 'http://notary.aepps.dev'
+        },
+      ],
     },
     mutations: {
       title (state, newtitle) {
@@ -45,6 +62,9 @@ const store = (function () {
       },
       setKeystore (state, keystore) {
         state.keystore = keystore
+      },
+      addApp( state , app) {
+        this.state.apps.push(app);
       },
       setUnlocked (state, unlocked) {
         state.unlocked = unlocked
@@ -125,6 +145,31 @@ const store = (function () {
       }
     },
     actions: {
+      addApp( {commit }, url) {
+        const CORS = 'http://cors-anywhere.herokuapp.com/'
+        fetch(CORS + url).then(function(response) {
+          return response.text().then(function(text) {
+            var el = document.createElement( 'html' )
+            el.innerHTML=text
+            var title = el.getElementsByTagName('title')[0].innerText
+            commit('addApp',
+              {
+                name : title,
+                icon : 'static/icons/notary.svg',
+                main : url
+              }
+            )
+          });
+        })
+      },
+      logout({getters, dispatch, state, commit}) {
+        aeContract = null
+        derivedKey = null
+        web3 = null
+        web3ForApps = null
+        providerOptsForApps = null
+        dispatch('setUnlocked', false)
+      },
       mkProviderOptsForApps ({getters, state}) {
         providerOptsForApps = {
           getAccounts: function (cb) {

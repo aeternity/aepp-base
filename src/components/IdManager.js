@@ -107,6 +107,9 @@ export default {
           this.$refs.mySwiper.swiper.slideTo(index)
         }
       }
+    },
+    logout () {
+      this.$store.dispatch('logout')
     }
   },
   created () {
