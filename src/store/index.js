@@ -276,7 +276,11 @@ const store = (function () {
           rpcUrl: state.rpcUrl
         }
         // that.providerOpts = opts
-        web3 = new Web3(new ZeroClientProvider(opts))
+        try {
+          web3 = new Web3(new ZeroClientProvider(opts))
+        } catch (e) {
+          console.log(e)
+        }
         if (!web3) {
           return
         }
