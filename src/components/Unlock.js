@@ -45,7 +45,7 @@ export default {
 
       this.keystore.keyFromPassword(this.password, (err, pwDerivedKey) => {
         if (err) {
-          this.error = err
+          this.error = err.message
           console.log(err)
           return
         }
