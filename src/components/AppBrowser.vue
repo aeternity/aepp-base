@@ -15,6 +15,13 @@
         <div class="app-name">{{app.name}}</div>
       </div>
     </div>
+    <div @click='add' class="app-shortcut">
+      <div class="app-icon">
+        <div :style='"background-image:url(static/icons/notary.svg)"' class="icon-image">
+        </div>
+      </div>
+      <div class="app-name">Add App</div>
+    </div>
 
     <div v-show='showIframe' @click='back' class="back">
       <div :style='"background-image:url(static/icons/browser.svg)"' class="icon-image">

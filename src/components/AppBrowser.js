@@ -43,6 +43,13 @@ export default {
     back() {
       this.showIframe = false
     },
+    add() {
+      let url = prompt('URL');
+      if(url) {
+        this.$store.dispatch('addApp', url)
+      }
+
+    },
   },
   components: {
     'quick-id': QuickId

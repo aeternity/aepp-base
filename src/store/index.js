@@ -35,6 +35,11 @@ const store = (function () {
           icon : 'static/icons/notary.svg',
           main : 'static/aexistence/index.html'
         },
+        {
+          name : 'Notary2',
+          icon : 'static/icons/notary.svg',
+          main : 'http://localhost:8081/#/'
+        },
       ],
     },
     mutations: {
@@ -52,6 +57,9 @@ const store = (function () {
       },
       setKeystore (state, keystore) {
         state.keystore = keystore
+      },
+      addApp( state , app) {
+        this.state.apps.push(app);
       },
       setUnlocked (state, unlocked) {
         state.unlocked = unlocked
@@ -132,6 +140,23 @@ const store = (function () {
       }
     },
     actions: {
+      addApp( {commit }, url) {
+        const CORS = 'http://cors-anywhere.herokuapp.com/'
+        fetch(CORS + url).then(function(response) {
+          return response.text().then(function(text) {
+            var el = document.createElement( 'html' )
+            el.innerHTML=text
+            var title = el.getElementsByTagName('title')[0].innerText
+            commit('addApp',
+              {
+                name : title,
+                icon : 'static/icons/notary.svg',
+                main : url
+              }
+            )
+          });
+        })
+      },
       logout({getters, dispatch, state, commit}) {
         aeContract = null
         derivedKey = null
