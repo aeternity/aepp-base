@@ -18,6 +18,7 @@
     "es6-promise": "^4.1.1",
     "eth-lightwallet": "^2.5.6",
     "ethereum-blockies-png": "^0.1.2",
+    "ethereumjs-tx": "^1.3.3",
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "swiper": "^4.0.1",

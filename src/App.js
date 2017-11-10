@@ -25,6 +25,41 @@ export default {
       document.domain = 'aepps.dev'
     }
   },
+  mounted: function () {
+    window.addEventListener('message', receiveMessage, false)
+    async function receiveMessage (event) {
+      if (!event.data.uuid) {
+        //this message isnt meant for us
+        return
+      }
+      let regex = new RegExp('^https?:\/\/.*\.aepps\.(?:com|dev)$')
+      if (!regex.test(event.origin)) {
+        // not of any of any of our authorized apps
+        return
+      }
+      if (event.data.method === 'getAccounts') {
+        let accounts = []
+        if (store.getters.activeIdentity.address) {
+          accounts.push(store.getters.activeIdentity.address)
+        }
+        event.source.postMessage({
+          uuid: event.data.uuid,
+          method: 'getAccountsReturn',
+          payload: accounts
+        }, '*')
+      } else if (event.data.method === 'signTransaction') {
+        if (confirm('Pay?')) {
+          let tx = event.data.payload
+          let result = await store.dispatch('signTransaction', tx)
+          event.source.postMessage({
+            uuid: event.data.uuid,
+            method: 'signTransactionReturn',
+            payload: result
+          }, '*')
+        }
+      }
+    }
+  },
   methods: {
   },
   data () {

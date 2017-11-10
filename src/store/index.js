@@ -285,6 +285,17 @@ const store = (function () {
             })
           })
         })
+      },
+      signTransaction ({commit, dispatch, state}, tx) {
+        return new Promise((resolve, reject) => {
+          // const KOVAN = 42
+          // tx.chainId = KOVAN
+          const t = new Transaction(tx)
+          console.log('sign', tx, t)
+          var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
+          console.log('signed', signed);
+          return resolve(signed)
+        })
       }
     }
   })
