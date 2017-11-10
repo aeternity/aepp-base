@@ -15,9 +15,11 @@
           Unlock
         </button>
       </ae-button>
-      <button class='small-btn unlock-different-keystore' @click="unlockDifferentKeystore">
-        Unlock a different account
-      </button>
+      <router-link :to="{path:unlockDifferentPath}">
+        <button class='small-btn unlock-different-keystore'>
+          Unlock a different account
+        </button>
+      </router-link>
     </form>
   </div>
 </template>
