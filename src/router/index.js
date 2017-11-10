@@ -5,6 +5,7 @@ import Intro from '@/components/Intro.vue'
 import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import AppBrowser from '@/components/AppBrowser.vue'
+import Transfer from '@/components/Transfer.vue'
 
 Vue.use(Router)
 
@@ -12,7 +13,8 @@ export const PATHS = {
   ROOT: '/',
   SETUP: '/setup',
   UNLOCK: '/unlock',
-  EMBEDDED_APP: '/app-browser'
+  EMBEDDED_APP: '/app-browser',
+  TRANSFER : '/transfer'
 }
 
 const router = new Router({
@@ -51,6 +53,15 @@ const router = new Router({
       meta: {
         title: 'App Browser',
         appClass: 'app-browser'
+      }
+    },
+    {
+      name: 'transfer',
+      path: PATHS.TRANSFER,
+      component: Transfer,
+      meta: {
+        title: 'Transfer',
+        appClass: 'transfer'
       }
     }
   ]

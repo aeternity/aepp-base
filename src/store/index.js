@@ -9,6 +9,11 @@ import Transaction from 'ethereumjs-tx'
 
 Vue.use(Vuex)
 
+const APP_TYPES = {
+  INTERNAL : 0,
+  EXTERNAL : 1,
+}
+
 const store = (function () {
   var aeContract
   var derivedKey
@@ -31,14 +36,22 @@ const store = (function () {
       keystore: null,
       apps : [
         {
+          type : APP_TYPES.EXTERNAL,
           name : 'Notary',
           icon : 'static/icons/notary.svg',
           main : 'static/aexistence/index.html'
         },
         {
+          type : APP_TYPES.EXTERNAL,
           name : 'Notary2',
           icon : 'static/icons/notary.svg',
           main : 'http://localhost:8081/#/'
+        },
+        {
+          type : APP_TYPES.INTERNAL,
+          name : 'Transfer',
+          icon : 'static/icons/notary.svg',
+          main : '/transfer'
         },
       ],
     },
@@ -140,6 +153,18 @@ const store = (function () {
       }
     },
     actions: {
+      signTransaction({state}, {t, success, error}) {
+        console.log("STORE", t);
+        var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
+        if(typeof success === 'function') {
+          success(signed)
+        }
+        //else if(typeof error === 'function') {
+            //error(new Error('success is not a function'))
+        //} else {
+          //throw
+        //}
+      },
       addApp( {commit }, url) {
         const CORS = 'http://cors-anywhere.herokuapp.com/'
         fetch(CORS + url).then(function(response) {

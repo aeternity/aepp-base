@@ -34,11 +34,15 @@ export default {
   },
   methods : {
     open(app) {
-      if(this.iframe !== app.main) {
-        this.iframeLoading = true
-        this.iframe = app.main
+      if(app.type === 1) {
+        if(this.iframe !== app.main) {
+          this.iframeLoading = true
+          this.iframe = app.main
+        }
+        this.showIframe = true
+      } else {
+        this.$router.push(app.main)
       }
-      this.showIframe = true
     },
     back() {
       this.showIframe = false
