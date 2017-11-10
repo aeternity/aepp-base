@@ -1,7 +1,6 @@
 import aeButton from './aeButton/aeButton.vue'
 import PinInput from '@/components/PinInput.vue'
-import router, { PATHS } from '../router/'
-console.log(PATHS)
+import { PATHS } from '../router/'
 
 export default {
   name: 'unlock',
@@ -13,7 +12,8 @@ export default {
     return {
       password: '',
       token: {},
-      error: false
+      error: false,
+      unlockDifferentPath: PATHS.SETUP
     }
   },
   computed: {
@@ -27,9 +27,8 @@ export default {
       return this.$store.state.unlocked
     }
   },
-  mounted() {
-    if(this.$refs.pinInput) {
-      console.log(this.$refs.pinInput);
+  mounted () {
+    if (this.$refs.pinInput) {
       this.$refs.pinInput.focus()
     }
   },
@@ -57,13 +56,21 @@ export default {
         this.error = false
         this.$store.dispatch('initWeb3', pwDerivedKey)
       })
-    },
-    unlockDifferentKeystore () {
-      if (window.confirm("Your saved account will be overwritten. Please make sure you have a backup of the seed phrase. Do you want to continue?")) {
-        //window.open("exit.html", "Thanks for Visiting!");
-        this.$router.push(PATHS.SETUP)
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.path === PATHS.SETUP) {
+      const leaveConfirmed = window.confirm(
+        'Your saved account will be overwritten. Please make sure you have a backup of the seed phrase. Do you want to continue?'
+      )
 
+      if (leaveConfirmed) {
+        next()
+      } else {
+        next(false)
       }
+    } else {
+      next()
     }
   }
 }
