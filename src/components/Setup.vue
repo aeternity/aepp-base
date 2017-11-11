@@ -7,7 +7,7 @@
       <h1 class="title">Account Setup 1/2</h1>
       <p class="text center">
       Save these 12 words to a safe place. You need them to recover your account in the future.
-      Dont't show them to anybody or you risk loosing all your funds.
+      Don't show them to anybody or you risk loosing all your funds.
       </p>
       <button class='small-btn generate-random-seed' @click="generateRandomSeed()">{{regenerateButtonText}}</button>
       <div class="seed-wrap">
