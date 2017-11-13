@@ -21,22 +21,19 @@ export default {
   methods : {
     createWeb3() {
       let providerOptsForApps = {
-        getAccounts: function (cb) {
+        getAccounts: (cb) => {
           console.log('getAccounts');
           cb(null, [this.activeIdentity.address])
         },
-        signTransaction: function (tx, cb) {
-          const t = new Transaction(tx)
-          console.log('sign', tx, t)
+        signTransaction: (tx, cb) => {
           this.$store.dispatch('signTransaction', {
-            t : t,
+            tx : tx,
             success : (signed) => {
               cb(null, '0x' + signed)
             }
           })
-          //var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
         },
-        approveTransaction: function (tx, cb) {
+        approveTransaction: (tx, cb) => {
           console.log('approve', tx)
           cb(null, true)
         },

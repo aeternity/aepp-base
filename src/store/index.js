@@ -153,10 +153,15 @@ const store = (function () {
       }
     },
     actions: {
-      signTransaction({state}, {t, success, error}) {
-        console.log("STORE", t);
-        var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-        if(typeof success === 'function') {
+      signTransaction ({state}, {tx,success, error}) {
+        const t = new Transaction(tx)
+        var signed = lightwallet.signing.signTx(
+          state.keystore,
+          derivedKey,
+          t.serialize().toString('hex'),
+          tx.from
+        )
+        if (typeof success === 'function') {
           success(signed)
         }
         //else if(typeof error === 'function') {

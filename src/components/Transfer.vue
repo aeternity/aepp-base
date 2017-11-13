@@ -2,10 +2,12 @@
   <div class="transfer screen">
     Transfer
     <div>
-    <input v-model='addressTo' type="text" value="" name="" id=""/>
+      <label>Address</label>
+      <input v-model='addressTo' type="text" value="" name="" id=""/>
     </div>
     <div>
-    <input v-model='amount' type="text" value="" name="" id=""/>
+      <label>Amount</label>
+      <input v-model='amount' type="text" value="" name="" id=""/>
     </div>
     <div>
 
