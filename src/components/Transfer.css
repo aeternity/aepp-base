@@ -1,0 +1,47 @@
+.transfer.screen {
+}
+h1 {
+  text-align:center;
+}
+.foo {
+  margin:10px auto;
+  padding:10px;
+  border-radius:10px;
+  max-width:400px;
+  /*background-color:lightgrey*/
+}
+label {
+  /*display:block*/
+}
+.from-address {
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  font-family: Roboto Mono;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.address-to {
+  /*text-align:center;*/
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  font-family: Roboto Mono;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.amount-in-fiat {
+  /*text-align:center;*/
+}
+.amount {
+  text-align:right;
+  width:50px;
+  padding:10px;
+}
+.address-to {
+  /*text-align:center;*/
+  padding:10px;
+  display:block;
+}
+.input-wrap {
+  display:block;
+  margin:0 auto;
+}

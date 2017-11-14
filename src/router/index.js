@@ -62,7 +62,10 @@ const router = new Router({
       meta: {
         title: 'Transfer',
         appClass: 'transfer'
-      }
+      },
+      children: [
+        { path: ':txhash', component:  Transfer},
+      ]
     }
   ]
 })
