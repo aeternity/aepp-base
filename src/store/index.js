@@ -153,18 +153,6 @@ const store = (function () {
       }
     },
     actions: {
-      signTransaction({state}, {t, success, error}) {
-        console.log("STORE", t);
-        var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-        if(typeof success === 'function') {
-          success(signed)
-        }
-        //else if(typeof error === 'function') {
-            //error(new Error('success is not a function'))
-        //} else {
-          //throw
-        //}
-      },
       addApp( {commit }, url) {
         const CORS = 'http://cors-anywhere.herokuapp.com/'
         fetch(CORS + url).then(function(response) {
@@ -353,6 +341,18 @@ const store = (function () {
               return resolve()
             })
           })
+        })
+      },
+      signTransaction ({state}, tx) {
+        return new Promise((resolve, reject) => {
+          if (!confirm('Pay?')) {
+            return reject(new Error("Payment rejected by user"))
+          }
+          const t = new Transaction(tx)
+          console.log('sign', tx, t)
+          var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
+          console.log('signed', signed);
+          return resolve(signed)
         })
       }
     }
