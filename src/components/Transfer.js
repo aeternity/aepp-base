@@ -143,8 +143,13 @@ export default {
           cb(null, [this.activeIdentity.address])
         },
         signTransaction: async(tx, cb) => {
-          let signed = await this.$store.dispatch('signTransaction', tx)
-          cb(null, '0x' + signed)
+          try {
+            let signed = await this.$store.dispatch('signTransaction', tx)
+            cb(null, '0x' + signed)
+          } catch (e) {
+            /* handle error */
+            cb(e, null)
+          }
         },
         approveTransaction: (tx, cb) => {
           console.log('approve', tx)
@@ -216,7 +221,7 @@ export default {
       web3.eth.sendTransaction(tx, (err, transactionHash) => {
         console.log('4 send');
         if (err) {
-          console.log(err)
+          alert(err.message)
           return
         }
         this.transactionHash = transactionHash

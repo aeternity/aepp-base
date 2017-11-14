@@ -345,6 +345,9 @@ const store = (function () {
       },
       signTransaction ({state}, tx) {
         return new Promise((resolve, reject) => {
+          if (!confirm('Pay?')) {
+            return reject(new Error("Payment rejected by user"))
+          }
           const t = new Transaction(tx)
           console.log('sign', tx, t)
           var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)

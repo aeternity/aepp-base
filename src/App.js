@@ -49,13 +49,22 @@ export default {
           payload: accounts
         }, '*')
       } else if (event.data.method === 'signTransaction') {
-        if (confirm('Pay?')) {
-          let tx = event.data.payload
+        let tx = event.data.payload
+        try {
           let result = await store.dispatch('signTransaction', tx)
           event.source.postMessage({
             uuid: event.data.uuid,
             method: 'signTransactionReturn',
+            error : null,
             payload: result
+          }, '*')
+        } catch (e) {
+          /* handle error */
+          event.source.postMessage({
+            uuid: event.data.uuid,
+            method: 'signTransactionReturn',
+            error : e,
+            payload: null
           }, '*')
         }
       }
