@@ -225,16 +225,6 @@ export default {
         }
         this.transactionHash = transactionHash
         this.$router.replace({ path: `/transfer/${transactionHash}` })
-        console.log(transactionHash);
-        var checkTxInterval = setInterval(() => {
-          web3.eth.getTransaction(transactionHash, (err, tx) => {
-            this.transaction = tx;
-            if(tx.blockHash) {
-              clearInterval(checkTxInterval)
-            }
-            console.log(tx);
-          })
-        },1000)
       });
     },
     swipeTo(idx) {

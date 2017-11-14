@@ -54,22 +54,22 @@ export default {
           console.log(err)
         }
         this.tx = tx;
-        if(!tx.blockHash) {
+        if(!tx || !tx.blockHash) {
           var checkTxInterval = setInterval(() => {
             web3.eth.getTransaction(this.txhash, (err, tx) => {
               if(err) {
                 console.log(err)
                 clearInterval(checkTxInterval)
               }
-              this.tx = tx;
-              if(tx.blockHash) {
-                clearInterval(checkTxInterval)
+              if(tx !== null) {
+                this.tx = tx;
+                if(tx.blockHash) {
+                  clearInterval(checkTxInterval)
+                }
               }
-              console.log(tx);
             })
           },1000)
         }
-        console.log('tx',tx);
       })
     }
   },
