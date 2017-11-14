@@ -9,6 +9,11 @@ import Transaction from 'ethereumjs-tx'
 
 Vue.use(Vuex)
 
+const APP_TYPES = {
+  INTERNAL : 0,
+  EXTERNAL : 1,
+}
+
 const store = (function () {
   var aeContract
   var derivedKey
@@ -31,19 +36,22 @@ const store = (function () {
       keystore: null,
       apps : [
         {
+          type : APP_TYPES.EXTERNAL,
           name : 'Notary',
           icon : 'static/icons/notary.svg',
           main : 'static/aexistence/index.html'
         },
         {
+          type : APP_TYPES.EXTERNAL,
           name : 'Notary2',
           icon : 'static/icons/notary.svg',
           main : 'http://localhost:8081/#/'
         },
         {
-          name : 'Notary Dev',
+          type : APP_TYPES.INTERNAL,
+          name : 'Transfer',
           icon : 'static/icons/notary.svg',
-          main : 'http://notary.aepps.dev'
+          main : '/transfer'
         },
       ],
     },
@@ -281,7 +289,11 @@ const store = (function () {
           rpcUrl: state.rpcUrl
         }
         // that.providerOpts = opts
-        web3 = new Web3(new ZeroClientProvider(opts))
+        try {
+          web3 = new Web3(new ZeroClientProvider(opts))
+        } catch (e) {
+          console.log(e)
+        }
         if (!web3) {
           return
         }
@@ -331,10 +343,8 @@ const store = (function () {
           })
         })
       },
-      signTransaction ({commit, dispatch, state}, tx) {
+      signTransaction ({state}, tx) {
         return new Promise((resolve, reject) => {
-          // const KOVAN = 42
-          // tx.chainId = KOVAN
           const t = new Transaction(tx)
           console.log('sign', tx, t)
           var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
