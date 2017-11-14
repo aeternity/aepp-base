@@ -142,13 +142,9 @@ export default {
           console.log('getAccounts');
           cb(null, [this.activeIdentity.address])
         },
-        signTransaction: (tx, cb) => {
-          this.$store.dispatch('signTransaction', {
-            tx : tx,
-            success : (signed) => {
-              cb(null, '0x' + signed)
-            }
-          })
+        signTransaction: async(tx, cb) => {
+          let signed = await this.$store.dispatch('signTransaction', tx)
+          cb(null, '0x' + signed)
         },
         approveTransaction: (tx, cb) => {
           console.log('approve', tx)
