@@ -35,18 +35,18 @@ const store = (function () {
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
       apps : [
-        {
-          type : APP_TYPES.EXTERNAL,
-          name : 'Notary',
-          icon : 'static/icons/notary.svg',
-          main : 'static/aexistence/index.html'
-        },
-        {
-          type : APP_TYPES.EXTERNAL,
-          name : 'Notary2',
-          icon : 'static/icons/notary.svg',
-          main : 'http://localhost:8081/#/'
-        },
+        //{
+          //type : APP_TYPES.EXTERNAL,
+          //name : 'Notary',
+          //icon : 'static/icons/notary.svg',
+          //main : 'static/aexistence/index.html'
+        //},
+        //{
+          //type : APP_TYPES.EXTERNAL,
+          //name : 'Notary',
+          //icon : 'static/icons/notary.svg',
+          //main : 'http://notary.aepps.com'
+        //},
         {
           type : APP_TYPES.INTERNAL,
           name : 'Transfer',
@@ -73,6 +73,10 @@ const store = (function () {
       },
       addApp( state , app) {
         this.state.apps.push(app);
+        localStorage.setItem('apps', JSON.stringify(this.state.apps))
+      },
+      setApps ( state , apps) {
+        this.state.apps = apps
       },
       setUnlocked (state, unlocked) {
         state.unlocked = unlocked
@@ -162,6 +166,7 @@ const store = (function () {
             var title = el.getElementsByTagName('title')[0].innerText
             commit('addApp',
               {
+                type : APP_TYPES.EXTERNAL,
                 name : title,
                 icon : 'static/icons/notary.svg',
                 main : url
@@ -312,6 +317,9 @@ const store = (function () {
       init ({ commit, state }) {
         if (localStorage.getItem('ks')) {
           commit('setKeystore', lightwallet.keystore.deserialize(localStorage.getItem('ks')))
+        }
+        if (localStorage.getItem('apps')) {
+          commit('setApps', JSON.parse(localStorage.getItem('apps')))
         }
       },
       createKeystore ({commit, dispatch, state}, {seed, password}) {
