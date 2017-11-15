@@ -35,18 +35,12 @@ const store = (function () {
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
       apps : [
-        //{
-          //type : APP_TYPES.EXTERNAL,
-          //name : 'Notary',
-          //icon : 'static/icons/notary.svg',
-          //main : 'static/aexistence/index.html'
-        //},
-        //{
-          //type : APP_TYPES.EXTERNAL,
-          //name : 'Notary',
-          //icon : 'static/icons/notary.svg',
-          //main : 'http://notary.aepps.com'
-        //},
+        {
+          type : APP_TYPES.EXTERNAL,
+          name : 'Notary',
+          icon : 'static/icons/notary.svg',
+          main : 'http://notary.aepps.com'
+        },
         {
           type : APP_TYPES.INTERNAL,
           name : 'Transfer',
