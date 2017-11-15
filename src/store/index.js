@@ -153,8 +153,11 @@ const store = (function () {
     actions: {
       addApp( {commit }, url) {
         const CORS = 'http://cors-anywhere.herokuapp.com/'
-        fetch(CORS + url).then(function(response) {
-          return response.text().then(function(text) {
+        fetch(CORS + url)
+          .then(function(response) {
+            return response.text();
+          })
+          .then(function(text) {
             var el = document.createElement( 'html' )
             el.innerHTML=text
             var title = el.getElementsByTagName('title')[0].innerText
@@ -166,8 +169,20 @@ const store = (function () {
                 main : url
               }
             )
-          });
-        })
+          })
+          .catch( function(reason) {
+            let title = prompt('Enter Title')
+            if(title) {
+              commit('addApp',
+                {
+                  type : APP_TYPES.EXTERNAL,
+                  name : title,
+                  icon : 'static/icons/notary.svg',
+                  main : url
+                }
+              )
+            }
+          })
       },
       logout({getters, dispatch, state, commit}) {
         aeContract = null
