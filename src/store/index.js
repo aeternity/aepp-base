@@ -319,7 +319,11 @@ const store = (function () {
           commit('setKeystore', lightwallet.keystore.deserialize(localStorage.getItem('ks')))
         }
         if (localStorage.getItem('apps')) {
-          commit('setApps', JSON.parse(localStorage.getItem('apps')))
+          let saved = JSON.parse(localStorage.getItem('apps'))
+          let std = state.apps;
+          let apps = std.concat(saved)
+          apps = apps.filter((app, index, self) => self.findIndex(t => t.name === app.name && t.main === app.main) === index)
+          commit('setApps', apps)
         }
       },
       createKeystore ({commit, dispatch, state}, {seed, password}) {
