@@ -34,7 +34,8 @@ export default {
         return
       }
       let regex = new RegExp('^https?:\/\/.*\.aepps\.(?:com|dev)$')
-      if (!skipSecurity && !regex.test(event.origin)) {
+      let regexLocal = new RegExp('^https?:\/\/localhost(?::\\d+)?$')
+      if (!skipSecurity && !regex.test(event.origin) && !regexLocal.test(event.origin)) {
         // not of any of any of our authorized apps
         return
       }
