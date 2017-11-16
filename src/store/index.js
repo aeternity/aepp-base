@@ -365,10 +365,12 @@ const store = (function () {
         })
       },
       signTransaction ({state}, tx) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
           if (!confirm('Pay?')) {
             return reject(new Error("Payment rejected by user"))
           }
+          tx.gas = tx.gas || await new Promise((resolve, reject) =>
+            web3.eth.estimateGas(tx, (error, result) => error ? reject(error) : resolve(result)))
           const t = new Transaction(tx)
           console.log('sign', tx, t)
           var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
