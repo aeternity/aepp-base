@@ -68,6 +68,12 @@ export default {
             payload: null
           }, '*')
         }
+      } else if (event.data.method === 'handShake') {
+        event.source.postMessage({
+          uuid: event.data.uuid,
+          method: 'handShakeReturn',
+          payload: null
+        }, '*')
       }
     }
   },
