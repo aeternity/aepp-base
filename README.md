@@ -3,18 +3,33 @@
 The identity provider is a relatively simple app, that allows apps, which are loaded
 via an iframe to interact with the ethereum network by providing an web3 instance.
 To make this happen only a couple of things need to be paid attention to; first of
-all since the apps are loaded via an iframe, same origin policies apply. To load
-the parent web3 instance you can modify your usual check to detect metamask like
-this:
+all apps need to be run on localhost, <subdomain>.aepps.com or <subdomain>.aepps.dev
+for security reasons. To get a web3 instance which talks to the identity aepp you
+need to use the [@aeternity/id-manager-provider](https://www.npmjs.com/package/@aeternity/id-manager-provider/).
 
 ```javascript
-window.addEventListener('load', function() {
-  if (window.web3) {
-    web3.setProvider(window.web3.currentProvider);
-  } else if (window.parent !== window && window.parent.web3 !== undefined) {
-    web3.setProvider(window.parent.web3.currentProvider);
-  }
-});
+import IdManagerProvider from '@aeternity/id-manager-provider'
+// ...
+function initWeb3() {
+    let web3;
+    let idManager = new IdManagerProvider()
+    idManager.checkIdManager().then( (idManagerPresent) => {
+        if (idManagerPresent ) {
+            web3 = new Web3(idManager.web3.currentProvider)
+        } else if (typeof window.web3 !== 'undefined') { // Metamask
+            web3 = new Web3(window.web3.currentProvider);
+        } else {
+            web3 = null;
+        }
+
+        if (web3) {
+            // Ready
+        } else {
+            // Not Ready
+        }
+
+    })
+}
 ```
 
 You also need to make sure that there are no synchronous calls to any of the web3
