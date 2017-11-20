@@ -1,5 +1,6 @@
 import IdManager from '@/components/IdManager.vue'
 import store from './store'
+import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
@@ -26,56 +27,8 @@ export default {
     }
   },
   mounted: function () {
-    window.addEventListener('message', receiveMessage, false)
-    async function receiveMessage (event) {
-      let skipSecurity = process.env.NODE_ENV === 'development'
-      if (!event.data.uuid) {
-        //this message isnt meant for us
-        return
-      }
-      let regex = new RegExp('^https?:\/\/.*\.aepps\.(?:com|dev)$')
-      let regexLocal = new RegExp('^https?:\/\/localhost(?::\\d+)?$')
-      if (!skipSecurity && !regex.test(event.origin) && !regexLocal.test(event.origin)) {
-        // not of any of any of our authorized apps
-        return
-      }
-      if (event.data.method === 'getAccounts') {
-        let accounts = []
-        if (store.getters.activeIdentity.address) {
-          accounts.push(store.getters.activeIdentity.address)
-        }
-        event.source.postMessage({
-          uuid: event.data.uuid,
-          method: 'getAccountsReturn',
-          payload: accounts
-        }, '*')
-      } else if (event.data.method === 'signTransaction') {
-        let tx = event.data.payload
-        try {
-          let result = await store.dispatch('signTransaction', tx)
-          event.source.postMessage({
-            uuid: event.data.uuid,
-            method: 'signTransactionReturn',
-            error : null,
-            payload: result
-          }, '*')
-        } catch (e) {
-          /* handle error */
-          event.source.postMessage({
-            uuid: event.data.uuid,
-            method: 'signTransactionReturn',
-            error : e,
-            payload: null
-          }, '*')
-        }
-      } else if (event.data.method === 'handShake') {
-        event.source.postMessage({
-          uuid: event.data.uuid,
-          method: 'handShakeReturn',
-          payload: null
-        }, '*')
-      }
-    }
+    let postMessagehandler = new PostMessageHandler(store)
+    postMessagehandler.registerListener()
   },
   methods: {
   },

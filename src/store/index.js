@@ -6,6 +6,7 @@ import ZeroClientProvider from 'web3-provider-engine/zero'
 import lightwallet from 'eth-lightwallet'
 import Web3 from 'web3'
 import Transaction from 'ethereumjs-tx'
+import abiDecoder from 'abi-decoder'
 
 Vue.use(Vuex)
 
@@ -366,7 +367,57 @@ const store = (function () {
       },
       signTransaction ({state}, tx) {
         return new Promise((resolve, reject) => {
-          if (!confirm('Pay?')) {
+          let nonce = tx.nonce ? tx.nonce : null
+          let from = tx.from
+          let to = tx.to ? web3.toHex(tx.to).toLowerCase() : null
+          let tokenAddress = web3.toHex(state.token.address).toLowerCase()
+          let isAeTokenTx = to === tokenAddress
+          let gas = tx.gas ? web3.toBigNumber(tx.gas) : null
+          let gasPrice = tx.gasPrice ? web3.toBigNumber(tx.gasPrice) : null
+          let data = tx.data ? tx.data : null // data sent to contract
+          let value = tx.value ? web3.toBigNumber(tx.value) : 0 // ether sent in transaction in wei
+
+          console.log('nonce', nonce)
+          console.log('from', from)
+          console.log('to', to)
+          console.log('isAeTokenTx', isAeTokenTx)
+          console.log('gas', gas)
+          console.log('gasPrice', gasPrice)
+          console.log('value', value)
+          console.log('data', data)
+
+          let confirmMessage = 'Send Transaction to ' + to
+          if (isAeTokenTx) {
+            // it is a call to our token contract
+            abiDecoder.addABI(aeAbi)
+            const decodedData = abiDecoder.decodeMethod(data)
+            if (decodedData) {
+              console.log('decodedData', JSON.stringify(decodedData))
+              let method = decodedData.name
+              // e.g. callAndApprove, transfer, ...
+              let params = decodedData.params
+              // e.g. [{"name":"_spender","value":"0x000....","type":"address"},{"name":"_value","value":"1000000000000000000","type":"uint256"}]
+              // methods which transfer tokens or allow transferring of tokens are:
+              // approve(_spender, _value)
+              // transferFrom(_from, _to, _value)
+              // transfer(_to, _value)
+              // approveAndCall(_spender, _value, _data)
+              if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
+                let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
+                confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
+              }
+            } else {
+              console.log('could not decode data')
+            }
+          } else {
+            if (value > 0) {
+              confirmMessage += ' with ' + web3.fromWei(value, 'ether') + ' ETH'
+            }
+          }
+
+          confirmMessage += ' (gas: ' + gas + ', gasPrice: ' + gasPrice + ')'
+
+          if (!confirm(confirmMessage)) {
             return reject(new Error("Payment rejected by user"))
           }
           const t = new Transaction(tx)
