@@ -1,4 +1,5 @@
 import QuickId from '@/components/QuickId.vue'
+import { AeAppIcon } from '@aeternity/aepp-components'
 
 export default {
   name: 'app-browser',
@@ -56,7 +57,8 @@ export default {
     },
   },
   components: {
-    'quick-id': QuickId
+     QuickId,
+     AeAppIcon
   },
   mounted() {
     console.log(this.$refs)

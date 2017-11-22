@@ -1,14 +1,12 @@
-import aeButton from './aeButton/aeButton.vue'
-import aeIdentity from './aeIdentity/aeIdentity.vue'
-import aeTransaction from './aeTransaction/aeTransaction.vue'
-
+import { AeSwitch , AeAmount , AeIdentity,AeAddressInput } from '@aeternity/aepp-components'
+import AeButton from './aeButton/aeButton.vue'
+import AeTransaction from './aeTransaction/aeTransaction.vue'
+import AeTransactionSummary from './aeTransactionSummary/aeTransactionSummary.vue'
 import Transaction from 'ethereumjs-tx'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 
 import Web3 from 'web3'
 import ZeroClientProvider from 'web3-provider-engine/zero'
-
-import aeSwitch from './aeSwitch/aeSwitch.vue'
 
 let web3
 
@@ -35,12 +33,15 @@ const commonSwiperOptions = {
 export default {
   name : 'Transfer',
   components: {
-    'ae-identity': aeIdentity,
-    'ae-button': aeButton,
-    'ae-switch': aeSwitch,
-    'ae-transaction' : aeTransaction,
-    'swiper': Swiper,
-    'swiper-slide': SwiperSlide,
+    AeIdentity,
+    AeButton,
+    AeSwitch,
+    AeAmount,
+    AeTransaction,
+    AeTransactionSummary,
+    AeAddressInput,
+    Swiper,
+    SwiperSlide,
     //'ae-button-icon': aeButtonIcon,
   },
   filters: {
@@ -73,7 +74,7 @@ export default {
       exchange : null,
       addressTo : '0xFcd59f0258E024Fd11909c0902Fd51705F385a38',
       addressFrom : '',
-      amount : '0.0001',
+      amount : 0.0001,
       gas : null,
       web3Ready : false,
       transactionHash : null,
@@ -87,9 +88,9 @@ export default {
     identitiesTo () {
       return this.identities.filter((i) => {return i.address !== this.addressFrom})
     },
-    total() {
-      return this.gas.gasPrice.times(this.gas.gas).plus(web3.toWei(this.amount, 'ether')).toString()
-    },
+    //total() {
+      //return this.gas.gasPrice.times(this.gas.gas).plus(web3.toWei(this.amount, 'ether')).toString()
+    //},
     amountInFiat() {
       if(!this.exchange) {
         return 'N/A'
@@ -168,7 +169,7 @@ export default {
         to : this.addressTo,
         value : web3.toWei(this.amount, "ether")
       }
-      let gas = new Promise((resolve, reject) => {
+      let gasAmount = new Promise((resolve, reject) => {
         web3.eth.estimateGas(tx, (err, gas) => {
           if (err) {
             reject(err)
@@ -186,15 +187,13 @@ export default {
           resolve(gasPrice)
         })
       })
-      Promise.all([gas,gasPrice]).then((values)=> {
+      Promise.all([gasAmount,gasPrice]).then((values)=> {
         this.gas = {
-          gas : values[0],
-          gasPrice : values[1],
+          amount : values[0],
+          price : values[1],
           total : values[1].times( values[0] ).toString()
         }
       })
-
-
     },
     send() {
       if(!web3) {
@@ -239,21 +238,6 @@ export default {
     this.swipeTo(this.$store.state.selectedIdentityIdx)
     if(this.$route.params.txhash) {
       this.transactionHash = this.$route.params.txhash;
-      //web3.eth.getTransaction(this.transactionHash, (err, tx) => {
-        //this.transaction = tx;
-        //if(!tx.blockHash) {
-          //var checkTxInterval = setInterval(() => {
-            //web3.eth.getTransaction(transactionHash, (err, tx) => {
-              //this.transaction = tx;
-              //if(tx.blockHash) {
-                //clearInterval(checkTxInterval)
-              //}
-              //console.log(tx);
-            //})
-          //},1000)
-        //}
-        //console.log(tx);
-      //})
     }
     const url = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
     this.$watch(vm => [vm.addressFrom, vm.addressTo, vm.amount].join(), val => {

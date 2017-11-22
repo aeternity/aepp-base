@@ -9,7 +9,6 @@
         <swiper-slide v-for='(i, index) in identities' :key='i.address'>
           <ae-identity :active="activeIdentity.address ==i.address" :identity='i' :size="'big'" class="" :collapsed="false">
             <ae-button role="sub-primary" class="id-manager__ae-button">
-              <!--<button @click="choose(i.address)" class="id-added-button">Choose Address</button>-->
             </ae-button>
           </ae-identity>
         </swiper-slide>
@@ -25,7 +24,6 @@
         <swiper-slide v-for='(i, index) in identitiesTo' :key='i.address'>
           <ae-identity :active="false" :identity='i' :size="'big'" class="" :collapsed="false">
             <ae-button role="sub-primary" class="id-manager__ae-button">
-              <!--<button @click="choose(i.address)" class="id-added-button">Choose Address</button>-->
             </ae-button>
           </ae-identity>
         </swiper-slide>
@@ -35,14 +33,14 @@
 
     <div v-else>
       <div class='foo'>
-        <input class='address-to' v-model='addressTo' type="text" value="" name="" id=""/>
+        <ae-address-input value='addressTo' v-model='addressTo'/>
       </div>
     </div>
 
     <div class='foo'>
       <h2>Transfer Amount</h2>
       <div class='input-wrap'>
-        <input class='amount' v-model='amount'  type="number" step="0.001" value="" name="" id=""/> ETH
+        <ae-amount v-model="amount" :step='0.001' :min="0" symbol='ETH'/>
         <span class='amount-in-fiat'>
           ≈ {{amountInFiat}} USD
         </span>
@@ -52,49 +50,14 @@
       <li v-for='e in errors'>{{e}}</li>
     </div>
     <div v-else class='foo'>
-      <h2>Summery</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th> From: </th>
-            <td> {{addressFrom}} </td>
-          </tr>
-          <tr>
-            <th> To: </th>
-            <td> {{addressTo}} </td>
-          </tr>
-          <tr>
-            <th> Amount: </th>
-            <td> {{amount}} ETH
-            <span class='amount-in-fiat'>
-              ≈ {{amountInFiat}} USD
-            </span>
-            </td>
-          </tr>
-          <tr>
-            <th>Fee:</th>
-            <td>
-              <span v-if='gas'>
-                {{gas.total | fromWei }} ETH
-              </span>
-              <span class='amount-in-fiat'>
-                <!--≈ {{amountInFiat}} USD-->
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <th>Total:</th>
-            <td>
-              <span v-if='gas'>
-                {{ total | fromWei }} ETH
-              </span>
-              <span class='amount-in-fiat'>
-                <!--≈ {{amountInFiat}} USD-->
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Summary</h2>
+      <ae-transaction-summary
+        :addressFrom='addressFrom'
+        :addressTo='addressTo'
+        :amount='amount'
+        :amountInFiat='amountInFiat'
+        :gas='gas'
+      />
 
       <ae-button :role="'primary'" class="id-manager__ae-button">
         <button @click='send'>Send</button>
@@ -109,5 +72,5 @@
 </template>
 
 <script src='./Transfer.js'/>
-<style scoped src='./Transfer.css'/>
+<style scoped src='./Transfer.scss'/>
 <!--<style src="swiper/dist/css/swiper.css"/>-->

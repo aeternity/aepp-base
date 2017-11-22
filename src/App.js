@@ -1,11 +1,13 @@
 import IdManager from '@/components/IdManager.vue'
+import Approve from '@/components/Approve.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
   components: {
-    'id-manager': IdManager
+    'id-manager': IdManager,
+    'approve' : Approve
   },
   computed: {
     showIdManager: () => {
