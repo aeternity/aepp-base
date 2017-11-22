@@ -13,8 +13,8 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "@aeternity/aepp-components": "^0.1.3",
     "abi-decoder": "^1.0.9",
-    "@aeternity/aepp-components": "file:../aepp-components",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
     "es6-promise": "^4.1.1",
