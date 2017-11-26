@@ -6,7 +6,9 @@ import ZeroClientProvider from 'web3-provider-engine/zero'
 import lightwallet from 'eth-lightwallet'
 import Web3 from 'web3'
 import Transaction from 'ethereumjs-tx'
-import abiDecoder from 'abi-decoder'
+import {approveTransaction as approveTransactionDialog} from "@/dialogs/index"
+import {logTx} from '@/lib/logging'
+import {getEstimatedGas, getGasPrice} from "@/lib/remoteGetters"
 
 Vue.use(Vuex)
 
@@ -152,34 +154,34 @@ const store = (function () {
       }
     },
     actions: {
-      addApp( {commit }, url) {
+      addApp({commit}, url) {
         const CORS = 'http://cors-anywhere.herokuapp.com/'
         fetch(CORS + url)
-          .then(function(response) {
+          .then(function (response) {
             return response.text();
           })
-          .then(function(text) {
-            var el = document.createElement( 'html' )
-            el.innerHTML=text
+          .then(function (text) {
+            var el = document.createElement('html')
+            el.innerHTML = text
             var title = el.getElementsByTagName('title')[0].innerText
             commit('addApp',
               {
-                type : APP_TYPES.EXTERNAL,
-                name : title,
-                icon : 'static/icons/notary.svg',
-                main : url
+                type: APP_TYPES.EXTERNAL,
+                name: title,
+                icon: 'static/icons/notary.svg',
+                main: url
               }
             )
           })
-          .catch( function(reason) {
+          .catch(function (reason) {
             let title = prompt('Enter Title')
-            if(title) {
+            if (title) {
               commit('addApp',
                 {
-                  type : APP_TYPES.EXTERNAL,
-                  name : title,
-                  icon : 'static/icons/notary.svg',
-                  main : url
+                  type: APP_TYPES.EXTERNAL,
+                  name: title,
+                  icon: 'static/icons/notary.svg',
+                  main: url
                 }
               )
             }
@@ -193,7 +195,7 @@ const store = (function () {
         providerOptsForApps = null
         dispatch('setUnlocked', false)
       },
-      mkProviderOptsForApps ({getters, state}) {
+      mkProviderOptsForApps({getters, state}) {
         providerOptsForApps = {
           getAccounts: function (cb) {
             // Only show them the currently selected account.
@@ -212,28 +214,32 @@ const store = (function () {
           rpcUrl: state.rpcUrl
         }
       },
-      mkWeb3ForApps () {
+      mkWeb3ForApps() {
         web3ForApps = new Web3(new ZeroClientProvider(providerOptsForApps))
         window.web3 = web3ForApps
       },
-      updateBalances ({ getters, dispatch, commit, state }) {
+      updateBalances({getters, dispatch, commit, state}) {
         for (let i in getters.address) {
           aeContract.contract.balanceOf(getters.address[i], function (err) {
             if (err) throw err
           })
         }
       },
-      generateAddress ({ dispatch, commit, state }, numAddresses = 1) {
-        if (state.keystore === null) { return }
+      generateAddress({dispatch, commit, state}, numAddresses = 1) {
+        if (state.keystore === null) {
+          return
+        }
         state.keystore.generateNewAddress(derivedKey, numAddresses)
-        let addrList = state.keystore.getAddresses().map(function (e) { return '0x' + e })
+        let addrList = state.keystore.getAddresses().map(function (e) {
+          return '0x' + e
+        })
         localStorage.setItem('numUnlockedAddresses', addrList.length)
       },
-      changeUser ({ commit, state }, address) {
+      changeUser({commit, state}, address) {
         commit('setAccount', address)
         commit('setName', address.substr(0, 6))
       },
-      setAcountInterval ({ dispatch, commit, state, getters }) {
+      setAcountInterval({dispatch, commit, state, getters}) {
         setInterval(() => {
           if (!web3) {
             return
@@ -263,16 +269,16 @@ const store = (function () {
           })
         }, 1000)
       },
-      setUnlocked ({ commit }, isUnlocked) {
+      setUnlocked({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
       },
-      restoreAddresses ({getters, dispatch, commit, state}) {
+      restoreAddresses({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
         if (numUnlockedAddresses > 0) {
           dispatch('generateAddress', numUnlockedAddresses)
         }
       },
-      initWeb3 ({ getters, dispatch, commit, state }, pwDerivedKey) {
+      initWeb3({getters, dispatch, commit, state}, pwDerivedKey) {
         if (!state.keystore) {
           return
         }
@@ -324,7 +330,7 @@ const store = (function () {
         dispatch('mkWeb3ForApps')
         dispatch('restoreAddresses')
       },
-      init ({ commit, state }) {
+      init({commit, state}) {
         if (localStorage.getItem('ks')) {
           commit('setKeystore', lightwallet.keystore.deserialize(localStorage.getItem('ks')))
         }
@@ -336,7 +342,7 @@ const store = (function () {
           commit('setApps', apps)
         }
       },
-      createKeystore ({commit, dispatch, state}, {seed, password}) {
+      createKeystore({commit, dispatch, state}, {seed, password}) {
         return new Promise(function (resolve, reject) {
           lightwallet.keystore.createVault({
             password: password,
@@ -365,66 +371,25 @@ const store = (function () {
           })
         })
       },
-      signTransaction ({state}, tx) {
+      signTransaction({state}, tx) {
+        const tokenAddress = web3.toHex(state.token.address).toLowerCase()
+        logTx(tx, tokenAddress)
+
+        const estimateGas = getEstimatedGas.bind(undefined, web3, tx)
+        const _getGasPrice = getGasPrice.bind(undefined, web3)
+
         return new Promise((resolve, reject) => {
-          let nonce = tx.nonce ? tx.nonce : null
-          let from = tx.from
-          let to = tx.to ? web3.toHex(tx.to).toLowerCase() : null
-          let tokenAddress = web3.toHex(state.token.address).toLowerCase()
-          let isAeTokenTx = to === tokenAddress
-          let gas = tx.gas ? web3.toBigNumber(tx.gas) : null
-          let gasPrice = tx.gasPrice ? web3.toBigNumber(tx.gasPrice) : null
-          let data = tx.data ? tx.data : null // data sent to contract
-          let value = tx.value ? web3.toBigNumber(tx.value) : 0 // ether sent in transaction in wei
-
-          console.log('nonce', nonce)
-          console.log('from', from)
-          console.log('to', to)
-          console.log('isAeTokenTx', isAeTokenTx)
-          console.log('gas', gas)
-          console.log('gasPrice', gasPrice)
-          console.log('value', value)
-          console.log('data', data)
-
-          let confirmMessage = 'Send Transaction to ' + to
-          if (isAeTokenTx) {
-            // it is a call to our token contract
-            abiDecoder.addABI(aeAbi)
-            const decodedData = abiDecoder.decodeMethod(data)
-            if (decodedData) {
-              console.log('decodedData', JSON.stringify(decodedData))
-              let method = decodedData.name
-              // e.g. callAndApprove, transfer, ...
-              let params = decodedData.params
-              // e.g. [{"name":"_spender","value":"0x000....","type":"address"},{"name":"_value","value":"1000000000000000000","type":"uint256"}]
-              // methods which transfer tokens or allow transferring of tokens are:
-              // approve(_spender, _value)
-              // transferFrom(_from, _to, _value)
-              // transfer(_to, _value)
-              // approveAndCall(_spender, _value, _data)
-              if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
-                let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
-                confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
-              }
+          approveTransactionDialog(tx, estimateGas, _getGasPrice, '').then(approved => {
+            if (approved) {
+              const t = new Transaction(tx)
+              console.log('sign', tx, t)
+              const signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
+              console.log('signed', signed)
+              return resolve(signed)
             } else {
-              console.log('could not decode data')
+              return reject(new Error('Payment rejected by user'))
             }
-          } else {
-            if (value > 0) {
-              confirmMessage += ' with ' + web3.fromWei(value, 'ether') + ' ETH'
-            }
-          }
-
-          confirmMessage += ' (gas: ' + gas + ', gasPrice: ' + gasPrice + ')'
-
-          if (!confirm(confirmMessage)) {
-            return reject(new Error("Payment rejected by user"))
-          }
-          const t = new Transaction(tx)
-          console.log('sign', tx, t)
-          var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-          console.log('signed', signed);
-          return resolve(signed)
+          })
         })
       }
     }

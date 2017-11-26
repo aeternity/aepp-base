@@ -8,11 +8,11 @@
 
     <div class="apps">
       <div @click='open(app)' v-for='app in apps' class="app-shortcut">
-        <ae-app-icon :app='app'/>
+        <ae-app-icon :src='app.icon'/>
         <div class="app-name">{{app.name}}</div>
       </div>
       <div @click='add' class="app-shortcut">
-        <ae-app-icon :app='{icon:"static/icons/notary.svg"}'/>
+        <ae-app-icon src='static/icons/notary.svg'/>
         <div class="app-name">Add App</div>
       </div>
     </div>
