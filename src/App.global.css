@@ -265,23 +265,3 @@ nav .avatar + .name{
   justify-content: space-between;
   align-items: top;
 }
-
-.modal-dialogs-wrapper{
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  background-image: linear-gradient(to bottom, rgba(30,30,30,.9), rgba(50, 10, 60, .9));
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  z-index: 1000000;
-}
-
-.modal-dialogs-wrapper:empty{
-  width: 0;
-  height: 0;
-  z-index: -1;
-  pointer-events: none;
-  display: none;
-}

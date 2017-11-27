@@ -1,4 +1,4 @@
-import { AeSwitch , AeAmountInput as AeAmount , AeIdentity,AeAddressInput } from '@aeternity/aepp-components'
+import { AeSwitch , AeAmount , AeIdentity,AeAddressInput } from '@aeternity/aepp-components'
 import AeButton from './aeButton/aeButton.vue'
 import AeTransaction from './aeTransaction/aeTransaction.vue'
 import AeTransactionSummary from './aeTransactionSummary/aeTransactionSummary.vue'

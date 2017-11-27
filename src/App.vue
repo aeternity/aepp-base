@@ -2,6 +2,7 @@
   <div id="app">
     <id-manager :title="'Quick Id Manager'" :class="idManagerClassObject"></id-manager>
     <router-view></router-view>
+    <!--<approve></approve>-->
   </div>
 </template>
 
