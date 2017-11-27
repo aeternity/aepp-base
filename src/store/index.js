@@ -114,7 +114,7 @@ const store = (function () {
         if (!state.keystore) {
           return
         }
-        return state.keystore.getAddresses().map(function (e) { return '0x' + e })
+        return state.keystore.getAddresses().map(function (e) { return e })
       },
       activeIdentity: (state, getters) => {
         if (!state.keystore || !getters.identities.length) {
@@ -131,10 +131,10 @@ const store = (function () {
         }
         return state.keystore.getAddresses().map(e => {
           return {
-            address: '0x' + e,
-            name: '0x' + e.substr(0, 6),
-            balance: getters.balanceByAddress('0x' + e),
-            tokenBalance: getters.tokenBalanceByAddress('0x' + e)
+            address: e,
+            name: e.substr(0, 6),
+            balance: getters.balanceByAddress(e),
+            tokenBalance: getters.tokenBalanceByAddress(e)
           }
         })
       },
@@ -230,9 +230,7 @@ const store = (function () {
           return
         }
         state.keystore.generateNewAddress(derivedKey, numAddresses)
-        let addrList = state.keystore.getAddresses().map(function (e) {
-          return '0x' + e
-        })
+        let addrList = state.keystore.getAddresses().map(function (e) { return e })
         localStorage.setItem('numUnlockedAddresses', addrList.length)
       },
       changeUser({commit, state}, address) {
