@@ -40,7 +40,7 @@ const store = (function () {
           type : APP_TYPES.EXTERNAL,
           name : 'Notary',
           icon : 'static/icons/notary.svg',
-          main : 'http://notary.aepps.com'
+          main : 'https://notary.aepps.com'
         },
         {
           type : APP_TYPES.INTERNAL,
