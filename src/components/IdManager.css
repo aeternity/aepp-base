@@ -78,6 +78,10 @@
   padding-bottom: 0;
 }
 
+.swiper-sizer._direction_horizontal > .swiper-container{
+  padding-bottom:40px;
+}
+
 .swiper-sizer._direction_horizontal{
   display: block;
 }
