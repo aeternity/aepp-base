@@ -153,7 +153,7 @@ const store = (function () {
     },
     actions: {
       addApp( {commit }, url) {
-        const CORS = 'http://cors-anywhere.herokuapp.com/'
+        const CORS = 'https://cors-anywhere.herokuapp.com/'
         fetch(CORS + url)
           .then(function(response) {
             return response.text();
