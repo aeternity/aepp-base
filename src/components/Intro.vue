@@ -9,7 +9,7 @@
 						<p class="text center">
               æternity gives access to the magic of Blockchain technology in an intuitive and easy way. Get access to it by generating a new account or Login to an existing.
 						</p>
-            <ae-button :role="'primary'">
+            <ae-button type='dramatic'>
               <router-link to="/setup">
                 Account setup
               </router-link>

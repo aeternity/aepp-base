@@ -8,8 +8,8 @@
   margin-top:40px;
 }
 .close-id-manager-button{
-  margin-top:30px;
-  margin-bottom: 15px;
+  display:block;
+  margin:30px auto 15px auto;
 }
 .logout-button {
   text-align:center;
@@ -35,8 +35,7 @@
 }
 
 .id-manager__ae-button + .id-manager__ae-button{
-  margin-left: 16px !important;
-  height: 30px !important;
+  margin-left: 6px !important;
 }
 
 .add-button-container{

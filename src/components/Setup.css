@@ -69,7 +69,8 @@
 }
 
 .next-step-button{
-  margin-top: 40px;
+  display:block;
+  margin:40px auto 0 auto;
 }
 
 .save-password-button{

@@ -8,8 +8,6 @@
       <swiper class="swiper-container" :options="swiperOptionsFrom" ref="swiperFrom" :not-next-tick="notNextTick">
         <swiper-slide v-for='(i, index) in identities' :key='i.address'>
           <ae-identity :active="activeIdentity.address ==i.address" :identity='i' :size="'big'" class="" :collapsed="false">
-            <ae-button role="sub-primary" class="id-manager__ae-button">
-            </ae-button>
           </ae-identity>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -23,8 +21,6 @@
       <swiper class="swiper-container" :options="swiperOptionsTo" ref="swiperTo" :not-next-tick="notNextTick">
         <swiper-slide v-for='(i, index) in identitiesTo' :key='i.address'>
           <ae-identity :active="false" :identity='i' :size="'big'" class="" :collapsed="false">
-            <ae-button role="sub-primary" class="id-manager__ae-button">
-            </ae-button>
           </ae-identity>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -59,8 +55,8 @@
         :gas='gas'
       />
 
-      <ae-button :role="'primary'" class="id-manager__ae-button">
-        <button @click='send'>Send</button>
+      <ae-button @click='send' type="dramatic" class="send-transaction-button">
+        Send
       </ae-button>
     </div>
 

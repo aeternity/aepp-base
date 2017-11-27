@@ -1,8 +1,8 @@
 import Swiper from 'swiper'
-import aeButton from './aeButton/aeButton.vue'
+import {AeButton} from '@aeternity/aepp-components'
 export default {
   components : {
-    'ae-button' : aeButton
+    AeButton
   },
   //components : [ aeButton
   //],

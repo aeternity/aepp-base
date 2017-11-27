@@ -1,5 +1,10 @@
-import { AeSwitch , AeAmountInput as AeAmount , AeIdentity,AeAddressInput } from '@aeternity/aepp-components'
-import AeButton from './aeButton/aeButton.vue'
+import {
+  AeButton,
+  AeSwitch,
+  AeAmountInput as AeAmount,
+  AeIdentity,
+  AeAddressInput
+} from '@aeternity/aepp-components'
 import AeTransaction from './aeTransaction/aeTransaction.vue'
 import AeTransactionSummary from './aeTransactionSummary/aeTransactionSummary.vue'
 import Transaction from 'ethereumjs-tx'

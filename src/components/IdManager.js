@@ -1,7 +1,5 @@
-import aeIdentity from './aeIdentity/aeIdentity.vue'
-import aeButton from './aeButton/aeButton.vue'
-import aeButtonIcon from './aeButtonIcon/aeButtonIcon.vue'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
+import {AeIdentity, AeButton, AeIcon} from '@aeternity/aepp-components'
 
 const commonSwiperOptions = {
   grabCursor: true,
@@ -49,11 +47,11 @@ export default {
     title: String
   },
   components: {
-    'ae-identity': aeIdentity,
-    'ae-button': aeButton,
-    'ae-button-icon': aeButtonIcon,
-    'swiper': Swiper,
-    'swiper-slide': SwiperSlide
+    AeIdentity,
+    AeButton,
+    AeIcon,
+    Swiper,
+    SwiperSlide
   },
   computed: {
     activeIdentity () {

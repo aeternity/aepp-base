@@ -2,7 +2,9 @@
   <div class="id-manager screen">
     <div class="topbar nomargin">
       <div class="add-button-container">
-        <ae-button-icon :icon='"add"' @click='generateNewIdentity' />
+        <ae-button size='small' type='dramatic' @click='generateNewIdentity'>
+          <ae-icon name='plus' slot='icon'/>
+        </ae-button>
       </div>
       <h1 class="center" v-if="!!title">{{title}}</h1>
     </div>
@@ -11,12 +13,11 @@
         <swiper class="swiper-container" :options="options" ref="mySwiper" :not-next-tick="notNextTick">
           <swiper-slide v-for='(i, index) in identities' :key='i.address'>
             <ae-identity :active="isActive(i)" :identity='i' :size="'big'" @click="swipeTo(index)" class="id-manager__identity" :collapsed="false">
-              <ae-button :role="'default'" class="id-manager__ae-button">
-                <button @click="copyAddress(i.address)" class="id-added-button">Copy Address</button>
+              <ae-button @click="copyAddress(i.address)" size='small' type='boring' class="id-manager__ae-button">
+                Copy Address
               </ae-button>
-              <ae-button :role="'sub-primary'" :disabled="activeIdentity === i" class="id-manager__ae-button">
-                <button  @click="activateId(i)" v-if="activeIdentity !== i" class="id-added-button">Activate</button>
-                <button v-else="" class="id-added-button">Activate</button>
+              <ae-button @click="activateId(i)" :inactive="activeIdentity === i" size='small' type='dramatic' :disabled="activeIdentity === i" class="id-manager__ae-button">
+                Activate
               </ae-button>
             </ae-identity>
           </swiper-slide>
@@ -32,10 +33,8 @@
     <p v-else="" class="text center">
       Currently you don't have an identity. Feel free to create one.
     </p>
-    <ae-button :role="'primary'" class="close-id-manager-button">
-      <button @click='goBack'>
-        Close
-      </button>
+    <ae-button @click='goBack' type='dramatic' class="close-id-manager-button">
+      Close
     </ae-button>
     <button class='small-btn logout-button' @click='logout'>
       LOGOUT

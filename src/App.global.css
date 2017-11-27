@@ -43,7 +43,7 @@ body{
 .proof.screen > :last-child{
   margin-bottom:100px;
 }
-.intro.screen .inner {
+.intro.screen >.inner {
   padding-top:21px;
 }
 .intro.screen .notice{

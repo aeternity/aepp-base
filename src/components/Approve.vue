@@ -32,33 +32,11 @@
         </div>
         <div class="bottom-buttons">
           <ae-button size='smaller' type='normal' @click="reject">
-            <svg slot="icon"
-                 class="icon cancel-icon"
-                 xmlns="http://www.w3.org/2000/svg"
-                 version="1.1"
-                 viewBox="0 0 15.556 15.556"
-            >
-              <path
-                d="m 12,13.414 6.364,6.364 1.414,-1.414 L 13.414,12 19.778,5.636 18.364,4.222 12,10.586 5.636,4.222 4.222,5.636 10.586,12 4.222,18.364 5.636,19.778 Z"
-                id="a"
-                transform="translate(-4.222,-4.222)"
-                height="100%"
-                width="100%"
-                y="0"
-                x="0"
-              />
-            </svg>
+            <ae-icon slot='icon' name='error'/>
             Cancel
           </ae-button>
           <ae-button size='smaller' type='dramatic' @click="accept">
-            <svg slot='icon'
-                 class='icon check-icon'
-                 version="1.1"
-                 viewBox="0 0 12.2 9.192"
-                 xmlns="http://www.w3.org/2000/svg"
-            >
-             <path transform="translate(-6.604,-8.25)" width="100%" height="100%" id="a" d="m11.025 17.442 7.779-7.778-1.415-1.414-6.364 6.364-3.007-3.008-1.414 1.415z"/>
-            </svg>
+            <ae-icon slot='icon' name='check'/>
             Approve
           </ae-button>
         </div>
