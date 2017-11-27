@@ -24,7 +24,8 @@
 }
 
 .unlock-button{
-  padding-top: 20px;
+  display:block;
+  margin:20px auto 0 auto;
 }
 
 .unlock-different-keystore {

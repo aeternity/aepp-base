@@ -10,10 +10,8 @@
       <p v-if='error' class="error">
         {{error}}
       </p>
-      <ae-button :role="'primary'" class="unlock-button">
-        <button @click="unlockSavedKeystore">
-          Unlock
-        </button>
+      <ae-button @click="unlockSavedKeystore" type='dramatic' class="unlock-button">
+        Unlock
       </ae-button>
       <router-link :to="{path:unlockDifferentPath}">
         <button class='small-btn unlock-different-keystore'>
