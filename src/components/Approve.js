@@ -46,6 +46,14 @@ export default {
     getGasPrice: {
       type: Function,
       required: true
+    },
+    isAeTokenTx: {
+      type: Boolean,
+      default: false
+    },
+    aeTokenTx: {
+      type: Object,
+      default: null
     }
   },
   components: {
