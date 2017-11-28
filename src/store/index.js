@@ -48,6 +48,12 @@ const store = (function () {
           icon : 'static/icons/notary.svg',
           main : '/transfer'
         },
+        {
+          type : APP_TYPES.EXTERNAL,
+          name : 'Wall',
+          icon : 'static/icons/wall.svg',
+          main : 'https://wall.aepps.com'
+        },
       ],
     },
     mutations: {
