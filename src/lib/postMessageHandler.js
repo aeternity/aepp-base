@@ -15,7 +15,8 @@ class PostMessageHandler {
     }
     let regex = new RegExp('^https?:\/\/.*\.aepps\.(?:com|dev)$')
     let regexLocal = new RegExp('^https?:\/\/localhost(?::\\d+)?$')
-    if (!skipSecurity && !regex.test(event.origin) && !regexLocal.test(event.origin)) {
+    let regexNgrok = new RegExp('^https?:\/\/.*\.ngrok\.io$')
+    if (!skipSecurity && !regex.test(event.origin) && !regexLocal.test(event.origin) && !regexNgrok.test(event.origin)) {
       // not of any of any of our authorized apps
       return
     }
