@@ -8,13 +8,9 @@
   margin-top:40px;
 }
 .close-id-manager-button{
-  display:block;
-  margin:30px auto 15px auto;
+  margin-top:30px;
 }
 .logout-button {
-  text-align:center;
-  display:block;
-  width:100%;
   margin-top:30px;
 }
 .explanation {

@@ -15,9 +15,11 @@
         <ae-button size='small' type='boring' class="copy-phrase-button" @click="copySeed()">{{copyButtonText}}</ae-button>
       </div>
 
-      <ae-button v-on:click="nextStep" type="dramatic" class="next-step-button">
-        Got it!
-      </ae-button>
+      <div>
+        <ae-button v-on:click="nextStep" type="dramatic" class="next-step-button">
+          Got it!
+        </ae-button>
+      </div>
       <ae-button size='smaller' type='dramatic' class='recover-with-seed' @click="recoverWidthSeed()">recover with seed phrase</ae-button>
     </div>
     <div v-else-if="displayPasswordInput" class="password-input wrapper">

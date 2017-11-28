@@ -55,9 +55,11 @@
         :gas='gas'
       />
 
-      <ae-button @click='send' type="dramatic" class="send-transaction-button">
-        Send
-      </ae-button>
+      <div class="center">
+        <ae-button @click='send' type="dramatic" class="send-transaction-button">
+          Send
+        </ae-button>
+      </div>
     </div>
 
     <div v-if='transactionHash' class="transaction">

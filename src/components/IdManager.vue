@@ -33,12 +33,16 @@
     <p v-else="" class="text center">
       Currently you don't have an identity. Feel free to create one.
     </p>
-    <ae-button @click='goBack' type='dramatic' class="close-id-manager-button">
-      Close
-    </ae-button>
-    <button class='small-btn logout-button' @click='logout'>
-      LOGOUT
-    </button>
+    <div class='center'>
+      <ae-button @click='goBack' type='dramatic' class="close-id-manager-button">
+        Close
+      </ae-button>
+    </div>
+    <div class='center'>
+      <ae-button class='logout-button' type='dramatic' size='smaller' @click='logout'>
+        LOGOUT
+      </ae-button>
+    </div>
 
   </div>
 </template>
