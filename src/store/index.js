@@ -435,7 +435,19 @@ const store = (function () {
             }
           })
         })
-      }
+      },
+      signPersonalMessage ({state}, { msg, appName}) {
+        return new Promise((resolve, reject) => {
+          var signed = lightwallet.signing.signMsg(state.keystore, derivedKey, msg.data, msg.from)
+          signed = lightwallet.signing.concatSig(signed)
+          // TODO confirm screen like in signTransaction
+          if(confirm(`sign "${web3.toAscii(msg.data)}" ?`)){
+            return resolve(signed)
+          } else {
+            reject(new Error('Signing rejected by user'))
+          }
+        })
+      },
     }
   })
 })()
