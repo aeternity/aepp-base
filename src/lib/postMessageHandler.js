@@ -44,7 +44,7 @@ class PostMessageHandler {
   async signTransaction (event) {
     let tx = event.data.payload
     try {
-      let result = await this.store.dispatch('signTransaction', tx)
+      let result = await this.store.dispatch('signTransaction', {tx: tx, appName: event.origin})
       event.source.postMessage({
         uuid: event.data.uuid,
         method: 'signTransactionReturn',

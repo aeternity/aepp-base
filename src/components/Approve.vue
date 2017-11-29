@@ -1,12 +1,12 @@
 <template>
-	<div class='approve'>
+  <div class='approve'>
       <template>
         <div>
           <ae-app-icon src='static/icons/notary.svg'/>
         </div>
 
-				<!--p>{{appName}}</p-->
-        <p class="app-name">Identity Manager</p>
+        <p class="app-name">{{appName}}</p>
+        <!-- <p class="app-name">Identity Manager</p> -->
         <span>Requests a transaction</span>
         <div class="transaction-flow">
           <div class="id" :title="`from ${from}`">
@@ -21,6 +21,7 @@
         </div>
         <hr>
         <ae-amount class='approve__amount' color="black" size="med" :value="amount"></ae-amount>
+        <ae-amount v-if="isAeTokenTx" class='approve__amount' color="black" size="med" :value="tokenAmount" unit="Æ"></ae-amount>
         <span v-if="!!usdValue" class="usd-value">{{usdValueStr}}</span>
         <hr>
         <div class="additional-fees-table" v-if="!!gasEstimate">

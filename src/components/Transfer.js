@@ -150,7 +150,7 @@ export default {
         },
         signTransaction: async(tx, cb) => {
           try {
-            let signed = await this.$store.dispatch('signTransaction', tx)
+            let signed = await this.$store.dispatch('signTransaction', {tx, appName: 'Transfer'})
             cb(null, '0x' + signed)
           } catch (e) {
             /* handle error */
@@ -225,6 +225,7 @@ export default {
       web3.eth.sendTransaction(tx, (err, transactionHash) => {
         console.log('4 send');
         if (err) {
+          console.log('web3.eth.sendTransaction', err)
           alert(err.message)
           return
         }

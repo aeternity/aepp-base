@@ -376,7 +376,7 @@ const store = (function () {
           })
         })
       },
-      signTransaction({state}, tx) {
+      signTransaction ({state}, {tx, appName}) {
         const tokenAddress = web3.toHex(state.token.address).toLowerCase()
         const to = tx.to ? web3.toHex(tx.to).toLowerCase() : null
         const isAeTokenTx = to === tokenAddress
@@ -384,6 +384,8 @@ const store = (function () {
 
         const estimateGas = getEstimatedGas.bind(undefined, web3, tx)
         const _getGasPrice = getGasPrice.bind(undefined, web3)
+        let aeTokenTx = {}
+
         if (isAeTokenTx) {
           let data = tx.data ? tx.data : null // data sent to contract
           // it is a call to our token contract
@@ -402,8 +404,9 @@ const store = (function () {
             // approveAndCall(_spender, _value, _data)
             if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
               let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
-              confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
+              // confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
             }
+            aeTokenTx = decodedData
           } else {
             console.log('could not decode data')
           }
@@ -414,9 +417,9 @@ const store = (function () {
             tx,
             estimateGas,
             _getGasPrice,
-            '',
-            true,
-            {}
+            appName,
+            isAeTokenTx,
+            aeTokenTx
           ).then(approved => {
             if (approved) {
               const t = new Transaction(tx)

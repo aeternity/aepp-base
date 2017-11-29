@@ -86,8 +86,20 @@ export default {
       const gasPrice = this.transaction.gasPrice
       return gasPrice ? new Bignumber(gasPrice) : ''
     },
-    nonce(){
+    nonce () {
       return this.transaction.nonce
+    },
+    tokenAmount () {
+      if (this.isAeTokenTx && this.aeTokenTx && this.aeTokenTx.name && this.aeTokenTx.params) {
+        let method = this.aeTokenTx.name
+        if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
+          let value = this.aeTokenTx.params.find(param => param.name === '_value').value
+          if (value) {
+            return fromWei(value, 'ether')
+          }
+        }
+      }
+      return '0'
     },
     usdValueStr () {
       return _createValueStr(this.usdValue, 10)
