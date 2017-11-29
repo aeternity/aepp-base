@@ -27,7 +27,7 @@ const store = (function () {
   return new Vuex.Store({
     state: {
       title: '',
-      selectedIdentityIdx: 0,
+      selectedIdentityIdx: 1,
       unlocked: false,
       identityCollapsed: true,
       showIdManager: false,
@@ -161,6 +161,9 @@ const store = (function () {
       }
     },
     actions: {
+      aeContract: () => {
+        return aeContract
+      },
       addApp({commit}, url) {
         const CORS = 'https://cors-anywhere.herokuapp.com/'
         fetch(CORS + url)

@@ -76,6 +76,7 @@ export default {
         }
       },
       transactionType : 'internal',
+      transactionCurrency : 'AE',
       exchange : null,
       addressTo : '0xFcd59f0258E024Fd11909c0902Fd51705F385a38',
       addressFrom : '',
@@ -87,6 +88,9 @@ export default {
     }
   },
   computed : {
+    tokenAddress () {
+      return this.$store.state.token.address
+    },
     identities () {
       return this.$store.getters.identities
     },
@@ -214,24 +218,44 @@ export default {
         return
       }
       console.log('2 send', this.amount);
-      var tx = {
-        from : this.addressFrom,
-        to : this.addressTo,
-        value : web3.toWei(this.amount, "ether")
+      var txPromise
+      if(this.transactionCurrency === 'ETH') {
+        txPromise = Promise.resolve({
+          from : this.addressFrom,
+          to : this.addressTo,
+          value : web3.toWei(this.amount, "ether")
+        })
+      } else if(this.transactionCurrency === 'AE') {
+        txPromise = new Promise((resolve, reject) => {
+          this.$store.dispatch('aeContract').then(contract => {
+            let tx = {
+              from : this.addressFrom,
+              to : this.tokenAddress,
+              value : 0,
+              data :  contract.transfer.getData(this.addressTo, web3.toWei(this.amount, "ether"))
+            }
+            resolve(tx)
+          }).catch(()=>{
+            reject(new Error('aeContract not found'))
+          })
+        })
+      } else {
+        return
       }
 
-      console.log('3 send', this.amount);
-      console.log(tx)
-      web3.eth.sendTransaction(tx, (err, transactionHash) => {
-        console.log('4 send');
-        if (err) {
-          console.log('web3.eth.sendTransaction', err)
-          alert(err.message)
-          return
-        }
-        this.transactionHash = transactionHash
-        this.$router.replace({ path: `/transfer/${transactionHash}` })
-      });
+      txPromise.then(tx=>{
+        console.log('3 send', this.amount);
+        console.log(tx)
+        web3.eth.sendTransaction(tx, (err, transactionHash) => {
+          console.log('4 send');
+          if (err) {
+            alert(err.message)
+            return
+          }
+          this.transactionHash = transactionHash
+          this.$router.replace({ path: `/transfer/${transactionHash}` })
+        });
+      })
     },
     swipeTo(idx) {
       this.$refs.swiperFrom.swiper.slideTo(idx)
