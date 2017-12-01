@@ -10,6 +10,7 @@ import {approveTransaction as approveTransactionDialog} from "@/dialogs/index"
 import {logTx} from '@/lib/logging'
 import {getEstimatedGas, getGasPrice} from "@/lib/remoteGetters"
 import abiDecoder from 'abi-decoder'
+var util = require('ethereumjs-util')
 
 Vue.use(Vuex)
 
@@ -436,18 +437,28 @@ const store = (function () {
           })
         })
       },
-      signPersonalMessage ({state}, { msg, appName}) {
+      signPersonalMessage ({state}, { msg, appName }) {
         return new Promise((resolve, reject) => {
-          var signed = lightwallet.signing.signMsg(state.keystore, derivedKey, msg.data, msg.from)
-          signed = lightwallet.signing.concatSig(signed)
-          // TODO confirm screen like in signTransaction
-          if(confirm(`sign "${web3.toAscii(msg.data)}" ?`)){
-            return resolve(signed)
+          if (confirm(`sign "${web3.toAscii(msg.data)}" ?`)) {
+            let data = msg.data
+            data = web3.toAscii(data)
+            let privateKey = state.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
+            let privateKeyBuffer = new Buffer(privateKey, 'hex')
+            const messageHash = util.hashPersonalMessage(util.toBuffer(data))
+            const signed = util.ecsign(messageHash, privateKeyBuffer)
+            const combined = Buffer.concat([
+              Buffer.from(signed.r),
+              Buffer.from(signed.s),
+              Buffer.from([signed.v])
+            ])
+            const signedHex = util.addHexPrefix(combined.toString('hex'))
+            // TODO confirm screen like in signTransaction
+            return resolve(signedHex)
           } else {
             reject(new Error('Signing rejected by user'))
           }
         })
-      },
+      }
     }
   })
 })()
