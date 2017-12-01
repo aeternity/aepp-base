@@ -20,8 +20,7 @@
           </div>
         </div>
         <hr>
-        <ae-amount class='approve__amount' color="black" size="med" :value="amount"></ae-amount>
-        <ae-amount v-if="isAeTokenTx" class='approve__amount' color="black" size="med" :value="tokenAmount" unit="Æ"></ae-amount>
+        <ae-amount class='approve__amount' color="black" size="med" :value="amount" :unit="unit"></ae-amount>
         <span v-if="!!usdValue" class="usd-value">{{usdValueStr}}</span>
         <hr>
         <div class="additional-fees-table" v-if="!!gasEstimate">
