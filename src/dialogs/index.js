@@ -2,7 +2,7 @@ import Vue from 'vue'
 import ModalDialogs, { makeDialog } from 'vue-modal-dialogs'
 import router from '@/router'
 
-import Approve from '@/components/Approve.vue';
+import Approve from '@/dialogs/ApproveTransaction.vue';
 
 Vue.use(ModalDialogs, {
   el:'#dialog',
@@ -27,5 +27,4 @@ export const approveTransaction = makeDialog(
   'appName',
   'isAeTokenTx',
   'aeTokenTx'
-
 )
