@@ -1,0 +1,36 @@
+.approve-message {
+  background-image: linear-gradient(to bottom, white, #f1f4f7);
+  padding: 30px 20px;
+  border: solid 1px transparent;
+  border-radius: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  width: 300px;
+  overflow-y: auto;
+  max-height: calc(100% - 10px);
+}
+
+.id, .id > *{
+  max-width: 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.active-id-area{
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message{
+  border: solid 2px #dcdcdc;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+  max-height: 5em;
+  overflow-y: auto;
+  display: block;
+}
+

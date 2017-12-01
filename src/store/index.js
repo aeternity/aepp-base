@@ -6,7 +6,10 @@ import ZeroClientProvider from 'web3-provider-engine/zero'
 import lightwallet from 'eth-lightwallet'
 import Web3 from 'web3'
 import Transaction from 'ethereumjs-tx'
-import {approveTransaction as approveTransactionDialog} from "@/dialogs/index"
+import {
+  approveTransaction as approveTransactionDialog,
+  approveMessage as approveMessageDialog
+} from "@/dialogs/index"
 import {logTx} from '@/lib/logging'
 import {getEstimatedGas, getGasPrice} from "@/lib/remoteGetters"
 import abiDecoder from 'abi-decoder'
@@ -430,33 +433,37 @@ const store = (function () {
               console.log('sign', tx, t)
               const signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
               console.log('signed', signed)
-              return resolve(signed)
+              resolve(signed)
             } else {
-              return reject(new Error('Payment rejected by user'))
+              reject(new Error('Payment rejected by user'))
             }
           })
         })
       },
-      signPersonalMessage ({state}, { msg, appName }) {
+      signPersonalMessage (store, { msg, appName }) {
+        const asText = web3.toAscii(msg.data)
+        const state = store.state
+        const activeIdentity = store.getters.activeIdentity;
         return new Promise((resolve, reject) => {
-          if (confirm(`sign "${web3.toAscii(msg.data)}" ?`)) {
-            let data = msg.data
-            data = web3.toAscii(data)
-            let privateKey = state.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
-            let privateKeyBuffer = new Buffer(privateKey, 'hex')
-            const messageHash = util.hashPersonalMessage(util.toBuffer(data))
-            const signed = util.ecsign(messageHash, privateKeyBuffer)
-            const combined = Buffer.concat([
-              Buffer.from(signed.r),
-              Buffer.from(signed.s),
-              Buffer.from([signed.v])
-            ])
-            const signedHex = util.addHexPrefix(combined.toString('hex'))
-            // TODO confirm screen like in signTransaction
-            return resolve(signedHex)
-          } else {
-            reject(new Error('Signing rejected by user'))
-          }
+          approveMessageDialog(activeIdentity, asText, appName).then(approved =>{
+            if (approved) {
+              const data = asText
+              let privateKey = state.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
+              let privateKeyBuffer = new Buffer(privateKey, 'hex')
+              const messageHash = util.hashPersonalMessage(util.toBuffer(data))
+              const signed = util.ecsign(messageHash, privateKeyBuffer)
+              const combined = Buffer.concat([
+                Buffer.from(signed.r),
+                Buffer.from(signed.s),
+                Buffer.from([signed.v])
+              ])
+              const signedHex = util.addHexPrefix(combined.toString('hex'))
+              // TODO confirm screen like in signTransaction
+              resolve(signedHex)
+            } else {
+              reject(new Error('Signing rejected by user'))
+            }
+          })
         })
       }
     }

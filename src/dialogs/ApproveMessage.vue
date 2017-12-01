@@ -3,11 +3,14 @@
     <template>
       <dialog-header title="Requests to sign a message" :appName="appName" iconSrc="static/icons/notary.svg"/>
       <div class="active-id-area">
-        <div class="id" :title="`active identity ${identity}`">
-          <ae-identity-avatar :address="identity"></ae-identity-avatar>
-          <div>{{identity}}</div>
+        <div class="id" :title="`Active identity ${address}`">
+          <ae-identity-avatar :address="address"></ae-identity-avatar>
+          <div>{{address}}</div>
         </div>
       </div>
+      <p class="message">
+        {{message}}
+      </p>
       <approve-buttons @approve="approve" @reject="reject"/>
     </template>
   </div>

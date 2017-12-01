@@ -1,6 +1,10 @@
 import ApproveButtons from '@/dialogs/ApproveButtons.vue'
 import DialogHeader from '@/dialogs/DialogHeader.vue'
 
+import {
+  AeIdentityAvatar
+} from '@aeternity/aepp-components'
+
 export default {
   name: 'approve-message',
   props: {
@@ -11,6 +15,15 @@ export default {
     message: {
       type: String,
       required: true
+    },
+    identity: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    address () {
+      return this.identity.address
     }
   },
   methods: {
@@ -20,5 +33,10 @@ export default {
     approve () {
       this.$close(true)
     }
+  },
+  components: {
+    AeIdentityAvatar,
+    ApproveButtons,
+    DialogHeader,
   }
 }
