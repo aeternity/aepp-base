@@ -8,7 +8,8 @@ class PostMessageHandler {
   }
 
   async receiveMessage (event) {
-    let skipSecurity = process.env.NODE_ENV === 'development'
+    // let skipSecurity = process.env.NODE_ENV === 'development'
+    let skipSecurity = true // for hackathon
     if (!event.data.uuid) {
       // this message isnt meant for us
       return
