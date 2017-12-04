@@ -31,7 +31,7 @@ const store = (function () {
   return new Vuex.Store({
     state: {
       title: '',
-      selectedIdentityIdx: 1,
+      selectedIdentityIdx: 0,
       unlocked: false,
       identityCollapsed: true,
       showIdManager: false,
