@@ -28,6 +28,7 @@ export default {
     }
   },
   mounted () {
+    console.log('unlock mounted')
     if (this.$refs.pinInput) {
       this.$refs.pinInput.focus()
     }
@@ -55,10 +56,12 @@ export default {
         }
         this.error = false
         this.$store.dispatch('initWeb3', pwDerivedKey)
+        console.log('good!')
       })
     }
   },
   beforeRouteLeave (to, from, next) {
+    console.log('who told you to leave?')
     if (to.path === PATHS.SETUP) {
       const leaveConfirmed = window.confirm(
         'Your saved account will be overwritten. Please make sure you have a backup of the seed phrase. Do you want to continue?'

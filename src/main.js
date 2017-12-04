@@ -27,9 +27,9 @@ const IdentityApp = Vue.extend({
   },
   beforeCreate: function () {
     console.log('before')
+    this.$store.dispatch('init')
   },
   mounted: function () {
-    this.$store.dispatch('init')
     console.log('mounted')
   }
 })
