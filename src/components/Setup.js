@@ -43,7 +43,6 @@ export default {
     }
   },
   created: function () {
-    console.log('setup created')
     this.generateRandomSeed()
   },
   methods: {
