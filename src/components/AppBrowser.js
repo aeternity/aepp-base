@@ -1,6 +1,6 @@
 import QuickId from '@/components/QuickId.vue'
 import { AeAppIcon } from '@aeternity/aepp-components'
-
+import { PATHS } from '../router'
 export default {
   name: 'app-browser',
   data () {
@@ -10,7 +10,15 @@ export default {
       iframeLoading : true,
     }
   },
+  watch: {
+    url () {
+      this.resolveUrl()
+    }
+  },
   computed : {
+    url () {
+      return this.$route.query && this.$route.query.aepp
+    },
     apps() {
       return this.$store.state.apps
     },
@@ -35,6 +43,7 @@ export default {
   },
   methods : {
     open(app) {
+      this.$router.push(PATHS.EMBEDDED_APP + '/?aepp=' + app.main)
       if(app.type === 1) {
         if(this.iframe !== app.main) {
           this.iframeLoading = true
@@ -46,6 +55,7 @@ export default {
       }
     },
     back() {
+      this.$router.push(PATHS.EMBEDDED_APP)
       this.showIframe = false
     },
     add() {
@@ -55,15 +65,29 @@ export default {
       }
 
     },
+    resolveUrl () {
+      if (this.url) {
+        let app = this.apps.find((app) => {
+          return app.main.indexOf(this.url) > -1
+        })
+        if (app) {
+          this.open(app)
+        } else {
+          this.$store.dispatch('addApp', this.url).then((app) => {
+            this.open(app)
+          }).catch((err) => console.log(err))
+        }
+      }
+    }
   },
   components: {
      QuickId,
      AeAppIcon
   },
   mounted() {
-    console.log(this.$refs)
     this.$refs.appframe.onload = () => {
       this.iframeLoading = false
     }
+    this.resolveUrl()
   }
 }

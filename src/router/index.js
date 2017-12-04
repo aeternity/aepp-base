@@ -53,7 +53,7 @@ const router = new Router({
       meta: {
         title: 'App Browser',
         appClass: 'app-browser'
-      }
+      },
     },
     {
       name: 'transfer',
@@ -78,7 +78,11 @@ const _mutationHandlers = {
   'setUnlocked': function (router, state) {
     if (state.keystore) {
       if (state.unlocked) {
-        router.push(PATHS.EMBEDDED_APP)
+        if (state.forwardPath) {
+          router.push(state.forwardPath)
+        } else {
+          router.push(PATHS.EMBEDDED_APP)
+        }
       } else {
         router.push(PATHS.UNLOCK)
       }
@@ -97,6 +101,7 @@ const _mutationHandlers = {
 }
 
 const _pathResolvers = {}
+
 
 _pathResolvers[PATHS.EMBEDDED_APP] = function (state) {
   if (!state.keystore) {
@@ -126,12 +131,19 @@ _pathResolvers[PATHS.SETUP] = function (state) {
 
 export const manageRouting = function (store, router) {
   router.onReady(function () {
-    const currentPath = router.currentRoute.path
+    const currentPath = router.currentRoute.path.replace(/\/$/, '')
+    if (router.currentRoute.query && router.currentRoute.query.aepp) {
+      store.commit('forwardPath', PATHS.EMBEDDED_APP + '/?aepp=' + router.currentRoute.query.aepp)
+    } else {
+      store.commit('forwardPath', '')
+    }
     const resolver = _pathResolvers[currentPath]
     if (typeof resolver === 'function') {
       const result = resolver(store.state, currentPath)
       if (typeof result === 'string') {
         router.push(result)
+      } else if(store.state.currentRoute) {
+        router.push(store.state.currentRoute)
       }
     }
   })
@@ -151,6 +163,7 @@ export const manageRouting = function (store, router) {
   })
 
   router.beforeEach(function (to, from, next) {
+
     if (from.path !== to.path) {
       const resolver = _pathResolvers[to.path]
       if (typeof resolver === 'function') {

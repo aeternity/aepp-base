@@ -69,11 +69,9 @@ export default {
       this.$store.commit('selectIdentity', this.identities.indexOf(id))
     },
     generateFirstAddress () {
-      console.log('generateFirstAddress')
       this.$store.dispatch('generateAddress')
     },
     generateNewIdentity () {
-      console.log('generateNewIdentity')
       this.$store.dispatch('generateAddress')
     },
     goBack () {
