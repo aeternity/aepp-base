@@ -9,7 +9,7 @@
     <div class="apps" :class="{'apps--editmode': editModeActive}">
       <div v-for='app in apps' class="app-shortcut">
         <div class="app-icon-outer" @click="open(app)" @touchstart="editMode" @touchend="editMode('cancel')" @contextmenu.prevent>
-          <div class="remove-app-btn" @click.stop="remove(app.name)" v-if="isRemoveable(app.name)">
+          <div class="remove-app-btn" @click.stop="remove(app.name)">
             <ae-icon name="close" type="exciting"></ae-icon>
           </div>
           <ae-app-icon :src='app.icon'/>

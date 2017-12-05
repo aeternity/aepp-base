@@ -37,7 +37,6 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
-      defaultApps: ['Notary', 'Transfer', 'Wall'],
       apps : [
         {
           type : APP_TYPES.EXTERNAL,
@@ -202,12 +201,7 @@ const store = (function () {
           })
       },
       removeApp({commit, state}, name) {
-        if (name) {
-          if (state.defaultApps.indexOf(name) === -1) {
-            console.log(name)
-            commit('removeApp', name)  
-          }
-        }
+        if (name) return commit('removeApp', name)
       },
       logout({getters, dispatch, state, commit}) {
         aeContract = null

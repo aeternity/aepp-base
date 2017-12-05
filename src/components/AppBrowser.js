@@ -63,10 +63,6 @@ export default {
         this.$store.dispatch('removeApp', name)
       }
     },
-    isRemoveable(name) {
-      const defaultApps = ['Notary', 'Transfer', 'Wall']
-      return name ? defaultApps.indexOf(name) === -1 : true
-    },
     editMode(action = null) {
       if (action === 'cancel') return clearTimeout(this.editModeTmOut)
       this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
