@@ -71,10 +71,6 @@ export default {
       if (action === 'cancel') return clearTimeout(this.editModeTmOut)
       this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
     },
-    clickOuter() {
-      console.log('click')
-      this.editModeActive = false
-    },
     setIsTouch() {
       this.isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch
     }

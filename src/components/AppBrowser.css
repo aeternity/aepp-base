@@ -138,13 +138,6 @@ iframe {
   z-index:998;
   /*background-color:red;*/
 }
-.no-touch .app-shortcut:hover .remove-app-btn,
-.touch .apps--editmode .remove-app-btn{
-  visibility: visible;
-  opacity:1;
-  transform:scale(1,1);
-  transition: opacity 300ms, transform 300ms, visibility 0s 0s;
-}
 .remove-app-btn{
   position: absolute;
   top:-10px;
@@ -154,4 +147,11 @@ iframe {
   opacity:0;
   transform:scale(.8,.8);
   transition: opacity 300ms, transform 300ms, visibility 0s 300ms;
+}
+.no-touch .app-shortcut:hover .remove-app-btn,
+.touch .apps--editmode .remove-app-btn{
+  visibility: visible;
+  opacity:1;
+  transform:scale(1,1);
+  transition: opacity 300ms, transform 300ms, visibility 0s 0s;
 }
