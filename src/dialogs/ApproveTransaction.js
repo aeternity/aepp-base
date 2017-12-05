@@ -1,6 +1,8 @@
 import Bignumber from 'bignumber.js'
 import Web from 'web3'
 import {convertAE_USD, convertETH_USD} from '@/lib/currencyConverter'
+import ApproveButtons from '@/dialogs/ApproveButtons.vue'
+import DialogHeader from '@/dialogs/DialogHeader.vue'
 
 const {fromWei} = Web.prototype
 
@@ -8,8 +10,6 @@ import {
   AeModal,
   AeHeaderButton,
   AeAmount,
-  AeButton,
-  AeAppIcon,
   AeIcon,
   AeIdentityAvatar
 } from '@aeternity/aepp-components'
@@ -25,7 +25,7 @@ const _createValueStr = (value, decimal, currencySymbol = '$') => {
 }
 
 export default {
-  name: 'approve',
+  name: 'approve-transaction',
   data () {
     return {
       usdValue: undefined, usdGas: undefined, gasEstimate: undefined
@@ -46,26 +46,35 @@ export default {
     getGasPrice: {
       type: Function,
       required: true
+    },
+    isAeTokenTx: {
+      type: Boolean,
+      default: false
+    },
+    aeTokenTx: {
+      type: Object,
+      default: null
     }
   },
   components: {
     AeModal,
     AeHeaderButton,
     AeAmount,
-    AeButton,
-    AeAppIcon,
+    AeIdentityAvatar,
     AeIcon,
-    AeIdentityAvatar
+    ApproveButtons,
+    DialogHeader
   },
   computed: {
     amount () {
-      return fromWei(this.transaction.value, 'ether')
+      const isAeTokenTx = this.isAeTokenTx
+      return isAeTokenTx ? this.tokenAmount : parseFloat(fromWei(this.transaction.value, 'ether'))
     },
     from () {
       return this.transaction.from
     },
     to () {
-      return this.transaction.to
+      return this.isAeTokenTx ? this.aeDestination : this.transaction.to
     },
     gas () {
       const gas = this.transaction.gas
@@ -78,27 +87,56 @@ export default {
       const gasPrice = this.transaction.gasPrice
       return gasPrice ? new Bignumber(gasPrice) : ''
     },
-    nonce(){
+    nonce () {
       return this.transaction.nonce
+    },
+    tokenAmount () {
+      if (this.isAeTokenTx && this.aeTokenTx && this.aeTokenTx.name && this.aeTokenTx.params) {
+        let method = this.aeTokenTx.name
+        if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
+          let value = this.aeTokenTx.params.find(param => param.name === '_value').value
+          if (value) {
+            return fromWei(value, 'ether')
+          }
+        }
+      }
+      return '0'
+    },
+    aeDestination(){
+      if (this.isAeTokenTx && this.aeTokenTx && this.aeTokenTx.name && this.aeTokenTx.params) {
+        let method = this.aeTokenTx.name
+        if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
+          let value = this.aeTokenTx.params.find(param => param.name === '_to').value
+          if (value) {
+            return value
+          }
+        }
+      }
+
+      return this.transaction.to
     },
     usdValueStr () {
       return _createValueStr(this.usdValue, 10)
     },
     usdGasStr () {
       return _createValueStr(this.usdGas, 5)
+    },
+    unit(){
+      return this.isAeTokenTx ? 'Æ' : 'eth'
     }
   },
   methods: {
     reject () {
       this.$close(false)
     },
-    accept () {
+    approve () {
       this.$close(true)
     }
   },
   mounted () {
     const amount = this.amount
-    convertAE_USD(amount).then(
+    const toUSD = this.isAeTokenTx ? convertAE_USD : convertETH_USD
+    toUSD(amount).then(
       usdValue => { this.usdValue = usdValue }
     )
 
@@ -106,7 +144,7 @@ export default {
       this.estimateGas(),
       this.getGasPrice()
     ]).then(
-      ([gasEstimate, gasPrice = 1]) => {
+      ([gasEstimate, gasPrice]) => {
         const asWei = gasEstimate * gasPrice
         const ethVal = fromWei(asWei, 'ether')
         this.gasEstimate = ethVal

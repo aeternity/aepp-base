@@ -1,0 +1,8 @@
+.bottom-buttons{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  margin-top: 40px;
+}

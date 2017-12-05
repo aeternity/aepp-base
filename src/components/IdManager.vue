@@ -3,7 +3,7 @@
     <div class="topbar nomargin">
       <div class="add-button-container">
         <ae-button size='small' type='dramatic' @click='generateNewIdentity'>
-          <ae-icon name='plus' slot='icon'/>
+          <ae-icon name='plus' type='dramatic' invert slot='icon'/>
         </ae-button>
       </div>
       <h1 class="center" v-if="!!title">{{title}}</h1>

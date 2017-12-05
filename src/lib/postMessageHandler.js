@@ -25,6 +25,8 @@ class PostMessageHandler {
       this.getAccounts(event)
     } else if (event.data.method === 'signTransaction') {
       this.signTransaction(event)
+    } else if (event.data.method === 'signPersonalMessage') {
+      this.signPersonalMessage(event)
     } else if (event.data.method === 'handShake') {
       this.handShake(event)
     }
@@ -45,7 +47,7 @@ class PostMessageHandler {
   async signTransaction (event) {
     let tx = event.data.payload
     try {
-      let result = await this.store.dispatch('signTransaction', tx)
+      let result = await this.store.dispatch('signTransaction', {tx: tx, appName: event.origin})
       event.source.postMessage({
         uuid: event.data.uuid,
         method: 'signTransactionReturn',
@@ -58,6 +60,27 @@ class PostMessageHandler {
       event.source.postMessage({
         uuid: event.data.uuid,
         method: 'signTransactionReturn',
+        error: e,
+        payload: null
+      }, '*')
+    }
+  }
+  async signPersonalMessage (event) {
+    let msg = event.data.payload
+    try {
+      let result = await this.store.dispatch('signPersonalMessage', {msg: msg, appName: event.origin})
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'signPersonalMessageReturn',
+        error: null,
+        payload: result
+      }, '*')
+    } catch (e) {
+      /* handle error */
+      console.log('e', e)
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'signPersonalMessageReturn',
         error: e,
         payload: null
       }, '*')
