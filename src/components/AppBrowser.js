@@ -1,5 +1,6 @@
 import QuickId from '@/components/QuickId.vue'
 import { AeAppIcon } from '@aeternity/aepp-components'
+import { AeIcon } from '@aeternity/aepp-components'
 
 export default {
   name: 'app-browser',
@@ -8,6 +9,9 @@ export default {
       iframe: '',
       showIframe : false,
       iframeLoading : true,
+      isTouch: false,
+      editModeActive: false,
+      editModeTmOut: null
     }
   },
   computed : {
@@ -53,12 +57,35 @@ export default {
       if(url) {
         this.$store.dispatch('addApp', url)
       }
-
     },
+    remove(url) {
+      if(url) {
+        this.$store.dispatch('removeApp', url)
+      }
+    },
+    isRemoveable(name) {
+      const defaultApps = ['Notary', 'Transfer', 'Wall']
+      return name ? defaultApps.indexOf(name) === -1 : true
+    },
+    editMode(action = null) {
+      if (action === 'cancel') return clearTimeout(this.editModeTmOut)
+      this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
+    },
+    clickOuter() {
+      console.log('click')
+      this.editModeActive = false
+    },
+    setIsTouch() {
+      this.isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch
+    }
   },
   components: {
      QuickId,
-     AeAppIcon
+     AeAppIcon,
+     AeIcon
+  },
+  created () {
+    this.setIsTouch()
   },
   mounted() {
     console.log(this.$refs)

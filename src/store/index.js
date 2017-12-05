@@ -193,6 +193,9 @@ const store = (function () {
             }
           })
       },
+      removeApp({commit}, url) {
+        console.log(url)
+      },
       logout({getters, dispatch, state, commit}) {
         aeContract = null
         derivedKey = null
