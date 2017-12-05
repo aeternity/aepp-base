@@ -58,9 +58,9 @@ export default {
         this.$store.dispatch('addApp', url)
       }
     },
-    remove(url) {
-      if(url) {
-        this.$store.dispatch('removeApp', url)
+    remove(name) {
+      if(name) {
+        this.$store.dispatch('removeApp', name)
       }
     },
     isRemoveable(name) {

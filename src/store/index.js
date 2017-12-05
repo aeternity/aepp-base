@@ -37,6 +37,7 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
+      defaultApps: ['Notary', 'Transfer', 'Wall'],
       apps : [
         {
           type : APP_TYPES.EXTERNAL,
@@ -77,6 +78,13 @@ const store = (function () {
       addApp( state , app) {
         this.state.apps.push(app);
         localStorage.setItem('apps', JSON.stringify(this.state.apps))
+      },
+      removeApp (state, name) {
+        const appIndex = state.apps.findIndex((app) => app.name === name)
+        if (appIndex > -1) {
+          state.apps.splice(appIndex, 1)
+          localStorage.setItem('apps', JSON.stringify(this.state.apps))
+        }
       },
       setApps ( state , apps) {
         this.state.apps = apps
@@ -193,8 +201,13 @@ const store = (function () {
             }
           })
       },
-      removeApp({commit}, url) {
-        console.log(url)
+      removeApp({commit, state}, name) {
+        if (name) {
+          if (state.defaultApps.indexOf(name) === -1) {
+            console.log(name)
+            commit('removeApp', name)  
+          }
+        }
       },
       logout({getters, dispatch, state, commit}) {
         aeContract = null
