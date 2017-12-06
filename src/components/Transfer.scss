@@ -15,6 +15,21 @@ h1 {
 label {
   /*display:block*/
 }
+.transfer__identities-to .swiper-pagination-bullet-active{
+  background: $aubergine;
+}
+.transfer__identities-to .swiper-wrapper {
+  padding-bottom: 35px;
+}
+.transfer__close-button {
+  position:absolute;
+  top:20px;
+  right:20px;
+}
+.transfer__switch-transaction-type,
+.transfer__switch-transaction-currency{
+  margin-bottom:20px;
+}
 .from-address {
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -70,6 +85,6 @@ input {
 input {
   height: 44px;
 }
-.send-transaction-button {
+.transfer__send-button {
   margin-top: 30px;
 }
