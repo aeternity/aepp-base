@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <ae-app-icon :src='iconSrc'/>
+      <ae-app-icon class='dialog-header__app-icon' :src='iconSrc'/>
     </div>
 
     <p class="app-name">{{appName}}</p>
