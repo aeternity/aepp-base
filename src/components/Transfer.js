@@ -1,5 +1,6 @@
 import {
   AeButton,
+  AeIcon,
   AeSwitch,
   AeAmountInput as AeAmount,
   AeIdentity,
@@ -40,6 +41,7 @@ export default {
   components: {
     AeIdentity,
     AeButton,
+    AeIcon,
     AeSwitch,
     AeAmount,
     AeTransaction,
@@ -143,6 +145,9 @@ export default {
     }
   },
   methods : {
+    close() {
+      window.history.back()
+    },
     isActive (id) {
       return id.address === this.activeIdentity.address
     },
