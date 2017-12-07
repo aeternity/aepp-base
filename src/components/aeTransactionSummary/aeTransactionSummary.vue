@@ -12,9 +12,9 @@
       <tr>
         <th> Amount: </th>
         <td> {{amount}} ETH
-          <span class='amount-in-fiat'>
-            ≈ {{amountInFiat}} USD
-          </span>
+          <!--<span class='amount-in-fiat'>-->
+            <!--≈ {{amountInFiat}} USD-->
+          <!--</span>-->
         </td>
       </tr>
       <tr>
