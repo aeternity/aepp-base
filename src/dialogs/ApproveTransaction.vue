@@ -15,13 +15,13 @@
         </div>
         <hr>
         <ae-amount class='approve__amount' color="black" size="med" :value="amount" :unit="unit"></ae-amount>
-        <span v-if="!!usdValue" class="usd-value">{{usdValueStr}}</span>
+        <!--<span v-if="!!usdValue" class="usd-value">{{usdValueStr}}</span>-->
         <hr>
         <div class="additional-fees-table" v-if="!!gasEstimate">
           <span class="additional-fees-header"> Additional fees</span>
           <div class="additional-fees-value">
             <div class="additional-fees-eth">{{gasEstimateStr}}</div>
-            <div v-if="!!usdGas" class="usd-value">{{usdGasStr}}</div>
+            <!--<div v-if="!!usdGas" class="usd-value">{{usdGasStr}}</div>-->
           </div>
         </div>
         <approve-buttons @approve="approve" @reject="reject"/>

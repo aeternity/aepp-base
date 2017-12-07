@@ -38,9 +38,9 @@
       <ae-switch v-model='transactionCurrency' name='transactionCurrency' :choices="[{value:'AE',label:'AE'},{value:'ETH',label:'ETH'}]"/>
       <div class='input-wrap'>
         <ae-amount v-model="amount" :step='0.001' :min="0" :symbol='transactionCurrency'/>
-        <span class='amount-in-fiat'>
-          ≈ {{amountInFiat}} USD
-        </span>
+        <!--<span class='amount-in-fiat'>-->
+          <!--≈ {{amountInFiat}} USD-->
+        <!--</span>-->
       </div>
     </div>
     <div v-if='errors.length' class="errors">
