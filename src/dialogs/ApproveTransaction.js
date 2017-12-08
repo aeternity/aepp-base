@@ -1,6 +1,6 @@
 import Bignumber from 'bignumber.js'
 import Web from 'web3'
-import {convertAE_USD, convertETH_USD} from '@/lib/currencyConverter'
+import {convertAE_CHF, convertETH_CHF} from '@/lib/currencyConverter'
 import ApproveButtons from '@/dialogs/ApproveButtons.vue'
 import DialogHeader from '@/dialogs/DialogHeader.vue'
 
@@ -14,7 +14,7 @@ import {
   AeIdentityAvatar
 } from '@aeternity/aepp-components'
 
-const _createValueStr = (value, decimal, currencySymbol = '$') => {
+const _createValueStr = (value, decimal, currencySymbol = 'CHF') => {
   if (typeof value !== 'number') {
     return ''
   }
@@ -28,7 +28,7 @@ export default {
   name: 'approve-transaction',
   data () {
     return {
-      usdValue: undefined, usdGas: undefined, gasEstimate: undefined
+      fiatValue: undefined, fiatGas: undefined, gasEstimate: undefined //all set in mounted() through async functions.
     }
   },
   props: {
@@ -115,11 +115,11 @@ export default {
 
       return this.transaction.to
     },
-    usdValueStr () {
-      return _createValueStr(this.usdValue, 10)
+    fiatValueStr () {
+      return _createValueStr(this.fiatValue, 10)
     },
-    usdGasStr () {
-      return _createValueStr(this.usdGas, 5)
+    fiatGasStr () {
+      return _createValueStr(this.fiatGas, 5)
     },
     unit(){
       return this.isAeTokenTx ? 'Æ' : 'eth'
@@ -135,9 +135,9 @@ export default {
   },
   mounted () {
     const amount = this.amount
-    const toUSD = this.isAeTokenTx ? convertAE_USD : convertETH_USD
-    toUSD(amount).then(
-      usdValue => { this.usdValue = usdValue }
+    const toFiat = this.isAeTokenTx ? convertAE_CHF : convertETH_CHF
+    toFiat(amount).then(
+      fiatValue => { this.fiatValue = fiatValue }
     )
 
     Promise.all([
@@ -148,10 +148,10 @@ export default {
         const asWei = gasEstimate * gasPrice
         const ethVal = fromWei(asWei, 'ether')
         this.gasEstimate = ethVal
-        return convertETH_USD(ethVal)
+        return convertETH_CHF(ethVal)
       }
     ).then(
-      usdGas => { this.usdGas = usdGas }
+      fiatGas => { this.fiatGas = fiatGas }
     )
   }
 }
