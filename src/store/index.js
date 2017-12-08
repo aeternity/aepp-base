@@ -56,9 +56,18 @@ const store = (function () {
           icon : 'static/icons/wall.svg',
           main : 'https://wall.aepps.com'
         },
+        {
+          type : APP_TYPES.INTERNAL,
+          name : 'Network',
+          icon : 'static/icons/notary.svg',
+          main : '/network'
+        },
       ],
     },
     mutations: {
+      updateRPC (state, rpcUrl) {
+        state.rpcUrl = rpcUrl
+      },
       title (state, newtitle) {
         state.title = newtitle
       },
@@ -160,6 +169,9 @@ const store = (function () {
       }
     },
     actions: {
+      updateRPC ({commit}, rpcURL) {
+        commit('updateRPC', rpcURL)
+      },
       addApp({commit}, url) {
         const CORS = 'https://cors-anywhere.herokuapp.com/'
         fetch(CORS + url)
