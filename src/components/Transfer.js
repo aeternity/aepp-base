@@ -7,8 +7,6 @@ import {
   AeAddressInput
 } from '@aeternity/aepp-components'
 import AeTransaction from './aeTransaction/aeTransaction.vue'
-import AeTransactionSummary from './aeTransactionSummary/aeTransactionSummary.vue'
-import Transaction from 'ethereumjs-tx'
 import {swiper as Swiper, swiperSlide as SwiperSlide} from 'vue-awesome-swiper'
 
 import Web3 from 'web3'
@@ -45,11 +43,9 @@ export default {
     AeSwitch,
     AeAmount,
     AeTransaction,
-    AeTransactionSummary,
     AeAddressInput,
     Swiper,
     SwiperSlide,
-    //'ae-button-icon': aeButtonIcon,
   },
   filters: {
     fromWei(value) {
@@ -95,7 +91,7 @@ export default {
       if (!this.exchange) {
         return 'N/A'
       }
-      return Math.round(this.exchange.USD * this.amount * 100) / 100
+      return Math.round(this.exchange.CHF * this.amount * 100) / 100
 
     },
     hasErrors() {
@@ -263,7 +259,7 @@ export default {
     if (this.$route.params.txhash) {
       this.transactionHash = this.$route.params.txhash;
     }
-    const url = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
+    const url = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,CHF,EUR"
     this.$watch(vm => [vm.addressFrom, vm.addressTo, vm.amount].join(), val => {
       this.estimateGas()
     })

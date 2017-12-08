@@ -28,9 +28,9 @@
       <div class='input-wrap'>
         <div>Amount</div>
         <ae-amount v-model="amount" :step='0.001' :min="0" :symbol='transactionCurrency'/>
-        <!--<span class='amount-in-fiat'>-->
-          <!--≈ {{amountInFiat}} USD-->
-        <!--</span>-->
+        <span class='amount-in-fiat'>
+          ≈ {{amountInFiat}} CHF
+        </span>
       </div>
     </div>
     <div v-if='hasErrors' class="errors">
