@@ -5,17 +5,6 @@
       <ae-icon slot='icon' name='close'/>
     </ae-button>
 
-    <!--<div class='foo'>-->
-      <!--<h2>Transfer From:</h2>-->
-    <!--</div>-->
-      <!--<swiper class="swiper-container" :options="swiperOptionsFrom" ref="swiperFrom" :not-next-tick="notNextTick">-->
-        <!--<swiper-slide v-for='(i, index) in identities' :key='i.address'>-->
-          <!--<ae-identity :active="activeIdentity.address ==i.address" :identity='i' :size="'big'" class="" :collapsed="false">-->
-          <!--</ae-identity>-->
-        <!--</swiper-slide>-->
-        <!--<div class="swiper-pagination" slot="pagination"></div>-->
-      <!--</swiper>-->
-
     <ae-switch class='transfer__switch-transaction-type' v-model='transactionType' name='transactionType' :choices="[{value:'internal',label:'To own identity'},{value:'external',label:'External address'}]"/>
     <div v-if='transactionType === "internal"'>
       <swiper class="swiper-container transfer__identities-to" :options="swiperOptionsTo" ref="swiperTo" :not-next-tick="notNextTick">
@@ -44,12 +33,12 @@
         </span>
       </div>
     </div>
-    <div v-if='errors.length' class="errors">
+    <div v-if='hasErrors' class="errors">
       <li v-for='e in errors'>{{e}}</li>
     </div>
 
     <div class="center">
-      <ae-button @click='send' type="dramatic" :inactive='errors.length' class="transfer__send-button">
+      <ae-button @click='send' type="dramatic" :inactive='hasErrors' class="transfer__send-button">
         Make Transaction
       </ae-button>
     </div>
