@@ -87,6 +87,9 @@ iframe {
   width:calc(50% - 10px);
   /*background-color:green;*/
 }
+.app-shortcut > div {
+  margin: 20px auto;
+}
 @media screen and (min-width:295px) {
   .app-shortcut {
     width:calc(33.3% - 10px);
