@@ -79,11 +79,11 @@ const store = (function () {
       setKeystore (state, keystore) {
         state.keystore = keystore
       },
-      addApp( state , app) {
-        this.state.apps.push(app);
+      addApp (state, app) {
+        this.state.apps.push(app)
         localStorage.setItem('apps', JSON.stringify(this.state.apps))
       },
-      setApps ( state , apps) {
+      setApps (state, apps) {
         this.state.apps = apps
       },
       setUnlocked (state, unlocked) {
@@ -112,9 +112,6 @@ const store = (function () {
             tokenBalance: tokenBalance ? tokenBalance : 0
           })
         }
-      },
-      setShowIdManager (state, showIdManager) {
-        state.showIdManager = showIdManager
       }
     },
     getters: {
@@ -232,27 +229,23 @@ const store = (function () {
         web3ForApps = new Web3(new ZeroClientProvider(providerOptsForApps))
         window.web3 = web3ForApps
       },
-      updateBalances({getters, dispatch, commit, state}) {
-        for (let i in getters.address) {
-          aeContract.contract.balanceOf(getters.address[i], function (err) {
-            if (err) throw err
-          })
-        }
-      },
-      generateAddress({dispatch, commit, state}, numAddresses = 1) {
+      generateAddress ({dispatch, commit, state}, numAddresses = 1) {
         if (state.keystore === null) {
           return
         }
         state.keystore.generateNewAddress(derivedKey, numAddresses)
         let addrList = state.keystore.getAddresses().map(function (e) { return e })
         localStorage.setItem('numUnlockedAddresses', addrList.length)
+        dispatch('updateAllBalances')
       },
       changeUser({commit, state}, address) {
         commit('setAccount', address)
         commit('setName', address.substr(0, 6))
       },
-      setAcountInterval({dispatch, commit, state, getters}) {
+      setAcountInterval ({dispatch, commit, state, getters}) {
+        // console.log('setAcountInterval')
         setInterval(() => {
+          // console.log('Check Accounts')
           if (!web3) {
             return
           }
@@ -260,26 +253,33 @@ const store = (function () {
             console.log('no accounts found')
             return
           }
-          getters.identities.forEach(identitiy => {
-            let address = identitiy.address
-            if (!address) {
-              return
-            }
-            web3.eth.getBalance(address, (err, balance) => {
-              if (balance !== null && !balance.equals(getters.balanceByAddress(address))) {
-                commit('setBalance', {address: address, balance: balance})
-              }
-            })
+          let address = getters.activeIdentity.address
+          dispatch('updateBalance', address)
+        }, 3000)
+      },
+      updateAllBalances ({getters, dispatch, commit, state}) {
+        getters.identities.forEach(identitiy => {
+          let address = identitiy.address
+          dispatch('updateBalance', address)
+        })
+      },
+      updateBalance ({getters, dispatch, commit, state}, address) {
+        if (!web3 || !address) {
+          return
+        }
+        web3.eth.getBalance(address, (err, balance) => {
+          if (!err && balance !== null && !balance.equals(getters.balanceByAddress(address))) {
+            commit('setBalance', {address: address, balance: balance})
+          }
+        })
 
-            if (aeContract) {
-              aeContract.balanceOf(address, {}, (err, balance) => {
-                if (balance !== null && !balance.equals(getters.tokenBalanceByAddress(address))) {
-                  commit('setBalance', {address: address, tokenBalance: balance})
-                }
-              })
+        if (aeContract) {
+          aeContract.balanceOf(address, {}, (err, balance) => {
+            if (!err && balance !== null && !balance.equals(getters.tokenBalanceByAddress(address))) {
+              commit('setBalance', {address: address, tokenBalance: balance})
             }
           })
-        }, 1000)
+        }
       },
       setUnlocked({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
@@ -287,6 +287,7 @@ const store = (function () {
       restoreAddresses({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
         if (numUnlockedAddresses > 0) {
+          console.log('generate how many?', numUnlockedAddresses)
           dispatch('generateAddress', numUnlockedAddresses)
         }
       },
@@ -354,7 +355,7 @@ const store = (function () {
           commit('setApps', apps)
         }
       },
-      createKeystore({commit, dispatch, state}, {seed, password}) {
+      createKeystore ({commit, dispatch, state}, {seed, password}) {
         return new Promise(function (resolve, reject) {
           lightwallet.keystore.createVault({
             password: password,
@@ -377,7 +378,7 @@ const store = (function () {
               // generate the first address
               dispatch('generateAddress')
               // since we created a new account, show the id manager
-              commit('setShowIdManager', true)
+              dispatch('setShowIdManager', true)
               return resolve()
             })
           })
@@ -465,6 +466,12 @@ const store = (function () {
             }
           })
         })
+      },
+      setShowIdManager ({state, dispatch}, showIdManager) {
+        if (showIdManager) {
+          dispatch('updateAllBalances')
+        }
+        state.showIdManager = showIdManager
       }
     }
   })

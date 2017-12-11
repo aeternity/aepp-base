@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     showIdManager () {
-      this.$store.commit('setShowIdManager', true)
+      this.$store.dispatch('setShowIdManager', true)
     }
   }
 }

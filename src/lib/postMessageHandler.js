@@ -56,7 +56,7 @@ class PostMessageHandler {
       }, '*')
     } catch (e) {
       /* handle error */
-      console.log('e', e)
+      e = JSON.parse(JSON.stringify(e))
       event.source.postMessage({
         uuid: event.data.uuid,
         method: 'signTransactionReturn',
