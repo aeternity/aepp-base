@@ -3,8 +3,9 @@
     <h1>Network</h1>
     <ae-switch
       name="example"
+      v-if="ready"
       :choices="options"
-      :default="0"
+      :default="current"
       @input="update"
     /></ae-switch>
    <!--  <ae-button @click="addCustom = !addCustom"  :type="!addCustom ? 'exciting' : 'normal'">Add Custom Network</ae-button>
@@ -12,6 +13,10 @@
     <form @submit.prevent="addOption()">
       <input v-if="addCustom" v-model="custom" placeholder="Custom Network" ref="input">
     </form> -->
+    <div @click='back' class="back">
+      <div :style='"background-image:url(static/icons/browser.svg)"' class="icon-image"></div>
+    </div>
+    <quick-id></quick-id>
   </div>
 </template>
 
@@ -22,6 +27,7 @@ import {
   AeButton,
   AeAmountInput
 } from '@aeternity/aepp-components'
+import QuickId from '@/components/QuickId.vue'
 
 export default {
 
@@ -32,6 +38,7 @@ export default {
       addCustom: false,
       custom: '',
       current: 0,
+      ready: false,
       options: [
         { label: 'Kovan', value: 0, url: 'https://kovan.infura.io' },
         { label: 'Rinkeby', value: 1, url: 'https://rinkeby.infura.io' },
@@ -41,28 +48,37 @@ export default {
       ]
     }
   },
-  watch: {
-    current () {
-      let option = this.options[this.current]
-      this.$store.dispatch('updateRPC', option.url)
-    }
-  },
   methods: {
     addOption () {
       this.options.push({label: this.custom, value: this.options.length, url: this.custom})
     },
     update (newVal) {
-      console.log(newVal)
+      if (this.current === newVal) return
       this.current = newVal
+      let option = this.options[this.current]
+      this.$store.dispatch('updateRPC', option.url)
+    },
+    back () {
+      this.$router.push('app-browser')
     }
   },
   components: {
     AeSwitch,
     AeButton,
-    AeAmountInput
+    AeAmountInput,
+    QuickId
   },
   mounted () {
-    console.log(this.$store)
+    let url = this.$store.state.rpcUrl
+    let key = this.options.findIndex((option) => option.url.toLowerCase() === url.toLowerCase())
+    if (key > -1) {
+      this.current = key
+    }
+    this.ready = true
+  },
+  destroyed () {
+    console.log('unmount')
+    this.ready = false
   }
 }
 </script>
@@ -72,5 +88,14 @@ export default {
   margin:20px auto;
   display: block;
   text-align: center;
+}
+.back {
+  position:absolute;
+  bottom:2px;
+  left:5px;
+  width:50px;
+  height:50px;
+  z-index:998;
+  /*background-color:red;*/
 }
 </style>

@@ -169,8 +169,9 @@ const store = (function () {
       }
     },
     actions: {
-      updateRPC ({commit}, rpcURL) {
+      updateRPC ({commit, dispatch}, rpcURL) {
         commit('updateRPC', rpcURL)
+        dispatch('logout')
       },
       addApp({commit}, url) {
         const CORS = 'https://cors-anywhere.herokuapp.com/'
@@ -237,6 +238,7 @@ const store = (function () {
         window.web3 = web3ForApps
       },
       updateBalances({getters, dispatch, commit, state}) {
+        console.log('updateBalances')
         for (let i in getters.address) {
           aeContract.contract.balanceOf(getters.address[i], function (err) {
             if (err) throw err
