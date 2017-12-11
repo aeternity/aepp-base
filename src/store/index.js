@@ -384,7 +384,7 @@ const store = (function () {
           })
         })
       },
-      signTransaction ({state}, {tx, appName}) {
+      async signTransaction ({state}, {tx, appName}) {
         const tokenAddress = web3.toHex(state.token.address).toLowerCase()
         const to = tx.to ? web3.toHex(tx.to).toLowerCase() : null
         const isAeTokenTx = to === tokenAddress
@@ -393,6 +393,10 @@ const store = (function () {
         const estimateGas = getEstimatedGas.bind(undefined, web3, tx)
         const _getGasPrice = getGasPrice.bind(undefined, web3)
         let aeTokenTx = {}
+
+        tx.gas = tx.gas || await new Promise((resolve, reject) => {
+          web3.eth.estimateGas(tx, (error, result) => error ? reject(error) : resolve(result))
+        })
 
         if (isAeTokenTx) {
           let data = tx.data ? tx.data : null // data sent to contract
