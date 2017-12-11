@@ -78,7 +78,7 @@ export default {
     },
     goBack () {
       // this.$router.push('/app-browser')
-      this.$store.commit('setShowIdManager', false)
+      this.$store.dispatch('setShowIdManager', false)
     },
     isActive (id) {
       return id.address === this.activeIdentity.address
