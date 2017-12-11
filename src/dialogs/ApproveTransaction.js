@@ -102,14 +102,18 @@ export default {
       }
       return '0'
     },
-    aeDestination(){
+    aeDestination () {
       if (this.isAeTokenTx && this.aeTokenTx && this.aeTokenTx.name && this.aeTokenTx.params) {
         let method = this.aeTokenTx.name
         if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
-          let value = this.aeTokenTx.params.find(param => param.name === '_to').value
-          if (value) {
-            return value
+          let param = this.aeTokenTx.params.find(param => param.name === '_to')
+          if (!param) {
+            param = this.aeTokenTx.params.find(param => param.name === '_spender')
           }
+          if (param && param.value) {
+            return param.value
+          }
+          return ''
         }
       }
 
