@@ -252,7 +252,9 @@ const store = (function () {
         commit('setName', address.substr(0, 6))
       },
       setAcountInterval({dispatch, commit, state, getters}) {
+        console.log('setAcountInterval')
         setInterval(() => {
+          console.log('Check Accounts')
           if (!web3) {
             return
           }
@@ -260,26 +262,24 @@ const store = (function () {
             console.log('no accounts found')
             return
           }
-          getters.identities.forEach(identitiy => {
-            let address = identitiy.address
-            if (!address) {
-              return
-            }
-            web3.eth.getBalance(address, (err, balance) => {
-              if (balance !== null && !balance.equals(getters.balanceByAddress(address))) {
-                commit('setBalance', {address: address, balance: balance})
-              }
-            })
-
-            if (aeContract) {
-              aeContract.balanceOf(address, {}, (err, balance) => {
-                if (balance !== null && !balance.equals(getters.tokenBalanceByAddress(address))) {
-                  commit('setBalance', {address: address, tokenBalance: balance})
-                }
-              })
+          let address = getters.activeIdentity.address
+          if (!address) {
+            return
+          }
+          web3.eth.getBalance(address, (err, balance) => {
+            if (balance !== null && !balance.equals(getters.balanceByAddress(address))) {
+              commit('setBalance', {address: address, balance: balance})
             }
           })
-        }, 1000)
+
+          if (aeContract) {
+            aeContract.balanceOf(address, {}, (err, balance) => {
+              if (balance !== null && !balance.equals(getters.tokenBalanceByAddress(address))) {
+                commit('setBalance', {address: address, tokenBalance: balance})
+              }
+            })
+          }
+        }, 3000)
       },
       setUnlocked({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
@@ -287,6 +287,7 @@ const store = (function () {
       restoreAddresses({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
         if (numUnlockedAddresses > 0) {
+          console.log('generate how many?', numUnlockedAddresses)
           dispatch('generateAddress', numUnlockedAddresses)
         }
       },
