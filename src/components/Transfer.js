@@ -66,7 +66,7 @@ export default {
       transactionType: 'internal',
       transactionCurrency: 'AE',
       exchange: null,
-      addressTo: '0xFcd59f0258E024Fd11909c0902Fd51705F385a38',
+      addressTo: null,
       addressFrom: '',
       amount: 0.0001,
       gas: null,
@@ -256,6 +256,9 @@ export default {
     console.log('mount')
     this.createWeb3()
     this.addressFrom = this.activeIdentity.address
+    if (this.identitiesTo.length > 0) {
+      this.addressTo = this.identitiesTo[0].address
+    }
     if (this.$route.params.txhash) {
       this.transactionHash = this.$route.params.txhash;
     }
