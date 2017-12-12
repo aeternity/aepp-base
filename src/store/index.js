@@ -59,9 +59,18 @@ const store = (function () {
           icon : 'static/icons/wall.svg',
           main : 'https://wall.aepps.com'
         },
+        {
+          type : APP_TYPES.INTERNAL,
+          name : 'Network',
+          icon : 'static/icons/notary.svg',
+          main : '/network'
+        },
       ],
     },
     mutations: {
+      updateRPC (state, rpcUrl) {
+        state.rpcUrl = rpcUrl
+      },
       title (state, newtitle) {
         state.title = newtitle
       },
@@ -160,6 +169,10 @@ const store = (function () {
       }
     },
     actions: {
+      updateRPC ({commit, dispatch}, rpcURL) {
+        commit('updateRPC', rpcURL)
+        dispatch('logout')
+      },
       aeContract: () => {
         return aeContract
       },
@@ -196,7 +209,7 @@ const store = (function () {
             }
           })
       },
-      logout({getters, dispatch, state, commit}) {
+      logout ({getters, dispatch, state, commit}) {
         aeContract = null
         derivedKey = null
         web3 = null
@@ -211,7 +224,7 @@ const store = (function () {
         localStorage.setItem('numUnlockedAddresses', addrList.length)
         dispatch('updateAllBalances')
       },
-      changeUser({commit, state}, address) {
+      changeUser ({commit, state}, address) {
         commit('setAccount', address)
         commit('setName', address.substr(0, 6))
       },
@@ -257,11 +270,13 @@ const store = (function () {
       setUnlocked({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
       },
-      restoreAddresses({getters, dispatch, commit, state}) {
+      restoreAddresses ({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
-        if (numUnlockedAddresses > 0) {
-          console.log('generate how many?', numUnlockedAddresses)
-          dispatch('generateAddress', numUnlockedAddresses)
+        let alreadyUnlocked = state.keystore.getAddresses().map(function (e) { return e })
+        let toUnlock = numUnlockedAddresses - alreadyUnlocked
+        if (toUnlock > 0) {
+          console.log('generate how many?', toUnlock)
+          dispatch('generateAddress', toUnlock)
         }
       },
       initWeb3({getters, dispatch, commit, state}, pwDerivedKey) {

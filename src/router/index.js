@@ -6,6 +6,7 @@ import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import AppBrowser from '@/components/AppBrowser.vue'
 import Transfer from '@/components/Transfer.vue'
+import Network from '@/components/Network.vue'
 
 Vue.use(Router)
 
@@ -14,7 +15,8 @@ export const PATHS = {
   SETUP: '/setup',
   UNLOCK: '/unlock',
   EMBEDDED_APP: '/app-browser',
-  TRANSFER : '/transfer'
+  TRANSFER: '/transfer',
+  NETWORK: '/network'
 }
 
 const router = new Router({
@@ -66,6 +68,15 @@ const router = new Router({
       children: [
         { path: ':txhash', component:  Transfer},
       ]
+    },
+    {
+      name: 'network',
+      path: PATHS.NETWORK,
+      component: Network,
+      meta: {
+        title: 'Network',
+        appClass: 'network'
+      }
     }
   ]
 })
