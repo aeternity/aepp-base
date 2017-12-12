@@ -43,8 +43,7 @@ export default {
         { label: 'Kovan', value: 0, url: 'https://kovan.infura.io' },
         { label: 'Rinkeby', value: 1, url: 'https://rinkeby.infura.io' },
         { label: 'Ropsten', value: 2, url: 'https://ropsten.infura.io' },
-        { label: 'Localhost', value: 3, url: 'http://localhost:8545' },
-        { label: 'Mainnet', value: 4, url: 'https://mainnet.infura.io' }
+        { label: 'Localhost:8545', value: 3, url: 'http://localhost:8545' }
       ]
     }
   },
@@ -77,7 +76,6 @@ export default {
     this.ready = true
   },
   destroyed () {
-    console.log('unmount')
     this.ready = false
   }
 }
