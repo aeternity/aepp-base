@@ -26,8 +26,6 @@ const store = (function () {
   var aeContract
   var derivedKey
   let web3
-  let web3ForApps
-  let providerOptsForApps
   return new Vuex.Store({
     state: {
       title: '',
@@ -202,32 +200,7 @@ const store = (function () {
         aeContract = null
         derivedKey = null
         web3 = null
-        web3ForApps = null
-        providerOptsForApps = null
         dispatch('setUnlocked', false)
-      },
-      mkProviderOptsForApps({getters, state}) {
-        providerOptsForApps = {
-          getAccounts: function (cb) {
-            // Only show them the currently selected account.
-            cb(null, [getters.activeIdentity.address])
-          },
-          signTransaction: function (tx, cb) {
-            const t = new Transaction(tx)
-            console.log('sign', tx, t)
-            var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-            cb(null, '0x' + signed)
-          },
-          approveTransaction: function (tx, cb) {
-            console.log('approve', tx)
-            cb(null, true)
-          },
-          rpcUrl: state.rpcUrl
-        }
-      },
-      mkWeb3ForApps() {
-        web3ForApps = new Web3(new ZeroClientProvider(providerOptsForApps))
-        window.web3 = web3ForApps
       },
       generateAddress ({dispatch, commit, state}, numAddresses = 1) {
         if (state.keystore === null) {
@@ -339,8 +312,6 @@ const store = (function () {
         })
         // dispatch('generateAddress', web3);
         dispatch('setAcountInterval')
-        dispatch('mkProviderOptsForApps')
-        dispatch('mkWeb3ForApps')
         dispatch('restoreAddresses')
       },
       init({commit, state}) {
