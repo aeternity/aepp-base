@@ -211,7 +211,7 @@ const store = (function () {
             }
           })
       },
-      logout({getters, dispatch, state, commit}) {
+      logout ({getters, dispatch, state, commit}) {
         aeContract = null
         derivedKey = null
         web3 = null
@@ -219,7 +219,7 @@ const store = (function () {
         providerOptsForApps = null
         dispatch('setUnlocked', false)
       },
-      mkProviderOptsForApps({getters, state}) {
+      mkProviderOptsForApps ({getters, state}) {
         providerOptsForApps = {
           getAccounts: function (cb) {
             // Only show them the currently selected account.
@@ -297,11 +297,13 @@ const store = (function () {
       setUnlocked({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
       },
-      restoreAddresses({getters, dispatch, commit, state}) {
+      restoreAddresses ({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
-        if (numUnlockedAddresses > 0) {
-          console.log('generate how many?', numUnlockedAddresses)
-          dispatch('generateAddress', numUnlockedAddresses)
+        let alreadyUnlocked = state.keystore.getAddresses().map(function (e) { return e })
+        let toUnlock = numUnlockedAddresses - alreadyUnlocked
+        if (toUnlock > 0) {
+          console.log('generate how many?', toUnlock)
+          dispatch('generateAddress', toUnlock)
         }
       },
       initWeb3({getters, dispatch, commit, state}, pwDerivedKey) {
