@@ -119,7 +119,7 @@ iframe {
     width:calc(14.28% - 20px);
   }
 }
-.app-name {
+.app-shortcut__app-name {
   text-align:center;
 }
 .back {

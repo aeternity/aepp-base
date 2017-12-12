@@ -58,10 +58,6 @@ hr:last-child{
   color: #999;
 }
 
-.app-name{
-  font-weight: 500;
-}
-
 .approve__amount{
   display: inline-block;
   text-align: center !important;
@@ -86,15 +82,6 @@ hr:last-child{
 
 .additional-fees-eth{
   font-weight: bold;
-}
-
-.bottom-buttons{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: space-between;
-  margin-top: 40px;
 }
 
 .icon{

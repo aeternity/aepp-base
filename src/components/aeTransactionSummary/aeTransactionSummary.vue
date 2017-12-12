@@ -13,7 +13,7 @@
         <th> Amount: </th>
         <td> {{amount}} ETH
           <span class='amount-in-fiat'>
-            ≈ {{amountInFiat}} USD
+            ≈ {{amountInFiat}} CHF
           </span>
         </td>
       </tr>
@@ -24,7 +24,7 @@
             {{gas.total | fromWei }} ETH
           </span>
           <span class='amount-in-fiat'>
-            <!--≈ {{amountInFiat}} USD-->
+            ≈ {{amountInFiat}} CHF
           </span>
         </td>
       </tr>
@@ -35,7 +35,7 @@
             {{ total | fromWei }} ETH
           </span>
           <span class='amount-in-fiat'>
-            <!--≈ {{amountInFiat}} USD-->
+            ≈ {{amountInFiat}} CHF
           </span>
         </td>
       </tr>

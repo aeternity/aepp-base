@@ -4,6 +4,7 @@ export const CURRENCIES = {
   ETH: 'ETH',
   EUR: 'EUR',
   USD: 'USD',
+  CHF: 'CHF'
 }
 
 export const convertCurrency = (fromCurrency, toCurrency, value = 1) => {
@@ -28,4 +29,12 @@ export const convertAE_USD = convertCurrency.bind(
 
 export const convertETH_USD = convertCurrency.bind(
   undefined, CURRENCIES.ETH, CURRENCIES.USD
+)
+
+export const convertAE_CHF = convertCurrency.bind(
+  undefined, CURRENCIES.AE, CURRENCIES.CHF
+)
+
+export const convertETH_CHF = convertCurrency.bind(
+  undefined, CURRENCIES.ETH, CURRENCIES.CHF
 )
