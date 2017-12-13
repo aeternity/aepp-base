@@ -60,4 +60,29 @@ npm run e2e
 npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Contributing
+
+Changes should be made in an extra fork or branch. Then create a pull request to the **stage** branch. The pull request will be reviewed and if the changes are accepted they are deployed to the [stage environment](https://stage-identity.aepps.com) by travis. If there are no conflicts in stage the stage branch will be merged into master. The master branch is deployed to the [live environment](http://stage-identity.aepps.com) by travis. Changes are never made directly into the master branch.
+
+## Live vs. Stage
+
+We have a stage and a live branch and environments where these branches will be deployed to.
+* [stage environment](https://stage-identity.aepps.com)
+* [live environment](http://stage-identity.aepps.com)
+
+### stage
+* Is used to see changes to the code in effect in a "real" environment without the fear of breaking the live environment.
+* Is password protected (???)
+* http and https are allowed
+* The URL of dapps running in the identity manager is not checked
+* Some of our æpps included in the identity manager point to the staging version of those æpps (e.g. [notary stage](https://stage-notary.aepps.com))
+
+### live
+* Is the live environment, code lives in the "master" branch
+* https is enforced
+* dapps must use https
+* dapps running in the identity manager must be running on <name>.aepps.com, localhost<:port?> or <name>.ngrok.io
+
+### Developing with the identity manager
+
+Since the accepted URLs are very restricted and https is enforced you can use the stage environment during development. You need to configure the [id-manager-provider](https://www.npmjs.com/package/@aeternity/id-manager-provider/) to either use the stage environment by changing the *idManagerHost* option during initialization or passing the *skipSecurity* option.
