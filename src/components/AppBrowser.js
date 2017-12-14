@@ -43,8 +43,8 @@ export default {
   },
   methods : {
     open(app) {
-      this.$router.push(PATHS.EMBEDDED_APP + '/?aepp=' + app.main)
       if(app.type === 1) {
+        this.$router.push(PATHS.EMBEDDED_APP + '/?aepp=' + app.main)
         if(this.iframe !== app.main) {
           this.iframeLoading = true
           this.iframe = app.main
@@ -89,5 +89,6 @@ export default {
       this.iframeLoading = false
     }
     this.resolveUrl()
+    this.$store.commit('forwardPath', null)
   }
 }
