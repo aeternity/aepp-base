@@ -6,9 +6,14 @@ import ZeroClientProvider from 'web3-provider-engine/zero'
 import lightwallet from 'eth-lightwallet'
 import Web3 from 'web3'
 import Transaction from 'ethereumjs-tx'
-import {approveTransaction as approveTransactionDialog} from "@/dialogs/index"
+import {
+  approveTransaction as approveTransactionDialog,
+  approveMessage as approveMessageDialog
+} from "@/dialogs/index"
 import {logTx} from '@/lib/logging'
 import {getEstimatedGas, getGasPrice} from "@/lib/remoteGetters"
+import abiDecoder from 'abi-decoder'
+var util = require('ethereumjs-util')
 
 Vue.use(Vuex)
 
@@ -21,8 +26,6 @@ const store = (function () {
   var aeContract
   var derivedKey
   let web3
-  let web3ForApps
-  let providerOptsForApps
   return new Vuex.Store({
     state: {
       title: '',
@@ -57,11 +60,20 @@ const store = (function () {
           icon : 'static/icons/wall.svg',
           main : 'https://wall.aepps.com'
         },
+        {
+          type : APP_TYPES.INTERNAL,
+          name : 'Network',
+          icon : 'static/icons/notary.svg',
+          main : '/network'
+        },
       ],
     },
     mutations: {
       forwardPath (state, path) {
         state.forwardPath = path
+      },
+      updateRPC (state, rpcUrl) {
+        state.rpcUrl = rpcUrl
       },
       title (state, newtitle) {
         state.title = newtitle
@@ -78,11 +90,11 @@ const store = (function () {
       setKeystore (state, keystore) {
         state.keystore = keystore
       },
-      addApp( state , app) {
-        this.state.apps.push(app);
+      addApp (state, app) {
+        this.state.apps.push(app)
         localStorage.setItem('apps', JSON.stringify(this.state.apps))
       },
-      setApps ( state , apps) {
+      setApps (state, apps) {
         this.state.apps = apps
       },
       setUnlocked (state, unlocked) {
@@ -111,9 +123,6 @@ const store = (function () {
             tokenBalance: tokenBalance ? tokenBalance : 0
           })
         }
-      },
-      setShowIdManager (state, showIdManager) {
-        state.showIdManager = showIdManager
       }
     },
     getters: {
@@ -164,6 +173,13 @@ const store = (function () {
       }
     },
     actions: {
+      updateRPC ({commit, dispatch}, rpcURL) {
+        commit('updateRPC', rpcURL)
+        dispatch('logout')
+      },
+      aeContract: () => {
+        return aeContract
+      },
       addApp({commit}, url) {
         return new Promise((resolve, reject) => {
           const CORS = 'https://cors-anywhere.herokuapp.com/'
@@ -201,58 +217,29 @@ const store = (function () {
             })
           })
       },
-      logout({getters, dispatch, state, commit}) {
+      logout ({getters, dispatch, state, commit}) {
         aeContract = null
         derivedKey = null
         web3 = null
-        web3ForApps = null
-        providerOptsForApps = null
         dispatch('setUnlocked', false)
       },
-      mkProviderOptsForApps({getters, state}) {
-        providerOptsForApps = {
-          getAccounts: function (cb) {
-            // Only show them the currently selected account.
-            cb(null, [getters.activeIdentity.address])
-          },
-          signTransaction: function (tx, cb) {
-            const t = new Transaction(tx)
-            console.log('sign', tx, t)
-            var signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-            cb(null, '0x' + signed)
-          },
-          approveTransaction: function (tx, cb) {
-            console.log('approve', tx)
-            cb(null, true)
-          },
-          rpcUrl: state.rpcUrl
-        }
-      },
-      mkWeb3ForApps() {
-        web3ForApps = new Web3(new ZeroClientProvider(providerOptsForApps))
-        window.web3 = web3ForApps
-      },
-      updateBalances({getters, dispatch, commit, state}) {
-        for (let i in getters.address) {
-          aeContract.contract.balanceOf(getters.address[i], function (err) {
-            if (err) throw err
-          })
-        }
-      },
-      generateAddress({dispatch, commit, state}, numAddresses = 1) {
-        if (state.keystore === null || !state.unlocked) {
+      generateAddress ({dispatch, commit, state}, numAddresses = 1) {
+        if (state.keystore === null) {
           return
         }
         state.keystore.generateNewAddress(derivedKey, numAddresses)
         let addrList = state.keystore.getAddresses().map(function (e) { return e })
         localStorage.setItem('numUnlockedAddresses', addrList.length)
+        dispatch('updateAllBalances')
       },
-      changeUser({commit, state}, address) {
+      changeUser ({commit, state}, address) {
         commit('setAccount', address)
         commit('setName', address.substr(0, 6))
       },
-      setAcountInterval({dispatch, commit, state, getters}) {
+      setAcountInterval ({dispatch, commit, state, getters}) {
+        // console.log('setAcountInterval')
         setInterval(() => {
+          // console.log('Check Accounts')
           if (!web3) {
             return
           }
@@ -260,34 +247,44 @@ const store = (function () {
             console.log('no accounts found')
             return
           }
-          getters.identities.forEach(identitiy => {
-            let address = identitiy.address
-            if (!address) {
-              return
-            }
-            web3.eth.getBalance(address, (err, balance) => {
-              if (balance !== null && !balance.equals(getters.balanceByAddress(address))) {
-                commit('setBalance', {address: address, balance: balance})
-              }
-            })
+          let address = getters.activeIdentity.address
+          dispatch('updateBalance', address)
+        }, 3000)
+      },
+      updateAllBalances ({getters, dispatch, commit, state}) {
+        getters.identities.forEach(identitiy => {
+          let address = identitiy.address
+          dispatch('updateBalance', address)
+        })
+      },
+      updateBalance ({getters, dispatch, commit, state}, address) {
+        if (!web3 || !address) {
+          return
+        }
+        web3.eth.getBalance(address, (err, balance) => {
+          if (!err && balance !== null && !balance.equals(getters.balanceByAddress(address))) {
+            commit('setBalance', {address: address, balance: balance})
+          }
+        })
 
-            if (aeContract) {
-              aeContract.balanceOf(address, {}, (err, balance) => {
-                if (balance !== null && !balance.equals(getters.tokenBalanceByAddress(address))) {
-                  commit('setBalance', {address: address, tokenBalance: balance})
-                }
-              })
+        if (aeContract) {
+          aeContract.balanceOf(address, {}, (err, balance) => {
+            if (!err && balance !== null && !balance.equals(getters.tokenBalanceByAddress(address))) {
+              commit('setBalance', {address: address, tokenBalance: balance})
             }
           })
-        }, 1000)
+        }
       },
       setUnlocked({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
       },
-      restoreAddresses({getters, dispatch, commit, state}) {
+      restoreAddresses ({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
-        if (numUnlockedAddresses > 0) {
-          dispatch('generateAddress', numUnlockedAddresses)
+        let alreadyUnlocked = state.keystore.getAddresses().map(function (e) { return e })
+        let toUnlock = numUnlockedAddresses - alreadyUnlocked
+        if (toUnlock > 0) {
+          console.log('generate how many?', toUnlock)
+          dispatch('generateAddress', toUnlock)
         }
       },
       initWeb3({getters, dispatch, commit, state}, pwDerivedKey) {
@@ -338,8 +335,6 @@ const store = (function () {
         })
         // dispatch('generateAddress', web3);
         dispatch('setAcountInterval')
-        dispatch('mkProviderOptsForApps')
-        dispatch('mkWeb3ForApps')
         dispatch('restoreAddresses')
       },
       init({commit, state}) {
@@ -354,7 +349,7 @@ const store = (function () {
           commit('setApps', apps)
         }
       },
-      createKeystore({commit, dispatch, state}, {seed, password}) {
+      createKeystore ({commit, dispatch, state}, {seed, password}) {
         return new Promise(function (resolve, reject) {
           lightwallet.keystore.createVault({
             password: password,
@@ -377,32 +372,104 @@ const store = (function () {
               // generate the first address
               dispatch('generateAddress')
               // since we created a new account, show the id manager
-              commit('setShowIdManager', true)
+              dispatch('setShowIdManager', true)
               return resolve()
             })
           })
         })
       },
-      signTransaction({state}, tx) {
+      async signTransaction ({state}, {tx, appName}) {
         const tokenAddress = web3.toHex(state.token.address).toLowerCase()
+        const to = tx.to ? web3.toHex(tx.to).toLowerCase() : null
+        const isAeTokenTx = to === tokenAddress
         logTx(tx, tokenAddress)
 
         const estimateGas = getEstimatedGas.bind(undefined, web3, tx)
         const _getGasPrice = getGasPrice.bind(undefined, web3)
+        let aeTokenTx = {}
+
+        tx.gas = tx.gas || await new Promise((resolve, reject) => {
+          web3.eth.estimateGas(tx, (error, result) => error ? reject(error) : resolve(result))
+        })
+
+        if (isAeTokenTx) {
+          let data = tx.data ? tx.data : null // data sent to contract
+          // it is a call to our token contract
+          abiDecoder.addABI(aeAbi)
+          const decodedData = abiDecoder.decodeMethod(data)
+          if (decodedData) {
+            console.log('decodedData', JSON.stringify(decodedData))
+            let method = decodedData.name
+            // e.g. callAndApprove, transfer, ...
+            let params = decodedData.params
+            // e.g. [{"name":"_spender","value":"0x000....","type":"address"},{"name":"_value","value":"1000000000000000000","type":"uint256"}]
+            // methods which transfer tokens or allow transferring of tokens are:
+            // approve(_spender, _value)
+            // transferFrom(_from, _to, _value)
+            // transfer(_to, _value)
+            // approveAndCall(_spender, _value, _data)
+            if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
+              let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
+              // confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
+            }
+            aeTokenTx = decodedData
+          } else {
+            console.log('could not decode data')
+          }
+        }
 
         return new Promise((resolve, reject) => {
-          approveTransactionDialog(tx, estimateGas, _getGasPrice, '').then(approved => {
+          approveTransactionDialog(
+            tx,
+            estimateGas,
+            _getGasPrice,
+            appName,
+            isAeTokenTx,
+            aeTokenTx
+          ).then(approved => {
             if (approved) {
               const t = new Transaction(tx)
               console.log('sign', tx, t)
               const signed = lightwallet.signing.signTx(state.keystore, derivedKey, t.serialize().toString('hex'), tx.from)
               console.log('signed', signed)
-              return resolve(signed)
+              resolve(signed)
             } else {
-              return reject(new Error('Payment rejected by user'))
+              reject(new Error('Payment rejected by user'))
             }
           })
         })
+      },
+      signPersonalMessage (store, { msg, appName }) {
+        const asText = web3.toAscii(msg.data)
+        const state = store.state
+        const activeIdentity = store.getters.activeIdentity;
+        return new Promise((resolve, reject) => {
+          approveMessageDialog(activeIdentity, asText, appName).then(approved =>{
+            if (approved) {
+              const data = asText
+              let privateKey = state.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
+              let privateKeyBuffer = new Buffer(privateKey, 'hex')
+              const messageHash = util.hashPersonalMessage(util.toBuffer(data))
+              const signed = util.ecsign(messageHash, privateKeyBuffer)
+              const combined = Buffer.concat([
+                Buffer.from(signed.r),
+                Buffer.from(signed.s),
+                Buffer.from([signed.v])
+              ])
+              const signedHex = util.addHexPrefix(combined.toString('hex'))
+              // TODO confirm screen like in signTransaction
+              resolve(signedHex)
+            } else {
+              reject(new Error('Signing rejected by user'))
+            }
+          })
+        })
+      },
+      setShowIdManager ({state, dispatch}, showIdManager) {
+        if (showIdManager) {
+          dispatch('updateAllBalances')
+        }
+        state.showIdManager = showIdManager
       }
     }
   })

@@ -2,10 +2,11 @@ import Vue from 'vue'
 import ModalDialogs, { makeDialog } from 'vue-modal-dialogs'
 import router from '@/router'
 
-import Approve from '@/components/Approve.vue';
+import ApproveTransaction from '@/dialogs/ApproveTransaction.vue'
+import ApproveMessage from '@/dialogs/ApproveMessage.vue'
 
 Vue.use(ModalDialogs, {
-  el:'#dialog',
+  el: '#dialog',
   wrapper: {
     props: {
       name: 'fade'
@@ -14,11 +15,24 @@ Vue.use(ModalDialogs, {
   wrapperComponentOptions: {
     router
   },
-  zIndex:{
-    value:1000
+  zIndex: {
+    value: 1000
   }
-});
+})
 
 export const approveTransaction = makeDialog(
-  Approve, 'transaction', 'estimateGas', 'getGasPrice', 'appName'
+  ApproveTransaction,
+  'transaction',
+  'estimateGas',
+  'getGasPrice',
+  'appName',
+  'isAeTokenTx',
+  'aeTokenTx'
+)
+
+export const approveMessage = makeDialog(
+  ApproveMessage,
+  'identity',
+  'message',
+  'appName'
 )

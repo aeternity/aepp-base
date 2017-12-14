@@ -1,14 +1,14 @@
 import {
   AeButton,
+  AeIcon,
   AeSwitch,
   AeAmountInput as AeAmount,
   AeIdentity,
   AeAddressInput
 } from '@aeternity/aepp-components'
 import AeTransaction from './aeTransaction/aeTransaction.vue'
-import AeTransactionSummary from './aeTransactionSummary/aeTransactionSummary.vue'
-import Transaction from 'ethereumjs-tx'
-import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
+import {swiper as Swiper, swiperSlide as SwiperSlide} from 'vue-awesome-swiper'
+import {convertAE_CHF, convertETH_CHF} from '@/lib/currencyConverter'
 
 import Web3 from 'web3'
 import ZeroClientProvider from 'web3-provider-engine/zero'
@@ -32,22 +32,21 @@ const commonSwiperOptions = {
   slidesPerView: 'auto',
   //roundLengths: true,
   pagination: '.swiper-pagination',
-  paginationClickable :true,
+  paginationClickable: true,
 }
 
 export default {
-  name : 'Transfer',
+  name: 'Transfer',
   components: {
     AeIdentity,
     AeButton,
+    AeIcon,
     AeSwitch,
     AeAmount,
     AeTransaction,
-    AeTransactionSummary,
     AeAddressInput,
     Swiper,
     SwiperSlide,
-    //'ae-button-icon': aeButtonIcon,
   },
   filters: {
     fromWei(value) {
@@ -58,67 +57,57 @@ export default {
   data() {
     return {
       notNextTick: true,
-      swiperOptionsFrom: {
-        ...commonSwiperOptions,
-        onSlideChangeEnd: swiper => {
-          console.log(swiper.activeIndex,swiper.realIndex,swiper)
-          this.addressFrom = this.identities[swiper.realIndex].address
-          if( this.$refs.swiperTo) {
-            this.addressTo = this.identitiesTo[this.$refs.swiperTo.swiper.realIndex].address
-          }
-        }
-      },
       swiperOptionsTo: {
         ...commonSwiperOptions,
         onSlideChangeEnd: swiper => {
-          console.log(swiper.activeIndex,swiper.realIndex,swiper)
+          console.log(swiper.activeIndex, swiper.realIndex, swiper)
           this.addressTo = this.identitiesTo[swiper.realIndex].address
         }
       },
-      transactionType : 'internal',
-      exchange : null,
-      addressTo : '0xFcd59f0258E024Fd11909c0902Fd51705F385a38',
-      addressFrom : '',
-      amount : 0.0001,
-      gas : null,
-      web3Ready : false,
-      transactionHash : null,
-      transaction : null
+      transactionType: 'internal',
+      transactionCurrency: 'AE',
+      addressTo: null,
+      addressFrom: '',
+      amount: 0.0001,
+      fiatAmount: 'N/A',
+      gas: null,
+      web3Ready: false,
+      transactionHash: null,
+      transaction: null
     }
   },
-  computed : {
-    identities () {
+  computed: {
+    tokenAddress() {
+      return this.$store.state.token.address
+    },
+    identities() {
       return this.$store.getters.identities
     },
-    identitiesTo () {
-      return this.identities.filter((i) => {return i.address !== this.addressFrom})
+    identitiesTo() {
+      return this.identities.filter((i) => {
+        return i.address !== this.addressFrom
+      })
     },
-    //total() {
-      //return this.gas.gasPrice.times(this.gas.gas).plus(web3.toWei(this.amount, 'ether')).toString()
-    //},
-    amountInFiat() {
-      if(!this.exchange) {
-        return 'N/A'
-      }
-      return Math.round( this.exchange.USD * this.amount * 100) / 100
-
+    hasErrors() {
+      const errors = this.errors || {}
+      return typeof errors.length === 'number' && errors.length > 1
     },
     activeIdentity() {
       return this.$store.getters.activeIdentity
     },
     errors() {
       let errors = [];
-      if(!this.web3Ready) {
+      if (!this.web3Ready) {
         errors.push("Web 3 not ready")
         return errors
       }
-      if(!web3.isAddress(this.addressFrom))
+      if (!web3.isAddress(this.addressFrom))
         errors.push("Address From is invalid")
-      if(!web3.isAddress(this.addressTo))
+      if (!web3.isAddress(this.addressTo))
         errors.push("Address To is invalid")
-      if(web3.isAddress(this.addressFrom) && this.addressFrom === this.addressTo)
+      if (web3.isAddress(this.addressFrom) && this.addressFrom === this.addressTo)
         errors.push("Addresses must be different")
-      if(parseFloat(this.amount) <= 0.0)
+      if (parseFloat(this.amount) <= 0.0)
         errors.push("Amount must be greater than zero")
       //if(address
       return errors
@@ -127,19 +116,42 @@ export default {
       return this.errors.length < 1
     },
   },
-  watch : {
-    transactionType (newTransactionType) {
-      if(newTransactionType !== 'internal') {
+  watch: {
+    transactionType(newTransactionType) {
+      if (newTransactionType !== 'internal') {
         return
       }
-      if( this.$refs.swiperTo ) {
+      if (this.$refs.swiperTo) {
         alert(newTransactionType)
         this.addressTo = this.identitiesTo[this.$refs.swiperTo.swiper.realIndex].address
       }
+    },
+    amount () {
+      this.recalculateFiat()
+    },
+    transactionCurrency () {
+      this.recalculateFiat()
     }
   },
-  methods : {
-    isActive (id) {
+  methods: {
+    async recalculateFiat () {
+      try {
+        if (this.transactionCurrency === 'AE') {
+          let fiatAmount = await convertAE_CHF(this.amount)
+          this.fiatAmount = parseFloat(fiatAmount).toFixed(2)
+        } else {
+          let fiatAmount = await convertETH_CHF(this.amount)
+          this.fiatAmount = parseFloat(fiatAmount).toFixed(2)
+        }
+      } catch (e) {
+        console.log(e)
+        this.fiatAmount = 'N/A'
+      }
+    },
+    close() {
+      window.history.back()
+    },
+    isActive(id) {
       return id.address === this.activeIdentity.address
     },
     createWeb3() {
@@ -148,9 +160,9 @@ export default {
           console.log('getAccounts');
           cb(null, [this.activeIdentity.address])
         },
-        signTransaction: async(tx, cb) => {
+        signTransaction: async (tx, cb) => {
           try {
-            let signed = await this.$store.dispatch('signTransaction', tx)
+            let signed = await this.$store.dispatch('signTransaction', {tx, appName: 'Transfer'})
             cb(null, '0x' + signed)
           } catch (e) {
             /* handle error */
@@ -164,15 +176,15 @@ export default {
         rpcUrl: this.$store.state.rpcUrl
       }
       web3 = new Web3(new ZeroClientProvider(providerOptsForApps))
-      if(web3) {
+      if (web3) {
         this.web3Ready = true;
       }
     },
     estimateGas() {
       var tx = {
-        from : this.addressFrom,
-        to : this.addressTo,
-        value : web3.toWei(this.amount, "ether")
+        from: this.addressFrom,
+        to: this.addressTo,
+        value: web3.toWei(this.amount, "ether")
       }
       let gasAmount = new Promise((resolve, reject) => {
         web3.eth.estimateGas(tx, (err, gas) => {
@@ -184,7 +196,7 @@ export default {
         });
       })
       let gasPrice = new Promise((resolve, reject) => {
-        web3.eth.getGasPrice((err,gasPrice)=>{
+        web3.eth.getGasPrice((err, gasPrice) => {
           if (err) {
             reject(err)
             return
@@ -192,71 +204,82 @@ export default {
           resolve(gasPrice)
         })
       })
-      Promise.all([gasAmount,gasPrice]).then((values)=> {
+      Promise.all([gasAmount, gasPrice]).then((values) => {
         this.gas = {
-          amount : values[0],
-          price : values[1],
-          total : values[1].times( values[0] ).toString()
+          amount: values[0],
+          price: values[1],
+          total: values[1].times(values[0]).toString()
         }
       })
     },
     send() {
-      if(!web3) {
+      if (!web3) {
         this.createWeb3()
       }
-      if(!this.addressFrom) {
+      if (!this.addressFrom) {
         return
       }
-      if(!this.addressTo) {
+      if (!this.addressTo) {
         return
       }
-      if(!this.amount) {
+      if (!this.amount) {
         return
       }
       console.log('2 send', this.amount);
-      var tx = {
-        from : this.addressFrom,
-        to : this.addressTo,
-        value : web3.toWei(this.amount, "ether")
+      var txPromise
+      if (this.transactionCurrency === 'ETH') {
+        txPromise = Promise.resolve({
+          from: this.addressFrom,
+          to: this.addressTo,
+          value: web3.toWei(this.amount, "ether")
+        })
+      } else if (this.transactionCurrency === 'AE') {
+        txPromise = new Promise((resolve, reject) => {
+          this.$store.dispatch('aeContract').then(contract => {
+            let tx = {
+              from: this.addressFrom,
+              to: this.tokenAddress,
+              value: 0,
+              data: contract.transfer.getData(this.addressTo, web3.toWei(this.amount, "ether"))
+            }
+            resolve(tx)
+          }).catch(() => {
+            reject(new Error('aeContract not found'))
+          })
+        })
+      } else {
+        return
       }
 
-      console.log('3 send', this.amount);
-      console.log(tx)
-      web3.eth.sendTransaction(tx, (err, transactionHash) => {
-        console.log('4 send');
-        if (err) {
-          alert(err.message)
-          return
-        }
-        this.transactionHash = transactionHash
-        this.$router.replace({ path: `/transfer/${transactionHash}` })
-      });
-    },
-    swipeTo(idx) {
-      this.$refs.swiperFrom.swiper.slideTo(idx)
+      txPromise.then(tx => {
+        console.log('3 send', this.amount);
+        console.log(tx)
+        web3.eth.sendTransaction(tx, (err, transactionHash) => {
+          console.log('4 send');
+          if (err) {
+            alert(err.message)
+            return
+          }
+          this.transactionHash = transactionHash
+          this.$router.replace({path: `/transfer/${transactionHash}`})
+        });
+      })
     }
   },
   mounted() {
     console.log('mount')
     this.createWeb3()
     this.addressFrom = this.activeIdentity.address
-    this.swipeTo(this.$store.state.selectedIdentityIdx)
-    if(this.$route.params.txhash) {
+    if (this.identitiesTo.length > 0) {
+      this.addressTo = this.identitiesTo[0].address
+    }
+    this.recalculateFiat()
+    if (this.$route.params.txhash) {
       this.transactionHash = this.$route.params.txhash;
     }
-    const url = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
     this.$watch(vm => [vm.addressFrom, vm.addressTo, vm.amount].join(), val => {
       this.estimateGas()
     })
     this.estimateGas()
-    fetch(url).then((response) => {
-      var contentType = response.headers.get("content-type");
-      if(contentType && contentType.includes("application/json")) {
-        return response.json();
-      }
-      throw new TypeError("Oops, we haven't got JSON!");
-    }).then((json) => {
-      this.exchange = json;
-    })
   }
 }
