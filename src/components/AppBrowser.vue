@@ -38,10 +38,10 @@
 
     <ae-modal v-if="modal" :title="modal.title" @close="closeModal">
       {{modal.message}}
-      <div class="ae-modal__options">
-        <button @click="closeModal">Cancel</button>
-        <button @click="remove(modal.target)">Delete</button>
-      </div>
+      <ul>
+        <li><ae-button size="smaller" @click="closeModal">CANCEL</ae-button></li>
+        <li><ae-button size="smaller" type="dramatic" @click="remove(modal.target)">DELETE</ae-button></li>
+      </ul>
     </ae-modal>
 
   </div>

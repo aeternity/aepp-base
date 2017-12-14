@@ -109,6 +109,17 @@ iframe {
   height:100%;
   z-index:950;
 }
+.ae-modal ul{
+  list-style-type: none;
+  padding:0;
+  display:flex;
+  align-items: center;
+  margin:29px 0 0;
+}
+.ae-modal ul > li{
+  flex:1 0 auto;
+  text-align: center;
+}
 @media screen and (min-width:295px) {
   .app-shortcut {
     width:calc(33.3% - 10px);
