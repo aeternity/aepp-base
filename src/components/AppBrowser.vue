@@ -31,7 +31,10 @@
       </div>
     </div>
     <quick-id></quick-id>
-
+    
+    <div class="app-browser__notifications" v-show="notifications.length > 0" @click.stop="doNothing">
+      <ae-notification v-for="(item, index) in notifications" :key="index" :type="item.type" @close="notifications.shift()">{{item.message}}</ae-notification>
+    </div>
   </div>
 </template>
 

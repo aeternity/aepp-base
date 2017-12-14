@@ -96,6 +96,12 @@ iframe {
 .app-icon-outer .app-icon{
   margin:0 auto; /* can delete after margins are removed from component */
 }
+.app-browser__notifications{
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  z-index:200;
+}
 @media screen and (min-width:295px) {
   .app-shortcut {
     width:calc(33.3% - 10px);

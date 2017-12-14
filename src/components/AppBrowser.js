@@ -2,6 +2,7 @@ import QuickId from '@/components/QuickId.vue'
 import { AeAppIcon } from '@aeternity/aepp-components'
 import { AeButton } from '@aeternity/aepp-components'
 import { AeIcon } from '@aeternity/aepp-components'
+import { AeNotification } from '@aeternity/aepp-components'
 
 export default {
   name: 'app-browser',
@@ -12,7 +13,8 @@ export default {
       iframeLoading : true,
       isTouch: false,
       editModeActive: false,
-      editModeTmOut: null
+      editModeTmOut: null,
+      notifications: []
     }
   },
   computed : {
@@ -36,6 +38,14 @@ export default {
       }
       style.display = this.showIframe ? 'block' : 'none'
       return style
+    }
+  },
+  watch: {
+    editModeActive (active) {
+      if (active) {
+        this.notifications.push({type: 'boring', message: "You're now removing œpps"})
+        setTimeout(() => this.notifications.shift(), 3000)
+      }
     }
   },
   methods : {
@@ -70,13 +80,17 @@ export default {
     },
     setIsTouch() {
       this.isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch
+    },
+    doNothing () {
+      // to stop .app-browser @click handler propogation
     }
   },
   components: {
      QuickId,
      AeAppIcon,
      AeIcon,
-     AeButton
+     AeButton,
+     AeNotification
   },
   created () {
     this.setIsTouch()
