@@ -3,6 +3,7 @@ import { AeAppIcon } from '@aeternity/aepp-components'
 import { AeButton } from '@aeternity/aepp-components'
 import { AeIcon } from '@aeternity/aepp-components'
 import { AeNotification } from '@aeternity/aepp-components'
+import { AeModal } from '@aeternity/aepp-components'
 
 export default {
   name: 'app-browser',
@@ -14,7 +15,8 @@ export default {
       isTouch: false,
       editModeActive: false,
       editModeTmOut: null,
-      notifications: []
+      notifications: [],
+      modal: null
     }
   },
   computed : {
@@ -70,9 +72,20 @@ export default {
       }
     },
     remove(name) {
+      this.modal = null
       if(name) {
         this.$store.dispatch('removeApp', name)
       }
+    },
+    confirmRemove (name) {
+      this.modal = {
+        title: `Delete "${name}"?`,
+        message: "You can easily add this œpp again, if you are regretting this action",
+        target: name
+      }
+    },
+    closeModal() {
+      this.modal = null
     },
     editMode(action = null) {
       if (action === 'cancel') return clearTimeout(this.editModeTmOut)
@@ -90,7 +103,8 @@ export default {
      AeAppIcon,
      AeIcon,
      AeButton,
-     AeNotification
+     AeNotification,
+     AeModal
   },
   created () {
     this.setIsTouch()
