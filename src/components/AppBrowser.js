@@ -1,5 +1,6 @@
 import QuickId from '@/components/QuickId.vue'
 import { AeAppIcon } from '@aeternity/aepp-components'
+import { AeButton } from '@aeternity/aepp-components'
 import { AeIcon } from '@aeternity/aepp-components'
 
 export default {
@@ -74,7 +75,8 @@ export default {
   components: {
      QuickId,
      AeAppIcon,
-     AeIcon
+     AeIcon,
+     AeButton
   },
   created () {
     this.setIsTouch()

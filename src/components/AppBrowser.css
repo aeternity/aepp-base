@@ -140,18 +140,19 @@ iframe {
 }
 .remove-app-btn{
   position: absolute;
-  top:-12px;
-  right:-12px;
+  top:0;
+  right:0;
   cursor: pointer;
   visibility: hidden;
   opacity:0;
-  transform:scale(.8,.8);
+  transform-origin:center center;
+  transform: translate(48%,-50%) scale(.45,.45);
   transition: opacity 300ms, transform 300ms, visibility 0s 300ms;
 }
 .no-touch .app-shortcut:hover .remove-app-btn,
 .touch .apps--editmode .remove-app-btn{
   visibility: visible;
   opacity:1;
-  transform:scale(1,1);
-  transition: opacity 300ms, transform 300ms, visibility 0s 0s;
+  transform: translate(48%,-50%) scale(.58,.58);
+  transition: opacity 300ms 500ms, transform 300ms 500ms, visibility 0s 500ms;
 }

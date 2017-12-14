@@ -10,7 +10,9 @@
       <div v-for='app in apps' class="app-shortcut">
         <div class="app-icon-outer" @click="open(app)" @touchstart="editMode" @touchend="editMode('cancel')" @contextmenu.prevent>
           <div class="remove-app-btn" @click.stop="remove(app.name)">
-            <ae-icon name="close" type="exciting"></ae-icon>
+            <ae-button size='small' type='dramatic'>
+              <ae-icon slot='icon' invert type='exciting' name="close"/>
+            </ae-button>
           </div>
           <ae-app-icon :src='app.icon'/>
         </div>
