@@ -11,8 +11,12 @@ export default {
     }
   },
   watch: {
-    url () {
+    url (newUrl, oldUrl) {
       this.resolveUrl()
+    },
+    iframe (newIframe, oldIframe) {
+      // replace the location so it will not be added to the histoty stack of the iframe
+      this.$refs.appframe.contentWindow.location.replace(this.iframe)
     }
   },
   computed : {
@@ -41,11 +45,11 @@ export default {
       return style
     }
   },
-  methods : {
-    open(app) {
-      if(app.type === 1) {
+  methods: {
+    open (app) {
+      if (app.type === 1) {
         this.$router.push(PATHS.EMBEDDED_APP + '/?aepp=' + app.main)
-        if(this.iframe !== app.main) {
+        if (this.iframe !== app.main) {
           this.iframeLoading = true
           this.iframe = app.main
         }
@@ -56,6 +60,7 @@ export default {
     },
     back() {
       this.$router.push(PATHS.EMBEDDED_APP)
+      this.iframe = ''
       this.showIframe = false
     },
     add() {
@@ -77,6 +82,8 @@ export default {
             this.open(app)
           }).catch((err) => console.log(err))
         }
+      } else {
+        this.showIframe = false
       }
     }
   },

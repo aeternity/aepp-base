@@ -2,7 +2,7 @@
   <div class="app-browser screen">
 
     <div :style='iframeStyle' :class="{'iframe-wrap' : true, loading : iframeLoading}">
-      <iframe ref="appframe" id="appframe" class="nomargin" :src="iframe"></iframe>
+      <iframe ref="appframe" id="appframe" class="nomargin"></iframe>
       <div class="loader"></div>
     </div>
 
