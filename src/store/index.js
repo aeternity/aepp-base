@@ -40,8 +40,7 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
-      entryQuery: null,
-      forwardPath: '',
+      initialQuery: null,
       apps : [
         {
           type : APP_TYPES.EXTERNAL,
@@ -70,11 +69,8 @@ const store = (function () {
       ],
     },
     mutations: {
-      entryQuery (state, entryQuery) {
-        state.entryQuery = entryQuery
-      },
-      forwardPath (state, path) {
-        state.forwardPath = path
+      initialQuery (state, initialQuery) {
+        state.initialQuery = initialQuery
       },
       updateRPC (state, rpcUrl) {
         state.rpcUrl = rpcUrl

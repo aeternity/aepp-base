@@ -7,12 +7,27 @@ export default {
     return {
       iframe: '',
       showIframe: false,
-      iframeLoading: true
+      iframeLoading: true,
+      linkSchemes: [
+        initialQuery => {
+          if (initialQuery.aepp && initialQuery.aepp === 'transfer') {
+            this.$router.push({path: '/transfer', query: initialQuery})
+          }
+        },
+        initialQuery => {
+          if (initialQuery.aepp) {
+            // append query to current route
+            this.$router.push({query: initialQuery})
+            return true
+          }
+          return false
+        }
+      ]
     }
   },
   watch: {
     url (newUrl, oldUrl) {
-      this.resolveUrl()
+      this.resolveUrl(newUrl)
     },
     iframe (newIframe, oldIframe) {
       // replace the location so it will not be added to the histoty stack of the iframe
@@ -69,21 +84,34 @@ export default {
         this.$store.dispatch('addApp', url)
       }
     },
-    resolveUrl () {
-      if (this.url) {
+    resolveUrl (url) {
+      if (url) {
         let app = this.apps.find((app) => {
-          return app.main.indexOf(this.url) > -1
+          return app.main.indexOf(url) > -1
         })
         if (app) {
           this.open(app)
         } else {
-          this.$store.dispatch('addApp', this.url).then((app) => {
+          this.$store.dispatch('addApp', url).then((app) => {
             this.open(app)
           }).catch((err) => console.log(err))
         }
       } else {
         this.showIframe = false
       }
+    },
+    checkInitialQuery () {
+      let initialQuery = this.$store.state.initialQuery
+      console.log('initialQuery', initialQuery)
+      this.linkSchemes.forEach(scheme => {
+        if (typeof scheme === 'function') {
+          if (scheme(initialQuery)) {
+            console.log('found matching scheme')
+          }
+          // TODO: how to break
+        }
+      })
+      this.$store.commit('initialQuery', null)
     }
   },
   components: {
@@ -94,7 +122,7 @@ export default {
     this.$refs.appframe.onload = () => {
       this.iframeLoading = false
     }
-    this.resolveUrl()
-    this.$store.commit('forwardPath', null)
+    this.resolveUrl(this.url)
+    this.checkInitialQuery()
   }
 }

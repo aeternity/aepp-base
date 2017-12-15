@@ -89,11 +89,8 @@ const _mutationHandlers = {
   'setUnlocked': function (router, state) {
     if (state.keystore) {
       if (state.unlocked) {
-        if (state.forwardPath) {
-          router.push(state.forwardPath)
-        } else {
-          router.push(PATHS.EMBEDDED_APP)
-        }
+        // TODO: check here for registered url schemes
+        router.push(PATHS.EMBEDDED_APP)
       } else {
         router.push(PATHS.UNLOCK)
       }
@@ -143,12 +140,7 @@ export const manageRouting = function (store, router) {
   router.onReady(function () {
     const currentPath = router.currentRoute.path.replace(/\/$/, '')
     if (router.currentRoute.query) {
-      store.commit('entryQuery', router.currentRoute.query)
-    }
-    if (router.currentRoute.query && router.currentRoute.query.aepp) {
-      store.commit('forwardPath', PATHS.EMBEDDED_APP + '/?aepp=' + router.currentRoute.query.aepp)
-    } else {
-      store.commit('forwardPath', '')
+      store.commit('initialQuery', router.currentRoute.query)
     }
     const resolver = _pathResolvers[currentPath]
     if (typeof resolver === 'function') {
@@ -177,6 +169,7 @@ export const manageRouting = function (store, router) {
 
   router.beforeEach(function (to, from, next) {
     if (from.path !== to.path) {
+      // this doesnt catch if only the query changes
       const resolver = _pathResolvers[to.path]
       if (typeof resolver === 'function') {
         const result = resolver(store.state, from)
@@ -188,6 +181,8 @@ export const manageRouting = function (store, router) {
       } else {
         next()
       }
+    } else {
+      next()
     }
   })
 }
