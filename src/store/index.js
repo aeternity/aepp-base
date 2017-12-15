@@ -40,6 +40,7 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
+      forwardPath: '',
       apps : [
         {
           type : APP_TYPES.EXTERNAL,
@@ -68,6 +69,9 @@ const store = (function () {
       ],
     },
     mutations: {
+      forwardPath (state, path) {
+        state.forwardPath = path
+      },
       updateRPC (state, rpcUrl) {
         state.rpcUrl = rpcUrl
       },
@@ -177,36 +181,40 @@ const store = (function () {
         return aeContract
       },
       addApp({commit}, url) {
-        const CORS = 'https://cors-anywhere.herokuapp.com/'
-        fetch(CORS + url)
-          .then(function (response) {
-            return response.text();
-          })
-          .then(function (text) {
-            var el = document.createElement('html')
-            el.innerHTML = text
-            var title = el.getElementsByTagName('title')[0].innerText
-            commit('addApp',
-              {
+        return new Promise((resolve, reject) => {
+          const CORS = 'https://cors-anywhere.herokuapp.com/'
+          fetch(CORS + url)
+            .then(function (response) {
+              return response.text();
+            })
+            .then(function (text) {
+              var el = document.createElement('html')
+              el.innerHTML = text
+              var title = el.getElementsByTagName('title')[0].innerText
+              let app = {
                 type: APP_TYPES.EXTERNAL,
                 name: title,
                 icon: 'static/icons/notary.svg',
                 main: url
               }
-            )
-          })
-          .catch(function (reason) {
-            let title = prompt('Enter Title')
-            if (title) {
-              commit('addApp',
-                {
+              commit('addApp', app)
+              resolve(app)
+            })
+            .catch(function (reason) {
+              let title = prompt('Enter Title')
+              if (title) {
+                let app = {
                   type: APP_TYPES.EXTERNAL,
                   name: title,
                   icon: 'static/icons/notary.svg',
                   main: url
                 }
-              )
-            }
+                commit('addApp', app)
+                resolve(app)
+              } else {
+                reject('no title')
+              }
+            })
           })
       },
       logout ({getters, dispatch, state, commit}) {

@@ -1,6 +1,6 @@
 import QuickId from '@/components/QuickId.vue'
 import { AeAppIcon } from '@aeternity/aepp-components'
-
+import { PATHS } from '../router'
 export default {
   name: 'app-browser',
   data () {
@@ -10,7 +10,19 @@ export default {
       iframeLoading : true,
     }
   },
+  watch: {
+    url (newUrl, oldUrl) {
+      this.resolveUrl()
+    },
+    iframe (newIframe, oldIframe) {
+      // replace the location so it will not be added to the histoty stack of the iframe
+      this.$refs.appframe.contentWindow.location.replace(this.iframe)
+    }
+  },
   computed : {
+    url () {
+      return this.$route.query && this.$route.query.aepp
+    },
     apps() {
       return this.$store.state.apps
     },
@@ -33,10 +45,11 @@ export default {
       return style
     }
   },
-  methods : {
-    open(app) {
-      if(app.type === 1) {
-        if(this.iframe !== app.main) {
+  methods: {
+    open (app) {
+      if (app.type === 1) {
+        this.$router.push(PATHS.EMBEDDED_APP + '/?aepp=' + app.main)
+        if (this.iframe !== app.main) {
           this.iframeLoading = true
           this.iframe = app.main
         }
@@ -46,6 +59,8 @@ export default {
       }
     },
     back() {
+      this.$router.push(PATHS.EMBEDDED_APP)
+      this.iframe = ''
       this.showIframe = false
     },
     add() {
@@ -55,15 +70,32 @@ export default {
       }
 
     },
+    resolveUrl () {
+      if (this.url) {
+        let app = this.apps.find((app) => {
+          return app.main.indexOf(this.url) > -1
+        })
+        if (app) {
+          this.open(app)
+        } else {
+          this.$store.dispatch('addApp', this.url).then((app) => {
+            this.open(app)
+          }).catch((err) => console.log(err))
+        }
+      } else {
+        this.showIframe = false
+      }
+    }
   },
   components: {
      QuickId,
      AeAppIcon
   },
   mounted() {
-    console.log(this.$refs)
     this.$refs.appframe.onload = () => {
       this.iframeLoading = false
     }
+    this.resolveUrl()
+    this.$store.commit('forwardPath', null)
   }
 }
