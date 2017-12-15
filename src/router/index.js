@@ -55,7 +55,7 @@ const router = new Router({
       meta: {
         title: 'App Browser',
         appClass: 'app-browser'
-      },
+      }
     },
     {
       name: 'transfer',
@@ -66,7 +66,7 @@ const router = new Router({
         appClass: 'transfer'
       },
       children: [
-        { path: ':txhash', component:  Transfer},
+        {path: ':txhash', component: Transfer}
       ]
     },
     {
@@ -113,7 +113,6 @@ const _mutationHandlers = {
 
 const _pathResolvers = {}
 
-
 _pathResolvers[PATHS.EMBEDDED_APP] = function (state) {
   if (!state.keystore) {
     return PATHS.SETUP
@@ -143,6 +142,9 @@ _pathResolvers[PATHS.SETUP] = function (state) {
 export const manageRouting = function (store, router) {
   router.onReady(function () {
     const currentPath = router.currentRoute.path.replace(/\/$/, '')
+    if (router.currentRoute.query) {
+      store.commit('entryQuery', router.currentRoute.query)
+    }
     if (router.currentRoute.query && router.currentRoute.query.aepp) {
       store.commit('forwardPath', PATHS.EMBEDDED_APP + '/?aepp=' + router.currentRoute.query.aepp)
     } else {
@@ -153,7 +155,7 @@ export const manageRouting = function (store, router) {
       const result = resolver(store.state, currentPath)
       if (typeof result === 'string') {
         router.push(result)
-      } else if(store.state.currentRoute) {
+      } else if (store.state.currentRoute) {
         router.push(store.state.currentRoute)
       }
     }
@@ -174,7 +176,6 @@ export const manageRouting = function (store, router) {
   })
 
   router.beforeEach(function (to, from, next) {
-
     if (from.path !== to.path) {
       const resolver = _pathResolvers[to.path]
       if (typeof resolver === 'function') {

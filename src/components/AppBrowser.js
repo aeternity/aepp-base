@@ -6,8 +6,8 @@ export default {
   data () {
     return {
       iframe: '',
-      showIframe : false,
-      iframeLoading : true,
+      showIframe: false,
+      iframeLoading: true
     }
   },
   watch: {
@@ -19,25 +19,25 @@ export default {
       this.$refs.appframe.contentWindow.location.replace(this.iframe)
     }
   },
-  computed : {
+  computed: {
     url () {
       return this.$route.query && this.$route.query.aepp
     },
-    apps() {
+    apps () {
       return this.$store.state.apps
     },
-    iframeStyle() {
+    iframeStyle () {
       let style
-      if(this.iframe === '') {
-        style =  {
-          'margin-left' : '200%',
-          opacity : '0.0',
+      if (this.iframe === '') {
+        style = {
+          'margin-left': '200%',
+          opacity: '0.0',
           transform: 'scale(1.5)'
         }
       } else {
-        style =  {
-          'margin-left' : '0%',
-          opacity : '1.0',
+        style = {
+          'margin-left': '0%',
+          opacity: '1.0',
           transform: 'scale(1.0)'
         }
       }
@@ -58,17 +58,16 @@ export default {
         this.$router.push(app.main)
       }
     },
-    back() {
+    back () {
       this.$router.push(PATHS.EMBEDDED_APP)
       this.iframe = ''
       this.showIframe = false
     },
-    add() {
-      let url = prompt('URL');
-      if(url) {
+    add () {
+      let url = prompt('URL')
+      if (url) {
         this.$store.dispatch('addApp', url)
       }
-
     },
     resolveUrl () {
       if (this.url) {
@@ -88,10 +87,10 @@ export default {
     }
   },
   components: {
-     QuickId,
-     AeAppIcon
+    QuickId,
+    AeAppIcon
   },
-  mounted() {
+  mounted () {
     this.$refs.appframe.onload = () => {
       this.iframeLoading = false
     }
