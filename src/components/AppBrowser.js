@@ -103,14 +103,15 @@ export default {
     checkInitialQuery () {
       let initialQuery = this.$store.state.initialQuery
       console.log('initialQuery', initialQuery)
-      this.linkSchemes.forEach(scheme => {
+      for (let i = 0; i < this.linkSchemes.length; i++) {
+        let scheme = this.linkSchemes[i]
         if (typeof scheme === 'function') {
           if (scheme(initialQuery)) {
             console.log('found matching scheme')
+            break
           }
-          // TODO: how to break
         }
-      })
+      }
       this.$store.commit('initialQuery', null)
     }
   },

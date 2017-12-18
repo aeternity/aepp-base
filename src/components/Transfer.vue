@@ -5,7 +5,7 @@
       <ae-icon slot='icon' name='close'/>
     </ae-button>
 
-    <ae-switch class='transfer__switch-transaction-type' v-model='transactionType' name='transactionType' :choices="[{value:'internal',label:'To own identity'},{value:'external',label:'External address'}]"/>
+    <ae-switch class='transfer__switch-transaction-type' v-model='transactionType' name='transactionType' :choices="[{value:'internal',label:'To own identity'},{value:'external',label:'External address'}]" :default="transactionType" />
     <div v-if='transactionType === "internal"'>
       <swiper class="swiper-container transfer__identities-to" :options="swiperOptionsTo" ref="swiperTo" :not-next-tick="notNextTick">
         <swiper-slide v-for='(i, index) in identitiesTo' :key='i.address'>
@@ -23,7 +23,7 @@
     </div>
 
     <div class='foo'>
-      <ae-switch class='transfer__switch-transaction-currency' v-model='transactionCurrency' name='transactionCurrency' :choices="[{value:'AE',label:'AE'},{value:'ETH',label:'ETH'}]"/>
+      <ae-switch class='transfer__switch-transaction-currency' v-model='transactionCurrency' name='transactionCurrency' :choices="[{value:'AE',label:'AE'},{value:'ETH',label:'ETH'}]" :default="transactionCurrency"/>
 
       <div class='input-wrap'>
         <div>Amount</div>
