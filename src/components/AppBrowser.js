@@ -7,22 +7,7 @@ export default {
     return {
       iframe: '',
       showIframe: false,
-      iframeLoading: true,
-      linkSchemes: [
-        initialQuery => {
-          if (initialQuery.aepp && initialQuery.aepp === 'transfer') {
-            this.$router.push({path: '/transfer', query: initialQuery})
-          }
-        },
-        initialQuery => {
-          if (initialQuery.aepp) {
-            // append query to current route
-            this.$router.push({query: initialQuery})
-            return true
-          }
-          return false
-        }
-      ]
+      iframeLoading: true
     }
   },
   watch: {
@@ -99,20 +84,6 @@ export default {
       } else {
         this.showIframe = false
       }
-    },
-    checkInitialQuery () {
-      let initialQuery = this.$store.state.initialQuery
-      console.log('initialQuery', initialQuery)
-      for (let i = 0; i < this.linkSchemes.length; i++) {
-        let scheme = this.linkSchemes[i]
-        if (typeof scheme === 'function') {
-          if (scheme(initialQuery)) {
-            console.log('found matching scheme')
-            break
-          }
-        }
-      }
-      this.$store.commit('initialQuery', null)
     }
   },
   components: {
@@ -124,6 +95,5 @@ export default {
       this.iframeLoading = false
     }
     this.resolveUrl(this.url)
-    this.checkInitialQuery()
   }
 }

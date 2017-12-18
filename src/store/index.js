@@ -41,7 +41,7 @@ const store = (function () {
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
       initialQuery: null,
-      apps : [
+      apps: [
         {
           type : APP_TYPES.EXTERNAL,
           name : 'Notary',
@@ -67,8 +67,12 @@ const store = (function () {
           main : '/network'
         },
       ],
+      linkSchemes: []
     },
     mutations: {
+      addLinkScheme (state, newLinkScheme) {
+        state.linkSchemes.push(newLinkScheme)
+      },
       initialQuery (state, initialQuery) {
         state.initialQuery = initialQuery
       },

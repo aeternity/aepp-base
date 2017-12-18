@@ -89,8 +89,11 @@ const _mutationHandlers = {
   'setUnlocked': function (router, state) {
     if (state.keystore) {
       if (state.unlocked) {
-        // TODO: check here for registered url schemes
-        router.push(PATHS.EMBEDDED_APP)
+        // check here for registered url schemes
+        if (!checkInitialQuery(router, state)) {
+          // this is the default redirect if none matched
+          router.push(PATHS.EMBEDDED_APP)
+        }
       } else {
         router.push(PATHS.UNLOCK)
       }
@@ -106,6 +109,22 @@ const _mutationHandlers = {
       }
     }
   }
+}
+
+const checkInitialQuery = (router, state) => {
+  let initialQuery = state.initialQuery
+  for (let i = 0; i < state.linkSchemes.length; i++) {
+    let scheme = state.linkSchemes[i]
+    if (typeof scheme === 'function') {
+      if (scheme(initialQuery)) {
+        console.log('found matching scheme')
+        return true
+      }
+    }
+  }
+  // TODO:
+  // store.commit('initialQuery', null)
+  return false
 }
 
 const _pathResolvers = {}

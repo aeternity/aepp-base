@@ -286,10 +286,10 @@ export default {
     }
   },
   created () {
+    this.createWeb3()
     this.parseQueryData()
   },
   mounted () {
-    this.createWeb3()
     this.addressFrom = this.activeIdentity.address
     if (!this.addressTo && this.identitiesTo.length > 0) {
       this.addressTo = this.identitiesTo[0].address
