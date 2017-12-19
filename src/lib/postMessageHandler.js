@@ -1,6 +1,9 @@
+import MetadataStorage from './metadataStorage'
+
 class PostMessageHandler {
   constructor (store) {
     this.store = store
+    this.metadataStorage = new MetadataStorage()
   }
 
   registerListener () {
@@ -29,6 +32,10 @@ class PostMessageHandler {
       this.signPersonalMessage(event)
     } else if (event.data.method === 'handShake') {
       this.handShake(event)
+    } else if (event.data.method === 'storeMetadata') {
+      this.storeMetadata(event)
+    } else if (event.data.method === 'readMetadata') {
+      this.readMetadata(event)
     }
   }
 
@@ -92,6 +99,39 @@ class PostMessageHandler {
       uuid: event.data.uuid,
       method: 'handShakeReturn',
       payload: null
+    }, '*')
+  }
+
+  async storeMetadata (event) {
+    let msg = event.data.payload
+
+    let namespace = event.origin
+    let key = msg.key
+    let value = msg.value
+
+    let success = this.metadataStorage.storeMetadata(namespace, key, value)
+    event.source.postMessage({
+      uuid: event.data.uuid,
+      method: 'storeMetadataReturn',
+      payload: {
+        success: success
+      }
+    }, '*')
+  }
+
+  async readMetadata (event) {
+    let msg = event.data.payload
+    let namespace = event.origin
+    let key = msg
+    let storedValue = this.metadataStorage.readMetadata(namespace, key)
+    event.source.postMessage({
+      uuid: event.data.uuid,
+      method: 'readMetadataReturn',
+      payload: {
+        success: true,
+        key: key,
+        value: storedValue
+      }
     }, '*')
   }
 }
