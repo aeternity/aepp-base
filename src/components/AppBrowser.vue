@@ -36,7 +36,7 @@
       <ae-notification v-for="(item, index) in notifications" :key="index" :type="item.type" @close="notifications.shift()">{{item.message}}</ae-notification>
     </div>
 
-    <ae-modal v-if="modal" :title="modal.title" @close="closeModal">
+    <ae-modal v-if="modal" :title="modal.title" @close="closeModal" :fullscreen="false">
       {{modal.message}}
       <ul>
         <li><ae-button size="smaller" @click="closeModal">CANCEL</ae-button></li>
