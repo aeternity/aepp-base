@@ -36,6 +36,8 @@ class PostMessageHandler {
       this.storeMetadata(event)
     } else if (event.data.method === 'readMetadata') {
       this.readMetadata(event)
+    } else if (event.data.method === 'requestPermissions') {
+      this.requestPermissions(event)
     }
   }
 
@@ -133,6 +135,33 @@ class PostMessageHandler {
         value: storedValue
       }
     }, '*')
+  }
+
+  async requestPermissions (event) {
+    let msg = event.data.payload
+    let requestingNamespace = event.origin
+    let requestedPermissions = msg
+
+    let normalizedPermissions = this.metadataStorage.normalizePermissionJson(requestedPermissions)
+    if (confirm('You want to give the app ' + requestingNamespace + ' the following permissions? \n\n ' + JSON.stringify(normalizedPermissions, null, 4))) {
+      let result = this.metadataStorage.grantPermissions(requestingNamespace, normalizedPermissions)
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'requestPermissionsReturn',
+        payload: {
+          success: true,
+          result: result
+        }
+      }, '*')
+    } else {
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'requestPermissionsReturn',
+        payload: {
+          success: false
+        }
+      }, '*')
+    }
   }
 }
 
