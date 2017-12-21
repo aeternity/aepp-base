@@ -1,14 +1,11 @@
 const Url = require('url')
+import { MissingPermissionError } from './errors'
 
 class MetadataStorage {
-  // TODO: main / open namespace
-  // TODO: read / write permissions
   // TODO: @schema type?
-  // TODO: display requested permissions (raw)
   // TODO: function to check missing permissions
-  // TODO: aepp can always access own namespace?
-  // TODO: own cool errors
   // TODO: version string
+  // TODO: get whole namespace?
 
   constructor () {
     this.storage = localStorage
@@ -18,6 +15,7 @@ class MetadataStorage {
   }
 
   grantPermissions (requestingNamespace, requestedPermissions) {
+    requestingNamespace = this.cleanNamespace(requestingNamespace)
     console.log('grantPermissions', requestingNamespace, requestedPermissions)
     try {
       let currentPermissionsRaw = this.storage.getItem(this.permissionKeyword)
@@ -60,49 +58,85 @@ class MetadataStorage {
     return existingPermissionsNamespace
   }
 
-  storeMetadata (namespace, key, value) {
-    try {
-      namespace = this.cleanNamespace(namespace)
-      let currentStorageRaw = this.storage.getItem(this.keyword)
-      let currentStorage = {}
-      if (currentStorageRaw) {
-        currentStorage = JSON.parse(currentStorageRaw)
-      }
-      console.log('currentStorage', currentStorage)
-      if (!currentStorage[namespace]) {
-        currentStorage[namespace] = {}
-      }
-      currentStorage[namespace][key] = value
-      this.storage.setItem(this.keyword, JSON.stringify(currentStorage))
-      return true
-    } catch (e) {
-      console.log(e)
-      return false
+  storeMetadata (requestingNamespace, requestedNamespace, key, value) {
+    requestedNamespace = this.cleanNamespace(requestedNamespace)
+    if (!this.hasWritePermission(requestingNamespace, requestedNamespace, key)) {
+      throw new MissingPermissionError('Missing Write Permission')
     }
+    let currentStorageRaw = this.storage.getItem(this.keyword)
+    let currentStorage = {}
+    if (currentStorageRaw) {
+      currentStorage = JSON.parse(currentStorageRaw)
+    }
+    console.log('currentStorage', currentStorage)
+    if (!currentStorage[requestedNamespace]) {
+      currentStorage[requestedNamespace] = {}
+    }
+    currentStorage[requestedNamespace][key] = value
+    this.storage.setItem(this.keyword, JSON.stringify(currentStorage))
+    return true
   }
 
-  readMetadata (namespace, key) {
-    try {
-      namespace = this.cleanNamespace(namespace)
-      let currentStorageRaw = this.storage.getItem(this.keyword)
-      if (!currentStorageRaw) {
-        return null
-      }
-      let currentStorage = JSON.parse(currentStorageRaw)
-      if (currentStorage[namespace] && currentStorage[namespace][key]) {
-        return currentStorage[namespace][key]
-      }
-      return null
-    } catch (e) {
-      console.log(e)
+  readMetadata (requestingNamespace, requestedNamespace, key) {
+    requestedNamespace = this.cleanNamespace(requestedNamespace)
+
+    if (!this.hasReadPermission(requestingNamespace, requestedNamespace, key)) {
+      let error = new MissingPermissionError('Missing Read Permission')
+      throw error
+    }
+
+    let currentStorageRaw = this.storage.getItem(this.keyword)
+    if (!currentStorageRaw) {
       return null
     }
+    let currentStorage = JSON.parse(currentStorageRaw)
+    if (currentStorage[requestedNamespace] && currentStorage[requestedNamespace][key]) {
+      return currentStorage[requestedNamespace][key]
+    }
+    return null
+  }
+
+  hasReadPermission (requestingNamespace, requestedNamespace, key) {
+    return this.hasPermission(requestingNamespace, requestedNamespace, key, 'read')
+  }
+
+  hasWritePermission (requestingNamespace, requestedNamespace, key) {
+    return this.hasPermission(requestingNamespace, requestedNamespace, key, 'write')
+  }
+
+  hasPermission (requestingNamespace, requestedNamespace, key, type) {
+    requestingNamespace = this.cleanNamespace(requestingNamespace)
+    requestedNamespace = this.cleanNamespace(requestedNamespace)
+    console.log('hasPermission', requestingNamespace, requestedNamespace, key, type)
+    if (requestingNamespace === requestedNamespace) {
+      console.log('its the same app')
+      return true
+    }
+    let permissionsRaw = this.storage.getItem(this.permissionKeyword)
+    if (!permissionsRaw) {
+      return false
+    }
+    let permissions = JSON.parse(permissionsRaw)
+    console.log('permissions', permissions)
+    if (
+      permissions &&
+      permissions[requestingNamespace] &&
+      permissions[requestingNamespace][requestedNamespace] &&
+      permissions[requestingNamespace][requestedNamespace][key] &&
+      permissions[requestingNamespace][requestedNamespace][key][type]
+    ) {
+      return true
+    }
+    return false
   }
 
   cleanNamespace (namespace) {
     try {
+      if (!namespace.startsWith('http')) {
+        // nice hack bro
+        namespace = 'http://' + namespace
+      }
       const url = Url.parse(namespace)
-      // console.log(namespace, url)
       if (url.host) {
         return url.host
       } else {
@@ -133,6 +167,9 @@ class MetadataStorage {
           }
 
           for (let [keyName, keyProps] of Object.entries(requestedKeys)) {
+            if (!keyName || keyName === '') {
+              continue
+            }
             normalizedPermissions[requestedNamespace][keyName] = {
               read: false,
               write: false

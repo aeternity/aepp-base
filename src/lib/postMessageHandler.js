@@ -1,4 +1,5 @@
 import MetadataStorage from './metadataStorage'
+import { BaseError } from './errors'
 
 class PostMessageHandler {
   constructor (store) {
@@ -107,34 +108,43 @@ class PostMessageHandler {
   async storeMetadata (event) {
     let msg = event.data.payload
 
-    let namespace = event.origin
+    let requestingNamespace = event.origin
+    let requestedNamespace = msg.namespace || requestingNamespace
     let key = msg.key
     let value = msg.value
-
-    let success = this.metadataStorage.storeMetadata(namespace, key, value)
-    event.source.postMessage({
-      uuid: event.data.uuid,
-      method: 'storeMetadataReturn',
-      payload: {
-        success: success
-      }
-    }, '*')
+    try {
+      let result = this.metadataStorage.storeMetadata(requestingNamespace, requestedNamespace, key, value)
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'storeMetadataReturn',
+        payload: {
+          success: result
+        }
+      }, '*')
+    } catch (e) {
+      this.sendError(event, e)
+    }
   }
 
   async readMetadata (event) {
     let msg = event.data.payload
-    let namespace = event.origin
-    let key = msg
-    let storedValue = this.metadataStorage.readMetadata(namespace, key)
-    event.source.postMessage({
-      uuid: event.data.uuid,
-      method: 'readMetadataReturn',
-      payload: {
-        success: true,
-        key: key,
-        value: storedValue
-      }
-    }, '*')
+    let requestingNamespace = event.origin
+    let requestedNamespace = msg.namespace || requestingNamespace
+    let key = msg.key
+    try {
+      let storedValue = this.metadataStorage.readMetadata(requestingNamespace, requestedNamespace, key)
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'readMetadataReturn',
+        payload: {
+          success: true,
+          key: key,
+          value: storedValue
+        }
+      }, '*')
+    } catch (e) {
+      this.sendError(event, e)
+    }
   }
 
   async requestPermissions (event) {
@@ -162,6 +172,23 @@ class PostMessageHandler {
         }
       }, '*')
     }
+  }
+
+  sendError (event, error) {
+    console.log(error)
+    let errorToSend = {
+      message: error.message
+    }
+    if (error instanceof BaseError) {
+      errorToSend = error.toJson()
+    }
+    event.source.postMessage({
+      uuid: event.data.uuid,
+      payload: {
+        success: false,
+        error: errorToSend
+      }
+    }, '*')
   }
 }
 
