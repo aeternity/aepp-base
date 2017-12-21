@@ -4,10 +4,10 @@ import { MissingPermissionError } from './errors'
 class MetadataStorage {
   // TODO: @schema type?
   // TODO: function to check missing permissions
-  // TODO: version string
   // TODO: get whole namespace?
 
-  constructor () {
+  constructor (options = {}) {
+    this.metadataVersion = options.metadataVersion || 'v0.1'
     this.storage = localStorage
     this.keyword = 'metadata'
     this.permissionKeyword = 'metadataPermissions'
@@ -16,13 +16,8 @@ class MetadataStorage {
 
   grantPermissions (requestingNamespace, requestedPermissions) {
     requestingNamespace = this.cleanNamespace(requestingNamespace)
-    console.log('grantPermissions', requestingNamespace, requestedPermissions)
     try {
-      let currentPermissionsRaw = this.storage.getItem(this.permissionKeyword)
-      let currentPermissions = {}
-      if (currentPermissionsRaw) {
-        currentPermissions = JSON.parse(currentPermissionsRaw)
-      }
+      let currentPermissions = this.getStoredPermissions()
 
       for (const [requestedNamespace, requestedKeys] of Object.entries(requestedPermissions)) {
         if (!currentPermissions[requestingNamespace]) {
@@ -68,12 +63,15 @@ class MetadataStorage {
     if (currentStorageRaw) {
       currentStorage = JSON.parse(currentStorageRaw)
     }
-    console.log('currentStorage', currentStorage)
-    if (!currentStorage[requestedNamespace]) {
-      currentStorage[requestedNamespace] = {}
+    if (!currentStorage[this.metadataVersion]) {
+      currentStorage[this.metadataVersion] = {}
     }
-    currentStorage[requestedNamespace][key] = value
+    if (!currentStorage[this.metadataVersion][requestedNamespace]) {
+      currentStorage[this.metadataVersion][requestedNamespace] = {}
+    }
+    currentStorage[this.metadataVersion][requestedNamespace][key] = value
     this.storage.setItem(this.keyword, JSON.stringify(currentStorage))
+    console.log('storeMetadata', currentStorage)
     return true
   }
 
@@ -90,8 +88,8 @@ class MetadataStorage {
       return null
     }
     let currentStorage = JSON.parse(currentStorageRaw)
-    if (currentStorage[requestedNamespace] && currentStorage[requestedNamespace][key]) {
-      return currentStorage[requestedNamespace][key]
+    if (currentStorage[this.metadataVersion] && currentStorage[this.metadataVersion][requestedNamespace] && currentStorage[this.metadataVersion][requestedNamespace][key]) {
+      return currentStorage[this.metadataVersion][requestedNamespace][key]
     }
     return null
   }
@@ -107,17 +105,11 @@ class MetadataStorage {
   hasPermission (requestingNamespace, requestedNamespace, key, type) {
     requestingNamespace = this.cleanNamespace(requestingNamespace)
     requestedNamespace = this.cleanNamespace(requestedNamespace)
-    console.log('hasPermission', requestingNamespace, requestedNamespace, key, type)
     if (requestingNamespace === requestedNamespace) {
       console.log('its the same app')
       return true
     }
-    let permissionsRaw = this.storage.getItem(this.permissionKeyword)
-    if (!permissionsRaw) {
-      return false
-    }
-    let permissions = JSON.parse(permissionsRaw)
-    console.log('permissions', permissions)
+    let permissions = this.getStoredPermissions()
     if (
       permissions &&
       permissions[requestingNamespace] &&
@@ -189,6 +181,65 @@ class MetadataStorage {
       console.log(e)
     }
     return normalizedPermissions
+  }
+
+  getStoredPermissions () {
+    try {
+      let currentPermissionsRaw = this.storage.getItem(this.permissionKeyword)
+      let currentPermissions = {}
+      if (currentPermissionsRaw) {
+        currentPermissions = JSON.parse(currentPermissionsRaw)
+      }
+      return currentPermissions
+    } catch (e) {
+      return {}
+    }
+  }
+
+  checkMissingPermissions (requestingNamespace, requestedPermissions) {
+    let missingPermissions = {}
+    requestingNamespace = this.cleanNamespace(requestingNamespace)
+    requestedPermissions = this.normalizePermissionJson(requestedPermissions)
+    let storedPermissions = this.getStoredPermissions()
+    for (let [requestedNamespace, requestedKeys] of Object.entries(requestedPermissions)) {
+      if (!storedPermissions[requestingNamespace]) {
+        missingPermissions[requestedNamespace] = requestedKeys
+        continue
+      }
+      if (!storedPermissions[requestingNamespace][requestedNamespace]) {
+        missingPermissions[requestedNamespace] = requestedKeys
+        continue
+      }
+      for (let [keyName, keyProps] of Object.entries(requestedKeys)) {
+        if (!storedPermissions[requestingNamespace][requestedNamespace][keyName]) {
+          if (!missingPermissions[requestedNamespace]) {
+            missingPermissions[requestedNamespace] = {}
+          }
+          missingPermissions[requestedNamespace][keyName] = keyProps
+          continue
+        }
+        if (keyProps['write'] && !storedPermissions[requestingNamespace][requestedNamespace][keyName]['write']) {
+          if (!missingPermissions[requestedNamespace]) {
+            missingPermissions[requestedNamespace] = {}
+          }
+          if (!missingPermissions[requestedNamespace][keyName]) {
+            missingPermissions[requestedNamespace][keyName] = {}
+          }
+          missingPermissions[requestedNamespace][keyName]['write'] = true
+        }
+        if (keyProps['read'] && !storedPermissions[requestingNamespace][requestedNamespace][keyName]['read']) {
+          if (!missingPermissions[requestedNamespace]) {
+            missingPermissions[requestedNamespace] = {}
+          }
+          if (!missingPermissions[requestedNamespace][keyName]) {
+            missingPermissions[requestedNamespace][keyName] = {}
+          }
+          missingPermissions[requestedNamespace][keyName]['read'] = true
+        }
+      }
+    }
+
+    return missingPermissions
   }
 }
 

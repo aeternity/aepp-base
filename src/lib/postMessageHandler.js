@@ -4,7 +4,7 @@ import { BaseError } from './errors'
 class PostMessageHandler {
   constructor (store) {
     this.store = store
-    this.metadataStorage = new MetadataStorage()
+    // this.metadataStorage = new MetadataStorage()
   }
 
   registerListener () {
@@ -112,8 +112,10 @@ class PostMessageHandler {
     let requestedNamespace = msg.namespace || requestingNamespace
     let key = msg.key
     let value = msg.value
+    let metadataVersion = msg.metadataVersion || null
+    let metadataStorage = new MetadataStorage({metadataVersion: metadataVersion})
     try {
-      let result = this.metadataStorage.storeMetadata(requestingNamespace, requestedNamespace, key, value)
+      let result = metadataStorage.storeMetadata(requestingNamespace, requestedNamespace, key, value)
       event.source.postMessage({
         uuid: event.data.uuid,
         method: 'storeMetadataReturn',
@@ -131,8 +133,10 @@ class PostMessageHandler {
     let requestingNamespace = event.origin
     let requestedNamespace = msg.namespace || requestingNamespace
     let key = msg.key
+    let metadataVersion = msg.metadataVersion || null
+    let metadataStorage = new MetadataStorage({metadataVersion: metadataVersion})
     try {
-      let storedValue = this.metadataStorage.readMetadata(requestingNamespace, requestedNamespace, key)
+      let storedValue = metadataStorage.readMetadata(requestingNamespace, requestedNamespace, key)
       event.source.postMessage({
         uuid: event.data.uuid,
         method: 'readMetadataReturn',
@@ -151,10 +155,12 @@ class PostMessageHandler {
     let msg = event.data.payload
     let requestingNamespace = event.origin
     let requestedPermissions = msg
+    let metadataStorage = new MetadataStorage()
 
-    let normalizedPermissions = this.metadataStorage.normalizePermissionJson(requestedPermissions)
+    let missingPermissions = metadataStorage.checkMissingPermissions(requestingNamespace, requestedPermissions)
+    let normalizedPermissions = metadataStorage.normalizePermissionJson(missingPermissions)
     if (confirm('You want to give the app ' + requestingNamespace + ' the following permissions? \n\n ' + JSON.stringify(normalizedPermissions, null, 4))) {
-      let result = this.metadataStorage.grantPermissions(requestingNamespace, normalizedPermissions)
+      let result = metadataStorage.grantPermissions(requestingNamespace, normalizedPermissions)
       event.source.postMessage({
         uuid: event.data.uuid,
         method: 'requestPermissionsReturn',
