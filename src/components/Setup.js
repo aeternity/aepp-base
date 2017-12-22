@@ -47,12 +47,14 @@ export default {
   },
   methods: {
     recoverWidthSeed () {
-      let seed = prompt('Seed phrase')
-      if (lightwallet.keystore.isSeedValid(seed)) {
-        this.seed = seed
-        this.stepIndex++
-      } else {
-        alert('Invalid seed phrase')
+      if (confirm('This is exprerimental software in development stage. For your own good please don\'t enter a seedphrase of an account you are using on mainnet.\n\nI understand!')) {
+        let seed = prompt('Seed phrase')
+        if (lightwallet.keystore.isSeedValid(seed)) {
+          this.seed = seed
+          this.stepIndex++
+        } else {
+          alert('Invalid seed phrase')
+        }
       }
     },
     generateRandomSeed () {
