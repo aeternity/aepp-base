@@ -8,6 +8,12 @@ export default {
     'id-manager': IdManager
   },
   computed: {
+    appClassObject: () => {
+      return {
+        stage: process.env.IS_STAGE === true,
+        development: process.env.NODE_ENV === 'development'
+      }
+    },
     showIdManager: () => {
       return store.state.showIdManager && store.state.unlocked
     },

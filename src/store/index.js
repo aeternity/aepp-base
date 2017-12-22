@@ -45,7 +45,7 @@ const store = (function () {
           type : APP_TYPES.EXTERNAL,
           name : 'Notary',
           icon : 'static/icons/notary.svg',
-          main : 'https://notary.aepps.com'
+          main : process.env.IS_STAGE ? 'https://stage-notary.aepps.com' : 'https://notary.aepps.com'
         },
         {
           type : APP_TYPES.INTERNAL,
