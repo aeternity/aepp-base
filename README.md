@@ -72,7 +72,6 @@ We have a stage and a live branch and environments where these branches will be 
 
 ### stage
 * Is used to see changes to the code in effect in a "real" environment without the fear of breaking the live environment.
-* Is password protected (???)
 * http and https are allowed
 * The URL of dapps running in the identity manager is not checked
 * Some of our æpps included in the identity manager point to the staging version of those æpps (e.g. [notary stage](https://stage-notary.aepps.com))
@@ -81,7 +80,6 @@ We have a stage and a live branch and environments where these branches will be 
 * Is the live environment, code lives in the "master" branch
 * https is enforced
 * dapps must use https
-* dapps running in the identity manager must be running on <name>.aepps.com, localhost<:port?> or <name>.ngrok.io
 
 ### Developing with the identity manager
 

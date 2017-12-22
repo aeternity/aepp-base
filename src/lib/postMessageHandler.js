@@ -8,18 +8,8 @@ class PostMessageHandler {
   }
 
   async receiveMessage (event) {
-    // let skipSecurity = process.env.NODE_ENV === 'development'
-    // let skipSecurity = true // for hackathon
-    let skipSecurity = process.env.SKIP_SECURITY === true
     if (!event.data.uuid) {
       // this message isnt meant for us
-      return
-    }
-    let regex = new RegExp('^https?:\/\/.*\.aepps\.(?:com|dev)$')
-    let regexLocal = new RegExp('^https?:\/\/localhost(?::\\d+)?$')
-    let regexNgrok = new RegExp('^https?:\/\/.*\.ngrok\.io$')
-    if (!skipSecurity && !regex.test(event.origin) && !regexLocal.test(event.origin) && !regexNgrok.test(event.origin)) {
-      // not of any of any of our authorized apps
       return
     }
     if (event.data.method === 'getAccounts') {
