@@ -29,7 +29,7 @@
         <div>Amount</div>
         <ae-amount v-model="amount" :step='0.001' :min="0" :symbol='transactionCurrency'/>
         <span class='amount-in-fiat'>
-          ≈ {{amountInFiat}} CHF
+          ≈ {{ fiatAmount }} CHF
         </span>
       </div>
     </div>
