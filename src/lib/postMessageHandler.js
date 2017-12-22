@@ -182,12 +182,7 @@ class PostMessageHandler {
 
   sendError (event, error) {
     console.log(error)
-    let errorToSend = {
-      message: error.message
-    }
-    if (error instanceof BaseError) {
-      errorToSend = error.toJson()
-    }
+    let errorToSend = JSON.parse(JSON.stringify(error))
     event.source.postMessage({
       uuid: event.data.uuid,
       payload: {
