@@ -1,5 +1,9 @@
 import QuickId from '@/components/QuickId.vue'
 import { AeAppIcon } from '@aeternity/aepp-components'
+import { AeButton } from '@aeternity/aepp-components'
+import { AeIcon } from '@aeternity/aepp-components'
+import { AeNotification } from '@aeternity/aepp-components'
+import { AeModal } from '@aeternity/aepp-components'
 
 export default {
   name: 'app-browser',
@@ -8,6 +12,11 @@ export default {
       iframe: '',
       showIframe : false,
       iframeLoading : true,
+      isTouch: false,
+      editModeActive: false,
+      editModeTmOut: null,
+      notifications: [],
+      modal: null
     }
   },
   computed : {
@@ -33,6 +42,14 @@ export default {
       return style
     }
   },
+  watch: {
+    editModeActive (active) {
+      if (active) {
+        this.notifications.push({type: 'boring', message: "You're now removing æpps"})
+        setTimeout(() => this.notifications.shift(), 3000)
+      }
+    }
+  },
   methods : {
     open(app) {
       if(app.type === 1) {
@@ -53,12 +70,44 @@ export default {
       if(url) {
         this.$store.dispatch('addApp', url)
       }
-
     },
+    remove(name) {
+      this.modal = null
+      if(name) {
+        this.$store.dispatch('removeApp', name)
+      }
+    },
+    confirmRemove (name) {
+      this.modal = {
+        title: `Delete "${name}"?`,
+        message: "You can easily add this æpp again, if you are regretting this action",
+        target: name
+      }
+    },
+    closeModal() {
+      this.modal = null
+    },
+    editMode(action = null) {
+      if (action === 'cancel') return clearTimeout(this.editModeTmOut)
+      this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
+    },
+    setIsTouch() {
+      this.isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch
+    },
+    doNothing () {
+      // to stop .app-browser @click handler propogation
+    }
   },
   components: {
      QuickId,
-     AeAppIcon
+     AeAppIcon,
+     AeIcon,
+     AeButton,
+     AeNotification,
+     AeModal
+  },
+  created () {
+    this.setIsTouch()
   },
   mounted() {
     console.log(this.$refs)
