@@ -1,17 +1,13 @@
 import QuickId from '@/components/QuickId.vue'
-import { AeAppIcon } from '@aeternity/aepp-components'
-import { AeButton } from '@aeternity/aepp-components'
-import { AeIcon } from '@aeternity/aepp-components'
-import { AeNotification } from '@aeternity/aepp-components'
-import { AeModal } from '@aeternity/aepp-components'
+import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModal } from '@aeternity/aepp-components'
 
 export default {
   name: 'app-browser',
   data () {
     return {
       iframe: '',
-      showIframe : false,
-      iframeLoading : true,
+      showIframe: false,
+      iframeLoading: true,
       isTouch: false,
       editModeActive: false,
       editModeTmOut: null,
@@ -19,23 +15,23 @@ export default {
       modal: null
     }
   },
-  computed : {
-    apps() {
+  computed: {
+    apps () {
       return this.$store.state.apps
     },
-    iframeStyle() {
+    iframeStyle () {
       let style
-      if(this.iframe === '') {
-        style =  {
-          'margin-left' : '200%',
-          opacity : '0.0',
-          transform: 'scale(1.5)'
+      if (this.iframe === '') {
+        style = {
+          'margin-left': '200%',
+          'opacity': '0.0',
+          'transform': 'scale(1.5)'
         }
       } else {
-        style =  {
-          'margin-left' : '0%',
-          opacity : '1.0',
-          transform: 'scale(1.0)'
+        style = {
+          'margin-left': '0%',
+          'opacity': '1.0',
+          'transform': 'scale(1.0)'
         }
       }
       style.display = this.showIframe ? 'block' : 'none'
@@ -50,10 +46,10 @@ export default {
       }
     }
   },
-  methods : {
-    open(app) {
-      if(app.type === 1) {
-        if(this.iframe !== app.main) {
+  methods: {
+    open (app) {
+      if (app.type === 1) {
+        if (this.iframe !== app.main) {
           this.iframeLoading = true
           this.iframe = app.main
         }
@@ -62,36 +58,36 @@ export default {
         this.$router.push(app.main)
       }
     },
-    back() {
+    back () {
       this.showIframe = false
     },
-    add() {
-      let url = prompt('URL');
-      if(url) {
+    add () {
+      let url = prompt('URL')
+      if (url) {
         this.$store.dispatch('addApp', url)
       }
     },
-    remove(name) {
+    remove (name) {
       this.modal = null
-      if(name) {
+      if (name) {
         this.$store.dispatch('removeApp', name)
       }
     },
     confirmRemove (name) {
       this.modal = {
         title: `Delete "${name}"?`,
-        message: "You can easily add this æpp again, if you are regretting this action",
+        message: 'You can easily add this æpp again, if you are regretting this action',
         target: name
       }
     },
-    closeModal() {
+    closeModal () {
       this.modal = null
     },
-    editMode(action = null) {
+    editMode (action = null) {
       if (action === 'cancel') return clearTimeout(this.editModeTmOut)
       this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
     },
-    setIsTouch() {
+    setIsTouch () {
       this.isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch
     },
     doNothing () {
@@ -99,17 +95,17 @@ export default {
     }
   },
   components: {
-     QuickId,
-     AeAppIcon,
-     AeIcon,
-     AeButton,
-     AeNotification,
-     AeModal
+    QuickId,
+    AeAppIcon,
+    AeIcon,
+    AeButton,
+    AeNotification,
+    AeModal
   },
   created () {
     this.setIsTouch()
   },
-  mounted() {
+  mounted () {
     console.log(this.$refs)
     this.$refs.appframe.onload = () => {
       this.iframeLoading = false
