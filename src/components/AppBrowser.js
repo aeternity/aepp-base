@@ -88,7 +88,7 @@ export default {
       this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
     },
     setIsTouch () {
-      this.isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch
+      this.isTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch
     },
     doNothing () {
       // to stop .app-browser @click handler propogation
