@@ -120,8 +120,8 @@ iframe {
   flex:1 0 auto;
   text-align: center;
 }
-.app-shortcut > div {
-  margin: 20px auto;
+.app-shortcut__app-icon {
+  margin:10px auto;
 }
 @media screen and (min-width:295px) {
   .app-shortcut {
