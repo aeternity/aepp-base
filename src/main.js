@@ -5,6 +5,11 @@ import App from './App.vue'
 import router, {manageRouting} from './router/index'
 import store from './store'
 
+console.log('use updateRPC(\'http://rpc-endpoint:8545\') to update the identity manager RPC endpoint')
+window.updateRPC  = function(rpcURL = 'https://kovan.infura.io') {
+  store.dispatch('updateRPC', rpcURL)
+}
+
 Vue.config.productionTip = false
 
 // router.beforeEach((to, from, next) => {
@@ -26,11 +31,9 @@ const IdentityApp = Vue.extend({
   methods: {
   },
   beforeCreate: function () {
-    console.log('before')
   },
   mounted: function () {
     this.$store.dispatch('init')
-    console.log('mounted')
   }
 })
 const vm = new IdentityApp()

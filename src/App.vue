@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="appClassObject">
     <id-manager :title="'Quick Id Manager'" :class="idManagerClassObject"></id-manager>
     <router-view></router-view>
   </div>
