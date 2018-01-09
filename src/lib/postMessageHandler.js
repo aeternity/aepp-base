@@ -12,15 +12,26 @@ class PostMessageHandler {
       // this message isnt meant for us
       return
     }
-    if (event.data.method === 'getAccounts') {
-      this.getAccounts(event)
-    } else if (event.data.method === 'signTransaction') {
-      this.signTransaction(event)
-    } else if (event.data.method === 'signPersonalMessage') {
-      this.signPersonalMessage(event)
-    } else if (event.data.method === 'handShake') {
-      this.handShake(event)
+    const sendsReply = ['getAccounts', 'signTransaction', 'signPersonalMessage', 'handShake']
+    if (sendsReply.includes(event.data.method)) {
+      await this.sendReplyMessage(this[event.data.method], event)
     }
+  }
+
+  async sendReplyMessage (method, event) {
+    let error = null
+    let payload = null
+    try {
+      payload = await method(event)
+    } catch (e) {
+      error = e
+    }
+    event.source.postMessage({
+      uuid: event.data.uuid,
+      method: `${event.data.method}Return`,
+      error,
+      payload
+    }, '*')
   }
 
   getAccounts (event) {
@@ -28,62 +39,31 @@ class PostMessageHandler {
     if (this.store.getters.activeIdentity.address) {
       accounts.push(this.store.getters.activeIdentity.address)
     }
-    event.source.postMessage({
-      uuid: event.data.uuid,
-      method: 'getAccountsReturn',
-      payload: accounts
-    }, '*')
+    return accounts
   }
 
   async signTransaction (event) {
     let tx = event.data.payload
     try {
-      let result = await this.store.dispatch('signTransaction', {tx: tx, appName: event.origin})
-      event.source.postMessage({
-        uuid: event.data.uuid,
-        method: 'signTransactionReturn',
-        error: null,
-        payload: result
-      }, '*')
+      return await this.store.dispatch('signTransaction', {tx: tx, appName: event.origin})
     } catch (e) {
       /* handle error */
-      e = JSON.parse(JSON.stringify(e))
-      event.source.postMessage({
-        uuid: event.data.uuid,
-        method: 'signTransactionReturn',
-        error: e,
-        payload: null
-      }, '*')
+      throw JSON.parse(JSON.stringify(e))
     }
   }
   async signPersonalMessage (event) {
     let msg = event.data.payload
     try {
-      let result = await this.store.dispatch('signPersonalMessage', {msg: msg, appName: event.origin})
-      event.source.postMessage({
-        uuid: event.data.uuid,
-        method: 'signPersonalMessageReturn',
-        error: null,
-        payload: result
-      }, '*')
+      return await this.store.dispatch('signPersonalMessage', {msg: msg, appName: event.origin})
     } catch (e) {
       /* handle error */
       console.log('e', e)
-      event.source.postMessage({
-        uuid: event.data.uuid,
-        method: 'signPersonalMessageReturn',
-        error: e,
-        payload: null
-      }, '*')
+      throw e
     }
   }
 
-  handShake (event) {
-    event.source.postMessage({
-      uuid: event.data.uuid,
-      method: 'handShakeReturn',
-      payload: null
-    }, '*')
+  handShake () {
+    return null
   }
 }
 
