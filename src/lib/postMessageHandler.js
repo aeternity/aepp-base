@@ -14,7 +14,7 @@ class PostMessageHandler {
     }
     const sendsReply = ['getAccounts', 'signTransaction', 'signPersonalMessage', 'handShake']
     if (sendsReply.includes(event.data.method)) {
-      await this.sendReplyMessage(this[event.data.method], event)
+      await this.sendReplyMessage(this[event.data.method].bind(this), event)
     }
   }
 
