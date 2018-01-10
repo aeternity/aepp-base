@@ -1,6 +1,10 @@
+import MetadataStorage from './metadataStorage'
+import { BaseError } from './errors'
+
 class PostMessageHandler {
   constructor (store) {
     this.store = store
+    // this.metadataStorage = new MetadataStorage()
   }
 
   registerListener () {
@@ -20,6 +24,12 @@ class PostMessageHandler {
       this.signPersonalMessage(event)
     } else if (event.data.method === 'handShake') {
       this.handShake(event)
+    } else if (event.data.method === 'storeMetadata') {
+      this.storeMetadata(event)
+    } else if (event.data.method === 'readMetadata') {
+      this.readMetadata(event)
+    } else if (event.data.method === 'requestPermissions') {
+      this.requestPermissions(event)
     }
   }
 
@@ -83,6 +93,93 @@ class PostMessageHandler {
       uuid: event.data.uuid,
       method: 'handShakeReturn',
       payload: null
+    }, '*')
+  }
+
+  async storeMetadata (event) {
+    let msg = event.data.payload
+
+    let requestingNamespace = event.origin
+    let requestedNamespace = msg.namespace || requestingNamespace
+    let key = msg.key
+    let value = msg.value
+    let metadataVersion = msg.metadataVersion || null
+    let metadataStorage = new MetadataStorage({metadataVersion: metadataVersion})
+    try {
+      let result = metadataStorage.storeMetadata(requestingNamespace, requestedNamespace, key, value)
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'storeMetadataReturn',
+        payload: {
+          success: result
+        }
+      }, '*')
+    } catch (e) {
+      this.sendError(event, e)
+    }
+  }
+
+  async readMetadata (event) {
+    let msg = event.data.payload
+    let requestingNamespace = event.origin
+    let requestedNamespace = msg.namespace || requestingNamespace
+    let key = msg.key
+    let metadataVersion = msg.metadataVersion || null
+    let metadataStorage = new MetadataStorage({metadataVersion: metadataVersion})
+    try {
+      let storedValue = metadataStorage.readMetadata(requestingNamespace, requestedNamespace, key)
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'readMetadataReturn',
+        payload: {
+          success: true,
+          key: key,
+          value: storedValue
+        }
+      }, '*')
+    } catch (e) {
+      this.sendError(event, e)
+    }
+  }
+
+  async requestPermissions (event) {
+    let msg = event.data.payload
+    let requestingNamespace = event.origin
+    let requestedPermissions = msg
+    let metadataStorage = new MetadataStorage()
+
+    let missingPermissions = metadataStorage.checkMissingPermissions(requestingNamespace, requestedPermissions)
+    let normalizedPermissions = metadataStorage.normalizePermissionJson(missingPermissions)
+    if (confirm('You want to give the app ' + requestingNamespace + ' the following permissions? \n\n ' + JSON.stringify(normalizedPermissions, null, 4))) {
+      let result = metadataStorage.grantPermissions(requestingNamespace, normalizedPermissions)
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'requestPermissionsReturn',
+        payload: {
+          success: true,
+          result: result
+        }
+      }, '*')
+    } else {
+      event.source.postMessage({
+        uuid: event.data.uuid,
+        method: 'requestPermissionsReturn',
+        payload: {
+          success: false
+        }
+      }, '*')
+    }
+  }
+
+  sendError (event, error) {
+    console.log(error)
+    let errorToSend = JSON.parse(JSON.stringify(error))
+    event.source.postMessage({
+      uuid: event.data.uuid,
+      payload: {
+        success: false,
+        error: errorToSend
+      }
     }, '*')
   }
 }
