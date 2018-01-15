@@ -31,12 +31,30 @@ export default {
     } else if (document.domain.includes('aepps.dev')) {
       document.domain = 'aepps.dev'
     }
+    this.registerLinkSchemes()
   },
   mounted: function () {
     let postMessagehandler = new PostMessageHandler(store)
     postMessagehandler.registerListener()
   },
   methods: {
+    registerLinkSchemes () {
+      this.$store.commit('addLinkScheme', initialQuery => {
+        if (initialQuery.aepp && initialQuery.aepp === 'transfer') {
+          this.$router.push({path: '/transfer', query: initialQuery})
+          return true
+        }
+        return false
+      })
+      this.$store.commit('addLinkScheme', initialQuery => {
+        if (initialQuery.aepp) {
+          // append query to current route
+          this.$router.push({path: '/app-browser', query: initialQuery})
+          return true
+        }
+        return false
+      })
+    }
   },
   data () {
     return {}

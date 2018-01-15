@@ -66,7 +66,7 @@ const router = new Router({
         appClass: 'transfer'
       },
       children: [
-        { path: ':txhash', component:  Transfer},
+        {path: ':txhash', component: Transfer}
       ]
     },
     {
@@ -89,7 +89,11 @@ const _mutationHandlers = {
   'setUnlocked': function (router, state) {
     if (state.keystore) {
       if (state.unlocked) {
-        router.push(PATHS.EMBEDDED_APP)
+        // check here for registered url schemes
+        if (!checkInitialQuery(router, state)) {
+          // this is the default redirect if none matched
+          router.push(PATHS.EMBEDDED_APP)
+        }
       } else {
         router.push(PATHS.UNLOCK)
       }
@@ -105,6 +109,22 @@ const _mutationHandlers = {
       }
     }
   }
+}
+
+const checkInitialQuery = (router, state) => {
+  let initialQuery = state.initialQuery
+  for (let i = 0; i < state.linkSchemes.length; i++) {
+    let scheme = state.linkSchemes[i]
+    if (typeof scheme === 'function') {
+      if (scheme(initialQuery)) {
+        console.log('found matching scheme')
+        return true
+      }
+    }
+  }
+  // TODO:
+  // store.commit('initialQuery', null)
+  return false
 }
 
 const _pathResolvers = {}
@@ -137,12 +157,17 @@ _pathResolvers[PATHS.SETUP] = function (state) {
 
 export const manageRouting = function (store, router) {
   router.onReady(function () {
-    const currentPath = router.currentRoute.path
+    const currentPath = router.currentRoute.path.replace(/\/$/, '')
+    if (router.currentRoute.query) {
+      store.commit('initialQuery', router.currentRoute.query)
+    }
     const resolver = _pathResolvers[currentPath]
     if (typeof resolver === 'function') {
       const result = resolver(store.state, currentPath)
       if (typeof result === 'string') {
         router.push(result)
+      } else if (store.state.currentRoute) {
+        router.push(store.state.currentRoute)
       }
     }
   })
@@ -163,6 +188,7 @@ export const manageRouting = function (store, router) {
 
   router.beforeEach(function (to, from, next) {
     if (from.path !== to.path) {
+      // this doesnt catch if only the query changes
       const resolver = _pathResolvers[to.path]
       if (typeof resolver === 'function') {
         const result = resolver(store.state, from)
@@ -174,6 +200,8 @@ export const manageRouting = function (store, router) {
       } else {
         next()
       }
+    } else {
+      next()
     }
   })
 }
