@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Intro from '../pages/Intro/Intro.vue'
 import OnBoard from '../pages/OnBoard/OnBoard.vue'
+import BaseLogin from '../pages/BaseLogin/BaseLogin.vue'
 import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import AppBrowser from '@/components/AppBrowser.vue'
@@ -14,6 +15,7 @@ Vue.use(Router)
 export const PATHS = {
   ROOT: '/',
   ON_BOARD: '/on-board',
+  LOGIN: '/login',
   SETUP: '/setup',
   UNLOCK: '/unlock',
   EMBEDDED_APP: '/app-browser',
@@ -39,6 +41,15 @@ const router = new Router({
       meta: {
         title: 'OnBoard',
         appClass: 'onBoard'
+      }
+    },
+    {
+      name: 'login',
+      path: PATHS.LOGIN,
+      component: BaseLogin,
+      meta: {
+        title: 'Login',
+        appClass: 'login'
       }
     },
     {
