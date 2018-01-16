@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Intro from '@/components/Intro.vue'
+import Intro from '../pages/Intro/Intro.vue'
+import OnBoard from '@/components/OnBoard.vue'
 import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import AppBrowser from '@/components/AppBrowser.vue'
@@ -12,6 +13,7 @@ Vue.use(Router)
 
 export const PATHS = {
   ROOT: '/',
+  ON_BOARD: '/on-board',
   SETUP: '/setup',
   UNLOCK: '/unlock',
   EMBEDDED_APP: '/app-browser',
@@ -28,6 +30,15 @@ const router = new Router({
       meta: {
         title: 'Welcome',
         appClass: 'welcome'
+      }
+    },
+    {
+      name: 'onBoard',
+      path: PATHS.ON_BOARD,
+      component: OnBoard,
+      meta: {
+        title: 'OnBoard',
+        appClass: 'onBoard'
       }
     },
     {
@@ -65,9 +76,7 @@ const router = new Router({
         title: 'Transfer',
         appClass: 'transfer'
       },
-      children: [
-        { path: ':txhash', component:  Transfer},
-      ]
+      children: [{ path: ':txhash', component: Transfer }]
     },
     {
       name: 'network',
@@ -86,7 +95,7 @@ export default router
 const _actionHandlers = {}
 
 const _mutationHandlers = {
-  'setUnlocked': function (router, state) {
+  setUnlocked: function (router, state) {
     if (state.keystore) {
       if (state.unlocked) {
         router.push(PATHS.EMBEDDED_APP)
@@ -95,7 +104,7 @@ const _mutationHandlers = {
       }
     }
   },
-  'setKeystore': function (router, state, currentPath) {
+  setKeystore: function (router, state, currentPath) {
     if (state.keystore) {
       router.push(PATHS.UNLOCK)
     } else {
@@ -126,13 +135,13 @@ _pathResolvers[PATHS.UNLOCK] = function (state) {
 }
 
 _pathResolvers[PATHS.SETUP] = function (state) {
-  //if (state.keystore) {
-    //if (state.unlocked) {
-      //return PATHS.EMBEDDED_APP
-    //} else {
-      //return PATHS.UNLOCK
-    //}
-  //}
+  // if (state.keystore) {
+  // if (state.unlocked) {
+  // return PATHS.EMBEDDED_APP
+  // } else {
+  // return PATHS.UNLOCK
+  // }
+  // }
 }
 
 export const manageRouting = function (store, router) {
@@ -167,7 +176,7 @@ export const manageRouting = function (store, router) {
       if (typeof resolver === 'function') {
         const result = resolver(store.state, from)
         if (typeof result === 'string') {
-          next({path: result, replace: true})
+          next({ path: result, replace: true })
         } else {
           next()
         }
