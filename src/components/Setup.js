@@ -13,7 +13,6 @@ export default {
   data () {
     return {
       stepIndex: 0,
-      iname: '/static/aexistence/index.html',
       seed: '',
       password: '',
       regenerateButtonText: 'generate new',
@@ -24,7 +23,6 @@ export default {
   },
   computed: {
     seedList: function () { return this.seed.match(/\S+/g) },
-    iframe: function () { return this.iname },
     // tokenDisplay: function () { return this.tokens.map(function (e) { return e.toString() }) },
     displayPasswordInput () {
       return (this.stepIndex === 1) || this.haveKeyStore
