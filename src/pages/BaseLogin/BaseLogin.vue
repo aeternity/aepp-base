@@ -42,10 +42,10 @@
           Enter your password if you remember it again or create a new account
           if you haven’t done that yet
         </p>
-        <ae-button type="plain" @click="goToStep(0)" style="text-transform: uppercase;">
+        <ae-button type="plain" @click="goToStep(0)" uppercase>
           Unlock with password
         </ae-button>
-        <ae-button type="plain">
+        <ae-button type="plain" uppercase>
           <router-link to="/setup" class="button-text">
             create new account
           </router-link>
@@ -66,7 +66,7 @@
         <ae-button :inactive="enableSeedPinButton" type="dramatic" btnBlock @click="createAccount()">
           Create Account
         </ae-button>
-        <ae-button type="plain" @click="goToStep(0)" style="text-transform: uppercase; padding: 10px 0px; margin-top: 6px;">
+        <ae-button type="plain" @click="goToStep(0)" uppercase style="padding: 10px 0px; margin-top: 6px;">
           login with an existing account
         </ae-button>
       </div>

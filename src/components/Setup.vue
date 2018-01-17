@@ -23,8 +23,10 @@
           Next
         </ae-button>
       </div>
-      <ae-button size='smaller' uppercase type='plain' class='recover-with-seed' @click="recoverWidthSeed()">
-        login with an existing account
+      <ae-button size='smaller' uppercase type='plain' class='recover-with-seed'>
+        <router-link to="/login">
+          login with an existing account
+        </router-link>
       </ae-button>
     </div>
 
