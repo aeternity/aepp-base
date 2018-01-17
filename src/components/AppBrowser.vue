@@ -36,13 +36,23 @@
       <ae-notification v-for="(item, index) in notifications" :key="index" :type="item.type" @close="notifications.shift()">{{item.message}}</ae-notification>
     </div>
 
-    <ae-modal v-if="modal" :title="modal.title" @close="closeModal" :fullscreen="false">
+    <ae-modal-light v-if="modal" :title="modal.title" @close="closeModal">
       {{modal.message}}
-      <ul>
-        <li><ae-button size="smaller" @click="closeModal">CANCEL</ae-button></li>
-        <li><ae-button size="smaller" type="dramatic" @click="remove(modal.target)">DELETE</ae-button></li>
-      </ul>
-    </ae-modal>
+      <ae-button
+        slot="buttons"
+        size="smaller"
+        type="exciting"
+        uppercase
+        @click="closeModal"
+      >cancel</ae-button>
+      <ae-button
+        slot="buttons"
+        size="smaller"
+        type="dramatic"
+        uppercase
+        @click="remove(modal.target)"
+      >delete</ae-button>
+    </ae-modal-light>
 
   </div>
 </template>

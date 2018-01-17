@@ -1,5 +1,5 @@
 import QuickId from '@/components/QuickId.vue'
-import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModal } from '@aeternity/aepp-components'
+import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
 
 export default {
   name: 'app-browser',
@@ -100,7 +100,7 @@ export default {
     AeIcon,
     AeButton,
     AeNotification,
-    AeModal
+    AeModalLight
   },
   created () {
     this.setIsTouch()
