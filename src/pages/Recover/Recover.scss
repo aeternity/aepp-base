@@ -1,0 +1,86 @@
+@import "./../../style.guide.scss";
+
+.base-login {
+  width: 100vw;
+  /*height: 100vh;*/
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+
+  .wrapper {
+    width: 85vw;
+    text-align: center;
+  }
+}
+
+.text-area-wrap {
+  border: solid 2px #f5f5f5;
+  padding: 20px;
+  margin:0 auto;
+  max-width:370px;
+  border-radius: 10px;
+  background-color: $white;
+}
+
+.form-group {
+  padding: 35px 0px;
+
+  .input-label {
+    height: 14px;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+    @include Input-Title;
+  }
+
+  .form-input {
+    margin:0 auto;
+    max-width:300px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.33;
+    text-align: center;
+    border: none;
+    background:transparent;
+    color: #989898;
+    min-height: 70px;
+    padding: 15px 20px 0px;
+    margin-bottom:10px;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box;
+  }
+}
+
+.text-phrase {
+  line-height: 1.44;
+  font-size: 16px;
+  color: $grey;
+}
+
+.recover-button {
+  background-color: transparent;
+  border: transparent;
+  box-shadow: none;
+}
+
+.footer {
+  position: absolute;
+  left: 38px;
+  right: 38px;
+  bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.button-text {
+  text-transform: uppercase;
+  color: #311b58;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}

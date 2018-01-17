@@ -9,7 +9,7 @@
               æternity gives you easy access to the magic of blockchain technology. Instantly login or see how it works.
 						</p>
             <ae-button type='exciting' class='background login' btnBlock>
-              <router-link to="/setup" class="Button-Text">
+              <router-link to="/login" class="Button-Text">
                 Login
               </router-link>
             </ae-button>

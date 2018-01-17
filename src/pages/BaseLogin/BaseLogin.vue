@@ -5,17 +5,17 @@
       <div class="form-group">
         <div class="input-label">Enter your password</div>
         <div class="text-area-wrap">
-          <textarea readonly class="form-input" required></textarea>
+          <pin-input :focus-on-mount='true' @change="password = $event.value" :id="'unlock__pin-input'" style="border: none;"/>
         </div>
       </div>
-      <ae-button btnBlock inactive type="exciting">Login</ae-button>
+      <ae-button btnBlock :inactive="enableButton" type="exciting" @click="unlockSavedKeystore">Login</ae-button>
       <div class="footer">
         <p class="text-phrase">
           Recover with phrase if you forgot your password or create a new
           account if you haven’t done that yet
         </p>
         <ae-button type="dramatic" invert style="background-color: transparent; border: transparent; box-shadow: none; text-transform: uppercase;">
-          <router-link to="#" class="button-text">
+          <router-link to="/recover" class="button-text">
             Recover with passphrase
           </router-link>
         </ae-button>

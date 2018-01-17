@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Intro from '../pages/Intro/Intro.vue'
 import OnBoard from '../pages/OnBoard/OnBoard.vue'
 import BaseLogin from '../pages/BaseLogin/BaseLogin.vue'
+import Recover from '../pages/Recover/Recover.vue'
 import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import AppBrowser from '@/components/AppBrowser.vue'
@@ -16,6 +17,7 @@ export const PATHS = {
   ROOT: '/',
   ON_BOARD: '/on-board',
   LOGIN: '/login',
+  PHRASE_RECOVER: '/recover',
   SETUP: '/setup',
   UNLOCK: '/unlock',
   EMBEDDED_APP: '/app-browser',
@@ -50,6 +52,15 @@ const router = new Router({
       meta: {
         title: 'Login',
         appClass: 'login'
+      }
+    },
+    {
+      name: 'recover',
+      path: PATHS.PHRASE_RECOVER,
+      component: Recover,
+      meta: {
+        title: 'Recover',
+        appClass: 'recover'
       }
     },
     {
