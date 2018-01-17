@@ -82,13 +82,35 @@ iframe {
   /*background-color:red;*/
 }
 .app-shortcut {
-  margin:5px;
+  position: relative;
+  margin:15px 5px;
   min-width:85px;
   width:calc(50% - 10px);
   /*background-color:green;*/
+  text-align: center;
 }
-.app-shortcut > div {
-  margin: 20px auto;
+.app-icon-outer{
+  position: relative;
+  display: inline-block;
+}
+.app-icon-outer .app-icon{
+  margin:0 auto; /* can delete after margins are removed from component */
+}
+.app-browser__notifications{
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  z-index:200;
+}
+.app-browser__modal{
+  position: fixed;
+  top:0; let:0;
+  width:100%;
+  height:100%;
+  z-index:998;
+}
+.app-shortcut__app-icon {
+  margin:10px auto;
 }
 @media screen and (min-width:295px) {
   .app-shortcut {
@@ -120,6 +142,7 @@ iframe {
   }
 }
 .app-shortcut__app-name {
+  margin-top: 10px;
   text-align:center;
 }
 .back {
@@ -130,4 +153,22 @@ iframe {
   height:50px;
   z-index:998;
   /*background-color:red;*/
+}
+.remove-app-btn{
+  position: absolute;
+  top:0;
+  right:0;
+  cursor: pointer;
+  visibility: hidden;
+  opacity:0;
+  transform-origin:center center;
+  transform: translate(48%,-50%) scale(.45,.45);
+  transition: opacity 300ms, transform 300ms, visibility 0s 300ms;
+}
+.no-touch .app-shortcut:hover .remove-app-btn,
+.touch .apps--editmode .remove-app-btn{
+  visibility: visible;
+  opacity:1;
+  transform: translate(48%,-50%) scale(.58,.58);
+  transition: opacity 300ms 500ms, transform 300ms 500ms, visibility 0s 500ms;
 }

@@ -90,6 +90,13 @@ const store = (function () {
         this.state.apps.push(app)
         localStorage.setItem('apps', JSON.stringify(this.state.apps))
       },
+      removeApp (state, name) {
+        const appIndex = state.apps.findIndex((app) => app.name === name)
+        if (appIndex > -1) {
+          state.apps.splice(appIndex, 1)
+          localStorage.setItem('apps', JSON.stringify(this.state.apps))
+        }
+      },
       setApps (state, apps) {
         this.state.apps = apps
       },
@@ -208,6 +215,9 @@ const store = (function () {
               )
             }
           })
+      },
+      removeApp ({commit, state}, name) {
+        if (name) return commit('removeApp', name)
       },
       logout ({getters, dispatch, state, commit}) {
         aeContract = null
