@@ -1,7 +1,8 @@
+@import "./../style.guide.scss";
+
 .setup {
 	width: 100vw;
 	/*height: 100vh;*/
-	background: rgba(255, 255, 255, 0.85);
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -10,15 +11,19 @@
 	flex-direction: column;
 	align-items: center;
   align-content: center;
-}
-.setup > .wrapper {
-	width: 85vw;
-  text-align: center;
+
+  .wrapper {
+    width: 85vw;
+    text-align: center;
+  }
 }
 
 .copy-phrase-button{
+  margin: auto;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
+  height: 30px !important;
+  display: block !important;
 }
 
 /*#appframe {
@@ -34,10 +39,11 @@
 
 .seed-wrap {
   border: solid 2px #f5f5f5;
-  background:#f5f5f5;
-  border-radius: 10px;
+  padding: 20px;
   margin:0 auto;
   max-width:370px;
+  border-radius: 10px;
+  background-color: $white;
 }
 .seed-input {
   margin:0 auto;
@@ -82,6 +88,8 @@
 }
 
 .generate-random-seed {
+  display: block !important ;
+  margin: auto;
   margin-bottom:10px;
 }
 .password-info:empty{
@@ -92,4 +100,20 @@
 }
 .go-to-unlock {
   margin-top:20px;
+}
+
+.save-these-12-words {
+  width: 300px;
+  height: 140px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  color: $anthracite;
+  margin-top: 36px;
+  margin-bottom: 36px;
 }

@@ -1,0 +1,177 @@
+@import "./../../style.guide.scss";
+.cube {
+  width: 73px;
+  height: 98px;
+}
+
+.welcome-to-identity {
+  width: 254px;
+  height: 87px;
+  @include titlelarge;
+}
+
+.eternity-gives-you {
+  width: 265px;
+  height: 123px;
+  @include paragraphnormal;
+}
+
+.margin {
+  margin-left: 30px;
+  margin-right: 80px;
+}
+
+.header-logo {
+  width: 44px;
+  height: 20.9px;
+  object-fit: contain;
+  margin: 30px;
+}
+
+footer {
+  margin: 20px 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  position: absolute;
+  text-align: right;
+  display: flex;
+  flex-direction: var(--axis-reverse, row-reverse);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skip-button {
+  color: $maegenta !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.next-button {
+  color: #311b58 !important;
+  font-size: 14px;
+  font-weight: 500;;
+}
+
+.step-dots {
+  display: flex;
+  flex-direction: var(--axis, row);
+
+  .step-dot {
+    cursor: pointer;
+    width: 0.500em;
+    height: 0.500em;
+    margin: .5ch;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: inline-block;
+
+    &.active {
+      background-color: #f7296e;
+    }
+  }
+
+  .inactive {
+  }
+}
+
+section {
+  width: 100%;
+  visibility: hidden;
+  display: none;
+
+  &.current {
+    visibility: visible;
+    display: block;
+  }
+
+  .define {
+    width: 254px;
+    height: 47px;
+    @include titlelarge;
+  }
+
+  .create-as-many-ident {
+    width: 295px;
+    height: 118px;
+    @include paragraphnormal;
+  }
+
+  .name {
+    width: 320px;
+    height: 43px;
+    @include titlelarge;
+  }
+
+  .next-you-select-a-p {
+    width: 300px;
+    height: 118px;
+    @include paragraphnormal;
+  }
+
+  .browse {
+    width: 320px;
+    height: 43px;
+    @include titlelarge;
+  }
+
+  .take-a-look-through {
+    width: 265px;
+    height: 112px;
+    @include paragraphnormal;
+  }
+
+  .play {
+    width: 320px;
+    height: 43px;
+    @include titlelarge;
+  }
+
+  .every-aepp-can-now-u {
+    width: 265px;
+    height: 85px;
+    @include paragraphnormal;
+  }
+}
+
+#create {
+  .mobile-shape {
+    margin-bottom: 37px;
+    margin-top: 37px;
+
+    img {
+      width: 305.1px;
+      height: 309.3px;
+      margin: auto;
+      display: block;
+    }
+  }
+}
+
+#browse {
+  .mobile-shape {
+    margin-bottom: 37px;
+    margin-top: 37px;
+
+    img {
+      width: 305.1px;
+      height: 309.3px;
+      margin: auto;
+      display: block;
+    }
+  }
+}
+
+#play {
+  .mobile-shape {
+    margin-bottom: 37px;
+    margin-top: 37px;
+
+    img {
+      width: 305.1px;
+      height: 309.3px;
+      margin: auto;
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.avatar {
+  display:inline-block;
+  vertical-align:middle;
+  border-radius:50%;
+  background:white;
+  width:48px;
+  height:48px;
+  border:2px solid white;
+  background-position:center;
+  background-size:cover;
+
+  &._size_medium {
+    width: 35px;
+    height: 35px;
+  }
+}

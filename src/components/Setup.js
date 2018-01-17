@@ -1,8 +1,9 @@
 import lightwallet from 'eth-lightwallet'
-import {PATHS} from '../router'
+import { PATHS } from '../router'
 
 import PinInput from '@/components/PinInput.vue'
-import { AeButton } from '@aeternity/aepp-components'
+// import { AeButton } from '@aeternity/aepp-components'
+import AeButton from './aeButton/aeButton.vue'
 
 export default {
   name: 'setup',
@@ -13,6 +14,7 @@ export default {
   data () {
     return {
       stepIndex: 0,
+      iname: '/static/aexistence/index.html',
       seed: '',
       password: '',
       regenerateButtonText: 'generate new',
@@ -22,10 +24,15 @@ export default {
     }
   },
   computed: {
-    seedList: function () { return this.seed.match(/\S+/g) },
+    seedList: function () {
+      return this.seed.match(/\S+/g)
+    },
+    iframe: function () {
+      return this.iname
+    },
     // tokenDisplay: function () { return this.tokens.map(function (e) { return e.toString() }) },
     displayPasswordInput () {
-      return (this.stepIndex === 1) || this.haveKeyStore
+      return this.stepIndex === 1 || this.haveKeyStore
     },
     displayGeneratedSeed () {
       return this.stepIndex === 0
@@ -45,14 +52,12 @@ export default {
   },
   methods: {
     recoverWidthSeed () {
-      if (confirm('This is exprerimental software in development stage. For your own good please don\'t enter a seedphrase of an account you are using on mainnet.\n\nI understand!')) {
-        let seed = prompt('Seed phrase')
-        if (lightwallet.keystore.isSeedValid(seed)) {
-          this.seed = seed
-          this.stepIndex++
-        } else {
-          alert('Invalid seed phrase')
-        }
+      let seed = prompt('Seed phrase')
+      if (lightwallet.keystore.isSeedValid(seed)) {
+        this.seed = seed
+        this.stepIndex++
+      } else {
+        alert('Invalid seed phrase')
       }
     },
     generateRandomSeed () {
