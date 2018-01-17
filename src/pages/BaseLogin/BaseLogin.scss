@@ -69,6 +69,15 @@
   box-shadow: none;
 }
 
+.pin-input-wrapper{
+  text-align: left !important;
+  margin-top: 10px;
+
+  .pin-input {
+    max-width: none !important;
+  }
+}
+
 .footer {
   position: absolute;
   left: 38px;
