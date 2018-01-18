@@ -28,7 +28,6 @@ const store = (function () {
   let web3
   return new Vuex.Store({
     state: {
-      title: '',
       selectedIdentityIdx: 0,
       unlocked: false,
       identityCollapsed: true,
@@ -70,12 +69,6 @@ const store = (function () {
     mutations: {
       updateRPC (state, rpcUrl) {
         state.rpcUrl = rpcUrl
-      },
-      title (state, newtitle) {
-        state.title = newtitle
-      },
-      appClass (state, newClass) {
-        state.appClass = newClass
       },
       identityCollapsed (state, collapse) {
         state.identityCollapsed = collapse
