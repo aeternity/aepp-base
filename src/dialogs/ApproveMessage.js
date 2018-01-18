@@ -37,6 +37,6 @@ export default {
   components: {
     AeIdentityAvatar,
     ApproveButtons,
-    DialogHeader,
+    DialogHeader
   }
 }

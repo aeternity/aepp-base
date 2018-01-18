@@ -9,17 +9,17 @@ import Transaction from 'ethereumjs-tx'
 import {
   approveTransaction as approveTransactionDialog,
   approveMessage as approveMessageDialog
-} from "@/dialogs/index"
+} from '@/dialogs/index'
 import {logTx} from '@/lib/logging'
-import {getEstimatedGas, getGasPrice} from "@/lib/remoteGetters"
+import {getEstimatedGas, getGasPrice} from '@/lib/remoteGetters'
 import abiDecoder from 'abi-decoder'
 var util = require('ethereumjs-util')
 
 Vue.use(Vuex)
 
 const APP_TYPES = {
-  INTERNAL : 0,
-  EXTERNAL : 1,
+  INTERNAL: 0,
+  EXTERNAL: 1
 }
 
 const store = (function () {
@@ -40,32 +40,32 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
-      apps : [
+      apps: [
         {
-          type : APP_TYPES.EXTERNAL,
-          name : 'Notary',
-          icon : 'static/icons/notary.svg',
-          main : process.env.IS_STAGE ? 'https://stage-notary.aepps.com' : 'https://notary.aepps.com'
+          type: APP_TYPES.EXTERNAL,
+          name: 'Notary',
+          icon: 'static/icons/notary.svg',
+          main: process.env.IS_STAGE ? 'https://stage-notary.aepps.com' : 'https://notary.aepps.com'
         },
         {
-          type : APP_TYPES.INTERNAL,
-          name : 'Transfer',
-          icon : 'static/icons/notary.svg',
-          main : '/transfer'
+          type: APP_TYPES.INTERNAL,
+          name: 'Transfer',
+          icon: 'static/icons/notary.svg',
+          main: '/transfer'
         },
         {
-          type : APP_TYPES.EXTERNAL,
-          name : 'Wall',
-          icon : 'static/icons/wall.svg',
-          main : 'https://wall.aepps.com'
+          type: APP_TYPES.EXTERNAL,
+          name: 'Wall',
+          icon: 'static/icons/wall.svg',
+          main: 'https://wall.aepps.com'
         },
         {
-          type : APP_TYPES.INTERNAL,
-          name : 'Network',
-          icon : 'static/icons/notary.svg',
-          main : '/network'
-        },
-      ],
+          type: APP_TYPES.INTERNAL,
+          name: 'Network',
+          icon: 'static/icons/notary.svg',
+          main: '/network'
+        }
+      ]
     },
     mutations: {
       updateRPC (state, rpcUrl) {
@@ -122,8 +122,8 @@ const store = (function () {
         } else {
           state.balances.push({
             address: address,
-            balance: balance ? balance : 0,
-            tokenBalance: tokenBalance ? tokenBalance : 0
+            balance: balance || 0,
+            tokenBalance: tokenBalance || 0
           })
         }
       }
@@ -183,11 +183,11 @@ const store = (function () {
       aeContract: () => {
         return aeContract
       },
-      addApp({commit}, url) {
+      addApp ({commit}, url) {
         const CORS = 'https://cors-anywhere.herokuapp.com/'
         fetch(CORS + url)
           .then(function (response) {
-            return response.text();
+            return response.text()
           })
           .then(function (text) {
             var el = document.createElement('html')
@@ -277,7 +277,7 @@ const store = (function () {
           })
         }
       },
-      setUnlocked({commit}, isUnlocked) {
+      setUnlocked ({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
       },
       restoreAddresses ({getters, dispatch, commit, state}) {
@@ -289,7 +289,7 @@ const store = (function () {
           dispatch('generateAddress', toUnlock)
         }
       },
-      initWeb3({getters, dispatch, commit, state}, pwDerivedKey) {
+      initWeb3 ({getters, dispatch, commit, state}, pwDerivedKey) {
         if (!state.keystore) {
           return
         }
@@ -339,13 +339,13 @@ const store = (function () {
         dispatch('setAcountInterval')
         dispatch('restoreAddresses')
       },
-      init({commit, state}) {
+      init ({commit, state}) {
         if (localStorage.getItem('ks')) {
           commit('setKeystore', lightwallet.keystore.deserialize(localStorage.getItem('ks')))
         }
         if (localStorage.getItem('apps')) {
           let saved = JSON.parse(localStorage.getItem('apps'))
-          let std = state.apps;
+          let std = state.apps
           let apps = std.concat(saved)
           apps = apps.filter((app, index, self) => self.findIndex(t => t.name === app.name && t.main === app.main) === index)
           commit('setApps', apps)
@@ -444,9 +444,9 @@ const store = (function () {
       signPersonalMessage (store, { msg, appName }) {
         const asText = web3.toAscii(msg.data)
         const state = store.state
-        const activeIdentity = store.getters.activeIdentity;
+        const activeIdentity = store.getters.activeIdentity
         return new Promise((resolve, reject) => {
-          approveMessageDialog(activeIdentity, asText, appName).then(approved =>{
+          approveMessageDialog(activeIdentity, asText, appName).then(approved => {
             if (approved) {
               const data = asText
               let privateKey = state.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)

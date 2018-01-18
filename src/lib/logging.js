@@ -34,4 +34,4 @@ export const logTx = (tx, tokenAddress) => {
       console.log('could not decode data')
     }
   }
-};
+}

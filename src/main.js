@@ -6,7 +6,7 @@ import router, {manageRouting} from './router/index'
 import store from './store'
 
 console.log('use updateRPC(\'http://rpc-endpoint:8545\') to update the identity manager RPC endpoint')
-window.updateRPC  = function(rpcURL = 'https://kovan.infura.io') {
+window.updateRPC = function (rpcURL = 'https://kovan.infura.io') {
   store.dispatch('updateRPC', rpcURL)
 }
 

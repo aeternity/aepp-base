@@ -1,4 +1,4 @@
 export default {
-  name : 'IdentityInfo',
+  name: 'IdentityInfo',
   props: ['identity']
 }

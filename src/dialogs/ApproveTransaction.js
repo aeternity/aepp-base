@@ -28,7 +28,7 @@ export default {
   name: 'approve-transaction',
   data () {
     return {
-      fiatValue: undefined, fiatGas: undefined, gasEstimate: undefined //all set in mounted() through async functions.
+      fiatValue: undefined, fiatGas: undefined, gasEstimate: undefined // all set in mounted() through async functions.
     }
   },
   props: {
@@ -125,7 +125,7 @@ export default {
     fiatGasStr () {
       return _createValueStr(this.fiatGas, 5)
     },
-    unit(){
+    unit () {
       return this.isAeTokenTx ? 'Æ' : 'eth'
     }
   },
