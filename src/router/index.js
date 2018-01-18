@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Intro from '@/components/Intro.vue'
+import Intro from '@/pages/Intro.vue'
 import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import AppBrowser from '@/components/AppBrowser.vue'
