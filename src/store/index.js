@@ -331,6 +331,7 @@ const store = (function () {
         }
         let TokenContract = web3.eth.contract(aeAbi)
         TokenContract.at(state.token.address, (err, contract) => {
+          if (err) console.error(err)
           aeContract = contract
           dispatch('setUnlocked', true)
           window.globalTokenContract = contract
@@ -403,7 +404,7 @@ const store = (function () {
             console.log('decodedData', JSON.stringify(decodedData))
             let method = decodedData.name
             // e.g. callAndApprove, transfer, ...
-            let params = decodedData.params
+            // let params = decodedData.params
             // e.g. [{"name":"_spender","value":"0x000....","type":"address"},{"name":"_value","value":"1000000000000000000","type":"uint256"}]
             // methods which transfer tokens or allow transferring of tokens are:
             // approve(_spender, _value)
@@ -411,7 +412,7 @@ const store = (function () {
             // transfer(_to, _value)
             // approveAndCall(_spender, _value, _data)
             if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
-              let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
+              // let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
               // confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
             }
             aeTokenTx = decodedData

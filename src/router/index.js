@@ -66,7 +66,7 @@ const router = new Router({
         appClass: 'transfer'
       },
       children: [
-        { path: ':txhash', component: Transfer}
+        { path: ':txhash', component: Transfer }
       ]
     },
     {

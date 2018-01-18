@@ -1,6 +1,6 @@
 import Bignumber from 'bignumber.js'
 import Web from 'web3'
-import {convertAE_CHF, convertETH_CHF} from '@/lib/currencyConverter'
+import {convertAEtoCHF, convertETHtoCHF} from '@/lib/currencyConverter'
 import ApproveButtons from '@/dialogs/ApproveButtons.vue'
 import DialogHeader from '@/dialogs/DialogHeader.vue'
 
@@ -139,7 +139,7 @@ export default {
   },
   mounted () {
     const amount = this.amount
-    const toFiat = this.isAeTokenTx ? convertAE_CHF : convertETH_CHF
+    const toFiat = this.isAeTokenTx ? convertAEtoCHF : convertETHtoCHF
     toFiat(amount).then(
       fiatValue => { this.fiatValue = fiatValue }
     )
@@ -152,7 +152,7 @@ export default {
         const asWei = gasEstimate * gasPrice
         const ethVal = fromWei(asWei, 'ether')
         this.gasEstimate = ethVal
-        return convertETH_CHF(ethVal)
+        return convertETHtoCHF(ethVal)
       }
     ).then(
       fiatGas => { this.fiatGas = fiatGas }

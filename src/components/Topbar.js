@@ -24,13 +24,13 @@ export default {
           label: 'Browse aepps',
           link: '/app-browser'
         }
-				// {
-				// label : 'Shared with me',
-				// link : '/new',
-				// },
-				// {
-				// label : 'My Proofs',
-				// },
+        // {
+        // label : 'Shared with me',
+        // link : '/new',
+        // },
+        // {
+        // label : 'My Proofs',
+        // },
       ]
     }
   },

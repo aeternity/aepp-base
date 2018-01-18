@@ -8,7 +8,7 @@ import {
 } from '@aeternity/aepp-components'
 import AeTransaction from './aeTransaction/aeTransaction.vue'
 import {swiper as Swiper, swiperSlide as SwiperSlide} from 'vue-awesome-swiper'
-import {convertAE_CHF, convertETH_CHF} from '@/lib/currencyConverter'
+import {convertAEtoCHF, convertETHtoCHF} from '@/lib/currencyConverter'
 
 import Web3 from 'web3'
 import ZeroClientProvider from 'web3-provider-engine/zero'
@@ -133,10 +133,10 @@ export default {
     async recalculateFiat () {
       try {
         if (this.transactionCurrency === 'AE') {
-          let fiatAmount = await convertAE_CHF(this.amount)
+          let fiatAmount = await convertAEtoCHF(this.amount)
           this.fiatAmount = parseFloat(fiatAmount).toFixed(2)
         } else {
-          let fiatAmount = await convertETH_CHF(this.amount)
+          let fiatAmount = await convertETHtoCHF(this.amount)
           this.fiatAmount = parseFloat(fiatAmount).toFixed(2)
         }
       } catch (e) {

@@ -16,7 +16,7 @@ export default {
       }
     },
     etherscanLink: function (value, type) {
-			// type tx, address, block
+      // type tx, address, block
       let baseurl = 'https://kovan.etherscan.io/'
       baseurl += type
       baseurl += '/'
