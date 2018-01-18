@@ -1,9 +1,7 @@
 import { AeIdentity } from '@aeternity/aepp-components'
 export default {
   name: 'quick-id',
-  components: {
-    'ae-identity': AeIdentity
-  },
+  components: { AeIdentity },
   data () {
     return {
     }

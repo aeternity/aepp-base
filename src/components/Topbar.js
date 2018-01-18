@@ -4,11 +4,7 @@ import aeIdentityAvatar from './aeIdentityAvatar/aeIdentityAvatar.vue'
 
 export default {
   name: 'topbar',
-  components: {
-    'ae-identity-avatar': aeIdentityAvatar,
-    'menu-entry': MenuEntry,
-    'quick-id': QuickId
-  },
+  components: { aeIdentityAvatar, MenuEntry, QuickId },
   data: function () {
     return {
       navopen: false,

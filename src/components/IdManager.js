@@ -12,7 +12,7 @@ const commonSwiperOptions = {
 }
 
 export default {
-  name: 'IdManager',
+  name: 'id-manager',
   data () {
     return {
       notNextTick: true,

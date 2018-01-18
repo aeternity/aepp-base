@@ -1,5 +1,5 @@
 export default {
-  name: 'PinInput',
+  name: 'pin-input',
   props: {
     'id': String,
     'value': {

@@ -1,3 +1,3 @@
 export default {
-  name: 'AmountInput'
+  name: 'amount-input'
 }

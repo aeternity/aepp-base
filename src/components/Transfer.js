@@ -36,7 +36,7 @@ const commonSwiperOptions = {
 }
 
 export default {
-  name: 'Transfer',
+  name: 'transfer',
   components: {
     AeIdentity,
     AeButton,
