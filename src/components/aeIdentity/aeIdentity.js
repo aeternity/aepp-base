@@ -1,9 +1,8 @@
 import aeIdentityAvatar from './../aeIdentityAvatar/aeIdentityAvatar.vue'
-import aeIdentityInfo from './../aeIdentityInfo/aeIdentityInfo.vue'
 import helperMixin from './../../mixins/helper'
 export default {
   name: 'ae-identity',
-  components: { aeIdentityAvatar, aeIdentityInfo },
+  components: { aeIdentityAvatar },
   data: function () {
     return {}
   },
