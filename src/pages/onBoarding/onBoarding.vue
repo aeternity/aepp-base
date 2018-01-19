@@ -25,6 +25,15 @@
             </p>
           </div>
         </section>
+        <section id="create">
+          <div class="content">
+            <h1>Create</h1>
+            <p>
+              First, you create a new card and we assign you a key.
+              This number (key) will be used to identify your transactions.
+            </p>
+          </div>
+        </section>
       </main>
       <footer>
         <ae-button type="plain" :disabled="isLastStep" v-show="!isLastStep" @click="skip(1)">
