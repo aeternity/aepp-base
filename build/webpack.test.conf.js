@@ -18,7 +18,7 @@ var webpackConfig = merge(baseConfig, {
         include: [
           resolve('src'),
           resolve('test'),
-          resolve('node_modules/ethereum-blockies-png'),
+          resolve('node_modules/abi-decoder'),
           resolve('node_modules/web3-provider-engine'),
           resolve('node_modules/dom7'),
           resolve('node_modules/eth-sig-util'),
