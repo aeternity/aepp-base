@@ -43,6 +43,14 @@
             </p>
           </div>
         </section>
+        <section id="app-browser">
+          <div class="content">
+            <h1>Browse</h1>
+            <p>
+              Take a look through the preloaded apps available or add other apps of your choice to the interface.
+            </p>
+          </div>
+        </section>
       </main>
       <footer>
         <ae-button type="plain" :disabled="isLastStep" v-show="!isLastStep" @click="skip(1)">
