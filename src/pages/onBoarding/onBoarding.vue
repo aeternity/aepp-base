@@ -16,6 +16,15 @@
             </p>
           </div>
         </section>
+        <section id="manage">
+          <div class="content">
+            <h1>Define</h1>
+            <p>
+              Create as many identities as you wish based on your activity preferences.
+              Use each one for things like social, trading or gaming.
+            </p>
+          </div>
+        </section>
       </main>
       <footer>
         <ae-button type="plain" :disabled="isLastStep" v-show="!isLastStep" @click="skip(1)">
