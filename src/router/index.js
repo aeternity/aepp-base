@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Intro from '@/pages/Intro.vue'
+import OnBoarding from '@/pages/onBoarding'
 import Setup from '@/components/Setup.vue'
 import Unlock from '@/components/Unlock.vue'
 import AppBrowser from '@/components/AppBrowser.vue'
@@ -16,7 +17,8 @@ export const PATHS = {
   UNLOCK: '/unlock',
   EMBEDDED_APP: '/app-browser',
   TRANSFER: '/transfer',
-  NETWORK: '/network'
+  NETWORK: '/network',
+  ON_BOARDING: '/onboarding'
 }
 
 const router = new Router({
@@ -28,6 +30,15 @@ const router = new Router({
       meta: {
         title: 'Welcome',
         appClass: 'welcome'
+      }
+    },
+    {
+      name: 'onBoarding',
+      path: PATHS.ON_BOARDING,
+      component: OnBoarding,
+      meta: {
+        title: 'On boarding',
+        appClass: 'onBoarding'
       }
     },
     {

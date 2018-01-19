@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="73px" height="98px" viewBox="0 0 73 98" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>D8D3BB34-3916-4B97-9461-ED8D0D70229C</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="-102.212388%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#6F53A1" offset="0%"></stop>
+            <stop stop-color="#4E357A" offset="53.2780182%"></stop>
+            <stop stop-color="#311B58" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="37.5076721%" y1="-1.63592198%" x2="100%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#6F53A1" offset="0%"></stop>
+            <stop stop-color="#311B58" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Cube">
+            <g id="Group">
+                <path d="M36,56.6990291 L72.1456311,36.1456311 L72.1456311,70.1154909 C72.1456311,73.6591337 70.2702193,76.9381349 67.2158323,78.7348331 L36,97.0970874 L36,56.6990291 Z" id="Rectangle-6" fill="url(#linearGradient-1)"></path>
+                <path d="M0,56.6990291 L36.1456311,36.1456311 L36.1456311,70.1154909 C36.1456311,73.6591337 34.2702193,76.9381349 31.2158323,78.7348331 L0,97.0970874 L0,56.6990291 Z" id="Rectangle-6" fill="url(#linearGradient-1)" transform="translate(18.072816, 66.621359) scale(-1, 1) translate(-18.072816, -66.621359) "></path>
+                <path d="M26.9094819,19.8338555 L61.5624458,10.5624458 L50.7975366,50.7975366 L10.5624458,61.5624458 L19.8338555,26.9094819 C20.7579298,23.4556478 23.4556478,20.7579298 26.9094819,19.8338555 Z" id="Rectangle-7" fill="url(#linearGradient-2)" transform="translate(36.062446, 36.062446) rotate(45.000000) translate(-36.062446, -36.062446) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

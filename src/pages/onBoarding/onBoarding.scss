@@ -1,0 +1,77 @@
+@import '~@aeternity/aepp-components/dist/variables.scss';
+@import './../../text.style.scss';
+
+.onBoarding {
+  .wrapper {
+    .content {
+      margin: auto;
+      // display: flex;
+      margin: 60px 60px 30px 30px;
+
+      h1 {
+        @include titlelarge;
+      }
+
+      p {
+        @include paragraphnormal;
+      }
+    }
+
+    main {
+      padding-top: 64px;
+    }
+
+    section {
+      width: 100%;
+      visibility: hidden;
+      display: none;
+
+      &.current {
+        visibility: visible;
+        display: block;
+      }
+
+      &#welcome {
+        .cube-div {
+          background: url('./../../assets/img/cube.svg') repeat-x center;
+          height: 200px;
+        }
+      }
+    }
+
+    footer {
+      margin: 20px 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      position: absolute;
+      text-align: right;
+      display: flex;
+      flex-direction: var(--axis-reverse, row-reverse);
+      justify-content: space-between;
+      align-items: center;
+
+      .step-dots {
+        display: flex;
+        flex-direction: var(--axis, row);
+
+        .step-dot {
+          cursor: pointer;
+          width: 0.500em;
+          height: 0.500em;
+          margin: .5ch;
+          background-color: #e0e0e0;
+          border-radius: 50%;
+          display: inline-block;
+
+          &.active {
+            background-color: #f7296e;
+          }
+        }
+
+        .inactive {
+        }
+      }
+    }
+  }
+}
