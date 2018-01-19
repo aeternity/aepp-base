@@ -34,6 +34,15 @@
             </p>
           </div>
         </section>
+        <section id="name-image">
+          <div class="content">
+            <h1>Name</h1>
+            <p>
+              Next, you select a profile image and assign a name to your card.
+              This will help you to easily distinguish between your cards (identities).
+            </p>
+          </div>
+        </section>
       </main>
       <footer>
         <ae-button type="plain" :disabled="isLastStep" v-show="!isLastStep" @click="skip(1)">
