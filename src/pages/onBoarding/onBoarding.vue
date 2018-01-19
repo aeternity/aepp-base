@@ -51,6 +51,15 @@
             </p>
           </div>
         </section>
+        <section id="end">
+          <div class="content">
+            <h1>Play</h1>
+            <p>
+              Every aepp can now use your new active identity and token balance.
+              Now it’s time to play!
+            </p>
+          </div>
+        </section>
       </main>
       <footer>
         <ae-button type="plain" :disabled="isLastStep" v-show="!isLastStep" @click="skip(1)">
