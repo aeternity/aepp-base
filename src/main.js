@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App.vue'
-import router, {manageRouting} from './router/index'
+import getRouter from './router/index'
 import store from './store'
 
 console.log('use updateRPC(\'http://rpc-endpoint:8545\') to update the identity manager RPC endpoint')
@@ -27,7 +27,7 @@ const IdentityApp = Vue.extend({
   render: h => h(App),
   components: { App },
   store,
-  router,
+  router: getRouter(store),
   methods: {
   },
   beforeCreate: function () {
@@ -37,5 +37,4 @@ const IdentityApp = Vue.extend({
   }
 })
 const vm = new IdentityApp()
-manageRouting(store, router)
 vm.$mount('#app')
