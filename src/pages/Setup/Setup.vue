@@ -1,7 +1,7 @@
 <template>
   <div class="screen setup">
     <ae-button size='smaller' type='dramatic' v-if='haveKeyStore' class='go-to-unlock'>
-      <router-link :to="{path:unlockPath}">Back to unlock</router-link>
+      <router-link :to="{ name: 'unlock' }">Back to unlock</router-link>
     </ae-button>
     <div v-if="displayGeneratedSeed" class="wrapper">
       <h1 class="title">Account Setup 1/2</h1>
