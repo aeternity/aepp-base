@@ -30,9 +30,7 @@ import {
 import QuickId from '@/components/QuickId.vue'
 
 export default {
-
-  name: 'Network',
-
+  name: 'network',
   data () {
     return {
       addCustom: false,

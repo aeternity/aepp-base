@@ -47,6 +47,6 @@
   </div>
 </template>
 
-<script src='./IdManager.js'/>
 <style src="swiper/dist/css/swiper.css"/>
 <style scoped src='./IdManager.css'/>
+<script src='./IdManager.js'/>

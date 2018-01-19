@@ -9,17 +9,17 @@ import Transaction from 'ethereumjs-tx'
 import {
   approveTransaction as approveTransactionDialog,
   approveMessage as approveMessageDialog
-} from "@/dialogs/index"
+} from '@/dialogs/index'
 import {logTx} from '@/lib/logging'
-import {getEstimatedGas, getGasPrice} from "@/lib/remoteGetters"
+import {getEstimatedGas, getGasPrice} from '@/lib/remoteGetters'
 import abiDecoder from 'abi-decoder'
 var util = require('ethereumjs-util')
 
 Vue.use(Vuex)
 
 const APP_TYPES = {
-  INTERNAL : 0,
-  EXTERNAL : 1,
+  INTERNAL: 0,
+  EXTERNAL: 1
 }
 
 const store = (function () {
@@ -28,7 +28,6 @@ const store = (function () {
   let web3
   return new Vuex.Store({
     state: {
-      title: '',
       selectedIdentityIdx: 0,
       unlocked: false,
       identityCollapsed: true,
@@ -40,42 +39,36 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
-      apps : [
+      apps: [
         {
-          type : APP_TYPES.EXTERNAL,
-          name : 'Notary',
-          icon : 'static/icons/notary.svg',
-          main : process.env.IS_STAGE ? 'https://stage-notary.aepps.com' : 'https://notary.aepps.com'
+          type: APP_TYPES.EXTERNAL,
+          name: 'Notary',
+          icon: 'static/icons/notary.svg',
+          main: process.env.IS_STAGE ? 'https://stage-notary.aepps.com' : 'https://notary.aepps.com'
         },
         {
-          type : APP_TYPES.INTERNAL,
-          name : 'Transfer',
-          icon : 'static/icons/notary.svg',
-          main : '/transfer'
+          type: APP_TYPES.INTERNAL,
+          name: 'Transfer',
+          icon: 'static/icons/notary.svg',
+          main: '/transfer'
         },
         {
-          type : APP_TYPES.EXTERNAL,
-          name : 'Wall',
-          icon : 'static/icons/wall.svg',
-          main : 'https://wall.aepps.com'
+          type: APP_TYPES.EXTERNAL,
+          name: 'Wall',
+          icon: 'static/icons/wall.svg',
+          main: 'https://wall.aepps.com'
         },
         {
-          type : APP_TYPES.INTERNAL,
-          name : 'Network',
-          icon : 'static/icons/notary.svg',
-          main : '/network'
-        },
-      ],
+          type: APP_TYPES.INTERNAL,
+          name: 'Network',
+          icon: 'static/icons/notary.svg',
+          main: '/network'
+        }
+      ]
     },
     mutations: {
       updateRPC (state, rpcUrl) {
         state.rpcUrl = rpcUrl
-      },
-      title (state, newtitle) {
-        state.title = newtitle
-      },
-      appClass (state, newClass) {
-        state.appClass = newClass
       },
       identityCollapsed (state, collapse) {
         state.identityCollapsed = collapse
@@ -122,8 +115,8 @@ const store = (function () {
         } else {
           state.balances.push({
             address: address,
-            balance: balance ? balance : 0,
-            tokenBalance: tokenBalance ? tokenBalance : 0
+            balance: balance || 0,
+            tokenBalance: tokenBalance || 0
           })
         }
       }
@@ -183,11 +176,11 @@ const store = (function () {
       aeContract: () => {
         return aeContract
       },
-      addApp({commit}, url) {
+      addApp ({commit}, url) {
         const CORS = 'https://cors-anywhere.herokuapp.com/'
         fetch(CORS + url)
           .then(function (response) {
-            return response.text();
+            return response.text()
           })
           .then(function (text) {
             var el = document.createElement('html')
@@ -277,7 +270,7 @@ const store = (function () {
           })
         }
       },
-      setUnlocked({commit}, isUnlocked) {
+      setUnlocked ({commit}, isUnlocked) {
         commit('setUnlocked', isUnlocked)
       },
       restoreAddresses ({getters, dispatch, commit, state}) {
@@ -289,7 +282,7 @@ const store = (function () {
           dispatch('generateAddress', toUnlock)
         }
       },
-      initWeb3({getters, dispatch, commit, state}, pwDerivedKey) {
+      initWeb3 ({getters, dispatch, commit, state}, pwDerivedKey) {
         if (!state.keystore) {
           return
         }
@@ -331,6 +324,7 @@ const store = (function () {
         }
         let TokenContract = web3.eth.contract(aeAbi)
         TokenContract.at(state.token.address, (err, contract) => {
+          if (err) console.error(err)
           aeContract = contract
           dispatch('setUnlocked', true)
           window.globalTokenContract = contract
@@ -339,13 +333,13 @@ const store = (function () {
         dispatch('setAcountInterval')
         dispatch('restoreAddresses')
       },
-      init({commit, state}) {
+      init ({commit, state}) {
         if (localStorage.getItem('ks')) {
           commit('setKeystore', lightwallet.keystore.deserialize(localStorage.getItem('ks')))
         }
         if (localStorage.getItem('apps')) {
           let saved = JSON.parse(localStorage.getItem('apps'))
-          let std = state.apps;
+          let std = state.apps
           let apps = std.concat(saved)
           apps = apps.filter((app, index, self) => self.findIndex(t => t.name === app.name && t.main === app.main) === index)
           commit('setApps', apps)
@@ -403,7 +397,7 @@ const store = (function () {
             console.log('decodedData', JSON.stringify(decodedData))
             let method = decodedData.name
             // e.g. callAndApprove, transfer, ...
-            let params = decodedData.params
+            // let params = decodedData.params
             // e.g. [{"name":"_spender","value":"0x000....","type":"address"},{"name":"_value","value":"1000000000000000000","type":"uint256"}]
             // methods which transfer tokens or allow transferring of tokens are:
             // approve(_spender, _value)
@@ -411,7 +405,7 @@ const store = (function () {
             // transfer(_to, _value)
             // approveAndCall(_spender, _value, _data)
             if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
-              let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
+              // let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
               // confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
             }
             aeTokenTx = decodedData
@@ -444,9 +438,9 @@ const store = (function () {
       signPersonalMessage (store, { msg, appName }) {
         const asText = web3.toAscii(msg.data)
         const state = store.state
-        const activeIdentity = store.getters.activeIdentity;
+        const activeIdentity = store.getters.activeIdentity
         return new Promise((resolve, reject) => {
-          approveMessageDialog(activeIdentity, asText, appName).then(approved =>{
+          approveMessageDialog(activeIdentity, asText, appName).then(approved => {
             if (approved) {
               const data = asText
               let privateKey = state.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)

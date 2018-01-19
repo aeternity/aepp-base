@@ -3,10 +3,7 @@ import aeIdentityInfo from './../aeIdentityInfo/aeIdentityInfo.vue'
 import helperMixin from './../../mixins/helper'
 export default {
   name: 'ae-identity',
-  components: {
-    'ae-identity-avatar': aeIdentityAvatar,
-    'ae-identity-info': aeIdentityInfo
-  },
+  components: { aeIdentityAvatar, aeIdentityInfo },
   data: function () {
     return {}
   },

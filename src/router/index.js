@@ -24,59 +24,35 @@ const router = new Router({
     {
       name: 'intro',
       path: PATHS.ROOT,
-      component: Intro,
-      meta: {
-        title: 'Welcome',
-        appClass: 'welcome'
-      }
+      component: Intro
     },
     {
       name: 'setup',
       path: PATHS.SETUP,
-      component: Setup,
-      meta: {
-        title: 'Setup',
-        appClass: 'setup'
-      }
+      component: Setup
     },
     {
       name: 'unlock',
       path: PATHS.UNLOCK,
-      component: Unlock,
-      meta: {
-        title: 'Unlock',
-        appClass: 'unlock'
-      }
+      component: Unlock
     },
     {
       name: 'app-browser',
       path: PATHS.EMBEDDED_APP,
-      component: AppBrowser,
-      meta: {
-        title: 'App Browser',
-        appClass: 'app-browser'
-      }
+      component: AppBrowser
     },
     {
       name: 'transfer',
       path: PATHS.TRANSFER,
       component: Transfer,
-      meta: {
-        title: 'Transfer',
-        appClass: 'transfer'
-      },
       children: [
-        { path: ':txhash', component:  Transfer},
+        { path: ':txhash', component: Transfer }
       ]
     },
     {
       name: 'network',
       path: PATHS.NETWORK,
-      component: Network,
-      meta: {
-        title: 'Network',
-        appClass: 'network'
-      }
+      component: Network
     }
   ]
 })
@@ -126,13 +102,13 @@ _pathResolvers[PATHS.UNLOCK] = function (state) {
 }
 
 _pathResolvers[PATHS.SETUP] = function (state) {
-  //if (state.keystore) {
-    //if (state.unlocked) {
-      //return PATHS.EMBEDDED_APP
-    //} else {
-      //return PATHS.UNLOCK
-    //}
-  //}
+  // if (state.keystore) {
+    // if (state.unlocked) {
+      // return PATHS.EMBEDDED_APP
+    // } else {
+      // return PATHS.UNLOCK
+    // }
+  // }
 }
 
 export const manageRouting = function (store, router) {
