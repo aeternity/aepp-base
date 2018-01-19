@@ -46,8 +46,7 @@ module.exports = {
         loader: 'babel-loader',
         include: [
           resolve('src'),
-          resolve('test'),
-          resolve('node_modules/ethereum-blockies-png')
+          resolve('test')
         ]
       },
       {

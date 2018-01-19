@@ -1,10 +1,7 @@
-import aeIdentity from './aeIdentity/aeIdentity.vue'
-import AeppComponents, { AeIdentity } from '@aeternity/aepp-components'
+import { AeIdentity } from '@aeternity/aepp-components'
 export default {
   name: 'quick-id',
-  components: {
-    'ae-identity': AeIdentity
-  },
+  components: { AeIdentity },
   data () {
     return {
     }

@@ -23,18 +23,18 @@ export const convertCurrency = (fromCurrency, toCurrency, value = 1) => {
   })
 }
 
-export const convertAE_USD = convertCurrency.bind(
+export const convertAEtoUSD = convertCurrency.bind(
   undefined, CURRENCIES.AE, CURRENCIES.USD
 )
 
-export const convertETH_USD = convertCurrency.bind(
+export const convertETHtoUSD = convertCurrency.bind(
   undefined, CURRENCIES.ETH, CURRENCIES.USD
 )
 
-export const convertAE_CHF = convertCurrency.bind(
+export const convertAEtoCHF = convertCurrency.bind(
   undefined, CURRENCIES.AE, CURRENCIES.CHF
 )
 
-export const convertETH_CHF = convertCurrency.bind(
+export const convertETHtoCHF = convertCurrency.bind(
   undefined, CURRENCIES.ETH, CURRENCIES.CHF
 )

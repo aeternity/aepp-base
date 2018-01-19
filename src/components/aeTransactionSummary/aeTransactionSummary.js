@@ -2,26 +2,26 @@ import {AeAddress} from '@aeternity/aepp-components'
 import unit from 'ethjs-unit'
 export default {
   name: 'ae-transaction-summary',
-  props : [
+  props: [
     'addressFrom',
     'addressTo',
     'amount',
     'amountInFiat',
-    'gas',
+    'gas'
   ],
-  components : {
+  components: {
     AeAddress
   },
   filters: {
-    fromWei(value) {
+    fromWei (value) {
       return unit.fromWei(value, 'ether')
     }
   },
-  computed : {
-    amountInWei() {
+  computed: {
+    amountInWei () {
       return unit.toWei(this.amount, 'ether')
     },
-    total() {
+    total () {
       return this.gas.price
         .times(this.gas.amount)
         .plus(this.amountInWei)

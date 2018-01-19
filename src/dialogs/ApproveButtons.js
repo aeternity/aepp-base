@@ -1,6 +1,6 @@
 import {
   AeButton,
-  AeIcon,
+  AeIcon
 } from '@aeternity/aepp-components'
 
 export default {

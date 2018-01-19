@@ -1,5 +1,5 @@
 export default {
-  name: 'PinInput',
+  name: 'pin-input',
   props: {
     'id': String,
     'value': {
@@ -10,13 +10,13 @@ export default {
       type: String,
       default: 'Enter Password...'
     },
-    'focusOnMount' : {
-      type : Boolean,
-      default : false
+    'focusOnMount': {
+      type: Boolean,
+      default: false
     }
   },
-  mounted() {
-    if(this.focusOnMount) {
+  mounted () {
+    if (this.focusOnMount) {
       this.$refs.input.focus()
     }
   },

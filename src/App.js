@@ -4,10 +4,14 @@ import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: {
-    'id-manager': IdManager
-  },
+  components: { IdManager },
   computed: {
+    appClassObject: () => {
+      return {
+        stage: process.env.IS_STAGE === true,
+        development: process.env.NODE_ENV === 'development'
+      }
+    },
     showIdManager: () => {
       return store.state.showIdManager && store.state.unlocked
     },
