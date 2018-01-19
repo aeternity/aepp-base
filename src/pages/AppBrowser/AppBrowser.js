@@ -1,4 +1,4 @@
-import QuickId from '@/components/QuickId.vue'
+import QuickId from '@/components/QuickId/QuickId.vue'
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
 
 export default {

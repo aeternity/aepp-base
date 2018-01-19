@@ -1,4 +1,4 @@
-import IdManager from '@/components/IdManager.vue'
+import IdManager from '@/components/IdManager/IdManager.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 

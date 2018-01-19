@@ -1,7 +1,7 @@
 import lightwallet from 'eth-lightwallet'
 import {PATHS} from '@/router'
 
-import PinInput from '@/components/PinInput.vue'
+import PinInput from '@/components/PinInput/PinInput.vue'
 import { AeButton } from '@aeternity/aepp-components'
 
 export default {
