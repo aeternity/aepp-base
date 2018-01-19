@@ -1,6 +1,6 @@
 import { AeButton } from '@aeternity/aepp-components'
 import PinInput from '@/components/PinInput.vue'
-import { PATHS } from '../router/'
+import { PATHS } from '@/router/'
 
 export default {
   name: 'unlock',

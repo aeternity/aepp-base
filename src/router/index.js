@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Intro from '@/pages/Intro.vue'
-import Setup from '@/components/Setup.vue'
-import Unlock from '@/components/Unlock.vue'
-import AppBrowser from '@/components/AppBrowser.vue'
-import Transfer from '@/components/Transfer.vue'
-import Network from '@/components/Network.vue'
+import Setup from '@/pages/Setup/Setup.vue'
+import Unlock from '@/pages/Unlock/Unlock.vue'
+import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
+import Transfer from '@/pages/Transfer/Transfer.vue'
+import Network from '@/pages/Network.vue'
 
 Vue.use(Router)
 

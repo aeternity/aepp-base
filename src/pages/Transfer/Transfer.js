@@ -6,7 +6,7 @@ import {
   AeIdentity,
   AeAddressInput
 } from '@aeternity/aepp-components'
-import AeTransaction from './aeTransaction/aeTransaction.vue'
+import AeTransaction from '@/components/aeTransaction/aeTransaction.vue'
 import {swiper as Swiper, swiperSlide as SwiperSlide} from 'vue-awesome-swiper'
 import {convertAEtoCHF, convertETHtoCHF} from '@/lib/currencyConverter'
 
