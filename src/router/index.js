@@ -10,41 +10,50 @@ import Network from '@/pages/Network.vue'
 
 Vue.use(Router)
 
+export const NAMES = {
+  INTRO: 'intro',
+  SETUP: 'setup',
+  UNLOCK: 'unlock',
+  APP_BROWSER: 'app-browser',
+  TRANSFER: 'transfer',
+  NETWORK: 'network'
+}
+
 export default (store) => {
   const router = new Router({
     routes: [
       {
-        name: 'intro',
+        name: NAMES.INTRO,
         path: '/',
         component: Intro
       },
       {
-        name: 'setup',
+        name: NAMES.SETUP,
         path: '/setup',
         component: Setup
       },
       {
-        name: 'unlock',
+        name: NAMES.UNLOCK,
         path: '/unlock',
         component: Unlock,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'setup' })
-          if (store.state.unlocked) return next({ name: 'app-browser' })
+          if (!store.state.keystore) return next({ name: NAMES.SETUP })
+          if (store.state.unlocked) return next({ name: NAMES.APP_BROWSER })
           next()
         }
       },
       {
-        name: 'app-browser',
+        name: NAMES.APP_BROWSER,
         path: '/app-browser',
         component: AppBrowser,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'setup' })
-          if (!store.state.unlocked) return next({ name: 'unlock' })
+          if (!store.state.keystore) return next({ name: NAMES.SETUP })
+          if (!store.state.unlocked) return next({ name: NAMES.UNLOCK })
           next()
         }
       },
       {
-        name: 'transfer',
+        name: NAMES.TRANSFER,
         path: '/transfer',
         component: Transfer,
         children: [
@@ -52,7 +61,7 @@ export default (store) => {
         ]
       },
       {
-        name: 'network',
+        name: NAMES.NETWORK,
         path: '/network',
         component: Network
       }
