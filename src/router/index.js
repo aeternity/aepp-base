@@ -19,8 +19,8 @@ export const NAMES = {
   NETWORK: 'network'
 }
 
-export default (store) => {
-  const router = new Router({
+export default (store, RouterClass = Router) => {
+  const router = new RouterClass({
     routes: [
       {
         name: NAMES.INTRO,
