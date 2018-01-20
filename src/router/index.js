@@ -73,13 +73,13 @@ export default (store, RouterClass = Router) => {
       case 'setUnlocked':
         if (state.keystore) {
           router.push({
-            name: state.unlocked ? 'app-browser' : 'unlock'
+            name: state.unlocked ? NAMES.APP_BROWSER : NAMES.UNLOCK
           })
         }
         break
       case 'setKeystore':
-        if (state.keystore) return router.push({ name: 'unlock' })
-        if (router.route.name === 'app-browser') return router.push({ name: 'setup' })
+        if (state.keystore) return router.push({ name: NAMES.UNLOCK })
+        if (router.route.name === NAMES.APP_BROWSER) return router.push({ name: NAMES.SETUP })
         break
     }
   })
