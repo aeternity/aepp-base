@@ -5,22 +5,16 @@ describe('router/index.js', function () {
   }
 
   describe('guarding routes', function () {
-    const createStoreMock = () => {
-      return {
-        subscribe: NO_OP,
-        subscribeAction: NO_OP
-      }
-    }
+    const createStoreMock = (store) => ({
+      subscribe: NO_OP,
+      ...store
+    })
 
     describe('routing when route change is requested', function () {
       const getBeforeEnterHandler = (state, fromName) => {
-        let exposedOptions
-        const RouterClass = function (options) {
-          exposedOptions = options
-        }
-        const storeMock = createStoreMock()
-        storeMock.state = state
-        createRouter(storeMock, RouterClass)
+        const RouterClass = sinon.spy()
+        createRouter(createStoreMock({ state }), RouterClass)
+        const exposedOptions = RouterClass.firstCall.args[0]
         expect(exposedOptions).to.be.a('object')
         const {routes} = exposedOptions
         expect(routes).to.be.instanceOf(Array)
@@ -29,13 +23,10 @@ describe('router/index.js', function () {
       }
 
       const getNextArg = beforeEnter => {
-        let exposedNextArg
-        const next = sinon.spy(arg => {
-          exposedNextArg = arg
-        })
+        const next = sinon.spy()
         beforeEnter(undefined, undefined, next)
         expect(next).to.have.been.calledOnce
-        return exposedNextArg
+        return next.firstCall.args[0]
       }
 
       const createRedirectTest = function (state, fromName, expectedRedirectName) {
@@ -131,16 +122,10 @@ describe('router/index.js', function () {
 
       const createRedirectTest = function (state, mutationType, expectedRedirect, currentPath) {
         return function () {
-          let exposedHandler
-          const subscribe = handler => {
-            exposedHandler = handler
-          }
-          const storeMock = {
-            subscribe,
-            subscribeAction: NO_OP
-          }
+          const subscribe = sinon.spy()
           const mutation = {type: mutationType}
-          const routerMock = createRouter(storeMock, RouterClass)
+          const routerMock = createRouter(createStoreMock({ subscribe }), RouterClass)
+          const exposedHandler = subscribe.firstCall.args[0]
           exposedHandler(mutation, state)
           expect(routerMock.push).to.have.been.calledOnce
           expect(routerMock.push).to.have.been.calledWith({name: expectedRedirect})
@@ -148,17 +133,10 @@ describe('router/index.js', function () {
       }
 
       it('registers a listener for vuex mutations', () => {
-        let exposedHandler
-        const subscribe = sinon.spy(handler => {
-          exposedHandler = handler
-        })
+        const subscribe = sinon.spy()
+        createRouter(createStoreMock({ subscribe }))
+        const exposedHandler = subscribe.firstCall.args[0]
 
-        const storeMock = {
-          subscribe,
-          subscribeAction: NO_OP
-        }
-
-        createRouter(storeMock)
         expect(subscribe).to.have.been.calledOnce
         expect(exposedHandler).to.be.a('function')
       })
