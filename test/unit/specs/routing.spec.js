@@ -13,55 +13,47 @@ describe('router/index.js', function () {
     }
 
     describe('routing when route change is requested', function () {
+      const getBeforeEnterHandler = (state, fromName) => {
+        let exposedOptions
+        const RouterClass = function (options) {
+          exposedOptions = options
+        }
+        const storeMock = createStoreMock()
+        storeMock.state = state
+        createRouter(storeMock, RouterClass)
+        expect(exposedOptions).to.be.a('object')
+        const {routes} = exposedOptions
+        expect(routes).to.be.instanceOf(Array)
+        const routeOption = routes.filter(r => r.name === fromName)[0]
+        return routeOption.beforeEnter
+      }
+
+      const getNextArg = beforeEnter => {
+        let exposedNextArg
+        const next = sinon.spy(arg => {
+          exposedNextArg = arg
+        })
+        beforeEnter(undefined, undefined, next)
+        expect(next).to.have.been.calledOnce
+        return exposedNextArg
+      }
+
       const createRedirectTest = function (state, fromName, expectedRedirectName) {
         return function () {
-          let exposedOptions
-          const RouterClass = function (options) {
-            exposedOptions = options
-          }
-          const storeMock = createStoreMock()
-          storeMock.state = state
-          createRouter(storeMock, RouterClass)
-          expect(exposedOptions).to.be.a('object')
-          const {routes} = exposedOptions
-          expect(routes).to.be.instanceOf(Array)
-          const routeOption = routes.filter(r => r.name === fromName)[0]
-          const {beforeEnter} = routeOption
+          const beforeEnter = getBeforeEnterHandler(state, fromName)
           expect(beforeEnter).to.be.a('function')
-          let exposedNextArg
-          const next = arg => {
-            exposedNextArg = arg
-          }
-          beforeEnter(undefined, undefined, next)
+          const exposedNextArg = getNextArg(beforeEnter)
           expect(exposedNextArg.name).to.be.equal(expectedRedirectName)
         }
       }
 
       const createNoRedirectTest = function (state, fromName) {
         return function () {
-          let exposedOptions
-          const RouterClass = function (options) {
-            exposedOptions = options
-          }
-          const storeMock = createStoreMock()
-          storeMock.state = state
-          createRouter(storeMock, RouterClass)
-          expect(exposedOptions).to.be.a('object')
-          const {routes} = exposedOptions
-          expect(routes).to.be.instanceOf(Array)
-          const routeOption = routes.filter(r => r.name === fromName)[0]
-          const {beforeEnter} = routeOption
+          const beforeEnter = getBeforeEnterHandler(state, fromName)
           const handlerType = typeof beforeEnter
-          expect(
-            handlerType === 'function' || handlerType === 'undefined'
-          ).to.be.equal(true)
+          expect(['function', 'undefined']).to.include(handlerType)
           if (handlerType === 'function') {
-            let exposedNextArg
-            const next = sinon.spy(arg => {
-              exposedNextArg = arg
-            })
-            beforeEnter(undefined, undefined, next)
-            expect(next).to.have.been.calledOnce
+            const exposedNextArg = getNextArg(beforeEnter)
             expect(exposedNextArg).to.be.a('undefined')
           }
         }
