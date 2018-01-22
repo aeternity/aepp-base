@@ -7,6 +7,7 @@
       <main>
         <section id="welcome">
           <div class="cube-div">
+            <img src="./../../assets/img/identity-card.svg" class="large-copy-2">
           </div>
           <div class="content">
             <h1>Welcome to Identity Manager</h1>

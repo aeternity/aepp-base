@@ -16,7 +16,6 @@ export default {
   },
   computed: {
     hasDots () {
-      console.log('hod' + this.max > 1 && this.showDots)
       return this.max > 1 && this.showDots
     },
     isLastStep () {

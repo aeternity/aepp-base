@@ -6,9 +6,10 @@
     .content {
       margin: auto;
       // display: flex;
-      margin: 60px 60px 30px 30px;
+      margin: 30px 60px 30px 30px;
 
       h1 {
+        width: 254px;
         @include titlelarge;
       }
 
@@ -31,10 +32,24 @@
         display: block;
       }
 
+      .mockup {
+        text-align: center;
+        margin-top: 30px;
+      }
+
       &#welcome {
         .cube-div {
           background: url('./../../assets/img/cube.svg') repeat-x center;
           height: 200px;
+
+          img {
+            margin: auto;
+            display: block;
+            padding: 40px 0px;
+            width: 213px;
+            height: 123px;
+            object-fit: contain;
+          }
         }
       }
     }
