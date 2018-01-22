@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Router from 'vue-router'
 
 import Intro from '@/pages/Intro.vue'
@@ -7,8 +6,6 @@ import Unlock from '@/pages/Unlock/Unlock.vue'
 import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
 import Network from '@/pages/Network.vue'
-
-Vue.use(Router)
 
 export default (store) => {
   const router = new Router({
