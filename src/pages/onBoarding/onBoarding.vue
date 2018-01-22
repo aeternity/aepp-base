@@ -41,6 +41,11 @@
           </div>
         </section>
         <section id="name-image">
+          <div class="screenshot-phone">
+            <div class="image">
+              <img src="./../../assets/img/identity-card3.svg" class="Group">
+            </div>
+          </div>
           <div class="content">
             <h1>Name</h1>
             <p>
