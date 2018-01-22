@@ -55,6 +55,17 @@
           </div>
         </section>
         <section id="app-browser">
+          <div class="screenshot-phone">
+            <div class="image">
+              <div class="icons">
+                <img src="./../../assets/img/app-icon1.svg" class="Group">
+                <img src="./../../assets/img/app-icon2.svg" class="Group">
+                <img src="./../../assets/img/app-icon3.svg" class="Group">
+                <img src="./../../assets/img/app-icon4.svg" class="Group">
+                <img src="./../../assets/img/app-icon5.svg" class="Group">
+              </div>
+            </div>
+          </div>
           <div class="content">
             <h1>Browse</h1>
             <p>
