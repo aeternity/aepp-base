@@ -10,41 +10,50 @@ import Network from '@/pages/Network.vue'
 
 Vue.use(Router)
 
-export default (store) => {
-  const router = new Router({
+export const NAMES = {
+  INTRO: 'intro',
+  SETUP: 'setup',
+  UNLOCK: 'unlock',
+  APP_BROWSER: 'app-browser',
+  TRANSFER: 'transfer',
+  NETWORK: 'network'
+}
+
+export default (store, RouterClass = Router) => {
+  const router = new RouterClass({
     routes: [
       {
-        name: 'intro',
+        name: NAMES.INTRO,
         path: '/',
         component: Intro
       },
       {
-        name: 'setup',
+        name: NAMES.SETUP,
         path: '/setup',
         component: Setup
       },
       {
-        name: 'unlock',
+        name: NAMES.UNLOCK,
         path: '/unlock',
         component: Unlock,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'setup' })
-          if (store.state.unlocked) return next({ name: 'app-browser' })
+          if (!store.state.keystore) return next({ name: NAMES.SETUP })
+          if (store.state.unlocked) return next({ name: NAMES.APP_BROWSER })
           next()
         }
       },
       {
-        name: 'app-browser',
+        name: NAMES.APP_BROWSER,
         path: '/app-browser',
         component: AppBrowser,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'setup' })
-          if (!store.state.unlocked) return next({ name: 'unlock' })
+          if (!store.state.keystore) return next({ name: NAMES.SETUP })
+          if (!store.state.unlocked) return next({ name: NAMES.UNLOCK })
           next()
         }
       },
       {
-        name: 'transfer',
+        name: NAMES.TRANSFER,
         path: '/transfer',
         component: Transfer,
         children: [
@@ -52,7 +61,7 @@ export default (store) => {
         ]
       },
       {
-        name: 'network',
+        name: NAMES.NETWORK,
         path: '/network',
         component: Network
       }
@@ -64,13 +73,13 @@ export default (store) => {
       case 'setUnlocked':
         if (state.keystore) {
           router.push({
-            name: state.unlocked ? 'app-browser' : 'unlock'
+            name: state.unlocked ? NAMES.APP_BROWSER : NAMES.UNLOCK
           })
         }
         break
       case 'setKeystore':
-        if (state.keystore) return router.push({ name: 'unlock' })
-        if (router.route.name === 'app-browser') return router.push({ name: 'setup' })
+        if (state.keystore) return router.push({ name: NAMES.UNLOCK })
+        if (router.route.name === NAMES.APP_BROWSER) return router.push({ name: NAMES.SETUP })
         break
     }
   })
