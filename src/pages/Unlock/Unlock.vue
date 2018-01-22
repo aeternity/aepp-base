@@ -14,7 +14,7 @@
         Unlock
       </ae-button>
         <ae-button size='smaller' type='dramatic' class='unlock-different-keystore'>
-          <router-link :to="{path:unlockDifferentPath}">
+          <router-link :to="{ name: 'setup' }">
           Unlock a different account
           </router-link>
         </ae-button>

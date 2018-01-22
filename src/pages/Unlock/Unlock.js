@@ -1,6 +1,5 @@
 import { AeButton } from '@aeternity/aepp-components'
 import PinInput from '@/components/PinInput/PinInput.vue'
-import { PATHS } from '@/router/'
 
 export default {
   name: 'unlock',
@@ -12,8 +11,7 @@ export default {
     return {
       password: '',
       token: {},
-      error: false,
-      unlockDifferentPath: PATHS.SETUP
+      error: false
     }
   },
   computed: {
@@ -59,7 +57,7 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-    if (to.path === PATHS.SETUP) {
+    if (to.name === 'setup') {
       const leaveConfirmed = window.confirm(
         'Your saved account will be overwritten. Please make sure you have a backup of the seed phrase. Do you want to continue?'
       )

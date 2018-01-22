@@ -1,5 +1,4 @@
 import lightwallet from 'eth-lightwallet'
-import {PATHS} from '@/router'
 
 import PinInput from '@/components/PinInput/PinInput.vue'
 import { AeButton } from '@aeternity/aepp-components'
@@ -17,8 +16,7 @@ export default {
       password: '',
       regenerateButtonText: 'generate new',
       copyButtonText: 'COPY TO CLIPBOARD',
-      working: false,
-      unlockPath: PATHS.UNLOCK
+      working: false
     }
   },
   computed: {
