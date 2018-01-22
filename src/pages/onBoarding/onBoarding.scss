@@ -1,6 +1,16 @@
 @import '~@aeternity/aepp-components/dist/variables.scss';
 @import './../../text.style.scss';
 
+@mixin screenshot-frame-device-screen($device_width, $device_height, $screen_width, $screen_height, $screen_left, $screen_top){
+    padding-top: 100% / ($device_width / $device_height);
+    img {
+        left: percentage($screen_left / $device_width);
+        width: percentage($screen_width / $device_width);
+        top: percentage($screen_top / $device_height);
+        height: percentage($screen_height / $device_height);
+    }
+}
+
 .onBoarding {
   .wrapper {
     .content {
@@ -15,6 +25,28 @@
 
       p {
         @include paragraphnormal;
+      }
+    }
+
+    .screenshot-phone {
+      background-image: url('./../../assets/img/phone-mockup.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 264.3px;
+      position: relative;
+      margin: auto;
+      padding-top: 20px;
+      padding-bottom: 38px;
+
+      .image {
+        top: 78px;
+        width: 206px;
+        position: relative;
+        margin: auto;
+      }
+
+      img {
+        width: 100%;
       }
     }
 

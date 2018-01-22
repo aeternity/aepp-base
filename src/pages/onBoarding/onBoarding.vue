@@ -27,6 +27,11 @@
           </div>
         </section>
         <section id="create">
+          <div class="screenshot-phone">
+            <div class="image">
+              <img src="./../../assets/img/identity-card2.svg" class="Group">
+            </div>
+          </div>
           <div class="content">
             <h1>Create</h1>
             <p>
