@@ -1,12 +1,10 @@
-import IdManager from '@/components/IdManager.vue'
+import IdManager from '@/components/IdManager/IdManager.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: {
-    'id-manager': IdManager
-  },
+  components: { IdManager },
   computed: {
     appClassObject: () => {
       return {

@@ -9,18 +9,18 @@
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
+    "test": "npm run lint && npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "@aeternity/aepp-components": "2.0.0",
+    "@aeternity/aepp-components": "2.0.1",
     "abi-decoder": "^1.0.9",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
     "bignumber.js": "^4.1.0",
     "es6-promise": "^4.1.1",
     "eth-lightwallet": "^3.0.0",
-    "ethereum-blockies-png": "^0.1.2",
+    "ethereum-blockies-png": "git+https://github.com/acdbaykal/ethereum-blockies-png.git",
     "ethjs-unit": "^0.1.6",
     "lodash": "^4.17.4",
     "moment": "^2.19.2",
@@ -35,6 +35,7 @@
     "web3-provider-engine": "^13.3.3"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.10",
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",

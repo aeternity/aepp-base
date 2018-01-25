@@ -5,6 +5,6 @@
   </div>
 </template>
 
-<script src='./App.js'/>
 <style scoped src='./App.css'/>
 <style src='./App.global.css'/>
+<script src='./App.js'/>
