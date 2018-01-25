@@ -18,6 +18,15 @@
           </div>
         </section>
         <section id="manage">
+          <div class="screenshot-phone">
+            <div class="image">
+              <img src="./../../assets/img/mini-card1.svg" class="Group">
+              <img src="./../../assets/img/mini-card2.svg" class="Group">
+              <img src="./../../assets/img/mini-card3.svg" class="Group">
+              <img src="./../../assets/img/mini-card3.svg" class="Group">
+              <img src="./../../assets/img/mini-card4.png" srcset="./../../assets/img/mini-card4@2x.png 2x, ./../../assets/img/mini-card4@3x.png 3x" class="Group-4">
+            </div>
+          </div>
           <div class="content">
             <h1>Define</h1>
             <p>
@@ -84,7 +93,7 @@
         </section>
       </main>
       <footer>
-        <ae-button type="plain" :disabled="isLastStep" v-show="!isLastStep" @click="skip(1)">
+        <ae-button type="plain" :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
           Next
         </ae-button>
         <ae-button type="exciting" v-show="isLastStep">
@@ -95,7 +104,7 @@
         <div class="step-dots" v-if="hasDots">
           <div class="step-dot" v-for="n in max" :class="{active: n == step}" @click="goToStep(n)"></div>
         </div>
-        <ae-button type="plain">
+        <ae-button type="plain" uppercase>
           <router-link to="/setup">
             Skip
           </router-link>

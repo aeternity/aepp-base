@@ -95,6 +95,20 @@
           }
         }
       }
+
+      &#manage {
+        .image {
+          img {
+            position: relative;
+            margin-top: -45px;
+            width: 206px;
+
+            &:first-child {
+              margin-top: 0px;
+            }
+          }
+        }
+      }
     }
 
     footer {
