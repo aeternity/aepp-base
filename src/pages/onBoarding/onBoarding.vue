@@ -84,6 +84,12 @@
         </section>
         <section id="end">
           <div class="content">
+            <div class="screenshot-phone2">
+              <div class="image">
+                <img src="./../../assets/img/dummy-list-view.svg">
+                <img src="./../../assets/img/mini-card.svg">
+              </div>
+            </div>
             <h1>Play</h1>
             <p>
               Every aepp can now use your new active identity and token balance.
