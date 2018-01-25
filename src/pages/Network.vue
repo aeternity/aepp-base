@@ -7,16 +7,14 @@
       :choices="options"
       :default="current"
       @input="update"
-    /></ae-switch>
+    />
    <!--  <ae-button @click="addCustom = !addCustom"  :type="!addCustom ? 'exciting' : 'normal'">Add Custom Network</ae-button>
     <br>
     <form @submit.prevent="addOption()">
       <input v-if="addCustom" v-model="custom" placeholder="Custom Network" ref="input">
     </form> -->
-    <div @click='back' class="back">
-      <div :style='"background-image:url(static/icons/browser.svg)"' class="icon-image"></div>
-    </div>
-    <quick-id></quick-id>
+    <router-link :to="{ name: 'apps' }" class="back" />
+    <quick-id />
   </div>
 </template>
 
@@ -54,9 +52,6 @@ export default {
       this.current = newVal
       let option = this.options[this.current]
       this.$store.dispatch('updateRPC', option.url)
-    },
-    back () {
-      this.$router.push('app-browser')
     }
   },
   components: {
@@ -92,6 +87,7 @@ export default {
   width:50px;
   height:50px;
   z-index:998;
-  /*background-color:red;*/
+  background-image: url('/static/icons/browser.svg');
+  background-size: contain;
 }
 </style>
