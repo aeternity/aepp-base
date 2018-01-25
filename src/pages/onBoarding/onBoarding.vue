@@ -120,4 +120,4 @@
   </div>
 </template>
 <script src="./onBoarding.js" />
-<style lang="scss" scoped src="./onBoarding.scss">
+<style lang="scss" scoped src="./onBoarding.scss" />
