@@ -30,14 +30,7 @@ const IdentityApp = Vue.extend({
   render: h => h(App),
   components: { App },
   store,
-  router: getRouter(store),
-  methods: {
-  },
-  beforeCreate: function () {
-  },
-  mounted: function () {
-    this.$store.dispatch('init')
-  }
+  router: getRouter(store)
 })
 const vm = new IdentityApp()
 vm.$mount('#app')

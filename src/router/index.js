@@ -9,9 +9,15 @@ import Transfer from '@/pages/Transfer/Transfer.vue'
 import Network from '@/pages/Network.vue'
 
 export default (store) => {
+  let loginTarget
+
   const checkLoggedIn = (to, from, next) => {
-    if (!store.state.keystore) return next({ name: 'intro' })
-    if (!store.state.unlocked) return next({ name: 'unlock' })
+    const name = !store.state.keystore && 'intro' ||
+      !store.state.unlocked && 'unlock'
+    if (name) {
+      loginTarget = to.fullPath
+      next({ name })
+    }
     next()
   }
 
@@ -75,13 +81,13 @@ export default (store) => {
     switch (mutation.type) {
       case 'setUnlocked':
         if (state.keystore) {
-          router.push({
-            name: state.unlocked ? 'apps' : 'unlock'
-          })
+          if (state.unlocked) {
+            router.push(loginTarget || { name: 'apps' })
+            loginTarget = undefined
+          } else {
+            router.push({ name: 'unlock' })
+          }
         }
-        break
-      case 'setKeystore':
-        if (state.keystore) return router.push({ name: 'unlock' })
         break
     }
   })

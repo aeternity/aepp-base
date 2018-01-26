@@ -201,11 +201,11 @@ const store = (function () {
       removeApp ({commit, state}, name) {
         if (name) return commit('removeApp', name)
       },
-      logout ({getters, dispatch, state, commit}) {
+      logout ({ commit }) {
         aeContract = null
         derivedKey = null
         web3 = null
-        dispatch('setUnlocked', false)
+        commit('setUnlocked', false)
       },
       generateAddress ({dispatch, commit, state}, numAddresses = 1) {
         if (state.keystore === null) {
@@ -258,9 +258,6 @@ const store = (function () {
             }
           })
         }
-      },
-      setUnlocked ({commit}, isUnlocked) {
-        commit('setUnlocked', isUnlocked)
       },
       restoreAddresses ({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
@@ -455,5 +452,7 @@ const store = (function () {
   })
 })()
 window.s = store
+
+store.dispatch('init')
 
 export default store
