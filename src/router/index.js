@@ -78,9 +78,6 @@ export default (store) => {
         break
       case 'setKeystore':
         if (state.keystore) return router.push({ name: 'unlock' })
-        if (['apps', 'app-browser'].includes(router.route.name)) {
-          return router.push({ name: 'setup' })
-        }
         break
     }
   })

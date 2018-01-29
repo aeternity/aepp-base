@@ -115,13 +115,6 @@ describe('router/index.js', () => {
       )
 
       it(
-        'redirects to SETUP path when setKeystore mutation is triggered, keystore is NOT present and current path is APPS',
-        createRedirectTest(
-          {keystore: {}}, 'setKeystore', 'unlock', 'apps'
-        )
-      )
-
-      it(
         'redirects to APPS path when setUnlocked mutation is triggered and keystore is present and unlocked',
         createRedirectTest(
           {keystore: {}, unlocked: true}, 'setUnlocked', 'apps'
