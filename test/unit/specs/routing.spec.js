@@ -24,8 +24,8 @@ describe('router/index.js', () => {
         createRedirectTest(state, fromName, fromName)
 
       it(
-        'pushes SETUP path if current route is APPS and no keystore is present',
-        createRedirectTest({}, 'apps', 'setup')
+        'pushes INTRO path if current route is APPS and no keystore is present',
+        createRedirectTest({}, 'apps', 'intro')
       )
 
       it(
@@ -79,12 +79,6 @@ describe('router/index.js', () => {
 
       it('does not interfere when current route is INTRO', () => {
         createNoRedirectTest({}, 'intro')()
-        createNoRedirectTest({
-          keystore: {}, unlocked: false
-        }, 'intro')()
-        createNoRedirectTest({
-          keystore: {}, unlocked: true
-        }, 'intro')()
       })
     })
 

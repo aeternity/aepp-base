@@ -10,7 +10,7 @@ import Network from '@/pages/Network.vue'
 
 export default (store) => {
   const checkLoggedIn = (to, from, next) => {
-    if (!store.state.keystore) return next({ name: 'setup' })
+    if (!store.state.keystore) return next({ name: 'intro' })
     if (!store.state.unlocked) return next({ name: 'unlock' })
     next()
   }
@@ -20,7 +20,11 @@ export default (store) => {
       {
         name: 'intro',
         path: '/',
-        component: Intro
+        component: Intro,
+        beforeEnter (to, from, next) {
+          if (store.state.keystore) return next({ name: 'unlock' })
+          next()
+        }
       },
       {
         name: 'setup',
