@@ -311,13 +311,8 @@ const store = (function () {
         if (!web3) {
           return
         }
-        let TokenContract = web3.eth.contract(aeAbi)
-        TokenContract.at(state.token.address, (err, contract) => {
-          if (err) console.error(err)
-          aeContract = contract
-          dispatch('setUnlocked', true)
-          window.globalTokenContract = contract
-        })
+        aeContract = web3.eth.contract(aeAbi).at(state.token.address)
+        commit('setUnlocked', true)
         // dispatch('generateAddress', web3);
         dispatch('setAcountInterval')
         dispatch('restoreAddresses')
