@@ -119,5 +119,5 @@
     </div>
   </div>
 </template>
-<script src="./onBoarding.js" />
-<style lang="scss" scoped src="./onBoarding.scss" />
+<script src="./Onboarding.js" />
+<style lang="scss" scoped src="./Onboarding.scss" />

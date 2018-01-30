@@ -1,7 +1,7 @@
 import { AeButton } from '@aeternity/aepp-components'
 
 export default {
-  name: 'id-page-onBoarding',
+  name: 'onboarding',
   components: { AeButton },
   data: () => ({
     step: 1,
@@ -9,10 +9,9 @@ export default {
     showDots: true
   }),
   mounted () {
-    let self = this
-    self.$sections = self.$el.querySelectorAll('section')
-    self.max = self.$sections.length
-    self.goToStep(self.step)
+    this.$sections = this.$el.querySelectorAll('section')
+    this.max = this.$sections.length
+    this.goToStep(this.step)
   },
   computed: {
     hasDots () {
