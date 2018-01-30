@@ -18,7 +18,7 @@
     }
 
     .screenshot-phone, .screenshot-phone2 {
-      background-image: url('./../../assets/img/phone-mockup.svg');
+      background-image: url('./../../assets/img/onboarding/phone-mockup.svg');
       background-repeat: no-repeat;
       background-position: center;
       height: 264.3px;
@@ -51,7 +51,7 @@
     }
 
     .screenshot-phone2 {
-      background-image: url('./../../assets/img/phone-bottom-mockup.svg');
+      background-image: url('./../../assets/img/onboarding/phone-bottom-mockup.svg');
 
       .image {
         top: 25px;
@@ -81,7 +81,7 @@
 
       &#welcome {
         .cube-div {
-          background: url('./../../assets/img/cube.svg') repeat-x center;
+          background: url('./../../assets/img/onboarding/cube.svg') repeat-x center;
           height: 200px;
           padding: 55px;
 

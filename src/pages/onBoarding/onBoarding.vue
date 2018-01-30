@@ -7,7 +7,7 @@
       <main>
         <section id="welcome">
           <div class="cube-div">
-            <img src="./../../assets/img/identity-card.svg" class="large-copy-2">
+            <img src="./../../assets/img/onboarding/identity-card.svg" class="large-copy-2">
           </div>
           <div class="content">
             <h1>Welcome to Identity Manager</h1>
@@ -20,11 +20,11 @@
         <section id="manage">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="./../../assets/img/mini-card1.svg" class="Group">
-              <img src="./../../assets/img/mini-card2.svg" class="Group">
-              <img src="./../../assets/img/mini-card3.svg" class="Group">
-              <img src="./../../assets/img/mini-card3.svg" class="Group">
-              <img src="./../../assets/img/mini-card4.png" srcset="./../../assets/img/mini-card4@2x.png 2x, ./../../assets/img/mini-card4@3x.png 3x" class="Group-4">
+              <img src="./../../assets/img/onboarding/mini-card.svg" class="Group">
+              <img src="./../../assets/img/onboarding/mini-card1.svg" class="Group">
+              <img src="./../../assets/img/onboarding/mini-card2.svg" class="Group">
+              <img src="./../../assets/img/onboarding/mini-card3.svg" class="Group">
+              <img src="./../../assets/img/onboarding/mini-card4.png" srcset="./../../assets/img/onboarding/mini-card4@2x.png 2x, ./../../assets/img/onboarding/mini-card4@3x.png 3x" class="Group-4">
             </div>
           </div>
           <div class="content">
@@ -38,7 +38,7 @@
         <section id="create">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="./../../assets/img/identity-card2.svg" class="Group">
+              <img src="./../../assets/img/onboarding/identity-card2.svg" class="Group">
             </div>
           </div>
           <div class="content">
@@ -52,7 +52,7 @@
         <section id="name-image">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="./../../assets/img/identity-card3.svg" class="Group">
+              <img src="./../../assets/img/onboarding/identity-card3.svg" class="Group">
             </div>
           </div>
           <div class="content">
@@ -67,11 +67,11 @@
           <div class="screenshot-phone">
             <div class="image">
               <div class="icons">
-                <img src="./../../assets/img/app-icon1.svg" class="Group">
-                <img src="./../../assets/img/app-icon2.svg" class="Group">
-                <img src="./../../assets/img/app-icon3.svg" class="Group">
-                <img src="./../../assets/img/app-icon4.svg" class="Group">
-                <img src="./../../assets/img/app-icon5.svg" class="Group">
+                <img src="./../../assets/img/onboarding/app-icon1.svg" class="Group">
+                <img src="./../../assets/img/onboarding/app-icon2.svg" class="Group">
+                <img src="./../../assets/img/onboarding/app-icon3.svg" class="Group">
+                <img src="./../../assets/img/onboarding/app-icon4.svg" class="Group">
+                <img src="./../../assets/img/onboarding/app-icon5.svg" class="Group">
               </div>
             </div>
           </div>
@@ -86,8 +86,8 @@
           <div class="content">
             <div class="screenshot-phone2">
               <div class="image">
-                <img src="./../../assets/img/dummy-list-view.svg">
-                <img src="./../../assets/img/mini-card.svg">
+                <img src="./../../assets/img/onboarding/dummy-list-view.svg">
+                <img src="./../../assets/img/onboarding/mini-card.svg">
               </div>
             </div>
             <h1>Play</h1>
