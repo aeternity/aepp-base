@@ -24,8 +24,8 @@ describe('router/index.js', () => {
         createRedirectTest(state, fromName, fromName)
 
       it(
-        'pushes SETUP path if current route is APP_BROWSER and no keystore is present',
-        createRedirectTest({}, 'app-browser', 'setup')
+        'pushes INTRO path if current route is APPS and no keystore is present',
+        createRedirectTest({}, 'apps', 'intro')
       )
 
       it(
@@ -34,10 +34,10 @@ describe('router/index.js', () => {
       )
 
       it(
-        'pushes UNLOCK path if current route is APP_BROWSER and keystore is present but not unlocked',
+        'pushes UNLOCK path if current route is APPS and keystore is present but not unlocked',
         createRedirectTest({
           keystore: {}, unlocked: false
-        }, 'app-browser', 'unlock')
+        }, 'apps', 'unlock')
       )
 
       it(
@@ -48,10 +48,10 @@ describe('router/index.js', () => {
       )
 
       it(
-        'pushes APP_BROWSER path if current route is UNLOCK and keystore is present and unlocked',
+        'pushes APPS path if current route is UNLOCK and keystore is present and unlocked',
         createRedirectTest({
           keystore: {}, unlocked: true
-        }, 'unlock', 'app-browser')
+        }, 'unlock', 'apps')
       )
 
       it(
@@ -61,10 +61,10 @@ describe('router/index.js', () => {
         }, 'setup')
       )
 
-      it('does not interfere when current route is APP_BROWSER and keystore is present and unlocked',
+      it('does not interfere when current route is APPS and keystore is present and unlocked',
         createNoRedirectTest({
           keystore: {}, unlocked: true
-        }, 'app-browser')
+        }, 'apps')
       )
 
       it('does not interfere when current route is SETUP and no keystore is present',
@@ -79,12 +79,6 @@ describe('router/index.js', () => {
 
       it('does not interfere when current route is INTRO', () => {
         createNoRedirectTest({}, 'intro')()
-        createNoRedirectTest({
-          keystore: {}, unlocked: false
-        }, 'intro')()
-        createNoRedirectTest({
-          keystore: {}, unlocked: true
-        }, 'intro')()
       })
     })
 
@@ -108,23 +102,9 @@ describe('router/index.js', () => {
       })
 
       it(
-        'redirects to UNLOCK path when setKeystore mutation is triggered and keystore is present',
+        'redirects to APPS path when setUnlocked mutation is triggered and keystore is present and unlocked',
         createRedirectTest(
-          {keystore: {}}, 'setKeystore', 'unlock'
-        )
-      )
-
-      it(
-        'redirects to SETUP path when setKeystore mutation is triggered, keystore is NOT present and current path is APP_BROWSER',
-        createRedirectTest(
-          {keystore: {}}, 'setKeystore', 'unlock', 'app-browser'
-        )
-      )
-
-      it(
-        'redirects to APP_BROWSER path when setUnlocked mutation is triggered and keystore is present and unlocked',
-        createRedirectTest(
-          {keystore: {}, unlocked: true}, 'setUnlocked', 'app-browser'
+          {keystore: {}, unlocked: true}, 'setUnlocked', 'apps'
         )
       )
 

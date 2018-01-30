@@ -17,11 +17,6 @@ var util = require('ethereumjs-util')
 
 Vue.use(Vuex)
 
-const APP_TYPES = {
-  INTERNAL: 0,
-  EXTERNAL: 1
-}
-
 const store = (function () {
   var aeContract
   var derivedKey
@@ -41,28 +36,24 @@ const store = (function () {
       keystore: null,
       apps: [
         {
-          type: APP_TYPES.EXTERNAL,
           name: 'Notary',
           icon: 'static/icons/notary.svg',
-          main: process.env.IS_STAGE ? 'https://stage-notary.aepps.com' : 'https://notary.aepps.com'
+          path: `${process.env.IS_STAGE ? 'stage-' : ''}notary.aepps.com`
         },
         {
-          type: APP_TYPES.INTERNAL,
           name: 'Transfer',
           icon: 'static/icons/notary.svg',
-          main: '/transfer'
+          path: 'transfer'
         },
         {
-          type: APP_TYPES.EXTERNAL,
           name: 'Wall',
           icon: 'static/icons/wall.svg',
-          main: 'https://wall.aepps.com'
+          path: 'wall.aepps.com'
         },
         {
-          type: APP_TYPES.INTERNAL,
           name: 'Network',
           icon: 'static/icons/notary.svg',
-          main: '/network'
+          path: 'network'
         }
       ]
     },
@@ -188,10 +179,9 @@ const store = (function () {
             var title = el.getElementsByTagName('title')[0].innerText
             commit('addApp',
               {
-                type: APP_TYPES.EXTERNAL,
                 name: title,
                 icon: 'static/icons/notary.svg',
-                main: url
+                path: url
               }
             )
           })
@@ -200,10 +190,9 @@ const store = (function () {
             if (title) {
               commit('addApp',
                 {
-                  type: APP_TYPES.EXTERNAL,
                   name: title,
                   icon: 'static/icons/notary.svg',
-                  main: url
+                  path: url
                 }
               )
             }
@@ -212,11 +201,11 @@ const store = (function () {
       removeApp ({commit, state}, name) {
         if (name) return commit('removeApp', name)
       },
-      logout ({getters, dispatch, state, commit}) {
+      logout ({ commit }) {
         aeContract = null
         derivedKey = null
         web3 = null
-        dispatch('setUnlocked', false)
+        commit('setUnlocked', false)
       },
       generateAddress ({dispatch, commit, state}, numAddresses = 1) {
         if (state.keystore === null) {
@@ -270,9 +259,6 @@ const store = (function () {
           })
         }
       },
-      setUnlocked ({commit}, isUnlocked) {
-        commit('setUnlocked', isUnlocked)
-      },
       restoreAddresses ({getters, dispatch, commit, state}) {
         let numUnlockedAddresses = localStorage.getItem('numUnlockedAddresses')
         let alreadyUnlocked = state.keystore.getAddresses().map(function (e) { return e })
@@ -322,14 +308,8 @@ const store = (function () {
         if (!web3) {
           return
         }
-        let TokenContract = web3.eth.contract(aeAbi)
-        TokenContract.at(state.token.address, (err, contract) => {
-          if (err) console.error(err)
-          aeContract = contract
-          dispatch('setUnlocked', true)
-          window.globalTokenContract = contract
-        })
-        // dispatch('generateAddress', web3);
+        aeContract = web3.eth.contract(aeAbi).at(state.token.address)
+        commit('setUnlocked', true)
         dispatch('setAcountInterval')
         dispatch('restoreAddresses')
       },
@@ -341,7 +321,7 @@ const store = (function () {
           let saved = JSON.parse(localStorage.getItem('apps'))
           let std = state.apps
           let apps = std.concat(saved)
-          apps = apps.filter((app, index, self) => self.findIndex(t => t.name === app.name && t.main === app.main) === index)
+          apps = apps.filter((app, index, self) => self.findIndex(t => t.name === app.name && t.path === app.path) === index)
           commit('setApps', apps)
         }
       },
@@ -471,5 +451,7 @@ const store = (function () {
   })
 })()
 window.s = store
+
+store.dispatch('init')
 
 export default store

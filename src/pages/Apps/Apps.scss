@@ -1,0 +1,59 @@
+.apps {
+  .nomargin {
+    visibility: hidden;
+    &.visible {
+      visibility: visible;
+    }
+    .ae-notification {
+      margin-bottom: 0;
+    }
+  }
+
+  .shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .app-shortcut {
+      position: relative;
+      margin: 30px 20px 20px 20px;
+
+      @mixin remove-app-btn-hidden {
+        visibility: hidden;
+        opacity: 0;
+        transform: translate(48%, -50%) scale(.45, .45);
+        transition: opacity 300ms, transform 300ms, visibility 0s 300ms;
+      }
+
+      .remove-app-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        @include remove-app-btn-hidden;
+      }
+
+      &:hover .remove-app-btn, .remove-app-btn.visible {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(48%, -50%) scale(.58, .58);
+        transition: opacity 300ms 500ms, transform 300ms 500ms, visibility 0s 500ms;
+      }
+
+      @media (hover: none) {
+        .remove-app-btn:not(.visible) {
+          @include remove-app-btn-hidden;
+        }
+      }
+
+      .ae-app-icon {
+        margin: 0 auto;
+      }
+
+      .app-name {
+        margin-top: 10px;
+        text-align: center;
+      }
+    }
+  }
+}
