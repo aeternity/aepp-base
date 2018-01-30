@@ -310,7 +310,6 @@ const store = (function () {
         }
         aeContract = web3.eth.contract(aeAbi).at(state.token.address)
         commit('setUnlocked', true)
-        // dispatch('generateAddress', web3);
         dispatch('setAcountInterval')
         dispatch('restoreAddresses')
       },

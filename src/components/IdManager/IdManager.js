@@ -57,9 +57,6 @@ export default {
     activeIdentity () {
       return this.$store.getters.activeIdentity
     },
-    addresses () {
-      return this.$store.getters.addresses
-    },
     identities () {
       return this.$store.getters.identities
     }
@@ -68,12 +65,7 @@ export default {
     activateId (id) {
       this.$store.commit('selectIdentity', this.identities.indexOf(id))
     },
-    generateFirstAddress () {
-      console.log('generateFirstAddress')
-      this.$store.dispatch('generateAddress')
-    },
     generateNewIdentity () {
-      console.log('generateNewIdentity')
       this.$store.dispatch('generateAddress')
     },
     goBack () {
@@ -108,11 +100,6 @@ export default {
     },
     logout () {
       this.$store.dispatch('logout')
-    }
-  },
-  created () {
-    if (this.addresses && this.addresses.length < 1) {
-      this.generateFirstAddress()
     }
   },
   mounted () {
