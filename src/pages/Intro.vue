@@ -14,7 +14,7 @@
             Login
           </ae-button>
         </router-link>
-        <router-link :to="{ name: 'onBoarding' }">
+        <router-link :to="{ name: 'onboarding' }">
           <ae-button type="plain" size="medium" uppercase>
             See how it works
           </ae-button>

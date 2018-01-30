@@ -1,7 +1,7 @@
 import Router from 'vue-router'
 
 import Intro from '@/pages/Intro.vue'
-import OnBoarding from '@/pages/onBoarding'
+import Onboarding from '@/pages/Onboarding/Onboarding.vue'
 import Setup from '@/pages/Setup/Setup.vue'
 import Unlock from '@/pages/Unlock/Unlock.vue'
 import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
@@ -23,8 +23,8 @@ export default (store) => {
       },
       {
         name: 'onBoarding',
-        path: '/on-boarding',
-        component: OnBoarding
+        path: '/onboarding',
+        component: Onboarding
       },
       {
         name: 'unlock',
