@@ -121,4 +121,3 @@
 </template>
 <script src="./Onboarding.js" />
 <style lang="scss" scoped src="./Onboarding.scss" />
-s
