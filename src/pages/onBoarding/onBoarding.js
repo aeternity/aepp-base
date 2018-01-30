@@ -23,21 +23,6 @@ export default {
     }
   },
   methods: {
-    setCssVars () {
-      this.$el.style.setProperty(
-        '--x',
-        `${(this.step * 100 - 100) * this.x_multiplier}%`
-      )
-      this.$el.style.setProperty(
-        '--y',
-        `${(this.step * 100 - 100) * this.y_multiplier}%`
-      )
-      this.$el.style.setProperty('--axis', this.axis)
-      this.$el.style.setProperty('--axis-reverse', this.axisReverse)
-      this.$el.style.setProperty('--cross', this.cross)
-      this.$el.style.setProperty('--cross-reverse', this.crossReverse)
-      // this.$el.style.setProperty('--vision', this.xray)
-    },
     goToStep (step) {
       this.step = step > this.max ? this.max : step < 1 ? 1 : step
       this.currentSection = this.$sections[this.step - 1]
