@@ -22,7 +22,7 @@ export default (store) => {
         component: Setup
       },
       {
-        name: 'onBoarding',
+        name: 'onboarding',
         path: '/onboarding',
         component: Onboarding
       },

@@ -60,6 +60,8 @@
 
     main {
       padding-top: 64px;
+      position: absolute;
+      bottom: 60px;
     }
 
     section {
@@ -138,6 +140,10 @@
             background-color: #f7296e;
           }
         }
+      }
+
+      .start-button {
+        margin-right: 30px;
       }
     }
   }

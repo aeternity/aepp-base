@@ -102,7 +102,7 @@
         <ae-button type="plain" :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
           Next
         </ae-button>
-        <ae-button type="exciting" v-show="isLastStep">
+        <ae-button type="exciting" v-show="isLastStep" class="start-button">
           <router-link to="/setup">
             Start
           </router-link>
