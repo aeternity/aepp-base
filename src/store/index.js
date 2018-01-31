@@ -34,6 +34,7 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
+      notification: null,
       apps: [
         {
           name: 'Notary',
@@ -110,6 +111,9 @@ const store = (function () {
             tokenBalance: tokenBalance || 0
           })
         }
+      },
+      setNotification (state, options) {
+        state.notification = options
       }
     },
     getters: {
@@ -160,6 +164,10 @@ const store = (function () {
       }
     },
     actions: {
+      setNotification ({ commit }, options) {
+        commit('setNotification', { type: 'boring', ...options })
+        if (options.autoClose) setTimeout(() => commit('setNotification'), 3000)
+      },
       updateRPC ({commit, dispatch}, rpcURL) {
         commit('updateRPC', rpcURL)
         dispatch('logout')
