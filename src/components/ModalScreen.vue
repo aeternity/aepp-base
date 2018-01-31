@@ -43,39 +43,39 @@
   @import '~@aeternity/aepp-components/dist/variables.scss';
 
   .modal-screen {
-    .ae-modal > main {
-      box-sizing: border-box;
-      @media (max-width: $screen-phone) {
-        height: calc(100vh - 85px);
-      }
-      @media (min-width: $screen-phone) {
-        height: calc(100vh - 20px);
-      }
+    .ae-modal {
+      height: 100%;
       max-height: 600px;
       display: flex;
       flex-direction: column;
 
-      .content {
-        .ae-button {
-          display: block;
-          width: 100%;
-          max-width: 310px;
-          margin: 15px auto;
+      > main {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .content {
+          .ae-button {
+            display: block;
+            width: 100%;
+            max-width: 310px;
+            margin: 15px auto;
+          }
+
+          p {
+            text-align: center;
+            max-width: 300px;
+            font-size: 18px;
+            line-height: 1.56;
+            margin-left: auto;
+            margin-right: auto;
+          }
         }
 
-        p {
-          text-align: center;
-          max-width: 300px;
-          font-size: 18px;
-          line-height: 1.56;
-          margin-left: auto;
-          margin-right: auto;
+        footer.content p {
+          color: $grey;
+          font-size: 16px;
         }
-      }
-
-      footer.content p {
-        color: $grey;
-        font-size: 16px;
       }
     }
 

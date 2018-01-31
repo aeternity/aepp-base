@@ -71,6 +71,9 @@ const store = (function () {
       setKeystore (state, keystore) {
         state.keystore = keystore
       },
+      setSeed (state, seed) {
+        state.seed = seed
+      },
       addApp (state, app) {
         this.state.apps.push(app)
         localStorage.setItem('apps', JSON.stringify(this.state.apps))
@@ -333,11 +336,11 @@ const store = (function () {
           commit('setApps', apps)
         }
       },
-      createKeystore ({commit, dispatch, state}, {seed, password}) {
+      createKeystore ({commit, dispatch, state}, password) {
         return new Promise(function (resolve, reject) {
           lightwallet.keystore.createVault({
             password: password,
-            seedPhrase: seed,
+            seedPhrase: state.seed,
             hdPathString: "m/44'/60'/0'/0"
           }, function (err, keystore) {
             if (err) {
@@ -355,8 +358,6 @@ const store = (function () {
               dispatch('initWeb3', pwDerivedKey)
               // generate the first address
               dispatch('generateAddress')
-              // since we created a new account, show the id manager
-              dispatch('setShowIdManager', true)
               return resolve()
             })
           })

@@ -1,0 +1,65 @@
+<template>
+  <modal-screen title="Recover with phrase" :redirectToOnClose="{ name: 'intro' }">
+    <form @submit.prevent="setSeed">
+      <ae-label
+        :for="_uid"
+        help-type="danger"
+        :help-text="errors.first('seed')"
+      >Enter passphrase</ae-label>
+      <ae-input
+        :id="_uid"
+        name="seed"
+        type="textarea"
+        v-model="seed"
+        v-validate="'required'"
+        v-focus="true"
+      />
+      <ae-button
+        type="dramatic"
+        :inactive="errors.has('seed')"
+      >Recover with Passphrase</ae-button>
+    </form>
+
+    <div slot="footer">
+      <p>
+        Enter your password if you remember it again or
+        create a new account if you haven’t done that yet
+      </p>
+      <ae-button :to="{ name: 'login' }" size="small" plain type="exciting" uppercase>
+        Login with an existing account
+      </ae-button>
+      <ae-button :to="{ name: 'new-account' }" size="small" plain type="exciting" uppercase>
+        Create new account
+      </ae-button>
+    </div>
+  </modal-screen>
+</template>
+
+<script>
+  import { keystore } from 'eth-lightwallet'
+  import { AeLabel, AeButton } from '@aeternity/aepp-components'
+  import ModalScreen from '@/components/ModalScreen'
+  import AeInput from '@/components/AeInput'
+
+  export default {
+    components: { ModalScreen, AeInput, AeLabel, AeButton },
+    data () {
+      return { seed: '' }
+    },
+    methods: {
+      async setSeed () {
+        if (!await this.$validator.validateAll()) return
+
+        if (keystore.isSeedValid(this.seed)) {
+          this.$store.commit('setSeed', this.seed)
+        } else {
+          this.$store.dispatch('setNotification', {
+            text: `Invalid passphrase`,
+            autoClose: true,
+            hideCloseButton: true
+          })
+        }
+      }
+    }
+  }
+</script>

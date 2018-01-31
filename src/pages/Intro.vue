@@ -9,16 +9,12 @@
       </main>
 
       <footer>
-        <router-link :to="{ name: 'setup' }">
-          <ae-button type="exciting" size="medium">
-            Login
-          </ae-button>
-        </router-link>
-        <router-link :to="{ name: 'setup' }">
-          <ae-button type="plain" size="medium" uppercase>
-            See how it works
-          </ae-button>
-        </router-link>
+        <ae-button :to="{ name: 'login' }" type="exciting">
+          Login
+        </ae-button>
+        <ae-button :to="{ name: 'login' }" size="small" plain uppercase>
+          See how it works
+        </ae-button>
       </footer>
     </div>
   </div>
