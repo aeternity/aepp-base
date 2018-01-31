@@ -20,14 +20,21 @@
       <ae-button type="exciting" @click="setSeed">
         Next
       </ae-button>
-      <ae-button :to="{ name: 'login' }" plain type="exciting" size="small" uppercase>
-        Login with an existing account
+      <ae-button
+        :to="{ name: accountExist ? 'login' : 'recover' }"
+        plain
+        type="exciting"
+        size="small"
+        uppercase
+      >
+        {{accountExist ? 'Login with an existing account' : 'Recover with passphrase'}}
       </ae-button>
     </div>
   </modal-screen>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import { keystore } from 'eth-lightwallet'
   import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
@@ -40,6 +47,9 @@
         seed: keystore.generateRandomSeed()
       }
     },
+    computed: mapState({
+      accountExist: state => !!state.keystore
+    }),
     methods: {
       newSeed () {
         this.seed = keystore.generateRandomSeed()

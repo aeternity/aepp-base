@@ -25,7 +25,14 @@
         Enter your password if you remember it again or
         create a new account if you haven’t done that yet
       </p>
-      <ae-button :to="{ name: 'login' }" size="small" plain type="exciting" uppercase>
+      <ae-button
+        v-if="accountExist"
+        :to="{ name: 'login' }"
+        size="small"
+        plain
+        type="exciting"
+        uppercase
+      >
         Login with an existing account
       </ae-button>
       <ae-button :to="{ name: 'new-account' }" size="small" plain type="exciting" uppercase>
@@ -36,6 +43,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import { keystore } from 'eth-lightwallet'
   import { AeLabel, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
@@ -46,6 +54,9 @@
     data () {
       return { seed: '' }
     },
+    computed: mapState({
+      accountExist: state => !!state.keystore
+    }),
     methods: {
       async setSeed () {
         if (!await this.$validator.validateAll()) return

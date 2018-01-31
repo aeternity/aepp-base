@@ -27,14 +27,23 @@
       >
         Create Account
       </ae-button>
-      <ae-button :to="{ name: 'login' }" size="small" plain uppercase>
-        Login with an existing account
+      <ae-button
+        :to="{ name: accountExist && 'login' || recover && 'new-account' || 'recover' }"
+        plain
+        type="exciting"
+        size="small"
+        uppercase
+      >
+        {{accountExist && 'Login with an existing account'
+          || recover && 'Create new account'
+          || 'Recover with passphrase'}}
       </ae-button>
     </div>
   </modal-screen>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import { AeLabel, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
   import AeInput from '@/components/AeInput'
@@ -48,6 +57,9 @@
         recover: false
       }
     },
+    computed: mapState({
+      accountExist: state => !!state.keystore
+    }),
     methods: {
       async createKeystore () {
         if (!await this.$validator.validateAll()) return
