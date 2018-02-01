@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 import {AeIdentity, AeButton, AeIcon} from '@aeternity/aepp-components'
 
@@ -53,14 +54,7 @@ export default {
     Swiper,
     SwiperSlide
   },
-  computed: {
-    activeIdentity () {
-      return this.$store.getters.activeIdentity
-    },
-    identities () {
-      return this.$store.getters.identities
-    }
-  },
+  computed: mapGetters(['identities', 'activeIdentity']),
   methods: {
     activateId (id) {
       this.$store.commit('selectIdentity', this.identities.indexOf(id))
