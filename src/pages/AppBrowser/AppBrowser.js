@@ -1,4 +1,5 @@
 import QuickId from '@/components/QuickId/QuickId.vue'
+import DashboardNavbar from '@/components/DashboardNavbar/DashboardNavbar.vue'
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
 
 export default {
@@ -100,7 +101,8 @@ export default {
     AeIcon,
     AeButton,
     AeNotification,
-    AeModalLight
+    AeModalLight,
+    DashboardNavbar
   },
   created () {
     this.setIsTouch()
