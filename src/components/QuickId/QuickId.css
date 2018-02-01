@@ -1,9 +1,9 @@
 .quick-id {
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
-  z-index:997;
+  z-index: 997;
 }
