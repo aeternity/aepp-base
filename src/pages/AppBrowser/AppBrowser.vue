@@ -1,6 +1,8 @@
 <template>
   <div class="app-browser screen" :class="{'no-touch': !isTouch, 'touch': isTouch}" @click="editModeActive = false">
-
+    <dashboard-navbar>
+      Browse æpps
+    </dashboard-navbar>
     <div :style='iframeStyle' :class="{'iframe-wrap' : true, loading : iframeLoading}">
       <iframe ref="appframe" id="appframe" class="nomargin" :src="iframe"></iframe>
       <div class="loader"></div>
@@ -58,4 +60,4 @@
 </template>
 
 <script src='./AppBrowser.js'/>
-<style scoped src='./AppBrowser.css'/>
+<style scoped src='./AppBrowser.scss' lang='scss'/>
