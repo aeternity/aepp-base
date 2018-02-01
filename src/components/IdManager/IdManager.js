@@ -75,18 +75,6 @@ export default {
     isActive (id) {
       return id.address === this.activeIdentity.address
     },
-    copyAddress (address) {
-      let textArea = document.createElement('textarea')
-      textArea.value = address
-      document.body.appendChild(textArea)
-      textArea.select()
-      try {
-        document.execCommand('copy')
-      } catch (err) {
-        console.log('Copy failed')
-      }
-      document.body.removeChild(textArea)
-    },
     swipeTo (index) {
       if (index >= 0 && index < this.identities.length && this.$refs.mySwiper) {
         if (Array.isArray(this.$refs.mySwiper)) {
