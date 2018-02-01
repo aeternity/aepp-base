@@ -1,6 +1,6 @@
 .dashboard-navbar {
-  padding-top: 20px;
-  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 
   .title {
     font-family: Roboto;
@@ -8,5 +8,13 @@
     font-weight: bold;
     text-align: center;
     color: #1e1e1e;
+  }
+
+  .left{
+    float:left;
+  }
+
+  .right{
+    float:right;
   }
 }
