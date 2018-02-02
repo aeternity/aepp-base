@@ -38,10 +38,9 @@
   import { keystore } from 'eth-lightwallet'
   import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
-  import AeInput from '@/components/AeInput'
 
   export default {
-    components: { ModalScreen, AeInput, AeLabel, AeButton, AeIcon },
+    components: { ModalScreen, AeLabel, AeButton, AeIcon },
     data () {
       return {
         seed: keystore.generateRandomSeed()

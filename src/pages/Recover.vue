@@ -13,6 +13,7 @@
         v-model="seed"
         v-validate="'required'"
         v-focus="true"
+        monospace
       />
       <ae-button
         type="dramatic"
@@ -45,9 +46,8 @@
 <script>
   import { mapState } from 'vuex'
   import { keystore } from 'eth-lightwallet'
-  import { AeLabel, AeButton } from '@aeternity/aepp-components'
+  import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
-  import AeInput from '@/components/AeInput'
 
   export default {
     components: { ModalScreen, AeInput, AeLabel, AeButton },

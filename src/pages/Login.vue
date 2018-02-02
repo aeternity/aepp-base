@@ -36,9 +36,8 @@
 </template>
 
 <script>
-  import { AeLabel, AeButton } from '@aeternity/aepp-components'
+  import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
-  import AeInput from '@/components/AeInput'
 
   export default {
     components: { ModalScreen, AeInput, AeLabel, AeButton },
