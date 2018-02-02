@@ -9,8 +9,8 @@
       </main>
 
       <footer>
-        <ae-button :to="{ name: 'login' }" type="exciting">
-          Login
+        <ae-button :to="{ name: keystore ? 'login' : 'new-account' }" type="exciting">
+          {{keystore ? 'Login' : 'Create Account'}}
         </ae-button>
         <ae-button :to="{ name: 'login' }" size="small" plain uppercase>
           See how it works
@@ -21,10 +21,14 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import { AeButton } from '@aeternity/aepp-components'
 
   export default {
-    components: { AeButton }
+    components: { AeButton },
+    computed: mapState({
+      keystore: state => state.keystore
+    })
   }
 </script>
 
