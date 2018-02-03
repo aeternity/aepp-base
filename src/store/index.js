@@ -168,7 +168,7 @@ const store = (function () {
     },
     actions: {
       setNotification ({ commit }, options) {
-        commit('setNotification', { type: 'boring', ...options })
+        commit('setNotification', options)
         if (options.autoClose) setTimeout(() => commit('setNotification'), 3000)
       },
       updateRPC ({commit, dispatch}, rpcURL) {

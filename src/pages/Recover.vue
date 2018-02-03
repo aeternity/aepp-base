@@ -66,8 +66,7 @@
         } else {
           this.$store.dispatch('setNotification', {
             text: `Invalid passphrase`,
-            autoClose: true,
-            hideCloseButton: true
+            autoClose: true
           })
         }
       }

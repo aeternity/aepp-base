@@ -1,11 +1,10 @@
 <template>
   <div id="app" :class="appClassObject">
     <id-manager title="Quick Id Manager" :class="idManagerClassObject" />
-    <ae-notification v-if="notification" :type="notification.type" @close="closeNotification">
+    <ae-banner v-if="notification">
       <img v-if="notification.icon" :src="notification.icon" />
       {{notification.text}}
-      <div v-if="notification.hideCloseButton" slot="button" />
-    </ae-notification>
+    </ae-banner>
     <router-view />
   </div>
 </template>

@@ -1,12 +1,12 @@
 import { mapState } from 'vuex'
-import { AeNotification } from '@aeternity/aepp-components'
+import { AeBanner } from '@aeternity/aepp-components'
 import IdManager from '@/components/IdManager/IdManager.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: { AeNotification, IdManager },
+  components: { AeBanner, IdManager },
   computed: {
     ...mapState({
       showIdManager: state => state.showIdManager && state.unlocked,
@@ -34,11 +34,6 @@ export default {
   mounted: function () {
     let postMessagehandler = new PostMessageHandler(store)
     postMessagehandler.registerListener()
-  },
-  methods: {
-    closeNotification () {
-      this.$store.commit('setNotification')
-    }
   },
   data () {
     return {}

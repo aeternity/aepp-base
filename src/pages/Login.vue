@@ -55,8 +55,7 @@
             this.$store.dispatch('setNotification', {
               text: 'You\'ve entered a wrong password',
               icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
-              autoClose: true,
-              hideCloseButton: true
+              autoClose: true
             })
             return
           }

@@ -19,8 +19,7 @@ export default {
       if (active) {
         this.$store.dispatch('setNotification', {
           text: 'You\'re now removing æpps',
-          autoClose: true,
-          hideCloseButton: true
+          autoClose: true
         })
       }
     }

@@ -69,8 +69,7 @@
           this.$store.dispatch('setNotification', {
             text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
             icon: require(`emoji-datasource-apple/img/apple/64/1f44f.png`),
-            autoClose: true,
-            hideCloseButton: true
+            autoClose: true
           })
         } finally {
           this.working = false
