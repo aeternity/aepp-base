@@ -8,7 +8,7 @@ import Transaction from 'ethereumjs-tx'
 import abiDecoder from 'abi-decoder'
 import util from 'ethereumjs-util'
 import Bluebird from 'bluebird'
-import aeAbi from '../abi/aeternity-token-abi.json'
+import AEToken from '@/assets/contracts/AEToken.json'
 import {
   approveTransaction as approveTransactionDialog,
   approveMessage as approveMessageDialog
@@ -29,11 +29,11 @@ const store = new Vuex.Store({
   state: {
     selectedIdentityIdx: 0,
     showIdManager: false,
-    tokenAddress: '0x35d8830ea35e6df033eedb6d5045334a4e34f9f9',
     balances: {},
     rpcUrl: 'https://kovan.infura.io',
     keystore: null,
     derivedKey: null,
+    networkId: null,
     notification: null,
     apps: [{
       name: 'Notary',
@@ -85,10 +85,13 @@ const store = new Vuex.Store({
         rpcUrl
       }))
       Bluebird.promisifyAll(web3.eth)
+      Bluebird.promisifyAll(web3.version)
       return web3
     },
-    tokenContract ({ tokenAddress }, { web3 }) {
-      const contract = web3.eth.contract(aeAbi).at(tokenAddress)
+    tokenContract ({ networkId }, { web3 }) {
+      if (!networkId || !AEToken.networks[networkId]) return null
+      const contract = web3.eth.contract(AEToken.abi)
+        .at(AEToken.networks[networkId].address)
       Bluebird.promisifyAll(contract)
       return contract
     },
@@ -116,6 +119,9 @@ const store = new Vuex.Store({
     },
     setDerivedKey (state, derivedKey) {
       state.derivedKey = derivedKey
+    },
+    setNetworkId (state, networkId) {
+      state.networkId = networkId
     },
     addApp (state, app) {
       state.apps.push(app)
@@ -171,7 +177,7 @@ const store = new Vuex.Store({
     async updateBalance ({getters: { web3, tokenContract }, commit}, address) {
       const [balance, tokenBalance] = await Promise.all([
         web3.eth.getBalanceAsync(address),
-        tokenContract.balanceOfAsync(address, {})
+        tokenContract ? tokenContract.balanceOfAsync(address, {}) : NaN
       ])
       commit('setBalance', { address, balance, tokenBalance })
     },
@@ -206,7 +212,7 @@ const store = new Vuex.Store({
       if (isAeTokenTx) {
         let data = tx.data ? tx.data : null // data sent to contract
         // it is a call to our token contract
-        abiDecoder.addABI(aeAbi)
+        abiDecoder.addABI(AEToken.abi)
         const decodedData = abiDecoder.decodeMethod(data)
         if (decodedData) {
           console.log('decodedData', JSON.stringify(decodedData))
@@ -273,6 +279,11 @@ store.watch(
     interval = setInterval(() =>
       store.dispatch('updateBalance', address), 3000)
   },
+  { immediate: true })
+
+store.watch(
+  (state, { web3 }) => web3,
+  async web3 => store.commit('setNetworkId', await web3.version.getNetworkAsync()),
   { immediate: true })
 
 export default store

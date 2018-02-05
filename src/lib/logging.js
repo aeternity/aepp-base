@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
-import aeAbi from '@/abi/aeternity-token-abi.json'
+import aeAbi from '@/assets/contracts/AEToken.json'
 import abiDecoder from 'abi-decoder'
 
 const {toHex} = Web3.prototype
