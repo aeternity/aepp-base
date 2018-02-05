@@ -60,11 +60,10 @@ export default {
       this.$store.commit('selectIdentity', this.identities.indexOf(id))
     },
     generateNewIdentity () {
-      this.$store.dispatch('generateAddress')
+      this.$store.dispatch('createIdentity')
     },
     goBack () {
-      // this.$router.push('/app-browser')
-      this.$store.dispatch('setShowIdManager', false)
+      this.$store.commit('toggleIdManager')
     },
     isActive (id) {
       return id.address === this.activeIdentity.address
@@ -81,7 +80,8 @@ export default {
       }
     },
     logout () {
-      this.$store.dispatch('logout')
+      this.$store.commit('toggleIdManager')
+      this.$store.commit('setDerivedKey')
     }
   },
   mounted () {

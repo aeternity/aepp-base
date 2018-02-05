@@ -9,10 +9,9 @@ export default {
   components: { AeBanner, IdManager },
   computed: {
     ...mapState({
-      showIdManager: state => state.showIdManager && state.unlocked,
       idManagerClassObject: state => ({
         'app_id-manager': true,
-        '_open': state.showIdManager && state.unlocked
+        '_open': state.showIdManager
       }),
       notification: state => state.notification
     }),

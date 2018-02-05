@@ -15,7 +15,7 @@ export default (store) => {
 
   const checkLoggedIn = (to, from, next) => {
     const name = !store.state.keystore && 'intro' ||
-      !store.state.unlocked && 'login'
+      !store.state.derivedKey && 'login'
     if (name) {
       loginTarget = to.fullPath
       next({ name })
@@ -40,7 +40,7 @@ export default (store) => {
         component: Login,
         beforeEnter (to, from, next) {
           if (!store.state.keystore) return next({ name: 'new-account' })
-          if (store.state.unlocked) return next({ name: 'apps' })
+          if (store.state.derivedKey) return next({ name: 'apps' })
           next()
         }
       },
@@ -95,9 +95,9 @@ export default (store) => {
 
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
-      case 'setUnlocked':
+      case 'setDerivedKey':
         if (state.keystore) {
-          if (state.unlocked) {
+          if (state.derivedKey) {
             router.push(loginTarget || { name: 'apps' })
             loginTarget = undefined
           } else {

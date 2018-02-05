@@ -32,7 +32,7 @@ export default {
       }
     },
     remove () {
-      this.$store.dispatch('removeApp', this.removeAppName)
+      this.$store.commit('removeApp', this.removeAppName)
       this.removeAppName = ''
     },
     editMode (action = null) {

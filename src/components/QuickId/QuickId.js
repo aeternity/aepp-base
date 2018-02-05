@@ -9,7 +9,8 @@ export default {
   }),
   methods: {
     showIdManager () {
-      this.$store.dispatch('setShowIdManager', true)
+      this.$store.dispatch('updateAllBalances')
+      this.$store.commit('toggleIdManager')
     }
   }
 }
