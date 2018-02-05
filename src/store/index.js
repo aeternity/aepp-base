@@ -34,6 +34,7 @@ const store = (function () {
       balances: [],
       rpcUrl: 'https://kovan.infura.io',
       keystore: null,
+      currentAppUrl: null,
       apps: [
         {
           name: 'Notary',
@@ -110,6 +111,9 @@ const store = (function () {
             tokenBalance: tokenBalance || 0
           })
         }
+      },
+      setCurrentAppUrl (state, currentAppUrl) {
+        this.state.currentAppUrl = currentAppUrl
       }
     },
     getters: {
@@ -446,6 +450,9 @@ const store = (function () {
           dispatch('updateAllBalances')
         }
         state.showIdManager = showIdManager
+      },
+      setCurrentAppUrl ({commit}, currentAppUrl) {
+        commit('setCurrentAppUrl', currentAppUrl)
       }
     }
   })

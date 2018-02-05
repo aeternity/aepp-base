@@ -12,7 +12,7 @@ class PostMessageHandler {
       // this message isnt meant for us
       return
     }
-    const sendsReply = ['getAccounts', 'signTransaction', 'signPersonalMessage', 'handShake']
+    const sendsReply = ['getAccounts', 'signTransaction', 'signPersonalMessage', 'handShake', 'urlChanged']
     if (sendsReply.includes(event.data.method)) {
       await this.sendReplyMessage(this[event.data.method].bind(this), event)
     }
@@ -64,6 +64,12 @@ class PostMessageHandler {
 
   handShake () {
     return null
+  }
+
+  urlChanged (event) {
+    let newURL = event.data.payload
+    this.store.dispatch('setCurrentAppUrl', newURL)
+    return true
   }
 }
 
