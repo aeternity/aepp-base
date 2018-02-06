@@ -20,11 +20,11 @@
         <section id="manage">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="./../../assets/img/onboarding/mini-card.svg" class="Group">
-              <img src="./../../assets/img/onboarding/mini-card1.svg" class="Group">
-              <img src="./../../assets/img/onboarding/mini-card2.svg" class="Group">
-              <img src="./../../assets/img/onboarding/mini-card3.svg" class="Group">
-              <img src="./../../assets/img/onboarding/mini-card4.png" srcset="./../../assets/img/onboarding/mini-card4@2x.png 2x, ./../../assets/img/onboarding/mini-card4@3x.png 3x" class="Group-4">
+              <img src="./../../assets/img/onboarding/mini-card.svg">
+              <img src="./../../assets/img/onboarding/mini-card1.svg">
+              <img src="./../../assets/img/onboarding/mini-card2.svg">
+              <img src="./../../assets/img/onboarding/mini-card3.svg">
+              <img src="./../../assets/img/onboarding/mini-card4.png" srcset="./../../assets/img/onboarding/mini-card4@2x.png 2x, ./../../assets/img/onboarding/mini-card4@3x.png 3x">
             </div>
           </div>
           <div class="content">
@@ -38,7 +38,7 @@
         <section id="create">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="./../../assets/img/onboarding/identity-card2.svg" class="Group">
+              <img src="./../../assets/img/onboarding/identity-card2.svg">
             </div>
           </div>
           <div class="content">
@@ -52,7 +52,7 @@
         <section id="name-image">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="./../../assets/img/onboarding/identity-card3.svg" class="Group">
+              <img src="./../../assets/img/onboarding/identity-card3.svg">
             </div>
           </div>
           <div class="content">
@@ -67,11 +67,11 @@
           <div class="screenshot-phone">
             <div class="image">
               <div class="icons">
-                <img src="./../../assets/img/onboarding/app-icon1.svg" class="Group">
-                <img src="./../../assets/img/onboarding/app-icon2.svg" class="Group">
-                <img src="./../../assets/img/onboarding/app-icon3.svg" class="Group">
-                <img src="./../../assets/img/onboarding/app-icon4.svg" class="Group">
-                <img src="./../../assets/img/onboarding/app-icon5.svg" class="Group">
+                <img src="./../../assets/img/onboarding/app-icon1.svg">
+                <img src="./../../assets/img/onboarding/app-icon2.svg">
+                <img src="./../../assets/img/onboarding/app-icon3.svg">
+                <img src="./../../assets/img/onboarding/app-icon4.svg">
+                <img src="./../../assets/img/onboarding/app-icon5.svg">
               </div>
             </div>
           </div>

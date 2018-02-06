@@ -31,8 +31,6 @@ export default {
       })
       this.currentSection.classList.add('current')
       this.currentSection.scrollTop = 0
-
-      this.setCssVars()
     },
     skip (step) {
       this.step += step
