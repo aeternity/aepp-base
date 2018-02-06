@@ -10,7 +10,7 @@
     </div>
     <template v-if="identities.length > 0">
       <div :class="`swiper-sizer ${modifierClass}`" v-for="(options, modifierClass) in swiperOptions">
-        <swiper class="swiper-container" :options="options" ref="mySwiper" :not-next-tick="notNextTick">
+        <swiper class="swiper-container" :options="options" ref="mySwiper" not-next-tick>
           <swiper-slide v-for='(i, index) in identities' :key='i.address'>
             <ae-identity :active="isActive(i)" :identity='i' :size="'big'" @click="swipeTo(index)" class="id-manager__identity" :collapsed="false">
               <ae-button v-clipboard:copy="i.address" size='small' type='boring' class="id-manager__ae-button">

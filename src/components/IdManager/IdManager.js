@@ -16,7 +16,6 @@ export default {
   name: 'id-manager',
   data () {
     return {
-      notNextTick: true,
       swiperOptions: {
         '_direction_vertical': {
           ...commonSwiperOptions,
