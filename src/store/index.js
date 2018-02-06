@@ -13,11 +13,10 @@ import {
   approveTransaction as approveTransactionDialog,
   approveMessage as approveMessageDialog
 } from '@/dialogs/index'
-import { logTx } from '@/lib/logging'
-import { getEstimatedGas, getGasPrice } from '@/lib/remoteGetters'
 
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
+abiDecoder.addABI(AEToken.abi)
 
 const store = new Vuex.Store({
   plugins: [
@@ -193,51 +192,16 @@ const store = new Vuex.Store({
       commit('setKeystore', keystore.serialize())
     },
     async signTransaction (
-      { state: { derivedKey, tokenAddress }, getters: { web3, keystore } }, { tx, appName }
+      { state: { derivedKey }, getters: { web3, keystore, tokenContract } }, { tx, appName }
     ) {
-      const to = tx.to ? web3.toHex(tx.to).toLowerCase() : null
-      const isAeTokenTx = to === tokenAddress
-      logTx(tx, tokenAddress)
+      const { to, data } = tx
+      const aeTokenTx = to.toLowerCase() === tokenContract._address.toLowerCase()
+        ? abiDecoder.decodeMethod(data) : null
 
-      let aeTokenTx = {}
+      tx.gas = tx.gas || await web3.eth.estimateGas(tx)
+      tx.gasPrice = tx.gasPrice || await web3.eth.getGasPrice()
 
-      tx.gas = tx.gas || await web3.eth.estimateGasAsync(tx)
-
-      if (isAeTokenTx) {
-        let data = tx.data ? tx.data : null // data sent to contract
-        // it is a call to our token contract
-        abiDecoder.addABI(AEToken.abi)
-        const decodedData = abiDecoder.decodeMethod(data)
-        if (decodedData) {
-          console.log('decodedData', JSON.stringify(decodedData))
-          let method = decodedData.name
-          // e.g. callAndApprove, transfer, ...
-          // let params = decodedData.params
-          // e.g. [{"name":"_spender","value":"0x000....","type":"address"},{"name":"_value","value":"1000000000000000000","type":"uint256"}]
-          // methods which transfer tokens or allow transferring of tokens are:
-          // approve(_spender, _value)
-          // transferFrom(_from, _to, _value)
-          // transfer(_to, _value)
-          // approveAndCall(_spender, _value, _data)
-          if (method === 'approveAndCall' || method === 'approve' || method === 'transfer') {
-            // let value = web3.toBigNumber(params.find(param => param.name === '_value').value)
-            // confirmMessage += ' which transfers ' + web3.fromWei(value, 'ether') + ' Æ-Token'
-          }
-          aeTokenTx = decodedData
-        } else {
-          console.log('could not decode data')
-        }
-      }
-
-      const approved = await approveTransactionDialog(
-        tx,
-        getEstimatedGas.bind(undefined, web3, tx),
-        getGasPrice.bind(undefined, web3),
-        appName,
-        isAeTokenTx,
-        aeTokenTx
-      )
-      if (!approved) {
+      if (!await approveTransactionDialog(tx, appName, aeTokenTx)) {
         throw new Error('Payment rejected by user')
       }
       const t = new Transaction(tx)
