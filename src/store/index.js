@@ -62,7 +62,7 @@ const store = new Vuex.Store({
       return keystore
     },
     web3 ({ derivedKey, rpcUrl }, { keystore }) {
-      const web3 = new Web3(new ZeroClientProvider({
+      return new Web3(new ZeroClientProvider({
         getAccounts (cb) {
           cb(null, keystore.getAddresses())
         },
@@ -84,16 +84,10 @@ const store = new Vuex.Store({
         },
         rpcUrl
       }))
-      Bluebird.promisifyAll(web3.eth)
-      Bluebird.promisifyAll(web3.version)
-      return web3
     },
     tokenContract ({ networkId }, { web3 }) {
       if (!networkId || !AEToken.networks[networkId]) return null
-      const contract = web3.eth.contract(AEToken.abi)
-        .at(AEToken.networks[networkId].address)
-      Bluebird.promisifyAll(contract)
-      return contract
+      return new web3.eth.Contract(AEToken.abi, AEToken.networks[networkId].address)
     },
     identities: ({ balances }, { keystore }) =>
       keystore
@@ -176,8 +170,8 @@ const store = new Vuex.Store({
     },
     async updateBalance ({getters: { web3, tokenContract }, commit}, address) {
       const [balance, tokenBalance] = await Promise.all([
-        web3.eth.getBalanceAsync(address),
-        tokenContract ? tokenContract.balanceOfAsync(address, {}) : NaN
+        web3.eth.getBalance(address),
+        tokenContract ? tokenContract.methods.balanceOf(address).call() : NaN
       ])
       commit('setBalance', { address, balance, tokenBalance })
     },
@@ -283,7 +277,7 @@ store.watch(
 
 store.watch(
   (state, { web3 }) => web3,
-  async web3 => store.commit('setNetworkId', await web3.version.getNetworkAsync()),
+  async web3 => store.commit('setNetworkId', await web3.eth.net.getId()),
   { immediate: true })
 
 export default store

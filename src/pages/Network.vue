@@ -11,7 +11,7 @@
     <div class="status">
      <b>Network id:</b> {{networkId}}<br />
      <b>Token contract address:</b>
-      {{tokenContract ? tokenContract.address : 'undefined'}}
+      {{tokenContract ? tokenContract._address : 'undefined'}}
     </div>
    <!--  <ae-button @click="addCustom = !addCustom"  :type="!addCustom ? 'exciting' : 'normal'">Add Custom Network</ae-button>
     <br>
