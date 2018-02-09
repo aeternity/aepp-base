@@ -6,10 +6,9 @@
         help-type="danger"
         :help-text="errors.first('seed')"
       >Enter passphrase</ae-label>
-      <ae-input
+      <ae-textarea
         :id="_uid"
         name="seed"
-        type="textarea"
         v-model="seed"
         v-validate="'required'"
         v-focus="true"
@@ -46,11 +45,11 @@
 <script>
   import { mapState } from 'vuex'
   import { keystore } from 'eth-lightwallet'
-  import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
+  import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
 
   export default {
-    components: { ModalScreen, AeInput, AeLabel, AeButton },
+    components: { ModalScreen, AeTextarea, AeLabel, AeButton },
     data () {
       return { seed: '' }
     },
