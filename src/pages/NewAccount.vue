@@ -43,7 +43,7 @@
     components: { ModalScreen, AeLabel, AeButton, AeIcon },
     data () {
       return {
-        seed: keystore.generateRandomSeed()
+        seed: undefined
       }
     },
     computed: mapState(['keystore']),
@@ -54,6 +54,9 @@
       setSeed () {
         this.$store.commit('setSeed', this.seed)
       }
+    },
+    mounted () {
+      this.newSeed()
     }
   }
 </script>
