@@ -101,7 +101,7 @@ const store = new Vuex.Store({
   },
 
   mutations: {
-    updateRPC (state, rpcUrl) {
+    setRPCUrl (state, rpcUrl) {
       state.rpcUrl = rpcUrl
     },
     setKeystore (state, keystore) {

@@ -63,7 +63,7 @@ export default {
       if (this.current === newVal) return
       this.current = newVal
       let option = this.options[this.current]
-      this.$store.commit('updateRPC', option.url)
+      this.$store.commit('setRPCUrl', option.url)
     }
   },
   components: {

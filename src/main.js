@@ -23,9 +23,9 @@ Vue.use(VeeValidate, {
 })
 Vue.directive('focus', focus)
 
-console.log('use updateRPC(\'http://rpc-endpoint:8545\') to update the identity manager RPC endpoint')
-window.updateRPC = function (rpcURL = 'https://kovan.infura.io') {
-  store.commit('updateRPC', rpcURL)
+console.log('use setRPCUrl(\'http://rpc-endpoint:8545\') to set the identity manager RPC endpoint')
+window.setRPCUrl = function (rpcURL = 'https://kovan.infura.io') {
+  store.commit('setRPCUrl', rpcURL)
 }
 
 Vue.config.productionTip = false
