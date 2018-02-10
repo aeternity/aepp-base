@@ -26,7 +26,7 @@
         create a new account if you haven’t done that yet
       </p>
       <ae-button
-        v-if="accountExist"
+        v-if="keystore"
         :to="{ name: 'login' }"
         size="small"
         plain
@@ -53,9 +53,7 @@
     data () {
       return { seed: '' }
     },
-    computed: mapState({
-      accountExist: state => !!state.keystore
-    }),
+    computed: mapState(['keystore']),
     methods: {
       async setSeed () {
         if (!await this.$validator.validateAll()) return

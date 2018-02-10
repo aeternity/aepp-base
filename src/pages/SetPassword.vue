@@ -28,13 +28,13 @@
         Create Account
       </ae-button>
       <ae-button
-        :to="{ name: accountExist && 'login' || recover && 'new-account' || 'recover' }"
+        :to="{ name: keystore && 'login' || recover && 'new-account' || 'recover' }"
         plain
         type="exciting"
         size="small"
         uppercase
       >
-        {{accountExist && 'Login with an existing account'
+        {{keystore && 'Login with an existing account'
           || recover && 'Create new account'
           || 'Recover with passphrase'}}
       </ae-button>
@@ -56,9 +56,7 @@
         recover: false
       }
     },
-    computed: mapState({
-      accountExist: state => !!state.keystore
-    }),
+    computed: mapState(['keystore']),
     methods: {
       async createKeystore () {
         if (!await this.$validator.validateAll()) return

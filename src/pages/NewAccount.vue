@@ -21,13 +21,13 @@
         Next
       </ae-button>
       <ae-button
-        :to="{ name: accountExist ? 'login' : 'recover' }"
+        :to="{ name: keystore ? 'login' : 'recover' }"
         plain
         type="exciting"
         size="small"
         uppercase
       >
-        {{accountExist ? 'Login with an existing account' : 'Recover with passphrase'}}
+        {{keystore ? 'Login with an existing account' : 'Recover with passphrase'}}
       </ae-button>
     </div>
   </modal-screen>
@@ -46,9 +46,7 @@
         seed: keystore.generateRandomSeed()
       }
     },
-    computed: mapState({
-      accountExist: state => !!state.keystore
-    }),
+    computed: mapState(['keystore']),
     methods: {
       newSeed () {
         this.seed = keystore.generateRandomSeed()
