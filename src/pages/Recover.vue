@@ -16,7 +16,7 @@
       />
       <ae-button
         type="dramatic"
-        :inactive="errors.has('seed')"
+        :inactive="errors.any()"
       >Recover with Passphrase</ae-button>
     </form>
 

@@ -16,7 +16,7 @@
       />
       <ae-button
         type="exciting"
-        :inactive="errors.has('password')"
+        :inactive="errors.any()"
       >Login</ae-button>
     </form>
 

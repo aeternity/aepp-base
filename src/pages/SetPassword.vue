@@ -23,7 +23,7 @@
       <ae-button
         type="dramatic"
         @click="createKeystore"
-        :inactive="errors.has('password') || working"
+        :inactive="errors.any() || working"
       >
         Create Account
       </ae-button>
