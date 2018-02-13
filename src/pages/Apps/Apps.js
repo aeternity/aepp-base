@@ -1,5 +1,5 @@
 import { mapState } from 'vuex'
-import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
+import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight, AeHeader } from '@aeternity/aepp-components'
 import QuickId from '@/components/QuickId/QuickId.vue'
 
 export default {
@@ -46,6 +46,7 @@ export default {
     AeIcon,
     AeButton,
     AeNotification,
-    AeModalLight
+    AeModalLight,
+    AeHeader
   }
 }
