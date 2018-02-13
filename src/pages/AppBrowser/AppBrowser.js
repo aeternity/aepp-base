@@ -1,3 +1,4 @@
+import { mapState } from 'vuex'
 import QuickId from '@/components/QuickId/QuickId.vue'
 
 export default {
@@ -9,11 +10,7 @@ export default {
     }
   },
   components: { QuickId },
-  computed: {
-    currentAppUrl () {
-      return this.$store.state.currentAppUrl
-    }
-  },
+  computed: mapState(['currentAppUrl']),
   mounted () {
     this.initialUrl = `//${this.$route.fullPath}`
     this.$refs.appframe.onload = () => {
