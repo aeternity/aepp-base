@@ -16,7 +16,11 @@ Vue.use(VeeValidate, {
     en: {
       messages: {
         required: 'This field is required',
-        min: (field, [length]) => `This field must be at least ${length} characters`
+        min: (field, [length]) => `This field must be at least ${length} characters`,
+        min_value: (field, [min]) => `This field must be ${min} or more`,
+        max_value: (field, [max]) => `This field must be ${max} or less`,
+        not_in: () => 'This field must be a valid value',
+        decimal: () => 'This field must be numeric and may contain decimal points'
       }
     }
   }

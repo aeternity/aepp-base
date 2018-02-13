@@ -73,10 +73,7 @@ export default (store) => {
         name: 'transfer',
         path: '/transfer',
         component: Transfer,
-        beforeEnter: checkLoggedIn,
-        children: [
-          { path: ':txhash', component: Transfer }
-        ]
+        beforeEnter: checkLoggedIn
       },
       {
         name: 'network',

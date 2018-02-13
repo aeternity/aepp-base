@@ -1,90 +1,39 @@
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
-.transfer.screen {
-}
-h1 {
-  text-align:center;
-}
-.foo {
-  margin:10px auto;
-  padding:10px;
-  border-radius:10px;
-  max-width:400px;
-  /*background-color:lightgrey*/
-}
-label {
-  /*display:block*/
-}
-.transfer__identities-to .swiper-pagination-bullet-active{
-  background: $aubergine;
-}
-.transfer__identities-to .swiper-wrapper {
-  padding-bottom: 35px;
-}
-.transfer__close-button {
-  position:absolute;
-  top:20px;
-  right:20px;
-}
-.transfer__switch-transaction-type,
-.transfer__switch-transaction-currency{
-  margin-bottom:20px;
-}
-.from-address {
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  font-family: Roboto Mono;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-.address-to {
-  /*text-align:center;*/
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  font-family: Roboto Mono;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-.amount-in-fiat {
-  /*text-align:center;*/
-}
-.amount {
-  text-align:right;
-  width:50px;
-  padding:10px;
-}
-.address-to {
-  /*text-align:center;*/
-  padding:10px;
-  display:block;
-}
-.input-wrap {
-  display:block;
-  margin:0 auto;
-}
+.modal-screen.transfer .ae-modal > main .content {
+  .swiper-container {
+    .swiper-wrapper {
+      padding-bottom: 35px;
+      width: 320px;
+    }
+    .swiper-pagination-bullet {
+      background: $aubergine;
+    }
+  }
 
-input {
-  padding: 13px;
-  border-radius: 10px;
-  font-size: 16px;
-  line-height: 26px;
-  border: solid 2px $smoke;
-  box-shadow: none;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 10px 0;
+  .ae-switch {
+    margin-bottom: 35px;
+    text-transform: uppercase;
+  }
 
-  ::placeholder {
+  .fiat-amount {
     color: $grey;
+    text-align: center;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
   }
 
-  &.danger {
-    border-color: $maegenta;
+  .ae-button {
+    margin-bottom: 80px;
+
+    img {
+      height: 20px;
+      margin-left: 50px;
+      margin-right: -50px;
+    }
   }
-}
-input {
-  height: 44px;
-}
-.transfer__send-button {
-  margin-top: 30px;
 }
