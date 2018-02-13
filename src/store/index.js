@@ -450,9 +450,6 @@ const store = (function () {
           dispatch('updateAllBalances')
         }
         state.showIdManager = showIdManager
-      },
-      setCurrentAppUrl ({commit}, currentAppUrl) {
-        commit('setCurrentAppUrl', currentAppUrl)
       }
     }
   })

@@ -68,7 +68,7 @@ class PostMessageHandler {
 
   urlChanged (event) {
     let newURL = event.data.payload
-    this.store.dispatch('setCurrentAppUrl', newURL)
+    this.store.commit('setCurrentAppUrl', newURL)
     return true
   }
 }
