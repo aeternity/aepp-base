@@ -1,22 +1,16 @@
+import { mapGetters } from 'vuex'
 import { AeIdentity } from '@aeternity/aepp-components'
+
 export default {
   name: 'quick-id',
   components: { AeIdentity },
-  data () {
-    return {
-    }
-  },
-  computed: {
-    identity () {
-      return this.$store.getters.activeIdentity
-    },
-    collapsed () {
-      return (!this.showPaymentUi) && this.$store.state.identityCollapsed
-    }
-  },
+  computed: mapGetters({
+    identity: 'activeIdentity'
+  }),
   methods: {
     showIdManager () {
-      this.$store.dispatch('setShowIdManager', true)
+      this.$store.dispatch('updateAllBalances')
+      this.$store.commit('toggleIdManager')
     }
   }
 }

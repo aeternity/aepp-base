@@ -1,6 +1,6 @@
 <template>
   <div class="app-browser screen" :class="{ loading }">
-    <iframe ref="appframe" id="appframe" class="nomargin" :src="startUrl" />
+    <iframe ref="appframe" id="appframe" class="nomargin" :src="initialUrl" />
 
     <div class="loader" />
 

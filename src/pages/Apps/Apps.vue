@@ -1,16 +1,6 @@
 <template>
   <div class="apps screen" @click="editModeActive = false">
-    <div
-      @click.stop
-      class="nomargin"
-      :class="{ visible: displayEditModeNotification }"
-    >
-      <ae-notification
-        type="boring"
-        @close="displayEditModeNotification = false"
-      >You're now removing æpps</ae-notification>
-    </div>
-
+    <ae-header name="Browse æpps" class="nomargin" />
     <div class="shortcuts">
       <div
         v-for="app in apps"
