@@ -8,7 +8,6 @@ export default {
     return {
       editModeActive: false,
       editModeTmOut: null,
-      displayEditModeNotification: false,
       removeAppName: ''
     }
   },
@@ -18,8 +17,10 @@ export default {
   watch: {
     editModeActive (active) {
       if (active) {
-        this.displayEditModeNotification = true
-        setTimeout(() => { this.displayEditModeNotification = false }, 3000)
+        this.$store.dispatch('setNotification', {
+          text: 'You\'re now removing æpps',
+          autoClose: true
+        })
       }
     }
   },
@@ -31,7 +32,7 @@ export default {
       }
     },
     remove () {
-      this.$store.dispatch('removeApp', this.removeAppName)
+      this.$store.commit('removeApp', this.removeAppName)
       this.removeAppName = ''
     },
     editMode (action = null) {

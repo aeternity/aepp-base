@@ -1,13 +1,5 @@
 .apps {
-  .nomargin {
-    visibility: hidden;
-    &.visible {
-      visibility: visible;
-    }
-    .ae-notification {
-      margin-bottom: 0;
-    }
-  }
+  margin-top: 65px;
 
   .shortcuts {
     display: grid;
