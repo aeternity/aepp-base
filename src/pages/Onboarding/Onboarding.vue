@@ -98,7 +98,7 @@
         </section>
       </main>
       <footer>
-        <ae-button type="boring" :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
+        <ae-button type="normal" :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
           Next
         </ae-button>
         <ae-button type="exciting" v-show="isLastStep" class="start-button">
@@ -109,7 +109,7 @@
         <div class="step-dots" v-if="hasDots">
           <div class="step-dot" v-for="n in max" :class="{active: n == step}" @click="goToStep(n)"></div>
         </div>
-        <ae-button type="boring" uppercase>
+        <ae-button type="normal" uppercase>
           <router-link to="/setup">
             Skip
           </router-link>
