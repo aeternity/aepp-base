@@ -102,7 +102,7 @@
           Next
         </ae-button>
         <ae-button type="exciting" v-show="isLastStep" class="start-button">
-          <router-link to="/setup">
+          <router-link :to="{ name: 'new-account'}">
             Start
           </router-link>
         </ae-button>
@@ -110,7 +110,7 @@
           <div class="step-dot" v-for="n in max" :class="{active: n == step}" @click="goToStep(n)"></div>
         </div>
         <ae-button type="normal" uppercase>
-          <router-link to="/setup">
+          <router-link :to="{ name: 'new-account'}">
             Skip
           </router-link>
         </ae-button>
