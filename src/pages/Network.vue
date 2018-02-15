@@ -7,21 +7,25 @@
       :choices="options"
       :default="current"
       @input="update"
-    /></ae-switch>
+    />
+    <div class="status">
+     <b>Network id:</b> {{networkId}}<br />
+     <b>Token contract address:</b>
+      {{tokenContract ? tokenContract._address : 'undefined'}}
+    </div>
    <!--  <ae-button @click="addCustom = !addCustom"  :type="!addCustom ? 'exciting' : 'normal'">Add Custom Network</ae-button>
     <br>
     <form @submit.prevent="addOption()">
       <input v-if="addCustom" v-model="custom" placeholder="Custom Network" ref="input">
     </form> -->
-    <div @click='back' class="back">
-      <div :style='"background-image:url(static/icons/browser.svg)"' class="icon-image"></div>
-    </div>
-    <quick-id></quick-id>
+    <router-link :to="{ name: 'apps' }" class="back" />
+    <quick-id />
   </div>
 </template>
 
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 import {
   AeSwitch,
   AeButton,
@@ -45,6 +49,12 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState({
+      networkId: state => state.networkId
+    }),
+    ...mapGetters(['tokenContract'])
+  },
   methods: {
     addOption () {
       this.options.push({label: this.custom, value: this.options.length, url: this.custom})
@@ -53,10 +63,7 @@ export default {
       if (this.current === newVal) return
       this.current = newVal
       let option = this.options[this.current]
-      this.$store.dispatch('updateRPC', option.url)
-    },
-    back () {
-      this.$router.push('app-browser')
+      this.$store.commit('setRPCUrl', option.url)
     }
   },
   components: {
@@ -85,6 +92,10 @@ export default {
   display: block;
   text-align: center;
 }
+.network .status {
+  margin: 20px auto;
+  max-width: 600px;
+}
 .back {
   position:absolute;
   bottom:2px;
@@ -92,6 +103,7 @@ export default {
   width:50px;
   height:50px;
   z-index:998;
-  /*background-color:red;*/
+  background-image: url('/static/icons/browser.svg');
+  background-size: contain;
 }
 </style>

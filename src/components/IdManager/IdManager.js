@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 import {AeIdentity, AeButton, AeIcon} from '@aeternity/aepp-components'
 
@@ -15,7 +16,6 @@ export default {
   name: 'id-manager',
   data () {
     return {
-      notNextTick: true,
       swiperOptions: {
         '_direction_vertical': {
           ...commonSwiperOptions,
@@ -53,47 +53,19 @@ export default {
     Swiper,
     SwiperSlide
   },
-  computed: {
-    activeIdentity () {
-      return this.$store.getters.activeIdentity
-    },
-    addresses () {
-      return this.$store.getters.addresses
-    },
-    identities () {
-      return this.$store.getters.identities
-    }
-  },
+  computed: mapGetters(['identities', 'activeIdentity']),
   methods: {
     activateId (id) {
       this.$store.commit('selectIdentity', this.identities.indexOf(id))
     },
-    generateFirstAddress () {
-      console.log('generateFirstAddress')
-      this.$store.dispatch('generateAddress')
-    },
     generateNewIdentity () {
-      console.log('generateNewIdentity')
-      this.$store.dispatch('generateAddress')
+      this.$store.dispatch('createIdentity')
     },
     goBack () {
-      // this.$router.push('/app-browser')
-      this.$store.dispatch('setShowIdManager', false)
+      this.$store.commit('toggleIdManager')
     },
     isActive (id) {
       return id.address === this.activeIdentity.address
-    },
-    copyAddress (address) {
-      let textArea = document.createElement('textarea')
-      textArea.value = address
-      document.body.appendChild(textArea)
-      textArea.select()
-      try {
-        document.execCommand('copy')
-      } catch (err) {
-        console.log('Copy failed')
-      }
-      document.body.removeChild(textArea)
     },
     swipeTo (index) {
       if (index >= 0 && index < this.identities.length && this.$refs.mySwiper) {
@@ -107,12 +79,8 @@ export default {
       }
     },
     logout () {
-      this.$store.dispatch('logout')
-    }
-  },
-  created () {
-    if (this.addresses && this.addresses.length < 1) {
-      this.generateFirstAddress()
+      this.$store.commit('toggleIdManager')
+      this.$store.commit('setDerivedKey')
     }
   },
   mounted () {
