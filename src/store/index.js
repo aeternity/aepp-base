@@ -154,6 +154,7 @@ const store = new Vuex.Store({
         title = el.getElementsByTagName('title')[0].innerText
       } finally {
         title = title || prompt('Enter Title')
+        path = path.replace(/^https?:\/\//i, '')
         if (title) {
           commit('addApp', {
             name: title,
