@@ -29,52 +29,52 @@ describe('router/index.js', () => {
       )
 
       it(
-        'pushes SETUP path if current route is UNLOCK and no keystore is present',
-        createRedirectTest({}, 'unlock', 'setup')
+        'pushes NEW_ACCOUNT path if current route is LOGIN and no keystore is present',
+        createRedirectTest({}, 'login', 'new-account')
       )
 
       it(
-        'pushes UNLOCK path if current route is APPS and keystore is present but not unlocked',
+        'pushes LOGIN path if current route is APPS and keystore is present but not derivedKey',
         createRedirectTest({
-          keystore: {}, unlocked: false
-        }, 'apps', 'unlock')
+          keystore: {}, derivedKey: false
+        }, 'apps', 'login')
       )
 
       it(
-        'does NOT redirect if current route is SETUP and keystore is present but not unlocked',
+        'does NOT redirect if current route is NEW_ACCOUNT and keystore is present but not derivedKey',
         createNoRedirectTest({
-          keystore: {}, unlocked: false
-        }, 'setup')
+          keystore: {}, derivedKey: false
+        }, 'new-account')
       )
 
       it(
-        'pushes APPS path if current route is UNLOCK and keystore is present and unlocked',
+        'pushes APPS path if current route is LOGIN and keystore is present and derivedKey',
         createRedirectTest({
-          keystore: {}, unlocked: true
-        }, 'unlock', 'apps')
+          keystore: {}, derivedKey: true
+        }, 'login', 'apps')
       )
 
       it(
-        'does NOT redirect if current route is SETUP and keystore is present and unlocked',
+        'does NOT redirect if current route is NEW_ACCOUNT and keystore is present and derivedKey',
         createNoRedirectTest({
-          keystore: {}, unlocked: true
-        }, 'setup')
+          keystore: {}, derivedKey: true
+        }, 'new-account')
       )
 
-      it('does not interfere when current route is APPS and keystore is present and unlocked',
+      it('does not interfere when current route is APPS and keystore is present and derivedKey',
         createNoRedirectTest({
-          keystore: {}, unlocked: true
+          keystore: {}, derivedKey: true
         }, 'apps')
       )
 
-      it('does not interfere when current route is SETUP and no keystore is present',
-        createNoRedirectTest({}, 'setup')
+      it('does not interfere when current route is NEW_ACCOUNT and no keystore is present',
+        createNoRedirectTest({}, 'new-account')
       )
 
-      it('does not interfere when current route is UNLOCK and keystore is present but unlocked',
+      it('does not interfere when current route is LOGIN and keystore is present but derivedKey',
         createNoRedirectTest({
-          keystore: {}, unlocked: false
-        }, 'unlock')
+          keystore: {}, derivedKey: false
+        }, 'login')
       )
 
       it('does not interfere when current route is INTRO', () => {
@@ -102,16 +102,16 @@ describe('router/index.js', () => {
       })
 
       it(
-        'redirects to APPS path when setUnlocked mutation is triggered and keystore is present and unlocked',
+        'redirects to APPS path when setDerivedKey mutation is triggered and keystore is present and derivedKey',
         createRedirectTest(
-          {keystore: {}, unlocked: true}, 'setUnlocked', 'apps'
+          {keystore: {}, derivedKey: true}, 'setDerivedKey', 'apps'
         )
       )
 
       it(
-        'redirects to UNLOCK path when setUnlocked mutation is triggered and keystore is present but locked',
+        'redirects to LOGIN path when setDerivedKey mutation is triggered and keystore is present but locked',
         createRedirectTest(
-          {keystore: {}, unlocked: false}, 'setUnlocked', 'unlock'
+          {keystore: {}, derivedKey: false}, 'setDerivedKey', 'login'
         )
       )
     })

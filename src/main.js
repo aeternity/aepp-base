@@ -2,15 +2,34 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Router from 'vue-router'
+import VueClipboard from 'vue-clipboard2'
+import VeeValidate from 'vee-validate'
+import { focus } from 'vue-focus'
 import App from './App.vue'
 import getRouter from './router/index'
 import store from './store'
 
 Vue.use(Router)
+Vue.use(VueClipboard)
+Vue.use(VeeValidate, {
+  dictionary: {
+    en: {
+      messages: {
+        required: 'This field is required',
+        min: (field, [length]) => `This field must be at least ${length} characters`,
+        min_value: (field, [min]) => `This field must be ${min} or more`,
+        max_value: (field, [max]) => `This field must be ${max} or less`,
+        not_in: () => 'This field must be a valid value',
+        decimal: () => 'This field must be numeric and may contain decimal points'
+      }
+    }
+  }
+})
+Vue.directive('focus', focus)
 
-console.log('use updateRPC(\'http://rpc-endpoint:8545\') to update the identity manager RPC endpoint')
-window.updateRPC = function (rpcURL = 'https://kovan.infura.io') {
-  store.dispatch('updateRPC', rpcURL)
+console.log('use setRPCUrl(\'http://rpc-endpoint:8545\') to set the identity manager RPC endpoint')
+window.setRPCUrl = function (rpcURL = 'https://kovan.infura.io') {
+  store.commit('setRPCUrl', rpcURL)
 }
 
 Vue.config.productionTip = false

@@ -1,8 +1,10 @@
 import Router from 'vue-router'
 
 import Intro from '@/pages/Intro.vue'
-import Setup from '@/pages/Setup/Setup.vue'
-import Unlock from '@/pages/Unlock/Unlock.vue'
+import Login from '@/pages/Login.vue'
+import Recover from '@/pages/Recover.vue'
+import NewAccount from '@/pages/NewAccount.vue'
+import SetPassword from '@/pages/SetPassword.vue'
 import Apps from '@/pages/Apps/Apps.vue'
 import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
@@ -13,7 +15,7 @@ export default (store) => {
 
   const checkLoggedIn = (to, from, next) => {
     const name = !store.state.keystore && 'intro' ||
-      !store.state.unlocked && 'unlock'
+      !store.state.derivedKey && 'login'
     if (name) {
       loginTarget = to.fullPath
       next({ name })
@@ -28,22 +30,36 @@ export default (store) => {
         path: '/',
         component: Intro,
         beforeEnter (to, from, next) {
-          if (store.state.keystore) return next({ name: 'unlock' })
+          if (!from.name && store.state.keystore) return next({ name: 'login' })
           next()
         }
       },
       {
-        name: 'setup',
-        path: '/setup',
-        component: Setup
+        name: 'login',
+        path: '/login',
+        component: Login,
+        beforeEnter (to, from, next) {
+          if (!store.state.keystore) return next({ name: 'new-account' })
+          if (store.state.derivedKey) return next({ name: 'apps' })
+          next()
+        }
       },
       {
-        name: 'unlock',
-        path: '/unlock',
-        component: Unlock,
+        name: 'recover',
+        path: '/recover',
+        component: Recover
+      },
+      {
+        name: 'new-account',
+        path: '/new-account',
+        component: NewAccount
+      },
+      {
+        name: 'set-password',
+        path: '/set-password',
+        component: SetPassword,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'setup' })
-          if (store.state.unlocked) return next({ name: 'apps' })
+          if (!store.state.seed) return next({ name: 'intro' })
           next()
         }
       },
@@ -57,10 +73,7 @@ export default (store) => {
         name: 'transfer',
         path: '/transfer',
         component: Transfer,
-        beforeEnter: checkLoggedIn,
-        children: [
-          { path: ':txhash', component: Transfer }
-        ]
+        beforeEnter: checkLoggedIn
       },
       {
         name: 'network',
@@ -79,15 +92,18 @@ export default (store) => {
 
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
-      case 'setUnlocked':
+      case 'setDerivedKey':
         if (state.keystore) {
-          if (state.unlocked) {
+          if (state.derivedKey) {
             router.push(loginTarget || { name: 'apps' })
             loginTarget = undefined
           } else {
-            router.push({ name: 'unlock' })
+            router.push({ name: 'login' })
           }
         }
+        break
+      case 'setSeed':
+        if (state.seed) router.push({ name: 'set-password' })
         break
     }
   })
