@@ -1,7 +1,6 @@
 import Router from 'vue-router'
 
 import Intro from '@/pages/Intro.vue'
-import Onboarding from '@/pages/Onboarding/Onboarding.vue'
 import Login from '@/pages/Login.vue'
 import Recover from '@/pages/Recover.vue'
 import NewAccount from '@/pages/NewAccount.vue'
@@ -38,11 +37,6 @@ export default (store) => {
           if (!from.name && store.state.keystore) return next({ name: 'login' })
           next()
         }
-      },
-      {
-        name: 'onboarding',
-        path: '/onboarding',
-        component: Onboarding
       },
       {
         name: 'login',
