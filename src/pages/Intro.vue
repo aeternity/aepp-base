@@ -12,7 +12,7 @@
       <ae-button :to="{ name: keystore ? 'login' : 'new-account' }" type="exciting">
         {{keystore ? 'Login' : 'Create Account'}}
       </ae-button>
-      <ae-button :to="{ name: 'onboarding' }" size="small" plain uppercase>
+      <ae-button :to="{ name: 'login' }" size="small" plain uppercase>
         See how it works
       </ae-button>
     </div>
