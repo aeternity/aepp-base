@@ -1,0 +1,79 @@
+.app-browser {
+  overflow: hidden;
+
+  iframe {
+    transition: filter 2s;
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    opacity: 1.0;
+    transform: scale(1.0);
+  }
+
+  .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.15);
+    z-index: 100;
+    cursor: wait;
+    opacity: 0;
+    transition: opacity 2s, translate 0s 2s;
+    transform: translateX(-300vw);
+
+    @keyframes sk-bounce {
+      0%, 100% {
+        transform: scale(0.0) translate(-50%,-50%);
+      }
+      50% {
+        transform: scale(1.0) translate(-50%,-50%);
+      }
+    }
+
+    &:before, &:after {
+      content : '';
+      display: block;
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      height: 60px;
+      width: 60px;
+      background-color: #F03C6E;
+      opacity: 0.6;
+      border-radius: 50%;
+      transform-origin: left top;
+      animation: sk-bounce 2.0s infinite ease-in-out;
+    }
+  }
+
+  &.loading {
+    iframe {
+      filter: blur(3px);
+    }
+    .loader {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 2s, translate 0s 0s;
+
+      &:after {
+        animation-delay: -1.0s;
+      }
+    }
+  }
+
+  .back {
+    position: absolute;
+    bottom: 2px;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    z-index: 998;
+    background-image: url('/static/icons/browser.svg');
+    background-size: contain;
+  }
+}

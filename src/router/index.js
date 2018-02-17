@@ -1,73 +1,116 @@
 import Router from 'vue-router'
 
 import Intro from '@/pages/Intro.vue'
-import Setup from '@/pages/Setup/Setup.vue'
-import Unlock from '@/pages/Unlock/Unlock.vue'
+import Login from '@/pages/Login.vue'
+import Recover from '@/pages/Recover.vue'
+import NewAccount from '@/pages/NewAccount.vue'
+import SetPassword from '@/pages/SetPassword.vue'
+import Apps from '@/pages/Apps/Apps.vue'
 import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
 import Network from '@/pages/Network.vue'
+import AddApp from '@/pages/AddApp/AddApp.vue'
 
 export default (store) => {
+  let loginTarget
+
+  const checkLoggedIn = (to, from, next) => {
+    const name = !store.state.keystore && 'intro' ||
+      !store.state.derivedKey && 'login'
+    if (name) {
+      loginTarget = to.fullPath
+      next({ name })
+    }
+    next()
+  }
+
   const router = new Router({
     routes: [
       {
         name: 'intro',
         path: '/',
-        component: Intro
-      },
-      {
-        name: 'setup',
-        path: '/setup',
-        component: Setup
-      },
-      {
-        name: 'unlock',
-        path: '/unlock',
-        component: Unlock,
+        component: Intro,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'setup' })
-          if (store.state.unlocked) return next({ name: 'app-browser' })
+          if (!from.name && store.state.keystore) return next({ name: 'login' })
           next()
         }
       },
       {
-        name: 'app-browser',
-        path: '/app-browser',
-        component: AppBrowser,
+        name: 'login',
+        path: '/login',
+        component: Login,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'setup' })
-          if (!store.state.unlocked) return next({ name: 'unlock' })
+          if (!store.state.keystore) return next({ name: 'new-account' })
+          if (store.state.derivedKey) return next({ name: 'apps' })
           next()
         }
+      },
+      {
+        name: 'recover',
+        path: '/recover',
+        component: Recover
+      },
+      {
+        name: 'new-account',
+        path: '/new-account',
+        component: NewAccount
+      },
+      {
+        name: 'set-password',
+        path: '/set-password',
+        component: SetPassword,
+        beforeEnter (to, from, next) {
+          if (!store.state.seed) return next({ name: 'intro' })
+          next()
+        }
+      },
+      {
+        name: 'apps',
+        path: '/apps',
+        component: Apps,
+        beforeEnter: checkLoggedIn
       },
       {
         name: 'transfer',
         path: '/transfer',
         component: Transfer,
-        children: [
-          { path: ':txhash', component: Transfer }
-        ]
+        beforeEnter: checkLoggedIn
       },
       {
         name: 'network',
         path: '/network',
-        component: Network
+        component: Network,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'add-app',
+        path: '/add-app',
+        component: AddApp,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'app-browser',
+        path: '/:name/:path*',
+        component: AppBrowser,
+        beforeEnter: checkLoggedIn
       }
     ]
   })
 
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
-      case 'setUnlocked':
+      case 'setDerivedKey':
         if (state.keystore) {
-          router.push({
-            name: state.unlocked ? 'app-browser' : 'unlock'
-          })
+          if (state.derivedKey) {
+            router.push(loginTarget || { name: 'apps' })
+            loginTarget = undefined
+          } else {
+            router.push({ name: 'login' })
+          }
         }
         break
-      case 'setKeystore':
-        if (state.keystore) return router.push({ name: 'unlock' })
-        if (router.route.name === 'app-browser') return router.push({ name: 'setup' })
+      case 'setSeed':
+        if (state.seed) router.push({ name: 'set-password' })
         break
     }
   })
