@@ -19,21 +19,21 @@
           slot="right"
           type="exciting"
           size="small"
-          @click="appName = ''"
+          @click="addApp"
           v-show="appName !== ''"
         >
-          <ae-icon slot="icon" type="exciting" invert name="close" />
+          <ae-icon slot="icon" type="exciting" invert :name="addNewApp ? 'plus' : 'close'" />
         </ae-button>
       </ae-input>
     </form>
     <ae-label>Recent æpps</ae-label>
-    <div v-for="app in apps" class="app">      
+    <div v-for="app in apps" class="app">
       <ae-app-icon :src="app.icon" />
       <div class="content">
         <h2 class="name">{{app.name}}</h2>
         <ae-button type="dramatic" size="smaller">
           Add æpp
-          <ae-icon slot="icon" name="plus" type="dramatic"/>          
+          <ae-icon slot="icon" name="plus" type="dramatic"/>
         </ae-button>
       </div>
     </div>

@@ -24,25 +24,27 @@ export default {
     QuickId
   },
   data () {
-    return { 
+    return {
       appName: ''
     }
   },
   computed: mapState({
-    apps() {
+    apps () {
       const searchTerm = this.appName
       const apps = this.$store.state.apps
 
       var options = {
-        keys: [
-          { name: 'name', weight: 0.3 }, 
-          { name: 'path', weight: 0.7 }
-        ]
-      };
+        tokenize: true,
+        matchAllTokens: true,
+        keys: ['name']
+      }
 
       const fuse = new Fuse(apps, options)
 
       return searchTerm === '' ? apps : fuse.search(searchTerm)
+    },
+    addNewApp () {
+      return this.apps.length <= 0 && this.appName !== ''
     }
   }),
   methods: {
@@ -50,6 +52,13 @@ export default {
       if (event.target.id === 'app-name') {
         this.appName = event.target.value
       }
+    },
+    addApp () {
+      const url = this.appName
+      if (url !== '' && this.addNewApp) {
+        this.$store.dispatch('addApp', url)
+      }
+      this.appName = ''
     }
   }
 }
