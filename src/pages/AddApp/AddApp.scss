@@ -1,0 +1,36 @@
+.add-app {
+  padding: 0px 20px 20px;
+
+  .app {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    padding: 10px 0px;
+    border-bottom: solid #f0f0f0 2px;
+    
+    .content {
+      display: flex;
+      margin-left: 15px;
+      flex-direction: column;
+    }
+
+    .ae-button {
+      padding: 0px;
+      margin-top: auto;
+      margin-bottom: 10px;
+      
+      .ae-icon {
+        margin-left: 0px;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+    }
+
+    h2.name {
+      display: block;
+      font-weight: bold;
+      margin-top: 3px;
+      margin-bottom: 0px;
+    }
+  }
+}
