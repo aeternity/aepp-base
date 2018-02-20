@@ -23,7 +23,8 @@ Vue.use(VeeValidate, {
         min_value_exclusive: (field, [min]) => `This field must be more than ${min}`,
         max_value: (field, [max]) => `This field must be ${max} or less`,
         not_in: () => 'This field must be a valid value',
-        decimal: () => 'This field must be numeric and may contain decimal points'
+        decimal: () => 'This field must be numeric and may contain decimal points',
+        url: () => 'This field is not a valid URL'
       }
     }
   }

@@ -1,64 +1,61 @@
 import Fuse from 'fuse.js'
 import { mapState } from 'vuex'
 import {
-  AeHeader,
   AeLabel,
   AeInput,
   AeButton,
   AeIcon,
   AeAppIcon,
-  AeDivider
+  AeDivider,
+  AeModal
 } from '@aeternity/aepp-components'
 import QuickId from '@/components/QuickId/QuickId.vue'
+import allApps from '@/lib/appsRegistry'
+
+const fuse = new Fuse(allApps, {
+  tokenize: true,
+  matchAllTokens: true,
+  keys: ['name']
+})
 
 export default {
-  name: 'AddApp',
   components: {
-    AeHeader,
     AeLabel,
     AeInput,
     AeButton,
     AeAppIcon,
     AeIcon,
     AeDivider,
+    AeModal,
     QuickId
   },
-  data () {
-    return {
-      appName: ''
-    }
-  },
+  data: () => ({
+    url: '',
+    appAddingByUrl: false,
+    searchTerm: ''
+  }),
   computed: mapState({
-    apps () {
-      const searchTerm = this.appName
-      const apps = this.$store.state.apps
-
-      var options = {
-        tokenize: true,
-        matchAllTokens: true,
-        keys: ['name']
-      }
-
-      const fuse = new Fuse(apps, options)
-
-      return searchTerm === '' ? apps : fuse.search(searchTerm)
-    },
-    addNewApp () {
-      return this.apps.length <= 0 && this.appName !== ''
+    apps ({ apps }) {
+      return (this.searchTerm ? fuse.search(this.searchTerm) : allApps)
+        .map(app => ({
+          ...app,
+          added: apps.some(a => a.path === app.path)
+        }))
     }
   }),
   methods: {
-    formOnChange (event) {
-      if (event.target.id === 'app-name') {
-        this.appName = event.target.value
-      }
+    addApp (app) {
+      this.$store.dispatch('addApp', app)
     },
-    addApp () {
-      const url = this.appName
-      if (url !== '' && this.addNewApp) {
-        this.$store.dispatch('addApp', url)
-      }
-      this.appName = ''
+    async addAppByUrl () {
+      if (!this.url || this.appAddingByUrl || !await this.$validator.validateAll()) return
+      this.appAddingByUrl = true
+      await this.$store.dispatch('addApp', this.url)
+      this.$router.push({ name: 'apps' })
+      this.appAddingByUrl = false
+    },
+    goToApps () {
+      this.$router.push({ name: 'apps' })
     }
   }
 }
