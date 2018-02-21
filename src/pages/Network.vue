@@ -18,8 +18,7 @@
     <form @submit.prevent="addOption()">
       <input v-if="addCustom" v-model="custom" placeholder="Custom Network" ref="input">
     </form> -->
-    <quick-id>
-      <router-link slot="left" :to="{ name: 'apps' }" class="back" />
+    <quick-id showBackButton>
     </quick-id>
   </div>
 </template>
@@ -96,15 +95,5 @@ export default {
 .network .status {
   margin: 20px auto;
   max-width: 600px;
-}
-
-.back {
-  width: 30px;
-  height: 30px;
-  background: url('/static/icons/grid.svg') no-repeat;
-  background-size: contain;
-  border-right: 2px solid #f1f4f7;
-  margin-right: 15px;
-  padding-right: 15px;
 }
 </style>

@@ -7,6 +7,12 @@ export default {
   computed: mapGetters({
     identity: 'activeIdentity'
   }),
+  props: {
+    showBackButton: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
     showIdManager () {
       this.$store.dispatch('updateAllBalances')

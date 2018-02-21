@@ -1,6 +1,11 @@
 <template>
   <ae-identity class="quick-id" :identity="identity" active @click="showIdManager" collapsed>
-    <slot name="left" slot="header-left" />
+    <router-link
+      :to="{ name: 'apps' }"
+      class="back"
+      slot="header-left"
+      v-if="showBackButton"
+    />
   </ae-identity>
 </template>
 
