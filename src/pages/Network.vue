@@ -18,8 +18,9 @@
     <form @submit.prevent="addOption()">
       <input v-if="addCustom" v-model="custom" placeholder="Custom Network" ref="input">
     </form> -->
-    <router-link :to="{ name: 'apps' }" class="back" />
-    <quick-id />
+    <quick-id>
+      <router-link slot="left" :to="{ name: 'apps' }" class="back" />
+    </quick-id>
   </div>
 </template>
 
@@ -96,14 +97,14 @@ export default {
   margin: 20px auto;
   max-width: 600px;
 }
+
 .back {
-  position:absolute;
-  bottom:2px;
-  left:5px;
-  width:50px;
-  height:50px;
-  z-index:998;
-  background-image: url('/static/icons/browser.svg');
+  width: 30px;
+  height: 30px;
+  background: url('/static/icons/grid.svg') no-repeat;
   background-size: contain;
+  border-right: 2px solid #f1f4f7;
+  margin-right: 15px;
+  padding-right: 15px;
 }
 </style>

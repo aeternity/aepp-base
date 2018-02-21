@@ -4,9 +4,10 @@
 
     <div class="loader" />
 
-    <router-link :to="{ name: 'apps' }" class="back" />
 
-    <quick-id />
+    <quick-id>
+      <router-link slot="left" :to="{ name: 'apps' }" class="back" />
+    </quick-id>
   </div>
 </template>
 
