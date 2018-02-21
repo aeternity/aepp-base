@@ -142,9 +142,8 @@ const store = new Vuex.Store({
           const el = document.createElement('html')
           el.innerHTML = text
           app.name = el.getElementsByTagName('title')[0].innerText
-        } finally {
-          app.name = app.name || prompt('Enter Title')
-        }
+        } catch (e) {}
+        app.name = app.name || prompt('Enter Title')
       }
 
       commit('addApp', app)
