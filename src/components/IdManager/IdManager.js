@@ -1,48 +1,15 @@
 import { mapGetters } from 'vuex'
-import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
-import {AeIdentity, AeButton, AeIcon, AeLabel, AeDivider, aeHelperMixin as helperMixin} from '@aeternity/aepp-components'
-
-const commonSwiperOptions = {
-  grabCursor: true,
-  setWrapperSize: false,
-  autoHeight: false,
-  paginationClickable: true,
-  mousewheelControl: true,
-  observeParents: true,
-  debugger: true
-}
+import {
+  AeIdentity,
+  AeButton,
+  AeIcon,
+  AeLabel,
+  AeDivider,
+  aeHelperMixin as helperMixin
+} from '@aeternity/aepp-components'
 
 export default {
   name: 'id-manager',
-  data () {
-    return {
-      swiperOptions: {
-        '_direction_vertical': {
-          ...commonSwiperOptions,
-          direction: 'vertical',
-          spaceBetween: 0,
-          centeredSlides: false,
-          roundLengths: true,
-          pagination: '.swiper-pagination._direction_vertical',
-          slidesPerView: 1.08,
-          breakpoints: {
-            '360': {
-              slidesPerView: 1.2
-            }
-          }
-        },
-        '_direction_horizontal': {
-          ...commonSwiperOptions,
-          direction: 'horizontal',
-          spaceBetween: 0,
-          centeredSlides: true,
-          slidesPerView: 2,
-          roundLengths: true,
-          pagination: '.swiper-pagination._direction_horizontal'
-        }
-      }
-    }
-  },
   props: {
     title: String
   },
@@ -50,27 +17,35 @@ export default {
     AeIdentity,
     AeButton,
     AeIcon,
-    Swiper,
-    SwiperSlide,
     AeLabel,
     AeDivider
   },
-  mixins: [
-    helperMixin
-  ],
+  mixins: [helperMixin],
   computed: {
     ...mapGetters(['identities', 'activeIdentity']),
     totalAmount () {
       let amount = 0
       let tokenAmount = 0
-      this.identities.forEach((identity) => {
-        amount += identity ? parseFloat(helperMixin.methods.readableEther(identity.balance)) : 0
-        tokenAmount += identity && identity.tokenBalance ? parseFloat(helperMixin.methods.readableToken(identity.tokenBalance)) : 0
+      this.identities.forEach(identity => {
+        amount += identity
+          ? parseFloat(helperMixin.methods.readableEther(identity.balance))
+          : 0
+        tokenAmount +=
+          identity && identity.tokenBalance
+            ? parseFloat(
+                helperMixin.methods.readableToken(identity.tokenBalance)
+              )
+            : 0
       })
       return {
         amount,
         tokenAmount
       }
+    },
+    inactiveIdentities () {
+      return this.identities.filter(
+        identity => identity.address !== this.activeIdentity.address
+      )
     }
   },
   methods: {
@@ -82,24 +57,6 @@ export default {
     },
     goBack () {
       this.$store.commit('toggleIdManager')
-    },
-    isActive (id) {
-      return id.address === this.activeIdentity.address
-    },
-    swipeTo (index) {
-      if (index >= 0 && index < this.identities.length && this.$refs.mySwiper) {
-        if (Array.isArray(this.$refs.mySwiper)) {
-          this.$refs.mySwiper.forEach(swiperElem => {
-            swiperElem.swiper.slideTo(index)
-          })
-        } else {
-          this.$refs.mySwiper.swiper.slideTo(index)
-        }
-      }
-    },
-    logout () {
-      this.$store.commit('toggleIdManager')
-      this.$store.commit('setDerivedKey')
     }
   },
   mounted () {
