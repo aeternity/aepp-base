@@ -13,7 +13,7 @@
         name="url"
         placeholder="Æpp URL"
         v-model="url"
-        v-validate="'url'"
+        v-validate="'url_http'"
       />
       <div class="add-button-wrapper">
         <ae-button

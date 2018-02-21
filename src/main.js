@@ -10,6 +10,14 @@ import getRouter from './router/index'
 import store from './store'
 
 Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
+Validator.extend('url_http', (value) => {
+  try {
+    const url = new URL((/^\w+:\//.test(value) ? '' : `http://`) + value)
+    return ['http:', 'https:'].includes(url.protocol)
+  } catch (e) {
+    return false
+  }
+})
 
 Vue.use(Router)
 Vue.use(VueClipboard)
@@ -24,7 +32,7 @@ Vue.use(VeeValidate, {
         max_value: (field, [max]) => `This field must be ${max} or less`,
         not_in: () => 'This field must be a valid value',
         decimal: () => 'This field must be numeric and may contain decimal points',
-        url: () => 'This field is not a valid URL'
+        url_http: () => 'This field is not a valid HTTP(S) URL'
       }
     }
   }
