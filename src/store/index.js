@@ -34,6 +34,7 @@ const store = new Vuex.Store({
     derivedKey: null,
     networkId: null,
     notification: null,
+    currentAppUrl: null,
     apps: [{
       name: 'Notary',
       icon: 'static/icons/notary.svg',
@@ -136,6 +137,9 @@ const store = new Vuex.Store({
     },
     toggleIdManager (state) {
       state.showIdManager = !state.showIdManager
+    },
+    setCurrentAppUrl (state, currentAppUrl) {
+      this.state.currentAppUrl = currentAppUrl
     }
   },
 
