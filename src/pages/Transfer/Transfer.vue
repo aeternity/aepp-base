@@ -46,7 +46,7 @@
       :id="`${_uid}-currency`"
       name="currency"
       v-model="currency"
-      v-validate:amount="`required|decimal|not_in:0|min_value:0|max_value:${maxAmount}`"
+      v-validate:amount="`required|decimal|min_value_exclusive:0|max_value:${maxAmount}`"
       data-vv-delay="1"
       placeholder="0.00"
     />
