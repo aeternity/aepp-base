@@ -40,25 +40,16 @@
       </div>
       <div class="v-pad">
         <ae-divider/>
-        <ae-label :help-text="inactiveIdentities.length.toString()">Inactive</ae-label>
-        <div class="inactive-identities">
-          <div
-            v-for='(identity, index) in inactiveIdentities'
-            :style="getStyle(index)"
-            class="inactive-identity"
-            @click="activateCard(index)"
-          >
-            <ae-identity :active="false" :identity='identity' :size="'big'" class="id-manager__identity" :collapsed="true">
-              <div v-show="index === activeIdentityCard">
-                <ae-button v-clipboard:copy="identity.address" size='small' type='boring' class="id-manager__ae-button">
-                Copy Address
-                </ae-button>
-                <ae-button @click="activateId(identity)" :inactive="true" size='small' type='dramatic' :disabled="activeIdentity === identity" class="id-manager__ae-button">
-                  Activate
-                </ae-button>
-              </div>
-            </ae-identity>
-          </div>
+        <ae-label :help-text="inactiveIdentities.length">Inactive</ae-label>
+        <div v-for='(identity, index) in inactiveIdentities'>
+          <ae-identity :active="false" :identity='identity' :size="'big'" class="id-manager__identity" :collapsed="true">
+            <ae-button v-clipboard:copy="identity.address" size='small' type='boring' class="id-manager__ae-button">
+              Copy Address
+            </ae-button>
+            <ae-button @click="activateId(identity)" :inactive="true" size='small' type='dramatic' :disabled="activeIdentity === identity" class="id-manager__ae-button">
+              Activate
+            </ae-button>
+          </ae-identity>
         </div>
       </div>
     </template>
@@ -71,5 +62,6 @@
   </div>
 </template>
 
+<style src="swiper/dist/css/swiper.css"/>
 <style scoped src='./IdManager.scss' type="scss"/>
 <script src='./IdManager.js'/>
