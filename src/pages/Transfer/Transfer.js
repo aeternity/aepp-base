@@ -61,10 +61,8 @@ export default {
       get () {
         const { currency } = this.$route.params
         if (!currency) return undefined
-        return {
-          amount: parseFloat(currency),
-          symbol: /(\D*)$/.exec(currency)[1]
-        }
+        const [, amount, symbol] = /^(.*?)(\D*)$/.exec(currency)
+        return { amount, symbol }
       },
       set (currency) {
         this.$router.replace({
