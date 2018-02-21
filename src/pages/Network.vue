@@ -18,8 +18,7 @@
     <form @submit.prevent="addOption()">
       <input v-if="addCustom" v-model="custom" placeholder="Custom Network" ref="input">
     </form> -->
-    <quick-id showBackButton>
-    </quick-id>
+    <quick-id showBackButton/>
   </div>
 </template>
 

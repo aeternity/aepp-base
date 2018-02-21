@@ -5,6 +5,7 @@
       class="back"
       slot="header-left"
       v-if="showBackButton"
+      @click.native="disablePropagation($event)"
     />
   </ae-identity>
 </template>
