@@ -71,7 +71,7 @@ export default (store) => {
       },
       {
         name: 'transfer',
-        path: '/transfer',
+        path: '/transfer/:to?/:currency?',
         component: Transfer,
         beforeEnter: checkLoggedIn
       },

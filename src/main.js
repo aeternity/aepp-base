@@ -3,11 +3,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import VueClipboard from 'vue-clipboard2'
-import VeeValidate from 'vee-validate'
+import VeeValidate, { Validator } from 'vee-validate'
 import { focus } from 'vue-focus'
 import App from './App.vue'
 import getRouter from './router/index'
 import store from './store'
+
+Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
 
 Vue.use(Router)
 Vue.use(VueClipboard)
@@ -18,6 +20,7 @@ Vue.use(VeeValidate, {
         required: 'This field is required',
         min: (field, [length]) => `This field must be at least ${length} characters`,
         min_value: (field, [min]) => `This field must be ${min} or more`,
+        min_value_exclusive: (field, [min]) => `This field must be more than ${min}`,
         max_value: (field, [max]) => `This field must be ${max} or less`,
         not_in: () => 'This field must be a valid value',
         decimal: () => 'This field must be numeric and may contain decimal points'
