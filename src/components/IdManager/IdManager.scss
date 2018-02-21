@@ -3,7 +3,38 @@
 }
 .id-manager .ae-identity {
   display:none;
+  width: auto;
 }
+
+.totalBalance label.ae-label {
+    display: inline-block;
+    margin-top: 0px;
+}
+
+.balances {
+//   width: calc(100% - 23px);
+  float: right;
+}
+
+.balance {
+  height: 14px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: $white;
+
+  .currency-symbol {
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0.12em;
+  }
+}
+
 .create-new-id-button{
   margin-top:40px;
 }
@@ -14,8 +45,15 @@
   margin-top:30px;
 }
 .explanation {
-  padding:0 20px;
+  padding:40px 50px 0px;
 }
+
+.bottom-right {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+}
+
 .topbar {
   display: flex;
   flex-direction: row-reverse;
@@ -34,7 +72,7 @@
   margin-left: 6px !important;
 }
 
-.add-button-container{
+.close-button-container{
   float: right;
   display: flex;
   align-items: center;
@@ -116,4 +154,9 @@
     width: auto;
     transform: scale(0.8);
   }
+}
+
+.v-pad {
+  padding-left: 20px;
+  padding-right: 20px;
 }

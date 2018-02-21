@@ -1,6 +1,6 @@
 import { mapGetters } from 'vuex'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
-import {AeIdentity, AeButton, AeIcon} from '@aeternity/aepp-components'
+import {AeIdentity, AeButton, AeIcon, AeLabel, AeDivider, aeHelperMixin as helperMixin} from '@aeternity/aepp-components'
 
 const commonSwiperOptions = {
   grabCursor: true,
@@ -51,9 +51,28 @@ export default {
     AeButton,
     AeIcon,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    AeLabel,
+    AeDivider
   },
-  computed: mapGetters(['identities', 'activeIdentity']),
+  mixins: [
+    helperMixin
+  ],
+  computed: {
+    ...mapGetters(['identities', 'activeIdentity']),
+    totalAmount () {
+      let amount = 0
+      let tokenAmount = 0
+      this.identities.forEach((identity) => {
+        amount += identity ? parseFloat(helperMixin.methods.readableEther(identity.balance)) : 0
+        tokenAmount += identity && identity.tokenBalance ? parseFloat(helperMixin.methods.readableToken(identity.tokenBalance)) : 0
+      })
+      return {
+        amount,
+        tokenAmount
+      }
+    }
+  },
   methods: {
     activateId (id) {
       this.$store.commit('selectIdentity', this.identities.indexOf(id))
