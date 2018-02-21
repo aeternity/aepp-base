@@ -13,6 +13,7 @@ import {
   approveTransaction as approveTransactionDialog,
   approveMessage as approveMessageDialog
 } from '@/dialogs/index'
+import apps from '@/lib/appsRegistry'
 
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
@@ -34,23 +35,7 @@ const store = new Vuex.Store({
     derivedKey: null,
     networkId: null,
     notification: null,
-    apps: [{
-      name: 'Notary',
-      icon: 'static/icons/notary.svg',
-      path: `${process.env.IS_STAGE ? 'stage-' : ''}notary.aepps.com`
-    }, {
-      name: 'Transfer',
-      icon: 'static/icons/notary.svg',
-      path: 'transfer'
-    }, {
-      name: 'Wall',
-      icon: 'static/icons/wall.svg',
-      path: 'wall.aepps.com'
-    }, {
-      name: 'Network',
-      icon: 'static/icons/notary.svg',
-      path: 'network'
-    }]
+    apps: [...apps]
   },
 
   getters: {
@@ -144,25 +129,24 @@ const store = new Vuex.Store({
       commit('setNotification', options)
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000)
     },
-    async addApp ({ commit }, path) {
-      let title
-      try {
-        const response = await fetch('https://cors-anywhere.herokuapp.com/' + path)
-        const text = await response.text()
-        const el = document.createElement('html')
-        el.innerHTML = text
-        title = el.getElementsByTagName('title')[0].innerText
-      } finally {
-        title = title || prompt('Enter Title')
-        path = path.replace(/^https?:\/\//i, '')
-        if (title) {
-          commit('addApp', {
-            name: title,
-            icon: 'static/icons/notary.svg',
-            path
-          })
-        }
+    async addApp ({ commit }, arg) {
+      const app = typeof arg !== 'string' ? arg : {
+        path: arg.replace(/^https?:\/\//i, ''),
+        icon: 'static/icons/notary.svg'
       }
+
+      if (!app.name) {
+        try {
+          const response = await fetch('https://cors-anywhere.herokuapp.com/' + app.path)
+          const text = await response.text()
+          const el = document.createElement('html')
+          el.innerHTML = text
+          app.name = el.getElementsByTagName('title')[0].innerText
+        } catch (e) {}
+        app.name = app.name || prompt('Enter Title')
+      }
+
+      commit('addApp', app)
     },
     updateAllBalances ({getters, dispatch}) {
       getters.keystore.getAddresses().forEach(address =>

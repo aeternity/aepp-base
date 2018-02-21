@@ -28,22 +28,7 @@ export default {
   },
   data () {
     return {
-      swiperOptionsTo: {
-        autoplay: false,
-        direction: 'horizontal',
-        spaceBetween: 10,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        initialSlide: 0,
-        onSlideChangeEnd: swiper => {
-          this.swiperOptionsTo.initialSlide = swiper.realIndex
-        }
-      },
       transactionType: undefined,
-      addressTo: undefined,
-      currency: undefined,
       prices: {}
     }
   },
@@ -58,6 +43,37 @@ export default {
         return balance ? web3.utils.fromWei(balance[k], 'ether') : 0
       }
     }),
+    to: {
+      get () {
+        return this.$route.params.to
+      },
+      set (to) {
+        this.$router.replace({
+          name: 'transfer',
+          params: {
+            ...this.$route.params,
+            to
+          }
+        })
+      }
+    },
+    currency: {
+      get () {
+        const { currency } = this.$route.params
+        if (!currency) return undefined
+        const [, amount, symbol] = /^(.*?)(\D*)$/.exec(currency)
+        return { amount, symbol }
+      },
+      set (currency) {
+        this.$router.replace({
+          name: 'transfer',
+          params: {
+            ...this.$route.params,
+            currency: `${currency.amount || 0}${currency.symbol}`
+          }
+        })
+      }
+    },
     fiatAmount () {
       const { amount, symbol } = this.currency || {}
       const fiatAmount = this.prices[symbol] * +amount
@@ -65,6 +81,21 @@ export default {
     },
     amount () {
       return this.currency ? this.currency.amount : 0
+    },
+    swiperOptionsTo () {
+      return {
+        autoplay: false,
+        direction: 'horizontal',
+        spaceBetween: 10,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        initialSlide: this.identitiesTo.findIndex(i => i.address === this.to),
+        onSlideChangeEnd: swiper => {
+          this.to = this.identitiesTo[swiper.realIndex].address
+        }
+      }
     }
   },
   methods: {
@@ -72,9 +103,7 @@ export default {
       if (!await this.$validator.validateAll()) return
 
       const { amount, symbol } = this.currency || {}
-      const to = this.transactionType === 'internal'
-        ? this.identitiesTo[this.swiperOptionsTo.initialSlide].address
-        : this.addressTo
+      const { to } = this
       if (!to || !amount || !symbol) return
       const from = this.activeIdentity.address
 

@@ -9,6 +9,7 @@ import Apps from '@/pages/Apps/Apps.vue'
 import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
 import Network from '@/pages/Network.vue'
+import AddApp from '@/pages/AddApp/AddApp.vue'
 
 export default (store) => {
   let loginTarget
@@ -71,7 +72,7 @@ export default (store) => {
       },
       {
         name: 'transfer',
-        path: '/transfer',
+        path: '/transfer/:to?/:currency?',
         component: Transfer,
         beforeEnter: checkLoggedIn
       },
@@ -79,6 +80,12 @@ export default (store) => {
         name: 'network',
         path: '/network',
         component: Network,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'add-app',
+        path: '/add-app',
+        component: AddApp,
         beforeEnter: checkLoggedIn
       },
       {

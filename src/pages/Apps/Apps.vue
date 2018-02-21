@@ -24,10 +24,10 @@
         </router-link>
       </div>
 
-      <div @click="add" class="app-shortcut">
+      <router-link to="add-app" class="app-shortcut">
         <ae-app-icon src="static/icons/notary.svg" />
         <div class="app-name">Add App</div>
-      </div>
+      </router-link>
     </div>
 
     <quick-id />

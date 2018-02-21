@@ -3,7 +3,7 @@
     <ae-switch
       v-if="identitiesTo.length"
       v-model="transactionType"
-      default="external"
+      :default="swiperOptionsTo.initialSlide === -1 ? 'external' : 'internal'"
       :choices="[
         { value: 'internal', label: 'To own identity' },
         { value: 'external', label: 'External address' }
@@ -30,8 +30,9 @@
       <ae-address-input
         :id="_uid"
         name="addressTo"
-        v-model="addressTo"
+        v-model="to"
         v-validate="'required|min:42'"
+        data-vv-delay="1"
         :placeholder="`0x00000 0000000 0000000\n0000000 0000000 0000000`"
       />
     </div>
@@ -45,7 +46,8 @@
       :id="`${_uid}-currency`"
       name="currency"
       v-model="currency"
-      v-validate:amount="`required|decimal|not_in:0|min_value:0|max_value:${maxAmount}`"
+      v-validate:amount="`required|decimal|min_value_exclusive:0|max_value:${maxAmount}`"
+      data-vv-delay="1"
       placeholder="0.00"
     />
     <div class="fiat-amount">≈ {{fiatAmount}} CHF</div>
