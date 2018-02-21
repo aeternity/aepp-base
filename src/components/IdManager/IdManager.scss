@@ -1,18 +1,18 @@
-.id-manager {
+.id-manager{
   background-color: #ffffff;
 }
 .id-manager .ae-identity {
-  display: none;
+  display:none;
   width: auto;
 }
 
 .totalBalance label.ae-label {
-  display: inline-block;
-  margin-top: 0px;
+    display: inline-block;
+    margin-top: 0px;
 }
 
 .balances {
-  //   width: calc(100% - 23px);
+//   width: calc(100% - 23px);
   float: right;
 }
 
@@ -30,29 +30,28 @@
 
   .currency-symbol {
     font-size: 12px;
-    color: #ffffff;
+    color: #FFFFFF;
     letter-spacing: 0.12em;
   }
 }
 
-.create-new-id-button {
-  margin-top: 40px;
+.create-new-id-button{
+  margin-top:40px;
 }
-.close-id-manager-button {
-  margin-top: 30px;
+.close-id-manager-button{
+  margin-top:30px;
 }
 .logout-button {
-  margin-top: 30px;
+  margin-top:30px;
 }
 .explanation {
-  padding: 40px 50px 0px;
+  padding:40px 50px 0px;
 }
 
 .bottom-right {
-  z-index: 999999;
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
 }
 
 .topbar {
@@ -69,79 +68,78 @@
   overflow: hidden;
 }
 
-.id-manager__ae-button + .id-manager__ae-button {
+.id-manager__ae-button + .id-manager__ae-button{
   margin-left: 6px !important;
 }
 
-.close-button-container {
+.close-button-container{
   float: right;
   display: flex;
   align-items: center;
 }
 
-.id-added-button {
+.id-added-button{
   text-transform: uppercase;
 }
 
-.swiper-sizer {
+.swiper-sizer{
   overflow: hidden;
   position: relative;
 }
 
-.swiper-sizer._direction_vertical {
+.swiper-sizer._direction_vertical{
   height: 100%;
-  width: 100%;
+  width:100%;
 }
 
-.swiper-sizer._direction_horizontal {
+.swiper-sizer._direction_horizontal{
   height: auto;
 }
 
-.swiper-sizer .swiper-slide {
+.swiper-sizer .swiper-slide{
   display: flex;
   align-content: center;
   justify-content: center;
 }
 
-.swiper-sizer._direction_vertical {
+.swiper-sizer._direction_vertical{
   display: none;
 }
 
-.swiper-sizer._direction_vertical > .swiper-container {
+.swiper-sizer._direction_vertical > .swiper-container{
   padding-top: 0;
   padding-bottom: 0;
 }
 
-.swiper-sizer._direction_horizontal > .swiper-container {
-  padding-bottom: 40px;
+.swiper-sizer._direction_horizontal > .swiper-container{
+  padding-bottom:40px;
 }
 
-.swiper-sizer._direction_horizontal {
+.swiper-sizer._direction_horizontal{
   display: block;
 }
 
 @media screen and (max-width: 600px) {
-  .swiper-sizer._direction_vertical {
+  .swiper-sizer._direction_vertical{
     display: block;
   }
 
-  .swiper-sizer._direction_horizontal {
+  .swiper-sizer._direction_horizontal{
     display: none;
   }
 
-  .swiper-sizer,
-  .swiper-sizer > .swiper-container {
+  .swiper-sizer, .swiper-sizer > .swiper-container{
     min-height: 190px;
     max-height: 230px;
   }
 
-  .swiper-slide {
+  .swiper-slide{
     width: 100%;
   }
 }
 
 @media screen and (min-width: 600px) and (max-width: 720px) {
-  .id-manager__identity {
+  .id-manager__identity{
     display: inline-block;
     position: relative;
     width: auto;
@@ -150,7 +148,7 @@
 }
 
 @media screen and (max-width: 360px) {
-  .id-manager__identity {
+  .id-manager__identity{
     display: inline-block;
     position: relative;
     width: auto;
@@ -161,14 +159,4 @@
 .v-pad {
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.inactive-identities {
-  position: absolute;
-}
-
-.inactive-identity {
-  position: absolute;
-  left: 0px;
-  right: 0px;
 }
