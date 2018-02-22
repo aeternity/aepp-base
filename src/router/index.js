@@ -10,6 +10,9 @@ import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
 import Network from '@/pages/Network.vue'
 import AddApp from '@/pages/AddApp/AddApp.vue'
+import AddressBook from '@/pages/AddressBook.vue'
+import AddressBookNew from '@/pages/AddressBookNew.vue'
+import AddressBookChoose from '@/pages/AddressBookChoose.vue'
 
 export default (store) => {
   let loginTarget
@@ -87,6 +90,25 @@ export default (store) => {
         path: '/add-app',
         component: AddApp,
         beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'address-book',
+        path: '/address-book',
+        component: AddressBook,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'address-book-new',
+        path: '/address-book/new',
+        component: AddressBookNew,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'address-book-choose',
+        path: '/address-book/choose/:redirectPathTemplate',
+        component: AddressBookChoose,
+        beforeEnter: checkLoggedIn,
+        props: true
       },
       {
         name: 'app-browser',

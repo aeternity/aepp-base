@@ -35,6 +35,17 @@
         data-vv-delay="1"
         :placeholder="`0x00000 0000000 0000000\n0000000 0000000 0000000`"
       />
+      <div class="buttons">
+        <ae-button
+          :to="{
+            name: 'address-book-choose',
+            params: { redirectPathTemplate: `/transfer/{address}/${$route.params.currency || ''}` }
+          }"
+          type="exciting"
+          size="small"
+          uppercase
+        >Contact</ae-button>
+      </div>
     </div>
 
     <ae-label

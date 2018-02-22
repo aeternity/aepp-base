@@ -16,6 +16,19 @@
     text-transform: uppercase;
   }
 
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -15px;
+    margin-bottom: 15px;
+
+    .ae-button {
+      width: auto;
+      min-width: 25%;
+      margin: 0;
+    }
+  }
+
   .fiat-amount {
     color: $grey;
     text-align: center;
@@ -27,7 +40,7 @@
     text-transform: uppercase;
   }
 
-  .ae-button {
+  .send-button {
     margin-bottom: 80px;
 
     img {
