@@ -1,8 +1,9 @@
 <template>
   <div class="onBoarding">
     <div class="wrapper">
-      <ae-header name="How it works">
-      </ae-header>
+      <header>
+        <img src="./../../assets/img/header-logo.svg">
+      </header>
       <main>
         <section id="welcome">
           <div class="cube-div">
@@ -98,10 +99,10 @@
         </section>
       </main>
       <footer>
-        <ae-button type="normal" :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
+        <ae-button type="boring" plain :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
           Next
         </ae-button>
-        <ae-button type="exciting" v-show="isLastStep" class="start-button">
+        <ae-button type="exciting" invert v-show="isLastStep" class="start-button">
           <router-link :to="{ name: 'new-account'}">
             Start
           </router-link>
@@ -109,7 +110,7 @@
         <div class="step-dots" v-if="hasDots">
           <div class="step-dot" v-for="n in max" :class="{active: n == step}" @click="goToStep(n)"></div>
         </div>
-        <ae-button type="normal" uppercase>
+        <ae-button type="dramatic" plain uppercase>
           <router-link :to="{ name: 'new-account'}">
             Skip
           </router-link>

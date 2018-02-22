@@ -1,8 +1,8 @@
-import { AeButton, AeHeader } from '@aeternity/aepp-components'
+import { AeButton } from '@aeternity/aepp-components'
 
 export default {
   name: 'onboarding',
-  components: { AeButton, AeHeader },
+  components: { AeButton },
   data: () => ({
     step: 1,
     max: 1,
