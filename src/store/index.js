@@ -180,7 +180,7 @@ const store = new Vuex.Store({
       { state: { derivedKey }, getters: { web3, keystore, tokenContract } }, { tx, appName }
     ) {
       const { to, data } = tx
-      const aeTokenTx = to.toLowerCase() === tokenContract._address.toLowerCase()
+      const aeTokenTx = tokenContract && to.toLowerCase() === tokenContract._address.toLowerCase()
         ? abiDecoder.decodeMethod(data) : null
 
       tx.gas = tx.gas || await web3.eth.estimateGas(tx)
