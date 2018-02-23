@@ -4,9 +4,7 @@
 
     <div class="loader" />
 
-    <router-link :to="{ name: 'apps' }" class="back" />
-
-    <quick-id />
+    <quick-id showBackButton />
   </div>
 </template>
 
