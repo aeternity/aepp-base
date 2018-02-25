@@ -1,22 +1,29 @@
 <template>
-  <modal-screen
-    class="address-book-no-contacts"
-    title="Æddress Book"
-    :redirectToOnClose="{ name: 'apps' }"
-  >
-    <ae-divider />
-    <div class="no-contacts">
-      No saved contacts.
-    </div>
-  </modal-screen>
+  <div>
+    <modal-screen
+      class="address-book-no-contacts"
+      title="Æddress Book"
+      :redirectToOnClose="{ name: 'apps' }"
+    >
+      <ae-divider />
+      <div class="no-contacts">
+        No saved contacts.
+      </div>
+    </modal-screen>
+
+    <fixed-add-button :to="{ name: 'address-book-new' }" />
+    <quick-id />
+  </div>
 </template>
 
 <script>
   import { AeDivider } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen.vue'
+  import FixedAddButton from '@/components/FixedAddButton.vue'
+  import QuickId from '@/components/QuickId/QuickId.vue'
 
   export default {
-    components: { AeDivider, ModalScreen }
+    components: { AeDivider, ModalScreen, FixedAddButton, QuickId }
   }
 </script>
 

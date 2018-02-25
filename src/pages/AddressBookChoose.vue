@@ -18,6 +18,7 @@
       <ae-divider />
     </template>
 
+    <fixed-add-button :to="{ name: 'address-book-new' }" />
     <quick-id />
   </modal-page>
   <address-book-no-contacts v-else />
@@ -27,6 +28,7 @@
   import { mapState } from 'vuex'
   import { AeIcon, AeDivider, AeLink } from '@aeternity/aepp-components'
   import AddressBookNoContacts from '@/pages/AddressBookNoContacts.vue'
+  import FixedAddButton from '@/components/FixedAddButton.vue'
   import QuickId from '@/components/QuickId/QuickId.vue'
   import AddressBookItem from '@/components/AddressBookItem.vue'
   import ModalPage from '@/components/ModalPage.vue'
@@ -37,6 +39,7 @@
       AeDivider,
       AeLink,
       AddressBookNoContacts,
+      FixedAddButton,
       QuickId,
       AddressBookItem,
       ModalPage
