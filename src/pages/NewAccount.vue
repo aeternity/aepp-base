@@ -2,9 +2,6 @@
   <modal-screen title="New Account 1/2" :redirectToOnClose="{ name: 'intro' }">
     <div class="panel">
       <div class="passphrase">{{seed}}</div>
-      <ae-button type="boring" size="small" uppercase v-clipboard:copy="seed">
-        Copy passphrase
-      </ae-button>
       <ae-button plain size="small" uppercase @click="newSeed">
         <ae-icon slot="icon" name="refresh" />
         Generate new
