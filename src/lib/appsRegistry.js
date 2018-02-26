@@ -1,7 +1,7 @@
 export default [{
-  name: 'Notary',
+  name: 'Proof',
   icon: 'static/icons/notary.svg',
-  path: `${process.env.IS_STAGE ? 'stage-' : ''}notary.aepps.com`
+  path: `${process.env.IS_STAGE ? 'stage-' : ''}proof.aepps.com`
 }, {
   name: 'Transfer',
   icon: 'static/icons/notary.svg',
