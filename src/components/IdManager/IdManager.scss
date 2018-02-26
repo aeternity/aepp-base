@@ -49,9 +49,10 @@
 }
 
 .bottom-right {
-  position: absolute;
-  right: 30px;
-  bottom: 30px;
+  z-index: 999999;
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
 }
 
 .topbar {
