@@ -33,45 +33,43 @@
           Active
         </ae-button>
       </ae-identity>
-      <!-- <swiper class="swiper-container" :options="options" ref="mySwiper" not-next-tick>
-        <swiper-slide v-for='(i, index) in identities' :key='i.address'>
-          <ae-identity :active="isActive(i)" :identity='i' :size="'big'" @click="swipeTo(index)" class="id-manager__identity" :collapsed="false">
-            <ae-button v-clipboard:copy="i.address" size='small' type='boring' class="id-manager__ae-button">
-              Copy Address
-            </ae-button>
-            <ae-button @click="activateId(i)" :inactive="activeIdentity === i" size='small' type='dramatic' :disabled="activeIdentity === i" class="id-manager__ae-button">
-              Activate
-            </ae-button>
-          </ae-identity>
-        </swiper-slide>
-        <div :class="`swiper-pagination ${modifierClass}`" slot="pagination"></div>
-      </swiper> -->
 
       <div class="explanation" v-if="identities.length == 1">
         <p class="text center" v-if="identities.length === 1">This is your first Identity, it enables you to use our Æpps, get Tokens, trade them and much more!</p>
         <p class="text center">Quickly activate another identity or instantly create one or multiple ID’s. Each has it’s own address and Token Balance</p>
       </div>
+      <div class="v-pad">
+        <ae-divider/>
+        <ae-label :help-text="inactiveIdentities.length.toString()">Inactive</ae-label>
+        <div class="inactive-identities">
+          <div
+            v-for='(identity, index) in inactiveIdentities'
+            :style="getStyle(index)"
+            class="inactive-identity"
+            @click="activateCard(index)"
+          >
+            <ae-identity :active="false" :identity='identity' :size="'big'" class="id-manager__identity" :collapsed="true">
+              <div v-show="index === activeIdentityCard">
+                <ae-button v-clipboard:copy="identity.address" size='small' type='boring' class="id-manager__ae-button">
+                Copy Address
+                </ae-button>
+                <ae-button @click="activateId(identity)" :inactive="true" size='small' type='dramatic' :disabled="activeIdentity === identity" class="id-manager__ae-button">
+                  Activate
+                </ae-button>
+              </div>
+            </ae-identity>
+          </div>
+        </div>
+      </div>
     </template>
     <p v-else="" class="text center">
       Currently you don't have an identity. Feel free to create one.
     </p>
-    <!-- <div class='center'>
-      <ae-button @click='goBack' type='dramatic' class="close-id-manager-button">
-        Close
-      </ae-button>
-    </div> -->
-    <!-- <div class='center'>
-      <ae-button class='logout-button' type='dramatic' size='smaller' @click='logout'>
-        LOGOUT
-      </ae-button>
-    </div> -->
-    <ae-button size='medium' type='dramatic' class="bottom-right">
+    <ae-button size='medium' type='dramatic' class="bottom-right" @click="generateNewIdentity">
       <ae-icon slot='icon' invert type='dramatic' name="plus"/>
     </ae-button>
-
   </div>
 </template>
 
-<style src="swiper/dist/css/swiper.css"/>
 <style scoped src='./IdManager.scss' type="scss"/>
 <script src='./IdManager.js'/>
