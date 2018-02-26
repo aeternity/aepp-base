@@ -59,9 +59,31 @@ export default {
       this.$store.commit('toggleIdManager')
     },
     getStyle (index) {
+      let top = 60 * index
+
+      if (
+        index !== this.activeIdentityCard &&
+        index > this.activeIdentityCard
+      ) {
+        top = 60 * (index + 1)
+      }
+
+      const zIndex = index === this.activeIdentityCard ? 120 : 60
+
       return {
-        top: `${60 * index}px`
+        top: `${top}px`,
+        'z-index': `${zIndex}`
+      }
+    },
+    activateCard (index) {
+      if (index === this.activeIdentityCard) {
+        this.activeIdentityCard = this.inactiveIdentities.length
+      } else {
+        this.activeIdentityCard = index
       }
     }
+  },
+  mounted () {
+    this.activeIdentityCard = this.inactiveIdentities.length
   }
 }
