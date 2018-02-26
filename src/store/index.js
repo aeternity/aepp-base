@@ -22,7 +22,7 @@ abiDecoder.addABI(AEToken.abi)
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx']
+      paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
     })
   ],
 
@@ -35,7 +35,8 @@ const store = new Vuex.Store({
     derivedKey: null,
     networkId: null,
     notification: null,
-    apps: [...apps]
+    apps: [...apps],
+    addressBook: []
   },
 
   getters: {
@@ -121,6 +122,9 @@ const store = new Vuex.Store({
     },
     toggleIdManager (state) {
       state.showIdManager = !state.showIdManager
+    },
+    addAddressBookItem (state, item) {
+      state.addressBook.push(item)
     }
   },
 

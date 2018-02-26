@@ -14,4 +14,8 @@ export default [{
   name: 'Network',
   icon: 'static/icons/notary.svg',
   path: 'network'
+}, {
+  name: 'Æddress Book',
+  icon: 'static/icons/notary.svg',
+  path: 'address-book'
 }]
