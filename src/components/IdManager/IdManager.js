@@ -57,9 +57,11 @@ export default {
     },
     goBack () {
       this.$store.commit('toggleIdManager')
+    },
+    getStyle (index) {
+      return {
+        top: `${60 * index}px`
+      }
     }
-  },
-  mounted () {
-    this.swipeTo(this.$store.state.selectedIdentityIdx)
   }
 }
