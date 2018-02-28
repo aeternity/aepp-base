@@ -53,7 +53,7 @@
                 <ae-button v-clipboard:copy="identity.address" size='small' type='boring' class="id-manager__ae-button">
                 Copy Address
                 </ae-button>
-                <ae-button @click="activateId(identity)" :inactive="true" size='small' type='dramatic' :disabled="activeIdentity === identity" class="id-manager__ae-button">
+                <ae-button @click="activateId(identity)" size='small' type='dramatic' :disabled="activeIdentity === identity" class="id-manager__ae-button">
                   Activate
                 </ae-button>
               </div>
