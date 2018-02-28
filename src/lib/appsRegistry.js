@@ -18,4 +18,8 @@ export default [{
   name: 'Æddress Book',
   icon: 'static/icons/notary.svg',
   path: 'address-book'
+}, {
+  name: 'Pairing',
+  icon: 'static/icons/notary.svg',
+  path: 'pairing'
 }]

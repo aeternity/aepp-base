@@ -1,19 +1,21 @@
 import { mapState } from 'vuex'
 import { AeBanner } from '@aeternity/aepp-components'
 import IdManager from '@/components/IdManager/IdManager.vue'
+import WaitingForConfirmationModal from '@/components/WaitingForConfirmationModal.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: { AeBanner, IdManager },
+  components: { AeBanner, IdManager, WaitingForConfirmationModal },
   computed: {
     ...mapState({
       idManagerClassObject: state => ({
         'app_id-manager': true,
         '_open': state.showIdManager
       }),
-      notification: state => state.notification
+      notification: state => state.notification,
+      waitingForConfirmation: state => state.waitingForConfirmation
     }),
     appClassObject: () => {
       return {

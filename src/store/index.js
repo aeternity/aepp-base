@@ -1,19 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import ZeroClientProvider from 'web3-provider-engine/zero'
 import { keystore as Keystore, signing } from 'eth-lightwallet'
 import Web3 from 'web3'
 import Transaction from 'ethereumjs-tx'
 import abiDecoder from 'abi-decoder'
 import util from 'ethereumjs-util'
 import Bluebird from 'bluebird'
+import io from 'socket.io-client'
 import AEToken from '@/assets/contracts/AEToken.json'
 import {
   approveTransaction as approveTransactionDialog,
   approveMessage as approveMessageDialog
 } from '@/dialogs/index'
 import apps from '@/lib/appsRegistry'
+import iceServers from '../lib/iceServers'
+import JsonRpcPeer from '../lib/jsonRpcPeer'
+
+const RTC_SIGNALING_URL = 'http://localhost:8079'
 
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
@@ -29,14 +33,19 @@ const store = new Vuex.Store({
   state: {
     selectedIdentityIdx: 0,
     showIdManager: false,
+    accounts: [],
     balances: {},
     rpcUrl: 'https://kovan.infura.io',
     keystore: null,
     derivedKey: null,
+    pairKey: null,
+    rtcConnection: null,
+    rtcChannel: null,
     networkId: null,
     notification: null,
     apps: [...apps],
-    addressBook: []
+    addressBook: [],
+    waitingForConfirmation: false
   },
 
   getters: {
@@ -46,47 +55,39 @@ const store = new Vuex.Store({
       Bluebird.promisifyAll(keystore)
       return keystore
     },
-    web3 ({ derivedKey, rpcUrl }, { keystore }) {
-      return new Web3(new ZeroClientProvider({
-        getAccounts (cb) {
-          cb(null, keystore.getAddresses())
-        },
-        signTransaction (tx, cb) {
-          const t = new Transaction(tx)
-          const signed = signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-          cb(null, '0x' + signed)
-        },
-        approveTransaction (tx, cb) {
-          cb(null, true)
-        },
-        signMessage (msg, cb) {
-          const signed = signing.signMsg(keystore, derivedKey, msg.data, msg.from)
-          cb(null, signing.concatSig(signed))
-        },
-        signPersonalMessage (msg, cb) {
-          const signed = signing.signMsg(keystore, derivedKey, msg.data, msg.from)
-          cb(null, signing.concatSig(signed))
-        },
-        rpcUrl
-      }))
+    web3 ({ rpcUrl }) {
+      return new Web3(rpcUrl)
+    },
+    peer ({ rtcChannel }, { keystore }) {
+      if (!rtcChannel) return null
+      const peer = new JsonRpcPeer(message => rtcChannel.send(message), {
+        getAccounts: () => keystore.getAddresses(),
+        signTransaction: (tx, appName) => store.dispatch('signTransaction', { tx, appName }),
+        signPersonalMessage: (tx, appName) =>
+          store.dispatch('signPersonalMessage', { tx, appName })
+      })
+      rtcChannel.onmessage = event => peer.processMessage(event.data)
+      return peer
     },
     tokenContract ({ networkId }, { web3 }) {
       if (!networkId || !AEToken.networks[networkId]) return null
       return new web3.eth.Contract(AEToken.abi, AEToken.networks[networkId].address)
     },
-    identities: ({ balances }, { keystore }) =>
-      keystore
-        ? keystore.getAddresses().map(e => ({
-          ...balances[e] || { balance: 0, tokenBalance: 0 },
-          address: e,
-          name: e.substr(0, 6)
-        }))
-        : [],
+    loggedIn: ({ derivedKey }, { peer }) => !!derivedKey || !!peer,
+    identities: ({ accounts, balances }) =>
+      accounts.map(e => ({
+        ...balances[e] || { balance: 0, tokenBalance: 0 },
+        address: e,
+        name: e.substr(0, 6)
+      })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx]
   },
 
   mutations: {
+    setAccounts (state, accounts) {
+      state.accounts = accounts
+    },
     setRPCUrl (state, rpcUrl) {
       state.rpcUrl = rpcUrl
     },
@@ -98,6 +99,19 @@ const store = new Vuex.Store({
     },
     setDerivedKey (state, derivedKey) {
       state.derivedKey = derivedKey
+    },
+    setPairKey (state, pairKey) {
+      state.pairKey = pairKey
+    },
+    logout (state) {
+      if (state.derivedKey) state.derivedKey = undefined
+      else if (state.pairKey) state.pairKey = undefined
+    },
+    setRtcConnection (state, rtcConnection) {
+      state.rtcConnection = rtcConnection
+    },
+    setRtcChannel (state, rtcChannel) {
+      state.rtcChannel = rtcChannel
     },
     setNetworkId (state, networkId) {
       state.networkId = networkId
@@ -125,6 +139,9 @@ const store = new Vuex.Store({
     },
     addAddressBookItem (state, item) {
       state.addressBook.push(item)
+    },
+    setWaitingForConfirmation (state, waitingForConfirmation) {
+      state.waitingForConfirmation = waitingForConfirmation
     }
   },
 
@@ -152,14 +169,14 @@ const store = new Vuex.Store({
 
       commit('addApp', app)
     },
-    updateAllBalances ({getters, dispatch}) {
-      getters.keystore.getAddresses().forEach(address =>
+    updateAllBalances ({ state: { accounts }, dispatch }) {
+      accounts.forEach(address =>
         dispatch('updateBalance', address))
     },
     async updateBalance ({getters: { web3, tokenContract }, commit}, address) {
       const [balance, tokenBalance] = await Promise.all([
         web3.eth.getBalance(address),
-        tokenContract ? tokenContract.methods.balanceOf(address).call() : NaN
+        tokenContract ? tokenContract.methods.balanceOf(address).call() : '0'
       ])
       commit('setBalance', { address, balance, tokenBalance })
     },
@@ -180,9 +197,26 @@ const store = new Vuex.Store({
       keystore.generateNewAddress(derivedKey, 1)
       commit('setKeystore', keystore.serialize())
     },
+    async proxyToPeer ({ getters: { keystore, peer }, commit }, { methodName, args }) {
+      commit('setWaitingForConfirmation', true)
+      let result
+      try {
+        result = await peer.call('signTransaction', ...args)
+      } finally {
+        commit('setWaitingForConfirmation', false)
+      }
+      return result
+    },
     async signTransaction (
-      { state: { derivedKey }, getters: { web3, keystore, tokenContract } }, { tx, appName }
+      { state: { derivedKey }, getters: { web3, keystore, tokenContract }, dispatch },
+      { tx, appName }
     ) {
+      if (!keystore) {
+        return await dispatch('proxyToPeer', {
+          methodName: 'signTransaction',
+          args: [tx, appName]
+        })
+      }
       const { to, data } = tx
       const aeTokenTx = tokenContract && to.toLowerCase() === tokenContract._address.toLowerCase()
         ? abiDecoder.decodeMethod(data) : null
@@ -196,15 +230,23 @@ const store = new Vuex.Store({
       const t = new Transaction(tx)
       return signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
     },
-    async signPersonalMessage ({ getters, state: { derivedKey } }, { msg, appName }) {
-      const data = getters.web3.toAscii(msg.data)
-      const { activeIdentity } = getters
+    async signPersonalMessage (
+      { getters: { web3, activeIdentity, keystore }, state: { derivedKey }, dispatch },
+      { msg, appName }
+    ) {
+      if (!keystore) {
+        return await dispatch('proxyToPeer', {
+          methodName: 'signPersonalMessage',
+          args: [msg, appName]
+        })
+      }
+      const data = web3.toAscii(msg.data)
       const approved = await approveMessageDialog(activeIdentity, data, appName)
       if (!approved) {
         throw new Error('Signing rejected by user')
       }
       const messageHash = util.hashPersonalMessage(util.toBuffer(data))
-      const privateKey = getters.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
+      const privateKey = keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
       const signed = util.ecsign(messageHash, new Buffer(privateKey, 'hex'))
       const combined = Buffer.concat([
         Buffer.from(signed.r),
@@ -231,6 +273,66 @@ store.watch(
 store.watch(
   (state, { web3 }) => web3,
   async web3 => store.commit('setNetworkId', await web3.eth.net.getId()),
+  { immediate: true })
+
+store.watch(
+  ({ pairKey }) => pairKey,
+  async (key) => {
+    if (store.state.rtcConnection) store.state.rtcConnection.close()
+    if (!key) return
+
+    const rtcConnection = new RTCPeerConnection({ iceServers })
+    store.commit('setRtcConnection', rtcConnection)
+
+    const socket = io(RTC_SIGNALING_URL, { query: { key } })
+    let createOffer = false
+    socket.on('first', () => {
+      createOffer = true
+    })
+    socket.on('description', async (description) => {
+      rtcConnection.setRemoteDescription(description)
+      if (!createOffer) {
+        const answer = await rtcConnection.createAnswer()
+        rtcConnection.setLocalDescription(answer)
+        socket.emit('description', answer)
+      }
+    })
+    await new Promise(resolve => socket.on('ready', resolve))
+
+    socket.on('ice-candidate', candidate => rtcConnection.addIceCandidate(candidate))
+    rtcConnection.onicecandidate = ({ candidate }) => candidate && socket.emit('ice-candidate', candidate)
+
+    let rtcChannel
+    if (createOffer) {
+      rtcChannel = rtcConnection.createDataChannel('sendChannel')
+      const offer = await rtcConnection.createOffer()
+      rtcConnection.setLocalDescription(offer)
+      socket.emit('description', offer)
+    } else {
+      await new Promise(resolve => {
+        rtcConnection.ondatachannel = event => {
+          rtcChannel = event.channel
+          resolve()
+        }
+      })
+    }
+
+    rtcChannel.onopen = () => {
+      store.commit('setRtcChannel', rtcChannel)
+      socket.disconnect()
+    }
+    rtcChannel.onclose = () => {
+      store.commit('setRtcChannel', null)
+      store.commit('setPairKey', null)
+    }
+  },
+  { immediate: true })
+
+store.watch(
+  (state, { keystore, peer }) => [keystore, peer],
+  async ([keystore, peer]) =>
+    store.commit('setAccounts', keystore && keystore.getAddresses() ||
+      peer && await peer.call('getAccounts') || []),
   { immediate: true })
 
 export default store

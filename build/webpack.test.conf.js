@@ -23,8 +23,7 @@ var webpackConfig = merge(baseConfig, {
           resolve('node_modules/eth-sig-util'),
           resolve('node_modules/ethereumjs-util'),
           resolve('node_modules/pngjs'),
-          resolve('node_modules/swiper'),
-          resolve('node_modules/web3-provider-engine')
+          resolve('node_modules/swiper')
         ]
       },
     ]

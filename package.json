@@ -25,8 +25,10 @@
     "ethereum-blockies-png": "git+https://github.com/acdbaykal/ethereum-blockies-png.git",
     "ethjs-unit": "^0.1.6",
     "fuse.js": "^3.2.0",
+    "json-rpc-protocol": "^0.11.3",
     "lodash": "^4.17.4",
     "moment": "^2.19.2",
+    "socket.io-client": "^2.0.4",
     "swiper": "^4.0.6",
     "vee-validate": "^2.0.3",
     "vue": "^2.5.8",
@@ -34,11 +36,12 @@
     "vue-clipboard2": "0.0.8",
     "vue-focus": "^2.1.0",
     "vue-modal-dialogs": "^1.1.4",
+    "vue-qrcode-component": "^2.1.1",
+    "vue-qrcode-reader": "^0.7.1",
     "vue-router": "^3.0.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.4.2",
-    "web3": "1.0.0-beta.29",
-    "web3-provider-engine": "^13.3.3"
+    "web3": "1.0.0-beta.29"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.10",
