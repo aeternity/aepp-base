@@ -13,6 +13,9 @@ export default {
   props: {
     title: String
   },
+  data: () => ({
+    activeIdentityCard: 0
+  }),
   components: {
     AeIdentity,
     AeButton,
@@ -59,20 +62,27 @@ export default {
       this.$store.commit('toggleIdManager')
     },
     getStyle (index) {
-      let top = 60 * index
+      let top = 65 * index
 
       if (
         index !== this.activeIdentityCard &&
         index > this.activeIdentityCard
       ) {
-        top = 60 * (index + 1)
+        top = 65 * (index + 1)
       }
 
+      if (index >= this.activeIdentityCard) {
+        top = top + 25
+      }
       const zIndex = index === this.activeIdentityCard ? 120 : 60
+
+      const bottomMargin =
+        this.inactiveIdentities.length === index + 1 ? '50px' : '0px'
 
       return {
         top: `${top}px`,
-        'z-index': `${zIndex}`
+        'z-index': `${zIndex}`,
+        'margin-bottom': bottomMargin
       }
     },
     activateCard (index) {

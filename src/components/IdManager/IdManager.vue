@@ -25,13 +25,15 @@
     <ae-label class="v-pad">Active Identity</ae-label>
     <template v-if="identities.length > 0">
       <ae-identity :active="true" :identity="activeIdentity" size="big" class="id-manager__identity" :collapsed="false">
-        <ae-divider />
-        <ae-button v-clipboard:copy="activeIdentity.address" size='small' type='boring' class="id-manager__ae-button">
-          Copy
-        </ae-button>
-        <ae-button @click="activateId(activeIdentity)" :inactive="true" size='small' type='dramatic' :disabled="true" class="id-manager__ae-button">
-          Active
-        </ae-button>
+        <div  class="action-buttons">
+          <ae-divider />
+          <ae-button v-clipboard:copy="activeIdentity.address" size='small' type='boring' class="id-manager__ae-button">
+            Copy
+          </ae-button>
+          <ae-button @click="activateId(activeIdentity)" :inactive="true" size='small' type='dramatic' :disabled="true" class="id-manager__ae-button">
+            Active
+          </ae-button>
+        </div>
       </ae-identity>
 
       <div class="explanation" v-if="identities.length == 1">
@@ -46,10 +48,17 @@
             v-for='(identity, index) in inactiveIdentities'
             :style="getStyle(index)"
             class="inactive-identity"
-            @click="activateCard(index)"
           >
-            <ae-identity :active="false" :identity='identity' :size="'big'" class="id-manager__identity" :collapsed="true">
-              <div v-show="index === activeIdentityCard">
+            <ae-identity
+              :active="false"
+              :identity='identity'
+              :size="'big'"
+              class="id-manager__identity"
+              :collapsed="true"
+              @click="activateCard(index)"
+            >
+              <div v-show="index === activeIdentityCard" class="action-buttons">
+                <ae-divider />
                 <ae-button v-clipboard:copy="identity.address" size='small' type='boring' class="id-manager__ae-button">
                 Copy Address
                 </ae-button>

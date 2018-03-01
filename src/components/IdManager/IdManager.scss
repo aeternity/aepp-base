@@ -1,6 +1,7 @@
 .id-manager {
   background-color: #ffffff;
 }
+
 .id-manager .ae-identity {
   display: none;
   width: auto;
@@ -140,6 +141,10 @@
   }
 }
 
+.ae-identity .action-buttons {
+  text-align: right;
+}
+
 @media screen and (min-width: 600px) and (max-width: 720px) {
   .id-manager__identity {
     display: inline-block;
@@ -165,10 +170,13 @@
 
 .inactive-identities {
   position: absolute;
+  left: 0px;
+  right: 0px;
 }
 
 .inactive-identity {
   position: absolute;
   left: 0px;
   right: 0px;
+  margin: auto;
 }
