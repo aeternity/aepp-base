@@ -5,6 +5,7 @@ import {
   AeIcon,
   AeLabel,
   AeDivider,
+  AeModal,
   aeHelperMixin as helperMixin
 } from '@aeternity/aepp-components'
 
@@ -21,7 +22,8 @@ export default {
     AeButton,
     AeIcon,
     AeLabel,
-    AeDivider
+    AeDivider,
+    AeModal
   },
   mixins: [helperMixin],
   computed: {

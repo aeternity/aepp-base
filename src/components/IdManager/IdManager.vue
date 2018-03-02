@@ -1,13 +1,5 @@
 <template>
-  <div class="id-manager screen">
-    <div class="topbar nomargin">
-      <div class="close-button-container">
-        <ae-button size='small' plain @click='goBack'>
-          <ae-icon name='close' slot='icon'/>
-        </ae-button>
-      </div>
-      <h1 class="center" v-if="!!title">{{title}}</h1>
-    </div>
+  <ae-modal class="modal-screen id-manager" :title="title" @close='goBack'>
     <div class="totalBalance v-pad">
       <ae-label>Total Balance</ae-label>
       <div class="balances">
@@ -77,7 +69,7 @@
     <ae-button size='medium' type='dramatic' class="bottom-right" @click="generateNewIdentity">
       <ae-icon slot='icon' invert type='dramatic' name="plus"/>
     </ae-button>
-  </div>
+  </ae-modal>
 </template>
 
 <style scoped src='./IdManager.scss' type="scss"/>
