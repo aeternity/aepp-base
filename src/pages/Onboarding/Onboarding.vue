@@ -4,7 +4,7 @@
       <header>
         <img src="./../../assets/img/header-logo.svg">
       </header>
-      <main>
+      <main class="main-content-container">
         <section id="welcome">
           <div class="cube-div">
             <img src="./../../assets/img/onboarding/identity-card.svg" class="large-copy-2">
