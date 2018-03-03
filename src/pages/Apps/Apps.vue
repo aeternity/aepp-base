@@ -9,24 +9,28 @@
         @touchend="editMode('cancel')"
         @contextmenu.prevent
       >
-        <ae-button
-          @click="removeAppName = app.name"
-          class="remove-app-btn"
-          :class="{ visible: editModeActive }"
-          type="dramatic"
-          size="small"
-        >
-          <ae-icon slot="icon" invert type="exciting" name="close" />
-        </ae-button>
-        <router-link :to="app.path">
-          <ae-app-icon :src="app.icon" />
-          <div class="app-name">{{app.name}}</div>
-        </router-link>
+          <div class="close-btn-boundaries">
+            <ae-button
+              @click="removeAppName = app.name"
+              class="remove-app-btn"
+              :class="{ visible: editModeActive }"
+              type="dramatic"
+              size="small"
+            >
+              <ae-icon slot="icon" invert type="exciting" name="close" />
+            </ae-button>
+            <router-link :to="app.path">
+              <ae-app-icon :src="app.icon" />
+            </router-link>
+          </div>
+          <router-link :to="app.path">
+            <div class="app-name">{{app.name}}</div>
+          </router-link>
       </div>
 
       <router-link to="add-app" class="app-shortcut">
         <ae-app-icon src="static/icons/notary.svg" />
-        <div class="app-name">Add App</div>
+        <div class="app-name extra-top-margin">Add App</div>
       </router-link>
     </div>
 
