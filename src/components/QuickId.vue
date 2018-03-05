@@ -36,10 +36,8 @@
   .quick-id {
     position: fixed;
     bottom: 20px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 997;
 
     .back {
