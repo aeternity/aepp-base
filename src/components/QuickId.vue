@@ -5,7 +5,7 @@
       class="back"
       slot="header-left"
       v-if="showBackButton"
-      @click.native="disablePropagation($event)"
+      @click.native.stop
     />
   </ae-identity>
 </template>
@@ -21,18 +21,12 @@
       identity: 'activeIdentity'
     }),
     props: {
-      showBackButton: {
-        type: Boolean,
-        default: false
-      }
+      'show-back-button': Boolean
     },
     methods: {
       showIdManager () {
         this.$store.dispatch('updateAllBalances')
         this.$store.commit('toggleIdManager')
-      },
-      disablePropagation (event) {
-        event.cancelBubble = true
       }
     }
   }
