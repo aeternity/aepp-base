@@ -8,6 +8,7 @@ import abiDecoder from 'abi-decoder'
 import util from 'ethereumjs-util'
 import Bluebird from 'bluebird'
 import io from 'socket.io-client'
+import _ from 'lodash'
 import AEToken from '@/assets/contracts/AEToken.json'
 import {
   approveTransaction as approveTransactionDialog,
@@ -173,11 +174,12 @@ const store = new Vuex.Store({
       accounts.forEach(address =>
         dispatch('updateBalance', address))
     },
-    async updateBalance ({getters: { web3, tokenContract }, commit}, address) {
+    async updateBalance ({ state, getters: { web3, tokenContract }, commit }, address) {
       const [balance, tokenBalance] = await Promise.all([
         web3.eth.getBalance(address),
         tokenContract ? tokenContract.methods.balanceOf(address).call() : '0'
       ])
+      if (_.isEqual(state.balances[address], { balance, tokenBalance })) return
       commit('setBalance', { address, balance, tokenBalance })
     },
     async createKeystore ({ commit, dispatch, state }, password) {
