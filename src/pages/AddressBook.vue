@@ -32,7 +32,7 @@
   import { mapState } from 'vuex'
   import { AeIcon, AeAppIcon, AeDivider } from '@aeternity/aepp-components'
   import AddressBookNoContacts from '@/pages/AddressBookNoContacts.vue'
-  import QuickId from '@/components/QuickId/QuickId.vue'
+  import QuickId from '@/components/QuickId.vue'
   import AddressBookItem from '@/components/AddressBookItem.vue'
   import FixedAddButton from '@/components/FixedAddButton.vue'
   import ModalPage from '@/components/ModalPage.vue'

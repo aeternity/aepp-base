@@ -9,7 +9,7 @@ import {
   AeDivider,
   AeModal
 } from '@aeternity/aepp-components'
-import QuickId from '@/components/QuickId/QuickId.vue'
+import QuickId from '@/components/QuickId.vue'
 import allApps from '@/lib/appsRegistry'
 
 const fuse = new Fuse(allApps, {

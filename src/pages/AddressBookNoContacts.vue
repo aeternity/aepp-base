@@ -20,7 +20,7 @@
   import { AeDivider } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen.vue'
   import FixedAddButton from '@/components/FixedAddButton.vue'
-  import QuickId from '@/components/QuickId/QuickId.vue'
+  import QuickId from '@/components/QuickId.vue'
 
   export default {
     components: { AeDivider, ModalScreen, FixedAddButton, QuickId }
