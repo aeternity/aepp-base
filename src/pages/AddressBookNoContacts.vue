@@ -11,7 +11,7 @@
       </div>
     </modal-screen>
 
-    <fixed-add-button :to="{ name: 'address-book-new' }" />
+    <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />
     <quick-id />
   </div>
 </template>

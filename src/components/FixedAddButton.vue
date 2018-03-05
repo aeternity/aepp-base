@@ -1,5 +1,11 @@
 <template>
-  <ae-button class="fixed-add-button" :to="to" @click="$emit('click')" type="dramatic">
+  <ae-button
+    class="fixed-add-button"
+    :class="{ 'quick-id': quickId }"
+    :to="to"
+    @click="$emit('click')"
+    type="dramatic"
+  >
     <ae-icon slot="icon" name="plus" invert type="exciting" />
   </ae-button>
 </template>
@@ -8,7 +14,10 @@
   import { AeButton, AeIcon } from '@aeternity/aepp-components'
 
   export default {
-    props: ['to'],
+    props: {
+      to: [Object, String],
+      'quick-id': Boolean
+    },
     components: { AeButton, AeIcon }
   }
 </script>
@@ -22,8 +31,14 @@
     right: 10px;
 
     @media (min-width: $screen-phone) {
-      bottom: 50px;
-      right: 50px;
+      bottom: 28px;
+      right: 28px;
+    }
+
+    &.quick-id {
+      @media (max-width: 600px) {
+        bottom: 110px;
+      }
     }
   }
 </style>
