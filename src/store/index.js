@@ -17,7 +17,7 @@ import apps from '@/lib/appsRegistry'
 import iceServers from '../lib/iceServers'
 import JsonRpcPeer from '../lib/jsonRpcPeer'
 
-const RTC_SIGNALING_URL = 'http://localhost:8079'
+const RTC_SIGNALING_URL = 'https://signaling.aepps.com'
 
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
