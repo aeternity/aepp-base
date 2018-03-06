@@ -25,6 +25,7 @@ Bluebird.promisifyAll(Keystore)
 abiDecoder.addABI(AEToken.abi)
 
 const store = new Vuex.Store({
+  strict: process.env.NODE_ENV !== 'production',
   plugins: [
     createPersistedState({
       paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
