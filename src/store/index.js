@@ -222,13 +222,14 @@ const store = new Vuex.Store({
         ? abiDecoder.decodeMethod(data) : null
 
       tx.gas = tx.gas || await web3.eth.estimateGas(tx)
-      tx.gasPrice = tx.gasPrice || await web3.eth.getGasPrice()
+      tx.gasPrice = tx.gasPrice || new web3.utils.BN(await web3.eth.getGasPrice())
+      tx.nonce = tx.nonce || await web3.eth.getTransactionCount(tx.from)
 
       if (!await approveTransactionDialog(tx, appName, aeTokenTx)) {
         throw new Error('Payment rejected by user')
       }
       const t = new Transaction(tx)
-      return signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
+      return `0x${signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)}`
     },
     async signPersonalMessage (
       { getters: { web3, activeIdentity, keystore }, state: { derivedKey }, dispatch },

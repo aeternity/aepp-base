@@ -133,8 +133,8 @@ export default {
           throw new Error(`"${symbol}" is invalid transaction currency`)
       }
 
-      await this.$store.dispatch('signTransaction', { tx, appName: 'Transfer' })
-      await this.web3.eth.sendTransaction(tx)
+      const signedTx = await this.$store.dispatch('signTransaction', { tx, appName: 'Transfer' })
+      await this.web3.eth.sendSignedTransaction(signedTx)
     }
   },
   async mounted () {
