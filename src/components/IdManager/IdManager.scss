@@ -182,6 +182,12 @@
   right: 0px;
 }
 
+@media (max-width: 479px) {
+  .active-identity {
+    margin-left: -17px;
+  }
+}
+
 .inactive-identity {
   position: absolute;
   left: 0px;
