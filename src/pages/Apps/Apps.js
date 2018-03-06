@@ -1,6 +1,6 @@
 import { mapState } from 'vuex'
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight, AeHeader } from '@aeternity/aepp-components'
-import QuickId from '@/components/QuickId/QuickId.vue'
+import QuickId from '@/components/QuickId.vue'
 
 export default {
   name: 'apps',

@@ -11,7 +11,7 @@
       </div>
     </modal-screen>
 
-    <fixed-add-button :to="{ name: 'address-book-new' }" />
+    <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />
     <quick-id />
   </div>
 </template>
@@ -20,7 +20,7 @@
   import { AeDivider } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen.vue'
   import FixedAddButton from '@/components/FixedAddButton.vue'
-  import QuickId from '@/components/QuickId/QuickId.vue'
+  import QuickId from '@/components/QuickId.vue'
 
   export default {
     components: { AeDivider, ModalScreen, FixedAddButton, QuickId }

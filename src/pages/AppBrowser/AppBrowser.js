@@ -1,4 +1,4 @@
-import QuickId from '@/components/QuickId/QuickId.vue'
+import QuickId from '@/components/QuickId.vue'
 
 export default {
   name: 'app-browser',
