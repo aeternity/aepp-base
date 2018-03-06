@@ -7,7 +7,6 @@ import Transaction from 'ethereumjs-tx'
 import abiDecoder from 'abi-decoder'
 import util from 'ethereumjs-util'
 import Bluebird from 'bluebird'
-import io from 'socket.io-client'
 import _ from 'lodash'
 import AEToken from '@/assets/contracts/AEToken.json'
 import {
@@ -15,10 +14,10 @@ import {
   approveMessage as approveMessageDialog
 } from '@/dialogs/index'
 import apps from '@/lib/appsRegistry'
-import iceServers from '../lib/iceServers'
 import JsonRpcPeer from '../lib/jsonRpcPeer'
+import { Pairing } from './plugins'
 
-const RTC_SIGNALING_URL = 'https://signaling.aepps.com'
+const pairConnection = new Pairing()
 
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
@@ -29,7 +28,8 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
-    })
+    }),
+    pairConnection.plugin
   ],
 
   state: {
@@ -41,8 +41,7 @@ const store = new Vuex.Store({
     keystore: null,
     derivedKey: null,
     pairKey: null,
-    rtcConnection: null,
-    rtcChannel: null,
+    pairConnected: false,
     networkId: null,
     notification: null,
     apps: [...apps],
@@ -60,15 +59,15 @@ const store = new Vuex.Store({
     web3 ({ rpcUrl }) {
       return new Web3(rpcUrl)
     },
-    peer ({ rtcChannel }, { keystore }) {
-      if (!rtcChannel) return null
-      const peer = new JsonRpcPeer(message => rtcChannel.send(message), {
+    peer ({ pairConnected }, { keystore }) {
+      if (!pairConnected) return null
+      const peer = new JsonRpcPeer(message => pairConnection.send(message), {
         getAccounts: () => keystore.getAddresses(),
         signTransaction: (tx, appName) => store.dispatch('signTransaction', { tx, appName }),
         signPersonalMessage: (tx, appName) =>
           store.dispatch('signPersonalMessage', { tx, appName })
       })
-      rtcChannel.onmessage = event => peer.processMessage(event.data)
+      pairConnection.onMessage = message => peer.processMessage(message)
       return peer
     },
     tokenContract ({ networkId }, { web3 }) {
@@ -109,11 +108,8 @@ const store = new Vuex.Store({
       if (state.derivedKey) state.derivedKey = undefined
       else if (state.pairKey) state.pairKey = undefined
     },
-    setRtcConnection (state, rtcConnection) {
-      state.rtcConnection = rtcConnection
-    },
-    setRtcChannel (state, rtcChannel) {
-      state.rtcChannel = rtcChannel
+    setPairConnected (state, pairConnected) {
+      state.pairConnected = pairConnected
     },
     setNetworkId (state, networkId) {
       state.networkId = networkId
@@ -277,59 +273,6 @@ store.watch(
 store.watch(
   (state, { web3 }) => web3,
   async web3 => store.commit('setNetworkId', await web3.eth.net.getId()),
-  { immediate: true })
-
-store.watch(
-  ({ pairKey }) => pairKey,
-  async (key) => {
-    if (store.state.rtcConnection) store.state.rtcConnection.close()
-    if (!key) return
-
-    const rtcConnection = new RTCPeerConnection({ iceServers })
-    store.commit('setRtcConnection', rtcConnection)
-
-    const socket = io(RTC_SIGNALING_URL, { query: { key } })
-    let createOffer = false
-    socket.on('first', () => {
-      createOffer = true
-    })
-    socket.on('description', async (description) => {
-      rtcConnection.setRemoteDescription(description)
-      if (!createOffer) {
-        const answer = await rtcConnection.createAnswer()
-        rtcConnection.setLocalDescription(answer)
-        socket.emit('description', answer)
-      }
-    })
-    await new Promise(resolve => socket.on('ready', resolve))
-
-    socket.on('ice-candidate', candidate => rtcConnection.addIceCandidate(candidate))
-    rtcConnection.onicecandidate = ({ candidate }) => candidate && socket.emit('ice-candidate', candidate)
-
-    let rtcChannel
-    if (createOffer) {
-      rtcChannel = rtcConnection.createDataChannel('sendChannel')
-      const offer = await rtcConnection.createOffer()
-      rtcConnection.setLocalDescription(offer)
-      socket.emit('description', offer)
-    } else {
-      await new Promise(resolve => {
-        rtcConnection.ondatachannel = event => {
-          rtcChannel = event.channel
-          resolve()
-        }
-      })
-    }
-
-    rtcChannel.onopen = () => {
-      store.commit('setRtcChannel', rtcChannel)
-      socket.disconnect()
-    }
-    rtcChannel.onclose = () => {
-      store.commit('setRtcChannel', null)
-      store.commit('setPairKey', null)
-    }
-  },
   { immediate: true })
 
 store.watch(
