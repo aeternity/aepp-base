@@ -7,7 +7,7 @@
     justify-items: center;
 
     .app-shortcut {
-      position: relative;
+      text-align: center;
 
       @mixin remove-app-btn-hidden {
         visibility: hidden;
@@ -42,9 +42,17 @@
       }
 
       .app-name {
-        margin-top: 10px;
+        margin-top: 6px;
         text-align: center;
+        &.extra-top-margin {
+          margin-top: 10px;
+        }
       }
     }
+  }
+
+  .close-btn-boundaries {
+    display: inline-block;
+    position: relative;
   }
 }
