@@ -94,6 +94,9 @@ export default {
         initialSlide: this.identitiesTo.findIndex(i => i.address === this.to),
         onSlideChangeEnd: swiper => {
           this.to = this.identitiesTo[swiper.realIndex].address
+        },
+        onInit: swiper => {
+          this.to = this.identitiesTo[swiper.realIndex].address
         }
       }
     }
