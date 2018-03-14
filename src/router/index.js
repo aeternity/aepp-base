@@ -24,6 +24,7 @@ export default (store) => {
     if (name) {
       loginTarget = to.fullPath
       next({ name })
+      return
     }
     next()
   }
