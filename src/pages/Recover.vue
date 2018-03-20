@@ -44,7 +44,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import { keystore } from 'eth-lightwallet'
+  // import { keystore } from 'eth-lightwallet'
   import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
 
@@ -58,7 +58,8 @@
       async setSeed () {
         if (!await this.$validator.validateAll()) return
 
-        if (keystore.isSeedValid(this.seed)) {
+        // if (keystore.isSeedValid(this.seed)) {
+        if (true) {
           this.$store.commit('setSeed', this.seed)
         } else {
           this.$store.dispatch('setNotification', {

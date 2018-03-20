@@ -1,6 +1,6 @@
 <template>
   <modal-screen title="New Account 2/2" :redirectToOnClose="{ name: 'intro' }">
-    <form @submit.prevent="createKeystore">
+    <form @submit.prevent="createHdWallet">
       <ae-label
         :for="_uid"
         help-type="danger"
@@ -22,7 +22,7 @@
     <div slot="footer">
       <ae-button
         type="dramatic"
-        @click="createKeystore"
+        @click="createHdWallet"
         :inactive="errors.any() || working"
       >
         Create Account
@@ -58,12 +58,12 @@
     },
     computed: mapState(['keystore']),
     methods: {
-      async createKeystore () {
+      async createHdWallet () {
         if (!await this.$validator.validateAll()) return
 
         this.working = true
         try {
-          await this.$store.dispatch('createKeystore', this.password)
+          await this.$store.dispatch('createHdWallet', this.password)
           this.$store.dispatch('setNotification', {
             text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
             icon: require(`emoji-datasource-apple/img/apple/64/1f44f.png`),

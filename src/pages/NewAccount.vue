@@ -32,7 +32,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import { keystore } from 'eth-lightwallet'
+  import AeternityClient from 'aepp-sdk'
   import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
 
@@ -46,7 +46,9 @@
     computed: mapState(['keystore']),
     methods: {
       newSeed () {
-        this.seed = keystore.generateRandomSeed()
+        // this.seed = keystore.generateRandomSeed()
+        this.seed = AeternityClient.Crypto.HDWallet.generateRandomSeed()
+        // this.seed = 'TODO'
       },
       setSeed () {
         this.$store.commit('setSeed', this.seed)

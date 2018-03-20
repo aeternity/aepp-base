@@ -19,7 +19,7 @@ export default (store) => {
   let loginTarget
 
   const checkLoggedIn = (to, from, next) => {
-    const name = !store.state.keystore && 'intro' ||
+    const name = !store.state.hdWallet && 'intro' ||
       !store.state.derivedKey && 'login'
     if (name) {
       loginTarget = to.fullPath
@@ -36,7 +36,7 @@ export default (store) => {
         path: '/',
         component: Intro,
         beforeEnter (to, from, next) {
-          if (!from.name && store.state.keystore) return next({ name: 'login' })
+          if (!from.name && store.state.hdWallet) return next({ name: 'login' })
           next()
         }
       },
@@ -50,7 +50,7 @@ export default (store) => {
         path: '/login',
         component: Login,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'new-account' })
+          if (!store.state.hdWallet) return next({ name: 'new-account' })
           if (store.state.derivedKey) return next({ name: 'apps' })
           next()
         }
@@ -129,7 +129,7 @@ export default (store) => {
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
       case 'setDerivedKey':
-        if (state.keystore) {
+        if (state.hdWallet) {
           if (state.derivedKey) {
             router.push(loginTarget || { name: 'apps' })
             loginTarget = undefined
