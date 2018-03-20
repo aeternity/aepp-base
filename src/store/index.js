@@ -54,7 +54,11 @@ const store = new Vuex.Store({
       return hdWallet
     },
     aeternityClient () {
-      const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 3013)
+      const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 3013, {internalPort: 3113})
+
+      provider.setBaseUrl('https://aeternity.flummi.club/external/v2/')
+      provider.setBaseUrl('https://aeternity.flummi.club/internal/v2/', true)
+
       const client = new AeternityClient(provider)
       return client
     },
@@ -169,16 +173,22 @@ const store = new Vuex.Store({
     },
     updateAllBalances ({getters, dispatch}) {
       getters.hdWallet.addresses.forEach(address =>
-        dispatch('updateBalance', address))
+        dispatch('updateBalance', address.pub))
     },
-    async updateBalance ({getters, commit}, address) {
+    async updateBalance ({getters: {aeternityClient}, commit}, address) {
       // const [balance, tokenBalance] = await Promise.all([
       //   web3.eth.getBalance(address),
       //   tokenContract ? tokenContract.methods.balanceOf(address).call() : NaN
       // ])
-      const balance = new BN('0', 10)
-      const tokenBalance = new BN('0', 10)
-      commit('setBalance', { address, balance, tokenBalance })
+      try {
+        const readBalance = await aeternityClient.accounts.getBalance({pubKey: address})
+        const tokenBalance = (new BN(readBalance, 10)).mul(new BN('1000000000000000000', 10))
+        const balance = '0'
+        commit('setBalance', { address, balance, tokenBalance })
+        console.log('readBalance', readBalance)
+      } catch (err) {
+        console.log(err)
+      }
     },
     async createHdWallet ({ commit, dispatch, state }) {
       const hdWallet = await Crypto.createHDWallet("m/44'/60'/0'/0", state.seed, 1)
