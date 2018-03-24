@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import VueClipboard from 'vue-clipboard2'
 import VeeValidate, { Validator } from 'vee-validate'
 import { focus } from 'vue-focus'
+import { sync } from 'vuex-router-sync'
 import App from './App.vue'
 import getRouter from './router/index'
 import store from './store'
@@ -46,12 +47,16 @@ window.setRPCUrl = function (rpcURL = 'https://kovan.infura.io') {
 
 Vue.config.productionTip = false
 
+const router = getRouter(store)
+
+sync(store, router)
+
 /* eslint-disable no-new */
 const IdentityApp = Vue.extend({
   render: h => h(App),
   components: { App },
   store,
-  router: getRouter(store)
+  router
 })
 const vm = new IdentityApp()
 vm.$mount('#app')

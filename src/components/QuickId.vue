@@ -25,8 +25,7 @@
     },
     methods: {
       showIdManager () {
-        this.$store.dispatch('updateAllBalances')
-        this.$store.commit('toggleIdManager')
+        this.$router.push({ name: 'accounts' })
       }
     }
   }
@@ -38,7 +37,6 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 997;
 
     .back {
       width: 25px;

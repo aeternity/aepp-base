@@ -1,18 +1,16 @@
 import { mapState } from 'vuex'
 import { AeBanner } from '@aeternity/aepp-components'
-import IdManager from '@/components/IdManager/IdManager.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: { AeBanner, IdManager },
+  components: { AeBanner },
+  data: () => ({
+    transitionName: undefined
+  }),
   computed: {
     ...mapState({
-      idManagerClassObject: state => ({
-        'app_id-manager': true,
-        '_open': state.showIdManager
-      }),
       notification: state => state.notification
     }),
     appClassObject: () => {
@@ -20,6 +18,14 @@ export default {
         stage: process.env.IS_STAGE === true,
         development: process.env.NODE_ENV === 'development'
       }
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.transitionName =
+        to.name === 'accounts' && 'slide-up' ||
+        from.name === 'accounts' && 'slide-down' ||
+        undefined
     }
   },
   created: function () {
@@ -33,8 +39,5 @@ export default {
   mounted: function () {
     let postMessagehandler = new PostMessageHandler(store)
     postMessagehandler.registerListener()
-  },
-  data () {
-    return {}
   }
 }

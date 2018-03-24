@@ -7,6 +7,7 @@ import Recover from '@/pages/Recover.vue'
 import NewAccount from '@/pages/NewAccount.vue'
 import SetPassword from '@/pages/SetPassword.vue'
 import Apps from '@/pages/Apps/Apps.vue'
+import Accounts from '@/pages/Accounts.vue'
 import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
 import Network from '@/pages/Network.vue'
@@ -78,6 +79,12 @@ export default (store) => {
         name: 'apps',
         path: '/apps',
         component: Apps,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'accounts',
+        path: '/accounts',
+        component: Accounts,
         beforeEnter: checkLoggedIn
       },
       {
