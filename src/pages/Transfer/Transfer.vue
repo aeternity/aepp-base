@@ -28,7 +28,7 @@
         :help-text="errors.first('addressTo')"
       >Receiving address</ae-label>
       <ae-address-input
-        :id="_uid"
+        :id="`${_uid}-addressTo`"
         name="addressTo"
         v-model="to"
         v-validate="'required|min:42'"
