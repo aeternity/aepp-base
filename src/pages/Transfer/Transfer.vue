@@ -78,4 +78,4 @@
 </template>
 
 <script src="./Transfer.js" />
-<style lang="scss" src="./Transfer.scss" />
+<style lang="scss" src="./Transfer.scss" scoped />

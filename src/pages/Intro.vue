@@ -1,6 +1,6 @@
 <template>
   <modal-screen class="intro">
-    <div>
+    <div class="logo">
       <img :src="require('@/assets/intro.svg')" />
       <p>
         æternity gives you easy access to the magic of blockchain
@@ -32,13 +32,13 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '~@aeternity/aepp-components/dist/variables.scss';
 
   .intro.modal-screen.ae-overlay {
     background: transparent;
 
-    .ae-modal {
+    /deep/ .ae-modal {
       background: transparent;
 
       .ae-header, header.desktop {
@@ -48,22 +48,22 @@
       main.content {
         flex-shrink: 0;
         display: flex;
+      }
+    }
 
-        div {
-          text-align: center;
-          margin: auto;
+    .logo {
+      text-align: center;
+      margin: auto;
 
-          img, p {
-            margin: 12px;
-          }
+      img, p {
+        margin: 12px;
+      }
 
-          p {
-            max-width: 300px;
-            font-size: 18px;
-            line-height: 1.56;
-            color: $anthracite;
-          }
-        }
+      p {
+        max-width: 300px;
+        font-size: 18px;
+        line-height: 1.56;
+        color: $anthracite;
       }
     }
   }

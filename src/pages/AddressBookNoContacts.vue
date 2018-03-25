@@ -27,12 +27,14 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .address-book-no-contacts.modal-screen.ae-overlay .ae-modal main.content {
-    display: flex;
-    flex-direction: column;
+  .address-book-no-contacts.modal-screen {
+    /deep/ .ae-modal main.content {
+      display: flex;
+      flex-direction: column;
+    }
 
     .no-contacts {
       margin: auto;
