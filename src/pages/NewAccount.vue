@@ -47,7 +47,7 @@
     methods: {
       newSeed () {
         // this.seed = keystore.generateRandomSeed()
-        this.seed = AeternityClient.Crypto.HDWallet.generateRandomSeed()
+        this.seed = AeternityClient.HdWallet.generateRandomSeed()
         // this.seed = 'TODO'
       },
       setSeed () {

@@ -37,7 +37,7 @@ const store = new Vuex.Store({
     // keystore: null,
     hdWallet: null,
     derivedKey: null,
-    networkId: null,
+    // networkId: null,
     notification: null,
     apps: [...apps],
     addressBook: []
@@ -54,10 +54,13 @@ const store = new Vuex.Store({
       return hdWallet
     },
     aeternityClient () {
+      // websocket wss 443
       const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 3013, {internalPort: 3113})
 
-      provider.setBaseUrl('https://aeternity.flummi.club/external/v2/')
-      provider.setBaseUrl('https://aeternity.flummi.club/internal/v2/', true)
+      // provider.setBaseUrl('https://aeternity.flummi.club/external/v2/')
+      // provider.setBaseUrl('https://aeternity.flummi.club/internal/v2/', true)
+      provider.setBaseUrl('https://sdk-testnet.aepps.com/v2/')
+      provider.setBaseUrl('https://sdk-testnet.aepps.com/internal/v2/', true)
 
       const client = new AeternityClient(provider)
       return client
@@ -185,13 +188,13 @@ const store = new Vuex.Store({
         const tokenBalance = (new BN(readBalance, 10)).mul(new BN('1000000000000000000', 10))
         const balance = '0'
         commit('setBalance', { address, balance, tokenBalance })
-        console.log('readBalance', readBalance)
+        // console.log('readBalance', readBalance)
       } catch (err) {
         console.log(err)
       }
     },
     async createHdWallet ({ commit, dispatch, state }) {
-      const hdWallet = await HdWallet.createHDWallet("m/44'/60'/0'/0", state.seed, 1)
+      const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", state.seed, 1)
       console.log(hdWallet)
       commit('selectIdentity', 0)
       commit('setHdWallet', hdWallet)
