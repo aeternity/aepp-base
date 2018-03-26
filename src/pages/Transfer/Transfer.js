@@ -11,6 +11,7 @@ import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper
 import { convertAEtoCHF, convertETHtoCHF } from '@/lib/currencyConverter'
 import ModalScreen from '@/components/ModalScreen'
 import QuickId from '@/components/QuickId.vue'
+import unit from 'ethjs-unit'
 
 export default {
   name: 'transfer',
@@ -29,18 +30,21 @@ export default {
   data () {
     return {
       transactionType: undefined,
-      prices: {}
+      prices: {},
+      units: [
+        { symbol: 'AE', name: 'æternity' }
+      ]
     }
   },
   computed: {
-    ...mapGetters(['web3', 'tokenContract', 'identities', 'activeIdentity']),
+    ...mapGetters(['identities', 'activeIdentity']),
     ...mapState({
       identitiesTo: (state, { identities, activeIdentity }) =>
         identities.filter(i => i.address !== activeIdentity.address),
-      maxAmount ({ balances }, { web3, activeIdentity }) {
+      maxAmount ({ balances }, { activeIdentity }) {
         const balance = balances[activeIdentity.address]
         const k = this.currency && this.currency.symbol === 'ETH' ? 'balance' : 'tokenBalance'
-        return balance ? web3.utils.fromWei(balance[k], 'ether') : 0
+        return balance ? unit.fromWei(balance[k], 'ether') : 0
       }
     }),
     to: {
@@ -110,31 +114,16 @@ export default {
       if (!to || !amount || !symbol) return
       const from = this.activeIdentity.address
 
-      let tx
-      switch (symbol) {
-        case 'ETH':
-          tx = {
-            from,
-            to,
-            value: this.web3.utils.toWei(amount, 'ether')
-          }
-          break
-        case 'AE':
-          tx = {
-            from,
-            to: this.tokenContract._address,
-            data: this.tokenContract.methods.transfer(
-              to,
-              this.web3.utils.toWei(amount, 'ether')
-            ).encodeABI()
-          }
-          break
-        default:
-          throw new Error(`"${symbol}" is invalid transaction currency`)
+      const spendTx = {
+        from: from,
+        to: to,
+        amount: parseInt(amount)
       }
-
-      await this.$store.dispatch('signTransaction', { tx, appName: 'Transfer' })
-      await this.web3.eth.sendTransaction(tx)
+      // return await this.aeternityClient.base.spend(receiver, parseInt(amount), 1, options)
+      const spendResult = await this.$store.dispatch('spendTransaction', { tx: spendTx, appName: 'Transfer' })
+      console.log('spendResult', spendResult)
+      // await this.$store.dispatch('signTransaction', { tx, appName: 'Transfer' })
+      // await this.web3.eth.sendTransaction(tx)
     }
   },
   async mounted () {

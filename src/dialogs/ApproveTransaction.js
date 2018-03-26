@@ -1,5 +1,3 @@
-import Bignumber from 'bignumber.js'
-import Web3 from 'web3'
 import { convertAEtoCHF, convertETHtoCHF } from '@/lib/currencyConverter'
 import ApproveButtons from '@/dialogs/ApproveButtons.vue'
 import DialogHeader from '@/dialogs/DialogHeader.vue'
@@ -10,8 +8,6 @@ import {
   AeIcon,
   AeIdentityAvatar
 } from '@aeternity/aepp-components'
-
-const { fromWei } = (new Web3()).utils
 
 const createValueStr = (value, decimal, currencySymbol = 'CHF') => {
   if (typeof value !== 'number' || isNaN(value)) {
@@ -36,8 +32,7 @@ export default {
       type: String,
       default: ''
     },
-    transaction: Object,
-    aeTokenTx: Object
+    transaction: Object
   },
   components: {
     AeModal,
@@ -50,21 +45,13 @@ export default {
   },
   computed: {
     amount () {
-      if (this.aeTokenTx && this.aeTokenTx.params) {
-        if (['approveAndCall', 'approve', 'transfer'].includes(this.aeTokenTx.name)) {
-          const { value } = this.aeTokenTx.params.find(param => param.name === '_value')
-          if (value) {
-            return parseFloat(fromWei(value, 'ether'))
-          }
-        }
-      }
-      if (this.transaction.value) {
-        return parseFloat(fromWei(this.transaction.value, 'ether'))
+      if (this.transaction.amount) {
+        return this.transaction.amount
       }
       return 0
     },
     amountFiat () {
-      return createValueStr((this.aeTokenTx ? this.aePrice : this.ethPrice) * this.amount, 10)
+      return createValueStr(this.aePrice * this.amount, 10)
     },
     to () {
       if (this.aeTokenTx && this.aeTokenTx.params) {
@@ -80,18 +67,16 @@ export default {
       return this.transaction.to
     },
     fees () {
-      const { gas, gasPrice } = this.transaction
-      console.log('fees', gas, gasPrice)
-      return fromWei(gas.toString(), 'ether') * new Bignumber(gasPrice)
+      return this.transaction.gas
     },
     feesStr () {
-      return createValueStr(this.fees, 5, 'ETH')
+      return createValueStr(this.fees, 5, 'Æ')
     },
     feesFiat () {
-      return createValueStr(this.ethPrice * this.fees, 5)
+      return createValueStr(this.aePrice * this.fees, 5)
     },
     unit () {
-      return this.aeTokenTx ? 'Æ' : 'eth'
+      return 'Æ'
     }
   },
   methods: {

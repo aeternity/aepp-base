@@ -9,10 +9,10 @@ import createPersistedState from 'vuex-persistedstate'
 // import util from 'ethereumjs-util'
 // import Bluebird from 'bluebird'
 // import AEToken from '@/assets/contracts/AEToken.json'
-// import {
-//   approveTransaction as approveTransactionDialog,
-//   approveMessage as approveMessageDialog
-// } from '@/dialogs/index'
+import {
+  approveTransaction as approveTransactionDialog
+  // approveMessage as approveMessageDialog
+} from '@/dialogs/index'
 import apps from '@/lib/appsRegistry'
 import AeternityClient from 'aepp-sdk'
 const Crypto = AeternityClient.Crypto
@@ -230,6 +230,28 @@ const store = new Vuex.Store({
       // const t = new Transaction(tx)
       // return signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
       return true
+    },
+    async spendTransaction ({ state: { hdWallet }, getters: { aeternityClient } }, { tx, appName }) {
+      console.log('tx', tx)
+      console.log('aeternityClient', aeternityClient)
+
+      tx.gas = 1
+      const senderKeyPair = hdWallet.addresses.find(address => {
+        return address.pub === tx.from
+      })
+      if (!senderKeyPair) {
+        throw new Error('sender not found in wallet')
+      }
+
+      if (!await approveTransactionDialog(tx, appName)) {
+        throw new Error('Payment rejected by user')
+      }
+
+      let options = {
+        privateKey: senderKeyPair.priv,
+        sender: senderKeyPair.pub
+      }
+      return await aeternityClient.base.spend(tx.to, tx.amount, tx.gas, options)
     },
     async signPersonalMessage ({ getters, state }, { msg, appName }) {
       // const data = getters.web3.toAscii(msg.data)

@@ -55,6 +55,7 @@
     >Amount</ae-label>
     <ae-amount-input
       :id="`${_uid}-currency`"
+      :units="units"
       name="currency"
       v-model="currency"
       v-validate:amount="`required|decimal|min_value_exclusive:0|max_value:${maxAmount}`"
