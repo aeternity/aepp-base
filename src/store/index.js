@@ -27,7 +27,7 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     createPersistedState({
-      paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
+      paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook', 'pairKey']
     }),
     pairConnection.plugin
   ],
