@@ -38,6 +38,9 @@
 <script>
   import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
+  import AeternityClient from 'aepp-sdk'
+  const HdWallet = AeternityClient.HdWallet
+  import Crypto from '../lib/crypto'
 
   export default {
     components: { ModalScreen, AeInput, AeLabel, AeButton },
@@ -47,7 +50,7 @@
     methods: {
       async unlockSavedKeystore () {
         if (!await this.$validator.validateAll()) return
-        const { keystore } = this.$store.getters
+        // const { keystore } = this.$store.getters
         // const derivedKey = await keystore.keyFromPasswordAsync(this.password)
         // if (!keystore.isDerivedKeyCorrect(derivedKey)) {
         //   this.$store.dispatch('setNotification', {
@@ -57,8 +60,14 @@
         //   })
         //   return
         // }
-        const derivedKey = 'TODO:'
-        this.$store.commit('setDerivedKey', derivedKey)
+
+        const encMnemonic = this.$store.state.encMnemonic
+        const mnemonic = Crypto.decryptString(encMnemonic, this.password)
+        //TODO: use existing action
+        const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", mnemonic, 1)
+        this.$store.commit('setHdWallet', hdWallet)
+        // this.$store.commit('setDerivedKey', 'TODO:')
+        this.$store.commit('setUnlocked', true)
       }
     }
   }

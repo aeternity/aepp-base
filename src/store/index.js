@@ -17,6 +17,7 @@ import apps from '@/lib/appsRegistry'
 import AeternityClient from 'aepp-sdk'
 const HdWallet = AeternityClient.HdWallet
 import BN from 'bn.js'
+import Crypto from '../lib/crypto'
 
 Vue.use(Vuex)
 // Bluebird.promisifyAll(Keystore)
@@ -25,7 +26,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ['apps', 'hdWallet', 'selectedIdentityIdx', 'addressBook']
+      paths: ['apps', 'encMnemonic', 'selectedIdentityIdx', 'addressBook']
     })
   ],
 
@@ -36,7 +37,9 @@ const store = new Vuex.Store({
     // rpcUrl: 'https://kovan.infura.io',
     // keystore: null,
     hdWallet: null,
+    encMnemonic: null,
     derivedKey: null,
+    unlocked: false,
     // networkId: null,
     notification: null,
     apps: [...apps],
@@ -121,6 +124,12 @@ const store = new Vuex.Store({
     setDerivedKey (state, derivedKey) {
       state.derivedKey = derivedKey
     },
+    setEncMnemonic (state, encMnemonic) {
+      state.encMnemonic = encMnemonic
+    },
+    setUnlocked (state, isUnlocked) {
+      state.unlocked = isUnlocked
+    },
     // setNetworkId (state, networkId) {
     //   state.networkId = networkId
     // },
@@ -193,12 +202,14 @@ const store = new Vuex.Store({
         console.log(err)
       }
     },
-    async createHdWallet ({ commit, dispatch, state }) {
+    async createHdWallet ({ commit, dispatch, state }, password) {
       const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", state.seed, 1)
-      console.log(hdWallet)
+      const encMnemonic = Crypto.encryptString(state.seed, password)
+      // console.log(hdWallet)
       commit('selectIdentity', 0)
       commit('setHdWallet', hdWallet)
-      commit('setDerivedKey', 'TODO:')
+      commit('setEncMnemonic', encMnemonic)
+      commit('setUnlocked', true)
     },
     // async createKeystore ({ commit, dispatch, state }, password) {
     //   const keystore = await Keystore.createVaultAsync({

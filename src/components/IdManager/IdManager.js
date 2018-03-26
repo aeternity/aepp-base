@@ -80,7 +80,8 @@ export default {
     },
     logout () {
       this.$store.commit('toggleIdManager')
-      this.$store.commit('setDerivedKey')
+      // this.$store.commit('setDerivedKey')
+      this.$store.commit('setUnlocked', false)
     }
   },
   mounted () {
