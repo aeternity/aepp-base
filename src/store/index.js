@@ -15,7 +15,7 @@ import {
 } from '@/dialogs/index'
 import apps from '@/lib/appsRegistry'
 import AeternityClient from 'aepp-sdk'
-const Crypto = AeternityClient.Crypto
+const HdWallet = AeternityClient.HdWallet
 import BN from 'bn.js'
 
 Vue.use(Vuex)
@@ -191,7 +191,7 @@ const store = new Vuex.Store({
       }
     },
     async createHdWallet ({ commit, dispatch, state }) {
-      const hdWallet = await Crypto.createHDWallet("m/44'/60'/0'/0", state.seed, 1)
+      const hdWallet = await HdWallet.createHDWallet("m/44'/60'/0'/0", state.seed, 1)
       console.log(hdWallet)
       commit('selectIdentity', 0)
       commit('setHdWallet', hdWallet)
