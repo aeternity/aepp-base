@@ -25,7 +25,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
+      paths: ['apps', 'hdWallet', 'selectedIdentityIdx', 'addressBook']
     })
   ],
 

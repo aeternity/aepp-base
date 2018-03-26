@@ -48,16 +48,16 @@
       async unlockSavedKeystore () {
         if (!await this.$validator.validateAll()) return
         const { keystore } = this.$store.getters
-
-        const derivedKey = await keystore.keyFromPasswordAsync(this.password)
-        if (!keystore.isDerivedKeyCorrect(derivedKey)) {
-          this.$store.dispatch('setNotification', {
-            text: 'You\'ve entered a wrong password',
-            icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
-            autoClose: true
-          })
-          return
-        }
+        // const derivedKey = await keystore.keyFromPasswordAsync(this.password)
+        // if (!keystore.isDerivedKeyCorrect(derivedKey)) {
+        //   this.$store.dispatch('setNotification', {
+        //     text: 'You\'ve entered a wrong password',
+        //     icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
+        //     autoClose: true
+        //   })
+        //   return
+        // }
+        const derivedKey = 'TODO:'
         this.$store.commit('setDerivedKey', derivedKey)
       }
     }
