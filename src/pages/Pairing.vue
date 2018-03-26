@@ -35,9 +35,10 @@
       ...mapState({
         pairKey (state) {
           if (!this.loggedIn && !state.pairKey) {
-            const t = Math.round(Math.random() * 1e10)
-            this.setPairKey(t)
-            return t
+            const t = new Uint32Array(1)
+            crypto.getRandomValues(t)
+            this.setPairKey(t[0])
+            return t[0]
           }
           return state.pairKey
         }
