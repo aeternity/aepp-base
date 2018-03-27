@@ -47,8 +47,7 @@
           collapsed
           :class="{
             'before-active': index + 1 === activeIdentityCard,
-            active: index === activeIdentityCard,
-            'after-active': index - 1 === activeIdentityCard
+            active: index === activeIdentityCard
           }"
           @click="activateCard(index)"
         >
@@ -159,16 +158,9 @@
     }
 
     .inactive-accounts {
-      :not(.active) {
-        &:not(:first-child):not(.after-active) /deep/ .ae-identity {
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
-        }
-
-        &:not(:last-child):not(.before-active) /deep/ .ae-identity {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-        }
+      :not(:last-child):not(.before-active):not(.active) /deep/ .ae-identity {
+        padding-bottom: 35px;
+        margin-bottom: -20px;
       }
 
       .active {
