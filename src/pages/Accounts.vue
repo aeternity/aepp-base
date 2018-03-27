@@ -51,7 +51,7 @@
           }"
           @click="activateCard(index)"
         >
-          <div v-show="index === activeIdentityCard" class="action-buttons">
+          <div v-if="index === activeIdentityCard" class="action-buttons">
             <ae-divider />
             <ae-button
               @click="selectIdentity(index)"
