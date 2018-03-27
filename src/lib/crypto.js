@@ -5,6 +5,11 @@ export default {
     return CryptoJS.AES.encrypt(string, password).toString()
   },
   decryptString (encryptedString, password) {
-    return CryptoJS.AES.decrypt(encryptedString, password).toString(CryptoJS.enc.Utf8)
+    try {
+      return CryptoJS.AES.decrypt(encryptedString, password).toString(CryptoJS.enc.Utf8)
+    } catch (err) {
+      console.log(err)
+      return false
+    }
   }
 }

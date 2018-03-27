@@ -60,11 +60,18 @@
         //   })
         //   return
         // }
-
         const encMnemonic = this.$store.state.encMnemonic
         const mnemonic = Crypto.decryptString(encMnemonic, this.password)
+        if (!mnemonic) {
+          this.$store.dispatch('setNotification', {
+            text: 'You\'ve entered a wrong password',
+            icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
+            autoClose: true
+          })
+          return
+        }
         //TODO: use existing action
-        const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", mnemonic, 1)
+        const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", mnemonic, this.$store.getters.aeternityClient, 1)
         this.$store.commit('setHdWallet', hdWallet)
         // this.$store.commit('setDerivedKey', 'TODO:')
         this.$store.commit('setUnlocked', true)

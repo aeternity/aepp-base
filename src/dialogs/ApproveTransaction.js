@@ -67,7 +67,7 @@ export default {
       return this.transaction.to
     },
     fees () {
-      return this.transaction.gas
+      return this.transaction.fee
     },
     feesStr () {
       return createValueStr(this.fees, 5, 'Æ')

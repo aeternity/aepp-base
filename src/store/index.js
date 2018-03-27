@@ -58,12 +58,12 @@ const store = new Vuex.Store({
     },
     aeternityClient () {
       // websocket wss 443
-      const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 3013, {internalPort: 3113})
+      const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 443, {internalPort: 3113, secured: true})
 
       // provider.setBaseUrl('https://aeternity.flummi.club/external/v2/')
       // provider.setBaseUrl('https://aeternity.flummi.club/internal/v2/', true)
-      provider.setBaseUrl('https://sdk-testnet.aepps.com/v2/')
-      provider.setBaseUrl('https://sdk-testnet.aepps.com/internal/v2/', true)
+      // provider.setBaseUrl('https://sdk-testnet.aepps.com/v2/')
+      // provider.setBaseUrl('https://sdk-testnet.aepps.com/internal/v2/', true)
 
       const client = new AeternityClient(provider)
       return client
@@ -187,13 +187,9 @@ const store = new Vuex.Store({
       getters.hdWallet.addresses.forEach(address =>
         dispatch('updateBalance', address.pub))
     },
-    async updateBalance ({getters: {aeternityClient}, commit}, address) {
-      // const [balance, tokenBalance] = await Promise.all([
-      //   web3.eth.getBalance(address),
-      //   tokenContract ? tokenContract.methods.balanceOf(address).call() : NaN
-      // ])
+    async updateBalanceSdk ({getters: {aeternityClient}, commit}, address) {
       try {
-        const readBalance = await aeternityClient.accounts.getBalance({pubKey: address})
+        const readBalance = await aeternityClient.accounts.getBalance(address)
         const tokenBalance = (new BN(readBalance, 10)).mul(new BN('1000000000000000000', 10))
         const balance = '0'
         commit('setBalance', { address, balance, tokenBalance })
@@ -202,8 +198,22 @@ const store = new Vuex.Store({
         console.log(err)
       }
     },
-    async createHdWallet ({ commit, dispatch, state }, password) {
-      const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", state.seed, 1)
+    async updateBalance ({getters: {aeternityClient}, commit}, address) {
+      try {
+        const rawResult = await fetch(`https://sdk-testnet.aepps.com/internal/v2/account/balance/${address}`)
+        const resultJson = await rawResult.json()
+        // console.log('result', resultJson)
+        if (resultJson && resultJson.balance) {
+          const tokenBalance = (new BN(resultJson.balance, 10)).mul(new BN('1000000000000000000', 10))
+          const balance = '0'
+          commit('setBalance', { address, balance, tokenBalance })
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async createHdWallet ({ commit, dispatch, state, getters: { aeternityClient } }, password) {
+      const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", state.seed, aeternityClient, 1)
       const encMnemonic = Crypto.encryptString(state.seed, password)
       // console.log(hdWallet)
       commit('selectIdentity', 0)
@@ -247,25 +257,17 @@ const store = new Vuex.Store({
     },
     async spendTransaction ({ state: { hdWallet }, getters: { aeternityClient } }, { tx, appName }) {
       console.log('tx', tx)
-      console.log('aeternityClient', aeternityClient)
 
-      tx.gas = 1
-      const senderKeyPair = hdWallet.addresses.find(address => {
-        return address.pub === tx.from
-      })
-      if (!senderKeyPair) {
-        throw new Error('sender not found in wallet')
-      }
+      tx.fee = 1
 
       if (!await approveTransactionDialog(tx, appName)) {
         throw new Error('Payment rejected by user')
       }
-
-      let options = {
-        privateKey: senderKeyPair.priv,
-        sender: senderKeyPair.pub
-      }
-      return await aeternityClient.base.spend(tx.to, tx.amount, tx.gas, options)
+      const spendTx = await hdWallet.spend(tx.from, tx.to, tx.amount, tx.fee)
+      // aeternityClient.tx.waitForTransaction(spendTx.tx_hash).then(result => {
+      //   console.log('resolved transaction', result)
+      // })
+      return spendTx
     },
     async signPersonalMessage ({ getters, state }, { msg, appName }) {
       // const data = getters.web3.toAscii(msg.data)
