@@ -185,6 +185,10 @@ const store = new Vuex.Store({
       commit('setDerivedKey', derivedKey)
     },
     createIdentity ({ getters: { keystore }, state: { derivedKey }, commit }) {
+      if (!keystore) {
+        peer.notification('createIdentity')
+        return
+      }
       keystore.generateNewAddress(derivedKey, 1)
       commit('setKeystore', keystore.serialize())
     },
@@ -277,6 +281,8 @@ const peer = new JsonRpcPeer(message => pairConnection.send(message), {
       ..._.cloneDeep(state)
     })
   },
+  createIdentity: () =>
+    store.dispatch('createIdentity'),
   signTransaction: (tx, appName) =>
     store.dispatch('signTransaction', { tx, appName }),
   signPersonalMessage: (tx, appName) =>
