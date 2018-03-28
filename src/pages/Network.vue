@@ -9,9 +9,7 @@
       @input="update"
     />
     <div class="status">
-     <b>Network id:</b> {{networkId}}<br />
-     <b>Token contract address:</b>
-      {{tokenContract ? tokenContract._address : 'undefined'}}
+     <b>Network id:</b> {{nodeSettings.host}}<br />
     </div>
    <!--  <ae-button @click="addCustom = !addCustom"  :type="!addCustom ? 'exciting' : 'normal'">Add Custom Network</ae-button>
     <br>
@@ -41,28 +39,39 @@ export default {
       current: 0,
       ready: false,
       options: [
-        { label: 'Kovan', value: 0, url: 'https://kovan.infura.io' },
-        { label: 'Rinkeby', value: 1, url: 'https://rinkeby.infura.io' },
-        { label: 'Ropsten', value: 2, url: 'https://ropsten.infura.io' },
-        { label: 'Localhost:8545', value: 3, url: 'http://localhost:8545' }
+        {
+          label: 'Devnet',
+          value: 0,
+          nodeSettings: {
+            host: 'sdk-testnet.aepps.com',
+            port: 443,
+            secured: true
+          }
+        },
+        {
+          label: 'Localhost',
+          value: 1,
+          nodeSettings: {
+            host: 'localhost',
+            port: 3013,
+            secured: false
+          }
+        }
       ]
     }
   },
   computed: {
-    ...mapState({
-      networkId: state => state.networkId
-    }),
-    ...mapGetters(['tokenContract'])
+    ...mapState([
+      'nodeSettings'
+    ])
   },
   methods: {
-    addOption () {
-      this.options.push({label: this.custom, value: this.options.length, url: this.custom})
-    },
     update (newVal) {
       if (this.current === newVal) return
       this.current = newVal
       let option = this.options[this.current]
-      this.$store.commit('setRPCUrl', option.url)
+      console.log('should update to', option)
+      this.$store.commit('setNodeSettings', option.nodeSettings)
     }
   },
   components: {
@@ -72,8 +81,9 @@ export default {
     QuickId
   },
   mounted () {
-    let url = this.$store.state.rpcUrl
-    let key = this.options.findIndex((option) => option.url.toLowerCase() === url.toLowerCase())
+    // let url = this.$store.state.rpcUrl
+    let host = this.nodeSettings.host
+    let key = this.options.findIndex((option) => option.nodeSettings.host.toLowerCase() === host.toLowerCase())
     if (key > -1) {
       this.current = key
     }

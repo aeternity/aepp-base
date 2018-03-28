@@ -43,7 +43,12 @@ const store = new Vuex.Store({
     // networkId: null,
     notification: null,
     apps: [...apps],
-    addressBook: []
+    addressBook: [],
+    nodeSettings: {
+      host: 'sdk-testnet.aepps.com',
+      port: 443,
+      secured: true
+    }
   },
 
   getters: {
@@ -56,9 +61,8 @@ const store = new Vuex.Store({
     hdWallet ({hdWallet}) {
       return hdWallet
     },
-    aeternityClient () {
-      // websocket wss 443
-      const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 443, {internalPort: 3113, secured: true})
+    aeternityClient ({ nodeSettings }) {
+      const provider = new AeternityClient.providers.HttpProvider(nodeSettings.host, nodeSettings.port, {secured: nodeSettings.secured})
 
       const client = new AeternityClient(provider)
       return client
@@ -107,6 +111,9 @@ const store = new Vuex.Store({
     // setRPCUrl (state, rpcUrl) {
     //   state.rpcUrl = rpcUrl
     // },
+    setNodeSettings (state, nodeSettings) {
+      state.nodeSettings = nodeSettings
+    },
     // setKeystore (state, keystore) {
     //   state.keystore = keystore
     // },
@@ -193,9 +200,9 @@ const store = new Vuex.Store({
         console.log(err)
       }
     },
-    async updateBalance ({getters: {aeternityClient}, commit}, address) {
+    async updateBalance ({getters: {aeternityClient}, state: { nodeSettings }, commit}, address) {
       try {
-        const rawResult = await fetch(`https://sdk-testnet.aepps.com/internal/v2/account/balance/${address}`)
+        const rawResult = await fetch(`https://${nodeSettings.host}/internal/v2/account/balance/${address}`)
         const resultJson = await rawResult.json()
         // console.log('result', resultJson)
         if (resultJson && resultJson.balance) {
