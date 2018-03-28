@@ -22,7 +22,7 @@
 
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import {
   AeSwitch,
   AeButton,
