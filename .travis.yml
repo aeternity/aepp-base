@@ -18,6 +18,11 @@ deploy:
     script: rsync -r --delete-after -v $TRAVIS_BUILD_DIR/dist/* deploy@139.59.142.164:/var/www/html/stage-identity.aepps.com/
     on:
       branch: stage
+  - provider: script
+    skip_cleanup: true
+    script: rsync -r --delete-after -v $TRAVIS_BUILD_DIR/dist/* deploy@139.59.142.164:/var/www/html/origin.aepps.com/
+    on:
+      branch: aeternity-chain
 before_install:
 - openssl aes-256-cbc -K $encrypted_0d22c88004c9_key -iv $encrypted_0d22c88004c9_iv
   -in aepp-identity-deploy.enc -out aepp-identity-deploy -d
