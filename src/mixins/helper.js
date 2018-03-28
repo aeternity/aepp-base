@@ -1,9 +1,6 @@
 import moment from 'moment'
 const blockies = require('ethereum-blockies-png')
-import Web3 from 'web3'
-
-// a "stupid" web3 just for conversions
-const web3 = new Web3()
+import unit from 'ethjs-unit'
 
 export default {
   methods: {
@@ -29,16 +26,10 @@ export default {
       })
     },
     readableToken: function (balance) {
-      if (!web3) {
-        return 'null'
-      }
-      return parseFloat(web3.utils.fromWei(balance.toString(10), 'ether')).toFixed(3)
+      return parseFloat(unit.utils.fromWei(balance.toString(10), 'ether')).toFixed(3)
     },
     readableEther: function (balance) {
-      if (!web3) {
-        return 'null'
-      }
-      return parseFloat(web3.utils.fromWei(balance.toString(10), 'ether')).toFixed(3)
+      return parseFloat(unit.utils.fromWei(balance.toString(10), 'ether')).toFixed(3)
     }
   }
 }
