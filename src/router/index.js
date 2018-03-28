@@ -20,7 +20,7 @@ export default (store) => {
   let loginTarget
 
   const checkLoggedIn = (to, from, next) => {
-    const name = !store.getters.peer &&
+    const name = !store.state.pairConnected &&
       (!store.state.keystore && 'intro' || !store.state.derivedKey && 'login')
     if (name) {
       loginTarget = to.fullPath

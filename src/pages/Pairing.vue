@@ -5,7 +5,7 @@
     :redirectToOnClose="{ name: loggedIn ? 'apps' : 'intro' }"
   >
     <br />
-    <template v-if="!peer">
+    <template v-if="!pairConnected">
       <qrcode-reader
         v-if="loggedIn"
         class="qrcode-reader"
@@ -43,7 +43,8 @@
           return state.pairKey
         }
       }),
-      ...mapGetters(['loggedIn', 'peer', 'keystore'])
+      ...mapState(['pairConnected']),
+      ...mapGetters(['loggedIn', 'keystore'])
     },
     methods: mapMutations(['setPairKey'])
   }

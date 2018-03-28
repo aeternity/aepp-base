@@ -56,26 +56,18 @@ const store = new Vuex.Store({
       Bluebird.promisifyAll(keystore)
       return keystore
     },
+    accounts ({ accounts }, { keystore }) {
+      return keystore ? keystore.getAddresses() : accounts
+    },
     web3 ({ rpcUrl }) {
       return new Web3(rpcUrl)
-    },
-    peer ({ pairConnected }, { keystore }) {
-      if (!pairConnected) return null
-      const peer = new JsonRpcPeer(message => pairConnection.send(message), {
-        getAccounts: () => keystore.getAddresses(),
-        signTransaction: (tx, appName) => store.dispatch('signTransaction', { tx, appName }),
-        signPersonalMessage: (tx, appName) =>
-          store.dispatch('signPersonalMessage', { tx, appName })
-      })
-      pairConnection.onMessage = message => peer.processMessage(message)
-      return peer
     },
     tokenContract ({ networkId }, { web3 }) {
       if (!networkId || !AEToken.networks[networkId]) return null
       return new web3.eth.Contract(AEToken.abi, AEToken.networks[networkId].address)
     },
-    loggedIn: ({ derivedKey }, { peer }) => !!derivedKey || !!peer,
-    identities: ({ accounts, balances }) =>
+    loggedIn: ({ derivedKey, pairConnected }) => !!derivedKey || pairConnected,
+    identities: ({ balances }, { accounts }) =>
       accounts.map(e => ({
         ...balances[e] || { balance: 0, tokenBalance: 0 },
         address: e,
@@ -196,7 +188,7 @@ const store = new Vuex.Store({
       keystore.generateNewAddress(derivedKey, 1)
       commit('setKeystore', keystore.serialize())
     },
-    async proxyToPeer ({ getters: { keystore, peer }, commit }, { methodName, args }) {
+    async proxyToPeer ({ getters: { keystore }, commit }, { methodName, args }) {
       commit('setWaitingForConfirmation', true)
       let result
       try {
@@ -275,11 +267,35 @@ store.watch(
   async web3 => store.commit('setNetworkId', await web3.eth.net.getId()),
   { immediate: true })
 
+const PAIR_SYNC_FIELDS = ['apps', 'rpcUrl', 'accounts', 'selectedIdentityIdx', 'addressBook']
+let lastReceivedState
+const peer = new JsonRpcPeer(message => pairConnection.send(message), {
+  setState: (state) => {
+    lastReceivedState = state
+    store.replaceState({
+      ..._.omit(store.state, PAIR_SYNC_FIELDS),
+      ..._.cloneDeep(state)
+    })
+  },
+  signTransaction: (tx, appName) =>
+    store.dispatch('signTransaction', { tx, appName }),
+  signPersonalMessage: (tx, appName) =>
+    store.dispatch('signPersonalMessage', { tx, appName })
+})
+pairConnection.onMessage = message => peer.processMessage(message)
 store.watch(
-  (state, { keystore, peer }) => [keystore, peer],
-  async ([keystore, peer]) =>
-    store.commit('setAccounts', keystore && keystore.getAddresses() ||
-      peer && await peer.call('getAccounts') || []),
-  { immediate: true })
+  (state, getters) =>
+    PAIR_SYNC_FIELDS.reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {}),
+  state => {
+    if (store.state.pairConnected && !_.isEqual(state, lastReceivedState)) {
+      peer.notification('setState', state)
+      lastReceivedState = null
+    }
+  })
+store.watch(
+  ({ pairConnected }) => pairConnected,
+  pairConnected =>
+    pairConnected && store.getters.keystore &&
+    peer.notification('setState', _.pick({ ...store.state, ...store.getters }, PAIR_SYNC_FIELDS)))
 
 export default store
