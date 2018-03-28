@@ -58,15 +58,15 @@
       async setSeed () {
         if (!await this.$validator.validateAll()) return
 
+        this.$store.commit('setSeed', this.seed)
         // if (keystore.isSeedValid(this.seed)) {
-        if (true) {
-          this.$store.commit('setSeed', this.seed)
-        } else {
-          this.$store.dispatch('setNotification', {
-            text: `Invalid passphrase`,
-            autoClose: true
-          })
-        }
+        //   this.$store.commit('setSeed', this.seed)
+        // } else {
+        //   this.$store.dispatch('setNotification', {
+        //     text: `Invalid passphrase`,
+        //     autoClose: true
+        //   })
+        // }
       }
     }
   }

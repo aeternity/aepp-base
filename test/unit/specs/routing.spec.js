@@ -24,56 +24,56 @@ describe('router/index.js', () => {
         createRedirectTest(state, fromName, fromName)
 
       it(
-        'pushes INTRO path if current route is APPS and no keystore is present',
+        'pushes INTRO path if current route is APPS and no encMnemonic is present',
         createRedirectTest({}, 'apps', 'intro')
       )
 
       it(
-        'pushes NEW_ACCOUNT path if current route is LOGIN and no keystore is present',
+        'pushes NEW_ACCOUNT path if current route is LOGIN and no encMnemonic is present',
         createRedirectTest({}, 'login', 'new-account')
       )
 
       it(
-        'pushes LOGIN path if current route is APPS and keystore is present but not derivedKey',
+        'pushes LOGIN path if current route is APPS and encMnemonic is present but not unlocked',
         createRedirectTest({
-          keystore: {}, derivedKey: false
+          encMnemonic: 'mnemonic', unlocked: false
         }, 'apps', 'login')
       )
 
       it(
-        'does NOT redirect if current route is NEW_ACCOUNT and keystore is present but not derivedKey',
+        'does NOT redirect if current route is NEW_ACCOUNT and encMnemonic is present but not unlocked',
         createNoRedirectTest({
-          keystore: {}, derivedKey: false
+          encMnemonic: 'mnemonic', unlocked: false
         }, 'new-account')
       )
 
       it(
-        'pushes APPS path if current route is LOGIN and keystore is present and derivedKey',
+        'pushes APPS path if current route is LOGIN and encMnemonic is present and unlocked',
         createRedirectTest({
-          keystore: {}, derivedKey: true
+          encMnemonic: 'mnemonic', unlocked: true
         }, 'login', 'apps')
       )
 
       it(
-        'does NOT redirect if current route is NEW_ACCOUNT and keystore is present and derivedKey',
+        'does NOT redirect if current route is NEW_ACCOUNT and encMnemonic is present and unlocked',
         createNoRedirectTest({
-          keystore: {}, derivedKey: true
+          encMnemonic: 'mnemonic', unlocked: true
         }, 'new-account')
       )
 
-      it('does not interfere when current route is APPS and keystore is present and derivedKey',
+      it('does not interfere when current route is APPS and encMnemonic is present and unlocked',
         createNoRedirectTest({
-          keystore: {}, derivedKey: true
+          encMnemonic: 'mnemonic', unlocked: true
         }, 'apps')
       )
 
-      it('does not interfere when current route is NEW_ACCOUNT and no keystore is present',
+      it('does not interfere when current route is NEW_ACCOUNT and no encMnemonic is present',
         createNoRedirectTest({}, 'new-account')
       )
 
-      it('does not interfere when current route is LOGIN and keystore is present but derivedKey',
+      it('does not interfere when current route is LOGIN and encMnemonic is present but locked',
         createNoRedirectTest({
-          keystore: {}, derivedKey: false
+          encMnemonic: 'mnemonic', unlocked: false
         }, 'login')
       )
 
@@ -102,16 +102,16 @@ describe('router/index.js', () => {
       })
 
       it(
-        'redirects to APPS path when setDerivedKey mutation is triggered and keystore is present and derivedKey',
+        'redirects to APPS path when setUnlocked mutation is triggered and hdWallet is present and is unlocked',
         createRedirectTest(
-          {keystore: {}, derivedKey: true}, 'setDerivedKey', 'apps'
+          {encMnemonic: 'mnemonic', hdWallet: {}, unlocked: true}, 'setUnlocked', 'apps'
         )
       )
 
       it(
-        'redirects to LOGIN path when setDerivedKey mutation is triggered and keystore is present but locked',
+        'redirects to LOGIN path when setUnlocked mutation is triggered and hdWallet is present but locked',
         createRedirectTest(
-          {keystore: {}, derivedKey: false}, 'setDerivedKey', 'login'
+          {encMnemonic: 'mnemonic', hdWallet: {}, unlocked: false}, 'setUnlocked', 'login'
         )
       )
     })

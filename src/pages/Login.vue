@@ -70,7 +70,7 @@
           })
           return
         }
-        //TODO: use existing action
+        // TODO: use existing action
         const hdWallet = await HdWallet.createHdWallet("m/44'/60'/0'/0", mnemonic, this.$store.getters.aeternityClient, 1)
         this.$store.commit('setHdWallet', hdWallet)
         // this.$store.commit('setDerivedKey', 'TODO:')
