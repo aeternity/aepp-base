@@ -38,7 +38,7 @@
 <script>
   import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
-  import AeternityClient from 'aepp-sdk'
+  import AeternityClient from '@aeternity/aepp-sdk'
   const HdWallet = AeternityClient.HdWallet
   import Crypto from '../lib/crypto'
 

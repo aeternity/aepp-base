@@ -14,7 +14,7 @@ import {
   // approveMessage as approveMessageDialog
 } from '@/dialogs/index'
 import apps from '@/lib/appsRegistry'
-import AeternityClient from 'aepp-sdk'
+import AeternityClient from '@aeternity/aepp-sdk'
 const HdWallet = AeternityClient.HdWallet
 import BN from 'bn.js'
 import Crypto from '../lib/crypto'
@@ -59,11 +59,6 @@ const store = new Vuex.Store({
     aeternityClient () {
       // websocket wss 443
       const provider = new AeternityClient.providers.HttpProvider('sdk-testnet.aepps.com', 443, {internalPort: 3113, secured: true})
-
-      // provider.setBaseUrl('https://aeternity.flummi.club/external/v2/')
-      // provider.setBaseUrl('https://aeternity.flummi.club/internal/v2/', true)
-      // provider.setBaseUrl('https://sdk-testnet.aepps.com/v2/')
-      // provider.setBaseUrl('https://sdk-testnet.aepps.com/internal/v2/', true)
 
       const client = new AeternityClient(provider)
       return client

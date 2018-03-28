@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@aeternity/aepp-components": "2.0.6",
+    "@aeternity/aepp-sdk": "github:aeternity/aepp-sdk-js#feature/mnemonic",
     "abi-decoder": "^1.0.9",
-    "aepp-sdk": "file:../aepp-sdk-js",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
     "bignumber.js": "^4.1.0",
@@ -42,6 +42,8 @@
     "web3-provider-engine": "^13.3.3"
   },
   "devDependencies": {
+    "@babel/polyfill": "7.0.0-beta.42",
+    "@babel/runtime": "7.0.0-beta.42",
     "@vue/test-utils": "^1.0.0-beta.10",
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.22.1",

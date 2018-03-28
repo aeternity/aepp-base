@@ -32,7 +32,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import AeternityClient from 'aepp-sdk'
+  import AeternityClient from '@aeternity/aepp-sdk'
   import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
 
