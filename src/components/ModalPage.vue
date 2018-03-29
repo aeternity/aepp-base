@@ -22,13 +22,13 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import "~@aeternity/aepp-components/dist/variables.scss";
 
   .modal-page.ae-overlay {
     background: $smoke;
 
-    .ae-modal {
+    /deep/ .ae-modal {
       padding-bottom: 60px;
     }
   }

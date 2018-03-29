@@ -73,4 +73,4 @@
 </template>
 
 <script src="./AddApp.js" />
-<style lang="scss" src="./AddApp.scss" />
+<style lang="scss" src="./AddApp.scss" scoped />
