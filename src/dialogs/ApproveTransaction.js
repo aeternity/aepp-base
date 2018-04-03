@@ -157,5 +157,10 @@ export default {
     ).then(
       fiatGas => { this.fiatGas = fiatGas }
     )
+  },
+  filters: {
+    trimValues: function (value) {
+      return value.toString().substring(0, 8)
+    }
   }
 }
