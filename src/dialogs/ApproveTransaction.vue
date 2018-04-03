@@ -14,7 +14,7 @@
           </div>
         </div>
         <hr>
-        <ae-amount class='approve__amount' color="black" size="med" :value="amount|trimValues" :unit="unit"></ae-amount>
+        <ae-amount class='approve__amount' color="black" size="med" :value="amount" :unit="unit"></ae-amount>
         <div v-if="!!fiatValue" class="fiat-value">{{fiatValueStr}}</div>
         <hr>
         <div class="additional-fees-table" v-if="!!gasEstimate">
