@@ -21,7 +21,14 @@
     components: { AeIdentityAvatar },
     computed: {
       formattedAddress () {
-        return times(6, i => this.address.slice(7 * i, 7 * (i + 1))).join(' ')
+        // return times(6, i => this.address.slice(7 * i, 7 * (i + 1))).join(' ')
+        // TODO: make nicer
+        const start = 7
+        const end = 7
+        const str = this.address
+        return str.substr(0, start + 3) +
+          '…' +
+          str.substr(str.length - end, str.length)
       }
     }
   }

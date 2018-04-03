@@ -24,16 +24,17 @@
     <div v-else>
       <ae-label
         :for="`${_uid}-addressTo`"
-        help-type="danger"
+        help-type="exciting"
         :help-text="errors.first('addressTo')"
       >Receiving address</ae-label>
       <ae-address-input
         :id="_uid"
+        :isBase58="true"
         name="addressTo"
         v-model="to"
-        v-validate="'required|min:42'"
+        v-validate="'required|min:97'"
         data-vv-delay="1"
-        :placeholder="`0x00000 0000000 0000000\n0000000 0000000 0000000`"
+        :placeholder="`ak$••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••`"
       />
       <div class="buttons">
         <ae-button
@@ -50,7 +51,7 @@
 
     <ae-label
       :for="`${_uid}-currency`"
-      help-type="danger"
+      help-type="exciting"
       :help-text="errors.first('currency')"
     >Amount</ae-label>
     <ae-amount-input

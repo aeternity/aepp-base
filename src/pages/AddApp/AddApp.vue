@@ -3,7 +3,7 @@
     <form @submit.prevent="addAppByUrl">
       <ae-label
         :for="`${_uid}-url`"
-        help-type="danger"
+        help-type="exciting"
         :help-text="errors.first('url')"
       >
         Enter æpp URL
