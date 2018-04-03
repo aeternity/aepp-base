@@ -11,7 +11,7 @@
 
 <script>
   import { AeIdentityAvatar } from '@aeternity/aepp-components'
-  import times from 'lodash/times'
+  // import times from 'lodash/times'
 
   export default {
     props: {
