@@ -28,7 +28,7 @@
 
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import QuickId from '@/components/QuickId.vue'
 import ModalScreen from '@/components/ModalScreen'
 import {
