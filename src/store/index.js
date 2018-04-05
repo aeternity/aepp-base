@@ -271,6 +271,55 @@ const store = new Vuex.Store({
       // })
       return spendTx
     },
+    async preClaimDomain ({ state: { hdWallet, selectedIdentityIdx }, getters: { aeternityClient } }, { domain, salt }) {
+      const preClaimFee = 1
+      const account = hdWallet.addresses[selectedIdentityIdx]
+      const tx = {
+        fee: preClaimFee,
+        amount: 0,
+        from: account.pub,
+        to: '0x0'
+      }
+      if (!await approveTransactionDialog(tx, 'AENS')) {
+        throw new Error('Payment rejected by user')
+      }
+      const commitmentHash = await aeternityClient.aens.getCommitmentHash(domain, salt)
+      return await aeternityClient.aens.preClaim(commitmentHash, preClaimFee, account, {})
+    },
+    async claimDomain ({ state: { hdWallet, selectedIdentityIdx }, getters: { aeternityClient } }, { domain, salt }) {
+      const claimFee = 1
+      const account = hdWallet.addresses[selectedIdentityIdx]
+      const tx = {
+        fee: claimFee + 3,
+        amount: 0,
+        from: account.pub,
+        to: '0x0'
+      }
+      if (!await approveTransactionDialog(tx, 'AENS')) {
+        throw new Error('Payment rejected by user')
+      }
+      return await aeternityClient.aens.claim(domain, salt, claimFee, account, {})
+    },
+    async updateDomain ({ state: { hdWallet, selectedIdentityIdx }, getters: { aeternityClient } }, { nameHash, pubKey }) {
+      const account = hdWallet.addresses[selectedIdentityIdx]
+      const updateFee = 1
+      const tx = {
+        fee: updateFee,
+        amount: 0,
+        from: account.pub,
+        to: '0x0'
+      }
+      if (!await approveTransactionDialog(tx, 'AENS')) {
+        throw new Error('Payment rejected by user')
+      }
+      return await aeternityClient.aens.update(pubKey, nameHash, account, {ttl: 36000, fee: updateFee})
+    },
+    async getDomain ({ state: { hdWallet, selectedIdentityIdx }, getters: { aeternityClient } }, { domain }) {
+      return await aeternityClient.aens.getName(domain)
+    },
+    async waitForTransaction ({ getters: { aeternityClient } }, { txHash }) {
+      return await aeternityClient.tx.waitForTransaction(txHash)
+    },
     async signPersonalMessage ({ getters, state }, { msg, appName }) {
       // const data = getters.web3.toAscii(msg.data)
       // const { activeIdentity } = getters

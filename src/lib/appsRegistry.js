@@ -23,5 +23,10 @@ export default [
     name: 'Æddress Book',
     icon: 'static/icons/notary.svg',
     path: 'address-book'
+  },
+  {
+    name: 'AENS',
+    icon: 'static/icons/notary.svg',
+    path: 'aens'
   }
 ]

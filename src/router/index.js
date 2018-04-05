@@ -14,6 +14,7 @@ import AddApp from '@/pages/AddApp/AddApp.vue'
 import AddressBook from '@/pages/AddressBook.vue'
 import AddressBookNew from '@/pages/AddressBookNew.vue'
 import AddressBookChoose from '@/pages/AddressBookChoose.vue'
+import Aens from '@/pages/Aens.vue'
 
 export default (store) => {
   let loginTarget
@@ -90,6 +91,12 @@ export default (store) => {
         name: 'network',
         path: '/network',
         component: Network,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'aens',
+        path: '/aens',
+        component: Aens,
         beforeEnter: checkLoggedIn
       },
       {
