@@ -62,7 +62,7 @@ export default {
         domainDetails.pointers = JSON.parse(domainDetails.pointers)
       }
       this.domainDetails = domainDetails
-      console.log(this.domainDetails)
+      // console.log(this.domainDetails)
     }
   },
   mounted () {

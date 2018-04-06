@@ -1,8 +1,15 @@
 <template>
   <modal-screen class="aens-wizard" :title="title" :redirectToOnClose="{ name: 'aens-list' }">
     <div v-if="!domain">
-      <ae-input placeholder="yourdomain.aet" v-model="domainToCheck"></ae-input>
-      <ae-button type='boring' @click="setDomain">Check</ae-button>
+      <form @submit.prevent="setDomain">
+        <ae-label
+          :for="_uid"
+          help-type="exciting"
+          :help-text="errors.first('domain')"
+        >Enter a .aet domain</ae-label>
+        <ae-input :id="_uid" name="domain" placeholder="yourdomain.aet" v-model="domainToCheck" v-validate="{regex: /^\w+.(aet|test)$/i}"></ae-input>
+        <ae-button :inactive="errors.any()" type='boring'>Check</ae-button>
+      </form>
     </div>
 
     <div class="loading" v-if="loading">
@@ -72,7 +79,8 @@ import {
   AeButton,
   AeInput,
   AeAddressInput,
-  AeAddress
+  AeAddress,
+  AeLabel
 } from '@aeternity/aepp-components'
 
 export default {
@@ -134,10 +142,12 @@ export default {
     QuickId,
     ModalScreen,
     AeAddressInput,
-    AeAddress
+    AeAddress,
+    AeLabel
   },
   methods: {
-    setDomain () {
+    async setDomain () {
+      if (!await this.$validator.validateAll()) return
       this.domain = this.domainToCheck
     },
     async checkDomainState (domain) {
@@ -203,38 +213,60 @@ export default {
       this.checkDomainState(this.domain)
     },
     async startPreclaim () {
-      const salt = Math.floor(Math.random() * Math.floor(Number.MAX_SAFE_INTEGER))
-      const preClaimResult = await this.$store.dispatch('preClaimDomain', { domain: this.domain, salt: salt })
-      const domainObj = {
-        domain: this.domainToCheck,
-        registrar: this.activeIdentity.address,
-        salt: salt,
-        state: 0,
-        nameHash: null,
-        preClaimTx: preClaimResult,
-        claimTx: null,
-        updateTx: null
+      try {
+        const salt = Math.floor(Math.random() * Math.floor(Number.MAX_SAFE_INTEGER))
+        const preClaimResult = await this.$store.dispatch('preClaimDomain', { domain: this.domain, salt: salt })
+        const domainObj = {
+          domain: this.domainToCheck,
+          registrar: this.activeIdentity.address,
+          salt: salt,
+          state: 0,
+          nameHash: null,
+          preClaimTx: preClaimResult,
+          claimTx: null,
+          updateTx: null
+        }
+        this.$store.commit('addDomainItem', domainObj)
+        this.checkDomainState(this.domain)
+      } catch (e) {
+        console.log(e)
+        this.showError('Pre Claim Failed')
       }
-      this.$store.commit('addDomainItem', domainObj)
-      this.checkDomainState(this.domain)
     },
     async startClaim () {
-      const domainObj = this.storageObj
-      const claimResult = await this.$store.dispatch('claimDomain', { domain: this.domain, salt: domainObj.salt })
-      domainObj.claimTx = claimResult
-      this.checkDomainState(this.domain)
+      try {
+        const domainObj = this.storageObj
+        const claimResult = await this.$store.dispatch('claimDomain', { domain: this.domain, salt: domainObj.salt })
+        domainObj.claimTx = claimResult
+        this.checkDomainState(this.domain)
+      } catch (e) {
+        console.log(e)
+        this.showError('Claim Failed')
+      }
     },
     async startUpdate () {
-      const domainObj = this.storageObj
-      const updateDomainResult = await this.$store.dispatch('updateDomain', { nameHash: this.apiData.name_hash, pubKey: this.addressToPoint })
-      domainObj.updateTx = updateDomainResult
-      this.checkDomainState(this.domain)
+      try {
+        const domainObj = this.storageObj
+        const updateDomainResult = await this.$store.dispatch('updateDomain', { nameHash: this.apiData.name_hash, pubKey: this.addressToPoint })
+        domainObj.updateTx = updateDomainResult
+        this.checkDomainState(this.domain)
+      } catch (e) {
+        console.log(e)
+        this.showError('Claim Failed')
+      }
     },
     startRevoke () {
       alert('Not implemented ;)')
     },
     startTransfer () {
       alert('Not implemented ;)')
+    },
+    showError (message) {
+      this.$store.dispatch('setNotification', {
+        text: message,
+        icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
+        autoClose: true
+      })
     }
   },
   mounted () {
