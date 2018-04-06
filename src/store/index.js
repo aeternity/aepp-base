@@ -26,12 +26,13 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ['apps', 'encMnemonic', 'selectedIdentityIdx', 'addressBook']
+      paths: ['apps', 'encMnemonic', 'selectedIdentityIdx', 'numAddresses', 'addressBook', 'domains']
     })
   ],
 
   state: {
     selectedIdentityIdx: 0,
+    numAddresses: 1,
     showIdManager: false,
     balances: {},
     // rpcUrl: 'https://kovan.infura.io',
@@ -48,7 +49,8 @@ const store = new Vuex.Store({
       host: 'sdk-testnet.aepps.com',
       port: 443,
       secured: true
-    }
+    },
+    domains: []
   },
 
   getters: {
@@ -103,8 +105,20 @@ const store = new Vuex.Store({
           name: e.pub.substr(0, 6)
         }))
         : [],
-    activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
-      identities[selectedIdentityIdx]
+    activeIdentity: ({ selectedIdentityIdx }, { identities }) => {
+      return identities[selectedIdentityIdx]
+    },
+    myDomains: (state, {activeIdentity}) => {
+      if (!activeIdentity) {
+        return []
+      }
+      return state.domains.filter(domainObj => domainObj.registrar === activeIdentity.address)
+    },
+    domainState: (state) => ({registrar, domain}) => {
+      state.domains.find(domainObj => {
+        return domainObj.registrar === registrar || domainObj.domain === domain
+      })
+    }
   },
 
   mutations: {
@@ -158,6 +172,17 @@ const store = new Vuex.Store({
     },
     addAddressBookItem (state, item) {
       state.addressBook.push(item)
+    },
+    addDomainItem (state, item) {
+      let existingItem = state.domains.find(domainObj => domainObj.domain === item.domain && domainObj.registrar === item.registrar)
+      if (existingItem) {
+        existingItem = item
+      } else {
+        state.domains.push(item)
+      }
+    },
+    setNumAddresses (state, numAddresses) {
+      state.numAddresses = numAddresses
     }
   },
 
@@ -239,6 +264,7 @@ const store = new Vuex.Store({
     createIdentity ({ getters: { hdWallet }, commit }) {
       hdWallet.generateNewAddress(1)
       commit('setHdWallet', hdWallet)
+      commit('setNumAddresses', hdWallet.addresses.length)
     },
     async signTransaction (
       { state: { derivedKey }, getters }, { tx, appName }

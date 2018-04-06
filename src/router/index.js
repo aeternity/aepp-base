@@ -14,7 +14,8 @@ import AddApp from '@/pages/AddApp/AddApp.vue'
 import AddressBook from '@/pages/AddressBook.vue'
 import AddressBookNew from '@/pages/AddressBookNew.vue'
 import AddressBookChoose from '@/pages/AddressBookChoose.vue'
-import Aens from '@/pages/Aens.vue'
+import AensList from '@/pages/Aens/AensList.vue'
+import AensWizard from '@/pages/Aens/AensWizard.vue'
 
 export default (store) => {
   let loginTarget
@@ -94,9 +95,15 @@ export default (store) => {
         beforeEnter: checkLoggedIn
       },
       {
-        name: 'aens',
+        name: 'aens-list',
         path: '/aens',
-        component: Aens,
+        component: AensList,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'aens-wizard',
+        path: '/aens/wizard/:domain?',
+        component: AensWizard,
         beforeEnter: checkLoggedIn
       },
       {
