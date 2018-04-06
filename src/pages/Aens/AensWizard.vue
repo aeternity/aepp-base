@@ -165,6 +165,8 @@ export default {
         (!apiData.pointers || (!apiData.pointers.account_pubkey && !apiData.pointers.oracle_pubkey)) &&
         !storageObj) {
         this.currentState = this.states.CLAIMED_AND_NOT_OWNED
+      } else if (apiData && !storageObj) {
+        this.currentState = this.states.CLAIMED_AND_NOT_OWNED
       } else if (!apiData && !storageObj) {
         // if not claimed & !localstorage => start pre-claim
         this.currentState = this.states.START_PRECLAIM
