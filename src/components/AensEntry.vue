@@ -1,17 +1,18 @@
 <template>
   <div class="aens-entry">
-    <div class="domain">
-      Domain: {{domain.domain}}
-    </div>
+    <h3 class="domain">
+      {{domain.domain}}
+    </h3>
     <div class="state">
-      State: {{readableState}}
+      {{readableState}}
     </div>
     <div class="pointer" v-if="pointer">
       <ae-address :address="pointer" size="compact" :show-avatar="true"></ae-address>
     </div>
     <div class="actions">
-      <ae-button type='boring' :to="{name: 'aens-wizard', params: {domain: domain.domain}}">Wizard</ae-button>
+      <ae-button type='exciting' size="small" :to="{name: 'aens-wizard', params: {domain: domain.domain}}">Details</ae-button>
     </div>
+    <hr />
   </div>
 </template>
 
@@ -36,9 +37,9 @@ export default {
       'aeternityClient'
     ]),
     readableState () {
-      if (this.domainDetails && this.domainDetails.pointers && (this.domainDetails.pointers.account_pubkey || this.domainDetails.pointers.oracle_pubkey)) {
+      if (this.domainDetails && this.pointer) {
         return 'claimed and set'
-      } else if (this.domainDetails && !this.domainDetails.pointers) {
+      } else if (this.domainDetails) {
         return 'claimed but not set'
       } else if (!this.domainDetails) {
         return 'claiming in progress'
@@ -72,7 +73,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.aens-entry {
+.state {
+  margin: 10px 0px;
+}
 
+.pointer {
+  margin: 10px 0px;
 }
 </style>

@@ -13,12 +13,14 @@
     </div>
 
     <div class="loading" v-if="loading">
-      Loading
+      <ae-loader></ae-loader>
+      <span>Getting Info</span>
     </div>
     <div v-else>
       <div v-if="currentState === states.CLAIMED_AND_OWNED_ROUTED">
-        claimed and owned by you and routed
+        <span>This domain has been claimed and it seems you are the owner. The domain currently points to:</span>
         <ae-address :address="pointer" size="compact" :show-avatar="true"></ae-address>
+        <span>You can update the location this domain points to here:</span>
         <ae-address-input
           :isBase58="true"
           name="addressToPoint"
@@ -31,7 +33,7 @@
         <ae-button type='boring' @click="startTransfer">Transfer</ae-button>
       </div>
       <div v-if="currentState === states.CLAIMED_AND_OWNED_NOT_ROUTED">
-        claimed and owned by you and not pointing to any address
+        <span>The domain was claimed by you but it's not pointing to any address yet. Enter the address you want the domain to point to:</span>
         <ae-address-input
           :isBase58="true"
           name="addressToPoint"
@@ -39,30 +41,36 @@
           v-validate="'required|min:97'"
           data-vv-delay="1">
         </ae-address-input>
-        <ae-button type='boring' @click="startUpdate">Point</ae-button>
+        <ae-button type='dramatic' @click="startUpdate">Point</ae-button>
       </div>
       <div v-else-if="currentState === states.CLAIMED_AND_NOT_OWNED">
-        claimed and (maybe) not owned by you
+        <span>This domain has been already claimed. If you think you are the owner of this domain you can add the domain to your list.</span>
+        <ae-button type='dramatic' @click="checkOwnership">Check ownership</ae-button>
       </div>
       <div v-else-if="currentState === states.START_PRECLAIM">
-        This Domain seems available
-        <ae-button type='boring' @click="startPreclaim">Preclaim</ae-button>
+        <span>This domain seems to be available. You can start claiming the domain
+          with the preclaim now. Remember that the full claiming process will cost about 6Æ in fees.</span>
+        <ae-button type='dramatic' @click="startPreclaim">Preclaim</ae-button>
       </div>
       <div v-else-if="currentState === states.PRECLAIM_MINED">
-        preclaim mined
-        <ae-button type='boring' @click="startClaim">Claim</ae-button>
+        <span>The preclaim was mined. You can now go on and start the actual claim. This will cost 1Æ in transaction fee
+        and 3Æ in fixed claiming fee.</span>
+        <ae-button type='dramatic' @click="startClaim">Claim</ae-button>
       </div>
       <div v-else-if="currentState === states.WAITING_FOR_PRECLAIM">
-        waiting for preclaim
+        <ae-loader></ae-loader>
+        <span>waiting for preclaim transaction to be mined</span>
       </div>
       <div v-else-if="currentState === states.CLAIM_MINED">
-        claim mined
+        <span>The Claim was mined.</span>
       </div>
       <div v-else-if="currentState === states.WAITING_FOR_CLAIM">
-        waiting for claim
+        <ae-loader></ae-loader>
+        <span>waiting for claim transaction to be mined</span>
       </div>
       <div v-else-if="currentState === states.WAITING_FOR_UPDATE">
-        waiting for update
+        <ae-loader></ae-loader>
+        <span>waiting for update transaction to be mined</span>
       </div>
     </div>
 
@@ -80,7 +88,8 @@ import {
   AeInput,
   AeAddressInput,
   AeAddress,
-  AeLabel
+  AeLabel,
+  AeLoader
 } from '@aeternity/aepp-components'
 
 export default {
@@ -143,7 +152,8 @@ export default {
     ModalScreen,
     AeAddressInput,
     AeAddress,
-    AeLabel
+    AeLabel,
+    AeLoader
   },
   methods: {
     async setDomain () {
@@ -259,6 +269,9 @@ export default {
       alert('Not implemented ;)')
     },
     startTransfer () {
+      alert('Not implemented ;)')
+    },
+    checkOwnership () {
       alert('Not implemented ;)')
     },
     showError (message) {
