@@ -10,6 +10,8 @@ describe('router/index.js', () => {
   describe('guarding routes', () => {
     const createStoreMock = (store) => ({
       subscribe: noop,
+      watch: noop,
+      getters: {},
       ...store
     })
 
@@ -83,16 +85,6 @@ describe('router/index.js', () => {
     })
 
     describe('listening on mutations', () => {
-      const createRedirectTest = (state, mutationType, expectedRedirect, currentRouteName) =>
-        () => {
-          const subscribe = sinon.spy()
-          const router = createRouter(createStoreMock({ subscribe, state }))
-          const exposedHandler = subscribe.firstCall.args[0]
-          if (currentRouteName) router.push({ name: currentRouteName })
-          exposedHandler({ type: mutationType }, state)
-          expect(router.currentRoute.name).to.equal(expectedRedirect)
-        }
-
       it('registers a listener for vuex mutations', () => {
         const subscribe = sinon.spy()
 
@@ -100,20 +92,6 @@ describe('router/index.js', () => {
         expect(subscribe).to.have.been.calledOnce
         expect(subscribe.firstCall.args[0]).to.be.a('function')
       })
-
-      it(
-        'redirects to APPS path when setDerivedKey mutation is triggered and keystore is present and derivedKey',
-        createRedirectTest(
-          {keystore: {}, derivedKey: true}, 'setDerivedKey', 'apps'
-        )
-      )
-
-      it(
-        'redirects to LOGIN path when setDerivedKey mutation is triggered and keystore is present but locked',
-        createRedirectTest(
-          {keystore: {}, derivedKey: false}, 'setDerivedKey', 'login'
-        )
-      )
     })
   })
 })

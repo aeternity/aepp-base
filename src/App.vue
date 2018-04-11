@@ -6,6 +6,7 @@
       {{notification.text}}
     </ae-banner>
     <router-view />
+    <waiting-for-confirmation-modal v-if="waitingForConfirmation" />
   </div>
 </template>
 

@@ -24,8 +24,14 @@ var webpackConfig = merge(baseConfig, {
           resolve('node_modules/ethereumjs-util'),
           resolve('node_modules/pngjs'),
           resolve('node_modules/swiper'),
-          resolve('node_modules/web3-provider-engine')
-        ]
+          resolve('node_modules/json-rpc-protocol')
+        ],
+        options: {
+          plugins: [
+            require('babel-plugin-transform-es2015-template-literals'),
+            require('babel-plugin-transform-es2015-shorthand-properties')
+          ]
+        }
       },
     ]
   },

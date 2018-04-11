@@ -14,13 +14,14 @@ import AddApp from '@/pages/AddApp/AddApp.vue'
 import AddressBook from '@/pages/AddressBook.vue'
 import AddressBookNew from '@/pages/AddressBookNew.vue'
 import AddressBookChoose from '@/pages/AddressBookChoose.vue'
+import Pairing from '@/pages/Pairing.vue'
 
 export default (store) => {
   let loginTarget
 
   const checkLoggedIn = (to, from, next) => {
-    const name = !store.state.keystore && 'intro' ||
-      !store.state.derivedKey && 'login'
+    const name = !store.state.pairConnected &&
+      (!store.state.keystore && 'intro' || !store.state.derivedKey && 'login')
     if (name) {
       loginTarget = to.fullPath
       next({ name })
@@ -118,6 +119,14 @@ export default (store) => {
         props: true
       },
       {
+        name: 'pairing',
+        path: '/pairing',
+        component: Pairing,
+        beforeEnter: (to, from, next) => {
+          next(store.state.keystore && !store.state.derivedKey ? { name: 'login' } : undefined)
+        }
+      },
+      {
         name: 'app-browser',
         path: '/:name/:path*',
         component: AppBrowser,
@@ -126,18 +135,24 @@ export default (store) => {
     ]
   })
 
+  store.watch(
+    (state, { loggedIn }) => loggedIn,
+    loggedIn => {
+      if (loggedIn) {
+        router.push(loginTarget || { name: 'apps' })
+        loginTarget = undefined
+      } else {
+        try {
+          router.currentRoute.matched[0].beforeEnter(
+            router.currentRoute,
+            router.currentRoute,
+            route => route && router.push(route))
+        } catch (e) {}
+      }
+    })
+
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
-      case 'setDerivedKey':
-        if (state.keystore) {
-          if (state.derivedKey) {
-            router.push(loginTarget || { name: 'apps' })
-            loginTarget = undefined
-          } else {
-            router.push({ name: 'login' })
-          }
-        }
-        break
       case 'setSeed':
         if (state.seed) router.push({ name: 'set-password' })
         break
