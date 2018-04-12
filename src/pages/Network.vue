@@ -164,9 +164,10 @@ export default {
       this.current = key
     }
     try {
-    let options = JSON.parse(localStorage.getItem('networks'))
-    if (options.length > 0)
-      this.options = options
+      let options = JSON.parse(localStorage.getItem('networks'))
+      if (options.length > 0) {
+        this.options = options
+      }
     } catch (e) {
       /* handle error */
     }
