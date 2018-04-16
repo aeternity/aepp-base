@@ -38,20 +38,16 @@
       </label>
       <div class="inactive-accounts">
         <ae-identity
-          v-for="(identity, index) in identities"
-          v-if="identity !== activeIdentity"
+          v-for="{ identity, index, beforeActive, active } in inactiveIdentities"
           :key="identity.address"
           :active="false"
           :identity="identity"
           size="big"
           collapsed
-          :class="{
-            'before-active': index + 1 === activeIdentityCard,
-            active: index === activeIdentityCard
-          }"
+          :class="{ 'before-active': beforeActive, active }"
           @click="activateCard(index)"
         >
-          <div v-if="index === activeIdentityCard" class="action-buttons">
+          <div v-if="active" class="action-buttons">
             <ae-divider />
             <ae-button
               @click="selectIdentity(index)"
@@ -84,6 +80,18 @@
     mixins: [aeHelperMixin],
     computed: {
       ...mapGetters(['identities', 'activeIdentity']),
+      inactiveIdentities () {
+        const activeIndex = this.activeIdentityCard
+        return this.identities
+          .map((identity, index) => ({ identity, index }))
+          .filter(({ identity }) => identity !== this.activeIdentity)
+          .map(({ identity, index }, i, identities) => ({
+            identity,
+            index,
+            beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
+            active: index === activeIndex
+          }))
+      },
       totalAmount () {
         return this.identities.reduce((p, identity) => ({
           amount: p.amount + parseFloat(this.readableEther(identity.balance)),
