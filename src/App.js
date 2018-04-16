@@ -10,9 +10,7 @@ export default {
     transitionName: undefined
   }),
   computed: {
-    ...mapState({
-      notification: state => state.notification
-    }),
+    ...mapState(['notification']),
     appClassObject: () => {
       return {
         stage: process.env.IS_STAGE === true,
