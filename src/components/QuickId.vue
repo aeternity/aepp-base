@@ -25,7 +25,7 @@
     },
     methods: {
       showIdManager () {
-        this.$router.push({ name: 'accounts' })
+        this.$store.commit('toggleIdManager')
       }
     }
   }

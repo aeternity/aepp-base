@@ -1,69 +1,71 @@
 <template>
-  <modal-page class="accounts" title="My Accounts" @close="closeHandler">
-    <template v-if="identities.length > 1">
-      <label class="total-balance">
-        Total balance
-        <span>
-          <span class="ae">{{totalAmount.tokenAmount}} AE</span><br />
-          {{totalAmount.amount}} ETH
-        </span>
-      </label>
-      <ae-divider />
-    </template>
+  <transition name="accounts-slide">
+    <modal-page class="accounts" title="My Accounts" @close="closeHandler">
+      <template v-if="identities.length > 1">
+        <label class="total-balance">
+          Total balance
+          <span>
+            <span class="ae">{{totalAmount.tokenAmount}} AE</span><br />
+            {{totalAmount.amount}} ETH
+          </span>
+        </label>
+        <ae-divider />
+      </template>
 
-    <label>Active address</label>
-    <ae-identity
-      class="active-account"
-      active
-      :identity="activeIdentity"
-      size="big"
-      :collapsed="false"
-    />
+      <label>Active address</label>
+      <ae-identity
+        class="active-account"
+        active
+        :identity="activeIdentity"
+        size="big"
+        :collapsed="false"
+      />
 
-    <template v-if="identities.length === 1">
-      <p>
-        This is your first Identity, it enables you to use our Æpps,
-        get Tokens, trade them and much more!
-      </p>
-      <p>
-        Quickly activate another identity or instantly create one or multiple ID’s.
-        Each has it’s own address and Token Balance
-      </p>
-    </template>
-    <template v-else>
-      <ae-divider/>
-      <label>
-        Inactive
-        <span>{{identities.length - 1}}</span>
-      </label>
-      <div class="inactive-accounts">
-        <ae-identity
-          v-for="{ identity, index, beforeActive, active } in inactiveIdentities"
-          :key="identity.address"
-          :active="false"
-          :identity="identity"
-          size="big"
-          collapsed
-          :class="{ 'before-active': beforeActive, active }"
-          @click="activateCard(index)"
-        >
-          <div v-if="active" class="action-buttons">
-            <ae-divider />
-            <ae-button
-              @click="selectIdentity(index)"
-              size="small"
-              type="dramatic"
-              uppercase
-            >
-              Activate
-            </ae-button>
-          </div>
-        </ae-identity>
-      </div>
-    </template>
+      <template v-if="identities.length === 1">
+        <p>
+          This is your first Identity, it enables you to use our Æpps,
+          get Tokens, trade them and much more!
+        </p>
+        <p>
+          Quickly activate another identity or instantly create one or multiple ID’s.
+          Each has it’s own address and Token Balance
+        </p>
+      </template>
+      <template v-else>
+        <ae-divider/>
+        <label>
+          Inactive
+          <span>{{identities.length - 1}}</span>
+        </label>
+        <div class="inactive-accounts">
+          <ae-identity
+            v-for="{ identity, index, beforeActive, active } in inactiveIdentities"
+            :key="identity.address"
+            :active="false"
+            :identity="identity"
+            size="big"
+            collapsed
+            :class="{ 'before-active': beforeActive, active }"
+            @click="activateCard(index)"
+          >
+            <div v-if="active" class="action-buttons">
+              <ae-divider />
+              <ae-button
+                @click="selectIdentity(index)"
+                size="small"
+                type="dramatic"
+                uppercase
+              >
+                Activate
+              </ae-button>
+            </div>
+          </ae-identity>
+        </div>
+      </template>
 
-    <fixed-add-button @click="createIdentity" />
-  </modal-page>
+      <fixed-add-button @click="createIdentity" />
+    </modal-page>
+  </transition>
 </template>
 
 <script>
@@ -108,10 +110,7 @@
         this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
       },
       closeHandler () {
-        const { from } = this.$store.state.route
-        const next =
-          !['login', 'set-password'].includes(from.name) && from.path || { name: 'apps' }
-        this.$router.push(next)
+        this.$store.commit('toggleIdManager')
       }
     },
     mounted () {
@@ -122,6 +121,16 @@
 
 <style lang="scss" scoped>
   @import '~@aeternity/aepp-components/dist/variables.scss';
+
+  .accounts-slide {
+    &-enter-active, &-leave-active {
+      transition: top 500ms, opacity 500ms;
+    }
+    &-enter, &-leave-to {
+      top: 100%;
+      opacity: 0;
+    }
+  }
 
   .accounts {
     label {

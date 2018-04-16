@@ -4,9 +4,8 @@
       <img v-if="notification.icon" :src="notification.icon" />
       {{notification.text}}
     </ae-banner>
-    <transition :name="transitionName">
-      <router-view />
-    </transition>
+    <router-view />
+    <accounts v-if="showIdManager" />
   </div>
 </template>
 

@@ -28,6 +28,7 @@ const store = new Vuex.Store({
 
   state: {
     selectedIdentityIdx: 0,
+    showIdManager: false,
     balances: {},
     rpcUrl: 'https://kovan.infura.io',
     keystore: null,
@@ -118,6 +119,9 @@ const store = new Vuex.Store({
     },
     setNotification (state, options) {
       state.notification = options
+    },
+    toggleIdManager (state) {
+      state.showIdManager = !state.showIdManager
     },
     addAddressBookItem (state, item) {
       state.addressBook.push(item)

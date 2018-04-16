@@ -10,20 +10,4 @@
       vertical-align: text-bottom;
     }
   }
-
-  .slide {
-    &-up-leave-active, &-down-enter-active {
-      transition-duration: 500ms;
-    }
-    &-up-enter-active, &-down-leave-active {
-      transition: top 500ms, opacity 500ms;
-    }
-    &-up-enter, &-down-leave-to {
-      top: 100%;
-      opacity: 0;
-    }
-    &-down-leave, &-down-leave-to {
-      z-index: 1;
-    }
-  }
 }
