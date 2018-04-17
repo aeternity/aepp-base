@@ -3,7 +3,7 @@
     <form @submit.prevent="setSeed">
       <ae-label
         :for="_uid"
-        help-type="danger"
+        help-type="dramatic"
         :help-text="errors.first('seed')"
       >Enter passphrase</ae-label>
       <ae-textarea

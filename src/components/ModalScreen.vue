@@ -34,17 +34,7 @@
   .modal-screen.ae-overlay {
     background: $smoke;
 
-    main {
-      flex-grow: 1;
-    }
-  }
-</style>
-
-<style lang="scss">
-  @import '~@aeternity/aepp-components/dist/variables.scss';
-
-  .modal-screen {
-    .ae-modal {
+    /deep/ .ae-modal {
       height: 100%;
       max-height: 600px;
       display: flex;
@@ -54,34 +44,38 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-
-        .content {
-          .ae-button {
-            display: block;
-            width: 100%;
-            max-width: 310px;
-            margin: 15px auto;
-          }
-
-          p {
-            text-align: center;
-            max-width: 300px;
-            font-size: 18px;
-            line-height: 1.56;
-            margin-left: auto;
-            margin-right: auto;
-          }
-        }
-
-        footer.content p {
-          color: $grey;
-          font-size: 16px;
-        }
       }
     }
 
-    .ae-button .inner .label {
-      margin: 0 auto;
+    .content /deep/ {
+      .ae-button {
+        display: block;
+        width: 100%;
+        max-width: 310px;
+        margin: 15px auto;
+
+        .inner .label {
+          margin: 0 auto;
+        }
+      }
+
+      p {
+        text-align: center;
+        max-width: 300px;
+        font-size: 18px;
+        line-height: 1.56;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    main.content {
+      flex-grow: 1;
+    }
+
+    footer.content /deep/ p {
+      color: $grey;
+      font-size: 16px;
     }
   }
 </style>

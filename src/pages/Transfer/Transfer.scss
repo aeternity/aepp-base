@@ -1,7 +1,7 @@
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
-.modal-screen.transfer .ae-modal > main .content {
-  .swiper-container {
+.modal-screen.transfer {
+  .swiper-container /deep/ {
     .swiper-wrapper {
       padding-bottom: 35px;
       width: 365px;

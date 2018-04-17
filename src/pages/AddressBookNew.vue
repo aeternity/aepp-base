@@ -4,7 +4,7 @@
     <form @submit.prevent="addAddressBookItem">
       <ae-label
         :for="`${_uid}-name`"
-        help-type="danger"
+        help-type="dramatic"
         :help-text="errors.first('name')"
       >Contact name</ae-label>
       <ae-input
@@ -16,7 +16,7 @@
 
       <ae-label
         :for="`${_uid}-address`"
-        help-type="danger"
+        help-type="dramatic"
         :help-text="errors.first('address')"
       >Contact address</ae-label>
       <ae-address-input

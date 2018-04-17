@@ -24,11 +24,11 @@
     <div v-else>
       <ae-label
         :for="`${_uid}-addressTo`"
-        help-type="danger"
+        help-type="dramatic"
         :help-text="errors.first('addressTo')"
       >Receiving address</ae-label>
       <ae-address-input
-        :id="_uid"
+        :id="`${_uid}-addressTo`"
         name="addressTo"
         v-model="to"
         v-validate="'required|min:42'"
@@ -50,7 +50,7 @@
 
     <ae-label
       :for="`${_uid}-currency`"
-      help-type="danger"
+      help-type="dramatic"
       :help-text="errors.first('currency')"
     >Amount</ae-label>
     <ae-amount-input
@@ -79,4 +79,4 @@
 
 <style lang="css" src="swiper/dist/css/swiper.css" />
 <script src="./Transfer.js" />
-<style lang="scss" src="./Transfer.scss" />
+<style lang="scss" src="./Transfer.scss" scoped />
