@@ -77,5 +77,6 @@
   </modal-screen>
 </template>
 
+<style lang="css" src="swiper/dist/css/swiper.css" />
 <script src="./Transfer.js" />
 <style lang="scss" src="./Transfer.scss" scoped />

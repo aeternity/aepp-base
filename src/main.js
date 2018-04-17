@@ -46,16 +46,6 @@ window.setRPCUrl = function (rpcURL = 'https://kovan.infura.io') {
 
 Vue.config.productionTip = false
 
-// router.beforeEach((to, from, next) => {
-//   console.log(to.name === 'id-manager' && !store.state.unlocked);
-//   if(to.name === 'id-manager' && !store.state.unlocked) {
-//     console.log(to.name, from.name);
-//     next(false)
-//     console.log(to.name, from );
-//     next({ replace: true, name: 'unlock' })
-//   }
-// })
-
 /* eslint-disable no-new */
 const IdentityApp = Vue.extend({
   render: h => h(App),

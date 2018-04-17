@@ -15,6 +15,7 @@
     },
     methods: {
       closeHandler () {
+        this.$emit('close')
         if (!this.redirectToOnClose) return
         this.$router.push(this.redirectToOnClose)
       }

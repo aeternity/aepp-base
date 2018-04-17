@@ -1,11 +1,11 @@
 <template>
   <div id="app" :class="appClassObject">
-    <id-manager title="Quick Id Manager" :class="idManagerClassObject" />
     <ae-banner v-if="notification">
       <img v-if="notification.icon" :src="notification.icon" />
       {{notification.text}}
     </ae-banner>
     <router-view />
+    <accounts v-if="showIdManager" />
   </div>
 </template>
 
