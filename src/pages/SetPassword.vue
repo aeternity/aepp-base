@@ -3,7 +3,7 @@
     <form @submit.prevent="createKeystore">
       <ae-label
         :for="_uid"
-        help-type="danger"
+        help-type="dramatic"
         :help-text="errors.first('password')"
       >Enter your password</ae-label>
       <ae-input
