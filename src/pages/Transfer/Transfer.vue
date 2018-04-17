@@ -24,7 +24,7 @@
     <div v-else>
       <ae-label
         :for="`${_uid}-addressTo`"
-        help-type="danger"
+        help-type="dramatic"
         :help-text="errors.first('addressTo')"
       >Receiving address</ae-label>
       <ae-address-input
@@ -50,7 +50,7 @@
 
     <ae-label
       :for="`${_uid}-currency`"
-      help-type="danger"
+      help-type="dramatic"
       :help-text="errors.first('currency')"
     >Amount</ae-label>
     <ae-amount-input
