@@ -1,5 +1,5 @@
 <template>
-  <transition name="accounts-slide">
+  <transition name="slide">
     <modal-page class="accounts" title="My Accounts" @close="closeHandler">
       <template v-if="identities.length > 1">
         <label class="total-balance">
@@ -122,17 +122,17 @@
 <style lang="scss" scoped>
   @import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .accounts-slide {
-    &-enter-active, &-leave-active {
-      transition: top 500ms, opacity 500ms;
-    }
-    &-enter, &-leave-to {
-      top: 100%;
-      opacity: 0;
-    }
-  }
-
   .accounts {
+    &.slide {
+      &-enter-active, &-leave-active {
+        transition: top 500ms, opacity 500ms;
+      }
+      &-enter, &-leave-to {
+        top: 100%;
+        opacity: 0;
+      }
+    }
+
     label {
       display: flex;
       text-transform: uppercase;
