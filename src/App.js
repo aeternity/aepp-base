@@ -1,24 +1,18 @@
-import IdManager from '@/components/IdManager/IdManager.vue'
+import { mapState } from 'vuex'
+import { AeBanner } from '@aeternity/aepp-components'
+import Accounts from '@/pages/Accounts.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: { IdManager },
+  components: { AeBanner, Accounts },
   computed: {
+    ...mapState(['notification', 'showIdManager']),
     appClassObject: () => {
       return {
         stage: process.env.IS_STAGE === true,
         development: process.env.NODE_ENV === 'development'
-      }
-    },
-    showIdManager: () => {
-      return store.state.showIdManager && store.state.unlocked
-    },
-    idManagerClassObject () {
-      return {
-        'app_id-manager': true,
-        '_open': store.state.showIdManager && store.state.unlocked
       }
     }
   },
@@ -33,10 +27,5 @@ export default {
   mounted: function () {
     let postMessagehandler = new PostMessageHandler(store)
     postMessagehandler.registerListener()
-  },
-  methods: {
-  },
-  data () {
-    return {}
   }
 }

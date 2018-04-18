@@ -61,6 +61,10 @@ hr:last-child{
 .approve__amount{
   display: inline-block;
   text-align: center !important;
+  text-overflow: ellipsis;
+  width: 100% !important;
+  overflow-x: hidden;
+  line-height: 1.2;
 }
 
 .additional-fees-table{
