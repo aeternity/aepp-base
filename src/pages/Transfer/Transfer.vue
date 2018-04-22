@@ -72,8 +72,6 @@
       <img slot="icon" :src="require('emoji-datasource-apple/img/apple/64/1f4b8.png')" />
       Make Transaction
     </ae-button>
-
-    <quick-id />
   </modal-screen>
 </template>
 

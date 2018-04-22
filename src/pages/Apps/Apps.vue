@@ -34,8 +34,6 @@
       </router-link>
     </div>
 
-    <quick-id />
-
     <ae-modal-light
       v-if="removeAppName"
       :title="`Delete \x22${removeAppName}?\x22`"

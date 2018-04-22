@@ -67,8 +67,6 @@
         </div>
       </div>
     </template>
-
-    <quick-id />
   </ae-modal>
 </template>
 
