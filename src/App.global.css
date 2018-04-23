@@ -40,19 +40,9 @@ body{
 .intro.screen >.inner {
   padding-top:21px;
 }
-.intro.screen .notice{
-  margin-top:20px;
-  margin-bottom:5px;
-}
 .home.screen  {
   margin-top:225px;
 
-}
-.notice {
-  /* Skip: */
-  font-size: 14px;
-  color: #4A4A4A;
-  letter-spacing: 0.35px;
 }
 a {
   color:inherit;
