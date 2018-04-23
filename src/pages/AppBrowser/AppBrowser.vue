@@ -1,8 +1,8 @@
 <template>
-  <div class="app-browser screen" :class="{ loading }">
-    <iframe ref="appframe" id="appframe" class="nomargin" :src="path" />
+  <div class="app-browser screen">
+    <iframe ref="appframe" :class="{ loading }" class="nomargin" :src="path" />
 
-    <div class="loader" />
+    <div v-if="loading" class="loader" />
 
     <quick-id showBackButton />
   </div>
