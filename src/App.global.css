@@ -22,11 +22,7 @@ body{
   height:100%;
   overflow:auto;
 }
-.screen >.inner {
-  padding-top:80px;
-}
-.screen > :first-child:not(.nomargin) ,
-.screen >.inner > :first-child:not(.nomargin) {
+.screen > :first-child:not(.nomargin) {
   margin-top:20px;
 }
 .intro.screen {
@@ -36,9 +32,6 @@ body{
 }
 .proof.screen > :last-child{
   margin-bottom:100px;
-}
-.intro.screen >.inner {
-  padding-top:21px;
 }
 .home.screen  {
   margin-top:225px;
