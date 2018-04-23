@@ -1,6 +1,6 @@
 <template>
-  <div class="app-browser screen">
-    <iframe ref="appframe" :class="{ loading }" class="nomargin" :src="path" />
+  <div class="app-browser">
+    <iframe ref="appframe" :class="{ loading }" :src="path" />
 
     <div v-if="loading" class="loader" />
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="network screen">
+  <div class="network">
     <h1>Network</h1>
     <ae-switch
       name="example"
