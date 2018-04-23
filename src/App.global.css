@@ -22,18 +22,6 @@ body{
 .screen > :first-child:not(.nomargin) {
   margin-top:20px;
 }
-.intro.screen {
-  position:relative;
-  z-index:10;
-  background:white;
-}
-.proof.screen > :last-child{
-  margin-bottom:100px;
-}
-.home.screen  {
-  margin-top:225px;
-
-}
 a {
   color:inherit;
   text-decoration:inherit;
