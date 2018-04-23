@@ -30,15 +30,6 @@ button {
   border: none;
   background: transparent;
 }
-.text {
-  /* This is the æxistenc: */
-  font-weight:300;
-  font-size: 16px;
-  color: #000000;
-  letter-spacing: 0.4px;
-  line-height: 24px;
-  max-width:400px;
-}
 
 h1 {
   font-size: 26px;
