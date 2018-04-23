@@ -15,9 +15,6 @@ body{
   overflow:hidden;
   background-image: linear-gradient(0deg, #F1F4F7 0%, #FFFFFF 100%);
 }
-#app.welcome .topbar {
-  display:none;
-}
 .screen {
   height:100%;
   overflow:auto;
