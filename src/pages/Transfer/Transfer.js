@@ -10,7 +10,6 @@ import {
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 import { convertAEtoCHF, convertETHtoCHF } from '@/lib/currencyConverter'
 import ModalScreen from '@/components/ModalScreen'
-import QuickId from '@/components/QuickId.vue'
 
 export default {
   name: 'transfer',
@@ -23,8 +22,7 @@ export default {
     AeAmountInput,
     AeLabel,
     Swiper,
-    SwiperSlide,
-    QuickId
+    SwiperSlide
   },
   data () {
     return {

@@ -5,6 +5,10 @@
       {{notification.text}}
     </ae-banner>
     <router-view />
+    <quick-id
+      v-if="displayQuickId"
+      :show-back-button="$route.name !== 'apps'"
+    />
     <accounts v-if="showIdManager" />
   </ae-main>
 </template>

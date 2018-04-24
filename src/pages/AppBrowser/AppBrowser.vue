@@ -3,8 +3,6 @@
     <iframe ref="appframe" :class="{ loading }" :src="path" />
 
     <div v-if="loading" class="loader" />
-
-    <quick-id showBackButton />
   </div>
 </template>
 

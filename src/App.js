@@ -1,12 +1,13 @@
 import { mapState } from 'vuex'
 import { AeMain, AeBanner } from '@aeternity/aepp-components'
 import Accounts from '@/pages/Accounts.vue'
+import QuickId from '@/components/QuickId.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: { AeMain, AeBanner, Accounts },
+  components: { AeMain, AeBanner, QuickId, Accounts },
   computed: {
     ...mapState(['notification', 'showIdManager']),
     appClassObject: () => {
@@ -14,6 +15,10 @@ export default {
         stage: process.env.IS_STAGE === true,
         development: process.env.NODE_ENV === 'development'
       }
+    },
+    displayQuickId () {
+      return !['intro', 'onboarding', 'login', 'recover', 'new-account', 'set-password']
+        .includes(this.$route.name)
     }
   },
   created: function () {

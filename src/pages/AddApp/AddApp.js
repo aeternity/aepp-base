@@ -9,7 +9,6 @@ import {
   AeDivider,
   AeModal
 } from '@aeternity/aepp-components'
-import QuickId from '@/components/QuickId.vue'
 import allApps from '@/lib/appsRegistry'
 
 const fuse = new Fuse(allApps, {
@@ -26,8 +25,7 @@ export default {
     AeAppIcon,
     AeIcon,
     AeDivider,
-    AeModal,
-    QuickId
+    AeModal
   },
   data: () => ({
     url: '',

@@ -18,7 +18,6 @@
     <form @submit.prevent="addOption()">
       <input v-if="addCustom" v-model="custom" placeholder="Custom Network" ref="input">
     </form> -->
-    <quick-id showBackButton/>
   </div>
 </template>
 
@@ -30,7 +29,6 @@ import {
   AeButton,
   AeAmountInput
 } from '@aeternity/aepp-components'
-import QuickId from '@/components/QuickId.vue'
 
 export default {
   name: 'network',
@@ -68,8 +66,7 @@ export default {
   components: {
     AeSwitch,
     AeButton,
-    AeAmountInput,
-    QuickId
+    AeAmountInput
   },
   mounted () {
     let url = this.$store.state.rpcUrl
