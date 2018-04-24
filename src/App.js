@@ -1,5 +1,5 @@
 import { mapState } from 'vuex'
-import { AeBanner } from '@aeternity/aepp-components'
+import { AeMain, AeBanner } from '@aeternity/aepp-components'
 import Accounts from '@/pages/Accounts.vue'
 import QuickId from '@/components/QuickId.vue'
 import store from './store'
@@ -7,7 +7,7 @@ import PostMessageHandler from './lib/postMessageHandler'
 
 export default {
   name: 'app',
-  components: { AeBanner, QuickId, Accounts },
+  components: { AeMain, AeBanner, QuickId, Accounts },
   computed: {
     ...mapState(['notification', 'showIdManager']),
     appClassObject: () => {
