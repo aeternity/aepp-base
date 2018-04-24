@@ -3,8 +3,6 @@
     <iframe ref="appframe" id="appframe" class="nomargin" :src="path" />
 
     <div class="loader" />
-
-    <quick-id showBackButton />
   </div>
 </template>
 

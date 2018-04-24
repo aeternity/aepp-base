@@ -1,5 +1,3 @@
-import QuickId from '@/components/QuickId.vue'
-
 export default {
   name: 'app-browser',
   data () {
@@ -8,7 +6,6 @@ export default {
       path: `//${this.$route.fullPath}`
     }
   },
-  components: { QuickId },
   methods: {
     updateUrl ({ data: { method, payload: url } }) {
       if (method !== 'urlChanged') return
