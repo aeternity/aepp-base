@@ -1,13 +1,14 @@
 <template>
   <ae-account-background class="quick-id" type="dramatic" @click="showIdManager">
-    <router-link
-      :to="{ name: 'apps' }"
-      @click.native.stop
-      class="back-button"
-      v-if="showBackButton"
-      tag="button"
-    />
-    <div class="vertical-ruler" v-if="showBackButton" />
+    <template v-if="showBackButton">
+      <router-link
+        :to="{ name: 'apps' }"
+        @click.native.stop
+        class="back-button"
+        tag="button"
+      />
+      <div class="vertical-ruler" />
+    </template>
     <ae-identity-main :identity="identity" active collapsed />
     <ae-icon name="chevron" class="chevron-icon" rotate="270" />
   </ae-account-background>
