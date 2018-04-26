@@ -10,7 +10,7 @@
       <div class="vertical-ruler" />
     </template>
     <ae-identity-main :identity="identity" active collapsed />
-    <ae-icon name="chevron" class="chevron-icon" rotate="270" />
+    <ae-icon name="chevron" rotate="270" type="dramatic" invert />
   </ae-account-background>
 </template>
 
@@ -57,10 +57,6 @@
       height: 25px;
       border-right: 1px solid #ffffff;
       align-self: center;
-    }
-
-    .chevron-icon {
-      fill: #ffffff;
     }
   }
 </style>
