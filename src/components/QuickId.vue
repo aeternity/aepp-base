@@ -1,5 +1,5 @@
 <template>
-  <ae-account-background class="quick-id" type="dramatic" @click="showIdManager">
+  <ae-identity-background class="quick-id" type="dramatic" @click="showIdManager">
     <template v-if="showBackButton">
       <router-link
         :to="{ name: 'apps' }"
@@ -9,18 +9,18 @@
       />
       <div class="vertical-ruler" />
     </template>
-    <ae-identity-main :identity="identity" active collapsed />
+    <ae-identity-light :identity="identity" active collapsed invert />
     <ae-icon name="chevron" rotate="270" type="dramatic" invert />
-  </ae-account-background>
+  </ae-identity-background>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
-  import { AeAccountBackground, AeIdentityMain, AeIcon } from '@aeternity/aepp-components'
+  import { AeIdentityBackground, AeIdentityLight, AeIcon } from '@aeternity/aepp-components'
 
   export default {
     name: 'quick-id',
-    components: { AeAccountBackground, AeIdentityMain, AeIcon },
+    components: { AeIdentityBackground, AeIdentityLight, AeIcon },
     computed: mapGetters({
       identity: 'activeIdentity'
     }),
