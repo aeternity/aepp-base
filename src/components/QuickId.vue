@@ -44,19 +44,25 @@
     width: calc(100% - 40px);
     max-width: 350px;
     cursor: pointer;
+    align-items: center;
 
     .back-button {
       width: 25px;
-      height: auto;
+      height: 25px;
       background: url('/static/icons/grid.svg') no-repeat;
       background-size: contain;
     }
 
     .vertical-ruler {
       margin: 0 15px;
-      height: 25px;
-      border-right: 1px solid #ffffff;
-      align-self: center;
+      height: 30px;
+      background-color: rgba(#ffffff, .5);
+      width: 2px;
+    }
+
+    .ae-identity-light {
+      flex-grow: 1;
+      margin-right: 10px;
     }
   }
 </style>
