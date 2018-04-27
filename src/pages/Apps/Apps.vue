@@ -20,7 +20,7 @@
             <ae-icon slot="icon" invert type="exciting" name="close" />
           </ae-button>
           <router-link :to="app.path">
-            <ae-app-icon :src="app.icon" />
+            <ae-app-icon :src="app.icon" :full-size="app.iconFullSize" />
           </router-link>
         </div>
         <router-link :to="app.path" class="app-name">

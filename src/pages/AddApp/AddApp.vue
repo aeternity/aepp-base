@@ -52,7 +52,7 @@
     <template v-for="(app, idx) in apps">
       <ae-divider v-if="idx" />
       <div class="app" :class="{ inactive: app.added }" @click="addApp(app.id)">
-        <ae-app-icon :src="app.icon" />
+        <ae-app-icon :src="app.icon" :full-size="app.iconFullSize" />
         <div class="content">
           <h2>{{app.name}}</h2>
           <ae-button type="dramatic" size="smaller" uppercase :inactive="app.added">

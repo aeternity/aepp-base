@@ -23,6 +23,7 @@ export const appsRegistry = {
   5: {
     name: 'Addresses',
     icon: 'static/icons/aepps/addresses.svg',
+    iconFullSize: true,
     path: 'addresses'
   }
 }
