@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import {
   AeLabel,
   AeInput,
@@ -42,13 +42,11 @@ export default {
     }
   }),
   methods: {
-    addApp (app) {
-      this.$store.dispatch('addApp', app)
-    },
+    ...mapActions(['addApp']),
     async addAppByUrl () {
       if (!this.url || this.appAddingByUrl || !await this.$validator.validateAll()) return
       this.appAddingByUrl = true
-      await this.$store.dispatch('addApp', this.url)
+      await this.addApp(this.url)
       this.$router.push({ name: 'apps' })
       this.appAddingByUrl = false
     },
