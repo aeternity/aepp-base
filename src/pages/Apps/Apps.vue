@@ -29,8 +29,8 @@
       </div>
 
       <router-link to="add-app" class="app-shortcut">
-        <ae-app-icon src="static/icons/notary.svg" />
-        <div class="app-name">Add App</div>
+        <ae-app-icon src="static/icons/plus.svg" />
+        <div class="app-name">Add an æpp</div>
       </router-link>
     </div>
 
