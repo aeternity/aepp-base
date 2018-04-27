@@ -1,18 +1,19 @@
-export const DEFAULT_ICON = 'static/icons/notary.svg'
+export const DEFAULT_ICON = 'static/icons/aepps/default.svg'
 
 export const appsRegistry = {
   1: {
     name: 'Proof',
-    icon: 'static/icons/notary.svg',
+    icon: 'static/icons/aepps/proof.svg',
     path: `${process.env.IS_STAGE ? 'stage-' : ''}proof.aepps.com`
   },
   2: {
     name: 'Transfer',
+    icon: 'static/icons/aepps/transfer.svg',
     path: 'transfer'
   },
   3: {
     name: 'Wall',
-    icon: 'static/icons/wall.svg',
+    icon: 'static/icons/aepps/wall.svg',
     path: 'wall.aepps.com'
   },
   4: {
@@ -20,7 +21,8 @@ export const appsRegistry = {
     path: 'network'
   },
   5: {
-    name: 'Æddress Book',
-    path: 'address-book'
+    name: 'Addresses',
+    icon: 'static/icons/aepps/addresses.svg',
+    path: 'addresses'
   }
 }

@@ -10,7 +10,7 @@
             <img src="./../../assets/img/onboarding/identity-card.svg" class="large-copy-2">
           </div>
           <div class="content">
-            <h1>Welcome to Identity Manager</h1>
+            <h1>Welcome to Base æpp</h1>
             <p>
               æternity gives you easy access to the magic of blockchain technology.
               Follow these quick steps or just jump in.

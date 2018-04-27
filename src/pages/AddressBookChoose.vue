@@ -2,7 +2,7 @@
   <modal-page
     v-if="addressBook.length"
     class="address-book"
-    title="Æddress Book"
+    title="Addresses"
     :redirectToOnClose="{ name: 'apps' }"
   >
     <ae-divider />

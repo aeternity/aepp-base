@@ -1,5 +1,5 @@
 <template>
-  <modal-screen title="Æddress Book" :redirectToOnClose="{ name: 'address-book' }">
+  <modal-screen title="Addresses" :redirectToOnClose="{ name: 'address-book' }">
     <ae-divider />
     <form @submit.prevent="addAddressBookItem">
       <ae-label
