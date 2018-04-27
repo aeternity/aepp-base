@@ -24,12 +24,6 @@ export default {
     }
   },
   methods: {
-    add () {
-      const url = prompt('URL')
-      if (url) {
-        this.$store.dispatch('addApp', url)
-      }
-    },
     remove () {
       this.$store.commit('removeApp', this.removeAppName)
       this.removeAppName = ''
