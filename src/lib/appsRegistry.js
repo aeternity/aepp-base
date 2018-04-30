@@ -11,9 +11,9 @@ export default [{
   icon: 'static/icons/wall.svg',
   path: 'wall.aepps.com'
 }, {
-  name: 'Network',
+  name: 'Settings',
   icon: 'static/icons/notary.svg',
-  path: 'network'
+  path: 'settings'
 }, {
   name: 'Æddress Book',
   icon: 'static/icons/notary.svg',

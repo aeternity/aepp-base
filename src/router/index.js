@@ -9,7 +9,8 @@ import SetPassword from '@/pages/SetPassword.vue'
 import Apps from '@/pages/Apps/Apps.vue'
 import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
-import Network from '@/pages/Network.vue'
+import Settings from '@/pages/Settings.vue'
+import SettingsNetwork from '@/pages/SettingsNetwork.vue'
 import AddApp from '@/pages/AddApp/AddApp.vue'
 import AddressBook from '@/pages/AddressBook.vue'
 import AddressBookNew from '@/pages/AddressBookNew.vue'
@@ -87,9 +88,15 @@ export default (store) => {
         beforeEnter: checkLoggedIn
       },
       {
-        name: 'network',
-        path: '/network',
-        component: Network,
+        name: 'settings',
+        path: '/settings',
+        component: Settings,
+        beforeEnter: checkLoggedIn
+      },
+      {
+        name: 'settings-network',
+        path: '/settings/network',
+        component: SettingsNetwork,
         beforeEnter: checkLoggedIn
       },
       {
