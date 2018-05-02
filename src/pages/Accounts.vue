@@ -175,9 +175,9 @@
     }
 
     .inactive-accounts {
-      :not(:last-child):not(.before-active):not(.active) /deep/ .ae-identity {
+      & > *:not(:last-child):not(.before-active):not(.active) {
         padding-bottom: 35px;
-        margin-bottom: -20px;
+        margin-bottom: -24px;
       }
 
       .active {
