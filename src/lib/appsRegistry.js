@@ -18,6 +18,7 @@ export const appsRegistry = {
   },
   4: {
     name: 'Settings',
+    icon: 'static/icons/aepps/settings.svg',
     path: 'settings'
   },
   5: {
