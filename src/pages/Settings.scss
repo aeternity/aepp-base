@@ -1,0 +1,8 @@
+@import '~@aeternity/aepp-components/dist/variables.scss';
+
+@media (max-width: $screen-phone - 1px) {
+  .settings.modal-page /deep/ .ae-modal main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

@@ -17,8 +17,9 @@ export const appsRegistry = {
     path: 'wall.aepps.com'
   },
   4: {
-    name: 'Network',
-    path: 'network'
+    name: 'Settings',
+    icon: 'static/icons/aepps/settings.svg',
+    path: 'settings'
   },
   5: {
     name: 'Addresses',
