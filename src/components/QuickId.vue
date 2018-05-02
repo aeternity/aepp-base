@@ -5,7 +5,6 @@
         :to="{ name: 'apps' }"
         @click.native.stop
         class="back-button"
-        tag="button"
       />
       <div class="vertical-ruler" />
     </template>
