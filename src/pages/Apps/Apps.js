@@ -1,5 +1,6 @@
 import { mapState } from 'vuex'
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight, AeHeader } from '@aeternity/aepp-components'
+import { DEFAULT_ICON, appsRegistry } from '@/lib/appsRegistry'
 
 export default {
   name: 'apps',
@@ -7,11 +8,15 @@ export default {
     return {
       editModeActive: false,
       editModeTmOut: null,
-      removeAppName: ''
+      removeAppIndex: -1
     }
   },
   computed: mapState({
-    apps: state => state.apps
+    apps: state => state.apps.map(app => ({
+      icon: DEFAULT_ICON,
+      ...app,
+      ...appsRegistry[app]
+    }))
   }),
   watch: {
     editModeActive (active) {
@@ -24,15 +29,9 @@ export default {
     }
   },
   methods: {
-    add () {
-      const url = prompt('URL')
-      if (url) {
-        this.$store.dispatch('addApp', url)
-      }
-    },
     remove () {
-      this.$store.commit('removeApp', this.removeAppName)
-      this.removeAppName = ''
+      this.$store.commit('removeApp', this.removeAppIndex)
+      this.removeAppIndex = -1
     },
     editMode (action = null) {
       if (action === 'cancel') return clearTimeout(this.editModeTmOut)

@@ -2,7 +2,7 @@
   <modal-page
     v-if="addressBook.length"
     class="address-book"
-    title="Æddress Book"
+    title="Addresses"
     :redirectToOnClose="{ name: 'apps' }"
   >
     <ae-divider />
@@ -16,7 +16,7 @@
       </address-book-item>
       <div v-if="idx === openIdx" class="actions">
         <router-link :to="{ name: 'transfer', params: { to: c.address } }">
-          <ae-app-icon src="static/icons/notary.svg" />
+          <ae-app-icon src="static/icons/aepps/transfer.svg" />
         </router-link>
       </div>
       <ae-divider />

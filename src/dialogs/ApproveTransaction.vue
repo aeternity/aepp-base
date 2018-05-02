@@ -1,7 +1,7 @@
 <template>
   <div class="approve">
     <template>
-      <dialog-header title="Requests a transaction" :appName="appName" iconSrc="static/icons/notary.svg" />
+      <dialog-header title="Requests a transaction" :appName="appName" iconSrc="static/icons/aepps/default.svg" />
       <div class="transaction-flow">
         <div class="id" :title="`from ${transaction.from}`">
           <ae-identity-avatar :address="transaction.from" />

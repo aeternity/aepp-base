@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import {
   AeLabel,
   AeInput,
@@ -9,7 +9,14 @@ import {
   AeDivider,
   AeModal
 } from '@aeternity/aepp-components'
-import allApps from '@/lib/appsRegistry'
+import { DEFAULT_ICON, appsRegistry } from '@/lib/appsRegistry'
+
+const allApps = Object.entries(appsRegistry)
+  .map(([id, d]) => ({
+    icon: DEFAULT_ICON,
+    ...d,
+    id
+  }))
 
 const fuse = new Fuse(allApps, {
   tokenize: true,
@@ -37,18 +44,16 @@ export default {
       return (this.searchTerm ? fuse.search(this.searchTerm) : allApps)
         .map(app => ({
           ...app,
-          added: apps.some(a => a.path === app.path)
+          added: apps.some(a => a === app.id)
         }))
     }
   }),
   methods: {
-    addApp (app) {
-      this.$store.dispatch('addApp', app)
-    },
+    ...mapActions(['addApp']),
     async addAppByUrl () {
       if (!this.url || this.appAddingByUrl || !await this.$validator.validateAll()) return
       this.appAddingByUrl = true
-      await this.$store.dispatch('addApp', this.url)
+      await this.addApp(this.url)
       this.$router.push({ name: 'apps' })
       this.appAddingByUrl = false
     },

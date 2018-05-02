@@ -1,7 +1,7 @@
 <template>
   <div class='approve-message'>
     <template>
-      <dialog-header title="Requests to sign a message" :appName="appName" iconSrc="static/icons/notary.svg"/>
+      <dialog-header title="Requests to sign a message" :appName="appName" iconSrc="static/icons/aepps/default.svg"/>
       <div class="active-id-area">
         <div class="id" :title="`Active identity ${address}`">
           <ae-identity-avatar :address="address"></ae-identity-avatar>
