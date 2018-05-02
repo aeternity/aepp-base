@@ -107,19 +107,19 @@ export default (store) => {
       },
       {
         name: 'address-book',
-        path: '/address-book',
+        path: '/addresses',
         component: AddressBook,
         beforeEnter: checkLoggedIn
       },
       {
         name: 'address-book-new',
-        path: '/address-book/new',
+        path: '/addresses/new',
         component: AddressBookNew,
         beforeEnter: checkLoggedIn
       },
       {
         name: 'address-book-choose',
-        path: '/address-book/choose/:redirectPathTemplate',
+        path: '/addresses/choose/:redirectPathTemplate',
         component: AddressBookChoose,
         beforeEnter: checkLoggedIn,
         props: true

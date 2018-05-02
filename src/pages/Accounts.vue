@@ -23,11 +23,11 @@
 
       <template v-if="identities.length === 1">
         <p>
-          This is your first Identity, it enables you to use our Æpps,
+          This is your first account, it enables you to use our æpps,
           get Tokens, trade them and much more!
         </p>
         <p>
-          Quickly activate another identity or instantly create one or multiple ID’s.
+          Quickly activate another account or instantly create one or multiple accounts.
           Each has it’s own address and Token Balance
         </p>
       </template>
@@ -175,9 +175,9 @@
     }
 
     .inactive-accounts {
-      :not(:last-child):not(.before-active):not(.active) /deep/ .ae-identity {
+      & > *:not(:last-child):not(.before-active):not(.active) {
         padding-bottom: 35px;
-        margin-bottom: -20px;
+        margin-bottom: -24px;
       }
 
       .active {

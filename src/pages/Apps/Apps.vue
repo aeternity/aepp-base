@@ -3,7 +3,7 @@
     <ae-header name="Browse æpps" />
     <div class="shortcuts">
       <div
-        v-for="app in apps"
+        v-for="(app, index) in apps"
         class="app-shortcut"
         @touchstart="editMode"
         @touchend="editMode('cancel')"
@@ -11,7 +11,7 @@
       >
         <div class="app-icon-wrapper">
           <ae-button
-            @click="removeAppName = app.name"
+            @click="removeAppIndex = index"
             class="remove-app-btn"
             :class="{ visible: editModeActive }"
             type="dramatic"
@@ -20,7 +20,7 @@
             <ae-icon slot="icon" invert type="exciting" name="close" />
           </ae-button>
           <router-link :to="app.path">
-            <ae-app-icon :src="app.icon" />
+            <ae-app-icon :src="app.icon" :full-size="app.iconFullSize" />
           </router-link>
         </div>
         <router-link :to="app.path" class="app-name">
@@ -29,15 +29,15 @@
       </div>
 
       <router-link to="add-app" class="app-shortcut">
-        <ae-app-icon src="static/icons/notary.svg" />
-        <div class="app-name">Add App</div>
+        <ae-app-icon src="static/icons/plus.svg" />
+        <div class="app-name">Add an æpp</div>
       </router-link>
     </div>
 
     <ae-modal-light
-      v-if="removeAppName"
-      :title="`Delete \x22${removeAppName}?\x22`"
-      @close="removeAppName = ''"
+      v-if="removeAppIndex !== -1"
+      :title="`Delete \x22${apps[removeAppIndex].name}?\x22`"
+      @close="removeAppIndex = -1"
     >
       You can easily add this æpp again, if you are regretting this action
       <ae-button
@@ -45,7 +45,7 @@
         size="smaller"
         type="exciting"
         uppercase
-        @click="removeAppName = ''"
+        @click="removeAppIndex = -1"
       >cancel</ae-button>
       <ae-button
         slot="buttons"

@@ -14,7 +14,7 @@ import {
   approveTransaction as approveTransactionDialog,
   approveMessage as approveMessageDialog
 } from '@/dialogs/index'
-import apps from '@/lib/appsRegistry'
+import { appsRegistry } from '@/lib/appsRegistry'
 
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
@@ -37,7 +37,7 @@ const store = new Vuex.Store({
     derivedKey: null,
     networkId: null,
     notification: null,
-    apps: [...apps],
+    apps: Object.keys(appsRegistry),
     addressBook: []
   },
 
@@ -107,8 +107,7 @@ const store = new Vuex.Store({
     addApp (state, app) {
       state.apps.push(app)
     },
-    removeApp (state, name) {
-      const appIndex = state.apps.findIndex(app => app.name === name)
+    removeApp (state, appIndex) {
       if (appIndex > -1) {
         state.apps.splice(appIndex, 1)
       }
@@ -136,23 +135,22 @@ const store = new Vuex.Store({
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000)
     },
     async addApp ({ commit }, arg) {
-      const app = typeof arg !== 'string' ? arg : {
-        path: arg.replace(/^https?:\/\//i, ''),
-        icon: 'static/icons/notary.svg'
+      if (appsRegistry[arg]) {
+        commit('addApp', arg)
+        return
       }
 
-      if (!app.name) {
-        try {
-          const response = await fetch('https://cors-anywhere.herokuapp.com/' + app.path)
-          const text = await response.text()
-          const el = document.createElement('html')
-          el.innerHTML = text
-          app.name = el.getElementsByTagName('title')[0].innerText
-        } catch (e) {}
-        app.name = app.name || prompt('Enter Title')
-      }
-
-      commit('addApp', app)
+      const path = arg.replace(/^https?:\/\//i, '')
+      let name
+      try {
+        const response = await fetch('https://cors-anywhere.herokuapp.com/' + path)
+        const text = await response.text()
+        const el = document.createElement('html')
+        el.innerHTML = text
+        name = el.getElementsByTagName('title')[0].innerText
+      } catch (e) {}
+      name = name || prompt('Enter Title')
+      commit('addApp', { path, name })
     },
     updateAllBalances ({getters, dispatch}) {
       getters.keystore.getAddresses().forEach(address =>

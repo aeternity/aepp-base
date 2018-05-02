@@ -1,22 +1,26 @@
 <template>
-  <ae-identity class="quick-id" :identity="identity" active @click="showIdManager" collapsed>
-    <router-link
-      :to="{ name: 'apps' }"
-      class="back"
-      slot="header-left"
-      v-if="showBackButton"
-      @click.native.stop
-    />
-  </ae-identity>
+  <ae-identity-background class="quick-id" type="dramatic" @click="showIdManager">
+    <template v-if="showBackButton">
+      <router-link
+        :to="{ name: 'apps' }"
+        @click.native.stop
+        class="back-button"
+        tag="button"
+      />
+      <div class="vertical-ruler" />
+    </template>
+    <ae-identity-light :identity="identity" active collapsed invert />
+    <ae-icon name="chevron" rotate="270" type="dramatic" invert />
+  </ae-identity-background>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
-  import { AeIdentity, AeIcon } from '@aeternity/aepp-components'
+  import { AeIdentityBackground, AeIdentityLight, AeIcon } from '@aeternity/aepp-components'
 
   export default {
     name: 'quick-id',
-    components: { AeIdentity, AeIcon },
+    components: { AeIdentityBackground, AeIdentityLight, AeIcon },
     computed: mapGetters({
       identity: 'activeIdentity'
     }),
@@ -37,15 +41,28 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 350px;
+    cursor: pointer;
+    align-items: center;
 
-    .back {
+    .back-button {
       width: 25px;
-      height: auto;
+      height: 25px;
       background: url('/static/icons/grid.svg') no-repeat;
       background-size: contain;
-      border-right: 2px solid #f1f4f7;
-      margin-right: 15px;
-      padding-right: 15px;
+    }
+
+    .vertical-ruler {
+      margin: 0 15px;
+      height: 30px;
+      background-color: rgba(#ffffff, .5);
+      width: 2px;
+    }
+
+    .ae-identity-light {
+      flex-grow: 1;
+      margin-right: 10px;
     }
   }
 </style>

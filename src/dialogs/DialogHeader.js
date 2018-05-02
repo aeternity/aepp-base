@@ -8,7 +8,7 @@ export default {
   props: {
     appName: {
       type: String,
-      default: 'Identity Manager'
+      default: 'Base æpp'
     },
     iconSrc: {
       type: String,

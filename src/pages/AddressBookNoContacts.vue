@@ -2,7 +2,7 @@
   <div>
     <modal-screen
       class="address-book-no-contacts"
-      title="Æddress Book"
+      title="Addresses"
       :redirectToOnClose="{ name: 'apps' }"
     >
       <ae-divider />

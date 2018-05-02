@@ -51,8 +51,8 @@
     <ae-label>{{searchTerm ? 'Search results' : 'All æpps'}}</ae-label>
     <template v-for="(app, idx) in apps">
       <ae-divider v-if="idx" />
-      <div class="app" :class="{ inactive: app.added }" @click="addApp(app)">
-        <ae-app-icon :src="app.icon" />
+      <div class="app" :class="{ inactive: app.added }" @click="addApp(app.id)">
+        <ae-app-icon :src="app.icon" :full-size="app.iconFullSize" />
         <div class="content">
           <h2>{{app.name}}</h2>
           <ae-button type="dramatic" size="smaller" uppercase :inactive="app.added">

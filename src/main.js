@@ -47,11 +47,11 @@ window.setRPCUrl = function (rpcURL = 'https://kovan.infura.io') {
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-const IdentityApp = Vue.extend({
+const BaseApp = Vue.extend({
   render: h => h(App),
   components: { App },
   store,
   router: getRouter(store)
 })
-const vm = new IdentityApp()
+const vm = new BaseApp()
 vm.$mount('#app')
