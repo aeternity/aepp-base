@@ -16,6 +16,7 @@ import {
 } from '@/dialogs/index'
 import { appsRegistry } from '@/lib/appsRegistry'
 
+const { BN } = Web3.utils
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
 abiDecoder.addABI(AEToken.abi)
@@ -79,13 +80,20 @@ const store = new Vuex.Store({
     identities: ({ balances }, { keystore }) =>
       keystore
         ? keystore.getAddresses().map(e => ({
-          ...balances[e] || { balance: 0, tokenBalance: 0 },
+          ...balances[e] || { balance: new BN(), tokenBalance: new BN() },
           address: e,
           name: e.substr(0, 6)
         }))
         : [],
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
-      identities[selectedIdentityIdx]
+      identities[selectedIdentityIdx],
+    totalBalance: (state, { identities }) =>
+      identities.reduce(
+        (p, identity) => ({
+          balance: p.balance.add(identity.balance),
+          tokenBalance: p.tokenBalance.add(identity.tokenBalance)
+        }),
+        { balance: new BN(), tokenBalance: new BN() })
   },
 
   mutations: {
@@ -115,7 +123,7 @@ const store = new Vuex.Store({
     selectIdentity (state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx
     },
-    setBalance (state, { address, balance = 0, tokenBalance = 0 }) {
+    setBalance (state, { address, balance, tokenBalance }) {
       Vue.set(state.balances, address, { balance, tokenBalance })
     },
     setNotification (state, options) {
@@ -157,10 +165,10 @@ const store = new Vuex.Store({
         dispatch('updateBalance', address))
     },
     async updateBalance ({ state, getters: { web3, tokenContract }, commit }, address) {
-      const [balance, tokenBalance] = await Promise.all([
+      const [balance, tokenBalance] = (await Promise.all([
         web3.eth.getBalance(address),
-        tokenContract ? tokenContract.methods.balanceOf(address).call() : NaN
-      ])
+        tokenContract ? tokenContract.methods.balanceOf(address).call() : 0
+      ])).map(Web3.utils.toBN)
       if (_.isEqual(state.balances[address], { balance, tokenBalance })) return
       commit('setBalance', { address, balance, tokenBalance })
     },

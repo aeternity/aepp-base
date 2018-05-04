@@ -5,8 +5,8 @@
         <label class="total-balance">
           Total balance
           <span>
-            <span class="ae">{{totalAmount.tokenAmount}} AE</span><br />
-            {{totalAmount.amount}} ETH
+            <span class="ae">{{totalBalance.tokenBalance | formatWei}} AE</span><br />
+            {{totalBalance.balance | formatWei}} ETH
           </span>
         </label>
         <ae-divider />
@@ -66,18 +66,19 @@
 
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex'
-  import { AeIdentity, AeButton, AeDivider, aeHelperMixin } from '@aeternity/aepp-components'
+  import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
   import ModalPage from '@/components/ModalPage'
   import FixedAddButton from '@/components/FixedAddButton'
+  import { formatWei } from '@/lib/filters'
 
   export default {
     data: () => ({
       activeIdentityCard: -1
     }),
     components: { AeIdentity, AeButton, AeDivider, ModalPage, FixedAddButton },
-    mixins: [aeHelperMixin],
+    filters: { formatWei },
     computed: {
-      ...mapGetters(['identities', 'activeIdentity']),
+      ...mapGetters(['identities', 'totalBalance', 'activeIdentity']),
       inactiveIdentities () {
         const activeIndex = this.activeIdentityCard
         return this.identities
@@ -89,14 +90,6 @@
             beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
             active: index === activeIndex
           }))
-      },
-      totalAmount () {
-        return this.identities.reduce((p, identity) => ({
-          amount: p.amount + parseFloat(this.readableEther(identity.balance)),
-          tokenAmount:
-            p.tokenAmount + (identity.tokenBalance
-              ? parseFloat(this.readableToken(identity.tokenBalance)) : 0)
-        }), { amount: 0, tokenAmount: 0 })
       }
     },
     methods: {
