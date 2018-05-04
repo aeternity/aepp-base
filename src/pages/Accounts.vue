@@ -17,8 +17,6 @@
         class="active-account"
         active
         :identity="activeIdentity"
-        size="big"
-        :collapsed="false"
       />
 
       <template v-if="identities.length === 1">
@@ -41,9 +39,7 @@
           <ae-identity
             v-for="{ identity, index, beforeActive, active } in inactiveIdentities"
             :key="identity.address"
-            :active="false"
             :identity="identity"
-            size="big"
             collapsed
             :class="{ 'before-active': beforeActive, active }"
             @click="activateCard(index)"
