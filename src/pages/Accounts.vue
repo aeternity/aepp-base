@@ -1,12 +1,12 @@
 <template>
   <transition name="slide">
-    <modal-page class="accounts" title="My Accounts" @close="closeHandler">
-      <template v-if="identities.length > 1">
+    <modal-page class="accounts" title="My Accounts" @close="toggleIdManager">
+      <template v-if="inactiveIdentities.length">
         <label class="total-balance">
           Total balance
           <span>
-            <span class="ae">{{totalAmount.tokenAmount}} AE</span><br />
-            {{totalAmount.amount}} ETH
+            <span class="ae">{{totalBalance.tokenBalance | formatWei}} AE</span><br />
+            {{totalBalance.balance | formatWei}} ETH
           </span>
         </label>
         <ae-divider />
@@ -17,11 +17,9 @@
         class="active-account"
         active
         :identity="activeIdentity"
-        size="big"
-        :collapsed="false"
       />
 
-      <template v-if="identities.length === 1">
+      <template v-if="inactiveIdentities.length === 0">
         <p>
           This is your first account, it enables you to use our æpps,
           get Tokens, trade them and much more!
@@ -35,15 +33,13 @@
         <ae-divider/>
         <label>
           Inactive
-          <span>{{identities.length - 1}}</span>
+          <span>{{inactiveIdentities.length}}</span>
         </label>
         <div class="inactive-accounts">
           <ae-identity
             v-for="{ identity, index, beforeActive, active } in inactiveIdentities"
             :key="identity.address"
-            :active="false"
             :identity="identity"
-            size="big"
             collapsed
             :class="{ 'before-active': beforeActive, active }"
             @click="activateCard(index)"
@@ -69,48 +65,40 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations, mapActions } from 'vuex'
-  import { AeIdentity, AeButton, AeDivider, aeHelperMixin } from '@aeternity/aepp-components'
+  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+  import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
   import ModalPage from '@/components/ModalPage'
   import FixedAddButton from '@/components/FixedAddButton'
+  import { formatWei } from '@/lib/filters'
 
   export default {
     data: () => ({
       activeIdentityCard: -1
     }),
     components: { AeIdentity, AeButton, AeDivider, ModalPage, FixedAddButton },
-    mixins: [aeHelperMixin],
+    filters: { formatWei },
     computed: {
-      ...mapGetters(['identities', 'activeIdentity']),
-      inactiveIdentities () {
-        const activeIndex = this.activeIdentityCard
-        return this.identities
-          .map((identity, index) => ({ identity, index }))
-          .filter(({ identity }) => identity !== this.activeIdentity)
-          .map(({ identity, index }, i, identities) => ({
-            identity,
-            index,
-            beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
-            active: index === activeIndex
-          }))
-      },
-      totalAmount () {
-        return this.identities.reduce((p, identity) => ({
-          amount: p.amount + parseFloat(this.readableEther(identity.balance)),
-          tokenAmount:
-            p.tokenAmount + (identity.tokenBalance
-              ? parseFloat(this.readableToken(identity.tokenBalance)) : 0)
-        }), { amount: 0, tokenAmount: 0 })
-      }
+      ...mapGetters(['totalBalance', 'activeIdentity']),
+      ...mapState({
+        inactiveIdentities (state, { identities, activeIdentity }) {
+          const activeIndex = this.activeIdentityCard
+          return identities
+            .map((identity, index) => ({ identity, index }))
+            .filter(({ identity }) => identity !== activeIdentity)
+            .map(({ identity, index }, i, identities) => ({
+              identity,
+              index,
+              beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
+              active: index === activeIndex
+            }))
+        }
+      })
     },
     methods: {
-      ...mapMutations(['selectIdentity']),
+      ...mapMutations(['selectIdentity', 'toggleIdManager']),
       ...mapActions(['createIdentity']),
       activateCard (i) {
         this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
-      },
-      closeHandler () {
-        this.$store.commit('toggleIdManager')
       }
     },
     mounted () {

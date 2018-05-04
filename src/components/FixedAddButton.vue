@@ -1,7 +1,7 @@
 <template>
   <ae-button
     class="fixed-add-button"
-    :class="{ 'quick-id': quickId }"
+    :class="{ 'quick-id': quickId, mobile: IS_MOBILE_DEVICE }"
     :to="to"
     @click="$emit('click')"
     type="dramatic"
@@ -12,12 +12,16 @@
 
 <script>
   import { AeButton, AeIcon } from '@aeternity/aepp-components'
+  import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 
   export default {
     props: {
       to: [Object, String],
       'quick-id': Boolean
     },
+    data: () => ({
+      IS_MOBILE_DEVICE
+    }),
     components: { AeButton, AeIcon }
   }
 </script>
@@ -28,16 +32,21 @@
   .fixed-add-button {
     position: fixed;
     bottom: 30px;
-    right: 10px;
+    right: 30px;
 
-    @media (min-width: $screen-phone) {
-      bottom: 28px;
-      right: 28px;
+    &:not(.mobile).quick-id {
+      bottom: 80px;
     }
 
-    &.quick-id {
-      @media (max-width: 600px) {
-        bottom: 110px;
+    &.mobile {
+      @media (max-width: $screen-phone) {
+        right: 10px;
+      }
+
+      &.quick-id {
+        @media (max-width: 600px) {
+          bottom: 110px;
+        }
       }
     }
   }
