@@ -36,7 +36,7 @@
 
     <ae-modal-light
       v-if="removeAppIndex !== -1"
-      :title="`Delete \x22${apps[removeAppIndex].name}?\x22`"
+      :title="`Delete \x22${apps[removeAppIndex].name}\x22?`"
       @close="removeAppIndex = -1"
     >
       You can easily add this æpp again, if you are regretting this action
