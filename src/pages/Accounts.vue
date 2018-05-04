@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
-    <modal-page class="accounts" title="My Accounts" @close="closeHandler">
-      <template v-if="identities.length > 1">
+    <modal-page class="accounts" title="My Accounts" @close="toggleIdManager">
+      <template v-if="inactiveIdentities.length">
         <label class="total-balance">
           Total balance
           <span>
@@ -19,7 +19,7 @@
         :identity="activeIdentity"
       />
 
-      <template v-if="identities.length === 1">
+      <template v-if="inactiveIdentities.length === 0">
         <p>
           This is your first account, it enables you to use our æpps,
           get Tokens, trade them and much more!
@@ -33,7 +33,7 @@
         <ae-divider/>
         <label>
           Inactive
-          <span>{{identities.length - 1}}</span>
+          <span>{{inactiveIdentities.length}}</span>
         </label>
         <div class="inactive-accounts">
           <ae-identity
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations, mapActions } from 'vuex'
+  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
   import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
   import ModalPage from '@/components/ModalPage'
   import FixedAddButton from '@/components/FixedAddButton'
@@ -78,28 +78,27 @@
     components: { AeIdentity, AeButton, AeDivider, ModalPage, FixedAddButton },
     filters: { formatWei },
     computed: {
-      ...mapGetters(['identities', 'totalBalance', 'activeIdentity']),
-      inactiveIdentities () {
-        const activeIndex = this.activeIdentityCard
-        return this.identities
-          .map((identity, index) => ({ identity, index }))
-          .filter(({ identity }) => identity !== this.activeIdentity)
-          .map(({ identity, index }, i, identities) => ({
-            identity,
-            index,
-            beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
-            active: index === activeIndex
-          }))
-      }
+      ...mapGetters(['totalBalance', 'activeIdentity']),
+      ...mapState({
+        inactiveIdentities (state, { identities, activeIdentity }) {
+          const activeIndex = this.activeIdentityCard
+          return identities
+            .map((identity, index) => ({ identity, index }))
+            .filter(({ identity }) => identity !== activeIdentity)
+            .map(({ identity, index }, i, identities) => ({
+              identity,
+              index,
+              beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
+              active: index === activeIndex
+            }))
+        }
+      })
     },
     methods: {
-      ...mapMutations(['selectIdentity']),
+      ...mapMutations(['selectIdentity', 'toggleIdManager']),
       ...mapActions(['createIdentity']),
       activateCard (i) {
         this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
-      },
-      closeHandler () {
-        this.$store.commit('toggleIdManager')
       }
     },
     mounted () {
