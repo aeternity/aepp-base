@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import ZeroClientProvider from 'web3-provider-engine/zero'
 import { keystore as Keystore, signing } from 'eth-lightwallet'
 import Web3 from 'web3'
 import Transaction from 'ethereumjs-tx'
@@ -16,6 +15,7 @@ import {
 } from '@/dialogs/index'
 import { appsRegistry } from '@/lib/appsRegistry'
 
+const { BN } = Web3.utils
 Vue.use(Vuex)
 Bluebird.promisifyAll(Keystore)
 abiDecoder.addABI(AEToken.abi)
@@ -48,29 +48,8 @@ const store = new Vuex.Store({
       Bluebird.promisifyAll(keystore)
       return keystore
     },
-    web3 ({ derivedKey, rpcUrl }, { keystore }) {
-      return new Web3(new ZeroClientProvider({
-        getAccounts (cb) {
-          cb(null, keystore.getAddresses())
-        },
-        signTransaction (tx, cb) {
-          const t = new Transaction(tx)
-          const signed = signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-          cb(null, '0x' + signed)
-        },
-        approveTransaction (tx, cb) {
-          cb(null, true)
-        },
-        signMessage (msg, cb) {
-          const signed = signing.signMsg(keystore, derivedKey, msg.data, msg.from)
-          cb(null, signing.concatSig(signed))
-        },
-        signPersonalMessage (msg, cb) {
-          const signed = signing.signMsg(keystore, derivedKey, msg.data, msg.from)
-          cb(null, signing.concatSig(signed))
-        },
-        rpcUrl
-      }))
+    web3 ({ rpcUrl }) {
+      return new Web3(rpcUrl)
     },
     tokenContract ({ networkId }, { web3 }) {
       if (!networkId || !AEToken.networks[networkId]) return null
@@ -189,7 +168,8 @@ const store = new Vuex.Store({
         ? abiDecoder.decodeMethod(data) : null
 
       tx.gas = tx.gas || await web3.eth.estimateGas(tx)
-      tx.gasPrice = tx.gasPrice || await web3.eth.getGasPrice()
+      tx.gasPrice = tx.gasPrice || new BN(await web3.eth.getGasPrice())
+      tx.nonce = tx.nonce || await web3.eth.getTransactionCount(tx.from)
 
       if (!await approveTransactionDialog(tx, appName, aeTokenTx)) {
         throw new Error('Payment rejected by user')
