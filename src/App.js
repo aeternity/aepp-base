@@ -2,12 +2,18 @@ import { mapState } from 'vuex'
 import { AeMain, AeBanner } from '@aeternity/aepp-components'
 import Accounts from '@/pages/Accounts.vue'
 import QuickId from '@/components/QuickId.vue'
+import FooterModal from '@/components/FooterModal.vue'
+import AccountsHorizontal from '@/components/AccountsHorizontal.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
+import IS_MOBILE_DEVICE from './lib/isMobileDevice'
 
 export default {
   name: 'app',
-  components: { AeMain, AeBanner, QuickId, Accounts },
+  components: { AeMain, AeBanner, QuickId, FooterModal, AccountsHorizontal, Accounts },
+  data: () => ({
+    IS_MOBILE_DEVICE
+  }),
   computed: {
     ...mapState(['notification', 'showIdManager']),
     appClassObject: () => {
