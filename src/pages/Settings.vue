@@ -35,7 +35,7 @@
 
 <style src="./Settings.scss" lang="scss" scoped />
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '~@aeternity/aepp-components/dist/variables.scss';
 
   .settings {
