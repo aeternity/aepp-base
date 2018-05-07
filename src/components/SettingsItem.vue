@@ -7,6 +7,8 @@
     @click="$emit('click', $event)"
   >
     <slot />
+    <div class="space" />
+    <slot name="right" />
   </component>
 </template>
 
@@ -33,7 +35,6 @@
     height: 60px;
     font-size: 18px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #f0f0f0;
     padding: 0 20px;
@@ -44,6 +45,10 @@
       &:hover {
         background-color: $smoke;
       }
+    }
+
+    .space {
+      flex-grow: 1;
     }
   }
 </style>
