@@ -10,6 +10,8 @@ import Bluebird from 'bluebird'
 import _ from 'lodash'
 import AEToken from '@/assets/contracts/AEToken.json'
 import { appsRegistry } from '@/lib/appsRegistry'
+import pollBalance from './plugins/pollBalance'
+import setNetworkId from './plugins/setNetworkId'
 
 const { BN } = Web3.utils
 Vue.use(Vuex)
@@ -21,7 +23,9 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
-    })
+    }),
+    pollBalance,
+    setNetworkId
   ],
 
   state: {
@@ -210,21 +214,5 @@ const store = new Vuex.Store({
     }
   }
 })
-
-let interval
-store.watch(
-  (state, { activeIdentity }) => activeIdentity && activeIdentity.address,
-  (address) => {
-    clearInterval(interval)
-    if (!address) return
-    interval = setInterval(() =>
-      store.dispatch('updateBalance', address), 3000)
-  },
-  { immediate: true })
-
-store.watch(
-  (state, { web3 }) => web3,
-  async web3 => store.commit('setNetworkId', await web3.eth.net.getId()),
-  { immediate: true })
 
 export default store
