@@ -24,7 +24,7 @@ class PostMessageHandler {
     try {
       payload = await method(event)
     } catch (e) {
-      error = e
+      error = e.toString()
     }
     event.source.postMessage({
       uuid: event.data.uuid,
@@ -42,24 +42,13 @@ class PostMessageHandler {
     return accounts
   }
 
-  async signTransaction (event) {
+  signTransaction (event) {
     let tx = event.data.payload
-    try {
-      return await this.store.dispatch('signTransaction', {tx: tx, appName: event.origin})
-    } catch (e) {
-      /* handle error */
-      throw JSON.parse(JSON.stringify(e))
-    }
+    return this.store.dispatch('signTransaction', {tx: tx, appName: event.origin})
   }
-  async signPersonalMessage (event) {
+  signPersonalMessage (event) {
     let msg = event.data.payload
-    try {
-      return await this.store.dispatch('signPersonalMessage', {msg: msg, appName: event.origin})
-    } catch (e) {
-      /* handle error */
-      console.log('e', e)
-      throw e
-    }
+    return this.store.dispatch('signPersonalMessage', {msg: msg, appName: event.origin})
   }
 
   handShake () {
