@@ -34,7 +34,7 @@ class PostMessageHandler {
     }, '*')
   }
 
-  getAccounts (event) {
+  getAccounts () {
     let accounts = []
     if (this.store.getters.activeIdentity.address) {
       accounts.push(this.store.getters.activeIdentity.address)
