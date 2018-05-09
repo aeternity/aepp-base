@@ -9,10 +9,6 @@ import util from 'ethereumjs-util'
 import Bluebird from 'bluebird'
 import _ from 'lodash'
 import AEToken from '@/assets/contracts/AEToken.json'
-import {
-  approveTransaction as approveTransactionDialog,
-  approveMessage as approveMessageDialog
-} from '@/dialogs/index'
 import { appsRegistry } from '@/lib/appsRegistry'
 
 const { BN } = Web3.utils
@@ -38,7 +34,9 @@ const store = new Vuex.Store({
     networkId: null,
     notification: null,
     apps: Object.keys(appsRegistry),
-    addressBook: []
+    addressBook: [],
+    transactionToApprove: null,
+    messageToApprove: null
   },
 
   getters: {
@@ -112,6 +110,12 @@ const store = new Vuex.Store({
     },
     addAddressBookItem (state, item) {
       state.addressBook.push(item)
+    },
+    setTransactionToApprove (state, transaction) {
+      state.transactionToApprove = transaction
+    },
+    setMessageToApprove (state, message) {
+      state.messageToApprove = message
     }
   },
 
@@ -168,7 +172,7 @@ const store = new Vuex.Store({
       commit('setKeystore', keystore.serialize())
     },
     async signTransaction (
-      { state: { derivedKey }, getters: { web3, keystore, tokenContract } }, { tx, appName }
+      { state: { derivedKey }, getters: { web3, keystore, tokenContract }, commit }, { tx, appName }
     ) {
       const { to, data } = tx
       const aeTokenTx = tokenContract && to.toLowerCase() === tokenContract._address.toLowerCase()
@@ -178,19 +182,21 @@ const store = new Vuex.Store({
       tx.gasPrice = tx.gasPrice || new BN(await web3.eth.getGasPrice())
       tx.nonce = tx.nonce || await web3.eth.getTransactionCount(tx.from)
 
-      if (!await approveTransactionDialog(tx, appName, aeTokenTx)) {
-        throw new Error('Payment rejected by user')
-      }
+      await new Promise((resolve, reject) =>
+        commit('setTransactionToApprove', {
+          transaction: tx,
+          appName,
+          aeTokenTx,
+          resolve,
+          reject
+        }))
       const t = new Transaction(tx)
       return signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
     },
-    async signPersonalMessage ({ getters, state: { derivedKey } }, { msg, appName }) {
+    async signPersonalMessage ({ getters, state: { derivedKey }, commit }, { msg, appName }) {
       const data = getters.web3.toAscii(msg.data)
-      const { activeIdentity } = getters
-      const approved = await approveMessageDialog(activeIdentity, data, appName)
-      if (!approved) {
-        throw new Error('Signing rejected by user')
-      }
+      await new Promise((resolve, reject) =>
+        commit('setMessageToApprove', { message: data, appName, resolve, reject }))
       const messageHash = util.hashPersonalMessage(util.toBuffer(data))
       const privateKey = getters.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
       const signed = util.ecsign(messageHash, new Buffer(privateKey, 'hex'))

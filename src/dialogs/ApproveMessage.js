@@ -1,3 +1,4 @@
+import { mapState } from 'vuex'
 import ApproveButtons from '@/dialogs/ApproveButtons.vue'
 import DialogHeader from '@/dialogs/DialogHeader.vue'
 
@@ -16,22 +17,26 @@ export default {
       type: String,
       required: true
     },
-    identity: {
-      type: Object,
+    resolve: {
+      type: Function,
+      required: true
+    },
+    reject: {
+      type: Function,
       required: true
     }
   },
-  computed: {
-    address () {
-      return this.identity.address
-    }
-  },
+  computed: mapState({
+    address: (state, { activeIdentity }) => activeIdentity.address
+  }),
   methods: {
-    reject () {
-      this.$close(false)
+    close () {
+      this.reject(new Error('Signing rejected by user'))
+      this.$store.commit('setMessageToApprove')
     },
     approve () {
-      this.$close(true)
+      this.resolve()
+      this.$store.commit('setMessageToApprove')
     }
   },
   components: {

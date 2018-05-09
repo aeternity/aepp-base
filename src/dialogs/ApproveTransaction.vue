@@ -24,7 +24,7 @@
           <div v-if="!!feesFiat" class="fiat-value">{{feesFiat}}</div>
         </div>
       </div>
-      <approve-buttons @approve="approve" @reject="reject" />
+      <approve-buttons @approve="approve" @reject="close" />
     </template>
 	</div>
 </template>

@@ -27,7 +27,3 @@ h1 {
   align-items: center;
   z-index: 1000000;
 }
-
-.modal-dialogs-wrapper:empty {
-  display: none;
-}
