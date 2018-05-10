@@ -1,4 +1,5 @@
 import Router from 'vue-router'
+import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
 
 import Intro from '@/pages/Intro.vue'
 import Onboarding from '@/pages/Onboarding/Onboarding.vue'
@@ -11,6 +12,8 @@ import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
 import Transfer from '@/pages/Transfer/Transfer.vue'
 import Settings from '@/pages/Settings.vue'
 import SettingsNetwork from '@/pages/SettingsNetwork.vue'
+import SettingsRemoteConnection from '@/pages/SettingsRemoteConnection.vue'
+import SettingsRemoteConnectionNew from '@/pages/SettingsRemoteConnectionNew.vue'
 import AddApp from '@/pages/AddApp/AddApp.vue'
 import AddressBook from '@/pages/AddressBook.vue'
 import AddressBookNew from '@/pages/AddressBookNew.vue'
@@ -99,6 +102,17 @@ export default (store) => {
         component: SettingsNetwork,
         beforeEnter: checkLoggedIn
       },
+      ...IS_MOBILE_DEVICE ? [{
+        name: 'settings-remote-connection',
+        path: '/settings/remote-connection',
+        component: SettingsRemoteConnection,
+        beforeEnter: checkLoggedIn
+      }, {
+        name: 'settings-remote-connection-new',
+        path: '/settings/remote-connection/new',
+        component: SettingsRemoteConnectionNew,
+        beforeEnter: checkLoggedIn
+      }] : [],
       {
         name: 'add-app',
         path: '/add-app',
