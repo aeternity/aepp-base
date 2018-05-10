@@ -14,7 +14,11 @@
           />
         </div>
         <template v-if="!$slots.default">
-          <ae-identity-light :identity="identity" collapsed />
+          <ae-identity-light v-if="loggedIn" :identity="identity" collapsed />
+          <div v-else class="connect-your-account" @click="toggleRemoteConnectionPrompt">
+            <span class="icon" />
+            Connect your account
+          </div>
           <router-link
             :to="{ name: 'apps' }"
             class="back"
@@ -35,18 +39,20 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   import { AeIdentity, AeIcon, AeOverlay, AeIdentityLight } from '@aeternity/aepp-components'
 
   export default {
     components: { AeIdentity, AeIcon, AeOverlay, AeIdentityLight },
-    computed: mapGetters({
-      identity: 'activeIdentity'
-    }),
     props: {
       'show-back-button': Boolean,
       closable: Boolean
-    }
+    },
+    computed: mapGetters({
+      identity: 'activeIdentity',
+      loggedIn: 'loggedIn'
+    }),
+    methods: mapMutations(['toggleRemoteConnectionPrompt'])
   }
 </script>
 
@@ -92,7 +98,7 @@
           }
         }
 
-        .back, .ae-identity-light {
+        .back, .ae-identity-light, .connect-your-account {
           z-index: 1;
           margin: 0 40px;
         }
@@ -102,6 +108,28 @@
           height: 25px;
           background: url('/static/icons/grid-black.svg') no-repeat;
           background-size: contain;
+        }
+
+        .connect-your-account {
+          cursor: pointer;
+          font-size: 12px;
+          font-weight: 500;
+
+          .icon {
+            display: inline-block;
+            background: $anthracite;
+            color: $white;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            margin-right: 12px;
+            border-radius: 10px;
+
+            &::before {
+              content: '!';
+            }
+          }
         }
       }
 
