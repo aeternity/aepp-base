@@ -23,8 +23,9 @@ export default (store) => {
   let loginTarget
 
   const checkLoggedIn = (to, from, next) => {
-    const name = !store.state.keystore && 'intro' ||
-      !store.state.derivedKey && 'login'
+    const name =
+      IS_MOBILE_DEVICE && !store.state.mobile.keystore && 'intro' ||
+      !store.getters.loggedIn && (IS_MOBILE_DEVICE ? 'login' : 'intro')
     if (name) {
       loginTarget = to.fullPath
       next({ name })
@@ -40,44 +41,42 @@ export default (store) => {
         path: '/',
         component: Intro,
         beforeEnter (to, from, next) {
-          if (!from.name && store.state.keystore) return next({ name: 'login' })
+          if (IS_MOBILE_DEVICE && !from.name && store.state.mobile.keystore) {
+            return next({ name: 'login' })
+          }
           next()
         }
       },
-      {
+      ...IS_MOBILE_DEVICE ? [{
         name: 'onboarding',
         path: '/onboarding',
         component: Onboarding
-      },
-      {
+      }, {
         name: 'login',
         path: '/login',
         component: Login,
         beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'new-account' })
-          if (store.state.derivedKey) return next({ name: 'apps' })
+          if (!store.state.mobile.keystore) return next({ name: 'new-account' })
+          if (store.getters.loggedIn) return next({ name: 'apps' })
           next()
         }
-      },
-      {
+      }, {
         name: 'recover',
         path: '/recover',
         component: Recover
-      },
-      {
+      }, {
         name: 'new-account',
         path: '/new-account',
         component: NewAccount
-      },
-      {
+      }, {
         name: 'set-password',
         path: '/set-password',
         component: SetPassword,
         beforeEnter (to, from, next) {
-          if (!store.state.seed) return next({ name: 'intro' })
+          if (!store.state.mobile.seed) return next({ name: 'intro' })
           next()
         }
-      },
+      }] : [],
       {
         name: 'apps',
         path: '/apps',
@@ -147,20 +146,22 @@ export default (store) => {
     ]
   })
 
+  store.watch(
+    (state, { loggedIn }) => loggedIn,
+    loggedIn => {
+      if (loggedIn) {
+        router.push(loginTarget || { name: 'apps' })
+        loginTarget = undefined
+      } else {
+        loginTarget = router.currentRoute.fullPath
+        router.push({ name: 'intro' })
+      }
+    })
+
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
-      case 'setDerivedKey':
-        if (state.keystore) {
-          if (state.derivedKey) {
-            router.push(loginTarget || { name: 'apps' })
-            loginTarget = undefined
-          } else {
-            router.push({ name: 'login' })
-          }
-        }
-        break
       case 'setSeed':
-        if (state.seed) router.push({ name: 'set-password' })
+        if (state.mobile.seed) router.push({ name: 'set-password' })
         break
     }
   })
