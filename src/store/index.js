@@ -12,6 +12,7 @@ import AEToken from '@/assets/contracts/AEToken.json'
 import { appsRegistry } from '@/lib/appsRegistry'
 import pollBalance from './plugins/pollBalance'
 import setNetworkId from './plugins/setNetworkId'
+import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 
 const { BN } = Web3.utils
 Vue.use(Vuex)
@@ -25,7 +26,8 @@ const store = new Vuex.Store({
       paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
     }),
     pollBalance,
-    setNetworkId
+    setNetworkId,
+    notificationOnRemoteConnection
   ],
 
   state: {
