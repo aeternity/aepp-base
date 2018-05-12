@@ -1,6 +1,7 @@
 import { mapState } from 'vuex'
-import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight, AeHeader } from '@aeternity/aepp-components'
+import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
 import { DEFAULT_ICON, appsRegistry } from '@/lib/appsRegistry'
+import AeHeader from '@/components/AeHeader'
 
 export default {
   name: 'apps',

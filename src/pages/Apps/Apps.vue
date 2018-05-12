@@ -1,6 +1,12 @@
 <template>
   <div class="apps" @click="editModeActive = false">
-    <ae-header name="Browse æpps" />
+    <header class="mobile">Browse æpps</header>
+    <ae-header>
+      <ae-button :to="{ name: 'add-app' }" type="dramatic">
+        <ae-icon slot="icon" name="plus" invert type="exciting" />
+      </ae-button>
+    </ae-header>
+
     <div class="shortcuts">
       <div
         v-for="(app, index) in apps"
@@ -28,7 +34,7 @@
         </router-link>
       </div>
 
-      <router-link to="add-app" class="app-shortcut">
+      <router-link :to="{ name: 'add-app' }" class="app-shortcut add-app">
         <ae-app-icon src="static/icons/plus.svg" />
         <div class="app-name">Add an æpp</div>
       </router-link>
