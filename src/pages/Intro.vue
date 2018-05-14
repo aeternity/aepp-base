@@ -9,34 +9,26 @@
     </div>
 
     <div slot="footer">
-      <template v-if="IS_MOBILE_DEVICE">
-        <ae-button :to="{ name: keystore ? 'login' : 'new-account' }" type="exciting">
-          {{keystore ? 'Login' : 'Create Account'}}
-        </ae-button>
-        <ae-button :to="{ name: 'onboarding' }" size="small" plain uppercase>
-          See how it works
-        </ae-button>
-      </template>
-      <ae-button v-else @click="toggleRemoteConnectionPrompt" type="exciting">
-        Connect your account
+      <ae-button :to="{ name: keystore ? 'login' : 'new-account' }" type="exciting">
+        {{keystore ? 'Login' : 'Create Account'}}
+      </ae-button>
+      <ae-button :to="{ name: 'onboarding' }" size="small" plain uppercase>
+        See how it works
       </ae-button>
     </div>
   </modal-screen>
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState } from 'vuex'
   import { AeButton } from '@aeternity/aepp-components'
-  import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
   import ModalScreen from '@/components/ModalScreen'
 
   export default {
     components: { ModalScreen, AeButton },
-    data: () => ({ IS_MOBILE_DEVICE }),
     computed: mapState({
       keystore: state => state.mobile.keystore
-    }),
-    methods: mapMutations(['toggleRemoteConnectionPrompt'])
+    })
   }
 </script>
 

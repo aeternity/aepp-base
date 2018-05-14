@@ -22,32 +22,36 @@ import AddressBookChoose from '@/pages/AddressBookChoose.vue'
 export default (store) => {
   let loginTarget
 
-  const checkLoggedIn = (to, from, next) => {
-    const name =
-      IS_MOBILE_DEVICE && !store.state.mobile.keystore && 'intro' ||
-      !store.getters.loggedIn && (IS_MOBILE_DEVICE ? 'login' : 'intro')
-    if (name) {
-      loginTarget = to.fullPath
-      next({ name })
-      return
+  const checkLoggedIn = requireLoggedIn => (to, from, next) => {
+    if (!store.getters.loggedIn) {
+      if (IS_MOBILE_DEVICE) {
+        loginTarget = to.fullPath
+        next({ name: store.state.mobile.keystore ? 'login' : 'intro' })
+        return
+      } else if (requireLoggedIn) {
+        loginTarget = to.fullPath
+        if (from.name) next(false)
+        else next({ name: 'apps' })
+        store.commit('toggleRemoteConnectionPrompt')
+        return
+      }
     }
     next()
   }
 
   const router = new Router({
     routes: [
-      {
+      ...IS_MOBILE_DEVICE ? [{
         name: 'intro',
         path: '/',
         component: Intro,
         beforeEnter (to, from, next) {
-          if (IS_MOBILE_DEVICE && !from.name && store.state.mobile.keystore) {
+          if (!from.name && store.state.mobile.keystore) {
             return next({ name: 'login' })
           }
           next()
         }
-      },
-      ...IS_MOBILE_DEVICE ? [{
+      }, {
         name: 'onboarding',
         path: '/onboarding',
         component: Onboarding
@@ -79,69 +83,69 @@ export default (store) => {
       }] : [],
       {
         name: 'apps',
-        path: '/apps',
+        path: IS_MOBILE_DEVICE ? '/apps' : '/',
         component: Apps,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(false)
       },
       {
         name: 'transfer',
         path: '/transfer/:to?/:currency?',
         component: Transfer,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(true)
       },
       {
         name: 'settings',
         path: '/settings',
         component: Settings,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(false)
       },
       {
         name: 'settings-network',
         path: '/settings/network',
         component: SettingsNetwork,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(false)
       },
       ...IS_MOBILE_DEVICE ? [{
         name: 'settings-remote-connection',
         path: '/settings/remote-connection',
         component: SettingsRemoteConnection,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(true)
       }, {
         name: 'settings-remote-connection-new',
         path: '/settings/remote-connection/new',
         component: SettingsRemoteConnectionNew,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(true)
       }] : [],
       {
         name: 'add-app',
         path: '/add-app',
         component: AddApp,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(true)
       },
       {
         name: 'address-book',
         path: '/addresses',
         component: AddressBook,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(true)
       },
       {
         name: 'address-book-new',
         path: '/addresses/new',
         component: AddressBookNew,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(true)
       },
       {
         name: 'address-book-choose',
         path: '/addresses/choose/:redirectPathTemplate',
         component: AddressBookChoose,
-        beforeEnter: checkLoggedIn,
+        beforeEnter: checkLoggedIn(true),
         props: true
       },
       {
         name: 'app-browser',
         path: '/:name/:path*',
         component: AppBrowser,
-        beforeEnter: checkLoggedIn
+        beforeEnter: checkLoggedIn(false)
       }
     ]
   })
@@ -150,11 +154,13 @@ export default (store) => {
     (state, { loggedIn }) => loggedIn,
     loggedIn => {
       if (loggedIn) {
-        router.push(loginTarget || { name: 'apps' })
-        loginTarget = undefined
+        if (IS_MOBILE_DEVICE || loginTarget) {
+          router.push(loginTarget || { name: 'apps' })
+          loginTarget = undefined
+        }
       } else {
         loginTarget = router.currentRoute.fullPath
-        router.push({ name: 'intro' })
+        router.push({ name: IS_MOBILE_DEVICE ? 'intro' : 'apps' })
       }
     })
 
@@ -162,6 +168,9 @@ export default (store) => {
     switch (mutation.type) {
       case 'setSeed':
         if (state.mobile.seed) router.push({ name: 'set-password' })
+        break
+      case 'toggleRemoteConnectionPrompt':
+        if (!state.desktop.showRemoteConnectionPrompt) loginTarget = undefined
         break
     }
   })
