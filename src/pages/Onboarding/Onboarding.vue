@@ -1,9 +1,7 @@
 <template>
   <div class="onBoarding">
     <div class="wrapper">
-      <header>
-        <img src="./../../assets/img/header-logo.svg">
-      </header>
+      <ae-header />
       <main class="main-content-container">
         <section id="welcome">
           <div class="cube-div">
