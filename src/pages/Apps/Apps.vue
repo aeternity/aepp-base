@@ -17,6 +17,7 @@
       >
         <div class="app-icon-wrapper">
           <ae-button
+            v-if="loggedIn"
             @click="removeAppIndex = index"
             class="remove-app-btn"
             :class="{ visible: editModeActive }"

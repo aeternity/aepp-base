@@ -27,7 +27,7 @@
   export default {
     components: { ModalScreen, AeButton },
     computed: mapState({
-      keystore: state => state.keystore
+      keystore: state => state.mobile.keystore
     })
   }
 </script>

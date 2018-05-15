@@ -38,12 +38,8 @@ export default {
     },
     transaction: Object,
     aeTokenTx: Object,
-    resolve: {
-      type: Function,
-      required: true
-    },
-    reject: {
-      type: Function,
+    id: {
+      type: String,
       required: true
     }
   },
@@ -104,12 +100,10 @@ export default {
   },
   methods: {
     close () {
-      this.reject(new Error('Payment rejected by user'))
-      this.$store.commit('setTransactionToApprove')
+      this.$store.commit('cancelTransaction', this.id)
     },
     approve () {
-      this.resolve()
-      this.$store.commit('setTransactionToApprove')
+      this.$store.commit('approveTransaction', this.id)
     }
   },
   async mounted () {

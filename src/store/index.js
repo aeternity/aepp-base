@@ -1,55 +1,61 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import { keystore as Keystore, signing } from 'eth-lightwallet'
 import Web3 from 'web3'
-import Transaction from 'ethereumjs-tx'
-import abiDecoder from 'abi-decoder'
-import util from 'ethereumjs-util'
-import Bluebird from 'bluebird'
 import _ from 'lodash'
+import uuid from 'uuid/v4'
 import AEToken from '@/assets/contracts/AEToken.json'
 import { appsRegistry } from '@/lib/appsRegistry'
+import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
+import desktop from './modules/desktop'
+import mobile from './modules/mobile'
 import pollBalance from './plugins/pollBalance'
 import setNetworkId from './plugins/setNetworkId'
+import remoteConnection from './plugins/remoteConnection'
+import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 
 const { BN } = Web3.utils
 Vue.use(Vuex)
-Bluebird.promisifyAll(Keystore)
-abiDecoder.addABI(AEToken.abi)
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     createPersistedState({
-      paths: ['apps', 'rpcUrl', 'keystore', 'selectedIdentityIdx', 'addressBook']
+      paths: [
+        'peerKey',
+        ...IS_MOBILE_DEVICE
+          ? [
+            'apps',
+            'rpcUrl',
+            'mobile.keystore',
+            'selectedIdentityIdx',
+            'addressBook',
+            'mobile.followers'
+          ] : []
+      ]
     }),
     pollBalance,
-    setNetworkId
+    setNetworkId,
+    remoteConnection.plugin,
+    notificationOnRemoteConnection
   ],
 
+  modules: IS_MOBILE_DEVICE ? { mobile } : { desktop },
+
   state: {
+    peerKey: uuid(),
     selectedIdentityIdx: 0,
     showIdManager: false,
     balances: {},
+    addresses: [],
     rpcUrl: 'https://kovan.infura.io',
-    keystore: null,
-    derivedKey: null,
     networkId: null,
     notification: null,
     apps: Object.keys(appsRegistry),
-    addressBook: [],
-    transactionToApprove: null,
-    messageToApprove: null
+    addressBook: []
   },
 
   getters: {
-    keystore ({ keystore: serializedKeystore }) {
-      if (!serializedKeystore) return null
-      const keystore = Keystore.deserialize(serializedKeystore)
-      Bluebird.promisifyAll(keystore)
-      return keystore
-    },
     web3 ({ rpcUrl }) {
       return new Web3(rpcUrl)
     },
@@ -57,14 +63,12 @@ const store = new Vuex.Store({
       if (!networkId || !AEToken.networks[networkId]) return null
       return new web3.eth.Contract(AEToken.abi, AEToken.networks[networkId].address)
     },
-    identities: ({ balances }, { keystore }) =>
-      keystore
-        ? keystore.getAddresses().map(e => ({
-          ...balances[e] || { balance: new BN(), tokenBalance: new BN() },
-          address: e,
-          name: e.substr(0, 6)
-        }))
-        : [],
+    identities: ({ balances }, { addresses }) =>
+      addresses.map(e => ({
+        ...balances[e] || { balance: new BN(), tokenBalance: new BN() },
+        address: e,
+        name: e.substr(0, 6)
+      })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
     totalBalance: (state, { identities }) =>
@@ -79,15 +83,6 @@ const store = new Vuex.Store({
   mutations: {
     setRPCUrl (state, rpcUrl) {
       state.rpcUrl = rpcUrl
-    },
-    setKeystore (state, keystore) {
-      state.keystore = keystore
-    },
-    setSeed (state, seed) {
-      state.seed = seed
-    },
-    setDerivedKey (state, derivedKey) {
-      state.derivedKey = derivedKey
     },
     setNetworkId (state, networkId) {
       state.networkId = networkId
@@ -114,12 +109,6 @@ const store = new Vuex.Store({
     },
     addAddressBookItem (state, item) {
       state.addressBook.push(item)
-    },
-    setTransactionToApprove (state, transaction) {
-      state.transactionToApprove = transaction
-    },
-    setMessageToApprove (state, message) {
-      state.messageToApprove = message
     }
   },
 
@@ -146,9 +135,8 @@ const store = new Vuex.Store({
       name = name || prompt('Enter Title')
       commit('addApp', { path, name })
     },
-    updateAllBalances ({getters, dispatch}) {
-      getters.keystore.getAddresses().forEach(address =>
-        dispatch('updateBalance', address))
+    updateAllBalances ({ getters: { addresses }, dispatch }) {
+      addresses.forEach(address => dispatch('updateBalance', address))
     },
     async updateBalance ({ state, getters: { web3, tokenContract }, commit }, address) {
       const [balance, tokenBalance] = (await Promise.all([
@@ -157,60 +145,6 @@ const store = new Vuex.Store({
       ])).map(Web3.utils.toBN)
       if (_.isEqual(state.balances[address], { balance, tokenBalance })) return
       commit('setBalance', { address, balance, tokenBalance })
-    },
-    async createKeystore ({ commit, dispatch, state }, password) {
-      const keystore = await Keystore.createVaultAsync({
-        password: password,
-        seedPhrase: state.seed,
-        hdPathString: "m/44'/60'/0'/0"
-      })
-      Bluebird.promisifyAll(keystore)
-      const derivedKey = await keystore.keyFromPasswordAsync(password)
-      keystore.generateNewAddress(derivedKey, 1)
-      commit('selectIdentity', 0)
-      commit('setKeystore', keystore.serialize())
-      commit('setDerivedKey', derivedKey)
-    },
-    createIdentity ({ getters: { keystore }, state: { derivedKey }, commit }) {
-      keystore.generateNewAddress(derivedKey, 1)
-      commit('setKeystore', keystore.serialize())
-    },
-    async signTransaction (
-      { state: { derivedKey }, getters: { web3, keystore, tokenContract }, commit }, { tx, appName }
-    ) {
-      const { to, data } = tx
-      const aeTokenTx = tokenContract && to.toLowerCase() === tokenContract._address.toLowerCase()
-        ? abiDecoder.decodeMethod(data) : null
-
-      tx.gas = tx.gas || await web3.eth.estimateGas(tx)
-      tx.gasPrice = tx.gasPrice || new BN(await web3.eth.getGasPrice())
-      tx.nonce = tx.nonce || await web3.eth.getTransactionCount(tx.from)
-
-      await new Promise((resolve, reject) =>
-        commit('setTransactionToApprove', {
-          transaction: tx,
-          appName,
-          aeTokenTx,
-          resolve,
-          reject
-        }))
-      const t = new Transaction(tx)
-      return signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
-    },
-    async signPersonalMessage ({ getters, state: { derivedKey }, commit }, { msg, appName }) {
-      const data = getters.web3.toAscii(msg.data)
-      await new Promise((resolve, reject) =>
-        commit('setMessageToApprove', { message: data, appName, resolve, reject }))
-      const messageHash = util.hashPersonalMessage(util.toBuffer(data))
-      const privateKey = getters.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
-      const signed = util.ecsign(messageHash, new Buffer(privateKey, 'hex'))
-      const combined = Buffer.concat([
-        Buffer.from(signed.r),
-        Buffer.from(signed.s),
-        Buffer.from([signed.v])
-      ])
-      // TODO confirm screen like in signTransaction
-      return util.addHexPrefix(combined.toString('hex'))
     }
   }
 })

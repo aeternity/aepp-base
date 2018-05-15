@@ -1,4 +1,4 @@
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
 import { DEFAULT_ICON, appsRegistry } from '@/lib/appsRegistry'
 import AeHeader from '@/components/AeHeader'
@@ -12,13 +12,16 @@ export default {
       removeAppIndex: -1
     }
   },
-  computed: mapState({
-    apps: state => state.apps.map(app => ({
-      icon: DEFAULT_ICON,
-      ...app,
-      ...appsRegistry[app]
-    }))
-  }),
+  computed: {
+    ...mapState({
+      apps: state => state.apps.map(app => ({
+        icon: DEFAULT_ICON,
+        ...app,
+        ...appsRegistry[app]
+      }))
+    }),
+    ...mapGetters(['loggedIn'])
+  },
   watch: {
     editModeActive (active) {
       if (active) {
@@ -35,6 +38,7 @@ export default {
       this.removeAppIndex = -1
     },
     editMode (action = null) {
+      if (!this.loggedIn) return
       if (action === 'cancel') return clearTimeout(this.editModeTmOut)
       this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
     }

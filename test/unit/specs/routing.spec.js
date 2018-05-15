@@ -1,17 +1,33 @@
 import { createLocalVue } from '@vue/test-utils'
 import Router from 'vue-router'
 import { noop } from 'lodash'
-import createRouter from '@/router'
+import createRouterInjector from 'inject-loader!@/router'
+
+const createRouter = createRouterInjector({
+  '@/lib/isMobileDevice': true
+}).default
 
 const localVue = createLocalVue()
 localVue.use(Router)
 
 describe('router/index.js', () => {
   describe('guarding routes', () => {
-    const createStoreMock = (store) => ({
-      subscribe: noop,
-      ...store
-    })
+    const createStoreMock = (store) => {
+      const state = {
+        mobile: {},
+        ...store.state
+      }
+
+      return {
+        subscribe: noop,
+        watch: noop,
+        getters: {
+          loggedIn: state.mobile.derivedKey
+        },
+        ...store,
+        state
+      }
+    }
 
     describe('routing when route change is requested', () => {
       const createRedirectTest = (state, fromName, expectedRedirectName) => () => {
@@ -36,34 +52,34 @@ describe('router/index.js', () => {
       it(
         'pushes LOGIN path if current route is APPS and keystore is present but not derivedKey',
         createRedirectTest({
-          keystore: {}, derivedKey: false
+          mobile: { keystore: {}, derivedKey: false }
         }, 'apps', 'login')
       )
 
       it(
         'does NOT redirect if current route is NEW_ACCOUNT and keystore is present but not derivedKey',
         createNoRedirectTest({
-          keystore: {}, derivedKey: false
+          mobile: { keystore: {}, derivedKey: false }
         }, 'new-account')
       )
 
       it(
         'pushes APPS path if current route is LOGIN and keystore is present and derivedKey',
         createRedirectTest({
-          keystore: {}, derivedKey: true
+          mobile: { keystore: {}, derivedKey: true }
         }, 'login', 'apps')
       )
 
       it(
         'does NOT redirect if current route is NEW_ACCOUNT and keystore is present and derivedKey',
         createNoRedirectTest({
-          keystore: {}, derivedKey: true
+          mobile: { keystore: {}, derivedKey: true }
         }, 'new-account')
       )
 
       it('does not interfere when current route is APPS and keystore is present and derivedKey',
         createNoRedirectTest({
-          keystore: {}, derivedKey: true
+          mobile: { keystore: {}, derivedKey: true }
         }, 'apps')
       )
 
@@ -73,7 +89,7 @@ describe('router/index.js', () => {
 
       it('does not interfere when current route is LOGIN and keystore is present but derivedKey',
         createNoRedirectTest({
-          keystore: {}, derivedKey: false
+          mobile: { keystore: {}, derivedKey: false }
         }, 'login')
       )
 
@@ -102,16 +118,9 @@ describe('router/index.js', () => {
       })
 
       it(
-        'redirects to APPS path when setDerivedKey mutation is triggered and keystore is present and derivedKey',
+        'redirects to SET-PASSWORD path when setSeed mutation is triggered and seed is present',
         createRedirectTest(
-          {keystore: {}, derivedKey: true}, 'setDerivedKey', 'apps'
-        )
-      )
-
-      it(
-        'redirects to LOGIN path when setDerivedKey mutation is triggered and keystore is present but locked',
-        createRedirectTest(
-          {keystore: {}, derivedKey: false}, 'setDerivedKey', 'login'
+          { mobile: { seed: true } }, 'setSeed', 'set-password'
         )
       )
     })
