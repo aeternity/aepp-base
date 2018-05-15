@@ -28,6 +28,7 @@
 
 <style lang="scss" scoped>
   @import '~@aeternity/aepp-components/dist/variables.scss';
+  @import '~@aeternity/aepp-components/dist/mixins.scss';
 
   .fixed-add-button {
     position: fixed;
@@ -39,7 +40,7 @@
     }
 
     &.mobile {
-      @media (max-width: $screen-phone) {
+      @include phone {
         right: 10px;
       }
 
