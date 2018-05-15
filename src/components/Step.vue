@@ -46,7 +46,7 @@
         width: 170px;
         display: inline-block;
 
-        /deep/ img {
+        img {
           width: 100%;
         }
       }
