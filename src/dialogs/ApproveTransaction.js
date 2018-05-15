@@ -37,7 +37,15 @@ export default {
       default: ''
     },
     transaction: Object,
-    aeTokenTx: Object
+    aeTokenTx: Object,
+    resolve: {
+      type: Function,
+      required: true
+    },
+    reject: {
+      type: Function,
+      required: true
+    }
   },
   components: {
     AeModal,
@@ -95,11 +103,13 @@ export default {
     }
   },
   methods: {
-    reject () {
-      this.$close(false)
+    close () {
+      this.reject(new Error('Payment rejected by user'))
+      this.$store.commit('setTransactionToApprove')
     },
     approve () {
-      this.$close(true)
+      this.resolve()
+      this.$store.commit('setTransactionToApprove')
     }
   },
   async mounted () {

@@ -19,6 +19,10 @@
         <accounts-horizontal v-if="showIdManager" />
       </footer-modal>
     </template>
+    <div class="modal-dialogs-wrapper" v-if="messageToApprove || transactionToApprove">
+      <approve-message v-if="messageToApprove" v-bind="messageToApprove" />
+      <approve-transaction v-if="transactionToApprove" v-bind="transactionToApprove" />
+    </div>
   </ae-main>
 </template>
 

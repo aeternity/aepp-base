@@ -11,7 +11,7 @@
       <p class="message">
         {{message}}
       </p>
-      <approve-buttons @approve="approve" @reject="reject"/>
+      <approve-buttons @approve="approve" @reject="close"/>
     </template>
   </div>
 </template>

@@ -7,7 +7,7 @@
     <heading>General settings</heading>
     <item :to="{ name: 'settings-network' }">
       Network
-      <span class="mute">{{networkName}}</span>
+      <span slot="right" class="mute">{{networkName}}</span>
     </item>
   </modal-page>
 </template>
@@ -35,7 +35,7 @@
 
 <style src="./Settings.scss" lang="scss" scoped />
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '~@aeternity/aepp-components/dist/variables.scss';
 
   .settings {

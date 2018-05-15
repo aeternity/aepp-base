@@ -8,6 +8,7 @@
     <item v-for="network in networks" :key="network.url">
       {{network.name}}
       <ae-radio
+        slot="right"
         name="network"
         :value="network.url"
         :checked="network.url === rpcUrl"
@@ -16,11 +17,13 @@
     </item>
     <item inactive>
       Network ID
-      <span>{{networkId}}</span>
+      <span slot="right">{{networkId}}</span>
     </item>
     <item inactive :title="tokenAddress">
       Token contract address
-      <span>{{tokenAddress ? `${tokenAddress.slice(0, 8)}...` : 'undefined'}}</span>
+      <span slot="right">
+        {{tokenAddress ? `${tokenAddress.slice(0, 8)}...` : 'undefined'}}
+      </span>
     </item>
   </modal-page>
 </template>
