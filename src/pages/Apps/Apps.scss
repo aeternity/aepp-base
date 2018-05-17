@@ -43,9 +43,9 @@
 
   .shortcuts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    margin: 20px;
-    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    margin: 10px;
+    grid-gap: 30px 10px;
     justify-items: center;
 
     @include abovePhone {
@@ -57,6 +57,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
 
       .app-icon-wrapper {
         position: relative;
@@ -100,6 +101,10 @@
         font-size: 18px;
         font-weight: 500;
         text-align: center;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       @include abovePhone {
