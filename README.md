@@ -62,11 +62,19 @@ npm test
 
 ## Contributing
 
-Changes should be made in an extra fork or branch. Then create a pull request to the **stage** branch. The pull request will be reviewed and if the changes are accepted they are deployed to the [stage environment](https://stage-identity.aepps.com) by travis. If there are no conflicts in stage the stage branch will be merged into master. The master branch is deployed to the [live environment](http://stage-identity.aepps.com) by travis. Changes are never made directly into the master branch.
+We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workflow [this is also helpful](https://gist.github.com/JamesMGreene/cdd0ac49f90c987e45ac).
+* Development of features happens in branches made from **develop** called feature/<the-feature> like feature/show-token-balance.
+* When development is finished a pull request to **develop** is created. At least one person has to review the PR and when everything is finde the PR gets merged.
+* The develop branch gets deployed to the [stage environment](https://stage-identity.aepps.com) by travis.
+* To make a new release create a release branch called release/vX.X.X, also bump the version number in package.json in this branch.
+* Create a PR to master which then also has to be accepted.
+* Create a tag for this version and push the tag.
+* Also merge back the changes (like the version bump) into develop.
+* The master branch is deployed to the [live environment](https://identity.aepps.com) by travis.
 
 ## Live vs. Stage
 
-We have a stage and a live branch and environments where these branches will be deployed to.
+We have a stage (develop) and a live (master) branch and environments where these branches will be deployed to.
 * [stage environment](https://stage-identity.aepps.com)
 * [live environment](http://stage-identity.aepps.com)
 
