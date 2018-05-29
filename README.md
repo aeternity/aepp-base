@@ -70,7 +70,7 @@ We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workfl
 * Create a PR to master which then also has to be accepted.
 * Create a tag for this version and push the tag.
 * Also merge back the changes (like the version bump) into develop.
-* The master branch is deployed to the [live environment](http://stage-identity.aepps.com) by travis.
+* The master branch is deployed to the [live environment](https://identity.aepps.com) by travis.
 
 ## Live vs. Stage
 
