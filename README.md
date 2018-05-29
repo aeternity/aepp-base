@@ -68,7 +68,7 @@ We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workfl
 * The develop branch gets deployed to the [stage environment](https://stage-identity.aepps.com) by travis.
 * To make a new release create a release branch called release/vX.X.X, also bump the version number in package.json in this branch.
 * Create a PR to master which then also has to be accepted.
-* create a tag for this version and push the tag
+* Create a tag for this version and push the tag.
 * Also merge back the changes (like the version bump) into develop.
 * The master branch is deployed to the [live environment](http://stage-identity.aepps.com) by travis.
 
