@@ -44,6 +44,10 @@ export default {
     setDerivedKey (state, derivedKey) {
       state.derivedKey = derivedKey
     },
+    signOut (state) {
+      state.keystore = null
+      state.derivedKey = null
+    },
     signTransaction (state, transaction) {
       Vue.set(state.transactionsToApprove, transaction.id, transaction)
     },

@@ -3,7 +3,7 @@
     :is="renderAs"
     :to="to"
     class="settings-item"
-    :class="{ inactive }"
+    :class="{ inactive, [type]: true }"
     @click="$emit('click', $event)"
   >
     <slot />
@@ -16,6 +16,7 @@
   export default {
     props: {
       to: undefined,
+      type: String,
       inactive: Boolean
     },
     computed: {
@@ -38,6 +39,14 @@
     align-items: center;
     border-bottom: 2px solid #f0f0f0;
     padding: 0 20px;
+
+    &.exciting {
+      color: $aubergine;
+    }
+
+    &.dramatic {
+      color: $maegenta;
+    }
 
     &:not(.inactive) {
       cursor: pointer;
