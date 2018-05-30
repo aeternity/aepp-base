@@ -16,12 +16,16 @@
         Remote connection
         <ae-icon slot="right" name="chevron" />
       </item>
+      <heading>Accounts</heading>
+      <item @click="signOut" type="dramatic">
+        Sign out on this device completely
+      </item>
     </template>
   </modal-page>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
   import { AeIcon } from '@aeternity/aepp-components'
   import ModalPage from '@/components/ModalPage.vue'
   import SettingsHeading from '@/components/SettingsHeading'
@@ -39,7 +43,8 @@
     data: () => ({ IS_MOBILE_DEVICE }),
     computed: mapState({
       networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name
-    })
+    }),
+    methods: mapMutations(['signOut'])
   }
 </script>
 
