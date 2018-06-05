@@ -11,7 +11,7 @@ import {
   AeIdentityAvatar
 } from '@aeternity/aepp-components'
 
-const { fromWei } = (new Web3()).utils
+const { fromWei } = new Web3().utils
 
 const createValueStr = (value, decimal, currencySymbol = 'CHF') => {
   if (typeof value !== 'number' || isNaN(value)) {
