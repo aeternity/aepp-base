@@ -44,7 +44,6 @@
 
 <script>
   import { mapState } from 'vuex'
-  import { keystore } from 'eth-lightwallet'
   import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
 
@@ -58,9 +57,10 @@
       async setSeed () {
         if (!await this.$validator.validateAll()) return
 
-        if (keystore.isSeedValid(this.seed)) {
+        try {
           this.$store.commit('setSeed', this.seed)
-        } else {
+        } catch (e) {
+          if (e.message !== 'Invalid mnemonic') throw e
           this.$store.dispatch('setNotification', {
             text: `Invalid passphrase`,
             autoClose: true

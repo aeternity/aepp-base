@@ -1,5 +1,4 @@
 import Bignumber from 'bignumber.js'
-import Web3 from 'web3'
 import { convertAEtoCHF, convertETHtoCHF } from '@/lib/currencyConverter'
 import ApproveButtons from '@/dialogs/ApproveButtons.vue'
 import DialogHeader from '@/dialogs/DialogHeader.vue'
@@ -11,7 +10,7 @@ import {
   AeIdentityAvatar
 } from '@aeternity/aepp-components'
 
-const { fromWei } = new Web3().utils
+const fromWei = value => value
 
 const createValueStr = (value, decimal, currencySymbol = 'CHF') => {
   if (typeof value !== 'number' || isNaN(value)) {

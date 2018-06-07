@@ -1,20 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import Web3 from 'web3'
-import _ from 'lodash'
 import uuid from 'uuid/v4'
-import AEToken from '@/assets/contracts/AEToken.json'
 import { appsRegistry } from '@/lib/appsRegistry'
+import networksRegistry from '@/lib/networksRegistry'
 import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
 import desktop from './modules/desktop'
 import mobile from './modules/mobile'
 import pollBalance from './plugins/pollBalance'
-import setNetworkId from './plugins/setNetworkId'
+import initEpoch from './plugins/initEpoch'
 import remoteConnection from './plugins/remoteConnection'
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
+import decryptAccounts from './plugins/decryptAccounts'
 
-const { BN } = Web3.utils
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -28,6 +26,7 @@ const store = new Vuex.Store({
             'apps',
             'rpcUrl',
             'mobile.keystore',
+            'mobile.accountCount',
             'selectedIdentityIdx',
             'addressBook',
             'mobile.followers'
@@ -45,9 +44,10 @@ const store = new Vuex.Store({
             : value)
     }),
     pollBalance,
-    setNetworkId,
+    initEpoch,
     remoteConnection.plugin,
-    notificationOnRemoteConnection
+    notificationOnRemoteConnection,
+    decryptAccounts
   ],
 
   modules: IS_MOBILE_DEVICE ? { mobile } : { desktop },
@@ -58,7 +58,8 @@ const store = new Vuex.Store({
     showIdManager: false,
     balances: {},
     addresses: [],
-    rpcUrl: 'https://kovan.infura.io',
+    rpcUrl: networksRegistry[0].url,
+    epoch: null,
     networkId: null,
     notification: null,
     apps: Object.keys(appsRegistry),
@@ -66,33 +67,24 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    web3 ({ rpcUrl }) {
-      return new Web3(rpcUrl)
-    },
-    tokenContract ({ networkId }, { web3 }) {
-      if (!networkId || !AEToken.networks[networkId]) return null
-      return new web3.eth.Contract(AEToken.abi, AEToken.networks[networkId].address)
-    },
     identities: ({ balances }, { addresses }) =>
       addresses.map(e => ({
-        ...balances[e] || { balance: new BN(), tokenBalance: new BN() },
+        balance: balances[e] || 0,
         address: e,
         name: e.substr(0, 6)
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
     totalBalance: (state, { identities }) =>
-      identities.reduce(
-        (p, identity) => ({
-          balance: p.balance.add(identity.balance),
-          tokenBalance: p.tokenBalance.add(identity.tokenBalance)
-        }),
-        { balance: new BN(), tokenBalance: new BN() })
+      identities.reduce((sum, { balance }) => sum + balance, 0)
   },
 
   mutations: {
     setRPCUrl (state, rpcUrl) {
       state.rpcUrl = rpcUrl
+    },
+    setEpoch (state, epoch) {
+      state.epoch = epoch
     },
     setNetworkId (state, networkId) {
       state.networkId = networkId
@@ -108,8 +100,8 @@ const store = new Vuex.Store({
     selectIdentity (state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx
     },
-    setBalance (state, { address, balance, tokenBalance }) {
-      Vue.set(state.balances, address, { balance, tokenBalance })
+    setBalance (state, { address, balance }) {
+      Vue.set(state.balances, address, balance)
     },
     setNotification (state, options) {
       state.notification = options
@@ -148,13 +140,10 @@ const store = new Vuex.Store({
     updateAllBalances ({ getters: { addresses }, dispatch }) {
       addresses.forEach(address => dispatch('updateBalance', address))
     },
-    async updateBalance ({ state, getters: { web3, tokenContract }, commit }, address) {
-      const [balance, tokenBalance] = (await Promise.all([
-        web3.eth.getBalance(address),
-        tokenContract ? tokenContract.methods.balanceOf(address).call() : 0
-      ])).map(Web3.utils.toBN)
-      if (_.isEqual(state.balances[address], { balance, tokenBalance })) return
-      commit('setBalance', { address, balance, tokenBalance })
+    async updateBalance ({ state: { epoch, balances }, commit }, address) {
+      const balance = (await epoch.getAccountBalance(address)).balance
+      if (balances[address] === balance) return
+      commit('setBalance', { address, balance })
     }
   }
 })

@@ -19,12 +19,6 @@
       Network ID
       <span slot="right">{{networkId}}</span>
     </item>
-    <item inactive :title="tokenAddress">
-      Token contract address
-      <span slot="right">
-        {{tokenAddress ? `${tokenAddress.slice(0, 8)}...` : 'undefined'}}
-      </span>
-    </item>
   </modal-page>
 </template>
 
@@ -44,12 +38,7 @@
       Item: SettingsItem
     },
     data: () => ({ networks }),
-    computed: {
-      ...mapState(['rpcUrl', 'networkId']),
-      ...mapState({
-        tokenAddress: (state, { tokenContract }) => tokenContract && tokenContract._address
-      })
-    },
+    computed: mapState(['rpcUrl', 'networkId']),
     methods: mapMutations(['setRPCUrl'])
   }
 </script>
