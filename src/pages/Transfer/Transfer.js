@@ -81,20 +81,22 @@ export default {
       return this.currency ? this.currency.amount : 0
     },
     swiperOptionsTo () {
+      const transfer = this
+      function syncTo () {
+        transfer.to = transfer.identitiesTo[this.activeIndex].address
+      }
       return {
-        autoplay: false,
-        direction: 'horizontal',
         spaceBetween: 10,
         centeredSlides: true,
         slidesPerView: 'auto',
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        initialSlide: this.identitiesTo.findIndex(i => i.address === this.to),
-        onSlideChangeEnd: swiper => {
-          this.to = this.identitiesTo[swiper.realIndex].address
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
         },
-        onInit: swiper => {
-          this.to = this.identitiesTo[swiper.realIndex].address
+        initialSlide: this.identitiesTo.findIndex(i => i.address === this.to),
+        on: {
+          init: syncTo,
+          slideChange: syncTo
         }
       }
     }
