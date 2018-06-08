@@ -67,11 +67,11 @@ class RemoteConnection {
       socket.on('follower-disconnected', fKey => store.commit('followerDisconnected', fKey))
 
       socket.on('message-from-follower', (followerKey, request) =>
-        (new RpcPeer(
+        new RpcPeer(
           response => socket.emit('message-to-follower', followerKey, response), {
             signTransaction: args => store.dispatch('signTransaction', args),
             cancelTransaction: args => store.commit('cancelTransaction', args)
-          }))
+          })
           .processMessage(request))
     } else {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true))

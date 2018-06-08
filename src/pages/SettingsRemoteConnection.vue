@@ -47,7 +47,7 @@
         Object.values(followers)
           .map(f => ({
             ...f,
-            disconnectedAt: (new Date(f.disconnectedAt)).toLocaleString(),
+            disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
             connected: isFollowerConnected[f.key]
           }))
     }),
