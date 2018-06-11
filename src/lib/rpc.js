@@ -10,8 +10,8 @@ export default class RpcPeer {
     this.pendingRequests = {}
   }
 
-  async processMessage (message) {
-    [NOTIFICATION, REQUEST].includes(message.type)
+  processMessage (message) {
+    return [NOTIFICATION, REQUEST].includes(message.type)
       ? this.processRequestMessage(message)
       : this.processResponseMessage(message)
   }
@@ -42,7 +42,7 @@ export default class RpcPeer {
     }
   }
 
-  async processResponseMessage (message) {
+  processResponseMessage (message) {
     if (!this.pendingRequests[message.id]) {
       throw new Error(`Can't find request with id: ${message.id}`)
     }
