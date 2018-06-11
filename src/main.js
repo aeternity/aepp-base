@@ -46,11 +46,10 @@ if (process.env.NODE_ENV === 'development') {
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-const BaseApp = Vue.extend({
-  render: h => h(App),
+new Vue({
+  el: '#app',
   components: { App },
   store,
-  router: getRouter(store)
+  router: getRouter(store),
+  template: '<App/>'
 })
-const vm = new BaseApp()
-vm.$mount('#app')

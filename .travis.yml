@@ -19,6 +19,7 @@ deploy:
     on:
       branch: develop
 before_install:
+- npm i -g npm@6.1.0
 - openssl aes-256-cbc -K $encrypted_0d22c88004c9_key -iv $encrypted_0d22c88004c9_iv
   -in aepp-identity-deploy.enc -out aepp-identity-deploy -d
 - eval "$(ssh-agent -s)"
