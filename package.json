@@ -8,6 +8,10 @@
     "dev-ssl": "npm run dev & local-ssl-proxy --source 8443 --target 8080",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
+    "build:ios": "npm run build && cordova build ios",
+    "build:android": "npm run build && cordova build android",
+    "run:android": "npm run build && cordova run android",
+    "gen:cordova-resources": "cordova-splash && cordova-icon",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run lint && npm run unit && npm run e2e",
@@ -20,6 +24,13 @@
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
     "bignumber.js": "^4.1.0",
     "bluebird": "^3.5.1",
+    "cordova-ios": "^4.5.4",
+    "cordova-android": "^7.0.0",
+    "cordova-browser": "^5.0.3",
+    "cordova-plugin-customurlscheme": "^4.3.0",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "phonegap-plugin-barcodescanner": "^7.1.0",
     "emoji-datasource-apple": "^4.0.3",
     "es6-promise": "^4.1.1",
     "eth-lightwallet": "^3.0.0",
@@ -60,6 +71,8 @@
     "cross-env": "^5.1.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.7",
+    "cordova-icon": "^1.0.0",
+    "cordova-splash": "^1.0.0",
     "cssnano": "^3.10.0",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^6.2.1",
@@ -109,6 +122,26 @@
     "webpack-dev-middleware": "^1.12.1",
     "webpack-hot-middleware": "^2.20.0",
     "webpack-merge": "^4.1.1"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-splashscreen": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "aeternity",
+        "ANDROID_SCHEME": " ",
+        "ANDROID_HOST": " ",
+        "ANDROID_PATHPREFIX": "/"
+      }
+    },
+    "platforms": [
+      "browser",
+      "android",
+      "ios"
+    ]
   },
   "engines": {
     "node": ">= 4.0.0",

@@ -16,3 +16,6 @@ package-lock.json
 *.njsproj
 *.sln
 .vscode
+platforms
+plugins
+www

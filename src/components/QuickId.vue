@@ -48,7 +48,7 @@
     .back-button {
       width: 25px;
       height: 25px;
-      background: url('/static/icons/grid.svg') no-repeat;
+      background: url('../../static/icons/grid.svg') no-repeat;
       background-size: contain;
     }
 
