@@ -32,5 +32,11 @@ module.exports = {
     'vue/require-v-for-key': 'off',
     'node/no-deprecated-api': 'off',
     'no-mixed-operators': 'off'
-  }
+  },
+  overrides: [{
+    files: '**/__tests__/*',
+    env: {
+      jest: true
+    }
+  }]
 }
