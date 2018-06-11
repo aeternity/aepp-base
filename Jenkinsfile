@@ -10,10 +10,19 @@ pipeline {
   }
 
   stages {
+    stage('Build') {
+      steps {
+        withCredentials([usernamePassword(
+          credentialsId: 'github-jsnewby-userpass',
+          usernameVariable: 'GIT_USERNAME',
+          passwordVariable: 'GIT_PASSWORD')]) {
+            sh 'scripts/build-android.sh'
+        }
+      }
+    }
     stage('Archive Artifacts') {
       steps {
-        sh 'cp /app/platforms/android/build/outputs/apk/debug/android-debug.apk $WORKSPACE/android-debug.apk'
-        archiveArtifacts artifacts: 'android-debug.apk', fingerprint: true
+        archiveArtifacts artifacts: 'platforms/android/build/outputs/apk/debug/android-debug.apk', fingerprint: true
       }
     }
   }

@@ -5,9 +5,10 @@ import Router from 'vue-router'
 import VeeValidate, { Validator } from 'vee-validate'
 import { focus } from 'vue-focus'
 import './lib/initIsMobileDevice'
+import store from './store'
 import App from './App.vue'
 import getRouter from './router/index'
-import store from './store'
+import IS_MOBILE_DEVICE from './lib/isMobileDevice'
 
 Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
 Validator.extend('url_http', (value) => {
@@ -37,19 +38,37 @@ Vue.use(VeeValidate, {
     }
   }
 })
+
 Vue.directive('focus', focus)
 
-if (process.env.NODE_ENV === 'development') {
-  window.store = store
-}
-
 Vue.config.productionTip = false
-Vue.prototype.$globals = {
-  IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE
+Vue.prototype.$globals = { IS_MOBILE_DEVICE }
+
+/**
+ * Function generates a vue instance
+ * reduces code-duplication due to the
+ * secure-storage initialization
+ */
+const initialize = function (App, {store, getRouter}) {
+  // dev mode
+  if (process.env.NODE_ENV === 'development') window.store = store
+
+  // mounting
+  /* eslint-disable no-new */
+  return new Vue({
+    components: { App },
+    store: store,
+    router: getRouter(store),
+    render: h => h(App)
+  }).$mount('#app')
 }
 
-new Vue({
-  store,
-  router: getRouter(store),
-  render: h => h(App)
-}).$mount('#app')
+/**
+ * First check if the device has loaded everything,
+ * in this case is true, then load Vuejs application
+ */
+document.addEventListener(
+  process.env.IS_CORDOVA ? 'deviceready' : 'onload',
+  initialize.bind(null, App, { store, getRouter }),
+  false
+)

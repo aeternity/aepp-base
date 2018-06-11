@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
+import VuexPersistence from 'vuex-persist'
+import uuid from 'uuid/v4'
 import { appsRegistry } from '../lib/appsRegistry'
 import networksRegistry from '../lib/networksRegistry'
 import desktop from './modules/desktop'
@@ -11,21 +12,23 @@ import remoteConnection from './plugins/remoteConnection'
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 import decryptAccounts from './plugins/decryptAccounts'
 import aeppApi from './plugins/aeppApi'
-import { genRandomBuffer } from './utils'
+import promisifySecureStorage from '../lib/promisifySecureStorage'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
-    createPersistedState({
-      paths: [
+    (new VuexPersistence({
+      storage: window.localStorage,
+      modules: [
         'peerKey',
-        ...process.env.IS_MOBILE_DEVICE
+        ...IS_MOBILE_DEVICE
           ? [
             'apps',
             'rpcUrl',
-            'mobile.keystore',
+            // 'mobile.keystore',
+            // 'mobile.derivedKey',
             'mobile.accountCount',
             'selectedIdentityIdx',
             'addressBook',
@@ -33,29 +36,28 @@ const store = new Vuex.Store({
             'mobile.names'
           ] : []
       ],
-      setState: (key, state, storage) =>
-        storage.setItem(key, JSON.stringify(state, (key, value) =>
-          value instanceof ArrayBuffer
-            ? { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) }
-            : value)),
-      getState: (key, storage) =>
+      restoreState: (key, storage) =>
         JSON.parse(storage.getItem(key), (key, value) =>
           value && value.type === 'ArrayBuffer'
             ? new Uint8Array(value.data).buffer
-            : value)
-    }),
+            : value),
+      saveState: (key, state, storage) =>
+        storage.setItem(key, JSON.stringify(state, (key, value) =>
+          value instanceof ArrayBuffer
+            ? { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) }
+            : value))
+    })).plugin,
     pollBalance,
     initEpoch,
-    remoteConnection,
+    remoteConnection.plugin,
     aeppApi,
-    ...process.env.IS_MOBILE_DEVICE
+    ...IS_MOBILE_DEVICE
       ? [decryptAccounts, notificationOnRemoteConnection] : []
   ],
-
-  modules: process.env.IS_MOBILE_DEVICE ? { mobile } : { desktop },
+  modules: IS_MOBILE_DEVICE ? { mobile } : { desktop },
 
   state: {
-    peerKey: Buffer.from(genRandomBuffer(15)).toString('base64'),
+    peerKey: uuid(),
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,
@@ -64,7 +66,6 @@ const store = new Vuex.Store({
     rpcUrl: networksRegistry[0].url,
     epoch: null,
     networkId: null,
-    alert: null,
     notification: null,
     apps: Object.keys(appsRegistry),
     addressBook: []
@@ -75,7 +76,7 @@ const store = new Vuex.Store({
       addresses.map((e, index) => ({
         balance: balances[e] || 0,
         address: e,
-        name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6)
+        name: IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6)
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
@@ -109,9 +110,6 @@ const store = new Vuex.Store({
     setBalance (state, { address, balance }) {
       Vue.set(state.balances, address, balance)
     },
-    setAlert (state, options) {
-      state.alert = options
-    },
     setNotification (state, options) {
       state.notification = options
     },
@@ -124,15 +122,6 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    alert ({ commit }, options) {
-      return new Promise(resolve => commit('setAlert', {
-        ...options,
-        resolve: () => {
-          commit('setAlert')
-          resolve()
-        }
-      }))
-    },
     setNotification ({ commit }, options) {
       commit('setNotification', options)
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000)
@@ -165,5 +154,3 @@ const store = new Vuex.Store({
     }
   }
 })
-
-export default store
