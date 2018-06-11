@@ -5,8 +5,9 @@ export default store => {
     (address) => {
       clearInterval(interval)
       if (!address) return
-      interval = setInterval(() =>
-        store.dispatch('updateBalance', address), 3000)
+      const updateBalance = () => store.dispatch('updateBalance', address)
+      updateBalance()
+      interval = setInterval(updateBalance, 3000)
     },
     { immediate: true })
 }
