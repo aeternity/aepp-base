@@ -28,5 +28,6 @@ ADD . .
 # As cordova changes global modules when adding a platform, we have to build the apk already during the docker build process
 RUN npm run build
 RUN cordova platform rm android &&cordova platform add android
-RUN npm run gen:cordova-resources
 RUN npm run build:android
+RUN npm run gen:cordova-resources
+RUN cordova build android
