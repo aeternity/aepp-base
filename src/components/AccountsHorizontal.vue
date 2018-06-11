@@ -3,7 +3,7 @@
     <div class="title">
       <h1>Account Switcher</h1>
       <div v-if="identities.length > 1">
-        Total balance <span>{{totalBalance.tokenBalance | formatWei}} AE</span>
+        Total balance <span>{{totalBalance | formatWei}} AE</span>
       </div>
     </div>
     <div class="accounts">

@@ -14,12 +14,12 @@
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs"
   },
   "dependencies": {
-    "@aeternity/aepp-components": "2.0.11",
-    "abi-decoder": "^1.0.9",
+    "@aeternity/aepp-components": "github:aeternity/aepp-components#feature/aeternity",
+    "@aeternity/aepp-sdk": "^0.13.0-0.1.2",
+    "@aeternity/bip39": "github:aeternity/bip39",
+    "@aeternity/hd-wallet": "github:aeternity/hd-wallet-js",
     "bignumber.js": "^4.1.0",
-    "bluebird": "^3.5.1",
     "emoji-datasource-apple": "^4.0.3",
-    "eth-lightwallet": "^3.0.0",
     "ethjs-unit": "^0.1.6",
     "fuse.js": "^3.2.0",
     "lodash": "^4.17.4",
@@ -35,8 +35,7 @@
     "vue-qrcode-reader": "^0.7.3",
     "vue-router": "^3.0.0",
     "vuex": "^3.0.1",
-    "vuex-persistedstate": "^2.4.2",
-    "web3": "1.0.0-beta.29"
+    "vuex-persistedstate": "^2.4.2"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.10",

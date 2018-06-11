@@ -32,7 +32,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import { keystore } from 'eth-lightwallet'
+  import { generateMnemonic } from '@aeternity/bip39'
   import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
   import ModalScreen from '@/components/ModalScreen'
 
@@ -46,7 +46,7 @@
     computed: mapState(['keystore']),
     methods: {
       newSeed () {
-        this.seed = keystore.generateRandomSeed()
+        this.seed = generateMnemonic()
       },
       setSeed () {
         this.$store.commit('setSeed', this.seed)

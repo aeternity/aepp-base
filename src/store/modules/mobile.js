@@ -1,21 +1,30 @@
 import Vue from 'vue'
-import { keystore as Keystore, signing } from 'eth-lightwallet'
-import Web3 from 'web3'
-import Transaction from 'ethereumjs-tx'
-import abiDecoder from 'abi-decoder'
-import util from 'ethereumjs-util'
-import Bluebird from 'bluebird'
-import uuid from 'uuid/v4'
-import AEToken from '@/assets/contracts/AEToken.json'
+import { Crypto } from '@aeternity/aepp-sdk'
+import { mnemonicToSeed, validateMnemonic } from '@aeternity/bip39'
+import { generateHDWallet } from '@aeternity/hd-wallet'
+import AES from '../../lib/aes'
 
-const { BN } = Web3.utils
-Bluebird.promisifyAll(Keystore)
-abiDecoder.addABI(AEToken.abi)
+const derivePasswordKey = async (password, salt) => {
+  const passwordKey = await window.crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(password),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveKey'])
+  return window.crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations: 15000, hash: 'SHA-256' },
+    passwordKey,
+    { name: 'AES-CTR', length: 128 },
+    false,
+    ['encrypt', 'decrypt'])
+}
 
 export default {
   state: {
     keystore: null,
     derivedKey: null,
+    accountCount: 0,
+    accounts: {},
     followers: {},
     isFollowerConnected: {},
     transactionsToApprove: {},
@@ -23,14 +32,7 @@ export default {
   },
 
   getters: {
-    keystore ({ keystore: serializedKeystore }) {
-      if (!serializedKeystore) return null
-      const keystore = Keystore.deserialize(serializedKeystore)
-      Bluebird.promisifyAll(keystore)
-      return keystore
-    },
-    addresses: (state, { keystore }) =>
-      keystore ? keystore.getAddresses() : [],
+    addresses: ({ accounts }) => Object.keys(accounts),
     loggedIn: ({ keystore, derivedKey }) => !!(keystore && derivedKey)
   },
 
@@ -39,10 +41,24 @@ export default {
       state.keystore = keystore
     },
     setSeed (state, seed) {
+      if (!validateMnemonic(seed)) throw new Error('Invalid mnemonic')
       state.seed = seed
+    },
+    clearSeed (state) {
+      state.seed = null
     },
     setDerivedKey (state, derivedKey) {
       state.derivedKey = derivedKey
+    },
+    resetAccountCount (state) {
+      state.accountCount = 1
+    },
+    createIdentity (state) {
+      state.accountCount++
+    },
+    setAccounts (state, accounts) {
+      state.accounts = accounts
+        .reduce((p, n) => ({ ...p, [Crypto.getReadablePublicKey(n.publicKey)]: n }), {})
     },
     signOut (state) {
       state.keystore = null
@@ -78,61 +94,38 @@ export default {
   },
 
   actions: {
-    async createKeystore ({ commit, dispatch, state }, password) {
-      const keystore = await Keystore.createVaultAsync({
-        password: password,
-        seedPhrase: state.seed,
-        hdPathString: "m/44'/60'/0'/0"
-      })
-      Bluebird.promisifyAll(keystore)
-      const derivedKey = await keystore.keyFromPasswordAsync(password)
-      keystore.generateNewAddress(derivedKey, 1)
+    async createKeystore ({ commit, state: { seed } }, password) {
+      const salt = new ArrayBuffer(16)
+      window.crypto.getRandomValues(new Uint8Array(salt))
+      const passwordDerivedKey = await derivePasswordKey(password, salt)
+      const aes = new AES(passwordDerivedKey)
+      const hdWallet = generateHDWallet(mnemonicToSeed(seed))
+      const encryptedHdWallet = {
+        privateKey: await aes.encrypt(hdWallet.privateKey),
+        chainCode: await aes.encrypt(hdWallet.chainCode),
+        mac: await aes.encrypt(new Uint8Array(2)),
+        salt
+      }
+      commit('clearSeed')
+      commit('resetAccountCount')
       commit('selectIdentity', 0)
-      commit('setKeystore', keystore.serialize())
-      commit('setDerivedKey', derivedKey)
+      commit('setKeystore', encryptedHdWallet)
+      commit('setDerivedKey', passwordDerivedKey)
     },
-    createIdentity ({ getters: { keystore }, state: { derivedKey }, commit }) {
-      keystore.generateNewAddress(derivedKey, 1)
-      commit('setKeystore', keystore.serialize())
+    async unlockKeystore ({ commit, state: { keystore } }, password) {
+      const passwordDerivedKey = await derivePasswordKey(password, keystore.salt)
+      const aes = new AES(passwordDerivedKey)
+      await aes.decrypt(keystore.privateKey)
+      await aes.decrypt(keystore.chainCode)
+      const mac = new Uint8Array(await aes.decrypt(keystore.mac))
+      if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password')
+      commit('setDerivedKey', passwordDerivedKey)
     },
-    async signTransaction (
-      { state: { derivedKey }, getters: { web3, keystore, tokenContract }, commit },
-      { tx, appName, id = uuid() }
-    ) {
-      const { to, data } = tx
-      const aeTokenTx = tokenContract && to.toLowerCase() === tokenContract._address.toLowerCase()
-        ? abiDecoder.decodeMethod(data) : null
-
-      tx.gas = tx.gas || await web3.eth.estimateGas(tx)
-      tx.gasPrice = tx.gasPrice || new BN(await web3.eth.getGasPrice())
-
-      await new Promise((resolve, reject) =>
-        commit('signTransaction', {
-          transaction: tx,
-          appName,
-          aeTokenTx,
-          resolve,
-          reject,
-          id
-        }))
-      tx.nonce = tx.nonce || await web3.eth.getTransactionCount(tx.from)
-      const t = new Transaction(tx)
-      return signing.signTx(keystore, derivedKey, t.serialize().toString('hex'), tx.from)
+    async signTransaction () {
+      throw new Error('Not implemented yet')
     },
-    async signPersonalMessage ({ getters, state: { derivedKey }, commit }, { msg, appName }) {
-      const data = getters.web3.toAscii(msg.data)
-      await new Promise((resolve, reject) =>
-        commit('setMessageToApprove', { message: data, appName, resolve, reject }))
-      const messageHash = util.hashPersonalMessage(util.toBuffer(data))
-      const privateKey = getters.keystore.exportPrivateKey(util.stripHexPrefix(msg.from), derivedKey)
-      const signed = util.ecsign(messageHash, new Buffer(privateKey, 'hex'))
-      const combined = Buffer.concat([
-        Buffer.from(signed.r),
-        Buffer.from(signed.s),
-        Buffer.from([signed.v])
-      ])
-      // TODO confirm screen like in signTransaction
-      return util.addHexPrefix(combined.toString('hex'))
+    async signPersonalMessage () {
+      throw new Error('Not implemented yet')
     }
   }
 }

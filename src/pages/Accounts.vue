@@ -5,8 +5,7 @@
         <label class="total-balance">
           Total balance
           <span>
-            <span class="ae">{{totalBalance.tokenBalance | formatWei}} AE</span><br />
-            {{totalBalance.balance | formatWei}} ETH
+            <span class="ae">{{totalBalance | formatWei}} AE</span>
           </span>
         </label>
         <ae-divider />
@@ -65,7 +64,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+  import { mapState, mapGetters, mapMutations } from 'vuex'
   import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
   import ModalPage from '@/components/ModalPage'
   import FixedAddButton from '@/components/FixedAddButton'
@@ -95,8 +94,7 @@
       })
     },
     methods: {
-      ...mapMutations(['selectIdentity', 'toggleIdManager']),
-      ...mapActions(['createIdentity']),
+      ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
       activateCard (i) {
         this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
       }

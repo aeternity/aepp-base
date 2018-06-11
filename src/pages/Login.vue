@@ -47,18 +47,16 @@
     methods: {
       async unlockSavedKeystore () {
         if (!await this.$validator.validateAll()) return
-        const { keystore } = this.$store.getters
-
-        const derivedKey = await keystore.keyFromPasswordAsync(this.password)
-        if (!keystore.isDerivedKeyCorrect(derivedKey)) {
+        try {
+          await this.$store.dispatch('unlockKeystore', this.password)
+        } catch (e) {
+          if (e.message !== 'Invalid password') throw e
           this.$store.dispatch('setNotification', {
             text: 'You\'ve entered a wrong password',
             icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
             autoClose: true
           })
-          return
         }
-        this.$store.commit('setDerivedKey', derivedKey)
       }
     }
   }
