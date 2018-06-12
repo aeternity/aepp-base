@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import uuid from 'uuid/v4'
 import { Crypto } from '@aeternity/aepp-sdk'
 import { mnemonicToSeed, validateMnemonic } from '@aeternity/bip39'
 import { generateHDWallet } from '@aeternity/hd-wallet'
@@ -121,8 +122,21 @@ export default {
       if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password')
       commit('setDerivedKey', passwordDerivedKey)
     },
-    async signTransaction () {
-      throw new Error('Not implemented yet')
+    async signTransaction (
+      { state: { accounts }, commit, rootState: { epoch } },
+      { transaction, appName, id = uuid() }) {
+      const spendTx = (await epoch.api.postSpend(transaction)).tx
+      const binaryTx = Crypto.decodeBase58Check(spendTx.split('$')[1])
+      await new Promise((resolve, reject) =>
+        commit('signTransaction', {
+          transaction,
+          appName,
+          resolve,
+          reject,
+          id
+        }))
+      const signature = Crypto.sign(binaryTx, accounts[transaction.sender].secretKey)
+      return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx))
     },
     async signPersonalMessage () {
       throw new Error('Not implemented yet')
