@@ -1,6 +1,11 @@
 export const DEFAULT_ICON = 'static/icons/aepps/default.svg'
 
 export const appsRegistry = {
+  2: {
+    name: 'Transfer',
+    icon: 'static/icons/aepps/transfer.svg',
+    path: 'transfer'
+  },
   4: {
     name: 'Settings',
     icon: 'static/icons/aepps/settings.svg',

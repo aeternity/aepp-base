@@ -89,7 +89,7 @@ export default (store) => {
       },
       {
         name: 'transfer',
-        path: '/transfer/:to?/:currency?',
+        path: '/transfer/:to?/:amount?',
         component: Transfer,
         beforeEnter: checkLoggedIn(true)
       },
