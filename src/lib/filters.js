@@ -1,1 +1,1 @@
-export const formatWei = value => value
+export const roundToken = value => value

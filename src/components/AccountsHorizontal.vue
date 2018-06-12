@@ -3,7 +3,7 @@
     <div class="title">
       <h1>Account Switcher</h1>
       <div v-if="identities.length > 1">
-        Total balance <span>{{totalBalance | formatWei}} AE</span>
+        Total balance <span>{{totalBalance | roundToken}} AE</span>
       </div>
     </div>
     <div class="accounts">
@@ -41,11 +41,11 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
-  import { formatWei } from '@/lib/filters'
+  import { roundToken } from '@/lib/filters'
 
   export default {
     components: { AeIdentity, AeButton, AeDivider },
-    filters: { formatWei },
+    filters: { roundToken },
     computed: mapGetters(['identities', 'activeIdentity', 'totalBalance']),
     methods: mapMutations(['selectIdentity']),
     mounted () {
