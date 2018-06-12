@@ -141,7 +141,7 @@ const store = new Vuex.Store({
       addresses.forEach(address => dispatch('updateBalance', address))
     },
     async updateBalance ({ state: { epoch, balances }, commit }, address) {
-      const balance = (await epoch.getAccountBalance(address)).balance
+      const balance = (await epoch.api.getAccountBalance(address)).balance
       if (balances[address] === balance) return
       commit('setBalance', { address, balance })
     }
