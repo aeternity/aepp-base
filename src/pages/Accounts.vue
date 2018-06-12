@@ -5,7 +5,7 @@
         <label class="total-balance">
           Total balance
           <span>
-            <span class="ae">{{totalBalance | formatWei}} AE</span>
+            <span class="ae">{{totalBalance | roundToken}} AE</span>
           </span>
         </label>
         <ae-divider />
@@ -68,14 +68,14 @@
   import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
   import ModalPage from '@/components/ModalPage'
   import FixedAddButton from '@/components/FixedAddButton'
-  import { formatWei } from '@/lib/filters'
+  import { roundToken } from '@/lib/filters'
 
   export default {
     data: () => ({
       activeIdentityCard: -1
     }),
     components: { AeIdentity, AeButton, AeDivider, ModalPage, FixedAddButton },
-    filters: { formatWei },
+    filters: { roundToken },
     computed: {
       ...mapGetters(['totalBalance', 'activeIdentity']),
       ...mapState({
