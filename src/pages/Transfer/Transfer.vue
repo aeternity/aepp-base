@@ -39,7 +39,7 @@
         <ae-button
           :to="{
             name: 'address-book-choose',
-            params: { redirectPathTemplate: `/transfer/{address}/${$route.params.currency || ''}` }
+            params: { redirectPathTemplate: `/transfer/{address}/${$route.params.amount || ''}` }
           }"
           type="exciting"
           size="small"
@@ -56,10 +56,12 @@
     <ae-amount-input
       :id="`${_uid}-currency`"
       name="currency"
-      v-model="currency"
+      :value="{ amount, symbol: 'AE' }"
+      @input="value => amount = value.amount"
       v-validate:amount="`required|decimal|min_value_exclusive:0|max_value:${maxAmount}`"
       data-vv-delay="1"
       placeholder="0.00"
+      :units="[{ symbol: 'AE', name: 'æternity' }]"
     />
     <div class="fiat-amount">≈ {{fiatAmount}} CHF</div>
 
