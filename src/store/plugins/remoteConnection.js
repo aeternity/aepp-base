@@ -38,7 +38,7 @@ class RemoteConnection {
     const broadcastState = state => {
       if (
         _.isEqual(state, lastReceivedState) ||
-        IS_MOBILE_DEVICE && !Object.keys(store.state.mobile.isFollowerConnected).length
+        (IS_MOBILE_DEVICE && !Object.keys(store.state.mobile.isFollowerConnected).length)
       ) return
       broadcast.notification('setState', state)
       lastReceivedState = null
