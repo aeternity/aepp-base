@@ -10,6 +10,7 @@
     <div class="shortcuts">
       <div
         v-for="(app, index) in apps"
+        :key="index"
         class="app-shortcut"
         @touchstart="editMode"
         @touchend="editMode('cancel')"

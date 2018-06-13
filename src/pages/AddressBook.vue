@@ -15,7 +15,7 @@
       >
         <ae-icon slot="icon" name="chevron" :rotate="idx === openIdx ? -90 : 90" />
       </address-book-item>
-      <div v-if="idx === openIdx" class="actions">
+      <div v-if="idx === openIdx" :key="idx" class="actions">
         <router-link :to="{ name: 'transfer', params: { to: c.address } }">
           <ae-app-icon src="static/icons/aepps/transfer.svg" />
         </router-link>
