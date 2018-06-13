@@ -50,7 +50,7 @@
     </ae-input>
     <ae-label>{{searchTerm ? 'Search results' : 'All æpps'}}</ae-label>
     <template v-for="(app, idx) in apps">
-      <ae-divider v-if="idx" />
+      <ae-divider v-if="idx" :key="app.id" />
       <div class="app" :class="{ inactive: app.added }" @click="addApp(app.id)">
         <ae-app-icon :src="app.icon" :full-size="app.iconFullSize" />
         <div class="content">

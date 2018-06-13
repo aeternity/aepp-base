@@ -6,8 +6,8 @@
     :redirectToOnClose="{ name: 'apps' }"
   >
     <ae-divider />
-    <template v-for="c in addressBook">
-      <ae-link :to="path(c.address)">
+    <template v-for="(c, idx) in addressBook">
+      <ae-link :to="path(c.address)" :key="idx">
         <address-book-item
           :name="c.name"
           :address="c.address"
@@ -15,7 +15,7 @@
           <ae-icon slot="icon" name="arrow" rotate="-45" />
         </address-book-item>
       </ae-link>
-      <ae-divider />
+      <ae-divider :key="idx" />
     </template>
 
     <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />

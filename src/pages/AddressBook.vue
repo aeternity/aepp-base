@@ -11,6 +11,7 @@
         :name="c.name"
         :address="c.address"
         @click="openIdx = openIdx === idx ? -1 : idx"
+        :key="idx"
       >
         <ae-icon slot="icon" name="chevron" :rotate="idx === openIdx ? -90 : 90" />
       </address-book-item>
@@ -19,7 +20,7 @@
           <ae-app-icon src="static/icons/aepps/transfer.svg" />
         </router-link>
       </div>
-      <ae-divider />
+      <ae-divider :key="idx" />
     </template>
 
     <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />
