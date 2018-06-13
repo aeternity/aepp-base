@@ -44,7 +44,7 @@
       </div>
     </div>
     <approve-buttons @approve="approve" @reject="close" />
-	</div>
+  </div>
 </template>
 
 <script>
