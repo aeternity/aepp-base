@@ -28,7 +28,6 @@ module.exports = {
     indent: 'off',
     'vue/valid-v-for': 'off',
     'vue/require-v-for-key': 'off',
-    'node/no-deprecated-api': 'off',
     'no-mixed-operators': 'off'
   },
   overrides: [{
