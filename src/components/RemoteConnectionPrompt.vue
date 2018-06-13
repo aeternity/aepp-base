@@ -26,43 +26,43 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import { AeAppIcon } from '@aeternity/aepp-components'
-  import QrCode from 'vue-qrcode-component'
-  import Step from './Step'
+import { mapState } from 'vuex'
+import { AeAppIcon } from '@aeternity/aepp-components'
+import QrCode from 'vue-qrcode-component'
+import Step from './Step'
 
-  export default {
-    components: { Step, AeAppIcon, QrCode },
-    computed: mapState(['peerKey'])
-  }
+export default {
+  components: { Step, AeAppIcon, QrCode },
+  computed: mapState(['peerKey'])
+}
 </script>
 
 <style scoped lang="scss">
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .remote-connection-prompt {
-    height: 100%;
+.remote-connection-prompt {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .steps {
+    margin: auto 0;
     display: flex;
-    flex-direction: column;
-    overflow-y: hidden;
 
-    h1 {
-      font-size: 24px;
-    }
+    .step {
+      border-right: 1px solid $silver;
+      flex-grow: 1;
+      flex-basis: 0;
 
-    .steps {
-      margin: auto 0;
-      display: flex;
-
-      .step {
-        border-right: 1px solid $silver;
-        flex-grow: 1;
-        flex-basis: 0;
-
-        &:last-child {
-          border-right: none;
-        }
+      &:last-child {
+        border-right: none;
       }
     }
   }
+}
 </style>

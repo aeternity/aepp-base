@@ -43,30 +43,30 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
-  import ModalScreen from '@/components/ModalScreen'
+import { mapState } from 'vuex'
+import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
+import ModalScreen from '@/components/ModalScreen'
 
-  export default {
-    components: { ModalScreen, AeTextarea, AeLabel, AeButton },
-    data () {
-      return { seed: '' }
-    },
-    computed: mapState(['keystore']),
-    methods: {
-      async setSeed () {
-        if (!await this.$validator.validateAll()) return
+export default {
+  components: { ModalScreen, AeTextarea, AeLabel, AeButton },
+  data () {
+    return { seed: '' }
+  },
+  computed: mapState(['keystore']),
+  methods: {
+    async setSeed () {
+      if (!await this.$validator.validateAll()) return
 
-        try {
-          this.$store.commit('setSeed', this.seed)
-        } catch (e) {
-          if (e.message !== 'Invalid mnemonic') throw e
-          this.$store.dispatch('setNotification', {
-            text: `Invalid passphrase`,
-            autoClose: true
-          })
-        }
+      try {
+        this.$store.commit('setSeed', this.seed)
+      } catch (e) {
+        if (e.message !== 'Invalid mnemonic') throw e
+        this.$store.dispatch('setNotification', {
+          text: `Invalid passphrase`,
+          autoClose: true
+        })
       }
     }
   }
+}
 </script>

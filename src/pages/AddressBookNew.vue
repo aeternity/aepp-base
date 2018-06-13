@@ -37,22 +37,22 @@
 </template>
 
 <script>
-  import { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider } from '@aeternity/aepp-components'
-  import ModalScreen from '@/components/ModalScreen.vue'
+import { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider } from '@aeternity/aepp-components'
+import ModalScreen from '@/components/ModalScreen.vue'
 
-  export default {
-    components: { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider, ModalScreen },
-    data: () => ({
-      name: '',
-      address: ''
-    }),
-    methods: {
-      async addAddressBookItem () {
-        if (!await this.$validator.validateAll()) return
-        const { name, address } = this
-        this.$store.commit('addAddressBookItem', { name, address })
-        this.$router.push({ name: 'address-book' })
-      }
+export default {
+  components: { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider, ModalScreen },
+  data: () => ({
+    name: '',
+    address: ''
+  }),
+  methods: {
+    async addAddressBookItem () {
+      if (!await this.$validator.validateAll()) return
+      const { name, address } = this
+      this.$store.commit('addAddressBookItem', { name, address })
+      this.$router.push({ name: 'address-book' })
     }
   }
+}
 </script>

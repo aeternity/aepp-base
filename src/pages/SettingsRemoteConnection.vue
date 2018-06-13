@@ -27,60 +27,60 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
-  import { AeButton } from '@aeternity/aepp-components'
-  import ModalPage from '@/components/ModalPage.vue'
-  import SettingsHeading from '@/components/SettingsHeading'
-  import SettingsItem from '@/components/SettingsItem'
-  import FixedAddButton from '@/components/FixedAddButton.vue'
+import { mapState, mapMutations } from 'vuex'
+import { AeButton } from '@aeternity/aepp-components'
+import ModalPage from '@/components/ModalPage.vue'
+import SettingsHeading from '@/components/SettingsHeading'
+import SettingsItem from '@/components/SettingsItem'
+import FixedAddButton from '@/components/FixedAddButton.vue'
 
-  export default {
-    components: {
-      AeButton,
-      ModalPage,
-      Heading: SettingsHeading,
-      Item: SettingsItem,
-      FixedAddButton
-    },
-    computed: mapState({
-      followers: ({ mobile: { followers, isFollowerConnected } }) =>
-        Object.values(followers)
-          .map(f => ({
-            ...f,
-            disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
-            connected: isFollowerConnected[f.key]
-          }))
-    }),
-    methods: mapMutations(['removeFollower'])
-  }
+export default {
+  components: {
+    AeButton,
+    ModalPage,
+    Heading: SettingsHeading,
+    Item: SettingsItem,
+    FixedAddButton
+  },
+  computed: mapState({
+    followers: ({ mobile: { followers, isFollowerConnected } }) =>
+      Object.values(followers)
+        .map(f => ({
+          ...f,
+          disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
+          connected: isFollowerConnected[f.key]
+        }))
+  }),
+  methods: mapMutations(['removeFollower'])
+}
 </script>
 
 <style src="./Settings.scss" lang="scss" scoped />
 
 <style lang="scss" scoped>
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .settings {
-    .settings-item {
-      height: 84px;
+.settings {
+  .settings-item {
+    height: 84px;
 
-      .follower {
-        .name {
-          line-height: 1.56;
-        }
-
-        .status {
-          line-height: 1.44;
-          color: $grey;
-          font-size: 16px;
-        }
+    .follower {
+      .name {
+        line-height: 1.56;
       }
 
-      .ae-button {
-        &, /deep/ .label {
-          padding-right: 0;
-        }
+      .status {
+        line-height: 1.44;
+        color: $grey;
+        font-size: 16px;
+      }
+    }
+
+    .ae-button {
+      &, /deep/ .label {
+        padding-right: 0;
       }
     }
   }
+}
 </style>

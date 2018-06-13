@@ -43,41 +43,41 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
-  import ModalScreen from '@/components/ModalScreen'
+import { mapState } from 'vuex'
+import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
+import ModalScreen from '@/components/ModalScreen'
 
-  export default {
-    components: { ModalScreen, AeInput, AeLabel, AeButton },
-    data () {
-      return {
-        password: '',
-        working: false,
-        recover: false
-      }
-    },
-    computed: mapState(['keystore']),
-    methods: {
-      async createKeystore () {
-        if (!await this.$validator.validateAll()) return
-
-        this.working = true
-        try {
-          await this.$store.dispatch('createKeystore', this.password)
-          this.$store.dispatch('setNotification', {
-            text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
-            icon: require(`emoji-datasource-apple/img/apple/64/1f44f.png`),
-            autoClose: true
-          })
-        } finally {
-          this.working = false
-        }
-      }
-    },
-    beforeRouteEnter (to, from, next) {
-      next((vm) => {
-        vm.recover = from.name === 'recover'
-      })
+export default {
+  components: { ModalScreen, AeInput, AeLabel, AeButton },
+  data () {
+    return {
+      password: '',
+      working: false,
+      recover: false
     }
+  },
+  computed: mapState(['keystore']),
+  methods: {
+    async createKeystore () {
+      if (!await this.$validator.validateAll()) return
+
+      this.working = true
+      try {
+        await this.$store.dispatch('createKeystore', this.password)
+        this.$store.dispatch('setNotification', {
+          text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
+          icon: require(`emoji-datasource-apple/img/apple/64/1f44f.png`),
+          autoClose: true
+        })
+      } finally {
+        this.working = false
+      }
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    next((vm) => {
+      vm.recover = from.name === 'recover'
+    })
   }
+}
 </script>

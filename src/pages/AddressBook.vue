@@ -29,47 +29,47 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import { AeIcon, AeAppIcon, AeDivider } from '@aeternity/aepp-components'
-  import AddressBookNoContacts from '@/pages/AddressBookNoContacts.vue'
-  import AddressBookItem from '@/components/AddressBookItem.vue'
-  import FixedAddButton from '@/components/FixedAddButton.vue'
-  import ModalPage from '@/components/ModalPage.vue'
+import { mapState } from 'vuex'
+import { AeIcon, AeAppIcon, AeDivider } from '@aeternity/aepp-components'
+import AddressBookNoContacts from '@/pages/AddressBookNoContacts.vue'
+import AddressBookItem from '@/components/AddressBookItem.vue'
+import FixedAddButton from '@/components/FixedAddButton.vue'
+import ModalPage from '@/components/ModalPage.vue'
 
-  export default {
-    components: {
-      AeIcon,
-      AeAppIcon,
-      AeDivider,
-      AddressBookItem,
-      AddressBookNoContacts,
-      FixedAddButton,
-      ModalPage
-    },
-    data: () => ({
-      openIdx: -1
-    }),
-    computed: mapState(['addressBook'])
-  }
+export default {
+  components: {
+    AeIcon,
+    AeAppIcon,
+    AeDivider,
+    AddressBookItem,
+    AddressBookNoContacts,
+    FixedAddButton,
+    ModalPage
+  },
+  data: () => ({
+    openIdx: -1
+  }),
+  computed: mapState(['addressBook'])
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .address-book {
-    .ae-divider {
-      margin: 16px 0;
-    }
+.address-book {
+  .ae-divider {
+    margin: 16px 0;
+  }
 
-    .actions {
-      display: flex;
+  .actions {
+    display: flex;
 
-      .ae-app-icon {
-        width: 52px;
-        height: 52px;
-        box-sizing: border-box;
-        margin: 16px 8px 0 8px;
-      }
+    .ae-app-icon {
+      width: 52px;
+      height: 52px;
+      box-sizing: border-box;
+      margin: 16px 8px 0 8px;
     }
   }
+}
 </style>

@@ -20,51 +20,51 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import { AeButton } from '@aeternity/aepp-components'
-  import ModalScreen from '@/components/ModalScreen'
+import { mapState } from 'vuex'
+import { AeButton } from '@aeternity/aepp-components'
+import ModalScreen from '@/components/ModalScreen'
 
-  export default {
-    components: { ModalScreen, AeButton },
-    computed: mapState({
-      keystore: state => state.mobile.keystore
-    })
-  }
+export default {
+  components: { ModalScreen, AeButton },
+  computed: mapState({
+    keystore: state => state.mobile.keystore
+  })
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .intro.modal-screen.ae-overlay {
+.intro.modal-screen.ae-overlay {
+  background: transparent;
+
+  /deep/ .ae-modal {
     background: transparent;
 
-    /deep/ .ae-modal {
-      background: transparent;
-
-      .ae-header, header.desktop {
-        display: none;
-      }
-
-      main.content {
-        flex-shrink: 0;
-        display: flex;
-      }
+    .ae-header, header.desktop {
+      display: none;
     }
 
-    .logo {
-      text-align: center;
-      margin: auto;
-
-      img, p {
-        margin: 12px;
-      }
-
-      p {
-        max-width: 300px;
-        font-size: 18px;
-        line-height: 1.56;
-        color: $anthracite;
-      }
+    main.content {
+      flex-shrink: 0;
+      display: flex;
     }
   }
+
+  .logo {
+    text-align: center;
+    margin: auto;
+
+    img, p {
+      margin: 12px;
+    }
+
+    p {
+      max-width: 300px;
+      font-size: 18px;
+      line-height: 1.56;
+      color: $anthracite;
+    }
+  }
+}
 </style>
