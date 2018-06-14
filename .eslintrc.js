@@ -24,14 +24,7 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    indent: 'off',
-    'no-tabs': 'off',
-    'import/first': 'off',
-    'vue/valid-v-for': 'off',
-    'vue/require-v-for-key': 'off',
-    'node/no-deprecated-api': 'off',
-    'no-mixed-operators': 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
   overrides: [{
     files: '**/__tests__/*',

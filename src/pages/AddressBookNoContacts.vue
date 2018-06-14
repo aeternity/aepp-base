@@ -16,29 +16,29 @@
 </template>
 
 <script>
-  import { AeDivider } from '@aeternity/aepp-components'
-  import ModalScreen from '@/components/ModalScreen.vue'
-  import FixedAddButton from '@/components/FixedAddButton.vue'
+import { AeDivider } from '@aeternity/aepp-components'
+import ModalScreen from '@/components/ModalScreen.vue'
+import FixedAddButton from '@/components/FixedAddButton.vue'
 
-  export default {
-    components: { AeDivider, ModalScreen, FixedAddButton }
-  }
+export default {
+  components: { AeDivider, ModalScreen, FixedAddButton }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .address-book-no-contacts.modal-screen {
-    /deep/ .ae-modal main.content {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .no-contacts {
-      margin: auto;
-      font-family: 'Roboto Mono', monospace;
-      font-weight: 500;
-      color: $grey;
-    }
+.address-book-no-contacts.modal-screen {
+  /deep/ .ae-modal main.content {
+    display: flex;
+    flex-direction: column;
   }
+
+  .no-contacts {
+    margin: auto;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    color: $grey;
+  }
+}
 </style>

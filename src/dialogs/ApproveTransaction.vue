@@ -44,58 +44,58 @@
       </div>
     </div>
     <approve-buttons @approve="approve" @reject="close" />
-	</div>
+  </div>
 </template>
 
 <script>
-  import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components'
-  import { convertAEtoCHF } from '@/lib/currencyConverter'
-  import ApproveButtons from '@/dialogs/ApproveButtons.vue'
-  import DialogHeader from '@/dialogs/DialogHeader.vue'
+import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components'
+import { convertAEtoCHF } from '@/lib/currencyConverter'
+import ApproveButtons from '@/dialogs/ApproveButtons.vue'
+import DialogHeader from '@/dialogs/DialogHeader.vue'
 
-  export default {
-    name: 'approve-transaction',
-    data () {
-      return {
-        price: null
-      }
-    },
-    props: {
-      appName: {
-        type: String,
-        default: ''
-      },
-      transaction: Object,
-      id: {
-        type: String,
-        required: true
-      }
-    },
-    components: {
-      AeAmount,
-      AeIdentityAvatar,
-      AeIcon,
-      ApproveButtons,
-      DialogHeader
-    },
-    methods: {
-      close () {
-        this.$store.commit('cancelTransaction', this.id)
-      },
-      approve () {
-        this.$store.commit('approveTransaction', this.id)
-      }
-    },
-    filters: {
-      round (value, decimal) {
-        const rounded = parseFloat(value.toFixed(decimal))
-        const start = rounded === value ? '' : '≈ '
-        return `${start}${rounded}`
-      }
-    },
-    async mounted () {
-      this.price = await convertAEtoCHF()
+export default {
+  name: 'approve-transaction',
+  data () {
+    return {
+      price: null
     }
+  },
+  props: {
+    appName: {
+      type: String,
+      default: ''
+    },
+    transaction: Object,
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  components: {
+    AeAmount,
+    AeIdentityAvatar,
+    AeIcon,
+    ApproveButtons,
+    DialogHeader
+  },
+  methods: {
+    close () {
+      this.$store.commit('cancelTransaction', this.id)
+    },
+    approve () {
+      this.$store.commit('approveTransaction', this.id)
+    }
+  },
+  filters: {
+    round (value, decimal) {
+      const rounded = parseFloat(value.toFixed(decimal))
+      const start = rounded === value ? '' : '≈ '
+      return `${start}${rounded}`
+    }
+  },
+  async mounted () {
+    this.price = await convertAEtoCHF()
   }
+}
 </script>
 <style scoped src="./ApproveTransaction.css" />

@@ -6,16 +6,16 @@
 </template>
 
 <style lang="scss" scoped>
-  @import "~@aeternity/aepp-components/dist/mixins.scss";
+@import "~@aeternity/aepp-components/dist/mixins.scss";
 
-  .ae-header {
-    margin: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.ae-header {
+  margin: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    @include desktop {
-      margin: 50px;
-    }
+  @include desktop {
+    margin: 50px;
   }
+}
 </style>

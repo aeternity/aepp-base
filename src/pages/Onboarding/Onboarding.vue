@@ -106,7 +106,13 @@
           </router-link>
         </ae-button>
         <div class="step-dots" v-if="hasDots">
-          <div class="step-dot" v-for="n in max" :class="{active: n == step}" @click="goToStep(n)"></div>
+          <div
+            class="step-dot"
+            v-for="n in max"
+            :key="n"
+            :class="{active: n === step}"
+            @click="goToStep(n)"
+          />
         </div>
         <ae-button type="dramatic" plain uppercase>
           <router-link :to="{ name: 'new-account'}">

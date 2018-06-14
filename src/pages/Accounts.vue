@@ -64,121 +64,121 @@
 </template>
 
 <script>
-  import { mapState, mapGetters, mapMutations } from 'vuex'
-  import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
-  import ModalPage from '@/components/ModalPage'
-  import FixedAddButton from '@/components/FixedAddButton'
-  import { roundToken } from '@/lib/filters'
+import { mapState, mapGetters, mapMutations } from 'vuex'
+import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
+import ModalPage from '@/components/ModalPage'
+import FixedAddButton from '@/components/FixedAddButton'
+import { roundToken } from '@/lib/filters'
 
-  export default {
-    data: () => ({
-      activeIdentityCard: -1
-    }),
-    components: { AeIdentity, AeButton, AeDivider, ModalPage, FixedAddButton },
-    filters: { roundToken },
-    computed: {
-      ...mapGetters(['totalBalance', 'activeIdentity']),
-      ...mapState({
-        inactiveIdentities (state, { identities, activeIdentity }) {
-          const activeIndex = this.activeIdentityCard
-          return identities
-            .map((identity, index) => ({ identity, index }))
-            .filter(({ identity }) => identity !== activeIdentity)
-            .map(({ identity, index }, i, identities) => ({
-              identity,
-              index,
-              beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
-              active: index === activeIndex
-            }))
-        }
-      })
-    },
-    methods: {
-      ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
-      activateCard (i) {
-        this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
+export default {
+  data: () => ({
+    activeIdentityCard: -1
+  }),
+  components: { AeIdentity, AeButton, AeDivider, ModalPage, FixedAddButton },
+  filters: { roundToken },
+  computed: {
+    ...mapGetters(['totalBalance', 'activeIdentity']),
+    ...mapState({
+      inactiveIdentities (state, { identities, activeIdentity }) {
+        const activeIndex = this.activeIdentityCard
+        return identities
+          .map((identity, index) => ({ identity, index }))
+          .filter(({ identity }) => identity !== activeIdentity)
+          .map(({ identity, index }, i, identities) => ({
+            identity,
+            index,
+            beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
+            active: index === activeIndex
+          }))
       }
-    },
-    mounted () {
-      this.$store.dispatch('updateAllBalances')
+    })
+  },
+  methods: {
+    ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
+    activateCard (i) {
+      this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
     }
+  },
+  mounted () {
+    this.$store.dispatch('updateAllBalances')
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .accounts {
-    &.slide {
-      &-enter-active, &-leave-active {
-        transition: top 500ms, opacity 500ms;
-      }
-      &-enter, &-leave-to {
-        top: 100%;
-        opacity: 0;
-      }
+.accounts {
+  &.slide {
+    &-enter-active, &-leave-active {
+      transition: top 500ms, opacity 500ms;
+    }
+    &-enter, &-leave-to {
+      top: 100%;
+      opacity: 0;
+    }
+  }
+
+  label {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    color: $anthracite;
+    margin: 15px 0;
+    align-items: center;
+
+    span {
+      flex-grow: 1;
+      text-align: right;
     }
 
-    label {
-      display: flex;
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: 500;
-      color: $anthracite;
-      margin: 15px 0;
-      align-items: center;
+    &.total-balance {
+      font-size: 16px;
+      text-transform: capitalize;
 
       span {
-        flex-grow: 1;
-        text-align: right;
-      }
+        font-family: 'Roboto Mono', monospace;
+        font-size: 12px;
+        color: $black;
 
-      &.total-balance {
-        font-size: 16px;
-        text-transform: capitalize;
-
-        span {
-          font-family: 'Roboto Mono', monospace;
-          font-size: 12px;
-          color: $black;
-
-          .ae {
-            font-weight: bold;
-          }
-        }
-      }
-    }
-
-    p {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    .active-account {
-      margin-bottom: 22px;
-    }
-
-    .inactive-accounts {
-      & > *:not(:last-child):not(.before-active):not(.active) {
-        padding-bottom: 35px;
-        margin-bottom: -24px;
-      }
-
-      .active {
-        margin: 10px 0;
-      }
-    }
-
-    .ae-identity {
-      .action-buttons {
-        text-align: right;
-
-        .ae-divider {
-          margin-bottom: 15px;
+        .ae {
+          font-weight: bold;
         }
       }
     }
   }
+
+  p {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .active-account {
+    margin-bottom: 22px;
+  }
+
+  .inactive-accounts {
+    & > *:not(:last-child):not(.before-active):not(.active) {
+      padding-bottom: 35px;
+      margin-bottom: -24px;
+    }
+
+    .active {
+      margin: 10px 0;
+    }
+  }
+
+  .ae-identity {
+    .action-buttons {
+      text-align: right;
+
+      .ae-divider {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
 </style>

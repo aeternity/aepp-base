@@ -36,28 +36,28 @@
 </template>
 
 <script>
-  import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
-  import ModalScreen from '@/components/ModalScreen'
+import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
+import ModalScreen from '@/components/ModalScreen'
 
-  export default {
-    components: { ModalScreen, AeInput, AeLabel, AeButton },
-    data () {
-      return { password: '' }
-    },
-    methods: {
-      async unlockSavedKeystore () {
-        if (!await this.$validator.validateAll()) return
-        try {
-          await this.$store.dispatch('unlockKeystore', this.password)
-        } catch (e) {
-          if (e.message !== 'Invalid password') throw e
-          this.$store.dispatch('setNotification', {
-            text: 'You\'ve entered a wrong password',
-            icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
-            autoClose: true
-          })
-        }
+export default {
+  components: { ModalScreen, AeInput, AeLabel, AeButton },
+  data () {
+    return { password: '' }
+  },
+  methods: {
+    async unlockSavedKeystore () {
+      if (!await this.$validator.validateAll()) return
+      try {
+        await this.$store.dispatch('unlockKeystore', this.password)
+      } catch (e) {
+        if (e.message !== 'Invalid password') throw e
+        this.$store.dispatch('setNotification', {
+          text: 'You\'ve entered a wrong password',
+          icon: require(`emoji-datasource-apple/img/apple/64/1f925.png`),
+          autoClose: true
+        })
       }
     }
   }
+}
 </script>

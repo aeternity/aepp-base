@@ -13,51 +13,51 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      to: undefined,
-      type: String,
-      inactive: Boolean
-    },
-    computed: {
-      renderAs () {
-        if (this.to) return 'router-link'
-        if (this.inactive) return 'div'
-        return 'label'
-      }
+export default {
+  props: {
+    to: undefined,
+    type: String,
+    inactive: Boolean
+  },
+  computed: {
+    renderAs () {
+      if (this.to) return 'router-link'
+      if (this.inactive) return 'div'
+      return 'label'
     }
   }
+}
 </script>
 
 <style lang="scss">
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .settings-item {
-    height: 60px;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    border-bottom: 2px solid #f0f0f0;
-    padding: 0 20px;
+.settings-item {
+  height: 60px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #f0f0f0;
+  padding: 0 20px;
 
-    &.exciting {
-      color: $aubergine;
-    }
+  &.exciting {
+    color: $aubergine;
+  }
 
-    &.dramatic {
-      color: $maegenta;
-    }
+  &.dramatic {
+    color: $maegenta;
+  }
 
-    &:not(.inactive) {
-      cursor: pointer;
+  &:not(.inactive) {
+    cursor: pointer;
 
-      &:hover {
-        background-color: $smoke;
-      }
-    }
-
-    .space {
-      flex-grow: 1;
+    &:hover {
+      background-color: $smoke;
     }
   }
+
+  .space {
+    flex-grow: 1;
+  }
+}
 </style>

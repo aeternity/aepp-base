@@ -13,39 +13,39 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
-  import { AeAppIcon, AeButton } from '@aeternity/aepp-components'
-  import Step from './Step'
+import { mapActions } from 'vuex'
+import { AeAppIcon, AeButton } from '@aeternity/aepp-components'
+import Step from './Step'
 
-  export default {
-    components: { Step, AeAppIcon, AeButton },
-    methods: mapActions(['cancelTransaction'])
-  }
+export default {
+  components: { Step, AeAppIcon, AeButton },
+  methods: mapActions(['cancelTransaction'])
+}
 </script>
 
 <style scoped lang="scss">
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .waiting-for-confirmation {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: hidden;
-    text-align: center;
-    align-items: center;
-    justify-content: space-between;
+.waiting-for-confirmation {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
 
-    h1 {
-      font-size: 24px;
-    }
-
-    .step {
-      flex-shrink: 0;
-      max-width: 250px;
-    }
-
-    .ae-button {
-      margin-bottom: 60px;
-    }
+  h1 {
+    font-size: 24px;
   }
+
+  .step {
+    flex-shrink: 0;
+    max-width: 250px;
+  }
+
+  .ae-button {
+    margin-bottom: 60px;
+  }
+}
 </style>

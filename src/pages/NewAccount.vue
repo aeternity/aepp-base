@@ -31,56 +31,56 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import { generateMnemonic } from '@aeternity/bip39'
-  import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
-  import ModalScreen from '@/components/ModalScreen'
+import { mapState } from 'vuex'
+import { generateMnemonic } from '@aeternity/bip39'
+import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
+import ModalScreen from '@/components/ModalScreen'
 
-  export default {
-    components: { ModalScreen, AeLabel, AeButton, AeIcon },
-    data () {
-      return {
-        seed: undefined
-      }
-    },
-    computed: mapState(['keystore']),
-    methods: {
-      newSeed () {
-        this.seed = generateMnemonic()
-      },
-      setSeed () {
-        this.$store.commit('setSeed', this.seed)
-      }
-    },
-    mounted () {
-      this.newSeed()
+export default {
+  components: { ModalScreen, AeLabel, AeButton, AeIcon },
+  data () {
+    return {
+      seed: undefined
     }
+  },
+  computed: mapState(['keystore']),
+  methods: {
+    newSeed () {
+      this.seed = generateMnemonic()
+    },
+    setSeed () {
+      this.$store.commit('setSeed', this.seed)
+    }
+  },
+  mounted () {
+    this.newSeed()
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
-  .modal-screen .content .panel {
-    border-radius: 10px;
-    background-color: #fff;
-    max-width: 400px;
-    margin: 0 auto;
-    overflow: hidden;
+.modal-screen .content .panel {
+  border-radius: 10px;
+  background-color: #fff;
+  max-width: 400px;
+  margin: 0 auto;
+  overflow: hidden;
 
-    .passphrase {
-      margin: 18px;
-      font-family: Roboto Mono, monospace;
-      font-weight: 500;
-      line-height: 1.63;
-      letter-spacing: 0.2px;
-      color: $grey;
-      min-height: 78px;
-      text-align: center;
-    }
-
-    .ae-button {
-      max-width: 190px;
-    }
+  .passphrase {
+    margin: 18px;
+    font-family: Roboto Mono, monospace;
+    font-weight: 500;
+    line-height: 1.63;
+    letter-spacing: 0.2px;
+    color: $grey;
+    min-height: 78px;
+    text-align: center;
   }
+
+  .ae-button {
+    max-width: 190px;
+  }
+}
 </style>

@@ -11,44 +11,44 @@
 </template>
 
 <script>
-  import { AeButton, AeIcon } from '@aeternity/aepp-components'
-  import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
+import { AeButton, AeIcon } from '@aeternity/aepp-components'
+import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 
-  export default {
-    props: {
-      to: [Object, String],
-      'quick-id': Boolean
-    },
-    data: () => ({
-      IS_MOBILE_DEVICE
-    }),
-    components: { AeButton, AeIcon }
-  }
+export default {
+  props: {
+    to: [Object, String],
+    'quick-id': Boolean
+  },
+  data: () => ({
+    IS_MOBILE_DEVICE
+  }),
+  components: { AeButton, AeIcon }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~@aeternity/aepp-components/dist/variables.scss';
-  @import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/mixins.scss';
 
-  .fixed-add-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
+.fixed-add-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
 
-    &:not(.mobile).quick-id {
-      bottom: 80px;
+  &:not(.mobile).quick-id {
+    bottom: 80px;
+  }
+
+  &.mobile {
+    @include phone {
+      right: 10px;
     }
 
-    &.mobile {
-      @include phone {
-        right: 10px;
-      }
-
-      &.quick-id {
-        @media (max-width: 600px) {
-          bottom: 110px;
-        }
+    &.quick-id {
+      @media (max-width: 600px) {
+        bottom: 110px;
       }
     }
   }
+}
 </style>
