@@ -1,11 +1,11 @@
 <template>
   <div class="apps" @click="editModeActive = false">
     <header class="mobile">Browse æpps</header>
-    <ae-header>
+    <header-desktop>
       <ae-button :to="{ name: 'add-app' }" type="dramatic">
         <ae-icon slot="icon" name="plus" invert type="exciting" />
       </ae-button>
-    </ae-header>
+    </header-desktop>
 
     <div class="shortcuts">
       <div
