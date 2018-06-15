@@ -4,6 +4,10 @@
   max-height: 100%;
   overflow: auto;
 
+  &.quick-id-hidden {
+    padding-bottom: 0;
+  }
+
   .ae-banner {
     position: fixed;
     left: 0;

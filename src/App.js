@@ -37,10 +37,11 @@ export default {
       showRemoteConnectionPrompt: ({ desktop }) => desktop.showRemoteConnectionPrompt,
       transactionIdToSignByRemote: ({ desktop }) => desktop.transactionIdToSignByRemote
     }),
-    appClassObject: () => {
+    appClassObject () {
       return {
         stage: process.env.IS_STAGE === true,
-        development: process.env.NODE_ENV === 'development'
+        development: process.env.NODE_ENV === 'development',
+        'quick-id-hidden': !this.displayQuickId
       }
     },
     displayQuickId () {
