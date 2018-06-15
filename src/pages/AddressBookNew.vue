@@ -28,11 +28,9 @@
       />
     </form>
 
-    <div slot="footer">
-      <ae-button @click="addAddressBookItem" type="dramatic" :inactive="errors.any()">
-        Save contact
-      </ae-button>
-    </div>
+    <ae-button @click="addAddressBookItem" type="dramatic" :inactive="errors.any()" slot="footer">
+      Save contact
+    </ae-button>
   </modal-screen>
 </template>
 

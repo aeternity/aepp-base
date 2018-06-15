@@ -19,7 +19,7 @@
       </p>
     </form>
 
-    <div slot="footer">
+    <template slot="footer">
       <ae-button
         type="dramatic"
         @click="createKeystore"
@@ -38,7 +38,7 @@
           || recover && 'Create new account'
           || 'Recover with passphrase'}}
       </ae-button>
-    </div>
+    </template>
   </modal-screen>
 </template>
 

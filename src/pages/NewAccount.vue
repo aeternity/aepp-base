@@ -13,7 +13,7 @@
       to anybody or you risk losing all your funds.
     </p>
 
-    <div slot="footer">
+    <template slot="footer">
       <ae-button type="exciting" @click="setSeed">
         Next
       </ae-button>
@@ -26,7 +26,7 @@
       >
         {{keystore ? 'Login with an existing account' : 'Recover with passphrase'}}
       </ae-button>
-    </div>
+    </template>
   </modal-screen>
 </template>
 

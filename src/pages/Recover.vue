@@ -20,7 +20,7 @@
       >Recover with Passphrase</ae-button>
     </form>
 
-    <div slot="footer">
+    <template slot="footer">
       <p>
         Enter your password if you remember it again or
         create a new account if you haven’t done that yet
@@ -38,7 +38,7 @@
       <ae-button :to="{ name: 'new-account' }" size="small" plain type="exciting" uppercase>
         Create new account
       </ae-button>
-    </div>
+    </template>
   </modal-screen>
 </template>
 
