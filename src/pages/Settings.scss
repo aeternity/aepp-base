@@ -1,9 +1,8 @@
-@import '~@aeternity/aepp-components/dist/variables.scss';
 @import '~@aeternity/aepp-components/dist/mixins.scss';
 
 @include phone {
-  .settings.modal-page /deep/ .ae-modal main {
-    padding-left: 0;
-    padding-right: 0;
+  .settings.mobile-page /deep/ .panel .content {
+    margin-left: 0;
+    margin-right: 0;
   }
 }

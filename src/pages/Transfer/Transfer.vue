@@ -1,5 +1,5 @@
 <template>
-  <modal-screen class="transfer" title="Transfer" :redirectToOnClose="{ name: 'apps' }">
+  <mobile-page class="transfer" title="Transfer">
     <ae-switch
       v-if="identitiesTo.length"
       v-model="transactionType"
@@ -74,9 +74,10 @@
       <img slot="icon" :src="require('emoji-datasource-apple/img/apple/64/1f4b8.png')" />
       Make Transaction
     </ae-button>
-  </modal-screen>
+  </mobile-page>
 </template>
 
 <style lang="css" src="swiper/dist/css/swiper.css" />
 <script src="./Transfer.js" />
+<style lang="scss" src="../../components/MobilePageContent.scss" scoped />
 <style lang="scss" src="./Transfer.scss" scoped />

@@ -1,7 +1,8 @@
 <template>
-  <modal-page
+  <mobile-page
     title="Network"
     :redirectToOnClose="{ name: 'settings' }"
+    back-button
     class="settings"
   >
     <heading>Available networks</heading>
@@ -19,12 +20,12 @@
       Network ID
       <span slot="right">{{networkId}}</span>
     </item>
-  </modal-page>
+  </mobile-page>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import ModalPage from '@/components/ModalPage.vue'
+import MobilePage from '@/components/MobilePage.vue'
 import AeRadio from '@/components/AeRadio.vue'
 import SettingsHeading from '@/components/SettingsHeading'
 import SettingsItem from '@/components/SettingsItem'
@@ -32,7 +33,7 @@ import networks from '@/lib/networksRegistry'
 
 export default {
   components: {
-    ModalPage,
+    MobilePage,
     AeRadio,
     Heading: SettingsHeading,
     Item: SettingsItem

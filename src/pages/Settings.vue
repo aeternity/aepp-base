@@ -1,7 +1,6 @@
 <template>
-  <modal-page
+  <mobile-page
     title="Settings"
-    :redirectToOnClose="{ name: 'apps' }"
     class="settings"
   >
     <heading>General settings</heading>
@@ -21,13 +20,13 @@
         Sign out on this device completely
       </item>
     </template>
-  </modal-page>
+  </mobile-page>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { AeIcon } from '@aeternity/aepp-components'
-import ModalPage from '@/components/ModalPage.vue'
+import MobilePage from '@/components/MobilePage.vue'
 import SettingsHeading from '@/components/SettingsHeading'
 import SettingsItem from '@/components/SettingsItem'
 import networks from '@/lib/networksRegistry'
@@ -36,7 +35,7 @@ import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
 export default {
   components: {
     AeIcon,
-    ModalPage,
+    MobilePage,
     Heading: SettingsHeading,
     Item: SettingsItem
   },

@@ -1,14 +1,33 @@
 <template>
   <header class="header-mobile">
-    <slot />
+    <div class="left">
+      <slot name="left" />
+    </div>
+    <span class="title">
+      <slot />
+    </span>
+    <div class="right">
+      <slot name="right" />
+    </div>
   </header>
 </template>
 
 <style lang="scss" scoped>
 .header-mobile {
-  font-weight: bold;
-  font-size: 24px;
-  text-align: center;
-  margin: 20px 0 50px 0;
+  margin: 20px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  height: 32px;
+
+  .title {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-weight: bold;
+    font-size: 24px;
+    white-space: nowrap;
+  }
 }
 </style>

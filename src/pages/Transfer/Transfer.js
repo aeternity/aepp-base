@@ -9,12 +9,12 @@ import {
 } from '@aeternity/aepp-components'
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
 import { convertAEtoCHF } from '@/lib/currencyConverter'
-import ModalScreen from '@/components/ModalScreen'
+import MobilePage from '@/components/MobilePage'
 
 export default {
   name: 'transfer',
   components: {
-    ModalScreen,
+    MobilePage,
     AeIdentity,
     AeButton,
     AeSwitch,

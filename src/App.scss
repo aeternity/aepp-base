@@ -1,8 +1,8 @@
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-height: 100%;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 
   &.quick-id-hidden {
     padding-bottom: 0;

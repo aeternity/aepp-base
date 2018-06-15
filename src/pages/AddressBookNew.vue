@@ -1,8 +1,9 @@
 <template>
-  <modal-screen
+  <mobile-page
     class="address-book"
     title="Addresses"
     :redirectToOnClose="{ name: 'address-book' }"
+    back-button
   >
     <ae-divider />
     <form @submit.prevent="addAddressBookItem">
@@ -35,15 +36,15 @@
     <ae-button @click="addAddressBookItem" type="dramatic" :inactive="errors.any()" slot="footer">
       Save contact
     </ae-button>
-  </modal-screen>
+  </mobile-page>
 </template>
 
 <script>
 import { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider } from '@aeternity/aepp-components'
-import ModalScreen from '@/components/ModalScreen.vue'
+import MobilePage from '@/components/MobilePage.vue'
 
 export default {
-  components: { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider, ModalScreen },
+  components: { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider, MobilePage },
   data: () => ({
     name: '',
     address: ''
@@ -59,4 +60,5 @@ export default {
 }
 </script>
 
+<style lang="scss" src="../components/MobilePageContent.scss" scoped />
 <style lang="scss" scoped src="./AddressBook.scss" />

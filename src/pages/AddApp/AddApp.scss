@@ -1,10 +1,7 @@
 @import "~@aeternity/aepp-components/dist/variables.scss";
 
-.add-app.ae-overlay {
-  background: $smoke;
-
-  /deep/ .ae-modal {
-    padding-bottom: 60px;
+.add-app.mobile-page {
+  /deep/ .panel {
     margin-top: 0;
   }
 

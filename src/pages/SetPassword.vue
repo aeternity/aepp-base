@@ -1,5 +1,9 @@
 <template>
-  <modal-screen title="New Account 2/2" :redirectToOnClose="{ name: 'intro' }">
+  <mobile-page
+    title="New Account 2/2"
+    :redirectToOnClose="{ name: recover ? 'recover' : 'new-account' }"
+    back-button
+  >
     <form @submit.prevent="createKeystore">
       <ae-label
         :for="_uid"
@@ -39,16 +43,16 @@
           || 'Recover with passphrase'}}
       </ae-button>
     </template>
-  </modal-screen>
+  </mobile-page>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
-import ModalScreen from '@/components/ModalScreen'
+import MobilePage from '@/components/MobilePage'
 
 export default {
-  components: { ModalScreen, AeInput, AeLabel, AeButton },
+  components: { MobilePage, AeInput, AeLabel, AeButton },
   data () {
     return {
       password: '',
@@ -81,3 +85,4 @@ export default {
   }
 }
 </script>
+<style lang="scss" src="../components/MobilePageContent.scss" scoped />

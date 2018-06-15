@@ -1,5 +1,5 @@
 <template>
-  <modal-screen title="Login to æternity" :redirectToOnClose="{ name: 'intro' }">
+  <mobile-page title="Login to æternity" :redirectToOnClose="{ name: 'intro' }" close-button>
     <form @submit.prevent="unlockSavedKeystore">
       <ae-label
         :for="_uid"
@@ -32,15 +32,15 @@
         Create new account
       </ae-button>
     </template>
-  </modal-screen>
+  </mobile-page>
 </template>
 
 <script>
 import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
-import ModalScreen from '@/components/ModalScreen'
+import MobilePage from '@/components/MobilePage'
 
 export default {
-  components: { ModalScreen, AeInput, AeLabel, AeButton },
+  components: { MobilePage, AeInput, AeLabel, AeButton },
   data () {
     return { password: '' }
   },
@@ -61,3 +61,4 @@ export default {
   }
 }
 </script>
+<style lang="scss" src="../components/MobilePageContent.scss" scoped />
