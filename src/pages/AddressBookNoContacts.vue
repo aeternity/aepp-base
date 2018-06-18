@@ -1,12 +1,12 @@
 <template>
   <div>
     <modal-screen
-      class="address-book-no-contacts"
+      class="address-book no-contacts"
       title="Addresses"
       :redirectToOnClose="{ name: 'apps' }"
     >
       <ae-divider />
-      <div class="no-contacts">
+      <div class="banner">
         No saved contacts.
       </div>
     </modal-screen>
@@ -28,13 +28,13 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
-.address-book-no-contacts.modal-screen {
+.address-book.no-contacts.modal-screen {
   /deep/ .ae-modal main.content {
     display: flex;
     flex-direction: column;
   }
 
-  .no-contacts {
+  .banner {
     margin: auto;
     font-family: 'Roboto Mono', monospace;
     font-weight: 500;
@@ -42,3 +42,4 @@ export default {
   }
 }
 </style>
+<style lang="scss" scoped src="./AddressBook.scss" />

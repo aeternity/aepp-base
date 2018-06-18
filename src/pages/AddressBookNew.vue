@@ -1,5 +1,9 @@
 <template>
-  <modal-screen title="Addresses" :redirectToOnClose="{ name: 'address-book' }">
+  <modal-screen
+    class="address-book"
+    title="Addresses"
+    :redirectToOnClose="{ name: 'address-book' }"
+  >
     <ae-divider />
     <form @submit.prevent="addAddressBookItem">
       <ae-label
@@ -54,3 +58,5 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped src="./AddressBook.scss" />

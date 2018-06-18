@@ -53,12 +53,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
-
-.address-book {
-  .ae-divider {
-    margin: 16px 0;
-  }
-}
-</style>
+<style lang="scss" scoped src="./AddressBook.scss" />

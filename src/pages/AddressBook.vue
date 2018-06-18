@@ -57,10 +57,6 @@ export default {
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
 .address-book {
-  .ae-divider {
-    margin: 16px 0;
-  }
-
   .actions {
     display: flex;
 
@@ -73,3 +69,4 @@ export default {
   }
 }
 </style>
+<style lang="scss" scoped src="./AddressBook.scss" />
