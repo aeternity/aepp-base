@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "e2e": "node test/e2e/runner.js",
+    "e2e": "node test/e2e/runner.js --env chromePhone,chromeTablet",
     "test": "npm run lint && npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs"
   },

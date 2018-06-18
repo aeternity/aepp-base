@@ -6,6 +6,7 @@ module.exports = {
   src_folders: ['test/e2e/specs'],
   output_folder: 'test/e2e/reports',
   custom_assertions_path: ['test/e2e/custom-assertions'],
+  custom_commands_path: ['test/e2e/custom-commands'],
 
   selenium: {
     start_process: true,
@@ -23,8 +24,10 @@ module.exports = {
       selenium_host: 'localhost',
       silent: true,
       globals: {
-        devServerURL: 'http://localhost:' + (process.env.PORT || config.dev.port)
-      }
+        devServerURL: 'http://localhost:' + (process.env.PORT || config.dev.port),
+        waitForConditionTimeout: 5000
+      },
+      use_xpath: true
     },
 
     chrome: {
@@ -32,6 +35,28 @@ module.exports = {
         browserName: 'chrome',
         javascriptEnabled: true,
         acceptSslCerts: true
+      }
+    },
+
+    chromePhone: {
+      desiredCapabilities: {
+        browserName: 'chrome-phone',
+        javascriptEnabled: true,
+        acceptSslCerts: true,
+        chromeOptions: {
+          mobileEmulation: { deviceName: 'iPhone 8' }
+        }
+      }
+    },
+
+    chromeTablet: {
+      desiredCapabilities: {
+        browserName: 'chrome-tablet',
+        javascriptEnabled: true,
+        acceptSslCerts: true,
+        chromeOptions: {
+          mobileEmulation: { deviceName: 'iPad' }
+        }
       }
     },
 
