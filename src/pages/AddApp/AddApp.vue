@@ -1,5 +1,5 @@
 <template>
-  <ae-modal class="add-app" title="Add an æpp" @close="goToApps">
+  <mobile-page class="add-app" title="Add an æpp">
     <form @submit.prevent="addAppByUrl">
       <ae-label
         :for="`${_uid}-url`"
@@ -67,7 +67,7 @@
         </div>
       </div>
     </template>
-  </ae-modal>
+  </mobile-page>
 </template>
 
 <script src="./AddApp.js" />

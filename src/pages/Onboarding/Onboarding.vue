@@ -1,7 +1,7 @@
 <template>
   <div class="onBoarding">
     <div class="wrapper">
-      <ae-header />
+      <header-desktop />
       <main class="main-content-container">
         <section id="welcome">
           <div class="cube-div">

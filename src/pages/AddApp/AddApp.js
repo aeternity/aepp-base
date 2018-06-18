@@ -6,10 +6,10 @@ import {
   AeButton,
   AeIcon,
   AeAppIcon,
-  AeDivider,
-  AeModal
+  AeDivider
 } from '@aeternity/aepp-components'
 import { DEFAULT_ICON, appsRegistry } from '@/lib/appsRegistry'
+import MobilePage from '@/components/MobilePage'
 
 const allApps = Object.entries(appsRegistry)
   .map(([id, d]) => ({
@@ -32,7 +32,7 @@ export default {
     AeAppIcon,
     AeIcon,
     AeDivider,
-    AeModal
+    MobilePage
   },
   data: () => ({
     url: '',
@@ -56,9 +56,6 @@ export default {
       await this.addApp(this.url)
       this.$router.push({ name: 'apps' })
       this.appAddingByUrl = false
-    },
-    goToApps () {
-      this.$router.push({ name: 'apps' })
     }
   }
 }

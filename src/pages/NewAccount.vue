@@ -1,5 +1,10 @@
 <template>
-  <modal-screen title="New Account 1/2" :redirectToOnClose="{ name: 'intro' }">
+  <mobile-page
+    title="New Account 1/2"
+    class="new-account"
+    :redirectToOnClose="{ name: 'intro' }"
+    close-button
+  >
     <div class="panel">
       <div class="passphrase">{{seed}}</div>
       <ae-button plain size="small" uppercase @click="newSeed">
@@ -13,7 +18,7 @@
       to anybody or you risk losing all your funds.
     </p>
 
-    <div slot="footer">
+    <template slot="footer">
       <ae-button type="exciting" @click="setSeed">
         Next
       </ae-button>
@@ -26,18 +31,18 @@
       >
         {{keystore ? 'Login with an existing account' : 'Recover with passphrase'}}
       </ae-button>
-    </div>
-  </modal-screen>
+    </template>
+  </mobile-page>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { generateMnemonic } from '@aeternity/bip39'
 import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
-import ModalScreen from '@/components/ModalScreen'
+import MobilePage from '@/components/MobilePage'
 
 export default {
-  components: { ModalScreen, AeLabel, AeButton, AeIcon },
+  components: { MobilePage, AeLabel, AeButton, AeIcon },
   data () {
     return {
       seed: undefined
@@ -61,7 +66,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
-.modal-screen .content .panel {
+.new-account .panel {
   border-radius: 10px;
   background-color: #fff;
   max-width: 400px;
@@ -84,3 +89,4 @@ export default {
   }
 }
 </style>
+<style lang="scss" src="../components/MobilePageContent.scss" scoped />

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <modal-page class="accounts" title="My Accounts" @close="toggleIdManager">
+    <mobile-page class="accounts" title="My Accounts" @close="toggleIdManager" close-button>
       <template v-if="inactiveIdentities.length">
         <label class="total-balance">
           Total balance
@@ -59,14 +59,14 @@
       </template>
 
       <fixed-add-button @click="createIdentity" />
-    </modal-page>
+    </mobile-page>
   </transition>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
-import ModalPage from '@/components/ModalPage'
+import MobilePage from '@/components/MobilePage'
 import FixedAddButton from '@/components/FixedAddButton'
 import { roundToken } from '@/lib/filters'
 
@@ -74,7 +74,7 @@ export default {
   data: () => ({
     activeIdentityCard: -1
   }),
-  components: { AeIdentity, AeButton, AeDivider, ModalPage, FixedAddButton },
+  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton },
   filters: { roundToken },
   computed: {
     ...mapGetters(['totalBalance', 'activeIdentity']),
@@ -109,6 +109,13 @@ export default {
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
 .accounts {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom, white, #f1f4f7);
+
   &.slide {
     &-enter-active, &-leave-active {
       transition: top 500ms, opacity 500ms;

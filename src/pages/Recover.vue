@@ -1,5 +1,5 @@
 <template>
-  <modal-screen title="Recover with phrase" :redirectToOnClose="{ name: 'intro' }">
+  <mobile-page title="Recover with phrase" :redirectToOnClose="{ name: 'intro' }" close-button>
     <form @submit.prevent="setSeed">
       <ae-label
         :for="_uid"
@@ -20,7 +20,7 @@
       >Recover with Passphrase</ae-button>
     </form>
 
-    <div slot="footer">
+    <template slot="footer">
       <p>
         Enter your password if you remember it again or
         create a new account if you haven’t done that yet
@@ -38,17 +38,17 @@
       <ae-button :to="{ name: 'new-account' }" size="small" plain type="exciting" uppercase>
         Create new account
       </ae-button>
-    </div>
-  </modal-screen>
+    </template>
+  </mobile-page>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
-import ModalScreen from '@/components/ModalScreen'
+import MobilePage from '@/components/MobilePage'
 
 export default {
-  components: { ModalScreen, AeTextarea, AeLabel, AeButton },
+  components: { MobilePage, AeTextarea, AeLabel, AeButton },
   data () {
     return { seed: '' }
   },
@@ -70,3 +70,4 @@ export default {
   }
 }
 </script>
+<style lang="scss" src="../components/MobilePageContent.scss" scoped />

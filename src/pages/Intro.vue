@@ -1,5 +1,5 @@
 <template>
-  <modal-screen class="intro">
+  <mobile-page class="intro">
     <div class="logo">
       <img :src="require('@/assets/intro.svg')" />
       <p>
@@ -8,24 +8,24 @@
       </p>
     </div>
 
-    <div slot="footer">
+    <template slot="footer">
       <ae-button :to="{ name: keystore ? 'login' : 'new-account' }" type="exciting">
         {{keystore ? 'Login' : 'Create Account'}}
       </ae-button>
       <ae-button :to="{ name: 'onboarding' }" size="small" plain uppercase>
         See how it works
       </ae-button>
-    </div>
-  </modal-screen>
+    </template>
+  </mobile-page>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { AeButton } from '@aeternity/aepp-components'
-import ModalScreen from '@/components/ModalScreen'
+import MobilePage from '@/components/MobilePage'
 
 export default {
-  components: { ModalScreen, AeButton },
+  components: { MobilePage, AeButton },
   computed: mapState({
     keystore: state => state.mobile.keystore
   })
@@ -35,17 +35,13 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
-.intro.modal-screen.ae-overlay {
+.intro.mobile-page {
   background: transparent;
 
-  /deep/ .ae-modal {
+  /deep/ .panel {
     background: transparent;
 
-    .ae-header, header.desktop {
-      display: none;
-    }
-
-    main.content {
+    .content {
       flex-shrink: 0;
       display: flex;
     }
@@ -68,3 +64,4 @@ export default {
   }
 }
 </style>
+<style lang="scss" src="../components/MobilePageContent.scss" scoped />

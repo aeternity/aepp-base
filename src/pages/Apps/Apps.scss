@@ -13,18 +13,13 @@
     overflow-y: auto;
   }
 
-  header.mobile {
-    font-weight: bold;
-    font-size: 24px;
-    text-align: center;
-    margin: 20px 0 50px 0;
-
+  .header-mobile {
     @include abovePhone {
       display: none;
     }
   }
 
-  .ae-header {
+  .header-desktop {
     position: fixed;
     top: 0;
     right: 0;
@@ -44,7 +39,7 @@
   .shortcuts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-    margin: 10px;
+    margin: 50px 10px 10px 10px;
     grid-gap: 30px 10px;
     justify-items: center;
 

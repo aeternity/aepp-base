@@ -1,9 +1,8 @@
 <template>
-  <modal-page
+  <mobile-page
     v-if="addressBook.length"
     class="address-book"
     title="Addresses"
-    :redirectToOnClose="{ name: 'apps' }"
   >
     <ae-divider />
     <template v-for="(c, idx) in addressBook">
@@ -24,7 +23,7 @@
     </template>
 
     <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />
-  </modal-page>
+  </mobile-page>
   <address-book-no-contacts v-else />
 </template>
 
@@ -34,7 +33,7 @@ import { AeIcon, AeAppIcon, AeDivider } from '@aeternity/aepp-components'
 import AddressBookNoContacts from '@/pages/AddressBookNoContacts.vue'
 import AddressBookItem from '@/components/AddressBookItem.vue'
 import FixedAddButton from '@/components/FixedAddButton.vue'
-import ModalPage from '@/components/ModalPage.vue'
+import MobilePage from '@/components/MobilePage.vue'
 
 export default {
   components: {
@@ -44,7 +43,7 @@ export default {
     AddressBookItem,
     AddressBookNoContacts,
     FixedAddButton,
-    ModalPage
+    MobilePage
   },
   data: () => ({
     openIdx: -1
@@ -57,10 +56,6 @@ export default {
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
 .address-book {
-  .ae-divider {
-    margin: 16px 0;
-  }
-
   .actions {
     display: flex;
 
@@ -73,3 +68,4 @@ export default {
   }
 }
 </style>
+<style lang="scss" scoped src="./AddressBook.scss" />
