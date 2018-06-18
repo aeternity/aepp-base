@@ -1,31 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="59px" height="59px" viewBox="0 0 59 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
-    <title>BE97B7B0-85C1-4B75-9BBE-D7130C8BC2A1</title>
-    <desc>Created with sketchtool.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="59" height="59" viewBox="0 0 59 59">
     <defs>
-        <rect id="path-1" x="0.733333333" y="0.733333333" width="46.9333333" height="46.9333333" rx="6"></rect>
-        <filter x="-19.2%" y="-19.2%" width="138.4%" height="138.4%" filterUnits="objectBoundingBox" id="filter-2">
-            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        <rect id="b" width="46.933" height="46.933" x=".733" y=".733" rx="10"/>
+        <filter id="a" width="138.4%" height="138.4%" x="-19.2%" y="-19.2%" filterUnits="objectBoundingBox">
+            <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="3"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
         </filter>
-        <polygon id="path-3" points="11.375 11.375 19.25 11.375 19.25 9.625 11.375 9.625 11.375 1.75 9.625 1.75 9.625 9.625 1.75 9.625 1.75 11.375 9.625 11.375 9.625 19.25 11.375 19.25"></polygon>
+        <path id="c" d="M11.375 11.375h7.875v-1.75h-7.875V1.75h-1.75v7.875H1.75v1.75h7.875v7.875h1.75z"/>
     </defs>
-    <g id="01.04-base-intro-app-browser" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-158.000000, -255.000000)">
-        <g id="app/launcher" transform="translate(163.000000, 260.000000)">
-            <g id="Rectangle-5">
-                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                <use fill="#16242C" fill-rule="evenodd" xlink:href="#path-1"></use>
-            </g>
-            <g id="icon/ui/plus" transform="translate(14.000000, 14.000000)">
-                <mask id="mask-4" fill="white">
-                    <use xlink:href="#path-3"></use>
-                </mask>
-                <use id="Combined-Shape" fill="#1E1E1E" fill-rule="evenodd" xlink:href="#path-3"></use>
-                <g id="fill/white" mask="url(#mask-4)" fill="#FFFFFF" fill-rule="evenodd">
-                    <polygon id="Rectangle-3" points="0 -2.1467203e-17 21 -2.15756232e-17 21 21 0 21"></polygon>
-                </g>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(5 5)">
+            <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+            <use fill="#FFF" xlink:href="#b"/>
+        </g>
+        <g transform="translate(19 19)">
+            <mask id="d" fill="#fff">
+                <use xlink:href="#c"/>
+            </mask>
+            <use fill="#1E1E1E" xlink:href="#c"/>
+            <g fill="#F7296E" mask="url(#d)">
+                <path d="M0 0h21v21H0z"/>
             </g>
         </g>
     </g>
