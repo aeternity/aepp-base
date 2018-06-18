@@ -138,8 +138,13 @@ export default {
       const signature = Crypto.sign(binaryTx, accounts[transaction.sender].secretKey)
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx))
     },
-    async signPersonalMessage () {
-      throw new Error('Not implemented yet')
+    async signPersonalMessage (
+      { state: { accounts }, commit },
+      { message, address, appName }) {
+      await new Promise((resolve, reject) =>
+        commit('setMessageToApprove', { message, appName, resolve, reject }))
+      const signature = Crypto.signPersonalMessage(message, accounts[address].secretKey)
+      return Crypto.encodeBase58Check(Buffer.from(signature))
     }
   }
 }
