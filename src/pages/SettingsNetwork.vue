@@ -25,11 +25,11 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import MobilePage from '@/components/MobilePage.vue'
-import AeRadio from '@/components/AeRadio.vue'
-import SettingsHeading from '@/components/SettingsHeading'
-import SettingsItem from '@/components/SettingsItem'
-import networks from '@/lib/networksRegistry'
+import MobilePage from '../components/MobilePage.vue'
+import AeRadio from '../components/AeRadio.vue'
+import SettingsHeading from '../components/SettingsHeading'
+import SettingsItem from '../components/SettingsItem'
+import networks from '../lib/networksRegistry'
 
 export default {
   components: {

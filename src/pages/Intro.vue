@@ -1,7 +1,7 @@
 <template>
   <mobile-page class="intro">
     <div class="logo">
-      <img :src="require('@/assets/intro.svg')" />
+      <img :src="require('../assets/intro.svg')" />
       <p>
         æternity gives you easy access to the magic of blockchain
         technology. Instantly login or see how it works.
@@ -22,7 +22,7 @@
 <script>
 import { mapState } from 'vuex'
 import { AeButton } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage'
+import MobilePage from '../components/MobilePage'
 
 export default {
   components: { MobilePage, AeButton },

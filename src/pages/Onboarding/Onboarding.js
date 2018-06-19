@@ -1,5 +1,5 @@
 import { AeButton } from '@aeternity/aepp-components'
-import HeaderDesktop from '@/components/HeaderDesktop'
+import HeaderDesktop from '../../components/HeaderDesktop'
 
 export default {
   name: 'onboarding',

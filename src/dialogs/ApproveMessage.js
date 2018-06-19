@@ -1,6 +1,6 @@
 import { mapState } from 'vuex'
-import ApproveButtons from '@/dialogs/ApproveButtons.vue'
-import DialogHeader from '@/dialogs/DialogHeader.vue'
+import ApproveButtons from './ApproveButtons.vue'
+import DialogHeader from './DialogHeader.vue'
 
 import {
   AeIdentityAvatar

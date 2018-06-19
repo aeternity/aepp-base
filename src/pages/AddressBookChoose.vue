@@ -25,10 +25,10 @@
 <script>
 import { mapState } from 'vuex'
 import { AeIcon, AeDivider, AeLink } from '@aeternity/aepp-components'
-import AddressBookNoContacts from '@/pages/AddressBookNoContacts.vue'
-import FixedAddButton from '@/components/FixedAddButton.vue'
-import AddressBookItem from '@/components/AddressBookItem.vue'
-import MobilePage from '@/components/MobilePage.vue'
+import AddressBookNoContacts from './AddressBookNoContacts.vue'
+import FixedAddButton from '../components/FixedAddButton.vue'
+import AddressBookItem from '../components/AddressBookItem.vue'
+import MobilePage from '../components/MobilePage.vue'
 
 export default {
   components: {

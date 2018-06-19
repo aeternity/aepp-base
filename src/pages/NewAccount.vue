@@ -39,7 +39,7 @@
 import { mapState } from 'vuex'
 import { generateMnemonic } from '@aeternity/bip39'
 import { AeLabel, AeButton, AeIcon } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage'
+import MobilePage from '../components/MobilePage'
 
 export default {
   components: { MobilePage, AeLabel, AeButton, AeIcon },

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import MobilePage from '@/components/MobilePage.vue'
+import MobilePage from '../components/MobilePage.vue'
 import { QrcodeReader as QrCodeReader } from 'vue-qrcode-reader'
 
 export default {
