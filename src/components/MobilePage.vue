@@ -36,10 +36,10 @@ import HeaderMobile from './HeaderMobile'
 export default {
   components: { AeButton, AeIcon, HeaderMobile },
   props: {
-    title: String,
-    redirectToOnClose: Object,
-    backButton: Boolean,
-    closeButton: Boolean
+    title: { type: String, default: '' },
+    redirectToOnClose: { type: Object, default: undefined },
+    backButton: { type: Boolean, default: false },
+    closeButton: { type: Boolean, default: false }
   },
   methods: {
     closeHandler () {

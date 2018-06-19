@@ -51,10 +51,10 @@ export default {
   components: { AeIdentity, AeButton, AeDivider },
   filters: { roundToken },
   computed: mapGetters(['identities', 'activeIdentity', 'totalBalance']),
-  methods: mapMutations(['selectIdentity']),
   mounted () {
     this.$store.dispatch('updateAllBalances')
-  }
+  },
+  methods: mapMutations(['selectIdentity'])
 }
 </script>
 

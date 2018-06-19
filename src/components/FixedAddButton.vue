@@ -21,8 +21,8 @@ import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 export default {
   components: { AeButton, AeIcon },
   props: {
-    to: [Object, String],
-    'quick-id': Boolean
+    to: { type: [Object, String], default: undefined },
+    'quick-id': { type: Boolean, default: false }
   },
   data: () => ({
     IS_MOBILE_DEVICE

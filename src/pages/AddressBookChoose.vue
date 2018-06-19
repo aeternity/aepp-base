@@ -48,7 +48,7 @@ export default {
     MobilePage
   },
   props: {
-    'redirect-path-template': String
+    'redirect-path-template': { type: String, required: true }
   },
   computed: mapState(['addressBook']),
   methods: {

@@ -31,12 +31,12 @@ import { AeIdentityBackground, AeIdentityLight, AeIcon } from '@aeternity/aepp-c
 export default {
   name: 'QuickId',
   components: { AeIdentityBackground, AeIdentityLight, AeIcon },
+  props: {
+    'show-back-button': { type: Boolean, default: false }
+  },
   computed: mapGetters({
     identity: 'activeIdentity'
   }),
-  props: {
-    'show-back-button': Boolean
-  },
   methods: {
     showIdManager () {
       this.$store.commit('toggleIdManager')

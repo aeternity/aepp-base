@@ -99,14 +99,14 @@ export default {
       }
     })
   },
+  mounted () {
+    this.$store.dispatch('updateAllBalances')
+  },
   methods: {
     ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
     activateCard (i) {
       this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
     }
-  },
-  mounted () {
-    this.$store.dispatch('updateAllBalances')
   }
 }
 </script>

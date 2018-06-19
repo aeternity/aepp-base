@@ -18,8 +18,8 @@ import { times } from 'lodash'
 export default {
   components: { AeIdentityAvatar },
   props: {
-    address: String,
-    name: String
+    address: { type: String, required: true },
+    name: { type: String, required: true }
   },
   computed: {
     formattedAddress () {

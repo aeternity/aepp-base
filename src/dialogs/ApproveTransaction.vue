@@ -82,7 +82,10 @@ export default {
       type: String,
       default: ''
     },
-    transaction: Object,
+    transaction: {
+      type: Object,
+      required: true
+    },
     id: {
       type: String,
       required: true

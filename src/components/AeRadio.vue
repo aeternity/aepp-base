@@ -15,7 +15,11 @@
 
 <script>
 export default {
-  props: ['name', 'value', 'checked']
+  props: {
+    name: { type: String, default: '' },
+    value: { type: [String, Number, Boolean], required: true },
+    checked: { type: Boolean, default: false }
+  }
 }
 </script>
 

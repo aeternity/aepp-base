@@ -55,8 +55,8 @@ import { AeIdentity, AeIcon, AeOverlay, AeIdentityLight } from '@aeternity/aepp-
 export default {
   components: { AeIdentity, AeIcon, AeOverlay, AeIdentityLight },
   props: {
-    'show-back-button': Boolean,
-    closable: Boolean
+    'show-back-button': { type: Boolean, default: false },
+    closable: { type: Boolean, default: false }
   },
   computed: mapGetters({
     identity: 'activeIdentity',
