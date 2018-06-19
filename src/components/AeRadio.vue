@@ -1,12 +1,12 @@
 <template>
   <label class="ae-radio">
     <input
-      type="radio"
       :name="name"
       :value="value"
       :checked="checked"
+      type="radio"
       @change="$emit('change')"
-    />
+    >
     <span class="wrapper">
       <span class="indicator" />
     </span>

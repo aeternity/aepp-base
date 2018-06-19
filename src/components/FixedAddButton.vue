@@ -1,12 +1,16 @@
 <template>
   <ae-button
-    class="fixed-add-button"
     :class="{ 'quick-id': quickId, mobile: IS_MOBILE_DEVICE }"
     :to="to"
-    @click="$emit('click')"
+    class="fixed-add-button"
     type="dramatic"
+    @click="$emit('click')"
   >
-    <ae-icon slot="icon" name="plus" invert type="exciting" />
+    <ae-icon
+      slot="icon"
+      name="plus"
+      invert
+      type="exciting" />
   </ae-button>
 </template>
 
@@ -15,14 +19,14 @@ import { AeButton, AeIcon } from '@aeternity/aepp-components'
 import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 
 export default {
+  components: { AeButton, AeIcon },
   props: {
     to: [Object, String],
     'quick-id': Boolean
   },
   data: () => ({
     IS_MOBILE_DEVICE
-  }),
-  components: { AeButton, AeIcon }
+  })
 }
 </script>
 

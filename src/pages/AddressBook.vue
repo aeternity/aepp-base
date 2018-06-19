@@ -9,12 +9,18 @@
       <address-book-item
         :name="c.name"
         :address="c.address"
-        @click="openIdx = openIdx === idx ? -1 : idx"
         :key="`${idx}-address`"
+        @click="openIdx = openIdx === idx ? -1 : idx"
       >
-        <ae-icon slot="icon" name="chevron" :rotate="idx === openIdx ? -90 : 90" />
+        <ae-icon
+          slot="icon"
+          :rotate="idx === openIdx ? -90 : 90"
+          name="chevron" />
       </address-book-item>
-      <div v-if="idx === openIdx" :key="`${idx}-actions`" class="actions">
+      <div
+        v-if="idx === openIdx"
+        :key="`${idx}-actions`"
+        class="actions">
         <router-link :to="{ name: 'transfer', params: { to: c.address } }">
           <ae-app-icon src="static/icons/aepps/transfer.svg" />
         </router-link>
@@ -22,7 +28,9 @@
       <ae-divider :key="`${idx}-divider`" />
     </template>
 
-    <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />
+    <fixed-add-button
+      :to="{ name: 'address-book-new' }"
+      quick-id />
   </mobile-page>
   <address-book-no-contacts v-else />
 </template>

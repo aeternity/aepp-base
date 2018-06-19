@@ -1,24 +1,26 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'settings' }"
     title="Network"
-    :redirectToOnClose="{ name: 'settings' }"
     back-button
     class="settings"
   >
     <heading>Available networks</heading>
-    <item v-for="network in networks" :key="network.url">
-      {{network.name}}
+    <item
+      v-for="network in networks"
+      :key="network.url">
+      {{ network.name }}
       <ae-radio
         slot="right"
-        name="network"
         :value="network.url"
         :checked="network.url === rpcUrl"
+        name="network"
         @change="setRPCUrl(network.url)"
       />
     </item>
     <item inactive>
       Network ID
-      <span slot="right">{{networkId}}</span>
+      <span slot="right">{{ networkId }}</span>
     </item>
   </mobile-page>
 </template>

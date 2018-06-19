@@ -7,7 +7,9 @@
     <div class="banner">
       No saved contacts.
     </div>
-    <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />
+    <fixed-add-button
+      :to="{ name: 'address-book-new' }"
+      quick-id />
   </mobile-page>
 </template>
 

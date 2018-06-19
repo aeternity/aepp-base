@@ -2,8 +2,8 @@
   <component
     :is="renderAs"
     :to="to"
-    class="settings-item"
     :class="{ inactive, [type]: true }"
+    class="settings-item"
     @click="$emit('click', $event)"
   >
     <slot />

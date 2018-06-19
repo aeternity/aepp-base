@@ -1,14 +1,20 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'intro' }"
     title="New Account 1/2"
     class="new-account"
-    :redirectToOnClose="{ name: 'intro' }"
     close-button
   >
     <div class="panel">
-      <div class="passphrase">{{seed}}</div>
-      <ae-button plain size="small" uppercase @click="newSeed">
-        <ae-icon slot="icon" name="refresh" />
+      <div class="passphrase">{{ seed }}</div>
+      <ae-button
+        plain
+        size="small"
+        uppercase
+        @click="newSeed">
+        <ae-icon
+          slot="icon"
+          name="refresh" />
         Generate new
       </ae-button>
     </div>
@@ -19,7 +25,9 @@
     </p>
 
     <template slot="footer">
-      <ae-button type="exciting" @click="setSeed">
+      <ae-button
+        type="exciting"
+        @click="setSeed">
         Next
       </ae-button>
       <ae-button
@@ -29,7 +37,7 @@
         size="small"
         uppercase
       >
-        {{keystore ? 'Login with an existing account' : 'Recover with passphrase'}}
+        {{ keystore ? 'Login with an existing account' : 'Recover with passphrase' }}
       </ae-button>
     </template>
   </mobile-page>
@@ -49,6 +57,9 @@ export default {
     }
   },
   computed: mapState(['keystore']),
+  mounted () {
+    this.newSeed()
+  },
   methods: {
     newSeed () {
       this.seed = generateMnemonic()
@@ -56,9 +67,6 @@ export default {
     setSeed () {
       this.$store.commit('setSeed', this.seed)
     }
-  },
-  mounted () {
-    this.newSeed()
   }
 }
 </script>

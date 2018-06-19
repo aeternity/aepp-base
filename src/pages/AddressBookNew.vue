@@ -1,39 +1,43 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'address-book' }"
     class="address-book"
     title="Addresses"
-    :redirectToOnClose="{ name: 'address-book' }"
     back-button
   >
     <ae-divider />
     <form @submit.prevent="addAddressBookItem">
       <ae-label
         :for="`${_uid}-name`"
-        help-type="dramatic"
         :help-text="errors.first('name')"
+        help-type="dramatic"
       >Contact name</ae-label>
       <ae-input
-        :id="`${_uid}-name`"
-        name="name"
-        v-model="name"
         v-validate="'required'"
+        :id="`${_uid}-name`"
+        v-model="name"
+        name="name"
       />
 
       <ae-label
         :for="`${_uid}-address`"
-        help-type="dramatic"
         :help-text="errors.first('address')"
+        help-type="dramatic"
       >Contact address</ae-label>
       <ae-address-input
-        :id="`${_uid}-address`"
-        name="address"
-        v-model="address"
         v-validate="'required|min:42'"
+        :id="`${_uid}-address`"
+        v-model="address"
         :placeholder="`0x••••• ••••••• •••••••\n••••••• ••••••• •••••••`"
+        name="address"
       />
     </form>
 
-    <ae-button @click="addAddressBookItem" type="dramatic" :inactive="errors.any()" slot="footer">
+    <ae-button
+      slot="footer"
+      :inactive="errors.any()"
+      type="dramatic"
+      @click="addAddressBookItem">
       Save contact
     </ae-button>
   </mobile-page>

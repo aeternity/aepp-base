@@ -5,10 +5,10 @@
         {{ title }}
         <ae-button
           v-if="backButton || closeButton"
-          @click="closeHandler"
           :slot="backButton ? 'left' : 'right'"
           plain
           size="small"
+          @click="closeHandler"
         >
           <ae-icon
             slot="icon"
@@ -20,7 +20,9 @@
       <div class="content">
         <slot />
       </div>
-      <div class="footer" v-if="$slots.footer">
+      <div
+        v-if="$slots.footer"
+        class="footer">
         <slot name="footer" />
       </div>
     </div>

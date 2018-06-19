@@ -1,22 +1,22 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: recover ? 'recover' : 'new-account' }"
     title="New Account 2/2"
-    :redirectToOnClose="{ name: recover ? 'recover' : 'new-account' }"
     back-button
   >
     <form @submit.prevent="createKeystore">
       <ae-label
         :for="_uid"
-        help-type="dramatic"
         :help-text="errors.first('password')"
+        help-type="dramatic"
       >Enter your password</ae-label>
       <ae-input
-        :id="_uid"
-        name="password"
-        type="password"
-        v-model="password"
         v-validate="'required|min:4'"
         v-focus="true"
+        :id="_uid"
+        v-model="password"
+        name="password"
+        type="password"
       />
       <p>
         Please choose a personal password to encrypt your new account.
@@ -25,9 +25,9 @@
 
     <template slot="footer">
       <ae-button
+        :inactive="errors.any() || working"
         type="dramatic"
         @click="createKeystore"
-        :inactive="errors.any() || working"
       >
         Create Account
       </ae-button>
@@ -38,9 +38,9 @@
         size="small"
         uppercase
       >
-        {{keystore && 'Login with an existing account'
+        {{ keystore && 'Login with an existing account'
           || recover && 'Create new account'
-          || 'Recover with passphrase'}}
+        || 'Recover with passphrase' }}
       </ae-button>
     </template>
   </mobile-page>

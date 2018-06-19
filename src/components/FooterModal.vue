@@ -1,36 +1,46 @@
 <template>
   <div class="footer-modal">
     <transition name="fade">
-      <ae-overlay v-if="$slots.default" @click="$emit('toggle')" />
+      <ae-overlay
+        v-if="$slots.default"
+        @click="$emit('toggle')" />
     </transition>
     <div class="modal">
       <div class="quick-id">
         <div class="chevron">
           <ae-icon
             v-if="closable"
-            name="chevron"
             :rotate="$slots.default ? 90 : -90"
+            name="chevron"
             @click.native="$emit('toggle')"
           />
         </div>
         <template v-if="!$slots.default">
-          <ae-identity-light v-if="loggedIn" :identity="identity" collapsed />
-          <div v-else class="connect-your-account" @click="toggleRemoteConnectionPrompt">
+          <ae-identity-light
+            v-if="loggedIn"
+            :identity="identity"
+            collapsed />
+          <div
+            v-else
+            class="connect-your-account"
+            @click="toggleRemoteConnectionPrompt">
             <span class="icon" />
             Connect your account
           </div>
           <router-link
+            v-if="showBackButton"
+            slot="header-left"
             :to="{ name: 'apps' }"
             class="back"
-            slot="header-left"
-            v-if="showBackButton"
             @click.native.stop
           />
         </template>
       </div>
 
       <transition name="scroll">
-        <div class="content" v-if="$slots.default">
+        <div
+          v-if="$slots.default"
+          class="content">
           <slot />
         </div>
       </transition>
