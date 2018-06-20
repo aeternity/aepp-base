@@ -17,9 +17,9 @@
         <section id="manage">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="@/assets/img/onboarding/mini-card.svg">
-              <img src="@/assets/img/onboarding/card1.svg">
-              <img src="@/assets/img/onboarding/mini-card2.svg">
+              <img src="./../../assets/img/onboarding/mini-card.svg">
+              <img src="./../../assets/img/onboarding/card1.svg">
+              <img src="./../../assets/img/onboarding/mini-card2.svg">
             </div>
           </div>
           <div class="content">
@@ -33,11 +33,11 @@
           <div class="screenshot-phone">
             <div class="image">
               <div class="icons">
-                <img src="@/assets/img/onboarding/app-icon1.svg">
-                <img src="@/assets/img/onboarding/app-icon2.svg">
-                <img src="@/assets/img/onboarding/app-icon3.svg">
-                <img src="@/assets/img/onboarding/app-icon4.svg">
-                <img src="@/assets/img/onboarding/app-icon5.svg">
+                <img src="./../../assets/img/onboarding/app-icon1.svg">
+                <img src="./../../assets/img/onboarding/app-icon2.svg">
+                <img src="./../../assets/img/onboarding/app-icon3.svg">
+                <img src="./../../assets/img/onboarding/app-icon4.svg">
+                <img src="./../../assets/img/onboarding/app-icon5.svg">
               </div>
             </div>
           </div>
@@ -51,8 +51,8 @@
         <section id="active-account">
           <div class="screenshot-phone2">
             <div class="image">
-              <img src="@/assets/img/onboarding/dummy-list-view.svg">
-              <img src="@/assets/img/onboarding/mini-card-collapsed.svg">
+              <img src="./../../assets/img/onboarding/dummy-list-view.svg">
+              <img src="./../../assets/img/onboarding/mini-card-collapsed.svg">
             </div>
           </div>
           <div class="content">
@@ -65,7 +65,7 @@
         <section id="end">
           <div class="screenshot-phone">
               <div class="image">
-                <img src="@/assets/img/onboarding/card1.svg">
+                <img src="./../../assets/img/onboarding/card1.png">
               </div>
             </div>
           <div class="content">
@@ -82,7 +82,7 @@
         <ae-button type="boring" plain :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
           Next
         </ae-button>
-        <ae-button type="exciting" size='small' invert v-show="isLastStep" class="start-button">
+        <ae-button type="exciting" size="small" uppercase v-show="isLastStep" class="start-button">
           <router-link :to="{ name: 'new-account'}">
             Start
           </router-link>
