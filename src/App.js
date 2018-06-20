@@ -1,11 +1,12 @@
 import { mapState } from 'vuex'
-import { AeMain, AeBanner } from '@aeternity/aepp-components'
+import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components'
 import Accounts from './pages/Accounts.vue'
 import QuickId from './components/QuickId.vue'
 import FooterModal from './components/FooterModal.vue'
 import AccountsHorizontal from './components/AccountsHorizontal.vue'
 import RemoteConnectionPrompt from './components/RemoteConnectionPrompt.vue'
 import WaitingForConfirmation from './components/WaitingForConfirmation.vue'
+import RemoveAppModal from './components/RemoveAppModal.vue'
 import ApproveMessage from './dialogs/ApproveMessage.vue'
 import ApproveTransaction from './dialogs/ApproveTransaction.vue'
 import store from './store'
@@ -17,11 +18,13 @@ export default {
   components: {
     AeMain,
     AeBanner,
+    AeButton,
     QuickId,
     FooterModal,
     AccountsHorizontal,
     RemoteConnectionPrompt,
     WaitingForConfirmation,
+    RemoveAppModal,
     Accounts,
     ApproveMessage,
     ApproveTransaction

@@ -8,6 +8,17 @@
         v-if="notification.icon"
         :src="notification.icon" >
       {{ notification.text }}
+      <ae-button
+        v-if="notification.action"
+        slot="right"
+        plain
+        uppercase
+        type="exciting"
+        size="small"
+        @click="notification.action.handler"
+      >
+        {{ notification.action.name }}
+      </ae-button>
     </ae-banner>
     <template v-if="displayQuickId">
       <template v-if="IS_MOBILE_DEVICE">
@@ -36,6 +47,7 @@
         v-if="transactionToApprove"
         v-bind="transactionToApprove" />
     </div>
+    <remove-app-modal />
   </ae-main>
 </template>
 

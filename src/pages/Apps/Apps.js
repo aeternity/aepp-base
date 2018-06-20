@@ -1,4 +1,4 @@
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
 import { DEFAULT_ICON, appsRegistry } from '../../lib/appsRegistry'
 import HeaderDesktop from '../../components/HeaderDesktop'
@@ -9,8 +9,7 @@ export default {
   data () {
     return {
       editModeActive: false,
-      editModeTmOut: null,
-      removeAppIndex: -1
+      editModeTmOut: null
     }
   },
   computed: {
@@ -25,23 +24,30 @@ export default {
   },
   watch: {
     editModeActive (active) {
-      if (active) {
-        this.$store.dispatch('setNotification', {
-          text: 'You\'re now removing æpps',
-          autoClose: true
-        })
-      }
+      this.setNotification(active)
     }
   },
+  beforeDestroy () {
+    if (!this.editModeActive) return
+    this.setNotification(false)
+  },
   methods: {
-    remove () {
-      this.$store.commit('removeApp', this.removeAppIndex)
-      this.removeAppIndex = -1
-    },
+    ...mapMutations(['selectAppToRemove']),
     editMode (action = null) {
       if (!this.loggedIn) return
       if (action === 'cancel') return clearTimeout(this.editModeTmOut)
       this.editModeTmOut = setTimeout(() => { this.editModeActive = true }, 1000)
+    },
+    setNotification (visible) {
+      this.$store.commit('setNotification', visible && ({
+        text: 'You\'re now removing æpps',
+        action: {
+          name: 'Cancel',
+          handler: () => {
+            this.editModeActive = false
+          }
+        }
+      }))
     }
   },
   components: {

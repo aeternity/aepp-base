@@ -54,6 +54,7 @@ const store = new Vuex.Store({
 
   state: {
     peerKey: uuid(),
+    selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,
     balances: {},
@@ -92,10 +93,12 @@ const store = new Vuex.Store({
     addApp (state, app) {
       state.apps.push(app)
     },
-    removeApp (state, appIndex) {
-      if (appIndex > -1) {
-        state.apps.splice(appIndex, 1)
-      }
+    selectAppToRemove (state, selectedAppIdxToRemove = -1) {
+      state.selectedAppIdxToRemove = selectedAppIdxToRemove
+    },
+    removeSelectedApp (state) {
+      state.apps.splice(state.selectedAppIdxToRemove, 1)
+      state.selectedAppIdxToRemove = -1
     },
     selectIdentity (state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx
