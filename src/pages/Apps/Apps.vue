@@ -26,7 +26,7 @@
       >
         <div class="app-icon-wrapper">
           <ae-button
-            v-if="loggedIn"
+            v-if="loggedIn && !app.unremovable"
             :class="{ visible: editModeActive }"
             class="remove-app-btn"
             type="dramatic"
