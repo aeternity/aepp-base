@@ -31,9 +31,9 @@
         :id="`${_uid}-addressTo`"
         name="addressTo"
         v-model="to"
-        v-validate="'required|min:42'"
+        v-validate="'required|min:51|max:53'"
         data-vv-delay="1"
-        :placeholder="`0x00000 0000000 0000000\n0000000 0000000 0000000`"
+        placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
       />
       <div class="buttons">
         <ae-button
