@@ -127,9 +127,6 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-splashscreen": {},
-      "phonegap-plugin-barcodescanner": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      },
       "cordova-plugin-customurlscheme": {
         "URL_SCHEME": "aeternity",
         "ANDROID_SCHEME": " ",
