@@ -30,7 +30,7 @@ const store = new Vuex.Store({
             'selectedIdentityIdx',
             'addressBook',
             'mobile.followers',
-            'names',
+            'names'
           ] : []
       ],
       setState: (key, state, storage) =>
@@ -73,7 +73,7 @@ const store = new Vuex.Store({
       addresses.map((e, index) => ({
         balance: balances[e] || 0,
         address: e,
-        name: names[index],
+        name: names[index] || e.substring(0, 6)
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
@@ -105,7 +105,7 @@ const store = new Vuex.Store({
     setBalance (state, { address, balance }) {
       Vue.set(state.balances, address, balance)
     },
-    setName(state, {objIndex, name}){
+    setName (state, {objIndex, name}) {
       Vue.set(state.names, objIndex, name)
     },
     setNotification (state, options) {

@@ -103,7 +103,7 @@ export default {
   data: () => ({
     activeIdentityCard: -1,
     modalVisible: false,
-    addedName: '',
+    addedName: ''
   }),
   components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton, AeInput, AeModalLight },
   filters: { roundToken },
@@ -122,21 +122,21 @@ export default {
             active: index === activeIndex
           }))
       }
-    }),
+    })
   },
   methods: {
     ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity', 'setName']),
     activateCard (i) {
       this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
     },
-    handleAddAddress(){
-      let accountCount=this.$store.state.mobile.accountCount
+    handleAddAddress () {
+      let accountCount = this.$store.state.mobile.accountCount
       let addedName = this.addedName
-      this.createIdentity();
-      this.setName({objIndex: accountCount, name: addedName});
-      this.addedName=""
-      this.modalVisible=false;
-    },
+      this.createIdentity()
+      this.setName({objIndex: accountCount, name: addedName})
+      this.addedName = ''
+      this.modalVisible = false
+    }
   },
   mounted () {
     this.$store.dispatch('updateAllBalances')
