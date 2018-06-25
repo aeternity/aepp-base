@@ -1,7 +1,7 @@
 <template>
   <mobile-page class="intro">
     <div class="logo">
-      <img :src="require('../assets/intro.svg')" />
+      <img :src="require('../assets/intro.svg')">
       <p>
         æternity gives you easy access to the magic of blockchain
         technology. Instantly login or see how it works.
@@ -9,7 +9,10 @@
     </div>
 
     <template slot="footer">
-      <ae-button :to="{ name: 'new-account' }" type="exciting">
+      <ae-button
+        :to="{ name: 'new-account' }"
+        type="exciting"
+      >
         Create Account
       </ae-button>
       <ae-button
@@ -19,7 +22,7 @@
         plain
         uppercase
       >
-        {{keystore ? 'Login' : 'Recover'}}
+        {{ keystore ? 'Login' : 'Recover' }}
       </ae-button>
       <ae-button
         :to="{ name: 'onboarding' }"
