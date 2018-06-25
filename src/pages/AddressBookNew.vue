@@ -28,8 +28,8 @@
         v-validate="'required|min:42'"
         :id="`${_uid}-address`"
         v-model="address"
-        :placeholder="`0x••••• ••••••• •••••••\n••••••• ••••••• •••••••`"
-        name="address"
+        v-validate="'required|min:51|max:53'"
+        placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
       />
     </form>
 

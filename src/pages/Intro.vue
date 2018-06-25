@@ -9,10 +9,17 @@
     </div>
 
     <template slot="footer">
+      <ae-button :to="{ name: 'new-account' }" type="exciting">
+        Create Account
+      </ae-button>
       <ae-button
-        :to="{ name: keystore ? 'login' : 'new-account' }"
-        type="exciting">
-        {{ keystore ? 'Login' : 'Create Account' }}
+        :to="{ name: keystore ? 'login' : 'recover' }"
+        size="small"
+        type="dramatic"
+        plain
+        uppercase
+      >
+        {{keystore ? 'Login' : 'Recover'}}
       </ae-button>
       <ae-button
         :to="{ name: 'onboarding' }"
