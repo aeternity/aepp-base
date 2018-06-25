@@ -1,11 +1,15 @@
 <template>
   <transition name="slide">
-    <mobile-page class="accounts" title="My Accounts" @close="toggleIdManager" close-button>
+    <mobile-page
+      class="accounts"
+      title="My Accounts"
+      close-button
+      @close="toggleIdManager">
       <template v-if="inactiveIdentities.length">
         <label class="total-balance">
           Total balance
           <span>
-            <span class="ae">{{totalBalance | roundToken}} AE</span>
+            <span class="ae">{{ totalBalance | roundToken }} AE</span>
           </span>
         </label>
         <ae-divider />
@@ -13,9 +17,9 @@
 
       <label>Active address</label>
       <ae-identity
+        :identity="activeIdentity"
         class="active-account"
         active
-        :identity="activeIdentity"
       />
 
       <template v-if="inactiveIdentities.length === 0">
@@ -32,24 +36,26 @@
         <ae-divider/>
         <label>
           Inactive
-          <span>{{inactiveIdentities.length}}</span>
+          <span>{{ inactiveIdentities.length }}</span>
         </label>
         <div class="inactive-accounts">
           <ae-identity
             v-for="{ identity, index, beforeActive, active } in inactiveIdentities"
             :key="identity.address"
             :identity="identity"
-            collapsed
             :class="{ 'before-active': beforeActive, active }"
+            collapsed
             @click="activateCard(index)"
           >
-            <div v-if="active" class="action-buttons">
+            <div
+              v-if="active"
+              class="action-buttons">
               <ae-divider />
               <ae-button
-                @click="selectIdentity(index)"
                 size="small"
                 type="dramatic"
                 uppercase
+                @click="selectIdentity(index)"
               >
                 Activate
               </ae-button>
@@ -71,11 +77,11 @@ import FixedAddButton from '../components/FixedAddButton'
 import { roundToken } from '../lib/filters'
 
 export default {
+  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton },
+  filters: { roundToken },
   data: () => ({
     activeIdentityCard: -1
   }),
-  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton },
-  filters: { roundToken },
   computed: {
     ...mapGetters(['totalBalance', 'activeIdentity']),
     ...mapState({
@@ -93,14 +99,14 @@ export default {
       }
     })
   },
+  mounted () {
+    this.$store.dispatch('updateAllBalances')
+  },
   methods: {
     ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
     activateCard (i) {
       this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
     }
-  },
-  mounted () {
-    this.$store.dispatch('updateAllBalances')
   }
 }
 </script>

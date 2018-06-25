@@ -1,5 +1,7 @@
 <template>
-  <mobile-page class="transfer" title="Transfer">
+  <mobile-page
+    class="transfer"
+    title="Transfer">
     <ae-switch
       v-if="identitiesTo.length"
       v-model="transactionType"
@@ -12,24 +14,32 @@
 
     <swiper
       v-if="transactionType === 'internal'"
-      class="swiper-container"
       :options="swiperOptionsTo"
+      class="swiper-container"
       not-next-tick
     >
-      <swiper-slide v-for="i in identitiesTo" :key="i.address">
-        <ae-identity :active="false" :identity="i" size="big" :collapsed="false" />
+      <swiper-slide
+        v-for="i in identitiesTo"
+        :key="i.address">
+        <ae-identity
+          :active="false"
+          :identity="i"
+          :collapsed="false"
+          size="big" />
       </swiper-slide>
-      <div class="swiper-pagination" slot="pagination" />
+      <div
+        slot="pagination"
+        class="swiper-pagination" />
     </swiper>
     <div v-else>
       <ae-label
         :for="`${_uid}-addressTo`"
-        help-type="dramatic"
         :help-text="errors.first('addressTo')"
+        help-type="dramatic"
       >Receiving address</ae-label>
       <ae-address-input
+        v-validate="'required|min:42'"
         :id="`${_uid}-addressTo`"
-        name="addressTo"
         v-model="to"
         v-validate="'required|min:51|max:53'"
         data-vv-delay="1"
@@ -50,28 +60,30 @@
 
     <ae-label
       :for="`${_uid}-currency`"
-      help-type="dramatic"
       :help-text="errors.first('currency')"
+      help-type="dramatic"
     >Amount</ae-label>
     <ae-amount-input
-      :id="`${_uid}-currency`"
-      name="currency"
-      :value="{ amount, symbol: 'AE' }"
-      @input="value => amount = value.amount"
       v-validate:amount="`required|decimal|min_value_exclusive:0|max_value:${maxAmount}`"
+      :id="`${_uid}-currency`"
+      :value="{ amount, symbol: 'AE' }"
+      :units="[{ symbol: 'AE', name: 'æternity' }]"
+      name="currency"
       data-vv-delay="1"
       placeholder="0.00"
-      :units="[{ symbol: 'AE', name: 'æternity' }]"
+      @input="value => amount = value.amount"
     />
-    <div class="fiat-amount">≈ {{fiatAmount}} CHF</div>
+    <div class="fiat-amount">≈ {{ fiatAmount }} CHF</div>
 
     <ae-button
-      @click="send"
+      :inactive="errors.any()"
       type="dramatic"
       class="send-button"
-      :inactive="errors.any()"
+      @click="send"
     >
-      <img slot="icon" :src="require('emoji-datasource-apple/img/apple/64/1f4b8.png')" />
+      <img
+        slot="icon"
+        :src="require('emoji-datasource-apple/img/apple/64/1f4b8.png')" >
       Make Transaction
     </ae-button>
   </mobile-page>

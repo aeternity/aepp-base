@@ -1,12 +1,12 @@
 <template>
   <label class="ae-radio">
     <input
-      type="radio"
       :name="name"
       :value="value"
       :checked="checked"
+      type="radio"
       @change="$emit('change')"
-    />
+    >
     <span class="wrapper">
       <span class="indicator" />
     </span>
@@ -15,7 +15,11 @@
 
 <script>
 export default {
-  props: ['name', 'value', 'checked']
+  props: {
+    name: { type: String, default: '' },
+    value: { type: [String, Number, Boolean], required: true },
+    checked: { type: Boolean, default: false }
+  }
 }
 </script>
 

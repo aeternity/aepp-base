@@ -3,7 +3,9 @@
     <h1>Connect your account</h1>
     <div class="steps">
       <step>
-        <ae-app-icon class="base" src="static/icons/base.svg" />
+        <ae-app-icon
+          class="base"
+          src="static/icons/base.svg" />
         <h2>Bæse</h2>
         <p>1. Open the Bæse æpp on your mobile device</p>
         <p class="small">Not installed? Install from store</p>
@@ -19,7 +21,10 @@
         <p>3. Open Remote Connect and scan the following QR</p>
       </step>
       <step>
-        <qr-code class="qr-code" :text="peerKey" color="#311b58" />
+        <qr-code
+          :text="peerKey"
+          class="qr-code"
+          color="#311b58" />
       </step>
     </div>
   </div>

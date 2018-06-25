@@ -21,7 +21,11 @@
       >
         {{keystore ? 'Login' : 'Recover'}}
       </ae-button>
-      <ae-button :to="{ name: 'onboarding' }" size="small" plain uppercase>
+      <ae-button
+        :to="{ name: 'onboarding' }"
+        size="small"
+        plain
+        uppercase>
         See how it works
       </ae-button>
     </template>

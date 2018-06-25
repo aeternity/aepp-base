@@ -1,49 +1,57 @@
 <template>
   <div class="approve">
     <dialog-header
+      :app-name="appName"
       title="Requests a transaction"
-      :appName="appName"
-      iconSrc="static/icons/aepps/default.svg"
+      icon-src="static/icons/aepps/default.svg"
     />
     <div class="transaction-flow">
-      <div class="id" :title="`from ${transaction.sender}`">
+      <div
+        :title="`from ${transaction.sender}`"
+        class="id">
         <ae-identity-avatar :address="transaction.sender" />
-        <div>{{transaction.sender}}</div>
+        <div>{{ transaction.sender }}</div>
       </div>
-      <ae-icon name="arrow" class="approve__flow-direction" />
-      <div class="id" :title="`to ${transaction.recipientPubkey}`">
+      <ae-icon
+        name="arrow"
+        class="approve__flow-direction" />
+      <div
+        :title="`to ${transaction.recipientPubkey}`"
+        class="id">
         <ae-identity-avatar :address="transaction.recipientPubkey" />
-        <div>{{transaction.recipientPubkey}}</div>
+        <div>{{ transaction.recipientPubkey }}</div>
       </div>
     </div>
     <hr>
     <ae-amount
+      :value="transaction.amount"
       class="approve__amount"
       color="black"
       size="med"
-      :value="transaction.amount"
       unit="Æ"
     />
     <div
       v-if="price"
       class="fiat-value"
     >
-      {{transaction.amount * price | round(10)}} CHF
+      {{ transaction.amount * price | round(10) }} CHF
     </div>
     <hr>
     <div class="additional-fees-table">
       <span class="additional-fees-header"> Additional fees</span>
       <div class="additional-fees-value">
-        <div class="additional-fees-eth">{{transaction.fee}} Æ</div>
+        <div class="additional-fees-eth">{{ transaction.fee }} Æ</div>
         <div
           v-if="price"
           class="fiat-value"
         >
-          {{transaction.fee * price | round(5)}} CHF
+          {{ transaction.fee * price | round(5) }} CHF
         </div>
       </div>
     </div>
-    <approve-buttons @approve="approve" @reject="close" />
+    <approve-buttons
+      @approve="approve"
+      @reject="close" />
   </div>
 </template>
 
@@ -54,37 +62,13 @@ import ApproveButtons from './ApproveButtons.vue'
 import DialogHeader from './DialogHeader.vue'
 
 export default {
-  name: 'approve-transaction',
-  data () {
-    return {
-      price: null
-    }
-  },
-  props: {
-    appName: {
-      type: String,
-      default: ''
-    },
-    transaction: Object,
-    id: {
-      type: String,
-      required: true
-    }
-  },
+  name: 'ApproveTransaction',
   components: {
     AeAmount,
     AeIdentityAvatar,
     AeIcon,
     ApproveButtons,
     DialogHeader
-  },
-  methods: {
-    close () {
-      this.$store.commit('cancelTransaction', this.id)
-    },
-    approve () {
-      this.$store.commit('approveTransaction', this.id)
-    }
   },
   filters: {
     round (value, decimal) {
@@ -93,8 +77,35 @@ export default {
       return `${start}${rounded}`
     }
   },
+  props: {
+    appName: {
+      type: String,
+      default: ''
+    },
+    transaction: {
+      type: Object,
+      required: true
+    },
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  data () {
+    return {
+      price: null
+    }
+  },
   async mounted () {
     this.price = await convertAEtoCHF()
+  },
+  methods: {
+    close () {
+      this.$store.commit('cancelTransaction', this.id)
+    },
+    approve () {
+      this.$store.commit('approveTransaction', this.id)
+    }
   }
 }
 </script>

@@ -1,9 +1,11 @@
 <template>
-  <div class="address-book-item" @click="$emit('click')">
+  <div
+    class="address-book-item"
+    @click="$emit('click')">
     <ae-identity-avatar :address="address" />
     <div class="details">
-      <div class="name">{{name}}</div>
-      <div class="address">{{formattedAddress}}</div>
+      <div class="name">{{ name }}</div>
+      <div class="address">{{ formattedAddress }}</div>
     </div>
     <slot name="icon" />
   </div>
@@ -14,11 +16,11 @@ import { AeIdentityAvatar } from '@aeternity/aepp-components'
 import { times } from 'lodash'
 
 export default {
-  props: {
-    address: String,
-    name: String
-  },
   components: { AeIdentityAvatar },
+  props: {
+    address: { type: String, required: true },
+    name: { type: String, required: true }
+  },
   computed: {
     formattedAddress () {
       return times(6, i => this.address.slice(7 * i, 7 * (i + 1))).join(' ')
