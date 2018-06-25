@@ -29,7 +29,8 @@ const store = new Vuex.Store({
             'mobile.accountCount',
             'selectedIdentityIdx',
             'addressBook',
-            'mobile.followers'
+            'mobile.followers',
+            'names'
           ] : []
       ],
       setState: (key, state, storage) =>
@@ -58,6 +59,7 @@ const store = new Vuex.Store({
     showIdManager: false,
     balances: {},
     addresses: [],
+    names: {},
     rpcUrl: networksRegistry[0].url,
     epoch: null,
     networkId: null,
@@ -67,16 +69,16 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    identities: ({ balances }, { addresses }) =>
-      addresses.map(e => ({
+    identities: ({ balances }, { addresses }, {names}) =>
+      addresses.map((e, index) => ({
         balance: balances[e] || 0,
         address: e,
-        name: e.substr(0, 6)
+        name: names[index] || e.substring(0, 6)
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
     totalBalance: (state, { identities }) =>
-      identities.reduce((sum, { balance }) => sum + balance, 0)
+      identities.reduce((sum, { balance }) => sum + balance, 0),
   },
 
   mutations: {
@@ -102,6 +104,9 @@ const store = new Vuex.Store({
     },
     setBalance (state, { address, balance }) {
       Vue.set(state.balances, address, balance)
+    },
+    setName (state, {objIndex, name}) {
+      Vue.set(state.names, objIndex, name)
     },
     setNotification (state, options) {
       state.notification = options
