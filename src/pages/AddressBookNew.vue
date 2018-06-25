@@ -41,7 +41,7 @@
 
 <script>
 import { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage.vue'
+import MobilePage from '../components/MobilePage.vue'
 
 export default {
   components: { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider, MobilePage },

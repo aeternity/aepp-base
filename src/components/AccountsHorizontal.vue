@@ -41,7 +41,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
-import { roundToken } from '@/lib/filters'
+import { roundToken } from '../lib/filters'
 
 export default {
   components: { AeIdentity, AeButton, AeDivider },

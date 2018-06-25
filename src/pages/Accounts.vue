@@ -66,9 +66,9 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage'
-import FixedAddButton from '@/components/FixedAddButton'
-import { roundToken } from '@/lib/filters'
+import MobilePage from '../components/MobilePage'
+import FixedAddButton from '../components/FixedAddButton'
+import { roundToken } from '../lib/filters'
 
 export default {
   data: () => ({

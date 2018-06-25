@@ -49,7 +49,7 @@
 <script>
 import { mapState } from 'vuex'
 import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage'
+import MobilePage from '../components/MobilePage'
 
 export default {
   components: { MobilePage, AeInput, AeLabel, AeButton },
