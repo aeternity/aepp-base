@@ -1,16 +1,19 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'settings' }"
     title="Remote Connection"
-    :redirectToOnClose="{ name: 'settings' }"
     back-button
     class="settings"
   >
     <heading>Connected devices</heading>
-    <item v-for="f in followers" :key="f.key" inactive>
+    <item
+      v-for="f in followers"
+      :key="f.key"
+      inactive>
       <div class="follower">
-        <span class="name">{{f.name}}</span><br />
+        <span class="name">{{ f.name }}</span><br >
         <span class="status">
-          {{f.connected ? 'Connected' : `Disconnected at ${f.disconnectedAt}`}}
+          {{ f.connected ? 'Connected' : `Disconnected at ${f.disconnectedAt}` }}
         </span>
       </div>
       <ae-button
@@ -23,17 +26,19 @@
       >revoke</ae-button>
     </item>
 
-    <fixed-add-button quick-id :to="{ name: 'settings-remote-connection-new' }" />
+    <fixed-add-button
+      :to="{ name: 'settings-remote-connection-new' }"
+      quick-id />
   </mobile-page>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { AeButton } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage.vue'
-import SettingsHeading from '@/components/SettingsHeading'
-import SettingsItem from '@/components/SettingsItem'
-import FixedAddButton from '@/components/FixedAddButton.vue'
+import MobilePage from '../components/MobilePage.vue'
+import SettingsHeading from '../components/SettingsHeading'
+import SettingsItem from '../components/SettingsItem'
+import FixedAddButton from '../components/FixedAddButton.vue'
 
 export default {
   components: {

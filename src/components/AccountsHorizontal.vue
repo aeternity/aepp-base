@@ -3,19 +3,23 @@
     <div class="title">
       <h1>Account Switcher</h1>
       <div v-if="identities.length > 1">
-        Total balance <span>{{totalBalance | roundToken}} AE</span>
+        Total balance <span>{{ totalBalance | roundToken }} AE</span>
       </div>
     </div>
     <div class="accounts">
       <div class="active">
         <h2>Active account</h2>
         <div>
-          <ae-identity :identity="activeIdentity" active>
+          <ae-identity
+            :identity="activeIdentity"
+            active>
             <ae-divider v-if="identities.length > 1" />
           </ae-identity>
         </div>
       </div>
-      <div class="inactive" v-if="identities.length > 1">
+      <div
+        v-if="identities.length > 1"
+        class="inactive">
         <h2>Inactive accounts</h2>
         <div>
           <ae-identity
@@ -26,10 +30,10 @@
           >
             <ae-divider />
             <ae-button
-              @click="selectIdentity(index)"
               type="dramatic"
               size="small"
               uppercase
+              @click="selectIdentity(index)"
             >Activate</ae-button>
           </ae-identity>
         </div>
@@ -41,16 +45,16 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
-import { roundToken } from '@/lib/filters'
+import { roundToken } from '../lib/filters'
 
 export default {
   components: { AeIdentity, AeButton, AeDivider },
   filters: { roundToken },
   computed: mapGetters(['identities', 'activeIdentity', 'totalBalance']),
-  methods: mapMutations(['selectIdentity']),
   mounted () {
     this.$store.dispatch('updateAllBalances')
-  }
+  },
+  methods: mapMutations(['selectIdentity'])
 }
 </script>
 

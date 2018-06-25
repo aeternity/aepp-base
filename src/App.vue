@@ -1,8 +1,12 @@
 <template>
-  <ae-main id="app" :class="appClassObject">
+  <ae-main
+    id="app"
+    :class="appClassObject">
     <ae-banner v-if="notification">
-      <img v-if="notification.icon" :src="notification.icon" />
-      {{notification.text}}
+      <img
+        v-if="notification.icon"
+        :src="notification.icon" >
+      {{ notification.text }}
     </ae-banner>
     <router-view />
     <template v-if="displayQuickId">
@@ -13,8 +17,8 @@
       <footer-modal
         v-else
         :show-back-button="showBackButton"
-        @toggle="toggleDesktopFooter"
         :closable="!transactionIdToSignByRemote"
+        @toggle="toggleDesktopFooter"
       >
         <remote-connection-prompt v-if="showRemoteConnectionPrompt" />
         <waiting-for-confirmation v-if="transactionIdToSignByRemote" />
@@ -22,11 +26,15 @@
       </footer-modal>
     </template>
     <div
-      class="modal-dialogs-wrapper"
       v-if="IS_MOBILE_DEVICE && (messageToApprove || transactionToApprove)"
+      class="modal-dialogs-wrapper"
     >
-      <approve-message v-if="messageToApprove" v-bind="messageToApprove" />
-      <approve-transaction v-if="transactionToApprove" v-bind="transactionToApprove" />
+      <approve-message
+        v-if="messageToApprove"
+        v-bind="messageToApprove" />
+      <approve-transaction
+        v-if="transactionToApprove"
+        v-bind="transactionToApprove" />
     </div>
   </ae-main>
 </template>

@@ -2,8 +2,8 @@
   <component
     :is="renderAs"
     :to="to"
-    class="settings-item"
     :class="{ inactive, [type]: true }"
+    class="settings-item"
     @click="$emit('click', $event)"
   >
     <slot />
@@ -15,9 +15,13 @@
 <script>
 export default {
   props: {
-    to: undefined,
-    type: String,
-    inactive: Boolean
+    to: { type: [Object, String], default: undefined },
+    type: {
+      type: String,
+      validator: value => ['exciting', 'dramatic'].includes(value),
+      default: undefined
+    },
+    inactive: { type: Boolean, default: false }
   },
   computed: {
     renderAs () {

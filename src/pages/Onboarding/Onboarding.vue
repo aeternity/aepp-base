@@ -5,7 +5,9 @@
       <main class="main-content-container">
         <section id="welcome">
           <div class="cube-div">
-            <img src="./../../assets/img/onboarding/identity-card.svg" class="large-copy-2">
+            <img
+              src="./../../assets/img/onboarding/identity-card.svg"
+              class="large-copy-2">
           </div>
           <div class="content">
             <h1>Welcome to Base æpp</h1>
@@ -22,7 +24,9 @@
               <img src="./../../assets/img/onboarding/mini-card1.svg">
               <img src="./../../assets/img/onboarding/mini-card2.svg">
               <img src="./../../assets/img/onboarding/mini-card3.svg">
-              <img src="./../../assets/img/onboarding/mini-card4.png" srcset="./../../assets/img/onboarding/mini-card4@2x.png 2x, ./../../assets/img/onboarding/mini-card4@3x.png 3x">
+              <img
+                src="./../../assets/img/onboarding/mini-card4.png"
+                srcset="./../../assets/img/onboarding/mini-card4@2x.png 2x, ./../../assets/img/onboarding/mini-card4@3x.png 3x">
             </div>
           </div>
           <div class="content">
@@ -97,24 +101,39 @@
         </section>
       </main>
       <footer>
-        <ae-button type="boring" plain :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
+        <ae-button
+          v-show="!isLastStep"
+          :disabled="isLastStep"
+          type="boring"
+          plain
+          uppercase
+          @click="skip(1)">
           Next
         </ae-button>
-        <ae-button type="exciting" invert v-show="isLastStep" class="start-button">
+        <ae-button
+          v-show="isLastStep"
+          type="exciting"
+          invert
+          class="start-button">
           <router-link :to="{ name: 'new-account'}">
             Start
           </router-link>
         </ae-button>
-        <div class="step-dots" v-if="hasDots">
+        <div
+          v-if="hasDots"
+          class="step-dots">
           <div
-            class="step-dot"
             v-for="n in max"
             :key="n"
             :class="{active: n === step}"
+            class="step-dot"
             @click="goToStep(n)"
           />
         </div>
-        <ae-button type="dramatic" plain uppercase>
+        <ae-button
+          type="dramatic"
+          plain
+          uppercase>
           <router-link :to="{ name: 'new-account'}">
             Skip
           </router-link>
