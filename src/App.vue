@@ -1,5 +1,5 @@
 <template>
-  <ae-main id="app" :class="appClassObject">
+  <ae-main id="app" :class="{ 'quick-id-hidden': !displayQuickId }">
     <ae-banner v-if="notification">
       <img v-if="notification.icon" :src="notification.icon" />
       {{notification.text}}

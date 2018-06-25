@@ -37,13 +37,6 @@ export default {
       showRemoteConnectionPrompt: ({ desktop }) => desktop.showRemoteConnectionPrompt,
       transactionIdToSignByRemote: ({ desktop }) => desktop.transactionIdToSignByRemote
     }),
-    appClassObject () {
-      return {
-        stage: process.env.IS_STAGE === true,
-        development: process.env.NODE_ENV === 'development',
-        'quick-id-hidden': !this.displayQuickId
-      }
-    },
     displayQuickId () {
       const hideQuickIdOn = ['onboarding', 'login', 'recover', 'new-account', 'set-password']
       if (IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')
