@@ -58,23 +58,54 @@
         </div>
       </template>
 
-      <fixed-add-button @click="createIdentity" />
+
+      <fixed-add-button @click="modalVisible = true" />
+      <div>
+            <ae-modal-light
+              v-if="modalVisible"
+              @close="modalVisible = false"
+              title="Name Account"
+            >
+              <label>Name Account</label>
+              <ae-input placeholder="Placeholder" v-model="addedName" />
+              <ae-button
+                size="smaller"
+                type="exciting"
+                uppercase
+                @click="modalVisible = false"
+                slot="buttons"
+              >
+                cancel
+              </ae-button>
+              <ae-button
+                size="smaller"
+                type="dramatic"
+                uppercase
+                @click="handleAddAddress"
+                slot="buttons"
+              >
+                add account
+              </ae-button>
+            </ae-modal-light>
+          </div>
     </mobile-page>
   </transition>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
-import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
+import { AeIdentity, AeButton, AeDivider, AeInput, AeModalLight} from '@aeternity/aepp-components'
 import MobilePage from '@/components/MobilePage'
 import FixedAddButton from '@/components/FixedAddButton'
 import { roundToken } from '@/lib/filters'
 
 export default {
   data: () => ({
-    activeIdentityCard: -1
+    activeIdentityCard: -1,
+    modalVisible: false,
+    addedName: '',
   }),
-  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton },
+  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton, AeInput, AeModalLight },
   filters: { roundToken },
   computed: {
     ...mapGetters(['totalBalance', 'activeIdentity']),
@@ -91,13 +122,21 @@ export default {
             active: index === activeIndex
           }))
       }
-    })
+    }),
   },
   methods: {
-    ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
+    ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity', 'setName']),
     activateCard (i) {
       this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
-    }
+    },
+    handleAddAddress(){
+      let accountCount=this.$store.state.mobile.accountCount
+      let addedName = this.addedName
+      this.createIdentity();
+      this.setName({objIndex: accountCount, name: addedName});
+      this.addedName=""
+      this.modalVisible=false;
+    },
   },
   mounted () {
     this.$store.dispatch('updateAllBalances')
