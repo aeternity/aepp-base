@@ -64,23 +64,54 @@
         </div>
       </template>
 
-      <fixed-add-button @click="createIdentity" />
+      <fixed-add-button @click="modalVisible = true" />
+
+      <ae-modal-light
+        v-if="modalVisible"
+        title="Add New Account"
+        @close="modalVisible = false"
+      >
+        <label>Name Account</label>
+        <ae-input
+          v-model="newAccountName"
+          placeholder="Placeholder" />
+        <ae-button
+          slot="buttons"
+          size="smaller"
+          type="exciting"
+          uppercase
+          @click="modalVisible = false"
+        >
+          cancel
+        </ae-button>
+        <ae-button
+          slot="buttons"
+          size="smaller"
+          type="dramatic"
+          uppercase
+          @click="handleAddAddress"
+        >
+          add account
+        </ae-button>
+      </ae-modal-light>
     </mobile-page>
   </transition>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
-import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
+import { AeIdentity, AeButton, AeDivider, AeInput, AeModalLight } from '@aeternity/aepp-components'
 import MobilePage from '../components/MobilePage'
 import FixedAddButton from '../components/FixedAddButton'
 import { roundToken } from '../lib/filters'
 
 export default {
-  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton },
+  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton, AeInput, AeModalLight },
   filters: { roundToken },
   data: () => ({
-    activeIdentityCard: -1
+    activeIdentityCard: -1,
+    modalVisible: false,
+    newAccountName: ''
   }),
   computed: {
     ...mapGetters(['totalBalance', 'activeIdentity']),
@@ -106,6 +137,11 @@ export default {
     ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
     activateCard (i) {
       this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
+    },
+    handleAddAddress () {
+      this.createIdentity(this.newAccountName)
+      this.newAccountName = ''
+      this.modalVisible = false
     }
   }
 }
