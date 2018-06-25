@@ -57,9 +57,9 @@
 
 <script>
 import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components'
-import { convertAEtoCHF } from '@/lib/currencyConverter'
-import ApproveButtons from '@/dialogs/ApproveButtons.vue'
-import DialogHeader from '@/dialogs/DialogHeader.vue'
+import { convertAEtoCHF } from '../lib/currencyConverter'
+import ApproveButtons from './ApproveButtons.vue'
+import DialogHeader from './DialogHeader.vue'
 
 export default {
   name: 'ApproveTransaction',

@@ -32,11 +32,11 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { AeIcon } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage.vue'
-import SettingsHeading from '@/components/SettingsHeading'
-import SettingsItem from '@/components/SettingsItem'
-import networks from '@/lib/networksRegistry'
-import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
+import MobilePage from '../components/MobilePage.vue'
+import SettingsHeading from '../components/SettingsHeading'
+import SettingsItem from '../components/SettingsItem'
+import networks from '../lib/networksRegistry'
+import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 
 export default {
   components: {

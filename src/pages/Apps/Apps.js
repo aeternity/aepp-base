@@ -1,8 +1,8 @@
 import { mapState, mapGetters } from 'vuex'
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components'
-import { DEFAULT_ICON, appsRegistry } from '@/lib/appsRegistry'
-import HeaderDesktop from '@/components/HeaderDesktop'
-import HeaderMobile from '@/components/HeaderMobile'
+import { DEFAULT_ICON, appsRegistry } from '../../lib/appsRegistry'
+import HeaderDesktop from '../../components/HeaderDesktop'
+import HeaderMobile from '../../components/HeaderMobile'
 
 export default {
   name: 'apps',
