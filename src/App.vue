@@ -2,13 +2,13 @@
   <ae-main
     id="app"
     :class="{ 'quick-id-hidden': !displayQuickId }">
+    <router-view />
     <ae-banner v-if="notification">
       <img
         v-if="notification.icon"
         :src="notification.icon" >
       {{ notification.text }}
     </ae-banner>
-    <router-view />
     <template v-if="displayQuickId">
       <template v-if="IS_MOBILE_DEVICE">
         <quick-id :show-back-button="showBackButton" />
