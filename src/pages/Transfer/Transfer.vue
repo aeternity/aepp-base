@@ -38,10 +38,9 @@
         help-type="dramatic"
       >Receiving address</ae-label>
       <ae-address-input
-        v-validate="'required|min:42'"
+        v-validate="'required|min:51|max:53'"
         :id="`${_uid}-addressTo`"
         v-model="to"
-        v-validate="'required|min:51|max:53'"
         data-vv-delay="1"
         placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
       />

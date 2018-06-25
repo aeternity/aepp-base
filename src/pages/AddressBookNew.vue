@@ -25,10 +25,9 @@
         help-type="dramatic"
       >Contact address</ae-label>
       <ae-address-input
-        v-validate="'required|min:42'"
+        v-validate="'required|min:51|max:53'"
         :id="`${_uid}-address`"
         v-model="address"
-        v-validate="'required|min:51|max:53'"
         placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
       />
     </form>
