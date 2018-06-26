@@ -17,11 +17,9 @@
 
   .content {
     margin: auto;
-    // margin: 30px 60px 30px 30px;
     width: 85vw;
 
     h1 {
-      // width: 254px;
       width: 100%;
       margin: 0;
       @include titlelarge;
@@ -75,9 +73,6 @@
   }
 
   main {
-    // padding-top: 64px;
-    // position: absolute;
-    // bottom: 60px;
     position: static;
   }
 
@@ -128,7 +123,6 @@
   }
 
   footer {
-    // width: 85vw;
     margin: 0 auto;
     padding: 10px 0;
     bottom: 0px;
