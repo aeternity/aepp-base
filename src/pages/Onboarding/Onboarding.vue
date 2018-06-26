@@ -79,7 +79,8 @@
         </section>
       </main>
       <footer>
-        <ae-button type="boring" plain :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
+        <div class="wrapper">
+          <ae-button size="small" type="boring" plain :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
           Next
         </ae-button>
         <ae-button type="exciting" size="small" uppercase v-show="isLastStep" class="start-button">
@@ -96,11 +97,12 @@
             @click="goToStep(n)"
           />
         </div>
-        <ae-button type="dramatic" plain uppercase>
+        <ae-button size="small" type="dramatic" plain uppercase>
           <router-link :to="{ name: 'new-account'}">
             Skip
           </router-link>
         </ae-button>
+        </div>
       </footer>
     </div>
   </div>
