@@ -83,7 +83,13 @@
 
     &.current {
       display: block;
-      animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      .screenshot-phone,
+      .screenshot-phone2 {
+        animation: slide-in-right .95s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      }
+      .content {
+        animation: fade 1.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      }
     }
 
     .mockup {
@@ -203,6 +209,14 @@
   }
   100% {
     transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
     opacity: 1;
   }
 }
