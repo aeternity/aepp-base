@@ -52,7 +52,7 @@
           <div class="screenshot-phone2">
             <div class="image">
               <img src="../../assets/img/onboarding/dummy-list-view.svg">
-              <img src="../../assets/img/onboarding/mini-card-collapsed.svg">
+              <img src="../../assets/img/onboarding/identity-card-collapse.svg">
             </div>
           </div>
           <div class="content">
