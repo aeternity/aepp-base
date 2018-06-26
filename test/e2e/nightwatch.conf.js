@@ -44,7 +44,8 @@ module.exports = {
         javascriptEnabled: true,
         acceptSslCerts: true,
         chromeOptions: {
-          mobileEmulation: { deviceName: 'iPhone 8' }
+          mobileEmulation: { deviceName: 'iPhone 8' },
+          args: ['--headless', '--disable-gpu', '--no-sandbox']
         }
       }
     },
@@ -55,7 +56,8 @@ module.exports = {
         javascriptEnabled: true,
         acceptSslCerts: true,
         chromeOptions: {
-          mobileEmulation: { deviceName: 'iPad' }
+          mobileEmulation: { deviceName: 'iPad' },
+          args: ['--headless', '--disable-gpu', '--no-sandbox']
         }
       }
     },
