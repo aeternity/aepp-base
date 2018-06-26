@@ -64,10 +64,10 @@
         </section>
         <section id="end">
           <div class="screenshot-phone">
-              <div class="image">
-                <img src="../../assets/img/onboarding/card1.png">
-              </div>
+            <div class="image">
+              <img src="../../assets/img/onboarding/card1.png">
             </div>
+          </div>
           <div class="content">
             <h1>
               AirSign with your secure account
@@ -81,27 +81,21 @@
       <footer>
         <div class="wrapper">
           <ae-button size="small" type="boring" plain :disabled="isLastStep" uppercase v-show="!isLastStep" @click="skip(1)">
-          Next
-        </ae-button>
-        <ae-button type="exciting" size="small" uppercase v-show="isLastStep" class="start-button">
-          <router-link :to="{ name: 'new-account'}">
-            Start
-          </router-link>
-        </ae-button>
-        <div class="step-dots" v-if="hasDots">
-          <div
-            class="step-dot"
-            v-for="n in max"
-            :key="n"
-            :class="{active: n === step}"
-            @click="goToStep(n)"
-          />
-        </div>
-        <ae-button size="small" type="dramatic" plain uppercase>
-          <router-link :to="{ name: 'new-account'}">
-            Skip
-          </router-link>
-        </ae-button>
+            Next
+          </ae-button>
+          <ae-button type="exciting" size="small" uppercase v-show="isLastStep" class="start-button">
+            <router-link :to="{ name: 'new-account'}">
+              Start
+            </router-link>
+          </ae-button>
+          <div class="step-dots" v-if="hasDots">
+            <div class="step-dot" v-for="n in max" :key="n" :class="{active: n === step}" @click="goToStep(n)" />
+          </div>
+          <ae-button size="small" type="dramatic" plain uppercase>
+            <router-link :to="{ name: 'new-account'}">
+              Skip
+            </router-link>
+          </ae-button>
         </div>
       </footer>
     </div>
