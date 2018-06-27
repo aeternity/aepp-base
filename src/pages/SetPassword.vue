@@ -1,9 +1,14 @@
 <template>
   <mobile-page
     :redirect-to-on-close="{ name: recover ? 'recover' : 'new-account' }"
+    class="set-password"
     title="New Account 2/2"
     back-button
   >
+    <h1 class="title">Create a<br>password</h1>
+    <span class="description">
+      For easy daily access, please create a secure password
+    </span>
     <form @submit.prevent="createKeystore">
       <ae-label
         :for="_uid"
@@ -18,9 +23,15 @@
         name="password"
         type="password"
       />
-      <p>
-        Please choose a personal password to encrypt your new account.
-      </p>
+      <ae-label
+        :help-text="errors.first('passwordRepeat')"
+        help-type="dramatic"
+      >Confirm your password</ae-label>
+      <ae-input
+        v-validate="'confirmed:'+password"
+        name="passwordRepeat"
+        type="password"
+      />
     </form>
 
     <template slot="footer">
@@ -56,6 +67,7 @@ export default {
   data () {
     return {
       password: '',
+      passwordRepeat: '',
       working: false,
       recover: false
     }
@@ -86,3 +98,14 @@ export default {
 }
 </script>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
+<style lang="scss" scoped>
+  .set-password {
+    .title {
+      font-size: 35px;
+    }
+
+    .description {
+      font-size: 18px;
+    }
+  }
+</style>
