@@ -1,17 +1,24 @@
 <template>
-  <div class='approve-message'>
+  <div class="approve-message">
     <template>
-      <dialog-header title="Requests to sign a message" :appName="appName" iconSrc="static/icons/aepps/default.svg"/>
+      <dialog-header
+        :app-name="appName"
+        title="Requests to sign a message"
+        icon-src="static/icons/aepps/default.svg"/>
       <div class="active-id-area">
-        <div class="id" :title="`Active identity ${address}`">
-          <ae-identity-avatar :address="address"></ae-identity-avatar>
-          <div>{{address}}</div>
+        <div
+          :title="`Active identity ${address}`"
+          class="id">
+          <ae-identity-avatar :address="address"/>
+          <div>{{ address }}</div>
         </div>
       </div>
       <p class="message">
-        {{message}}
+        {{ message }}
       </p>
-      <approve-buttons @approve="approve" @reject="close"/>
+      <approve-buttons
+        @approve="approve"
+        @reject="close"/>
     </template>
   </div>
 </template>

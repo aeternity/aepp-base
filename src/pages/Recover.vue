@@ -1,22 +1,25 @@
 <template>
-  <mobile-page title="Recover with phrase" :redirectToOnClose="{ name: 'intro' }" close-button>
+  <mobile-page
+    :redirect-to-on-close="{ name: 'intro' }"
+    title="Recover with phrase"
+    close-button>
     <form @submit.prevent="setSeed">
       <ae-label
         :for="_uid"
-        help-type="dramatic"
         :help-text="errors.first('seed')"
+        help-type="dramatic"
       >Enter passphrase</ae-label>
       <ae-textarea
-        :id="_uid"
-        name="seed"
-        v-model="seed"
         v-validate="'required'"
         v-focus="true"
+        :id="_uid"
+        v-model="seed"
+        name="seed"
         monospace
       />
       <ae-button
-        type="dramatic"
         :inactive="errors.any()"
+        type="dramatic"
       >Recover with Passphrase</ae-button>
     </form>
 
@@ -35,7 +38,12 @@
       >
         Login with an existing account
       </ae-button>
-      <ae-button :to="{ name: 'new-account' }" size="small" plain type="exciting" uppercase>
+      <ae-button
+        :to="{ name: 'new-account' }"
+        size="small"
+        plain
+        type="exciting"
+        uppercase>
         Create new account
       </ae-button>
     </template>
@@ -45,7 +53,7 @@
 <script>
 import { mapState } from 'vuex'
 import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage'
+import MobilePage from '../components/MobilePage'
 
 export default {
   components: { MobilePage, AeTextarea, AeLabel, AeButton },

@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import uuid from 'uuid/v4'
-import { appsRegistry } from '@/lib/appsRegistry'
-import networksRegistry from '@/lib/networksRegistry'
-import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
+import { appsRegistry } from '../lib/appsRegistry'
+import networksRegistry from '../lib/networksRegistry'
+import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 import desktop from './modules/desktop'
 import mobile from './modules/mobile'
 import pollBalance from './plugins/pollBalance'
@@ -54,6 +54,7 @@ const store = new Vuex.Store({
 
   state: {
     peerKey: uuid(),
+    selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,
     balances: {},
@@ -92,10 +93,12 @@ const store = new Vuex.Store({
     addApp (state, app) {
       state.apps.push(app)
     },
-    removeApp (state, appIndex) {
-      if (appIndex > -1) {
-        state.apps.splice(appIndex, 1)
-      }
+    selectAppToRemove (state, selectedAppIdxToRemove = -1) {
+      state.selectedAppIdxToRemove = selectedAppIdxToRemove
+    },
+    removeSelectedApp (state) {
+      state.apps.splice(state.selectedAppIdxToRemove, 1)
+      state.selectedAppIdxToRemove = -1
     },
     selectIdentity (state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx

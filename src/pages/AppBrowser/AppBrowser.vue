@@ -1,8 +1,13 @@
 <template>
   <div class="app-browser">
-    <iframe ref="appframe" :class="{ loading }" :src="path" />
+    <iframe
+      ref="appframe"
+      :class="{ loading }"
+      :src="path" />
 
-    <div v-if="loading" class="loader" />
+    <div
+      v-if="loading"
+      class="loader" />
   </div>
 </template>
 

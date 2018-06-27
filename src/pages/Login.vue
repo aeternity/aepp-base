@@ -1,22 +1,25 @@
 <template>
-  <mobile-page title="Login to æternity" :redirectToOnClose="{ name: 'intro' }" close-button>
+  <mobile-page
+    :redirect-to-on-close="{ name: 'intro' }"
+    title="Login to æternity"
+    close-button>
     <form @submit.prevent="unlockSavedKeystore">
       <ae-label
         :for="_uid"
-        help-type="dramatic"
         :help-text="errors.first('password')"
+        help-type="dramatic"
       >Enter your password</ae-label>
       <ae-input
-        :id="_uid"
-        name="password"
-        type="password"
-        v-model="password"
         v-validate="'required|min:4'"
         v-focus="true"
+        :id="_uid"
+        v-model="password"
+        name="password"
+        type="password"
       />
       <ae-button
-        type="exciting"
         :inactive="errors.any()"
+        type="exciting"
       >Login</ae-button>
     </form>
 
@@ -25,10 +28,20 @@
         Recover with phrase if you forgot your password or
         create a new account if you haven’t done that yet
       </p>
-      <ae-button :to="{ name: 'recover' }" size="small" plain type="dramatic" uppercase>
+      <ae-button
+        :to="{ name: 'recover' }"
+        size="small"
+        plain
+        type="dramatic"
+        uppercase>
         Recover with passphrase
       </ae-button>
-      <ae-button :to="{ name: 'new-account' }" size="small" plain type="exciting" uppercase>
+      <ae-button
+        :to="{ name: 'new-account' }"
+        size="small"
+        plain
+        type="exciting"
+        uppercase>
         Create new account
       </ae-button>
     </template>
@@ -37,7 +50,7 @@
 
 <script>
 import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage'
+import MobilePage from '../components/MobilePage'
 
 export default {
   components: { MobilePage, AeInput, AeLabel, AeButton },

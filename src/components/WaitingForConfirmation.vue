@@ -2,12 +2,16 @@
   <div class="waiting-for-confirmation">
     <h1>Sign the transaction in the Bæse æpp</h1>
     <step>
-      <ae-app-icon class="base" src="static/icons/base.svg" />
+      <ae-app-icon
+        class="base"
+        src="static/icons/base.svg" />
       <h2>Bæse</h2>
       <p>Open your Bæse æpp, check the transaction details and sign</p>
     </step>
     <div>
-      <ae-button type="dramatic" @click="cancelTransaction">Cancel Transaction</ae-button>
+      <ae-button
+        type="dramatic"
+        @click="cancelTransaction">Cancel Transaction</ae-button>
     </div>
   </div>
 </template>

@@ -1,15 +1,26 @@
 <template>
-  <ae-identity-background class="quick-id" type="dramatic" @click="showIdManager">
+  <ae-identity-background
+    class="quick-id"
+    type="dramatic"
+    @click="showIdManager">
     <template v-if="showBackButton">
       <router-link
         :to="{ name: 'apps' }"
-        @click.native.stop
         class="back-button"
+        @click.native.stop
       />
       <div class="vertical-ruler" />
     </template>
-    <ae-identity-light :identity="identity" active collapsed invert />
-    <ae-icon name="chevron" rotate="270" type="dramatic" invert />
+    <ae-identity-light
+      :identity="identity"
+      active
+      collapsed
+      invert />
+    <ae-icon
+      name="chevron"
+      rotate="270"
+      type="dramatic"
+      invert />
   </ae-identity-background>
 </template>
 
@@ -18,14 +29,14 @@ import { mapGetters } from 'vuex'
 import { AeIdentityBackground, AeIdentityLight, AeIcon } from '@aeternity/aepp-components'
 
 export default {
-  name: 'quick-id',
+  name: 'QuickId',
   components: { AeIdentityBackground, AeIdentityLight, AeIcon },
+  props: {
+    'show-back-button': { type: Boolean, default: false }
+  },
   computed: mapGetters({
     identity: 'activeIdentity'
   }),
-  props: {
-    'show-back-button': Boolean
-  },
   methods: {
     showIdManager () {
       this.$store.commit('toggleIdManager')

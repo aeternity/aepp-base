@@ -1,13 +1,14 @@
 import { mapState } from 'vuex'
-import { AeMain, AeBanner } from '@aeternity/aepp-components'
-import Accounts from '@/pages/Accounts.vue'
-import QuickId from '@/components/QuickId.vue'
-import FooterModal from '@/components/FooterModal.vue'
-import AccountsHorizontal from '@/components/AccountsHorizontal.vue'
-import RemoteConnectionPrompt from '@/components/RemoteConnectionPrompt.vue'
-import WaitingForConfirmation from '@/components/WaitingForConfirmation.vue'
-import ApproveMessage from '@/dialogs/ApproveMessage.vue'
-import ApproveTransaction from '@/dialogs/ApproveTransaction.vue'
+import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components'
+import Accounts from './pages/Accounts.vue'
+import QuickId from './components/QuickId.vue'
+import FooterModal from './components/FooterModal.vue'
+import AccountsHorizontal from './components/AccountsHorizontal.vue'
+import RemoteConnectionPrompt from './components/RemoteConnectionPrompt.vue'
+import WaitingForConfirmation from './components/WaitingForConfirmation.vue'
+import RemoveAppModal from './components/RemoveAppModal.vue'
+import ApproveMessage from './dialogs/ApproveMessage.vue'
+import ApproveTransaction from './dialogs/ApproveTransaction.vue'
 import store from './store'
 import PostMessageHandler from './lib/postMessageHandler'
 import IS_MOBILE_DEVICE from './lib/isMobileDevice'
@@ -17,11 +18,13 @@ export default {
   components: {
     AeMain,
     AeBanner,
+    AeButton,
     QuickId,
     FooterModal,
     AccountsHorizontal,
     RemoteConnectionPrompt,
     WaitingForConfirmation,
+    RemoveAppModal,
     Accounts,
     ApproveMessage,
     ApproveTransaction
@@ -37,13 +40,6 @@ export default {
       showRemoteConnectionPrompt: ({ desktop }) => desktop.showRemoteConnectionPrompt,
       transactionIdToSignByRemote: ({ desktop }) => desktop.transactionIdToSignByRemote
     }),
-    appClassObject () {
-      return {
-        stage: process.env.IS_STAGE === true,
-        development: process.env.NODE_ENV === 'development',
-        'quick-id-hidden': !this.displayQuickId
-      }
-    },
     displayQuickId () {
       const hideQuickIdOn = ['onboarding', 'login', 'recover', 'new-account', 'set-password']
       if (IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')

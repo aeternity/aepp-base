@@ -1,16 +1,18 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'settings-remote-connection' }"
     title="Remote Connection"
-    :redirectToOnClose="{ name: 'settings-remote-connection' }"
     back-button
     class="settings"
   >
-    <qr-code-reader @decode="decode" :video-constraints="videoConstraints" />
+    <qr-code-reader
+      :video-constraints="videoConstraints"
+      @decode="decode" />
   </mobile-page>
 </template>
 
 <script>
-import MobilePage from '@/components/MobilePage.vue'
+import MobilePage from '../components/MobilePage.vue'
 import { QrcodeReader as QrCodeReader } from 'vue-qrcode-reader'
 
 export default {

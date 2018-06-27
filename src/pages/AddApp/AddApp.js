@@ -8,10 +8,11 @@ import {
   AeAppIcon,
   AeDivider
 } from '@aeternity/aepp-components'
-import { DEFAULT_ICON, appsRegistry } from '@/lib/appsRegistry'
-import MobilePage from '@/components/MobilePage'
+import { DEFAULT_ICON, appsRegistry } from '../../lib/appsRegistry'
+import MobilePage from '../../components/MobilePage'
 
 const allApps = Object.entries(appsRegistry)
+  .filter(([, { unremovable }]) => !unremovable)
   .map(([id, d]) => ({
     icon: DEFAULT_ICON,
     ...d,

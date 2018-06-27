@@ -7,14 +7,16 @@
     <div class="banner">
       No saved contacts.
     </div>
-    <fixed-add-button quick-id :to="{ name: 'address-book-new' }" />
+    <fixed-add-button
+      :to="{ name: 'address-book-new' }"
+      quick-id />
   </mobile-page>
 </template>
 
 <script>
 import { AeDivider } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage.vue'
-import FixedAddButton from '@/components/FixedAddButton.vue'
+import MobilePage from '../components/MobilePage.vue'
+import FixedAddButton from '../components/FixedAddButton.vue'
 
 export default {
   components: { AeDivider, MobilePage, FixedAddButton }

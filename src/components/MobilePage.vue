@@ -5,10 +5,10 @@
         {{ title }}
         <ae-button
           v-if="backButton || closeButton"
-          @click="closeHandler"
           :slot="backButton ? 'left' : 'right'"
           plain
           size="small"
+          @click="closeHandler"
         >
           <ae-icon
             slot="icon"
@@ -20,7 +20,9 @@
       <div class="content">
         <slot />
       </div>
-      <div class="footer" v-if="$slots.footer">
+      <div
+        v-if="$slots.footer"
+        class="footer">
         <slot name="footer" />
       </div>
     </div>
@@ -34,10 +36,10 @@ import HeaderMobile from './HeaderMobile'
 export default {
   components: { AeButton, AeIcon, HeaderMobile },
   props: {
-    title: String,
-    redirectToOnClose: Object,
-    backButton: Boolean,
-    closeButton: Boolean
+    title: { type: String, default: '' },
+    redirectToOnClose: { type: Object, default: undefined },
+    backButton: { type: Boolean, default: false },
+    closeButton: { type: Boolean, default: false }
   },
   methods: {
     closeHandler () {

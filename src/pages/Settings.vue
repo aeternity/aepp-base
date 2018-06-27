@@ -6,17 +6,23 @@
     <heading>General settings</heading>
     <item :to="{ name: 'settings-network' }">
       Network
-      <span slot="right" class="mute">{{networkName}}</span>
+      <span
+        slot="right"
+        class="mute">{{ networkName }}</span>
     </item>
     <template v-if="IS_MOBILE_DEVICE">
       <heading>Add-ons</heading>
       <item :to="{ name: 'settings-remote-connection' }">
-        <img src="/static/icons/remote-connect.svg" />
+        <img src="/static/icons/remote-connect.svg" >
         Remote connection
-        <ae-icon slot="right" name="chevron" />
+        <ae-icon
+          slot="right"
+          name="chevron" />
       </item>
       <heading>Accounts</heading>
-      <item @click="signOut" type="dramatic">
+      <item
+        type="dramatic"
+        @click="signOut">
         Sign out on this device completely
       </item>
     </template>
@@ -26,11 +32,11 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { AeIcon } from '@aeternity/aepp-components'
-import MobilePage from '@/components/MobilePage.vue'
-import SettingsHeading from '@/components/SettingsHeading'
-import SettingsItem from '@/components/SettingsItem'
-import networks from '@/lib/networksRegistry'
-import IS_MOBILE_DEVICE from '@/lib/isMobileDevice'
+import MobilePage from '../components/MobilePage.vue'
+import SettingsHeading from '../components/SettingsHeading'
+import SettingsItem from '../components/SettingsItem'
+import networks from '../lib/networksRegistry'
+import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 
 export default {
   components: {
