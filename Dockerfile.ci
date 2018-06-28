@@ -15,19 +15,15 @@ RUN apt-get update && \
 
 
 
-RUN npm i -g cordova@7 cordova-splash cordova-icon && cordova telemetry off
-
 RUN mkdir app
 WORKDIR /app
 
-COPY package.json package.json
-RUN npm install
-
 ADD . .
+RUN npm config set unsafe-perm true # https://github.com/npm/npm/issues/17346
+RUN npm install && npx cordova telemetry off
 
 # As cordova changes global modules when adding a platform, we have to build the apk already during the docker build process
-RUN npm run build
-RUN cordova platform rm android &&cordova platform add android
-RUN npm run build:android
+RUN npm run build:cordova
+RUN npx cordova prepare android
 RUN npm run gen:cordova-resources
-RUN cordova build android
+RUN npx cordova build android
