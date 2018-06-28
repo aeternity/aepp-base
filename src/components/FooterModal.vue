@@ -116,7 +116,7 @@ export default {
       .back {
         width: 25px;
         height: 25px;
-        background: url('/static/icons/grid-black.svg') no-repeat;
+        background: url('../../static/icons/grid-black.svg') no-repeat;
         background-size: contain;
       }
 
