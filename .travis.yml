@@ -11,6 +11,8 @@ install:
 script:
 - npm run lint
 - npm run unit
+before_deploy:
+- export TARGET_DEVICE=`[[ $TRAVIS_BRANCH =~ ^(master|develop)$ ]] && echo "desktop"`
 - npm run build
 deploy:
   - provider: script
