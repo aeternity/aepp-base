@@ -17,6 +17,7 @@ exports.command = function () {
       .waitForElementVisible('//*[@id="app"]')
       .setValue('//textarea', testAccount.mnemonic)
       .click('//*[contains(text(), "Recover with Passphrase")]')
+      .waitForElementVisible('//input')
       .setValue('//input', testAccount.password)
       .click('//*[contains(text(), "Create Account")]')
       .waitForElementVisible('//*[contains(@class, "apps")]')
