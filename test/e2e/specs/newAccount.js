@@ -8,6 +8,7 @@ module.exports = {
       .click('//*[contains(text(), "Create Account")]'),
   newAccount: browser =>
     browser
+      .waitForElementVisible('//*[contains(text(), "New Account 1/2")')
       .assert.pathEqual('/new-account')
       .assert.notScrollable()
       .execute(() => {

@@ -9,6 +9,7 @@ module.exports = {
       .click('//*[contains(text(), "Recover with passphrase")]'),
   recover: browser =>
     browser
+      .waitForElementVisible('//*[contains(text(), "Recover with phrase")')
       .assert.pathEqual('/recover')
       .assert.notScrollable()
       .saveScreenshotWithFonts('recover')
