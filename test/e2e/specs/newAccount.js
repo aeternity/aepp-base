@@ -24,6 +24,8 @@ module.exports = {
       .saveScreenshotWithFonts('new-account-set-password')
       .setValue('//input', testAccount.password)
       .click('//*[contains(text(), "Create Account")]')
+      .pause(1000)
+      .source(result => console.log(result.value))
       .waitForElementVisible('//*[contains(@class, "apps")]')
       .assert.pathEqual('/apps'),
   after: browser => browser.end()

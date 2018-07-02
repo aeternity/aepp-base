@@ -10,6 +10,8 @@ module.exports = {
       .saveScreenshotWithFonts('login')
       .setValue('//input', testAccount.password)
       .click('//button//*[contains(text(), "Login")]')
+      .pause(1000)
+      .source(result => console.log(result.value))
       .waitForElementVisible('//*[contains(@class, "apps")]')
       .assert.pathEqual('/apps')
       .end()

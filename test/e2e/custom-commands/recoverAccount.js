@@ -10,6 +10,8 @@ exports.command = function () {
       .refresh()
       .setValue('//input', testAccount.password)
       .click('//button//*[contains(text(), "Login")]')
+      .pause(1000)
+      .source(result => console.log(result.value))
       .waitForElementVisible('//*[contains(@class, "apps")]')
   } else {
     this
@@ -20,6 +22,8 @@ exports.command = function () {
       .waitForElementVisible('//input')
       .setValue('//input', testAccount.password)
       .click('//*[contains(text(), "Create Account")]')
+      .pause(1000)
+      .source(result => console.log(result.value))
       .waitForElementVisible('//*[contains(@class, "apps")]')
       .waitForElementNotPresent('//*[contains(@class, "ae-banner")]')
       .execute(() => localStorage.getItem('vuex'), [], res => { cachedState = res.value })
