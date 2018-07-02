@@ -1,8 +1,9 @@
 const path = require('path')
 
 exports.command = function (name) {
+  this.clearFocus()
+  if (process.env.TAKE_SCREENSHOTS !== 'true') return
   this
-    .clearFocus()
     .waitForFontsReady()
     .saveScreenshot(
       path.resolve(
