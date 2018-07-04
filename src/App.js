@@ -28,6 +28,8 @@ export default {
         'login',
         'recover',
         'new-account',
+        'new-account-create',
+        'new-account-confirm',
         'set-password'
       ]
       if (IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')

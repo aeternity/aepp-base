@@ -11,6 +11,8 @@ import OnboardingYourAccounts from '../pages/OnboardingYourAccounts'
 import Login from '../pages/Login.vue'
 import Recover from '../pages/Recover.vue'
 import NewAccount from '../pages/NewAccount.vue'
+import NewAccountCreate from '../pages/NewAccountCreate.vue'
+import NewAccountConfirm from '../pages/NewAccountConfirm.vue'
 import SetPassword from '../pages/SetPassword.vue'
 import Apps from '../pages/Apps/Apps.vue'
 import AppBrowser from '../pages/AppBrowser/AppBrowser.vue'
@@ -99,6 +101,15 @@ export default (store) => {
         name: 'new-account',
         path: '/new-account',
         component: NewAccount
+      }, {
+        name: 'new-account-create',
+        path: '/new-account/create',
+        component: NewAccountCreate
+      }, {
+        name: 'new-account-confirm',
+        path: '/new-account/confirm',
+        component: NewAccountConfirm,
+        props: true
       }, {
         name: 'set-password',
         path: '/set-password',
