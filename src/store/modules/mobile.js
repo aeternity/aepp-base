@@ -29,7 +29,8 @@ export default {
     followers: {},
     isFollowerConnected: {},
     transactionsToApprove: {},
-    messageToApprove: null
+    messageToApprove: null,
+    names: []
   },
 
   getters: {
@@ -52,9 +53,11 @@ export default {
       state.derivedKey = derivedKey
     },
     resetAccountCount (state) {
+      state.names = ['My First Account']
       state.accountCount = 1
     },
-    createIdentity (state) {
+    createIdentity (state, name) {
+      state.names.push(name)
       state.accountCount++
     },
     setAccounts (state, accounts) {

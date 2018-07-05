@@ -30,7 +30,8 @@ const store = new Vuex.Store({
             'mobile.accountCount',
             'selectedIdentityIdx',
             'addressBook',
-            'mobile.followers'
+            'mobile.followers',
+            'mobile.names'
           ] : []
       ],
       setState: (key, state, storage) =>
@@ -70,11 +71,11 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    identities: ({ balances }, { addresses }) =>
-      addresses.map(e => ({
+    identities: ({ balances }, { addresses }, { mobile }) =>
+      addresses.map((e, index) => ({
         balance: balances[e] || 0,
         address: e,
-        name: e.substr(0, 6)
+        name: IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6)
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
