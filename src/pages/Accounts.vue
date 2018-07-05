@@ -71,8 +71,9 @@
         title="Add New Account"
         @close="modalVisible = false"
       >
-        <label>Name Account</label>
+        <ae-label :for="_uid">Name Account</ae-label>
         <ae-input
+          :id="_uid"
           v-model="newAccountName"
           placeholder="Placeholder" />
         <ae-button
@@ -100,13 +101,25 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
-import { AeIdentity, AeButton, AeDivider, AeInput, AeModalLight } from '@aeternity/aepp-components'
+import {
+  AeIdentity, AeButton, AeDivider,
+  AeLabel, AeInput, AeModalLight
+} from '@aeternity/aepp-components'
 import MobilePage from '../components/MobilePage'
 import FixedAddButton from '../components/FixedAddButton'
 import { roundToken } from '../lib/filters'
 
 export default {
-  components: { AeIdentity, AeButton, AeDivider, MobilePage, FixedAddButton, AeInput, AeModalLight },
+  components: {
+    AeIdentity,
+    AeButton,
+    AeDivider,
+    MobilePage,
+    FixedAddButton,
+    AeLabel,
+    AeInput,
+    AeModalLight
+  },
   filters: { roundToken },
   data: () => ({
     activeIdentityCard: -1,
@@ -228,6 +241,10 @@ export default {
         margin-bottom: 15px;
       }
     }
+  }
+
+  .ae-overlay /deep/ .ae-modal-light main {
+    text-align: start;
   }
 }
 </style>
