@@ -47,9 +47,9 @@ const store = new Vuex.Store({
     pollBalance,
     initEpoch,
     remoteConnection.plugin,
-    notificationOnRemoteConnection,
-    decryptAccounts,
-    aeppApi
+    aeppApi,
+    ...IS_MOBILE_DEVICE
+      ? [decryptAccounts, notificationOnRemoteConnection] : []
   ],
 
   modules: IS_MOBILE_DEVICE ? { mobile } : { desktop },

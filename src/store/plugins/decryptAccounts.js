@@ -1,9 +1,8 @@
 import { getHDWalletAccounts } from '@aeternity/hd-wallet'
-import IS_MOBILE_DEVICE from '../../lib/isMobileDevice'
 import AES from '../../lib/aes'
 
 export default store =>
-  IS_MOBILE_DEVICE && store.watch(
+  store.watch(
     ({ mobile: { keystore, accountCount, derivedKey } }) => [keystore, accountCount, derivedKey],
     async ([keystore, accountCount, derivedKey]) => {
       if (!keystore || !derivedKey) return

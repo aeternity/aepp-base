@@ -8,6 +8,7 @@ import { focus } from 'vue-focus'
 import App from './App.vue'
 import getRouter from './router/index'
 import store from './store'
+import IS_MOBILE_DEVICE from './lib/isMobileDevice'
 
 Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
 Validator.extend('url_http', (value) => {
@@ -44,6 +45,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 Vue.config.productionTip = false
+Vue.prototype.$globals = { IS_MOBILE_DEVICE }
 
 /* eslint-disable no-new */
 new Vue({
