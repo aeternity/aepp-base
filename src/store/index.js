@@ -12,6 +12,7 @@ import initEpoch from './plugins/initEpoch'
 import remoteConnection from './plugins/remoteConnection'
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 import decryptAccounts from './plugins/decryptAccounts'
+import aeppApi from './plugins/aeppApi'
 
 Vue.use(Vuex)
 
@@ -47,7 +48,8 @@ const store = new Vuex.Store({
     initEpoch,
     remoteConnection.plugin,
     notificationOnRemoteConnection,
-    decryptAccounts
+    decryptAccounts,
+    aeppApi
   ],
 
   modules: IS_MOBILE_DEVICE ? { mobile } : { desktop },

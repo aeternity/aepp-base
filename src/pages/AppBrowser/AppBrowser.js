@@ -15,11 +15,6 @@ export default {
   beforeMount () {
     window.addEventListener('message', this.updateUrl, false)
   },
-  mounted () {
-    this.$refs.appframe.onload = () => {
-      this.loading = false
-    }
-  },
   beforeDestroy () {
     window.removeEventListener('message', this.updateUrl, false)
   }

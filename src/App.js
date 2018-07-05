@@ -9,8 +9,6 @@ import WaitingForConfirmation from './components/WaitingForConfirmation.vue'
 import RemoveAppModal from './components/RemoveAppModal.vue'
 import ApproveMessage from './dialogs/ApproveMessage.vue'
 import ApproveTransaction from './dialogs/ApproveTransaction.vue'
-import store from './store'
-import PostMessageHandler from './lib/postMessageHandler'
 import IS_MOBILE_DEVICE from './lib/isMobileDevice'
 
 export default {
@@ -63,9 +61,5 @@ export default {
     } else if (document.domain.includes('aepps.dev')) {
       document.domain = 'aepps.dev'
     }
-  },
-  mounted: function () {
-    let postMessagehandler = new PostMessageHandler(store)
-    postMessagehandler.registerListener()
   }
 }
