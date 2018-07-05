@@ -8,6 +8,11 @@
     "dev-ssl": "npm run dev & local-ssl-proxy --source 8443 --target 8080",
     "start": "npm run dev",
     "build": "node build/build.js",
+    "build:cordova": "export IS_CORDOVA=true && npm run build",
+    "build:ios": "npm run build:cordova && cordova build ios",
+    "build:android": "npm run build:cordova && cordova build android",
+    "run:android": "npm run build:cordova && cordova run android",
+    "gen:cordova-resources": "cordova-splash && cordova-icon",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run lint && npm run unit && npm run e2e",
@@ -56,6 +61,9 @@
     "chalk": "^2.3.0",
     "chromedriver": "^2.33.2",
     "copy-webpack-plugin": "^4.2.3",
+    "cordova": "^8.0.0",
+    "cordova-icon": "^0.13.0",
+    "cordova-splash": "^0.12.0",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.7",
     "eslint": "^4.15.0",
@@ -98,6 +106,23 @@
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.1"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "aeternity",
+        "ANDROID_SCHEME": " ",
+        "ANDROID_HOST": " ",
+        "ANDROID_PATHPREFIX": "/"
+      }
+    },
+    "platforms": [
+      "browser",
+      "android",
+      "ios"
+    ]
   },
   "engines": {
     "node": ">= 6.0.0",

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Base æpp</title>
 
+    <% if (!process.env.IS_CORDOVA) { %>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
@@ -13,6 +14,7 @@
     <meta name="msapplication-TileColor" content="#f7296e">
     <meta name="msapplication-config" content="/static/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <% } %>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:500|Roboto:300,400,500,700" rel="stylesheet">
@@ -20,5 +22,9 @@
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
+    <% if (process.env.IS_CORDOVA) { %>
+    <script type="text/javascript" src="cordova.js"></script>
+    <% } %>
   </body>
 </html>
