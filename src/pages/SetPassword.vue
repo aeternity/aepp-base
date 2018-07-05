@@ -11,24 +11,26 @@
     </span>
     <form @submit.prevent="createKeystore">
       <ae-label
-        :for="_uid"
+        :for="`${_uid}-password`"
         :help-text="errors.first('password')"
         help-type="dramatic"
       >Enter your password</ae-label>
       <ae-input
         v-validate="'required|min:4'"
         v-focus="true"
-        :id="_uid"
+        :id="`${_uid}-password`"
         v-model="password"
         name="password"
         type="password"
       />
       <ae-label
+        :for="`${_uid}-passwordRepeat`"
         :help-text="errors.first('passwordRepeat')"
         help-type="dramatic"
       >Confirm your password</ae-label>
       <ae-input
         v-validate="'confirmed:'+password"
+        :id="`${_uid}-passwordRepeat`"
         name="passwordRepeat"
         type="password"
       />
