@@ -1,4 +1,5 @@
 @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components/dist/mixins.scss';
 @import './../../text.style.scss';
 
 .onBoarding {
@@ -17,15 +18,17 @@
 
   .content {
     margin: auto;
-    margin: 30px 60px 30px 30px;
+    width: 85vw;
 
     h1 {
-      width: 254px;
+      width: 100%;
+      margin: 0;
       @include titlelarge;
     }
 
     p {
       @include paragraphnormal;
+      margin: 0 0 15px 0;
     }
   }
 
@@ -46,17 +49,6 @@
       margin: auto;
     }
 
-    .icons {
-      padding: 18px 12px;
-      padding-right: 0px;
-
-      img {
-        width: 54px;
-        height: 54px;
-        margin-right: 7.5px;
-      }
-    }
-
     img {
       width: 100%;
     }
@@ -71,9 +63,7 @@
   }
 
   main {
-    padding-top: 64px;
-    position: absolute;
-    bottom: 60px;
+    position: static;
   }
 
   section {
@@ -82,6 +72,13 @@
 
     &.current {
       display: block;
+      .screenshot-phone,
+      .screenshot-phone2 {
+        animation: slide-in-right .95s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      }
+      .content {
+        animation: fade 1.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      }
     }
 
     .mockup {
@@ -119,41 +116,114 @@
         }
       }
     }
+
+    &#app-browser {
+      .image {
+        padding-top: 5px;
+
+        .ae-app-icon {
+          float: left;
+          width: 48px;
+          height: 48px;
+          margin: 10px;
+          padding: 8px;
+        }
+      }
+    }
+
+    &#active-account {
+      .image > img {
+        margin-bottom: 10px;
+      }
+    }
   }
 
   footer {
-    margin: 20px 0px;
+    margin: 0 auto;
     bottom: 0px;
     left: 0px;
     right: 0px;
     position: absolute;
     text-align: right;
-    display: flex;
-    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
-
-    .step-dots {
+    
+    .wrapper {
+      padding: 20px 0;
+      width: 90vw;
+      border-top: 2px solid $normal;
+      margin: 0 auto;
       display: flex;
-      flex-direction: row;
+      align-items: center;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      
+      .step-dots {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
 
-      .step-dot {
-        cursor: pointer;
-        width: 0.500em;
-        height: 0.500em;
-        margin: .5ch;
-        background-color: #e0e0e0;
-        border-radius: 50%;
-        display: inline-block;
-
-        &.active {
-          background-color: #f7296e;
+        .step-dot {
+          cursor: pointer;
+          width: 0.5em;
+          height: 0.5em;
+          margin: .5ch;
+          background-color: $normal;
+          border-radius: 50%;
+          display: inline-block;
+          &.active {
+            background-color: $dramatic;
+          }
         }
       }
     }
+  }
+}
 
-    .start-button {
-      margin-right: 30px;
+@media (max-width:370px) {
+  .onBoarding main {
+
+    section div {
+      flex: 1;
+    }
+
+    #welcome .cube-div {
+      padding: 31px;
+    }
+
+    .screenshot-phone,
+    .screenshot-phone2 {
+      transform: scale(.9, .77);
+      padding: 0;
+    }
+
+    .content {
+      h1 {
+        @include titlemedium;
+      }
+      p {
+        @include paragraphboring;
+        color: $black;
+      }
     }
   }
 }
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
