@@ -6,7 +6,7 @@
         <section id="welcome">
           <div class="cube-div">
             <img
-              src="../../assets/img/onboarding/identity-card.svg"
+              src="../../assets/img/onboarding/account-active-big.svg"
               class="large-copy-2">
           </div>
           <div class="content">
@@ -19,9 +19,9 @@
         <section id="manage">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="../../assets/img/onboarding/mini-card.svg">
-              <img src="../../assets/img/onboarding/card1.svg">
-              <img src="../../assets/img/onboarding/mini-card2.svg">
+              <img src="../../assets/img/onboarding/account-active.svg">
+              <img src="../../assets/img/onboarding/account-secured.svg">
+              <img src="../../assets/img/onboarding/account-inactive.svg">
             </div>
           </div>
           <div class="content">
@@ -52,7 +52,7 @@
           <div class="screenshot-phone2">
             <div class="image">
               <img src="../../assets/img/onboarding/dummy-list-view.svg">
-              <img src="../../assets/img/onboarding/identity-card-collapse.svg">
+              <img src="../../assets/img/onboarding/account-active-collapsed.svg">
             </div>
           </div>
           <div class="content">
@@ -65,7 +65,7 @@
         <section id="end">
           <div class="screenshot-phone">
             <div class="image">
-              <img src="../../assets/img/onboarding/card1.png">
+              <img src="../../assets/img/onboarding/account-secured-big.png">
             </div>
           </div>
           <div class="content">
