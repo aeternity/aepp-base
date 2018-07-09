@@ -17,7 +17,17 @@ export default {
   computed: {
     ...mapState(['notification']),
     displayFooter () {
-      const hideQuickIdOn = ['onboarding', 'login', 'recover', 'new-account', 'set-password']
+      const hideQuickIdOn = [
+        'onboarding',
+        'onboarding-your-accounts',
+        'onboarding-aepps',
+        'onboarding-active-account',
+        'onboarding-secure-account',
+        'login',
+        'recover',
+        'new-account',
+        'set-password'
+      ]
       if (IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')
       return !hideQuickIdOn.includes(this.$route.name)
     },

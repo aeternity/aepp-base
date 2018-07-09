@@ -2,7 +2,12 @@ import Router from 'vue-router'
 import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 
 import Intro from '../pages/Intro.vue'
-import Onboarding from '../pages/Onboarding/Onboarding.vue'
+import Onboarding from '../pages/Onboarding.vue'
+import OnboardingActiveAccount from '../pages/OnboardingActiveAccount'
+import OnboardingAepps from '../pages/OnboardingAepps'
+import OnboardingSecureAccount from '../pages/OnboardingSecureAccount'
+import OnboardingWelcome from '../pages/OnboardingWelcome'
+import OnboardingYourAccounts from '../pages/OnboardingYourAccounts'
 import Login from '../pages/Login.vue'
 import Recover from '../pages/Recover.vue'
 import NewAccount from '../pages/NewAccount.vue'
@@ -52,9 +57,31 @@ export default (store) => {
           next()
         }
       }, {
-        name: 'onboarding',
         path: '/onboarding',
-        component: Onboarding
+        component: Onboarding,
+        children: [
+          {
+            name: 'onboarding',
+            path: '',
+            component: OnboardingWelcome
+          }, {
+            name: 'onboarding-your-accounts',
+            path: 'your-accounts',
+            component: OnboardingYourAccounts
+          }, {
+            name: 'onboarding-aepps',
+            path: 'aepps',
+            component: OnboardingAepps
+          }, {
+            name: 'onboarding-active-account',
+            path: 'active-account',
+            component: OnboardingActiveAccount
+          }, {
+            name: 'onboarding-secure-account',
+            path: 'secure-account',
+            component: OnboardingSecureAccount
+          }
+        ]
       }, {
         name: 'login',
         path: '/login',
