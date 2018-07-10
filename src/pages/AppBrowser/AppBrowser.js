@@ -3,7 +3,7 @@ export default {
   data () {
     return {
       loading: true,
-      path: `https://${this.$route.fullPath}`
+      path: `https:/${this.$route.fullPath}`
     }
   },
   methods: {
