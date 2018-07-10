@@ -30,7 +30,7 @@ import { mapState, mapMutations } from 'vuex'
 import MobilePage from '../components/MobilePage.vue'
 import AeRadio from '../components/AeRadio.vue'
 import SettingsHeading from '../components/SettingsHeading'
-import SettingsItem from '../components/SettingsItem'
+import ListItem from '../components/ListItem'
 import networks from '../lib/networksRegistry'
 
 export default {
@@ -38,7 +38,7 @@ export default {
     MobilePage,
     AeRadio,
     Heading: SettingsHeading,
-    Item: SettingsItem
+    Item: ListItem
   },
   data: () => ({ networks }),
   computed: mapState(['rpcUrl', 'networkId']),

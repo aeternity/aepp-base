@@ -37,7 +37,7 @@ import { mapState, mapMutations } from 'vuex'
 import { AeButton } from '@aeternity/aepp-components'
 import MobilePage from '../components/MobilePage.vue'
 import SettingsHeading from '../components/SettingsHeading'
-import SettingsItem from '../components/SettingsItem'
+import ListItem from '../components/ListItem'
 import FixedAddButton from '../components/FixedAddButton.vue'
 
 export default {
@@ -45,7 +45,7 @@ export default {
     AeButton,
     MobilePage,
     Heading: SettingsHeading,
-    Item: SettingsItem,
+    Item: ListItem,
     FixedAddButton
   },
   computed: mapState({
@@ -67,7 +67,7 @@ export default {
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
 .settings {
-  .settings-item {
+  .list-item {
     height: 84px;
 
     .follower {

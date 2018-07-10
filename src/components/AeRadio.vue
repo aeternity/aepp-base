@@ -17,7 +17,7 @@
 export default {
   props: {
     name: { type: String, default: '' },
-    value: { type: [String, Number, Boolean], required: true },
+    value: { type: [String, Number, Boolean], default: '' },
     checked: { type: Boolean, default: false }
   }
 }

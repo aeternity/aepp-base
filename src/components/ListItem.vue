@@ -3,10 +3,18 @@
     :is="renderAs"
     :to="to"
     :class="{ inactive, [type]: true }"
-    class="settings-item"
+    class="list-item"
     @click="$emit('click', $event)"
   >
-    <slot />
+    <slot name="identicon"/>
+    <div class="content">
+      <div class="title">
+        <slot/>
+      </div>
+      <div class="subtitle">
+        <slot name="subtitle"/>
+      </div>
+    </div>
     <div class="space" />
     <slot name="right" />
   </component>
@@ -36,7 +44,7 @@ export default {
 <style lang="scss">
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
-.settings-item {
+.list-item {
   height: 60px;
   font-size: 18px;
   display: flex;
@@ -62,6 +70,22 @@ export default {
 
   .space {
     flex-grow: 1;
+  }
+
+  .title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #203040;
+  }
+
+  .subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: #76818d;
+  }
+
+  .content {
+    margin-left: 8px;
   }
 }
 </style>
