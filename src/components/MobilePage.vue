@@ -83,7 +83,7 @@ export default {
       background: linear-gradient(to bottom, white, #f1f4f7);
       border-radius: 10px;
       margin: auto;
-      min-width: $screen-phone - 2 * $overlay-padding;
+      width: $screen-phone - 2 * $overlay-padding;
       min-height: 600px;
     }
 

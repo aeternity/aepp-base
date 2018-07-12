@@ -5,10 +5,10 @@
     title="New Account 2/2"
     back-button
   >
-    <h1 class="title">Create a<br>password</h1>
-    <span class="description">
+    <h1>Create a<br>password</h1>
+    <p>
       For easy daily access, please create a secure password
-    </span>
+    </p>
     <form @submit.prevent="createKeystore">
       <ae-label
         :for="`${_uid}-password`"
@@ -100,14 +100,3 @@ export default {
 }
 </script>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" scoped>
-  .set-password {
-    .title {
-      font-size: 35px;
-    }
-
-    .description {
-      font-size: 18px;
-    }
-  }
-</style>

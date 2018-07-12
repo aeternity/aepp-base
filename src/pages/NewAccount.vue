@@ -80,6 +80,7 @@ export default {
   max-width: 400px;
   margin: 0 auto;
   overflow: hidden;
+  text-align: center;
 
   .passphrase {
     margin: 18px;
