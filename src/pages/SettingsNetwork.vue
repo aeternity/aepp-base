@@ -12,7 +12,6 @@
       {{ network.name }}
       <ae-radio
         slot="right"
-        :value="network.url"
         :checked="network.url === rpcUrl"
         name="network"
         @change="setRPCUrl(network.url)"
