@@ -6,15 +6,7 @@
     class="list-item"
     @click="$emit('click', $event)"
   >
-    <slot name="identicon"/>
-    <div class="content">
-      <div class="title">
-        <slot/>
-      </div>
-      <div class="subtitle">
-        <slot name="subtitle"/>
-      </div>
-    </div>
+    <slot />
     <div class="space" />
     <slot name="right" />
   </component>
@@ -70,22 +62,6 @@ export default {
 
   .space {
     flex-grow: 1;
-  }
-
-  .title {
-    font-size: 15px;
-    font-weight: 500;
-    color: #203040;
-  }
-
-  .subtitle {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: #76818d;
-  }
-
-  .content {
-    margin-left: 8px;
   }
 }
 </style>
