@@ -13,7 +13,7 @@ RUN apt-get update && \
     curl -sL https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.gz | tar xz --strip-components=1 &&\
     rm -rf /var/lib/apt/lists/*
 
-
+ENV GRADLE_OPTS=${GRADLE_OPTS}\ -Dorg.gradle.daemon=false
 
 RUN mkdir app
 WORKDIR /app
@@ -26,4 +26,4 @@ RUN npm install && npx cordova telemetry off
 RUN npm run build:cordova
 RUN npx cordova prepare android
 RUN npm run gen:cordova-resources
-RUN npx cordova build android
+RUN npx cordova build android -- --gradleArg=--no-daemon
