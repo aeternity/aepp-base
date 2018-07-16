@@ -3,7 +3,7 @@
     :is="renderAs"
     :to="to"
     :class="{ inactive, [type]: true }"
-    class="settings-item"
+    class="list-item"
     @click="$emit('click', $event)"
   >
     <slot />
@@ -36,7 +36,7 @@ export default {
 <style lang="scss">
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
-.settings-item {
+.list-item {
   height: 60px;
   font-size: 18px;
   display: flex;

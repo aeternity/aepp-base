@@ -34,7 +34,7 @@ import { mapState, mapMutations } from 'vuex'
 import { AeIcon } from '@aeternity/aepp-components'
 import MobilePage from '../components/MobilePage.vue'
 import SettingsHeading from '../components/SettingsHeading'
-import SettingsItem from '../components/SettingsItem'
+import ListItem from '../components/ListItem'
 import networks from '../lib/networksRegistry'
 
 export default {
@@ -42,7 +42,7 @@ export default {
     AeIcon,
     MobilePage,
     Heading: SettingsHeading,
-    Item: SettingsItem
+    Item: ListItem
   },
   computed: mapState({
     networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name

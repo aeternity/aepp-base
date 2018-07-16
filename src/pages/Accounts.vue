@@ -5,64 +5,35 @@
       title="My Accounts"
       close-button
       @close="toggleIdManager">
-      <template v-if="inactiveIdentities.length">
-        <label class="total-balance">
-          Total balance
-          <span>
-            <span class="ae">{{ totalBalance | roundToken }} AE</span>
-          </span>
-        </label>
-        <ae-divider />
-      </template>
-
-      <label>Active address</label>
+      <label class="active-account">Active address</label>
       <ae-identity
         :identity="activeIdentity"
         class="active-account"
         active
       />
 
-      <template v-if="inactiveIdentities.length === 0">
-        <p>
-          This is your first account, it enables you to use our æpps,
-          get Tokens, trade them and much more!
-        </p>
-        <p>
-          Quickly activate another account or instantly create one or multiple accounts.
-          Each has it’s own address and Token Balance
-        </p>
-      </template>
-      <template v-else>
-        <ae-divider/>
-        <label>
-          Inactive
-          <span>{{ inactiveIdentities.length }}</span>
-        </label>
-        <div class="inactive-accounts">
-          <ae-identity
-            v-for="{ identity, index, beforeActive, active } in inactiveIdentities"
-            :key="identity.address"
-            :identity="identity"
-            :class="{ 'before-active': beforeActive, active }"
-            collapsed
-            @click="activateCard(index)"
-          >
-            <div
-              v-if="active"
-              class="action-buttons">
-              <ae-divider />
-              <ae-button
-                size="small"
-                type="dramatic"
-                uppercase
-                @click="selectIdentity(index)"
-              >
-                Activate
-              </ae-button>
-            </div>
-          </ae-identity>
+      <list-item>
+        <div class="arrow">↪</div>
+        <div class="content">
+          <div class="title">Total Balance</div>
+          <div class="subtitle">{{ totalBalance }} AE</div>
         </div>
-      </template>
+      </list-item>
+
+      <list-item
+        v-for="(identity, index) in identities"
+        :key="index">
+        <ae-identity-avatar :address="identity.address" />
+        <div class="content">
+          <div class="title">{{ identity.name }}</div>
+          <div class="subtitle">{{ identity.balance }} AE</div>
+        </div>
+        <ae-radio
+          slot="right"
+          :checked="index === selectedIdentityIdx"
+          @change="selectIdentity(index)"
+        />
+      </list-item>
 
       <fixed-add-button @click="modalVisible = true" />
 
@@ -102,55 +73,43 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import {
-  AeIdentity, AeButton, AeDivider,
+  AeIdentity, AeIdentityAvatar, AeButton, AeDivider,
   AeLabel, AeInput, AeModalLight
 } from '@aeternity/aepp-components'
 import MobilePage from '../components/MobilePage'
 import FixedAddButton from '../components/FixedAddButton'
+import ListItem from '../components/ListItem'
+import AeRadio from '../components/AeRadio.vue'
 import { roundToken } from '../lib/filters'
 
 export default {
   components: {
     AeIdentity,
+    AeIdentityAvatar,
     AeButton,
     AeDivider,
     MobilePage,
     FixedAddButton,
     AeLabel,
     AeInput,
-    AeModalLight
+    AeModalLight,
+    ListItem,
+    AeRadio
   },
   filters: { roundToken },
   data: () => ({
-    activeIdentityCard: -1,
     modalVisible: false,
     newAccountName: ''
   }),
   computed: {
-    ...mapGetters(['totalBalance', 'activeIdentity']),
-    ...mapState({
-      inactiveIdentities (state, { identities, activeIdentity }) {
-        const activeIndex = this.activeIdentityCard
-        return identities
-          .map((identity, index) => ({ identity, index }))
-          .filter(({ identity }) => identity !== activeIdentity)
-          .map(({ identity, index }, i, identities) => ({
-            identity,
-            index,
-            beforeActive: identities[i + 1] && identities[i + 1].index === activeIndex,
-            active: index === activeIndex
-          }))
-      }
-    })
+    ...mapGetters(['totalBalance', 'activeIdentity', 'identities']),
+    ...mapState(['selectedIdentityIdx'])
   },
   mounted () {
     this.$store.dispatch('updateAllBalances')
   },
   methods: {
     ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
-    activateCard (i) {
-      this.activeIdentityCard = i === this.activeIdentityCard ? -1 : i
-    },
     handleAddAddress () {
       this.createIdentity(this.newAccountName)
       this.newAccountName = ''
@@ -181,7 +140,7 @@ export default {
     }
   }
 
-  label {
+  label.active-account {
     display: flex;
     text-transform: uppercase;
     font-size: 12px;
@@ -194,51 +153,34 @@ export default {
       flex-grow: 1;
       text-align: right;
     }
-
-    &.total-balance {
-      font-size: 16px;
-      text-transform: capitalize;
-
-      span {
-        font-family: 'Roboto Mono', monospace;
-        font-size: 12px;
-        color: $black;
-
-        .ae {
-          font-weight: bold;
-        }
-      }
-    }
-  }
-
-  p {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 400px;
-    text-align: center;
   }
 
   .active-account {
     margin-bottom: 22px;
   }
 
-  .inactive-accounts {
-    & > *:not(:last-child):not(.before-active):not(.active) {
-      padding-bottom: 35px;
-      margin-bottom: -24px;
+  .list-item {
+    .ae-identity-avatar, .arrow {
+      border: none;
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      line-height: 32px;
     }
 
-    .active {
-      margin: 10px 0;
-    }
-  }
+    .content {
+      margin-left: 8px;
 
-  .ae-identity {
-    .action-buttons {
-      text-align: right;
+      .title {
+        font-size: 15px;
+        font-weight: 500;
+        color: #203040;
+      }
 
-      .ae-divider {
-        margin-bottom: 15px;
+      .subtitle {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 13px;
+        color: #76818d;
       }
     }
   }
