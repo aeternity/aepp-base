@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 import { AeAppIcon, AeButton } from '@aeternity/aepp-components'
 import Step from './Step'
 
 export default {
   components: { Step, AeAppIcon, AeButton },
-  methods: mapActions(['cancelTransaction'])
+  methods: mapMutations(['cancelTransaction'])
 }
 </script>
 

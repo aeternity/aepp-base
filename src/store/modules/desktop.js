@@ -1,10 +1,9 @@
 import uuid from 'uuid/v4'
-import remoteConnection from '../plugins/remoteConnection'
 
 export default {
   state: {
     remoteConnected: false,
-    transactionIdToSignByRemote: null,
+    transactionToSignByRemote: null,
     showRemoteConnectionPrompt: false
   },
 
@@ -18,9 +17,10 @@ export default {
       state.showRemoteConnectionPrompt = false
       state.remoteConnected = remoteConnected
     },
-    setTransactionIdToSignByRemote (state, transactionId) {
-      state.transactionIdToSignByRemote = transactionId
+    setTransactionToSign (state, transaction) {
+      state.transactionToSignByRemote = transaction
     },
+    cancelTransaction () {},
     toggleRemoteConnectionPrompt (state) {
       state.showRemoteConnectionPrompt = !state.showRemoteConnectionPrompt
     }
@@ -29,17 +29,14 @@ export default {
   actions: {
     async signTransaction ({ commit }, args) {
       args.id = uuid()
-      commit('setTransactionIdToSignByRemote', args.id)
       let result
       try {
-        result = await remoteConnection.leader.call('signTransaction', args)
+        result = await new Promise((resolve, reject) =>
+          commit('setTransactionToSign', { resolve, reject, args }))
       } finally {
-        commit('setTransactionIdToSignByRemote')
+        commit('setTransactionToSign')
       }
       return result
-    },
-    async cancelTransaction ({ state: { transactionIdToSignByRemote } }) {
-      remoteConnection.leader.call('cancelTransaction', transactionIdToSignByRemote)
     }
   }
 }

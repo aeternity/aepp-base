@@ -2,12 +2,19 @@
 
 .transfer.mobile-page {
   .swiper-container /deep/ {
+    z-index: auto;
+
     .swiper-wrapper {
+      z-index: auto;
       padding-bottom: 35px;
-      width: 365px;
     }
-    .swiper-pagination-bullet {
-      background: $aubergine;
+
+    .swiper-pagination {
+      z-index: auto;
+
+      &-bullet {
+        background: $aubergine;
+      }
     }
   }
 

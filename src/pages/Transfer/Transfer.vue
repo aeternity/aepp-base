@@ -16,7 +16,6 @@
       v-if="transactionType === 'internal'"
       :options="swiperOptionsTo"
       class="swiper-container"
-      not-next-tick
     >
       <swiper-slide
         v-for="i in identitiesTo"
@@ -41,6 +40,7 @@
         v-validate="'required|min:51|max:53'"
         :id="`${_uid}-addressTo`"
         v-model="to"
+        name="addressTo"
         data-vv-delay="1"
         placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
       />

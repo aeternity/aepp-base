@@ -28,6 +28,7 @@
         v-validate="'required|min:51|max:53'"
         :id="`${_uid}-address`"
         v-model="address"
+        name="address"
         placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
       />
     </form>

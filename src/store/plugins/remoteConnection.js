@@ -6,17 +6,14 @@ import RpcPeer from '../../lib/rpc'
 const BACKEND_URL = 'https://signaling.aepps.com'
 const PAIR_SYNC_FIELDS = ['apps', 'rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook']
 
-class RemoteConnection {
-  constructor () {
-    this.plugin = this.plugin.bind(this)
-  }
-
-  open (store) {
+export default store => {
+  const open = () => {
     const query = { key: store.state.peerKey }
     if (IS_MOBILE_DEVICE) {
       query.followers = Object.keys(store.state.mobile.followers)
     }
     const socket = io(BACKEND_URL, { query })
+    const closeCbs = [socket.close]
 
     socket.on('exception', console.error)
 
@@ -43,13 +40,13 @@ class RemoteConnection {
       broadcast.notification('setState', state)
       lastReceivedState = null
     }
-    this.unwatch = store.watch(getStateForSync, broadcastState)
+    closeCbs.push(store.watch(getStateForSync, broadcastState))
 
     if (IS_MOBILE_DEVICE) {
       const syncState = _.throttle(() =>
         broadcastState(getStateForSync(store.state, store.getters)), 500)
 
-      this.unsubscribe = store.subscribe(({ type, payload }) => {
+      closeCbs.push(store.subscribe(({ type, payload }) => {
         switch (type) {
           case 'addFollower':
             socket.emit('add-follower', payload.key)
@@ -61,7 +58,7 @@ class RemoteConnection {
             socket.emit('remove-follower', payload)
             break
         }
-      })
+      }))
 
       socket.on('follower-connected', fKey => store.commit('followerConnected', fKey))
       socket.on('follower-disconnected', fKey => store.commit('followerDisconnected', fKey))
@@ -77,35 +74,37 @@ class RemoteConnection {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true))
       socket.on('removed-from-group', () => store.commit('setRemoteConnected', false))
 
-      this.leader = new RpcPeer(message => socket.emit('message-to-leader', message))
-      socket.on('message-from-leader', message => this.leader.processMessage(message))
+      const leader = new RpcPeer(message => socket.emit('message-to-leader', message))
+      socket.on('message-from-leader', message => leader.processMessage(message))
+      closeCbs.push(store.subscribe(({ type, payload }) => {
+        switch (type) {
+          case 'setTransactionToSign':
+            if (!payload) return
+            leader.call('signTransaction', payload.args).then(payload.resolve, payload.reject)
+            break
+          case 'cancelTransaction':
+            leader.call('cancelTransaction', store.state.desktop.transactionToSignByRemote.args.id)
+            break
+        }
+      }))
     }
 
-    this.socket = socket
+    return () => closeCbs.forEach(f => f())
   }
 
-  close () {
-    this.unwatch()
-    this.unsubscribe()
-    this.socket.close()
-    delete this.unwatch
-    delete this.unsubscribe
-    delete this.socket
-  }
-
-  plugin (store) {
-    if (IS_MOBILE_DEVICE) {
-      store.watch(
-        ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length,
-        isConnectionNecessary => {
-          if (isConnectionNecessary && !this.socket) this.open(store)
-          if (!isConnectionNecessary && this.socket) this.close()
-        },
-        { immediate: true })
-    } else {
-      this.open(store)
-    }
+  if (IS_MOBILE_DEVICE) {
+    let closeCb
+    store.watch(
+      ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length,
+      isConnectionNecessary => {
+        if (isConnectionNecessary && !closeCb) closeCb = open()
+        if (!isConnectionNecessary && closeCb) {
+          closeCb()
+          closeCb = undefined
+        }
+      },
+      { immediate: true })
+  } else {
+    open(store)
   }
 }
-
-export default new RemoteConnection()

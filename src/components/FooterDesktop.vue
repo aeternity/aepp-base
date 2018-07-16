@@ -1,11 +1,11 @@
 <template>
   <footer-modal
     :show-back-button="showBackButton"
-    :closable="!transactionIdToSignByRemote"
+    :closable="!transactionToSignByRemote"
     @toggle="toggleDesktopFooter"
   >
     <remote-connection-prompt v-if="showRemoteConnectionPrompt" />
-    <waiting-for-confirmation v-if="transactionIdToSignByRemote" />
+    <waiting-for-confirmation v-if="transactionToSignByRemote" />
     <accounts-horizontal v-if="showIdManager" />
   </footer-modal>
 </template>
@@ -31,12 +31,12 @@ export default {
     ...mapState(['showIdManager']),
     ...mapState({
       showRemoteConnectionPrompt: ({ desktop }) => desktop.showRemoteConnectionPrompt,
-      transactionIdToSignByRemote: ({ desktop }) => desktop.transactionIdToSignByRemote
+      transactionToSignByRemote: ({ desktop }) => desktop.transactionToSignByRemote
     })
   },
   methods: {
     toggleDesktopFooter () {
-      if (this.transactionIdToSignByRemote) return
+      if (this.transactionToSignByRemote) return
       this.$store.commit(`toggle${this.$store.getters.loggedIn
         ? 'IdManager' : 'RemoteConnectionPrompt'}`)
     }
