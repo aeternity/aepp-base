@@ -36,7 +36,8 @@ export default {
       epoch: ({ epoch }) => epoch,
       identitiesTo: (state, { identities, activeIdentity }) =>
         identities.filter(i => i.address !== activeIdentity.address),
-      maxAmount: ({ balances }, { activeIdentity }) => balances[activeIdentity.address]
+      maxAmount: ({ balances }, { activeIdentity }) =>
+        activeIdentity ? balances[activeIdentity.address] : 0
     }),
     to: {
       get () {
