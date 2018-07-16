@@ -16,7 +16,6 @@
       v-if="transactionType === 'internal'"
       :options="swiperOptionsTo"
       class="swiper-container"
-      not-next-tick
     >
       <swiper-slide
         v-for="i in identitiesTo"
