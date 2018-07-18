@@ -25,6 +25,7 @@
       :show-back-button="showBackButton"
     />
     <remove-app-modal />
+    <alert-modal />
   </ae-main>
 </template>
 
