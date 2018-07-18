@@ -82,8 +82,11 @@ export default {
         text: 'You\'ve entered a wrong passphrase, try again before proceeding.',
         buttonText: 'Try again'
       })
-      if (isValid) this.$store.commit('setSeed', this.seed)
-      else this.selectedWordIds = []
+      if (isValid) {
+        this.$router.push({ name: 'set-password', params: { seed: this.seed } })
+      } else {
+        this.selectedWordIds = []
+      }
     }
   }
 }

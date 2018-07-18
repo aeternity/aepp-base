@@ -53,6 +53,7 @@
 <script>
 import { mapState } from 'vuex'
 import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
+import { validateMnemonic } from '@aeternity/bip39'
 import MobilePage from '../components/MobilePage'
 
 export default {
@@ -65,10 +66,9 @@ export default {
     async setSeed () {
       if (!await this.$validator.validateAll()) return
 
-      try {
-        this.$store.commit('setSeed', this.seed)
-      } catch (e) {
-        if (e.message !== 'Invalid mnemonic') throw e
+      if (validateMnemonic(this.seed)) {
+        this.$router.push({ name: 'set-password', params: { seed: this.seed } })
+      } else {
         this.$store.dispatch('setNotification', {
           text: `Invalid passphrase`,
           autoClose: true

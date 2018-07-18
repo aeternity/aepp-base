@@ -46,6 +46,11 @@ export default (store) => {
     next()
   }
 
+  const checkSeedPassed = (to, from, next) => {
+    if (!to.params.seed) return next({ name: 'intro' })
+    next()
+  }
+
   const router = new Router({
     routes: [
       ...IS_MOBILE_DEVICE ? [{
@@ -109,15 +114,14 @@ export default (store) => {
         name: 'new-account-confirm',
         path: '/new-account/confirm',
         component: NewAccountConfirm,
+        beforeEnter: checkSeedPassed,
         props: true
       }, {
         name: 'set-password',
         path: '/set-password',
         component: SetPassword,
-        beforeEnter (to, from, next) {
-          if (!store.state.mobile.seed) return next({ name: 'intro' })
-          next()
-        }
+        beforeEnter: checkSeedPassed,
+        props: true
       }] : [],
       {
         name: 'apps',
@@ -204,9 +208,6 @@ export default (store) => {
 
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
-      case 'setSeed':
-        if (state.mobile.seed) router.push({ name: 'set-password' })
-        break
       case 'toggleRemoteConnectionPrompt':
         if (!state.desktop.showRemoteConnectionPrompt) loginTarget = undefined
         break
