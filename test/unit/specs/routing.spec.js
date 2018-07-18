@@ -96,16 +96,6 @@ describe('router/index.js', () => {
     })
 
     describe('listening on mutations', () => {
-      const createRedirectTest = (state, mutationType, expectedRedirect, currentRouteName) =>
-        () => {
-          const subscribe = jest.fn()
-          const router = createRouter(createStoreMock({ subscribe, state }))
-          const exposedHandler = subscribe.mock.calls[0][0]
-          if (currentRouteName) router.push({ name: currentRouteName })
-          exposedHandler({ type: mutationType }, state)
-          expect(router.currentRoute.name).toBe(expectedRedirect)
-        }
-
       it('registers a listener for vuex mutations', () => {
         const subscribe = jest.fn()
 
@@ -113,13 +103,6 @@ describe('router/index.js', () => {
         expect(subscribe).toHaveBeenCalledTimes(1)
         expect(subscribe).toHaveBeenCalledWith(expect.any(Function))
       })
-
-      it(
-        'redirects to SET-PASSWORD path when setSeed mutation is triggered and seed is present',
-        createRedirectTest(
-          { mobile: { seed: true } }, 'setSeed', 'set-password'
-        )
-      )
     })
   })
 })

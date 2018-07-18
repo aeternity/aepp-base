@@ -65,6 +65,7 @@ const store = new Vuex.Store({
     rpcUrl: networksRegistry[0].url,
     epoch: null,
     networkId: null,
+    alert: null,
     notification: null,
     apps: Object.keys(appsRegistry),
     addressBook: []
@@ -109,6 +110,9 @@ const store = new Vuex.Store({
     setBalance (state, { address, balance }) {
       Vue.set(state.balances, address, balance)
     },
+    setAlert (state, options) {
+      state.alert = options
+    },
     setNotification (state, options) {
       state.notification = options
     },
@@ -121,6 +125,15 @@ const store = new Vuex.Store({
   },
 
   actions: {
+    alert ({ commit }, options) {
+      return new Promise(resolve => commit('setAlert', {
+        ...options,
+        resolve: () => {
+          commit('setAlert')
+          resolve()
+        }
+      }))
+    },
     setNotification ({ commit }, options) {
       commit('setNotification', options)
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000)

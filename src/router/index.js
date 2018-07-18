@@ -11,6 +11,8 @@ import OnboardingYourAccounts from '../pages/OnboardingYourAccounts'
 import Login from '../pages/Login.vue'
 import Recover from '../pages/Recover.vue'
 import NewAccount from '../pages/NewAccount.vue'
+import NewAccountCreate from '../pages/NewAccountCreate.vue'
+import NewAccountConfirm from '../pages/NewAccountConfirm.vue'
 import SetPassword from '../pages/SetPassword.vue'
 import Apps from '../pages/Apps/Apps.vue'
 import AppBrowser from '../pages/AppBrowser/AppBrowser.vue'
@@ -41,6 +43,11 @@ export default (store) => {
         return
       }
     }
+    next()
+  }
+
+  const checkSeedPassed = (to, from, next) => {
+    if (!to.params.seed) return next({ name: 'intro' })
     next()
   }
 
@@ -100,13 +107,21 @@ export default (store) => {
         path: '/new-account',
         component: NewAccount
       }, {
+        name: 'new-account-create',
+        path: '/new-account/create',
+        component: NewAccountCreate
+      }, {
+        name: 'new-account-confirm',
+        path: '/new-account/confirm',
+        component: NewAccountConfirm,
+        beforeEnter: checkSeedPassed,
+        props: true
+      }, {
         name: 'set-password',
         path: '/set-password',
         component: SetPassword,
-        beforeEnter (to, from, next) {
-          if (!store.state.mobile.seed) return next({ name: 'intro' })
-          next()
-        }
+        beforeEnter: checkSeedPassed,
+        props: true
       }] : [],
       {
         name: 'apps',
@@ -193,9 +208,6 @@ export default (store) => {
 
   store.subscribe(function (mutation, state) {
     switch (mutation.type) {
-      case 'setSeed':
-        if (state.mobile.seed) router.push({ name: 'set-password' })
-        break
       case 'toggleRemoteConnectionPrompt':
         if (!state.desktop.showRemoteConnectionPrompt) loginTarget = undefined
         break

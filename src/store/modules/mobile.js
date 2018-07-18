@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import uuid from 'uuid/v4'
 import { Crypto } from '@aeternity/aepp-sdk'
-import { mnemonicToSeed, validateMnemonic } from '@aeternity/bip39'
+import { mnemonicToSeed } from '@aeternity/bip39'
 import { generateHDWallet } from '@aeternity/hd-wallet'
 import AES from '../../lib/aes'
 
@@ -41,13 +41,6 @@ export default {
   mutations: {
     setKeystore (state, keystore) {
       state.keystore = keystore
-    },
-    setSeed (state, seed) {
-      if (!validateMnemonic(seed)) throw new Error('Invalid mnemonic')
-      state.seed = seed
-    },
-    clearSeed (state) {
-      state.seed = null
     },
     setDerivedKey (state, derivedKey) {
       state.derivedKey = derivedKey
@@ -98,7 +91,7 @@ export default {
   },
 
   actions: {
-    async createKeystore ({ commit, state: { seed } }, password) {
+    async createKeystore ({ commit }, { password, seed }) {
       const salt = new ArrayBuffer(16)
       window.crypto.getRandomValues(new Uint8Array(salt))
       const passwordDerivedKey = await derivePasswordKey(password, salt)
@@ -110,7 +103,6 @@ export default {
         mac: await aes.encrypt(new Uint8Array(2)),
         salt
       }
-      commit('clearSeed')
       commit('resetAccountCount')
       commit('selectIdentity', 0)
       commit('setKeystore', encryptedHdWallet)

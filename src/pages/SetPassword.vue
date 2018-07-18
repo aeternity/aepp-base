@@ -66,6 +66,9 @@ import MobilePage from '../components/MobilePage'
 
 export default {
   components: { MobilePage, AeInput, AeLabel, AeButton },
+  props: {
+    seed: { type: String, required: true }
+  },
   data () {
     return {
       password: '',
@@ -81,7 +84,10 @@ export default {
 
       this.working = true
       try {
-        await this.$store.dispatch('createKeystore', this.password)
+        await this.$store.dispatch('createKeystore', {
+          password: this.password,
+          seed: this.seed
+        })
         this.$store.dispatch('setNotification', {
           text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
           icon: require(`emoji-datasource-apple/img/apple/64/1f44f.png`),

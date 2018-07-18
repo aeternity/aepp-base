@@ -3,6 +3,7 @@ import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components'
 import FooterMobile from './components/FooterMobile'
 import FooterDesktop from './components/FooterDesktop'
 import RemoveAppModal from './components/RemoveAppModal.vue'
+import AlertModal from './components/AlertModal'
 import IS_MOBILE_DEVICE from './lib/isMobileDevice'
 
 export default {
@@ -12,6 +13,7 @@ export default {
     AeBanner,
     AeButton,
     RemoveAppModal,
+    AlertModal,
     AppFooter: IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop
   },
   computed: {
@@ -26,6 +28,8 @@ export default {
         'login',
         'recover',
         'new-account',
+        'new-account-create',
+        'new-account-confirm',
         'set-password'
       ]
       if (IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')
