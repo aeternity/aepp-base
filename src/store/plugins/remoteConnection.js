@@ -7,7 +7,7 @@ const PAIR_SYNC_FIELDS = ['apps', 'rpcUrl', 'addresses', 'selectedIdentityIdx', 
 
 export default store => {
   const open = () => {
-    const query = { key: store.state.peerKey }
+    const query = { key: store.state.peerId }
     if (process.env.IS_MOBILE_DEVICE) {
       query.followers = Object.keys(store.state.mobile.followers)
     }
@@ -50,7 +50,7 @@ export default store => {
       closeCbs.push(store.subscribe(({ type, payload }) => {
         switch (type) {
           case 'addFollower':
-            socket.emit('add-follower', payload.key)
+            socket.emit('add-follower', payload.id)
             break
           case 'followerConnected':
             syncState()
@@ -61,12 +61,14 @@ export default store => {
         }
       }))
 
-      socket.on('follower-connected', fKey => store.commit('followerConnected', fKey))
-      socket.on('follower-disconnected', fKey => store.commit('followerDisconnected', fKey))
+      socket.on('follower-connected', followerId =>
+        store.commit('followerConnected', followerId))
+      socket.on('follower-disconnected', followerId =>
+        store.commit('followerDisconnected', followerId))
 
-      socket.on('message-from-follower', (followerKey, request) =>
+      socket.on('message-from-follower', (followerId, request) =>
         new RpcPeer(
-          response => socket.emit('message-to-follower', followerKey, response), {
+          response => socket.emit('message-to-follower', followerId, response), {
             signTransaction: args => store.dispatch('signTransaction', args),
             cancelTransaction: args => store.commit('cancelTransaction', args)
           })

@@ -1,7 +1,7 @@
 import notificationOnRemoveConnection from '../notificationOnRemoteConnection'
 
 const testFollower = {
-  key: 'test-follower-key',
+  id: 'test-follower-id',
   name: 'test-follower-name'
 }
 const getDispatch = (disconnectedAt, mutation) => {
@@ -11,7 +11,7 @@ const getDispatch = (disconnectedAt, mutation) => {
     state: {
       mobile: {
         followers: {
-          [testFollower.key]: { name: testFollower.name, disconnectedAt }
+          [testFollower.id]: { name: testFollower.name, disconnectedAt }
         }
       }
     }
@@ -21,7 +21,7 @@ const getDispatch = (disconnectedAt, mutation) => {
   return store.dispatch
 }
 const testMutation = {
-  type: 'followerConnected', payload: testFollower.key
+  type: 'followerConnected', payload: testFollower.id
 }
 
 it('emits notification', () =>

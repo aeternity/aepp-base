@@ -20,7 +20,7 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       paths: [
-        'peerKey',
+        'peerId',
         ...process.env.IS_MOBILE_DEVICE
           ? [
             'apps',
@@ -55,7 +55,7 @@ const store = new Vuex.Store({
   modules: process.env.IS_MOBILE_DEVICE ? { mobile } : { desktop },
 
   state: {
-    peerKey: Buffer.from(genRandomBuffer(15)).toString('base64'),
+    peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,

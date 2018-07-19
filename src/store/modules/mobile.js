@@ -77,17 +77,17 @@ export default {
       state.messageToApprove = message
     },
     addFollower (state, follower) {
-      Vue.set(state.followers, follower.key, follower)
+      Vue.set(state.followers, follower.id, follower)
     },
-    removeFollower (state, followerKey) {
-      Vue.delete(state.followers, followerKey)
+    removeFollower (state, followerId) {
+      Vue.delete(state.followers, followerId)
     },
-    followerConnected (state, followerKey) {
-      Vue.set(state.isFollowerConnected, followerKey, true)
+    followerConnected (state, followerId) {
+      Vue.set(state.isFollowerConnected, followerId, true)
     },
-    followerDisconnected (state, followerKey) {
-      Vue.delete(state.isFollowerConnected, followerKey)
-      Vue.set(state.followers[followerKey], 'disconnectedAt', Date.now())
+    followerDisconnected (state, followerId) {
+      Vue.delete(state.isFollowerConnected, followerId)
+      Vue.set(state.followers[followerId], 'disconnectedAt', Date.now())
     }
   },
 
