@@ -28,18 +28,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import { AeAppIcon } from '@aeternity/aepp-components'
 import renderQrCodeSvgBinary from '../lib/renderQrCodeSvgBinary'
 import Step from './Step'
 
 export default {
   components: { Step, AeAppIcon },
-  computed: mapState({
-    peerId: ({ desktop }) => desktop.peerId
-  }),
+  computed: mapGetters(['remoteConnectionPublicKey']),
   watch: {
-    peerId () {
+    remoteConnectionPublicKey () {
       this.renderQrCode()
     }
   },
@@ -49,7 +47,7 @@ export default {
   methods: {
     renderQrCode () {
       this.$refs.qrCode.replaceWith(
-        renderQrCodeSvgBinary(Buffer.from(this.peerId, 'base64'), 170))
+        renderQrCodeSvgBinary(Buffer.from(this.remoteConnectionPublicKey), 170))
     }
   }
 }

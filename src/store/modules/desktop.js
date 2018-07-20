@@ -1,17 +1,23 @@
 import uuid from 'uuid/v4'
-import { genRandomBuffer } from '../utils'
+import nacl from 'tweetnacl'
+import { getPeerIdByKey } from '../utils'
 
 export default {
   state: {
-    peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     remoteConnected: false,
+    remoteConnectionPrivateKey: nacl.box.keyPair().secretKey.buffer,
     transactionToSignByRemote: null,
     showRemoteConnectionPrompt: false
   },
 
   getters: {
     addresses: (state, getters, { addresses }) => addresses,
-    loggedIn: ({ remoteConnected }) => remoteConnected
+    loggedIn: ({ remoteConnected }) => remoteConnected,
+    remoteConnectionPublicKey: ({ remoteConnectionPrivateKey }) =>
+      nacl.box.keyPair.fromSecretKey(
+        new Uint8Array(remoteConnectionPrivateKey)).publicKey.buffer,
+    peerId: (state, { remoteConnectionPublicKey }) =>
+      getPeerIdByKey(remoteConnectionPublicKey)
   },
 
   mutations: {

@@ -4,7 +4,7 @@ import { Crypto } from '@aeternity/aepp-sdk/src'
 import { mnemonicToSeed } from '@aeternity/bip39'
 import { generateHDWallet } from '@aeternity/hd-wallet/src'
 import AES from '../../lib/aes'
-import { genRandomBuffer } from '../utils'
+import { genRandomBuffer, getPeerIdByKey } from '../utils'
 
 const derivePasswordKey = async (password, salt) => {
   const passwordKey = await window.crypto.subtle.importKey(
@@ -76,7 +76,8 @@ export default {
       state.messageToApprove = message
     },
     addFollower (state, follower) {
-      Vue.set(state.followers, follower.id, follower)
+      const id = getPeerIdByKey(follower.key)
+      Vue.set(state.followers, id, { ...follower, id })
     },
     removeFollower (state, followerId) {
       Vue.delete(state.followers, followerId)

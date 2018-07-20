@@ -27,13 +27,13 @@ const store = new Vuex.Store({
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
           followers: Object.entries(mobile.followers)
-            .reduce((p, [k, { id, name, disconnectedAt }]) =>
-              ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
+            .reduce((p, [k, { id, key, name, disconnectedAt }]) =>
+              ({ ...p, [k]: { id, key, name, disconnectedAt } }), {}),
           names: mobile.names
         }
       } : {
         desktop: {
-          peerId: desktop.peerId
+          remoteConnectionPrivateKey: desktop.remoteConnectionPrivateKey
         }
       }
     })),
