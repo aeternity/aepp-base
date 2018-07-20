@@ -19,20 +19,23 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     createPersistedState({
-      paths: [
-        'peerId',
-        ...process.env.IS_MOBILE_DEVICE
-          ? [
-            'apps',
-            'rpcUrl',
-            'mobile.keystore',
-            'mobile.accountCount',
-            'selectedIdentityIdx',
-            'addressBook',
-            'mobile.followers',
-            'mobile.names'
-          ] : []
-      ],
+      reducer: ({ peerId, apps, rpcUrl, selectedIdentityIdx, addressBook, mobile }) => ({
+        peerId,
+        ...process.env.IS_MOBILE_DEVICE ? {
+          apps,
+          rpcUrl,
+          selectedIdentityIdx,
+          addressBook,
+          mobile: {
+            keystore: mobile.keystore,
+            accountCount: mobile.accountCount,
+            followers: Object.entries(mobile.followers)
+              .reduce((p, [k, { id, name, disconnectedAt }]) =>
+                ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
+            names: mobile.names
+          }
+        } : {}
+      }),
       setState: (key, state, storage) =>
         storage.setItem(key, JSON.stringify(state, (key, value) =>
           value instanceof ArrayBuffer

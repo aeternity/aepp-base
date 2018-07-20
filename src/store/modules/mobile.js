@@ -28,7 +28,6 @@ export default {
     accountCount: 0,
     accounts: {},
     followers: {},
-    isFollowerConnected: {},
     transactionsToApprove: {},
     messageToApprove: null,
     names: []
@@ -83,10 +82,10 @@ export default {
       Vue.delete(state.followers, followerId)
     },
     followerConnected (state, followerId) {
-      Vue.set(state.isFollowerConnected, followerId, true)
+      Vue.set(state.followers[followerId], 'connected', true)
     },
     followerDisconnected (state, followerId) {
-      Vue.delete(state.isFollowerConnected, followerId)
+      Vue.delete(state.followers[followerId], 'connected')
       Vue.set(state.followers[followerId], 'disconnectedAt', Date.now())
     }
   },

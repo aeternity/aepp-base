@@ -35,8 +35,7 @@ export default store => {
       if (
         _.isEqual(state, lastReceivedState) || (
           process.env.IS_MOBILE_DEVICE &&
-          !Object.keys(store.state.mobile.isFollowerConnected).length
-        )
+          !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return
       broadcast.notification('setState', state)
       lastReceivedState = null

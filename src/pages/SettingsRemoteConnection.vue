@@ -49,12 +49,11 @@ export default {
     FixedAddButton
   },
   computed: mapState({
-    followers: ({ mobile: { followers, isFollowerConnected } }) =>
+    followers: ({ mobile: { followers } }) =>
       Object.values(followers)
         .map(f => ({
           ...f,
-          disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
-          connected: isFollowerConnected[f.id]
+          disconnectedAt: new Date(f.disconnectedAt).toLocaleString()
         }))
   }),
   methods: mapMutations(['removeFollower'])
