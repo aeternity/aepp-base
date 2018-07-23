@@ -64,6 +64,18 @@ export default {
     }
   },
   async mounted () {
+    if (process.env.IS_CORDOVA) {
+      const { permissions } = window.cordova.plugins
+      await new Promise((resolve, reject) =>
+        permissions.requestPermission(
+          permissions.CAMERA,
+          ({ hasPermission }) =>
+            hasPermission ? resolve() : reject(new Error('Denied to use the camera')),
+          reject))
+      this.cameraAllowed = true
+      return
+    }
+
     if (navigator.permissions) {
       const status = await navigator.permissions.query({ name: 'camera' })
       this.cameraAllowed = status.state !== 'denied'
