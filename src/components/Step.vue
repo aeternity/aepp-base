@@ -41,15 +41,6 @@
         letter-spacing: .3px;
       }
     }
-
-    .qr-code {
-      width: 170px;
-      display: inline-block;
-
-      img {
-        width: 100%;
-      }
-    }
   }
 }
 </style>
