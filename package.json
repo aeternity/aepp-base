@@ -24,7 +24,6 @@
     "@aeternity/bip39": "github:aeternity/bip39",
     "@aeternity/hd-wallet": "github:aeternity/hd-wallet-js",
     "@zxing/library": "0.7.0",
-    "bignumber.js": "^4.1.0",
     "emoji-datasource-apple": "^4.0.3",
     "fuse.js": "^3.2.0",
     "lodash": "^4.17.4",
