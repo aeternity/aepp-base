@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Router from 'vue-router'
-import VueClipboard from 'vue-clipboard2'
 import VeeValidate, { Validator } from 'vee-validate'
 import { focus } from 'vue-focus'
 import App from './App.vue'
@@ -21,7 +20,6 @@ Validator.extend('url_http', (value) => {
 })
 
 Vue.use(Router)
-Vue.use(VueClipboard)
 Vue.use(VeeValidate, {
   dictionary: {
     en: {
