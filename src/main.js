@@ -46,11 +46,8 @@ if (process.env.NODE_ENV === 'development') {
 Vue.config.productionTip = false
 Vue.prototype.$globals = { IS_MOBILE_DEVICE }
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  components: { App },
   store,
   router: getRouter(store),
-  template: '<App/>'
-})
+  render: h => h(App)
+}).$mount('#app')
