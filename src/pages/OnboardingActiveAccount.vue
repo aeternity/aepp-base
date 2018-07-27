@@ -1,10 +1,10 @@
 <template>
   <div class="onboarding-active-account">
     <phone bottom>
-      <img src="../assets/img/onboarding/dummy-list-view.svg">
+      <img src="../assets/onboarding/dummy-list-view.svg">
       <img
         class="account"
-        src="../assets/img/onboarding/account-active-collapsed.svg"
+        src="../assets/onboarding/account-active-collapsed.svg"
       >
     </phone>
     <h1>Your active account</h1>

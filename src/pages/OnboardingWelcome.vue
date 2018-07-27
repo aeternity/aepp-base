@@ -102,12 +102,12 @@
     }
 
     .cubes {
-      background: url('../assets/img/onboarding/cube.svg') repeat-x center;
+      background: url('../assets/onboarding/cube.svg') repeat-x center;
       background-position-x: -35px;
     }
 
     .account {
-      background: url('../assets/img/onboarding/account-active-big.svg') no-repeat center;
+      background: url('../assets/onboarding/account-active-big.svg') no-repeat center;
     }
   }
 }

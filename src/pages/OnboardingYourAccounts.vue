@@ -1,9 +1,9 @@
 <template>
   <div class="onboarding-your-accounts">
     <phone>
-      <img src="../assets/img/onboarding/account-active.svg">
-      <img src="../assets/img/onboarding/account-secured.svg">
-      <img src="../assets/img/onboarding/account-inactive.svg">
+      <img src="../assets/onboarding/account-active.svg">
+      <img src="../assets/onboarding/account-secured.svg">
+      <img src="../assets/onboarding/account-inactive.svg">
     </phone>
     <h1>Your accounts</h1>
     <p>

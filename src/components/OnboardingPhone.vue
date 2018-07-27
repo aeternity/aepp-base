@@ -19,7 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 .onboarding-phone {
-  background: url('../assets/img/onboarding/phone-top-mockup.svg') no-repeat top center;
+  background: url('../assets/onboarding/phone-top-mockup.svg') no-repeat top center;
   height: 271px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -33,7 +33,7 @@ export default {
   }
 
   &.bottom {
-    background-image: url('../assets/img/onboarding/phone-bottom-mockup.svg');
+    background-image: url('../assets/onboarding/phone-bottom-mockup.svg');
     flex-direction: column-reverse;
 
     .content {

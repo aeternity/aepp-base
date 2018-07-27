@@ -1,6 +1,6 @@
 <template>
   <header class="header-desktop">
-    <img src="../assets/img/header-logo.svg">
+    <img src="../assets/header-logo.svg">
     <slot />
   </header>
 </template>

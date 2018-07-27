@@ -1,7 +1,7 @@
 <template>
   <mobile-page class="intro">
     <div class="logo">
-      <img :src="require('../assets/intro.svg')">
+      <img src="../assets/intro.svg">
       <p>
         æternity gives you easy access to the magic of blockchain
         technology. Instantly login or see how it works.
