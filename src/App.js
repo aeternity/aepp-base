@@ -4,7 +4,6 @@ import FooterMobile from './components/FooterMobile'
 import FooterDesktop from './components/FooterDesktop'
 import RemoveAppModal from './components/RemoveAppModal.vue'
 import AlertModal from './components/AlertModal'
-import IS_MOBILE_DEVICE from './lib/isMobileDevice'
 
 export default {
   name: 'app',
@@ -14,7 +13,7 @@ export default {
     AeButton,
     RemoveAppModal,
     AlertModal,
-    AppFooter: IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop
+    AppFooter: process.env.IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop
   },
   computed: {
     ...mapState(['notification']),
@@ -32,7 +31,7 @@ export default {
         'new-account-confirm',
         'set-password'
       ]
-      if (IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')
+      if (process.env.IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')
       return !hideQuickIdOn.includes(this.$route.name)
     },
     showBackButton () {

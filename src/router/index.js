@@ -1,6 +1,4 @@
 import Router from 'vue-router'
-import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
-
 import Intro from '../pages/Intro.vue'
 import Onboarding from '../pages/Onboarding.vue'
 import OnboardingActiveAccount from '../pages/OnboardingActiveAccount'
@@ -31,7 +29,7 @@ export default (store) => {
 
   const checkLoggedIn = requireLoggedIn => (to, from, next) => {
     if (!store.getters.loggedIn) {
-      if (IS_MOBILE_DEVICE) {
+      if (process.env.IS_MOBILE_DEVICE) {
         loginTarget = to.fullPath
         next({ name: store.state.mobile.keystore ? 'login' : 'intro' })
         return
@@ -53,7 +51,7 @@ export default (store) => {
 
   const router = new Router({
     routes: [
-      ...IS_MOBILE_DEVICE ? [{
+      ...process.env.IS_MOBILE_DEVICE ? [{
         name: 'intro',
         path: '/',
         component: Intro,
@@ -125,7 +123,7 @@ export default (store) => {
       }] : [],
       {
         name: 'apps',
-        path: IS_MOBILE_DEVICE ? '/apps' : '/',
+        path: process.env.IS_MOBILE_DEVICE ? '/apps' : '/',
         component: Apps,
         beforeEnter: checkLoggedIn(false)
       },
@@ -147,7 +145,7 @@ export default (store) => {
         component: SettingsNetwork,
         beforeEnter: checkLoggedIn(false)
       },
-      ...IS_MOBILE_DEVICE ? [{
+      ...process.env.IS_MOBILE_DEVICE ? [{
         name: 'settings-remote-connection',
         path: '/settings/remote-connection',
         component: SettingsRemoteConnection,
@@ -196,13 +194,13 @@ export default (store) => {
     (state, { loggedIn }) => loggedIn,
     loggedIn => {
       if (loggedIn) {
-        if (IS_MOBILE_DEVICE || loginTarget) {
+        if (process.env.IS_MOBILE_DEVICE || loginTarget) {
           router.push(loginTarget || { name: 'apps' })
           loginTarget = undefined
         }
       } else {
         loginTarget = router.currentRoute.fullPath
-        router.push({ name: IS_MOBILE_DEVICE ? 'intro' : 'apps' })
+        router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'apps' })
       }
     })
 
