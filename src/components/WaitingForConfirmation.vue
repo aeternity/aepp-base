@@ -3,8 +3,8 @@
     <h1>Sign the transaction in the Bæse æpp</h1>
     <step>
       <ae-app-icon
-        class="base"
-        src="static/icons/base.svg" />
+        :src="require('../assets/icons/base.svg')"
+        class="base" />
       <h2>Bæse</h2>
       <p>Open your Bæse æpp, check the transaction details and sign</p>
     </step>

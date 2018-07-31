@@ -2,8 +2,8 @@
   <div class="approve">
     <dialog-header
       :app-name="appName"
+      :icon-src="DEFAULT_ICON"
       title="Requests a transaction"
-      icon-src="static/icons/aepps/default.svg"
     />
     <div class="transaction-flow">
       <div
@@ -58,6 +58,7 @@
 <script>
 import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components'
 import { convertAEtoCHF } from '../lib/currencyConverter'
+import { DEFAULT_ICON } from '../lib/appsRegistry'
 import ApproveButtons from './ApproveButtons.vue'
 import DialogHeader from './DialogHeader.vue'
 
@@ -93,6 +94,7 @@ export default {
   },
   data () {
     return {
+      DEFAULT_ICON,
       price: null
     }
   },

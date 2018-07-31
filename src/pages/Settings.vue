@@ -13,7 +13,7 @@
     <template v-if="$globals.IS_MOBILE_DEVICE">
       <heading>Add-ons</heading>
       <item :to="{ name: 'settings-remote-connection' }">
-        <img src="../../static/icons/remote-connect.svg" >
+        <img src="../assets/icons/remote-connect.svg" >
         Remote connection
         <ae-icon
           slot="right"

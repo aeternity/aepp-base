@@ -4,19 +4,19 @@
     <div class="steps">
       <step>
         <ae-app-icon
-          class="base"
-          src="static/icons/base.svg" />
+          :src="require('../assets/icons/base.svg')"
+          class="base" />
         <h2>Bæse</h2>
         <p>1. Open the Bæse æpp on your mobile device</p>
         <p class="small">Not installed? Install from store</p>
       </step>
       <step>
-        <ae-app-icon src="static/icons/aepps/settings.svg" />
+        <ae-app-icon :src="require('../assets/icons/aepps/settings.svg')" />
         <h2>Settings</h2>
         <p>2. Open your settings in the Bæse æpp</p>
       </step>
       <step>
-        <ae-app-icon src="static/icons/remote-connect.svg" />
+        <ae-app-icon :src="require('../assets/icons/remote-connect.svg')" />
         <h2>Remote Connect</h2>
         <p>3. Open Remote Connect and scan the following QR</p>
       </step>
