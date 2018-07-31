@@ -4,6 +4,7 @@ import { Crypto } from '@aeternity/aepp-sdk'
 import { mnemonicToSeed } from '@aeternity/bip39'
 import { generateHDWallet } from '@aeternity/hd-wallet'
 import AES from '../../lib/aes'
+import { genRandomBuffer } from '../utils'
 
 const derivePasswordKey = async (password, salt) => {
   const passwordKey = await window.crypto.subtle.importKey(
@@ -92,8 +93,7 @@ export default {
 
   actions: {
     async createKeystore ({ commit }, { password, seed }) {
-      const salt = new ArrayBuffer(16)
-      window.crypto.getRandomValues(new Uint8Array(salt))
+      const salt = genRandomBuffer(16)
       const passwordDerivedKey = await derivePasswordKey(password, salt)
       const aes = new AES(passwordDerivedKey)
       const hdWallet = generateHDWallet(mnemonicToSeed(seed))

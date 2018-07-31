@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import uuid from 'uuid/v4'
 import { appsRegistry } from '../lib/appsRegistry'
 import networksRegistry from '../lib/networksRegistry'
 import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
@@ -13,6 +12,7 @@ import remoteConnection from './plugins/remoteConnection'
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 import decryptAccounts from './plugins/decryptAccounts'
 import aeppApi from './plugins/aeppApi'
+import { genRandomBuffer } from './utils'
 
 Vue.use(Vuex)
 
@@ -56,7 +56,7 @@ const store = new Vuex.Store({
   modules: IS_MOBILE_DEVICE ? { mobile } : { desktop },
 
   state: {
-    peerKey: uuid(),
+    peerKey: Buffer.from(genRandomBuffer(15)).toString('base64'),
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,

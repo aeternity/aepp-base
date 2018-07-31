@@ -21,10 +21,7 @@
         <p>3. Open Remote Connect and scan the following QR</p>
       </step>
       <step>
-        <qr-code
-          :text="peerKey"
-          class="qr-code"
-          color="#311b58" />
+        <div ref="qrCode" />
       </step>
     </div>
   </div>
@@ -33,12 +30,26 @@
 <script>
 import { mapState } from 'vuex'
 import { AeAppIcon } from '@aeternity/aepp-components'
-import QrCode from 'vue-qrcode-component'
+import renderQrCodeSvgBinary from '../lib/renderQrCodeSvgBinary'
 import Step from './Step'
 
 export default {
-  components: { Step, AeAppIcon, QrCode },
-  computed: mapState(['peerKey'])
+  components: { Step, AeAppIcon },
+  computed: mapState(['peerKey']),
+  watch: {
+    peerKey () {
+      this.renderQrCode()
+    }
+  },
+  mounted () {
+    this.renderQrCode()
+  },
+  methods: {
+    renderQrCode () {
+      this.$refs.qrCode.replaceWith(
+        renderQrCodeSvgBinary(Buffer.from(this.peerKey, 'base64'), 170))
+    }
+  }
 }
 </script>
 
