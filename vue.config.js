@@ -4,6 +4,7 @@ const { IS_MOBILE_DEVICE } = process.env
 const IS_CORDOVA = parseBool(process.env.IS_CORDOVA)
 
 module.exports = {
+  baseUrl: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   chainWebpack: config =>
     config.plugin('define').tap(([definitions]) => {
