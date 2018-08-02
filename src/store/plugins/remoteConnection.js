@@ -12,7 +12,7 @@ export default store => {
       query.followers = Object.keys(store.state.mobile.followers)
     }
     const socket = io(BACKEND_URL, { query })
-    const closeCbs = [socket.close]
+    const closeCbs = [socket.close.bind(socket)]
 
     socket.on('exception', console.error)
 
