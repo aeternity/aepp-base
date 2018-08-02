@@ -1,11 +1,11 @@
 <template>
   <div class="onboarding-aepps">
     <phone>
-      <ae-app-icon src="static/icons/aepps/messages.svg" />
-      <ae-app-icon src="static/icons/aepps/proof.svg" />
-      <ae-app-icon src="static/icons/aepps/transfer.svg" />
-      <ae-app-icon src="static/icons/aepps/settings.svg" />
-      <ae-app-icon src="static/icons/plus.svg" />
+      <ae-app-icon :src="require('../assets/icons/aepps/messages.svg')" />
+      <ae-app-icon :src="require('../assets/icons/aepps/proof.svg')" />
+      <ae-app-icon :src="require('../assets/icons/aepps/transfer.svg')" />
+      <ae-app-icon :src="require('../assets/icons/aepps/settings.svg')" />
+      <ae-app-icon :src="require('../assets/icons/plus.svg')" />
     </phone>
     <h1>The Aepp Ecosystem</h1>
     <p>

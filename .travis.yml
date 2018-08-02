@@ -8,11 +8,8 @@ before_install:
 - npm i -g npm@6.1.0
 install:
 - travis_wait npm install
-script:
-- npm run lint
-- npm run unit
 before_deploy:
-- export TARGET_DEVICE=`[[ $TRAVIS_BRANCH =~ ^(master|develop)$ ]] && echo "desktop"`
+- export IS_MOBILE_DEVICE=`[[ $TRAVIS_BRANCH =~ ^(master|develop)$ ]] && echo "false"`
 - npm run build
 deploy:
   - provider: script

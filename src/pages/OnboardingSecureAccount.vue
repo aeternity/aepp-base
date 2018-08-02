@@ -1,7 +1,7 @@
 <template>
   <div class="onboarding-secure-account">
     <phone>
-      <img src="../assets/img/onboarding/account-secured-big.png">
+      <img src="../assets/onboarding/account-secured-big.png">
     </phone>
     <h1>AirSign with your secure account</h1>
     <p>

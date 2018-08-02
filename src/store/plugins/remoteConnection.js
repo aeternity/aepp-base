@@ -1,6 +1,5 @@
 import io from 'socket.io-client'
 import _ from 'lodash'
-import IS_MOBILE_DEVICE from '../../lib/isMobileDevice'
 import RpcPeer from '../../lib/rpc'
 
 const BACKEND_URL = 'https://signaling.aepps.com'
@@ -9,7 +8,7 @@ const PAIR_SYNC_FIELDS = ['apps', 'rpcUrl', 'addresses', 'selectedIdentityIdx', 
 export default store => {
   const open = () => {
     const query = { key: store.state.peerKey }
-    if (IS_MOBILE_DEVICE) {
+    if (process.env.IS_MOBILE_DEVICE) {
       query.followers = Object.keys(store.state.mobile.followers)
     }
     const socket = io(BACKEND_URL, { query })
@@ -34,15 +33,17 @@ export default store => {
       PAIR_SYNC_FIELDS.reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {})
     const broadcastState = state => {
       if (
-        _.isEqual(state, lastReceivedState) ||
-        (IS_MOBILE_DEVICE && !Object.keys(store.state.mobile.isFollowerConnected).length)
+        _.isEqual(state, lastReceivedState) || (
+          process.env.IS_MOBILE_DEVICE &&
+          !Object.keys(store.state.mobile.isFollowerConnected).length
+        )
       ) return
       broadcast.notification('setState', state)
       lastReceivedState = null
     }
     closeCbs.push(store.watch(getStateForSync, broadcastState))
 
-    if (IS_MOBILE_DEVICE) {
+    if (process.env.IS_MOBILE_DEVICE) {
       const syncState = _.throttle(() =>
         broadcastState(getStateForSync(store.state, store.getters)), 500)
 
@@ -92,7 +93,7 @@ export default store => {
     return () => closeCbs.forEach(f => f())
   }
 
-  if (IS_MOBILE_DEVICE) {
+  if (process.env.IS_MOBILE_DEVICE) {
     let closeCb
     store.watch(
       ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length,

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Base æpp</title>
+
+    <% if (!process.env.IS_CORDOVA) { %>
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= BASE_URL %>favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= BASE_URL %>favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= BASE_URL %>favicons/favicon-16x16.png">
+    <link rel="manifest" href="<%= BASE_URL %>favicons/site.webmanifest">
+    <link rel="mask-icon" href="<%= BASE_URL %>favicons/safari-pinned-tab.svg" color="#f7296e">
+    <link rel="shortcut icon" href="<%= BASE_URL %>favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#f7296e">
+    <meta name="msapplication-config" content="<%= BASE_URL %>favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <% } %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:500|Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" rel="stylesheet">
+  </head>
+  <body>
+    <noscript>
+      <strong>
+        We're sorry but the Base æpp doesn't work properly without JavaScript enabled.
+        Please enable it to continue.
+      </strong>
+    </noscript>
+
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+
+    <% if (process.env.IS_CORDOVA) { %>
+    <script type="text/javascript" src="cordova.js"></script>
+    <% } %>
+  </body>
+</html>

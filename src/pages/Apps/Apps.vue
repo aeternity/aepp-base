@@ -53,7 +53,7 @@
       <router-link
         :to="{ name: 'add-app' }"
         class="app-shortcut add-app">
-        <ae-app-icon src="static/icons/plus.svg" />
+        <ae-app-icon :src="require('../../assets/icons/plus.svg')" />
         <div class="app-name">Add an æpp</div>
       </router-link>
     </div>

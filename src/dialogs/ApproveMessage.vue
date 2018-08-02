@@ -3,8 +3,8 @@
     <template>
       <dialog-header
         :app-name="appName"
-        title="Requests to sign a message"
-        icon-src="static/icons/aepps/default.svg"/>
+        :icon-src="require('../assets/icons/aepps/default.svg')"
+        title="Requests to sign a message"/>
       <div class="active-id-area">
         <div
           :title="`Active identity ${address}`"

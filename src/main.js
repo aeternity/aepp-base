@@ -2,13 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Router from 'vue-router'
-import VueClipboard from 'vue-clipboard2'
 import VeeValidate, { Validator } from 'vee-validate'
 import { focus } from 'vue-focus'
+import './lib/initIsMobileDevice'
 import App from './App.vue'
 import getRouter from './router/index'
 import store from './store'
-import IS_MOBILE_DEVICE from './lib/isMobileDevice'
 
 Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
 Validator.extend('url_http', (value) => {
@@ -21,7 +20,6 @@ Validator.extend('url_http', (value) => {
 })
 
 Vue.use(Router)
-Vue.use(VueClipboard)
 Vue.use(VeeValidate, {
   dictionary: {
     en: {
@@ -46,13 +44,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 Vue.config.productionTip = false
-Vue.prototype.$globals = { IS_MOBILE_DEVICE }
+Vue.prototype.$globals = {
+  IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE
+}
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  components: { App },
   store,
   router: getRouter(store),
-  template: '<App/>'
-})
+  render: h => h(App)
+}).$mount('#app')

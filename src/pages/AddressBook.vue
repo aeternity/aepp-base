@@ -22,7 +22,7 @@
         :key="`${idx}-actions`"
         class="actions">
         <router-link :to="{ name: 'transfer', params: { to: c.address } }">
-          <ae-app-icon src="static/icons/aepps/transfer.svg" />
+          <ae-app-icon :src="require('../assets/icons/aepps/transfer.svg')" />
         </router-link>
       </div>
       <ae-divider :key="`${idx}-divider`" />

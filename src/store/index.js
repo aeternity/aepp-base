@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import { appsRegistry } from '../lib/appsRegistry'
 import networksRegistry from '../lib/networksRegistry'
-import IS_MOBILE_DEVICE from '../lib/isMobileDevice'
 import desktop from './modules/desktop'
 import mobile from './modules/mobile'
 import pollBalance from './plugins/pollBalance'
@@ -22,7 +21,7 @@ const store = new Vuex.Store({
     createPersistedState({
       paths: [
         'peerKey',
-        ...IS_MOBILE_DEVICE
+        ...process.env.IS_MOBILE_DEVICE
           ? [
             'apps',
             'rpcUrl',
@@ -49,11 +48,11 @@ const store = new Vuex.Store({
     initEpoch,
     remoteConnection,
     aeppApi,
-    ...IS_MOBILE_DEVICE
+    ...process.env.IS_MOBILE_DEVICE
       ? [decryptAccounts, notificationOnRemoteConnection] : []
   ],
 
-  modules: IS_MOBILE_DEVICE ? { mobile } : { desktop },
+  modules: process.env.IS_MOBILE_DEVICE ? { mobile } : { desktop },
 
   state: {
     peerKey: Buffer.from(genRandomBuffer(15)).toString('base64'),
@@ -76,7 +75,7 @@ const store = new Vuex.Store({
       addresses.map((e, index) => ({
         balance: balances[e] || 0,
         address: e,
-        name: IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6)
+        name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6)
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
