@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
 import { appsRegistry } from '../lib/appsRegistry'
 import networksRegistry from '../lib/networksRegistry'
 import desktop from './modules/desktop'
 import mobile from './modules/mobile'
+import persistState from './plugins/persistState'
 import pollBalance from './plugins/pollBalance'
 import initEpoch from './plugins/initEpoch'
 import remoteConnection from './plugins/remoteConnection'
@@ -18,35 +18,23 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
-    createPersistedState({
-      reducer: ({ peerId, apps, rpcUrl, selectedIdentityIdx, addressBook, mobile }) => ({
-        peerId,
-        ...process.env.IS_MOBILE_DEVICE ? {
-          apps,
-          rpcUrl,
-          selectedIdentityIdx,
-          addressBook,
-          mobile: {
-            keystore: mobile.keystore,
-            accountCount: mobile.accountCount,
-            followers: Object.entries(mobile.followers)
-              .reduce((p, [k, { id, name, disconnectedAt }]) =>
-                ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
-            names: mobile.names
-          }
-        } : {}
-      }),
-      setState: (key, state, storage) =>
-        storage.setItem(key, JSON.stringify(state, (key, value) =>
-          value instanceof ArrayBuffer
-            ? { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) }
-            : value)),
-      getState: (key, storage) =>
-        JSON.parse(storage.getItem(key), (key, value) =>
-          value && value.type === 'ArrayBuffer'
-            ? new Uint8Array(value.data).buffer
-            : value)
-    }),
+    persistState(({ peerId, apps, rpcUrl, selectedIdentityIdx, addressBook, mobile }) => ({
+      peerId,
+      ...process.env.IS_MOBILE_DEVICE ? {
+        apps,
+        rpcUrl,
+        selectedIdentityIdx,
+        addressBook,
+        mobile: {
+          keystore: mobile.keystore,
+          accountCount: mobile.accountCount,
+          followers: Object.entries(mobile.followers)
+            .reduce((p, [k, { id, name, disconnectedAt }]) =>
+              ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
+          names: mobile.names
+        }
+      } : {}
+    })),
     pollBalance,
     initEpoch,
     remoteConnection,
