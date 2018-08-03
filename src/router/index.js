@@ -14,16 +14,21 @@ import NewAccountConfirm from '../pages/NewAccountConfirm.vue'
 import SetPassword from '../pages/SetPassword.vue'
 import Apps from '../pages/Apps/Apps.vue'
 import AppBrowser from '../pages/AppBrowser/AppBrowser.vue'
-import Settings from '../pages/Settings.vue'
-import SettingsNetwork from '../pages/SettingsNetwork.vue'
-import SettingsRemoteConnection from '../pages/SettingsRemoteConnection.vue'
-import SettingsRemoteConnectionNew from '../pages/SettingsRemoteConnectionNew.vue'
 import AddApp from '../pages/AddApp/AddApp.vue'
 import AddressBook from '../pages/AddressBook.vue'
 import AddressBookNew from '../pages/AddressBookNew.vue'
 import AddressBookChoose from '../pages/AddressBookChoose.vue'
 
 const Transfer = () => import('../pages/Transfer/Transfer.vue')
+
+const Settings = () =>
+  import(/* webpackChunkName: 'settings' */'../pages/Settings.vue')
+const SettingsNetwork = () =>
+  import(/* webpackChunkName: 'settings' */'../pages/SettingsNetwork.vue')
+const SettingsRemoteConnection = () =>
+  import(/* webpackChunkName: 'settings' */'../pages/SettingsRemoteConnection.vue')
+const SettingsRemoteConnectionNew = () =>
+  import(/* webpackChunkName: 'settings' */'../pages/SettingsRemoteConnectionNew.vue')
 
 export default (store) => {
   let loginTarget
