@@ -14,7 +14,6 @@ import NewAccountConfirm from '../pages/NewAccountConfirm.vue'
 import SetPassword from '../pages/SetPassword.vue'
 import Apps from '../pages/Apps/Apps.vue'
 import AppBrowser from '../pages/AppBrowser/AppBrowser.vue'
-import Transfer from '../pages/Transfer/Transfer.vue'
 import Settings from '../pages/Settings.vue'
 import SettingsNetwork from '../pages/SettingsNetwork.vue'
 import SettingsRemoteConnection from '../pages/SettingsRemoteConnection.vue'
@@ -23,6 +22,8 @@ import AddApp from '../pages/AddApp/AddApp.vue'
 import AddressBook from '../pages/AddressBook.vue'
 import AddressBookNew from '../pages/AddressBookNew.vue'
 import AddressBookChoose from '../pages/AddressBookChoose.vue'
+
+const Transfer = () => import('../pages/Transfer/Transfer.vue')
 
 export default (store) => {
   let loginTarget
