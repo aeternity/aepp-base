@@ -7,19 +7,29 @@ module.exports = {
   baseUrl: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   chainWebpack: config =>
-    config.plugin('define').tap(([definitions]) => {
-      Object.entries(definitions['process.env']).forEach(([k, v]) => {
-        definitions[`process.env.${k}`] = v
+    config
+      .plugin('define')
+      .tap(([definitions]) => {
+        Object.entries(definitions['process.env']).forEach(([k, v]) => {
+          definitions[`process.env.${k}`] = v
+        })
+        delete definitions['process.env']
+
+        definitions['process.env.IS_CORDOVA'] = IS_CORDOVA
+
+        if (IS_CORDOVA || IS_MOBILE_DEVICE) {
+          definitions['process.env.IS_MOBILE_DEVICE'] =
+            IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE)
+        }
+
+        return [definitions]
       })
-      delete definitions['process.env']
-
-      definitions['process.env.IS_CORDOVA'] = IS_CORDOVA
-
-      if (IS_CORDOVA || IS_MOBILE_DEVICE) {
-        definitions['process.env.IS_MOBILE_DEVICE'] =
-          IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE)
-      }
-
-      return [definitions]
-    })
+      .parent
+      .module
+      .rule('wasm')
+      .test(/\.wasm$/)
+      .type('javascript/auto')
+      .use('file-loader')
+      .loader('file-loader')
+      .tap(() => ({ name: '[name].[hash:8].[ext]' }))
 }
