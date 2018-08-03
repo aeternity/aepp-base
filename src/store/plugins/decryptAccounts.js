@@ -1,4 +1,4 @@
-import { getHDWalletAccounts } from '@aeternity/hd-wallet'
+import { getHDWalletAccounts } from '@aeternity/hd-wallet/src'
 import AES from '../../lib/aes'
 
 export default store =>

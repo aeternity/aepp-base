@@ -1,4 +1,4 @@
-import Epoch from '@aeternity/aepp-sdk'
+import Epoch from '@aeternity/aepp-sdk/src'
 
 export default store =>
   store.watch(
