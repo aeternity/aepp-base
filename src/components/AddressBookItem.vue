@@ -13,7 +13,7 @@
 
 <script>
 import { AeIdentityAvatar } from '@aeternity/aepp-components'
-import { times } from 'lodash'
+import { times } from 'lodash-es'
 
 export default {
   components: { AeIdentityAvatar },

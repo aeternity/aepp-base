@@ -23,7 +23,7 @@
     "@zxing/library": "0.7.0",
     "emoji-datasource-apple": "^4.0.3",
     "fuse.js": "^3.2.0",
-    "lodash": "^4.17.4",
+    "lodash-es": "^4.17.10",
     "socket.io-client": "^2.1.0",
     "swiper": "^4.3.3",
     "uuid": "^3.2.1",

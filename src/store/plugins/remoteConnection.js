@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import _ from 'lodash'
+import { omit, cloneDeep, isEqual, throttle } from 'lodash-es'
 import RpcPeer from '../../lib/rpc'
 
 const BACKEND_URL = 'https://signaling.aepps.com'
@@ -22,8 +22,8 @@ export default store => {
         setState (state) {
           lastReceivedState = state
           store.replaceState({
-            ..._.omit(store.state, PAIR_SYNC_FIELDS),
-            ..._.cloneDeep(state)
+            ...omit(store.state, PAIR_SYNC_FIELDS),
+            ...cloneDeep(state)
           })
         }
       })
@@ -33,7 +33,7 @@ export default store => {
       PAIR_SYNC_FIELDS.reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {})
     const broadcastState = state => {
       if (
-        _.isEqual(state, lastReceivedState) || (
+        isEqual(state, lastReceivedState) || (
           process.env.IS_MOBILE_DEVICE &&
           !Object.keys(store.state.mobile.isFollowerConnected).length
         )
@@ -44,7 +44,7 @@ export default store => {
     closeCbs.push(store.watch(getStateForSync, broadcastState))
 
     if (process.env.IS_MOBILE_DEVICE) {
-      const syncState = _.throttle(() =>
+      const syncState = throttle(() =>
         broadcastState(getStateForSync(store.state, store.getters)), 500)
 
       closeCbs.push(store.subscribe(({ type, payload }) => {
