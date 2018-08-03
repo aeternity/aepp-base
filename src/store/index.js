@@ -11,15 +11,13 @@ import remoteConnection from './plugins/remoteConnection'
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 import decryptAccounts from './plugins/decryptAccounts'
 import aeppApi from './plugins/aeppApi'
-import { genRandomBuffer } from './utils'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
-    persistState(({ peerId, apps, rpcUrl, selectedIdentityIdx, addressBook, mobile }) => ({
-      peerId,
+    persistState(({ apps, rpcUrl, selectedIdentityIdx, addressBook, mobile, desktop }) => ({
       ...process.env.IS_MOBILE_DEVICE ? {
         apps,
         rpcUrl,
@@ -33,7 +31,11 @@ const store = new Vuex.Store({
               ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
           names: mobile.names
         }
-      } : {}
+      } : {
+        desktop: {
+          peerId: desktop.peerId
+        }
+      }
     })),
     pollBalance,
     initEpoch,
@@ -46,7 +48,6 @@ const store = new Vuex.Store({
   modules: process.env.IS_MOBILE_DEVICE ? { mobile } : { desktop },
 
   state: {
-    peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,

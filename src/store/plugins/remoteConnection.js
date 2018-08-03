@@ -1,13 +1,18 @@
 import io from 'socket.io-client'
 import _ from 'lodash'
 import RpcPeer from '../../lib/rpc'
+import { genRandomBuffer } from '../utils'
 
 const BACKEND_URL = 'https://signaling.aepps.com'
 const PAIR_SYNC_FIELDS = ['apps', 'rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook']
 
 export default store => {
   const open = () => {
-    const query = { key: store.state.peerId }
+    const query = {
+      key: process.env.IS_MOBILE_DEVICE
+        ? Buffer.from(genRandomBuffer(15)).toString('base64')
+        : store.state.desktop.peerId
+    }
     if (process.env.IS_MOBILE_DEVICE) {
       query.followers = Object.keys(store.state.mobile.followers)
     }

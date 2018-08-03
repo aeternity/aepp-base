@@ -35,7 +35,9 @@ import Step from './Step'
 
 export default {
   components: { Step, AeAppIcon },
-  computed: mapState(['peerId']),
+  computed: mapState({
+    peerId: ({ desktop }) => desktop.peerId
+  }),
   watch: {
     peerId () {
       this.renderQrCode()
