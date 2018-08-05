@@ -21,21 +21,23 @@ export default new Vuex.Store({
   plugins: [
     (new VuexPersistence({
       storage: window.localStorage,
-      modules: [
-        'peerKey',
-        ...IS_MOBILE_DEVICE
-          ? [
-            'apps',
-            'rpcUrl',
-            // 'mobile.keystore',
-            // 'mobile.derivedKey',
-            'mobile.accountCount',
-            'selectedIdentityIdx',
-            'addressBook',
-            'mobile.followers',
-            'mobile.names'
-          ] : []
-      ],
+      reducer: function (state) {
+        return {
+          peerKey: state.peerKey,
+          ...IS_MOBILE_DEVICE ? {
+            apps: state.apps,
+            rpcUrl: state.rpcUrl,
+            selectedIdentityIdx: state.selectedIdentityIdx,
+            addressBook: state.addressBook,
+            mobile: {
+              accountCount: state.mobile.accountCount,
+              followers: state.mobile.followers,
+              names: state.mobile.names,
+              hasMasterKey: state.mobile.hasMasterKey
+            }
+          } : {}
+        }
+      },
       restoreState: (key, storage) =>
         JSON.parse(storage.getItem(key), (key, value) =>
           value && value.type === 'ArrayBuffer'

@@ -49,9 +49,11 @@ Vue.prototype.$globals = { IS_MOBILE_DEVICE }
  * reduces code-duplication due to the
  * secure-storage initialization
  */
-const initialize = function (App, {store, getRouter}) {
+const initialize = function (App) {
   // dev mode
   if (process.env.NODE_ENV === 'development') window.store = store
+
+  window.store = store
 
   // mounting
   /* eslint-disable no-new */
@@ -69,6 +71,6 @@ const initialize = function (App, {store, getRouter}) {
  */
 document.addEventListener(
   process.env.IS_CORDOVA ? 'deviceready' : 'onload',
-  initialize.bind(null, App, { store, getRouter }),
+  initialize.bind(null, App),
   false
 )

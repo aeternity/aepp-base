@@ -23,8 +23,9 @@ const derivePasswordKey = async (password, salt) => {
 
 export default {
   state: {
-    keystore: null,
     derivedKey: null,
+    hasMasterKey: false,
+    keystore: null,
     accountCount: 0,
     accounts: {},
     followers: {},
@@ -40,6 +41,9 @@ export default {
   },
 
   mutations: {
+    hasMasterKey (state, hasMasterKey) {
+      state.hasMasterKey = hasMasterKey
+    },
     setKeystore (state, keystore) {
       state.keystore = keystore
     },
@@ -99,7 +103,7 @@ export default {
      * to the promise
      * @return {Promise<any>}
      */
-    async isSecure () {
+    isSecure () {
       return new Promise((resolve, reject) => {
         if (window.SecureStorage) {
           /**
@@ -133,7 +137,7 @@ export default {
                * - pass/pin code
                */
               if (!isDeviceSecure) {
-                return reject(new Error('Not secure!'))
+                return reject(new Error('The device does not have security protection!'))
               }
 
               /**
@@ -145,40 +149,48 @@ export default {
              * Catch error, in case of an error, bootstrap the
              * application with default local storage
              */
-            .catch(() => reject(new Error('Not secure!')))
-        } else {
-          return reject(new Error('Not secure!'))
+            .catch(() => reject(new Error('The secure storage, could not be initialized!')))
         }
+
+        /**
+         * Reject promise for not secure
+         */
+        return reject(new Error('Not secure storage found!'))
       })
     },
+
     /**
      * Sets the the Master key on SecureStorage
      * @param dispatch
      * @param payload
      * @return {Promise<any>}
      */
-    async setMasterKey ({dispatch}, payload) {
+    setMasterKey ({dispatch}, payload) {
       return new Promise((resolve, reject) => {
         return dispatch('isSecure').then((storage) => {
-          return storage
-            .setItem('keystore', payload)
-            .then(resolve)
-            .catch(reject)
+          return storage.setItem('keystore',
+            JSON.stringify(payload, (key, value) =>
+              value instanceof ArrayBuffer
+                ? { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) }
+                : value)).then(resolve)
         }).catch(reject)
       })
     },
+
     /**
      * Retrieves the master key from SecureStorage
      * @param dispatch
      * @return {Promise<any>}
      */
-    async getMasterKey ({dispatch}) {
+    getMasterKey ({dispatch}) {
       return new Promise((resolve, reject) => {
         return dispatch('isSecure').then((storage) => {
-          return storage
-            .getItem('keystore')
-            .then(resolve)
-            .catch(reject)
+          return storage.getItem('keystore').then((item) => resolve(
+            JSON.parse(item, (key, value) =>
+              value && value.type === 'ArrayBuffer'
+                ? new Uint8Array(value.data).buffer
+                : value)
+          ))
         }).catch(reject)
       })
     },
@@ -203,14 +215,13 @@ export default {
         commit('selectIdentity', 0)
         commit('setKeystore', encryptedHdWallet)
         commit('setDerivedKey', passwordDerivedKey)
+        commit('hasMasterKey', true)
       })
     },
     async unlockKeystore ({ commit, dispatch }, password) {
       const keystore = await dispatch('getMasterKey')
       const passwordDerivedKey = await derivePasswordKey(password, keystore.salt)
       const aes = new AES(passwordDerivedKey)
-      await aes.decrypt(keystore.privateKey)
-      await aes.decrypt(keystore.chainCode)
       const mac = new Uint8Array(await aes.decrypt(keystore.mac))
       if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password')
       commit('setDerivedKey', passwordDerivedKey)

@@ -31,7 +31,7 @@ export default (store) => {
     if (!store.getters.loggedIn) {
       if (process.env.IS_MOBILE_DEVICE) {
         loginTarget = to.fullPath
-        next({ name: store.state.mobile.keystore ? 'login' : 'intro' })
+        next({ name: store.state.mobile.hasMasterKey ? 'login' : 'intro' })
         return
       } else if (requireLoggedIn) {
         loginTarget = to.fullPath
@@ -56,7 +56,7 @@ export default (store) => {
         path: '/',
         component: Intro,
         beforeEnter (to, from, next) {
-          if (!from.name && store.state.mobile.keystore) {
+          if (!from.name && store.state.mobile.hasMasterKey) {
             return next({ name: 'login' })
           }
           next()
@@ -92,7 +92,7 @@ export default (store) => {
         path: '/login',
         component: Login,
         beforeEnter (to, from, next) {
-          if (!store.state.mobile.keystore) return next({ name: 'new-account' })
+          if (!store.state.mobile.hasMasterKey) return next({ name: 'new-account' })
           if (store.getters.loggedIn) return next({ name: 'apps' })
           next()
         }
