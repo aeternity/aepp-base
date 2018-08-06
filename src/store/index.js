@@ -11,6 +11,7 @@ import remoteConnection from './plugins/remoteConnection'
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 import decryptAccounts from './plugins/decryptAccounts'
 import aeppApi from './plugins/aeppApi'
+import registerServiceWorker from './plugins/registerServiceWorker'
 
 Vue.use(Vuex)
 
@@ -41,6 +42,7 @@ const store = new Vuex.Store({
     initEpoch,
     remoteConnection,
     aeppApi,
+    registerServiceWorker,
     ...process.env.IS_MOBILE_DEVICE
       ? [decryptAccounts, notificationOnRemoteConnection] : []
   ],
