@@ -2,21 +2,23 @@ import { createLocalVue } from '@vue/test-utils'
 import Router from 'vue-router'
 import { noop } from 'lodash-es'
 import '../../lib/initIsMobileDevice.js'
-import createRouter from '../'
+import router from '../'
+import { mockStore } from '../../store'
 
 jest.mock('../../lib/initIsMobileDevice.js')
+jest.mock('../../store')
 const localVue = createLocalVue()
 localVue.use(Router)
 
 describe('router/index.js', () => {
   describe('guarding routes', () => {
-    const createStoreMock = (store) => {
+    const mockRouterStore = (store) => {
       const state = {
         mobile: {},
         ...store.state
       }
 
-      return {
+      mockStore({
         subscribe: noop,
         watch: noop,
         getters: {
@@ -24,12 +26,12 @@ describe('router/index.js', () => {
         },
         ...store,
         state
-      }
+      })
     }
 
     describe('routing when route change is requested', () => {
       const createRedirectTest = (state, fromName, expectedRedirectName) => () => {
-        const router = createRouter(createStoreMock({ state }))
+        mockRouterStore({ state })
         router.push({ name: fromName })
         expect(router.currentRoute.name).toBe(expectedRedirectName)
       }
@@ -93,16 +95,6 @@ describe('router/index.js', () => {
 
       it('does not interfere when current route is INTRO', () => {
         createNoRedirectTest({}, 'intro')()
-      })
-    })
-
-    describe('listening on mutations', () => {
-      it('registers a listener for vuex mutations', () => {
-        const subscribe = jest.fn()
-
-        createRouter(createStoreMock({ subscribe }))
-        expect(subscribe).toHaveBeenCalledTimes(1)
-        expect(subscribe).toHaveBeenCalledWith(expect.any(Function))
       })
     })
   })
