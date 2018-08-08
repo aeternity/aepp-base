@@ -1,6 +1,6 @@
 import { createLocalVue } from '@vue/test-utils'
 import Router from 'vue-router'
-import { noop } from 'lodash'
+import { noop } from 'lodash-es'
 import createRouter from '../../../src/router'
 
 jest.mock('../../../src/lib/isMobileDevice.js')

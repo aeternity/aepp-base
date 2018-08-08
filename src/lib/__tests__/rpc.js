@@ -1,4 +1,4 @@
-import { noop } from 'lodash'
+import { noop } from 'lodash-es'
 import RPC from '../rpc'
 
 const testMethodName = 'test-method-name'

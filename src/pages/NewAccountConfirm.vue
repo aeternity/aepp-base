@@ -47,7 +47,7 @@
 
 <script>
 import { AeButton } from '@aeternity/aepp-components'
-import { shuffle } from 'lodash'
+import { shuffle } from 'lodash-es'
 import MobilePage from '../components/MobilePage'
 
 export default {
