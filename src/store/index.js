@@ -50,6 +50,7 @@ const store = new Vuex.Store({
   modules: process.env.IS_MOBILE_DEVICE ? { mobile } : { desktop },
 
   state: {
+    loginTarget: '',
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,
@@ -78,6 +79,9 @@ const store = new Vuex.Store({
   },
 
   mutations: {
+    setLoginTarget (state, loginTarget) {
+      state.loginTarget = loginTarget
+    },
     setRPCUrl (state, rpcUrl) {
       state.rpcUrl = rpcUrl
     },

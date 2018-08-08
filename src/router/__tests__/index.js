@@ -21,6 +21,7 @@ describe('router/index.js', () => {
       mockStore({
         subscribe: noop,
         watch: noop,
+        commit: noop,
         getters: {
           loggedIn: state.mobile.derivedKey
         },
