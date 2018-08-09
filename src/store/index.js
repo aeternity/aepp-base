@@ -1,49 +1,42 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
 import { appsRegistry } from '../lib/appsRegistry'
 import networksRegistry from '../lib/networksRegistry'
 import desktop from './modules/desktop'
 import mobile from './modules/mobile'
+import persistState from './plugins/persistState'
 import pollBalance from './plugins/pollBalance'
 import initEpoch from './plugins/initEpoch'
 import remoteConnection from './plugins/remoteConnection'
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection'
 import decryptAccounts from './plugins/decryptAccounts'
 import aeppApi from './plugins/aeppApi'
-import { genRandomBuffer } from './utils'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
-    createPersistedState({
-      paths: [
-        'peerKey',
-        ...process.env.IS_MOBILE_DEVICE
-          ? [
-            'apps',
-            'rpcUrl',
-            'mobile.keystore',
-            'mobile.accountCount',
-            'selectedIdentityIdx',
-            'addressBook',
-            'mobile.followers',
-            'mobile.names'
-          ] : []
-      ],
-      setState: (key, state, storage) =>
-        storage.setItem(key, JSON.stringify(state, (key, value) =>
-          value instanceof ArrayBuffer
-            ? { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) }
-            : value)),
-      getState: (key, storage) =>
-        JSON.parse(storage.getItem(key), (key, value) =>
-          value && value.type === 'ArrayBuffer'
-            ? new Uint8Array(value.data).buffer
-            : value)
-    }),
+    persistState(({ apps, rpcUrl, selectedIdentityIdx, addressBook, mobile, desktop }) => ({
+      ...process.env.IS_MOBILE_DEVICE ? {
+        apps,
+        rpcUrl,
+        selectedIdentityIdx,
+        addressBook,
+        mobile: {
+          keystore: mobile.keystore,
+          accountCount: mobile.accountCount,
+          followers: Object.entries(mobile.followers)
+            .reduce((p, [k, { id, name, disconnectedAt }]) =>
+              ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
+          names: mobile.names
+        }
+      } : {
+        desktop: {
+          peerId: desktop.peerId
+        }
+      }
+    })),
     pollBalance,
     initEpoch,
     remoteConnection,
@@ -55,7 +48,6 @@ const store = new Vuex.Store({
   modules: process.env.IS_MOBILE_DEVICE ? { mobile } : { desktop },
 
   state: {
-    peerKey: Buffer.from(genRandomBuffer(15)).toString('base64'),
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     showIdManager: false,

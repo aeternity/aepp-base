@@ -8,7 +8,7 @@
     <heading>Connected devices</heading>
     <item
       v-for="f in followers"
-      :key="f.key"
+      :key="f.id"
       inactive>
       <div class="follower">
         <span class="name">{{ f.name }}</span><br >
@@ -22,7 +22,7 @@
         size="small"
         plain
         uppercase
-        @click="removeFollower(f.key)"
+        @click="removeFollower(f.id)"
       >revoke</ae-button>
     </item>
 
@@ -49,12 +49,11 @@ export default {
     FixedAddButton
   },
   computed: mapState({
-    followers: ({ mobile: { followers, isFollowerConnected } }) =>
+    followers: ({ mobile: { followers } }) =>
       Object.values(followers)
         .map(f => ({
           ...f,
-          disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
-          connected: isFollowerConnected[f.key]
+          disconnectedAt: new Date(f.disconnectedAt).toLocaleString()
         }))
   }),
   methods: mapMutations(['removeFollower'])

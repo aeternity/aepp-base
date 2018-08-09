@@ -35,9 +35,11 @@ import Step from './Step'
 
 export default {
   components: { Step, AeAppIcon },
-  computed: mapState(['peerKey']),
+  computed: mapState({
+    peerId: ({ desktop }) => desktop.peerId
+  }),
   watch: {
-    peerKey () {
+    peerId () {
       this.renderQrCode()
     }
   },
@@ -47,7 +49,7 @@ export default {
   methods: {
     renderQrCode () {
       this.$refs.qrCode.replaceWith(
-        renderQrCodeSvgBinary(Buffer.from(this.peerKey, 'base64'), 170))
+        renderQrCodeSvgBinary(Buffer.from(this.peerId, 'base64'), 170))
     }
   }
 }

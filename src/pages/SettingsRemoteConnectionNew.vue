@@ -55,7 +55,7 @@ export default {
           continue
         }
         this.$store.commit('addFollower', {
-          key: data.toString('base64'),
+          id: data.toString('base64'),
           name: prompt('Name this device') || 'Unnamed'
         })
         this.$router.push({ name: 'settings-remote-connection' })

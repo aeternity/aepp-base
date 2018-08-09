@@ -1,7 +1,9 @@
 import uuid from 'uuid/v4'
+import { genRandomBuffer } from '../utils'
 
 export default {
   state: {
+    peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     remoteConnected: false,
     transactionToSignByRemote: null,
     showRemoteConnectionPrompt: false

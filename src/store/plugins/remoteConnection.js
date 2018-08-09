@@ -1,18 +1,23 @@
 import io from 'socket.io-client'
 import { omit, cloneDeep, isEqual, throttle } from 'lodash-es'
 import RpcPeer from '../../lib/rpc'
+import { genRandomBuffer } from '../utils'
 
 const BACKEND_URL = 'https://signaling.aepps.com'
 const PAIR_SYNC_FIELDS = ['apps', 'rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook']
 
 export default store => {
   const open = () => {
-    const query = { key: store.state.peerKey }
+    const query = {
+      key: process.env.IS_MOBILE_DEVICE
+        ? Buffer.from(genRandomBuffer(15)).toString('base64')
+        : store.state.desktop.peerId
+    }
     if (process.env.IS_MOBILE_DEVICE) {
       query.followers = Object.keys(store.state.mobile.followers)
     }
     const socket = io(BACKEND_URL, { query })
-    const closeCbs = [socket.close]
+    const closeCbs = [socket.close.bind(socket)]
 
     socket.on('exception', console.error)
 
@@ -35,8 +40,7 @@ export default store => {
       if (
         isEqual(state, lastReceivedState) || (
           process.env.IS_MOBILE_DEVICE &&
-          !Object.keys(store.state.mobile.isFollowerConnected).length
-        )
+          !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return
       broadcast.notification('setState', state)
       lastReceivedState = null
@@ -50,7 +54,7 @@ export default store => {
       closeCbs.push(store.subscribe(({ type, payload }) => {
         switch (type) {
           case 'addFollower':
-            socket.emit('add-follower', payload.key)
+            socket.emit('add-follower', payload.id)
             break
           case 'followerConnected':
             syncState()
@@ -61,12 +65,14 @@ export default store => {
         }
       }))
 
-      socket.on('follower-connected', fKey => store.commit('followerConnected', fKey))
-      socket.on('follower-disconnected', fKey => store.commit('followerDisconnected', fKey))
+      socket.on('follower-connected', followerId =>
+        store.commit('followerConnected', followerId))
+      socket.on('follower-disconnected', followerId =>
+        store.commit('followerDisconnected', followerId))
 
-      socket.on('message-from-follower', (followerKey, request) =>
+      socket.on('message-from-follower', (followerId, request) =>
         new RpcPeer(
-          response => socket.emit('message-to-follower', followerKey, response), {
+          response => socket.emit('message-to-follower', followerId, response), {
             signTransaction: args => store.dispatch('signTransaction', args),
             cancelTransaction: args => store.commit('cancelTransaction', args)
           })
