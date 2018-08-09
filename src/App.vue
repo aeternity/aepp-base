@@ -1,7 +1,7 @@
 <template>
   <ae-main
     id="app"
-    :class="{ 'quick-id-hidden': !displayFooter }">
+    :class="{ 'quick-id-hidden': !$route.meta.displayFooter }">
     <router-view />
     <ae-banner v-if="notification">
       <img
@@ -21,8 +21,8 @@
       </ae-button>
     </ae-banner>
     <app-footer
-      v-if="displayFooter"
-      :show-back-button="showBackButton"
+      v-if="$route.meta.displayFooter"
+      :show-back-button="$route.name !== 'apps'"
     />
     <remove-app-modal />
     <alert-modal />

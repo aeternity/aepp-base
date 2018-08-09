@@ -10,7 +10,7 @@
     "build:cordova": "IS_CORDOVA=true npm run build",
     "build:ios": "npm run build:cordova && cordova build ios",
     "build:android": "npm run build:cordova && cordova build android",
-    "gen:cordova-resources": "cordova-splash && cordova-icon",
+    "gen:cordova-resources": "cordova-splash && cordova-icon --icon=public/favicons/android-chrome-512x512.png",
     "lint": "vue-cli-service lint",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "vue-cli-service test:unit"
@@ -24,6 +24,7 @@
     "emoji-datasource-apple": "^4.0.3",
     "fuse.js": "^3.2.0",
     "lodash-es": "^4.17.10",
+    "register-service-worker": "^1.0.0",
     "socket.io-client": "^2.1.0",
     "swiper": "^4.3.3",
     "uuid": "^3.2.1",
@@ -38,18 +39,18 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.10",
+    "@vue/cli-plugin-pwa": "^3.0.0-rc.10",
     "@vue/cli-plugin-unit-jest": "^3.0.0-rc.10",
     "@vue/cli-service": "^3.0.0-rc.10",
     "@vue/eslint-config-standard": "^3.0.0-rc.10",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.3",
-    "vue-template-compiler": "^2.5.16",
     "cordova": "^8.0.0",
     "cordova-icon": "^0.13.0",
-    "cordova-splash": "^0.12.0"
+    "cordova-splash": "^0.12.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.3"
   },
   "engines": {
     "node": ">= 6.0.0",
@@ -61,7 +62,7 @@
     "not ie <= 8"
   ],
   "sideEffects": [
-    "./src/lib/initIsMobileDevice.js",
+    "./src/lib/initEnv.js",
     "*.css",
     "*.scss",
     "*.vue"

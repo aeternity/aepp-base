@@ -15,29 +15,7 @@ export default {
     AlertModal,
     AppFooter: process.env.IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop
   },
-  computed: {
-    ...mapState(['notification']),
-    displayFooter () {
-      const hideQuickIdOn = [
-        'onboarding',
-        'onboarding-your-accounts',
-        'onboarding-aepps',
-        'onboarding-active-account',
-        'onboarding-secure-account',
-        'login',
-        'recover',
-        'new-account',
-        'new-account-create',
-        'new-account-confirm',
-        'set-password'
-      ]
-      if (process.env.IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')
-      return !hideQuickIdOn.includes(this.$route.name)
-    },
-    showBackButton () {
-      return !['intro', 'apps'].includes(this.$route.name)
-    }
-  },
+  computed: mapState(['notification']),
   created: function () {
     // set domain to base host because of iframe cross domain policy, very nice hardcoded urls
     if (document.domain.includes('aepps.com')) {

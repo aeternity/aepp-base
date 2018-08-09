@@ -1,12 +1,10 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Router from 'vue-router'
 import VeeValidate, { Validator } from 'vee-validate'
 import { focus } from 'vue-focus'
-import './lib/initIsMobileDevice'
+import './lib/initEnv'
 import App from './App.vue'
-import getRouter from './router/index'
+import router from './router'
 import store from './store'
 
 Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
@@ -50,6 +48,6 @@ Vue.prototype.$globals = {
 
 new Vue({
   store,
-  router: getRouter(store),
+  router,
   render: h => h(App)
 }).$mount('#app')
