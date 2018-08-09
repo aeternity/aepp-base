@@ -10,7 +10,7 @@
     "build:cordova": "IS_CORDOVA=true npm run build",
     "build:ios": "npm run build:cordova && cordova build ios",
     "build:android": "npm run build:cordova && cordova build android",
-    "gen:cordova-resources": "cordova-splash && cordova-icon",
+    "gen:cordova-resources": "cordova-splash && cordova-icon --icon=public/favicons/android-chrome-512x512.png",
     "lint": "vue-cli-service lint",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "vue-cli-service test:unit"
