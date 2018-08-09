@@ -33,9 +33,6 @@ export default {
       ]
       if (process.env.IS_MOBILE_DEVICE) hideQuickIdOn.push('intro')
       return !hideQuickIdOn.includes(this.$route.name)
-    },
-    showBackButton () {
-      return !['intro', 'apps'].includes(this.$route.name)
     }
   },
   created: function () {

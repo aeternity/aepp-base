@@ -22,7 +22,7 @@
     </ae-banner>
     <app-footer
       v-if="displayFooter"
-      :show-back-button="showBackButton"
+      :show-back-button="$route.name !== 'apps'"
     />
     <remove-app-modal />
     <alert-modal />
