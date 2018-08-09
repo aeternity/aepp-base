@@ -94,10 +94,16 @@ export default [{
   name: 'settings-remote-connection',
   path: '/settings/remote-connection',
   component: SettingsRemoteConnection,
-  beforeEnter: checkLoggedIn(true)
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true
+  }
 }, {
   name: 'settings-remote-connection-new',
   path: '/settings/remote-connection/new',
   component: SettingsRemoteConnectionNew,
-  beforeEnter: checkLoggedIn(true)
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true
+  }
 }]

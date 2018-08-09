@@ -1,3 +1,4 @@
+import { merge } from 'lodash-es'
 import { checkLoggedIn } from '../utils'
 import Apps from '../../pages/Apps/Apps.vue'
 import AppBrowser from '../../pages/AppBrowser/AppBrowser.vue'
@@ -56,4 +57,4 @@ export default [{
   path: '/:name/:path*',
   component: AppBrowser,
   beforeEnter: checkLoggedIn(false)
-}]
+}].map(route => merge(route, { meta: { displayFooter: true } }))
