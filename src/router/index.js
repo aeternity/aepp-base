@@ -1,14 +1,25 @@
 import Router from 'vue-router'
 import store from '../store'
-import mobile from './routes/mobile'
-import common from './routes/common'
+import mobileRoutes from './routes/mobile'
+import commonRoutes from './routes/common'
+import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt'
 
-const router = new Router({
-  routes: [
-    ...process.env.IS_MOBILE_DEVICE ? mobile : [],
-    ...common
-  ]
-})
+const router = new Router()
+
+if (process.env.IS_MOBILE_DEVICE && !process.env.IS_CORDOVA && !process.env.IS_PWA) {
+  router.addRoutes([{
+    path: '/',
+    component: AddToHomeScreenPrompt
+  }])
+}
+
+if (process.env.IS_MOBILE_DEVICE && (process.env.IS_CORDOVA || process.env.IS_PWA)) {
+  router.addRoutes(mobileRoutes)
+}
+
+if (!process.env.IS_MOBILE_DEVICE || process.env.IS_CORDOVA || process.env.IS_PWA) {
+  router.addRoutes(commonRoutes)
+}
 
 store.watch(
   (state, { loggedIn }) => loggedIn,

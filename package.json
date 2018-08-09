@@ -62,7 +62,7 @@
     "not ie <= 8"
   ],
   "sideEffects": [
-    "./src/lib/initIsMobileDevice.js",
+    "./src/lib/initEnv.js",
     "*.css",
     "*.scss",
     "*.vue"

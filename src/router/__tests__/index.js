@@ -1,11 +1,11 @@
 import { createLocalVue } from '@vue/test-utils'
 import Router from 'vue-router'
 import { noop } from 'lodash-es'
-import '../../lib/initIsMobileDevice.js'
+import '../../lib/initEnv.js'
 import router from '../'
 import { mockStore } from '../../store'
 
-jest.mock('../../lib/initIsMobileDevice.js')
+jest.mock('../../lib/initEnv.js')
 jest.mock('../../store')
 const localVue = createLocalVue()
 localVue.use(Router)

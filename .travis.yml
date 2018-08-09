@@ -9,7 +9,6 @@ before_install:
 install:
 - travis_wait npm install
 before_deploy:
-- export IS_MOBILE_DEVICE=`[[ $TRAVIS_BRANCH =~ ^(master|develop)$ ]] && echo "false"`
 - npm run build
 deploy:
   - provider: script
