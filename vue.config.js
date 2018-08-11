@@ -1,6 +1,6 @@
 const parseBool = val => val ? JSON.parse(val) : false
 
-const { IS_MOBILE_DEVICE } = process.env
+const { IS_MOBILE_DEVICE, IS_PWA } = process.env
 const IS_CORDOVA = parseBool(process.env.IS_CORDOVA)
 
 module.exports = {
@@ -18,6 +18,10 @@ module.exports = {
       if (IS_CORDOVA || IS_MOBILE_DEVICE) {
         definitions['process.env.IS_MOBILE_DEVICE'] =
           IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE)
+      }
+
+      if (IS_PWA) {
+        definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA)
       }
 
       return [definitions]
