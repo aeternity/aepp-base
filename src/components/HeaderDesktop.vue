@@ -6,7 +6,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "~@aeternity/aepp-components/dist/mixins.scss";
+@import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .header-desktop {
   margin: 30px;

@@ -80,12 +80,6 @@ export default {
         font-size: 16px;
       }
     }
-
-    .ae-button {
-      &, /deep/ .label {
-        padding-right: 0;
-      }
-    }
   }
 }
 </style>

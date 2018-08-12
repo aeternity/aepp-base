@@ -1,7 +1,8 @@
 <template>
   <div class="approve-buttons">
     <ae-button
-      size="smaller"
+      size="small"
+      plain
       type="normal"
       @click="reject">
       <ae-icon
@@ -10,7 +11,8 @@
       {{ rejectLabel }}
     </ae-button>
     <ae-button
-      size="smaller"
+      size="small"
+      plain
       type="dramatic"
       @click="approve">
       <ae-icon

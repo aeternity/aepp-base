@@ -29,13 +29,13 @@
         :id="`${_uid}-address`"
         v-model="address"
         name="address"
-        placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
+        placeholder="ak$ ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• •••"
       />
     </form>
 
     <ae-button
       slot="footer"
-      :inactive="errors.any()"
+      :disabled="errors.any()"
       type="dramatic"
       @click="addAddressBookItem">
       Save contact

@@ -32,6 +32,7 @@
         :type="isLastStep ? 'exciting' : 'boring'"
         :plain="!isLastStep"
         :to="{ name: isLastStep ? 'new-account' : stepRouteNames[currentStepIdx + 1] }"
+        class="next"
         size="small"
         uppercase
       >
@@ -70,7 +71,6 @@ export default {
 
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
 @import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .onboarding.mobile-page {
@@ -124,6 +124,11 @@ export default {
           z-index: 1;
         }
       }
+    }
+
+    .ae-button.next /deep/ .label {
+      padding-left: 20px;
+      padding-right: 20px;
     }
   }
 }

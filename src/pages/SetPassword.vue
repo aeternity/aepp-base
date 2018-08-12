@@ -38,7 +38,7 @@
 
     <template slot="footer">
       <ae-button
-        :inactive="errors.any() || working"
+        :disabled="errors.any() || working"
         type="dramatic"
         @click="createKeystore"
       >

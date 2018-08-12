@@ -20,7 +20,6 @@
 
     <template slot="footer">
       <ae-button
-        :inactive="!readingEnded"
         size="medium"
         type="exciting"
         @click="createSeed"

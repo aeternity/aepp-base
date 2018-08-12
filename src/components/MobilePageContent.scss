@@ -1,16 +1,12 @@
-@import "~@aeternity/aepp-components/dist/variables.scss";
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
 .mobile-page /deep/ .panel {
   .content, .footer {
     > .ae-button, form > .ae-button {
       display: block;
       width: 100%;
-      max-width: 310px;
+      max-width: 330px;
       margin: 15px auto;
-
-      .inner .label {
-        margin: 0 auto;
-      }
     }
 
     h1, p {

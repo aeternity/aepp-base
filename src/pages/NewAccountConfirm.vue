@@ -22,11 +22,12 @@
     <div class="words">
       <ae-button
         v-for="(word, index) in seedPermutation"
-        :inactive="selectedWordIds.includes(index)"
+        :disabled="selectedWordIds.includes(index)"
         :key="index"
         size="small"
         type="exciting"
         uppercase
+        plain
         @click="wordClick(index)"
       >
         {{ word }}
@@ -35,7 +36,7 @@
 
     <ae-button
       slot="footer"
-      :inactive="selectedWordIds.length !== seedPermutation.length"
+      :disabled="selectedWordIds.length !== seedPermutation.length"
       size="medium"
       type="exciting"
       @click="confirmPhrase"
@@ -128,11 +129,14 @@ export default {
   .words {
     text-align: center;
 
-    .ae-button {
+    .ae-button._plain {
       margin: 3.5px 2.5px;
+      background-color: $aubergine;
+      color: $white;
       border: 2px solid $aubergine;
+      box-sizing: content-box;
 
-      &._active_false {
+      &._disabled {
         background-color: transparent;
         border-color: $grey;
         color: $grey;

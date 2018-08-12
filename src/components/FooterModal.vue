@@ -18,7 +18,7 @@
         <template v-if="!$slots.default">
           <ae-identity-light
             v-if="loggedIn"
-            :identity="identity"
+            v-bind="identity"
             collapsed />
           <div
             v-else

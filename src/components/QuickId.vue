@@ -12,7 +12,7 @@
       <div class="vertical-ruler" />
     </template>
     <ae-identity-light
-      :identity="identity"
+      v-bind="identity"
       active
       collapsed
       invert />

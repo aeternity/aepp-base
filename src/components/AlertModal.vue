@@ -8,7 +8,8 @@
 
     <ae-button
       slot="buttons"
-      size="smaller"
+      size="small"
+      plain
       uppercase
       @click="alert.resolve"
     >
