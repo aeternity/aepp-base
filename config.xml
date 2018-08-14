@@ -33,9 +33,6 @@
     <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
         <string>To scan QR Codes</string>
     </edit-config>
-    <engine name="browser" spec="^5.0.3" />
-    <engine name="ios" spec="^4.5.4" />
-    <engine name="android" spec="^6.3.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
@@ -45,4 +42,8 @@
         <variable name="ANDROID_PATHPREFIX" value="/" />
     </plugin>
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
+    <plugin name="cordova-plugin-airgap-secure-storage" spec="git+ssh://git@github.com:aeternity/cordova-plugin-airgap-secure-storage.git#master" />
+    <engine name="browser" spec="^5.0.3" />
+    <engine name="ios" spec="^4.5.4" />
+    <engine name="android" spec="^6.3.0" />
 </widget>

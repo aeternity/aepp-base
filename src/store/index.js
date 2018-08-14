@@ -15,7 +15,7 @@ import registerServiceWorker from './plugins/registerServiceWorker'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(({ apps, rpcUrl, selectedIdentityIdx, addressBook, mobile, desktop }) => ({
@@ -27,9 +27,9 @@ const store = new Vuex.Store({
         mobile: {
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
-          followers: Object.entries(mobile.followers)
-            .reduce((p, [k, { id, name, disconnectedAt }]) =>
-              ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
+          followers: Object
+            .entries(mobile.followers)
+            .reduce((p, [k, { id, name, disconnectedAt }]) => ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
           names: mobile.names
         }
       } : {
@@ -163,5 +163,3 @@ const store = new Vuex.Store({
     }
   }
 })
-
-export default store

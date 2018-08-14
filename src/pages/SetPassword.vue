@@ -83,6 +83,7 @@ export default {
       if (!await this.$validator.validateAll()) return
 
       this.working = true
+
       try {
         await this.$store.dispatch('createKeystore', {
           password: this.password,

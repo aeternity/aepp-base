@@ -37,17 +37,35 @@ Vue.use(VeeValidate, {
 })
 Vue.directive('focus', focus)
 
-if (process.env.NODE_ENV === 'development') {
-  window.store = store
-}
-
 Vue.config.productionTip = false
 Vue.prototype.$globals = {
   IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE
 }
 
-new Vue({
-  store,
-  router,
-  render: h => h(App)
-}).$mount('#app')
+/**
+ * Function generates a vue instance
+ * reduces code-duplication due to the
+ * secure-storage initialization
+ */
+const initialize = function (App) {
+  // dev mode
+  if (process.env.NODE_ENV === 'development') window.store = store
+
+  // mounting
+  /* eslint-disable no-new */
+  return new Vue({
+    store,
+    router,
+    render: h => h(App)
+  }).$mount('#app')
+}
+
+/**
+ * First check if the device has loaded everything,
+ * in this case is true, then load Vuejs application
+ */
+document.addEventListener(
+  process.env.IS_CORDOVA ? 'deviceready' : 'onload',
+  initialize.bind(null, App),
+  false
+)

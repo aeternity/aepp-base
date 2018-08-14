@@ -23,7 +23,7 @@ const derivePasswordKey = async (password, salt) => {
 
 export default {
   state: {
-    keystore: null,
+    keystore: false,
     derivedKey: null,
     accountCount: 0,
     accounts: {},
@@ -58,7 +58,7 @@ export default {
         .reduce((p, n) => ({ ...p, [Crypto.getReadablePublicKey(n.publicKey)]: n }), {})
     },
     signOut (state) {
-      state.keystore = null
+      state.keystore = false
       state.derivedKey = null
     },
     signTransaction (state, transaction) {
@@ -91,7 +91,114 @@ export default {
   },
 
   actions: {
-    async createKeystore ({ commit }, { password, seed }) {
+    /**
+     * The function checks SecureStorage
+     * for its availability and then creates
+     * and instance, where it passes it over
+     * to the promise
+     * @return {Promise<any>}
+     */
+    async isSecure () {
+      if (window.SecureStorage) {
+        /**
+         * Instantiate a new secureStorage instance
+         */
+        const secureStorage = new window.SecureStorage('storage', false)
+
+        /**
+         * Promise returned from init() in case secureStorage
+         * run successfully!
+         *
+         * Catch error, in case of an error, bootstrap the
+         * application with default local storage
+         */
+        await secureStorage.init()
+
+        /**
+         * Also check if the device is already secure, in case
+         * is false, then TODO: display a notification or an error
+         * message to notify user to secure the device!
+         */
+        const isDeviceSecure = await secureStorage.isDeviceSecure()
+
+        /**
+         * Reply with some kind of message to the user
+         * in case the device is not secure.
+         *
+         * Best approach for this would be to tell user to go
+         * to "settings" page and enable the secureDevice
+         * which will in turn redirect user to the phone settings
+         * where he will have to setup either:
+         * - finger print
+         * - pass/pin code
+         */
+        if (!isDeviceSecure) {
+          throw new Error('The device does not have security protection!')
+        }
+
+        /**
+         * If everything resolves, resolve with SecureStorage
+         */
+        return secureStorage
+      } else {
+        throw new Error('Not secure storage found!')
+      }
+    },
+
+    /**
+     * Sets the the Master key on SecureStorage
+     * @param dispatch
+     * @param payload
+     * @return {Promise<any>}
+     */
+    async setMasterKey ({dispatch}, payload) {
+      /**
+       * Fetch local Storage instance
+       */
+      const storage = await dispatch('isSecure')
+
+      /**
+       * Set the item and check if there's any
+       * errors being thrown around
+       */
+      await storage.setItem('keystore',
+        JSON.stringify(payload, (key, value) =>
+          value instanceof ArrayBuffer
+            ? { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) }
+            : value))
+
+      /**
+       * Resolve async function
+       */
+      return undefined
+    },
+
+    /**
+     * Retrieves the master key from SecureStorage
+     * @param dispatch
+     * @return {Promise<any>}
+     */
+    async getMasterKey ({dispatch}) {
+      /**
+       * Fetch local Storage instance
+       */
+      const storage = await dispatch('isSecure')
+
+      /**
+       * Fetch Key
+       */
+      const key = await storage.getItem('keystore')
+
+      /**
+       * Resolve with key
+       */
+      return JSON.parse(key, (key, value) =>
+        value && value.type === 'ArrayBuffer'
+          ? new Uint8Array(value.data).buffer
+          : value)
+    },
+
+    async createKeystore ({ commit, dispatch }, { password, seed }) {
       const salt = genRandomBuffer(16)
       const passwordDerivedKey = await derivePasswordKey(password, salt)
       const aes = new AES(passwordDerivedKey)
@@ -102,12 +209,15 @@ export default {
         mac: await aes.encrypt(new Uint8Array(2)),
         salt
       }
+      await dispatch('setMasterKey', encryptedHdWallet)
       commit('resetAccountCount')
       commit('selectIdentity', 0)
-      commit('setKeystore', encryptedHdWallet)
       commit('setDerivedKey', passwordDerivedKey)
+      commit('setKeystore', true)
     },
-    async unlockKeystore ({ commit, state: { keystore } }, password) {
+
+    async unlockKeystore ({ commit, state, dispatch }, password) {
+      const keystore = await dispatch('getMasterKey')
       const passwordDerivedKey = await derivePasswordKey(password, keystore.salt)
       const aes = new AES(passwordDerivedKey)
       await aes.decrypt(keystore.privateKey)
@@ -116,6 +226,7 @@ export default {
       if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password')
       commit('setDerivedKey', passwordDerivedKey)
     },
+
     async signTransaction (
       { state: { accounts }, commit, rootState: { epoch } },
       { transaction, appName, id = uuid() }) {
@@ -132,6 +243,7 @@ export default {
       const signature = Crypto.sign(binaryTx, accounts[transaction.sender].secretKey)
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx))
     },
+
     async signPersonalMessage (
       { state: { accounts }, commit },
       { message, address, appName }) {
