@@ -11,7 +11,7 @@ module.exports = {
     '^.+\\.jsx?$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!lodash-es/)',
+    'node_modules/(?!(lodash-es|emoji-datasource-apple)/)',
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
