@@ -1,31 +1,28 @@
 <template>
-  <div class="approve">
+  <div class="approve-transaction">
     <dialog-header
       :app-name="appName"
-      :icon-src="DEFAULT_ICON"
       title="Requests a transaction"
     />
-    <div class="transaction-flow">
+    <div class="flow">
       <div
         :title="`from ${transaction.sender}`"
         class="id">
         <ae-identity-avatar :address="transaction.sender" />
-        <div>{{ transaction.sender }}</div>
+        {{ transaction.sender }}
       </div>
-      <ae-icon
-        name="arrow"
-        class="approve__flow-direction" />
+      <ae-icon name="arrow" />
       <div
         :title="`to ${transaction.recipientPubkey}`"
         class="id">
         <ae-identity-avatar :address="transaction.recipientPubkey" />
-        <div>{{ transaction.recipientPubkey }}</div>
+        {{ transaction.recipientPubkey }}
       </div>
     </div>
+
     <hr>
     <ae-amount
       :value="transaction.amount"
-      class="approve__amount"
       color="black"
       size="med"
       unit="Æ"
@@ -37,9 +34,10 @@
       {{ transaction.amount * price | round(10) }} CHF
     </div>
     <hr>
-    <div class="additional-fees-table">
-      <span class="additional-fees-header"> Additional fees</span>
-      <div class="additional-fees-value">
+
+    <div class="additional-fees">
+      <span class="header">Additional fees</span>
+      <div class="value">
         <div class="additional-fees-eth">{{ transaction.fee }} Æ</div>
         <div
           v-if="price"
@@ -58,12 +56,10 @@
 <script>
 import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components'
 import { convertAEtoCHF } from '../lib/currencyConverter'
-import { DEFAULT_ICON } from '../lib/appsRegistry'
 import ApproveButtons from './ApproveButtons.vue'
 import DialogHeader from './DialogHeader.vue'
 
 export default {
-  name: 'ApproveTransaction',
   components: {
     AeAmount,
     AeIdentityAvatar,
@@ -94,7 +90,6 @@ export default {
   },
   data () {
     return {
-      DEFAULT_ICON,
       price: null
     }
   },
@@ -111,4 +106,75 @@ export default {
   }
 }
 </script>
-<style scoped src="./ApproveTransaction.css" />
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components/dist/variables.scss';
+
+.approve-transaction {
+  background-image: linear-gradient(to bottom, white, #f1f4f7);
+  padding: 30px 20px;
+  border: solid 1px transparent;
+  border-radius: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  width: 300px;
+  overflow-y: auto;
+  max-height: calc(100% - 10px);
+
+  .flow {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    .id {
+      max-width: 80px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-family: 'Roboto Mono', monospace;
+
+      .ae-identity-avatar {
+        margin-bottom: 12px;
+      }
+    }
+
+    .ae-icon {
+      margin-top: 15px;
+    }
+  }
+
+  hr {
+    background-color: $silver;
+    height: 2px;
+    border: none;
+    margin: 15px 0;
+  }
+
+  .ae-amount {
+    justify-content: center;
+
+    /deep/ .value {
+      width: auto;
+    }
+  }
+
+  .additional-fees {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+
+    .header {
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+    .value {
+      text-align: right;
+
+      .additional-fees-eth{
+        font-weight: bold;
+      }
+    }
+  }
+}
+</style>
