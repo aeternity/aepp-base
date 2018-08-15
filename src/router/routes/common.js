@@ -1,15 +1,15 @@
 import { merge } from 'lodash-es'
 import { checkLoggedIn } from '../utils'
-import Apps from '../../pages/Apps/Apps.vue'
-import AppBrowser from '../../pages/AppBrowser/AppBrowser.vue'
-import AddApp from '../../pages/AddApp/AddApp.vue'
+import Apps from '../../pages/Apps.vue'
+import AppBrowser from '../../pages/AppBrowser.vue'
+import AddApp from '../../pages/AddApp.vue'
 import AddressBook from '../../pages/AddressBook.vue'
 import AddressBookNew from '../../pages/AddressBookNew.vue'
 import AddressBookChoose from '../../pages/AddressBookChoose.vue'
 import Settings from '../../pages/Settings.vue'
 import SettingsNetwork from '../../pages/SettingsNetwork.vue'
 
-const Transfer = () => import('../../pages/Transfer/Transfer.vue')
+const Transfer = () => import('../../pages/Transfer.vue')
 
 export default [{
   name: 'apps',

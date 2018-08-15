@@ -93,5 +93,121 @@
   </mobile-page>
 </template>
 
-<script src="./AddApp.js" />
-<style lang="scss" src="./AddApp.scss" scoped />
+<script>
+import Fuse from 'fuse.js'
+import { mapState, mapActions } from 'vuex'
+import {
+  AeLabel,
+  AeInput,
+  AeButton,
+  AeIcon,
+  AeAppIcon,
+  AeDivider
+} from '@aeternity/aepp-components'
+import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry'
+import MobilePage from '../components/MobilePage'
+
+const allApps = Object.entries(appsRegistry)
+  .filter(([, { unremovable }]) => !unremovable)
+  .map(([id, d]) => ({
+    icon: DEFAULT_ICON,
+    ...d,
+    id
+  }))
+
+const fuse = new Fuse(allApps, {
+  tokenize: true,
+  matchAllTokens: true,
+  keys: ['name']
+})
+
+export default {
+  components: {
+    AeLabel,
+    AeInput,
+    AeButton,
+    AeAppIcon,
+    AeIcon,
+    AeDivider,
+    MobilePage
+  },
+  data: () => ({
+    url: '',
+    appAddingByUrl: false,
+    searchTerm: ''
+  }),
+  computed: mapState({
+    apps ({ apps }) {
+      return (this.searchTerm ? fuse.search(this.searchTerm) : allApps)
+        .map(app => ({
+          ...app,
+          added: apps.some(a => a === app.id)
+        }))
+    }
+  }),
+  methods: {
+    ...mapActions(['addApp']),
+    async addAppByUrl () {
+      if (!this.url || this.appAddingByUrl || !await this.$validator.validateAll()) return
+      this.appAddingByUrl = true
+      await this.addApp(this.url)
+      this.$router.push({ name: 'apps' })
+      this.appAddingByUrl = false
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "~@aeternity/aepp-components/dist/variables";
+
+.add-app.mobile-page {
+  /deep/ .panel {
+    margin-top: 0;
+  }
+
+  .ae-button._size_smaller {
+    padding-right: 0;
+    padding-left: 0;
+
+    .ae-icon {
+      margin-left: 0;
+      margin-right: 6px;
+    }
+  }
+
+  .add-button-wrapper {
+    text-align: right;
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
+
+  .app {
+    display: flex;
+    cursor: pointer;
+
+    &.inactive {
+      cursor: not-allowed;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-left: 15px;
+
+      &:before, &:after {
+        content: '';
+      }
+
+      h2 {
+        margin: 0;
+      }
+    }
+  }
+
+  .ae-divider {
+    margin: 16px 0;
+  }
+}
+</style>
