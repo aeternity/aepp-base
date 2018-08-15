@@ -25,24 +25,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { AeIdentityBackground, AeIdentityLight, AeIcon } from '@aeternity/aepp-components'
+import { mapGetters } from 'vuex';
+import { AeIdentityBackground, AeIdentityLight, AeIcon } from '@aeternity/aepp-components';
 
 export default {
   name: 'QuickId',
   components: { AeIdentityBackground, AeIdentityLight, AeIcon },
   props: {
-    'show-back-button': { type: Boolean, default: false }
+    'show-back-button': { type: Boolean, default: false },
   },
   computed: mapGetters({
-    identity: 'activeIdentity'
+    identity: 'activeIdentity',
   }),
   methods: {
-    showIdManager () {
-      this.$store.commit('toggleIdManager')
-    }
-  }
-}
+    showIdManager() {
+      this.$store.commit('toggleIdManager');
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">

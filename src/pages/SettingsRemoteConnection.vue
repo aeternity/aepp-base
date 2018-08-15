@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { AeButton } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage.vue'
-import SettingsHeading from '../components/SettingsHeading'
-import ListItem from '../components/ListItem'
-import FixedAddButton from '../components/FixedAddButton.vue'
+import { mapState, mapMutations } from 'vuex';
+import { AeButton } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage.vue';
+import SettingsHeading from '../components/SettingsHeading';
+import ListItem from '../components/ListItem';
+import FixedAddButton from '../components/FixedAddButton.vue';
 
 export default {
   components: {
@@ -46,18 +46,18 @@ export default {
     MobilePage,
     Heading: SettingsHeading,
     Item: ListItem,
-    FixedAddButton
+    FixedAddButton,
   },
   computed: mapState({
     followers: ({ mobile: { followers } }) =>
       Object.values(followers)
         .map(f => ({
           ...f,
-          disconnectedAt: new Date(f.disconnectedAt).toLocaleString()
-        }))
+          disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
+        })),
   }),
-  methods: mapMutations(['removeFollower'])
-}
+  methods: mapMutations(['removeFollower']),
+};
 </script>
 
 <style src="./Settings.scss" lang="scss" scoped />

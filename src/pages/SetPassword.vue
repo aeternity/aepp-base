@@ -60,49 +60,51 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage'
+import { mapState } from 'vuex';
+import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage';
 
 export default {
-  components: { MobilePage, AeInput, AeLabel, AeButton },
-  props: {
-    seed: { type: String, required: true }
+  components: {
+    MobilePage, AeInput, AeLabel, AeButton,
   },
-  data () {
+  props: {
+    seed: { type: String, required: true },
+  },
+  data() {
     return {
       password: '',
       passwordRepeat: '',
       working: false,
-      recover: false
-    }
+      recover: false,
+    };
   },
   computed: mapState(['keystore']),
   methods: {
-    async createKeystore () {
-      if (!await this.$validator.validateAll()) return
+    async createKeystore() {
+      if (!await this.$validator.validateAll()) return;
 
-      this.working = true
+      this.working = true;
       try {
         await this.$store.dispatch('createKeystore', {
           password: this.password,
-          seed: this.seed
-        })
+          seed: this.seed,
+        });
         this.$store.dispatch('setNotification', {
           text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
-          icon: require(`emoji-datasource-apple/img/apple/64/1f44f.png`),
-          autoClose: true
-        })
+          icon: require('emoji-datasource-apple/img/apple/64/1f44f.png'),
+          autoClose: true,
+        });
       } finally {
-        this.working = false
+        this.working = false;
       }
-    }
+    },
   },
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next((vm) => {
-      vm.recover = from.name === 'recover'
-    })
-  }
-}
+      vm.recover = from.name === 'recover';
+    });
+  },
+};
 </script>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />

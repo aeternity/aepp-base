@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { AeModalLight, AeButton } from '@aeternity/aepp-components'
-import { appsRegistry } from '../lib/appsRegistry'
+import { mapState, mapMutations } from 'vuex';
+import { AeModalLight, AeButton } from '@aeternity/aepp-components';
+import { appsRegistry } from '../lib/appsRegistry';
 
 export default {
   components: { AeModalLight, AeButton },
@@ -39,9 +39,9 @@ export default {
     app: ({ apps, selectedAppIdxToRemove: appIdx }) =>
       appIdx !== -1 && ({
         ...apps[appIdx],
-        ...appsRegistry[apps[appIdx]]
-      })
+        ...appsRegistry[apps[appIdx]],
+      }),
   }),
-  methods: mapMutations(['selectAppToRemove', 'removeSelectedApp'])
-}
+  methods: mapMutations(['selectAppToRemove', 'removeSelectedApp']),
+};
 </script>

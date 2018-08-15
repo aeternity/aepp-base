@@ -89,18 +89,18 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex';
 import {
   AeButton,
   AeSwitch,
   AeAddressInput,
   AeAmountInput,
   AeIdentity,
-  AeLabel
-} from '@aeternity/aepp-components'
-import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper'
-import { convertAEtoCHF } from '../lib/currencyConverter'
-import MobilePage from '../components/MobilePage'
+  AeLabel,
+} from '@aeternity/aepp-components';
+import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
+import { convertAEtoCHF } from '../lib/currencyConverter';
+import MobilePage from '../components/MobilePage';
 
 export default {
   components: {
@@ -112,13 +112,13 @@ export default {
     AeAmountInput,
     AeLabel,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
-  data () {
+  data() {
     return {
       transactionType: undefined,
-      aePrice: undefined
-    }
+      aePrice: undefined,
+    };
   },
   computed: {
     ...mapGetters(['identities', 'activeIdentity']),
@@ -127,44 +127,44 @@ export default {
       identitiesTo: (state, { identities, activeIdentity }) =>
         identities.filter(i => i.address !== activeIdentity.address),
       maxAmount: ({ balances }, { activeIdentity }) =>
-        activeIdentity ? balances[activeIdentity.address] : 0
+        (activeIdentity ? balances[activeIdentity.address] : 0),
     }),
     to: {
-      get () {
-        return this.$route.params.to
+      get() {
+        return this.$route.params.to;
       },
-      set (to) {
+      set(to) {
         this.$router.replace({
           name: 'transfer',
           params: {
             ...this.$route.params,
-            to
-          }
-        })
-      }
+            to,
+          },
+        });
+      },
     },
     amount: {
-      get () {
-        return this.$route.params.amount
+      get() {
+        return this.$route.params.amount;
       },
-      set (amount) {
+      set(amount) {
         this.$router.replace({
           name: 'transfer',
           params: {
             ...this.$route.params,
-            amount
-          }
-        })
-      }
+            amount,
+          },
+        });
+      },
     },
-    fiatAmount () {
-      const fiatAmount = this.aePrice * +this.amount
-      return isNaN(fiatAmount) ? 'N/A' : fiatAmount.toFixed(2)
+    fiatAmount() {
+      const fiatAmount = this.aePrice * +this.amount;
+      return isNaN(fiatAmount) ? 'N/A' : fiatAmount.toFixed(2);
     },
-    swiperOptionsTo () {
-      const transfer = this
-      function syncTo () {
-        transfer.to = transfer.identitiesTo[this.activeIndex].address
+    swiperOptionsTo() {
+      const transfer = this;
+      function syncTo() {
+        transfer.to = transfer.identitiesTo[this.activeIndex].address;
       }
       return {
         spaceBetween: 10,
@@ -172,26 +172,26 @@ export default {
         slidesPerView: 'auto',
         pagination: {
           el: '.swiper-pagination',
-          clickable: true
+          clickable: true,
         },
         initialSlide: this.identitiesTo.findIndex(i => i.address === this.to),
         on: {
           init: syncTo,
-          slideChange: syncTo
-        }
-      }
-    }
+          slideChange: syncTo,
+        },
+      };
+    },
   },
-  async mounted () {
-    this.$store.dispatch('updateAllBalances')
-    this.aePrice = await convertAEtoCHF()
+  async mounted() {
+    this.$store.dispatch('updateAllBalances');
+    this.aePrice = await convertAEtoCHF();
   },
   methods: {
-    async send () {
-      if (!await this.$validator.validateAll()) return
+    async send() {
+      if (!await this.$validator.validateAll()) return;
 
-      const { to, amount } = this
-      if (!to || !amount) return
+      const { to, amount } = this;
+      if (!to || !amount) return;
 
       const signedTx = await this.$store.dispatch('signTransaction', {
         transaction: {
@@ -200,14 +200,14 @@ export default {
           sender: this.activeIdentity.address,
           recipientPubkey: to,
           payload: '',
-          ttl: Number.MAX_SAFE_INTEGER
+          ttl: Number.MAX_SAFE_INTEGER,
         },
-        appName: 'Transfer'
-      })
-      await this.epoch.api.postTx({ tx: signedTx })
-    }
-  }
-}
+        appName: 'Transfer',
+      });
+      await this.epoch.api.postTx({ tx: signedTx });
+    },
+  },
+};
 </script>
 
 <style lang="css" src="swiper/dist/css/swiper.css" />

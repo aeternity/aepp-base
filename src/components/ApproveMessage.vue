@@ -21,49 +21,49 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeIdentityAvatar } from '@aeternity/aepp-components'
-import ApproveButtons from './ApproveButtons.vue'
-import DialogHeader from './DialogHeader.vue'
+import { mapState } from 'vuex';
+import { AeIdentityAvatar } from '@aeternity/aepp-components';
+import ApproveButtons from './ApproveButtons.vue';
+import DialogHeader from './DialogHeader.vue';
 
 export default {
   components: {
     AeIdentityAvatar,
     ApproveButtons,
-    DialogHeader
+    DialogHeader,
   },
   props: {
     appName: {
       type: String,
-      required: true
+      required: true,
     },
     message: {
       type: String,
-      required: true
+      required: true,
     },
     resolve: {
       type: Function,
-      required: true
+      required: true,
     },
     reject: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: mapState({
-    address: (state, { activeIdentity }) => activeIdentity.address
+    address: (state, { activeIdentity }) => activeIdentity.address,
   }),
   methods: {
-    close () {
-      this.reject(new Error('Signing rejected by user'))
-      this.$store.commit('setMessageToApprove')
+    close() {
+      this.reject(new Error('Signing rejected by user'));
+      this.$store.commit('setMessageToApprove');
     },
-    approve () {
-      this.resolve()
-      this.$store.commit('setMessageToApprove')
-    }
-  }
-}
+    approve() {
+      this.resolve();
+      this.$store.commit('setMessageToApprove');
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

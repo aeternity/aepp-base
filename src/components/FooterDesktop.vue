@@ -11,35 +11,35 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import FooterModal from './FooterModal.vue'
-import AccountsHorizontal from './AccountsHorizontal.vue'
-import RemoteConnectionPrompt from './RemoteConnectionPrompt.vue'
-import WaitingForConfirmation from './WaitingForConfirmation.vue'
+import { mapState } from 'vuex';
+import FooterModal from './FooterModal.vue';
+import AccountsHorizontal from './AccountsHorizontal.vue';
+import RemoteConnectionPrompt from './RemoteConnectionPrompt.vue';
+import WaitingForConfirmation from './WaitingForConfirmation.vue';
 
 export default {
   components: {
     FooterModal,
     AccountsHorizontal,
     RemoteConnectionPrompt,
-    WaitingForConfirmation
+    WaitingForConfirmation,
   },
   props: {
-    showBackButton: { type: Boolean, default: false }
+    showBackButton: { type: Boolean, default: false },
   },
   computed: {
     ...mapState(['showIdManager']),
     ...mapState({
       showRemoteConnectionPrompt: ({ desktop }) => desktop.showRemoteConnectionPrompt,
-      transactionToSignByRemote: ({ desktop }) => desktop.transactionToSignByRemote
-    })
+      transactionToSignByRemote: ({ desktop }) => desktop.transactionToSignByRemote,
+    }),
   },
   methods: {
-    toggleDesktopFooter () {
-      if (this.transactionToSignByRemote) return
+    toggleDesktopFooter() {
+      if (this.transactionToSignByRemote) return;
       this.$store.commit(`toggle${this.$store.getters.loggedIn
-        ? 'IdManager' : 'RemoteConnectionPrompt'}`)
-    }
-  }
-}
+        ? 'IdManager' : 'RemoteConnectionPrompt'}`);
+    },
+  },
+};
 </script>

@@ -15,15 +15,15 @@
 </template>
 
 <script>
-import { AeButton, AeIcon } from '@aeternity/aepp-components'
+import { AeButton, AeIcon } from '@aeternity/aepp-components';
 
 export default {
   components: { AeButton, AeIcon },
   props: {
     to: { type: [Object, String], default: undefined },
-    'quick-id': { type: Boolean, default: false }
-  }
-}
+    'quick-id': { type: Boolean, default: false },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

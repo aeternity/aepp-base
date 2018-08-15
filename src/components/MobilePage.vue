@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import { AeButton, AeIcon } from '@aeternity/aepp-components'
-import HeaderMobile from './HeaderMobile'
+import { AeButton, AeIcon } from '@aeternity/aepp-components';
+import HeaderMobile from './HeaderMobile';
 
 export default {
   components: { AeButton, AeIcon, HeaderMobile },
@@ -39,16 +39,16 @@ export default {
     title: { type: String, default: '' },
     redirectToOnClose: { type: Object, default: undefined },
     backButton: { type: Boolean, default: false },
-    closeButton: { type: Boolean, default: false }
+    closeButton: { type: Boolean, default: false },
   },
   methods: {
-    closeHandler () {
-      this.$emit('close')
-      if (!this.redirectToOnClose) return
-      this.$router.push(this.redirectToOnClose)
-    }
-  }
-}
+    closeHandler() {
+      this.$emit('close');
+      if (!this.redirectToOnClose) return;
+      this.$router.push(this.redirectToOnClose);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

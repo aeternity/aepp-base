@@ -54,10 +54,10 @@
 </template>
 
 <script>
-import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components'
-import { convertAEtoCHF } from '../lib/currencyConverter'
-import ApproveButtons from './ApproveButtons.vue'
-import DialogHeader from './DialogHeader.vue'
+import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components';
+import { convertAEtoCHF } from '../lib/currencyConverter';
+import ApproveButtons from './ApproveButtons.vue';
+import DialogHeader from './DialogHeader.vue';
 
 export default {
   components: {
@@ -65,46 +65,46 @@ export default {
     AeIdentityAvatar,
     AeIcon,
     ApproveButtons,
-    DialogHeader
+    DialogHeader,
   },
   filters: {
-    round (value, decimal) {
-      const rounded = parseFloat(value.toFixed(decimal))
-      const start = rounded === value ? '' : '≈ '
-      return `${start}${rounded}`
-    }
+    round(value, decimal) {
+      const rounded = parseFloat(value.toFixed(decimal));
+      const start = rounded === value ? '' : '≈ ';
+      return `${start}${rounded}`;
+    },
   },
   props: {
     appName: {
       type: String,
-      default: ''
+      default: '',
     },
     transaction: {
       type: Object,
-      required: true
+      required: true,
     },
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
-      price: null
-    }
+      price: null,
+    };
   },
-  async mounted () {
-    this.price = await convertAEtoCHF()
+  async mounted() {
+    this.price = await convertAEtoCHF();
   },
   methods: {
-    close () {
-      this.$store.commit('cancelTransaction', this.id)
+    close() {
+      this.$store.commit('cancelTransaction', this.id);
     },
-    approve () {
-      this.$store.commit('approveTransaction', this.id)
-    }
-  }
-}
+    approve() {
+      this.$store.commit('approveTransaction', this.id);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

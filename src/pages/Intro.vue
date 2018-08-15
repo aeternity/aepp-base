@@ -36,16 +36,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeButton } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage'
+import { mapState } from 'vuex';
+import { AeButton } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage';
 
 export default {
   components: { MobilePage, AeButton },
   computed: mapState({
-    keystore: state => state.mobile.keystore
-  })
-}
+    keystore: state => state.mobile.keystore,
+  }),
+};
 </script>
 
 <style lang="scss" scoped>

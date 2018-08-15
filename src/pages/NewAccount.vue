@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage'
+import { AeButton } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage';
 
 export default {
-  components: { MobilePage, AeButton }
-}
+  components: { MobilePage, AeButton },
+};
 </script>
 
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />

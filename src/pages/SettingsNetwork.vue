@@ -25,24 +25,24 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import MobilePage from '../components/MobilePage.vue'
-import AeRadio from '../components/AeRadio.vue'
-import SettingsHeading from '../components/SettingsHeading'
-import ListItem from '../components/ListItem'
-import networks from '../lib/networksRegistry'
+import { mapState, mapMutations } from 'vuex';
+import MobilePage from '../components/MobilePage.vue';
+import AeRadio from '../components/AeRadio.vue';
+import SettingsHeading from '../components/SettingsHeading';
+import ListItem from '../components/ListItem';
+import networks from '../lib/networksRegistry';
 
 export default {
   components: {
     MobilePage,
     AeRadio,
     Heading: SettingsHeading,
-    Item: ListItem
+    Item: ListItem,
   },
   data: () => ({ networks }),
   computed: mapState(['rpcUrl', 'networkId']),
-  methods: mapMutations(['setRPCUrl'])
-}
+  methods: mapMutations(['setRPCUrl']),
+};
 </script>
 
 <style src="./Settings.scss" lang="scss" scoped />

@@ -71,16 +71,16 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex';
 import {
   AeIdentity, AeIdentityAvatar, AeButton, AeDivider,
-  AeLabel, AeInput, AeModalLight
-} from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage'
-import FixedAddButton from '../components/FixedAddButton'
-import ListItem from '../components/ListItem'
-import AeRadio from '../components/AeRadio.vue'
-import { roundToken } from '../lib/filters'
+  AeLabel, AeInput, AeModalLight,
+} from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage';
+import FixedAddButton from '../components/FixedAddButton';
+import ListItem from '../components/ListItem';
+import AeRadio from '../components/AeRadio.vue';
+import { roundToken } from '../lib/filters';
 
 export default {
   components: {
@@ -94,29 +94,29 @@ export default {
     AeInput,
     AeModalLight,
     ListItem,
-    AeRadio
+    AeRadio,
   },
   filters: { roundToken },
   data: () => ({
     modalVisible: false,
-    newAccountName: ''
+    newAccountName: '',
   }),
   computed: {
     ...mapGetters(['totalBalance', 'activeIdentity', 'identities']),
-    ...mapState(['selectedIdentityIdx'])
+    ...mapState(['selectedIdentityIdx']),
   },
-  mounted () {
-    this.$store.dispatch('updateAllBalances')
+  mounted() {
+    this.$store.dispatch('updateAllBalances');
   },
   methods: {
     ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
-    handleAddAddress () {
-      this.createIdentity(this.newAccountName)
-      this.newAccountName = ''
-      this.modalVisible = false
-    }
-  }
-}
+    handleAddAddress() {
+      this.createIdentity(this.newAccountName);
+      this.newAccountName = '';
+      this.modalVisible = false;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

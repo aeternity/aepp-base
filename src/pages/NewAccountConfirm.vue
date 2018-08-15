@@ -46,50 +46,50 @@
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components'
-import { shuffle } from 'lodash-es'
-import MobilePage from '../components/MobilePage'
+import { AeButton } from '@aeternity/aepp-components';
+import { shuffle } from 'lodash-es';
+import MobilePage from '../components/MobilePage';
 
 export default {
   components: { MobilePage, AeButton },
   props: {
-    seed: { type: String, required: true }
+    seed: { type: String, required: true },
   },
-  data () {
+  data() {
     return {
       seedPermutation: shuffle(this.seed.split(' ')),
-      selectedWordIds: []
-    }
+      selectedWordIds: [],
+    };
   },
   computed: {
-    selectedSeed () {
-      return this.selectedWordIds.map(idx => this.seedPermutation[idx]).join(' ')
-    }
+    selectedSeed() {
+      return this.selectedWordIds.map(idx => this.seedPermutation[idx]).join(' ');
+    },
   },
   methods: {
-    wordClick (index) {
-      if (this.selectedWordIds.includes(index)) return
-      this.selectedWordIds.push(index)
+    wordClick(index) {
+      if (this.selectedWordIds.includes(index)) return;
+      this.selectedWordIds.push(index);
     },
-    async confirmPhrase () {
-      const isValid = this.selectedSeed === this.seed
+    async confirmPhrase() {
+      const isValid = this.selectedSeed === this.seed;
       await this.$store.dispatch('alert', isValid ? {
         title: 'Correct Passphrase!',
         text: 'Proceed to your æpp browser. Enjoy the æpp ecosystem!',
-        buttonText: 'Create password'
+        buttonText: 'Create password',
       } : {
         title: 'Incorrect passphrase',
         text: 'You\'ve entered a wrong passphrase, try again before proceeding.',
-        buttonText: 'Try again'
-      })
+        buttonText: 'Try again',
+      });
       if (isValid) {
-        this.$router.push({ name: 'set-password', params: { seed: this.seed } })
+        this.$router.push({ name: 'set-password', params: { seed: this.seed } });
       } else {
-        this.selectedWordIds = []
+        this.selectedWordIds = [];
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

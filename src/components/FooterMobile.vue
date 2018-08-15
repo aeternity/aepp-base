@@ -19,25 +19,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Accounts from '../pages/Accounts.vue'
-import QuickId from './QuickId.vue'
-import ApproveMessage from './ApproveMessage.vue'
-import ApproveTransaction from './ApproveTransaction.vue'
+import { mapState } from 'vuex';
+import Accounts from '../pages/Accounts.vue';
+import QuickId from './QuickId.vue';
+import ApproveMessage from './ApproveMessage.vue';
+import ApproveTransaction from './ApproveTransaction.vue';
 
 export default {
-  components: { QuickId, Accounts, ApproveMessage, ApproveTransaction },
+  components: {
+    QuickId, Accounts, ApproveMessage, ApproveTransaction,
+  },
   props: {
-    showBackButton: { type: Boolean, default: false }
+    showBackButton: { type: Boolean, default: false },
   },
   computed: {
     ...mapState(['showIdManager']),
     ...mapState({
       messageToApprove: ({ mobile }) => mobile.messageToApprove,
-      transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0]
-    })
-  }
-}
+      transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],
+    }),
+  },
+};
 </script>
 
 <style lang="scss" scoped>

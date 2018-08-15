@@ -37,32 +37,32 @@
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components'
-import { generateMnemonic } from '@aeternity/bip39'
-import MobilePage from '../components/MobilePage'
+import { AeButton } from '@aeternity/aepp-components';
+import { generateMnemonic } from '@aeternity/bip39';
+import MobilePage from '../components/MobilePage';
 
 export default {
   components: { MobilePage, AeButton },
   data: () => ({
     seed: generateMnemonic(),
     readingPaused: false,
-    readingEnded: false
+    readingEnded: false,
   }),
   methods: {
-    async createSeed () {
+    async createSeed() {
       if (this.readingEnded) {
-        this.$router.push({ name: 'new-account-confirm', params: { seed: this.seed } })
+        this.$router.push({ name: 'new-account-confirm', params: { seed: this.seed } });
       } else {
-        this.readingPaused = true
+        this.readingPaused = true;
         await this.$store.dispatch('alert', {
           title: 'That was to fast',
-          text: 'Please make sure to write it down on paper, and don\'t loose it!'
-        })
-        this.readingPaused = false
+          text: 'Please make sure to write it down on paper, and don\'t loose it!',
+        });
+        this.readingPaused = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

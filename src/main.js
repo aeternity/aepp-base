@@ -1,23 +1,23 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import VeeValidate, { Validator } from 'vee-validate'
-import { focus } from 'vue-focus'
-import './lib/initEnv'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from 'vue';
+import Router from 'vue-router';
+import VeeValidate, { Validator } from 'vee-validate';
+import { focus } from 'vue-focus';
+import './lib/initEnv';
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
-Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
+Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min);
 Validator.extend('url_http', (value) => {
   try {
-    const url = new URL((/^\w+:\//.test(value) ? '' : `http://`) + value)
-    return ['http:', 'https:'].includes(url.protocol)
+    const url = new URL((/^\w+:\//.test(value) ? '' : 'http://') + value);
+    return ['http:', 'https:'].includes(url.protocol);
   } catch (e) {
-    return false
+    return false;
   }
-})
+});
 
-Vue.use(Router)
+Vue.use(Router);
 Vue.use(VeeValidate, {
   dictionary: {
     en: {
@@ -30,24 +30,24 @@ Vue.use(VeeValidate, {
         not_in: () => 'This field must be a valid value',
         decimal: () => 'This field must be numeric and may contain decimal points',
         url_http: () => 'This field is not a valid HTTP(S) URL',
-        confirmed: () => 'The passwords do not match'
-      }
-    }
-  }
-})
-Vue.directive('focus', focus)
+        confirmed: () => 'The passwords do not match',
+      },
+    },
+  },
+});
+Vue.directive('focus', focus);
 
 if (process.env.NODE_ENV === 'development') {
-  window.store = store
+  window.store = store;
 }
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 Vue.prototype.$globals = {
-  IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE
-}
+  IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE,
+};
 
 new Vue({
   store,
   router,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h(App),
+}).$mount('#app');

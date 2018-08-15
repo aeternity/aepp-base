@@ -12,21 +12,21 @@
 </template>
 
 <script>
-import { AeIdentityAvatar } from '@aeternity/aepp-components'
-import { times } from 'lodash-es'
+import { AeIdentityAvatar } from '@aeternity/aepp-components';
+import { times } from 'lodash-es';
 
 export default {
   components: { AeIdentityAvatar },
   props: {
     address: { type: String, required: true },
-    name: { type: String, required: true }
+    name: { type: String, required: true },
   },
   computed: {
-    formattedAddress () {
-      return times(6, i => this.address.slice(7 * i, 7 * (i + 1))).join(' ')
-    }
-  }
-}
+    formattedAddress() {
+      return times(6, i => this.address.slice(7 * i, 7 * (i + 1))).join(' ');
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

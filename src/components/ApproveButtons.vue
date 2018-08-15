@@ -22,32 +22,32 @@
 </template>
 
 <script>
-import { AeButton, AeIcon } from '@aeternity/aepp-components'
+import { AeButton, AeIcon } from '@aeternity/aepp-components';
 
 export default {
   components: {
     AeButton,
-    AeIcon
+    AeIcon,
   },
   props: {
     rejectLabel: {
       type: String,
-      default: 'Cancel'
+      default: 'Cancel',
     },
     approveLabel: {
       type: String,
-      default: 'Approve'
-    }
+      default: 'Approve',
+    },
   },
   methods: {
-    approve () {
-      this.$emit('approve')
+    approve() {
+      this.$emit('approve');
     },
-    reject () {
-      this.$emit('reject')
-    }
-  }
-}
+    reject() {
+      this.$emit('reject');
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

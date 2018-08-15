@@ -7,28 +7,28 @@
 </template>
 
 <script>
-import { AeAppIcon } from '@aeternity/aepp-components'
-import { DEFAULT_ICON } from '../lib/appsRegistry'
+import { AeAppIcon } from '@aeternity/aepp-components';
+import { DEFAULT_ICON } from '../lib/appsRegistry';
 
 export default {
   components: {
-    AeAppIcon
+    AeAppIcon,
   },
   props: {
     appName: {
       type: String,
-      default: 'Base æpp'
+      default: 'Base æpp',
     },
     iconSrc: {
       type: String,
-      default: DEFAULT_ICON
+      default: DEFAULT_ICON,
     },
     title: {
       type: String,
-      default: ''
-    }
-  }
-}
+      default: '',
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

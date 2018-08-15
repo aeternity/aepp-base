@@ -12,9 +12,9 @@
 <script>
 export default {
   props: {
-    bottom: { type: Boolean, default: false }
-  }
-}
+    bottom: { type: Boolean, default: false },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

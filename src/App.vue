@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components'
-import FooterMobile from './components/FooterMobile'
-import FooterDesktop from './components/FooterDesktop'
-import RemoveAppModal from './components/RemoveAppModal.vue'
-import AlertModal from './components/AlertModal'
+import { mapState } from 'vuex';
+import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components';
+import FooterMobile from './components/FooterMobile';
+import FooterDesktop from './components/FooterDesktop';
+import RemoveAppModal from './components/RemoveAppModal.vue';
+import AlertModal from './components/AlertModal';
 
 export default {
   components: {
@@ -44,18 +44,18 @@ export default {
     AeButton,
     RemoveAppModal,
     AlertModal,
-    AppFooter: process.env.IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop
+    AppFooter: process.env.IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop,
   },
   computed: mapState(['notification']),
-  created: function () {
+  created() {
     // set domain to base host because of iframe cross domain policy, very nice hardcoded urls
     if (document.domain.includes('aepps.com')) {
-      document.domain = 'aepps.com'
+      document.domain = 'aepps.com';
     } else if (document.domain.includes('aepps.dev')) {
-      document.domain = 'aepps.dev'
+      document.domain = 'aepps.dev';
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped lang="scss">

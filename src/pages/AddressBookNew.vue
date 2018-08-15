@@ -44,24 +44,26 @@
 </template>
 
 <script>
-import { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage.vue'
+import { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
-  components: { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider, MobilePage },
+  components: {
+    AeLabel, AeInput, AeAddressInput, AeButton, AeDivider, MobilePage,
+  },
   data: () => ({
     name: '',
-    address: ''
+    address: '',
   }),
   methods: {
-    async addAddressBookItem () {
-      if (!await this.$validator.validateAll()) return
-      const { name, address } = this
-      this.$store.commit('addAddressBookItem', { name, address })
-      this.$router.push({ name: 'address-book' })
-    }
-  }
-}
+    async addAddressBookItem() {
+      if (!await this.$validator.validateAll()) return;
+      const { name, address } = this;
+      this.$store.commit('addAddressBookItem', { name, address });
+      this.$router.push({ name: 'address-book' });
+    },
+  },
+};
 </script>
 
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />

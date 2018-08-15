@@ -1,13 +1,13 @@
-import { noop } from 'lodash'
+import { noop } from 'lodash';
 
 const store = {
   subscribe: noop,
-  watch: noop
-}
+  watch: noop,
+};
 
-export default store
+export default store;
 
-export const mockStore = newStore => {
-  Object.keys(store).forEach(key => delete store[key])
-  Object.assign(store, newStore)
-}
+export const mockStore = (newStore) => {
+  Object.keys(store).forEach(key => delete store[key]);
+  Object.assign(store, newStore);
+};

@@ -1,1 +1,1 @@
-export const roundToken = value => value
+export const roundToken = value => value;

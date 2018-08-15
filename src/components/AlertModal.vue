@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeButton, AeModalLight } from '@aeternity/aepp-components'
+import { mapState } from 'vuex';
+import { AeButton, AeModalLight } from '@aeternity/aepp-components';
 
 export default {
   components: { AeModalLight, AeButton },
-  computed: mapState(['alert'])
-}
+  computed: mapState(['alert']),
+};
 </script>
 
 <style lang="scss" scoped>

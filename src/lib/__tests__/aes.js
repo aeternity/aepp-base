@@ -1,28 +1,28 @@
-import AES from '../aes'
+import AES from '../aes';
 
 if (window.crypto && window.crypto.subtle) {
-  throw new Error('This tests should be rewritten using provided Web Crypto API')
+  throw new Error('This tests should be rewritten using provided Web Crypto API');
 }
 
 const getTestArray = length =>
-  new Uint8Array(length).map((_, idx) => idx)
+  new Uint8Array(length).map((_, idx) => idx);
 
 const genCryptTest = methodName => () => {
-  const testKey = getTestArray(16)
-  const testData = getTestArray(24)
-  const testResult = getTestArray(24).reverse
+  const testKey = getTestArray(16);
+  const testData = getTestArray(24);
+  const testResult = getTestArray(24).reverse;
   const cryptMethod = jest.fn().mockImplementation(() =>
-    new Promise(resolve => resolve(testResult)))
-  window.crypto = { subtle: { [methodName]: cryptMethod } }
+    new Promise(resolve => resolve(testResult)));
+  window.crypto = { subtle: { [methodName]: cryptMethod } };
 
-  const aes = new AES(testKey)
-  expect(aes[methodName](testData)).resolves.toBe(testResult)
+  const aes = new AES(testKey);
+  expect(aes[methodName](testData)).resolves.toBe(testResult);
   expect(cryptMethod).toHaveBeenCalledWith(
     { name: 'AES-CTR', counter: new Uint8Array(16), length: 128 },
     testKey,
-    testData
-  )
-}
+    testData,
+  );
+};
 
-it('encrypts', genCryptTest('encrypt'))
-it('decrypts', genCryptTest('decrypt'))
+it('encrypts', genCryptTest('encrypt'));
+it('decrypts', genCryptTest('decrypt'));
