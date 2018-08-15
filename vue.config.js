@@ -7,7 +7,9 @@ module.exports = {
   baseUrl: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   chainWebpack: config =>
-    config.plugin('define').tap(([definitions]) => {
+    config.plugin('define').tap((options) => {
+      const definitions = Object.assign({}, options[0]);
+
       Object.entries(definitions['process.env']).forEach(([k, v]) => {
         definitions[`process.env.${k}`] = v;
       });

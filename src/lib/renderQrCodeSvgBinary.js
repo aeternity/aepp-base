@@ -26,7 +26,10 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
     const outputWidth = Math.max(width, qrWidth);
     const outputHeight = Math.max(height, qrHeight);
 
-    const multiple = Math.min(Math.floor(outputWidth / qrWidth), Math.floor(outputHeight / qrHeight));
+    const multiple = Math.min(
+      Math.floor(outputWidth / qrWidth),
+      Math.floor(outputHeight / qrHeight),
+    );
 
     const leftPadding = Math.floor((outputWidth - (inputWidth * multiple)) / 2);
     const topPadding = Math.floor((outputHeight - (inputHeight * multiple)) / 2);
@@ -35,14 +38,22 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
 
     this.containerElement.appendChild(svgElement);
 
-    for (let inputY = 0, outputY = topPadding; inputY < inputHeight; inputY++, outputY += multiple) {
-      for (let inputX = 0, outputX = leftPadding; inputX < inputWidth; inputX++, outputX += multiple) {
+    for (let inputY = 0, outputY = topPadding;
+      inputY < inputHeight; inputY += 1, outputY += multiple) {
+      for (let inputX = 0, outputX = leftPadding;
+        inputX < inputWidth; inputX += 1, outputX += multiple) {
         if (input.get(inputX, inputY) === 1) {
           const isPartOfPositionPattern =
             (inputX < this.POSITION_SIDE && inputY < this.POSITION_SIDE) ||
             (inputX > inputWidth - this.POSITION_SIDE - 1 && inputY < this.POSITION_SIDE) ||
             (inputY > inputHeight - this.POSITION_SIDE - 1 && inputX < this.POSITION_SIDE);
-          const svgChildElement = this.createSvgChildElement(outputX, outputY, multiple, multiple, isPartOfPositionPattern);
+          const svgChildElement = this.createSvgChildElement(
+            outputX,
+            outputY,
+            multiple,
+            multiple,
+            isPartOfPositionPattern,
+          );
           svgElement.appendChild(svgChildElement);
         }
       }
@@ -59,8 +70,8 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
       el.setAttribute('height', w);
       el.setAttribute('width', h);
     } else {
-      el.setAttribute('cx', x + w / 2);
-      el.setAttribute('cy', y + h / 2);
+      el.setAttribute('cx', x + (w / 2));
+      el.setAttribute('cy', y + (h / 2));
       el.setAttribute('r', w * 0.4);
     }
     el.setAttribute('fill', this.FILL_COLOR);

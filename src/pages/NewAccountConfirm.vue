@@ -48,7 +48,7 @@
 <script>
 import { AeButton } from '@aeternity/aepp-components';
 import { shuffle } from 'lodash-es';
-import MobilePage from '../components/MobilePage';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
   components: { MobilePage, AeButton },

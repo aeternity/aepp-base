@@ -61,6 +61,7 @@ export default (store) => {
           case 'removeFollower':
             socket.emit('remove-follower', payload);
             break;
+          default:
         }
       }));
 
@@ -90,6 +91,7 @@ export default (store) => {
           case 'cancelTransaction':
             leader.call('cancelTransaction', store.state.desktop.transactionToSignByRemote.args.id);
             break;
+          default:
         }
       }));
     }

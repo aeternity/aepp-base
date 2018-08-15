@@ -16,7 +16,7 @@ export const convertCurrency = (fromCurrency, toCurrency, value = 1) => fetch(`h
   return {};
 }).then((body) => {
   const rate = parseFloat(body[toCurrency]);
-  return !isNaN(rate) ? value * rate : undefined;
+  return !Number.isNaN(rate) ? value * rate : undefined;
 });
 
 export const convertAEtoUSD = convertCurrency.bind(undefined, CURRENCIES.AE, CURRENCIES.USD);

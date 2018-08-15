@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Phone from '../components/OnboardingPhone';
+import Phone from '../components/OnboardingPhone.vue';
 
 export default {
   components: { Phone },

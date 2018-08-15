@@ -43,8 +43,8 @@
 
 <script>
 import { AeButton } from '@aeternity/aepp-components';
-import MobilePage from '../components/MobilePage';
-import HeaderDesktop from '../components/HeaderDesktop';
+import MobilePage from '../components/MobilePage.vue';
+import HeaderDesktop from '../components/HeaderDesktop.vue';
 
 export default {
   components: { MobilePage, AeButton, HeaderDesktop },

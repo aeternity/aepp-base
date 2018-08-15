@@ -64,8 +64,8 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components';
 import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry';
-import HeaderDesktop from '../components/HeaderDesktop';
-import HeaderMobile from '../components/HeaderMobile';
+import HeaderDesktop from '../components/HeaderDesktop.vue';
+import HeaderMobile from '../components/HeaderMobile.vue';
 
 export default {
   components: {
@@ -106,7 +106,10 @@ export default {
     ...mapMutations(['selectAppToRemove']),
     editMode(action = null) {
       if (!this.loggedIn) return;
-      if (action === 'cancel') return clearTimeout(this.editModeTmOut);
+      if (action === 'cancel') {
+        clearTimeout(this.editModeTmOut);
+        return;
+      }
       this.editModeTmOut = setTimeout(() => { this.editModeActive = true; }, 1000);
     },
     setNotification(visible) {

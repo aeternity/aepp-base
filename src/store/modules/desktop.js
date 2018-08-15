@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
+
 import uuid from 'uuid/v4';
 import { genRandomBuffer } from '../utils';
 

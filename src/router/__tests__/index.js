@@ -1,7 +1,7 @@
 import { createLocalVue } from '@vue/test-utils';
 import Router from 'vue-router';
 import { noop } from 'lodash-es';
-import '../../lib/initEnv.js';
+import '../../lib/initEnv';
 import router from '../';
 import { mockStore } from '../../store';
 

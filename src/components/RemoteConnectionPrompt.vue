@@ -31,7 +31,7 @@
 import { mapState } from 'vuex';
 import { AeAppIcon } from '@aeternity/aepp-components';
 import renderQrCodeSvgBinary from '../lib/renderQrCodeSvgBinary';
-import Step from './Step';
+import Step from './Step.vue';
 
 export default {
   components: { Step, AeAppIcon },

@@ -16,7 +16,7 @@
 
 <script>
 import { AeAppIcon } from '@aeternity/aepp-components';
-import Phone from '../components/OnboardingPhone';
+import Phone from '../components/OnboardingPhone.vue';
 
 export default {
   components: { AeAppIcon, Phone },

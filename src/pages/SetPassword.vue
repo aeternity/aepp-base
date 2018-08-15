@@ -62,7 +62,8 @@
 <script>
 import { mapState } from 'vuex';
 import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components';
-import MobilePage from '../components/MobilePage';
+import clappingHandsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f44f.png';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
   components: {
@@ -92,7 +93,7 @@ export default {
         });
         this.$store.dispatch('setNotification', {
           text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
-          icon: require('emoji-datasource-apple/img/apple/64/1f44f.png'),
+          icon: clappingHandsEmojiPath,
           autoClose: true,
         });
       } finally {
@@ -102,7 +103,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      vm.recover = from.name === 'recover';
+      vm.recover = from.name === 'recover'; // eslint-disable-line no-param-reassign
     });
   },
 };

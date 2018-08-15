@@ -50,7 +50,8 @@
 
 <script>
 import { AeLabel, AeInput, AeButton } from '@aeternity/aepp-components';
-import MobilePage from '../components/MobilePage';
+import lyingFaceEmojiPath from 'emoji-datasource-apple/img/apple/64/1f925.png';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
   components: {
@@ -68,7 +69,7 @@ export default {
         if (e.message !== 'Invalid password') throw e;
         this.$store.dispatch('setNotification', {
           text: 'You\'ve entered a wrong password',
-          icon: require('emoji-datasource-apple/img/apple/64/1f925.png'),
+          icon: lyingFaceEmojiPath,
           autoClose: true,
         });
       }

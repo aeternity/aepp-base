@@ -19,7 +19,7 @@
 <script>
 import { mapMutations } from 'vuex';
 import { AeAppIcon, AeButton } from '@aeternity/aepp-components';
-import Step from './Step';
+import Step from './Step.vue';
 
 export default {
   components: { Step, AeAppIcon, AeButton },

@@ -31,7 +31,7 @@
 
 <script>
 import { AeButton, AeIcon } from '@aeternity/aepp-components';
-import HeaderMobile from './HeaderMobile';
+import HeaderMobile from './HeaderMobile.vue';
 
 export default {
   components: { AeButton, AeIcon, HeaderMobile },

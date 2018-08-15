@@ -76,9 +76,9 @@ import {
   AeIdentity, AeIdentityAvatar, AeButton, AeDivider,
   AeLabel, AeInput, AeModalLight,
 } from '@aeternity/aepp-components';
-import MobilePage from '../components/MobilePage';
-import FixedAddButton from '../components/FixedAddButton';
-import ListItem from '../components/ListItem';
+import MobilePage from '../components/MobilePage.vue';
+import FixedAddButton from '../components/FixedAddButton.vue';
+import ListItem from '../components/ListItem.vue';
 import AeRadio from '../components/AeRadio.vue';
 import { roundToken } from '../lib/filters';
 

@@ -1,5 +1,6 @@
 import store from '../store';
 
+// eslint-disable-next-line import/prefer-default-export
 export const checkLoggedIn = requireLoggedIn => (to, from, next) => {
   if (!store.getters.loggedIn) {
     if (process.env.IS_MOBILE_DEVICE) {

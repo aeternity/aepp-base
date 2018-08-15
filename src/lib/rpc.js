@@ -28,7 +28,7 @@ export default class RpcPeer {
       case NOTIFICATION:
         this.handlers[message.method](...message.params);
         break;
-      case REQUEST:
+      case REQUEST: {
         const response = { id: message.id };
         try {
           response.result = await this.handlers[message.method](...message.params);
@@ -39,6 +39,9 @@ export default class RpcPeer {
         }
         this.send(response);
         break;
+      }
+      default:
+        throw new Error(`Invalid request message type: '${message.type}'`);
     }
   }
 
@@ -60,7 +63,8 @@ export default class RpcPeer {
   }
 
   call(method, ...params) {
-    const id = ++this.id;
+    this.id += 1;
+    const { id } = this;
     this.send({
       id, type: REQUEST, method, params,
     });

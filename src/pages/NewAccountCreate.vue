@@ -39,7 +39,7 @@
 <script>
 import { AeButton } from '@aeternity/aepp-components';
 import { generateMnemonic } from '@aeternity/bip39';
-import MobilePage from '../components/MobilePage';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
   components: { MobilePage, AeButton },

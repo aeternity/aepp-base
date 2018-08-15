@@ -100,7 +100,7 @@ import {
 } from '@aeternity/aepp-components';
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
 import { convertAEtoCHF } from '../lib/currencyConverter';
-import MobilePage from '../components/MobilePage';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
   components: {
@@ -159,7 +159,7 @@ export default {
     },
     fiatAmount() {
       const fiatAmount = this.aePrice * +this.amount;
-      return isNaN(fiatAmount) ? 'N/A' : fiatAmount.toFixed(2);
+      return Number.isNaN(fiatAmount) ? 'N/A' : fiatAmount.toFixed(2);
     },
     swiperOptionsTo() {
       const transfer = this;

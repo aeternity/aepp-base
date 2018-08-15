@@ -2,7 +2,7 @@ import Router from 'vue-router';
 import store from '../store';
 import mobileRoutes from './routes/mobile';
 import commonRoutes from './routes/common';
-import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt';
+import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt.vue';
 
 const router = new Router();
 
@@ -41,6 +41,7 @@ store.subscribe((mutation, state) => {
     case 'toggleRemoteConnectionPrompt':
       if (!state.desktop.showRemoteConnectionPrompt) store.commit('setLoginTarget');
       break;
+    default:
   }
 });
 

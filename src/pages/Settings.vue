@@ -33,8 +33,8 @@
 import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components';
 import MobilePage from '../components/MobilePage.vue';
-import SettingsHeading from '../components/SettingsHeading';
-import ListItem from '../components/ListItem';
+import SettingsHeading from '../components/SettingsHeading.vue';
+import ListItem from '../components/ListItem.vue';
 import networks from '../lib/networksRegistry';
 
 export default {

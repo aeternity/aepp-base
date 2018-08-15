@@ -32,10 +32,10 @@
 <script>
 import { mapState } from 'vuex';
 import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components';
-import FooterMobile from './components/FooterMobile';
-import FooterDesktop from './components/FooterDesktop';
+import FooterMobile from './components/FooterMobile.vue';
+import FooterDesktop from './components/FooterDesktop.vue';
 import RemoveAppModal from './components/RemoveAppModal.vue';
-import AlertModal from './components/AlertModal';
+import AlertModal from './components/AlertModal.vue';
 
 export default {
   components: {

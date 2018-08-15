@@ -1,9 +1,11 @@
+/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
-import desktop from './modules/desktop';
-import mobile from './modules/mobile';
+import desktopModule from './modules/desktop';
+import mobileModule from './modules/mobile';
 import persistState from './plugins/persistState';
 import pollBalance from './plugins/pollBalance';
 import initEpoch from './plugins/initEpoch';
@@ -49,7 +51,7 @@ const store = new Vuex.Store({
       ? [decryptAccounts, notificationOnRemoteConnection] : [],
   ],
 
-  modules: process.env.IS_MOBILE_DEVICE ? { mobile } : { desktop },
+  modules: process.env.IS_MOBILE_DEVICE ? { mobile: mobileModule } : { desktop: desktopModule },
 
   state: {
     loginTarget: '',
@@ -151,7 +153,9 @@ const store = new Vuex.Store({
         const el = document.createElement('html');
         el.innerHTML = text;
         name = el.getElementsByTagName('title')[0].innerText;
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
       name = name || prompt('Enter Title');
       commit('addApp', { path, name });
     },
@@ -159,7 +163,7 @@ const store = new Vuex.Store({
       addresses.forEach(address => dispatch('updateBalance', address));
     },
     async updateBalance({ state: { epoch, balances }, commit }, address) {
-      const balance = (await epoch.api.getAccountBalance(address)).balance;
+      const { balance } = await epoch.api.getAccountBalance(address);
       if (balances[address] === balance) return;
       commit('setBalance', { address, balance });
     },

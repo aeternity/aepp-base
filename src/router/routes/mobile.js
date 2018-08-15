@@ -2,11 +2,11 @@ import { checkLoggedIn } from '../utils';
 import store from '../../store/index';
 import Intro from '../../pages/Intro.vue';
 import Onboarding from '../../pages/Onboarding.vue';
-import OnboardingActiveAccount from '../../pages/OnboardingActiveAccount';
-import OnboardingAepps from '../../pages/OnboardingAepps';
-import OnboardingSecureAccount from '../../pages/OnboardingSecureAccount';
-import OnboardingWelcome from '../../pages/OnboardingWelcome';
-import OnboardingYourAccounts from '../../pages/OnboardingYourAccounts';
+import OnboardingActiveAccount from '../../pages/OnboardingActiveAccount.vue';
+import OnboardingAepps from '../../pages/OnboardingAepps.vue';
+import OnboardingSecureAccount from '../../pages/OnboardingSecureAccount.vue';
+import OnboardingWelcome from '../../pages/OnboardingWelcome.vue';
+import OnboardingYourAccounts from '../../pages/OnboardingYourAccounts.vue';
 import Login from '../../pages/Login.vue';
 import Recover from '../../pages/Recover.vue';
 import NewAccount from '../../pages/NewAccount.vue';
@@ -19,7 +19,10 @@ const SettingsRemoteConnectionNew = () =>
   import('../../pages/SettingsRemoteConnectionNew.vue');
 
 const checkSeedPassed = (to, from, next) => {
-  if (!to.params.seed) return next({ name: 'intro' });
+  if (!to.params.seed) {
+    next({ name: 'intro' });
+    return;
+  }
   next();
 };
 
@@ -29,7 +32,8 @@ export default [{
   component: Intro,
   beforeEnter(to, from, next) {
     if (!from.name && store.state.mobile.keystore) {
-      return next({ name: 'login' });
+      next({ name: 'login' });
+      return;
     }
     next();
   },
@@ -62,8 +66,14 @@ export default [{
   path: '/login',
   component: Login,
   beforeEnter(to, from, next) {
-    if (!store.state.mobile.keystore) return next({ name: 'new-account' });
-    if (store.getters.loggedIn) return next({ name: 'apps' });
+    if (!store.state.mobile.keystore) {
+      next({ name: 'new-account' });
+      return;
+    }
+    if (store.getters.loggedIn) {
+      next({ name: 'apps' });
+      return;
+    }
     next();
   },
 }, {

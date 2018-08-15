@@ -54,7 +54,7 @@
 import { mapState } from 'vuex';
 import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components';
 import { validateMnemonic } from '@aeternity/bip39';
-import MobilePage from '../components/MobilePage';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
   components: {

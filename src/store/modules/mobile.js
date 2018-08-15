@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
+
 import Vue from 'vue';
 import uuid from 'uuid/v4';
 import { Crypto } from '@aeternity/aepp-sdk/src';
@@ -55,7 +57,7 @@ export default {
     },
     createIdentity(state, name) {
       state.names.push(name);
-      state.accountCount++;
+      state.accountCount += 1;
     },
     setAccounts(state, accounts) {
       state.accounts = accounts
