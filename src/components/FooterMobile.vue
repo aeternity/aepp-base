@@ -22,8 +22,8 @@
 import { mapState } from 'vuex'
 import Accounts from '../pages/Accounts.vue'
 import QuickId from './QuickId.vue'
-import ApproveMessage from '../dialogs/ApproveMessage.vue'
-import ApproveTransaction from '../dialogs/ApproveTransaction.vue'
+import ApproveMessage from './ApproveMessage.vue'
+import ApproveTransaction from './ApproveTransaction.vue'
 
 export default {
   components: { QuickId, Accounts, ApproveMessage, ApproveTransaction },
