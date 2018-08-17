@@ -85,7 +85,7 @@ export default {
       this.working = true
 
       try {
-        await this.$store.dispatch('createKeystore', {
+        await this.$store.dispatch('createWithPassword', {
           password: this.password,
           seed: this.seed
         })

@@ -25,6 +25,7 @@ export default new Vuex.Store({
         selectedIdentityIdx,
         addressBook,
         mobile: {
+          hasMasterKey: mobile.hasMasterKey,
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
           followers: Object

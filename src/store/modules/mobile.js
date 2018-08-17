@@ -23,7 +23,9 @@ const derivePasswordKey = async (password, salt) => {
 
 export default {
   state: {
-    keystore: false,
+    masterKey: null,
+    hasMasterKey: false,
+    keystore: null,
     derivedKey: null,
     accountCount: 0,
     accounts: {},
@@ -34,11 +36,24 @@ export default {
   },
 
   getters: {
-    addresses: ({ accounts }) => Object.keys(accounts),
-    loggedIn: ({ keystore, derivedKey }) => !!(keystore && derivedKey)
+    addresses ({ accounts }) {
+      return Object.keys(accounts)
+    },
+    loggedIn ({ masterKey, keystore, derivedKey }) {
+      if (derivedKey) {
+        return !!(keystore && derivedKey)
+      }
+      return !!masterKey
+    }
   },
 
   mutations: {
+    setMasterKey (state, masterKey) {
+      state.masterKey = masterKey
+    },
+    setHasMasterKey (state, hasMasterKey) {
+      state.hasMasterKey = hasMasterKey
+    },
     setKeystore (state, keystore) {
       state.keystore = keystore
     },
@@ -58,7 +73,8 @@ export default {
         .reduce((p, n) => ({ ...p, [Crypto.getReadablePublicKey(n.publicKey)]: n }), {})
     },
     signOut (state) {
-      state.keystore = false
+      state.hasMasterKey = false
+      state.keystore = null
       state.derivedKey = null
     },
     signTransaction (state, transaction) {
@@ -98,7 +114,7 @@ export default {
      * to the promise
      * @return {Promise<any>}
      */
-    async isSecure () {
+    async initSecureStorage () {
       if (window.SecureStorage) {
         /**
          * Instantiate a new secureStorage instance
@@ -115,28 +131,6 @@ export default {
         await secureStorage.init()
 
         /**
-         * Also check if the device is already secure, in case
-         * is false, then TODO: display a notification or an error
-         * message to notify user to secure the device!
-         */
-        const isDeviceSecure = await secureStorage.isDeviceSecure()
-
-        /**
-         * Reply with some kind of message to the user
-         * in case the device is not secure.
-         *
-         * Best approach for this would be to tell user to go
-         * to "settings" page and enable the secureDevice
-         * which will in turn redirect user to the phone settings
-         * where he will have to setup either:
-         * - finger print
-         * - pass/pin code
-         */
-        if (!isDeviceSecure) {
-          throw new Error('The device does not have security protection!')
-        }
-
-        /**
          * If everything resolves, resolve with SecureStorage
          */
         return secureStorage
@@ -146,16 +140,55 @@ export default {
     },
 
     /**
+     * Check if the device has a security system in place
+     * @param dispatch
+     * @return {Promise<*>}
+     */
+    async isDeviceSecure ({ dispatch }) {
+      /**
+       * Bootstrapping secureStorage
+       */
+      const secureStorage = await dispatch('initSecureStorage')
+
+      /**
+       * Also check if the device is already secure, in case
+       * is false, then TODO: display a notification or an error
+       * message to notify user to secure the device!
+       */
+      const isDeviceSecure = await secureStorage.isDeviceSecure()
+
+      /**
+       * Reply with some kind of message to the user
+       * in case the device is not secure.
+       *
+       * Best approach for this would be to tell user to go
+       * to "settings" page and enable the secureDevice
+       * which will in turn redirect user to the phone settings
+       * where he will have to setup either:
+       * - finger print
+       * - pass/pin code
+       */
+      if (!isDeviceSecure) {
+        throw new Error('The device does not have security protection!')
+      }
+
+      /**
+       * Return reference of secureStorage (in case its needed)
+       */
+      return secureStorage
+    },
+
+    /**
      * Sets the the Master key on SecureStorage
      * @param dispatch
      * @param payload
      * @return {Promise<any>}
      */
-    async setMasterKey ({dispatch}, payload) {
+    async setMasterKey ({ dispatch }, payload) {
       /**
        * Fetch local Storage instance
        */
-      const storage = await dispatch('isSecure')
+      const storage = await dispatch('isDeviceSecure')
 
       /**
        * Set the item and check if there's any
@@ -182,7 +215,7 @@ export default {
       /**
        * Fetch local Storage instance
        */
-      const storage = await dispatch('isSecure')
+      const storage = await dispatch('isDeviceSecure')
 
       /**
        * Fetch Key
@@ -198,6 +231,77 @@ export default {
           : value)
     },
 
+    /**
+     * Create a master key and return its value
+     * @param context
+     * @param seed
+     * @return {Promise<void>}
+     */
+    async createMasterKey ({ commit, dispatch }, seed) {
+      const masterKey = generateHDWallet(mnemonicToSeed(seed))
+      await dispatch('setMasterKey', masterKey)
+      commit('setMasterKey', masterKey)
+      commit('setHasMasterKey', true)
+      return undefined
+    },
+
+    /**
+     * Unlock/get Master key and commit
+     * @param commit
+     * @param dispatch
+     * @return {Promise<undefined>}
+     */
+    async unlockMasterKey ({ commit, dispatch }) {
+      const masterKey = await dispatch('getMasterKey')
+      commit('setMasterKey', masterKey)
+      return undefined
+    },
+
+    /**
+     * Lock masterKey with a derived password
+     * @return {Promise<void>}
+     */
+    async createWithPassword ({ commit, dispatch }, { seed, password }) {
+      const salt = genRandomBuffer(16)
+      const masterKey = generateHDWallet(mnemonicToSeed(seed))
+      const derivedKey = await derivePasswordKey(password, salt)
+      const aes = new AES(derivedKey)
+      const mac = await aes.encrypt(new Uint8Array(2))
+      const privateKey = await aes.encrypt(masterKey.privateKey)
+      const chainCode = await aes.encrypt(masterKey.chainCode)
+
+      commit('setKeystore', { privateKey, chainCode, mac, salt })
+      commit('setDerivedKey', derivedKey)
+      commit('resetAccountCount')
+      commit('selectIdentity', 0)
+    },
+
+    /**
+     * Unlock key with password derived security
+     * @param state
+     * @param commit
+     * @param dispatch
+     * @param masterKey
+     * @param password
+     * @return {Promise<void>}
+     */
+    async unlockWithPassword ({ state, commit, dispatch }, password) {
+      const derivedKey = await derivePasswordKey(password, state.keystore.salt)
+      const aes = new AES(derivedKey)
+      await aes.decrypt(state.keystore.privateKey)
+      await aes.decrypt(state.keystore.chainCode)
+      const mac = new Uint8Array(await aes.decrypt(state.keystore.mac))
+
+      if (mac.reduce((p, n) => p || n !== 0, false)) {
+        throw new Error('Invalid password')
+      }
+
+      commit('setDerivedKey', derivedKey)
+    },
+
+    /**
+     * TODO: Follow up on this later
+     */
     async createKeystore ({ commit, dispatch }, { password, seed }) {
       const salt = genRandomBuffer(16)
       const passwordDerivedKey = await derivePasswordKey(password, salt)
@@ -215,7 +319,6 @@ export default {
       commit('setDerivedKey', passwordDerivedKey)
       commit('setKeystore', true)
     },
-
     async unlockKeystore ({ commit, state, dispatch }, password) {
       const keystore = await dispatch('getMasterKey')
       const passwordDerivedKey = await derivePasswordKey(password, keystore.salt)

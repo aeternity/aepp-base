@@ -61,7 +61,7 @@ export default {
     async unlockSavedKeystore () {
       if (!await this.$validator.validateAll()) return
       try {
-        await this.$store.dispatch('unlockKeystore', this.password)
+        await this.$store.dispatch('unlockWithPassword', this.password)
       } catch (e) {
         if (e.message !== 'Invalid password') throw e
         this.$store.dispatch('setNotification', {

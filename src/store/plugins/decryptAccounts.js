@@ -3,9 +3,12 @@ import AES from '../../lib/aes'
 
 export default store =>
   store.watch(
-    ({ mobile: { keystore, accountCount, derivedKey } }) => [keystore, accountCount, derivedKey],
-    async ([keystore, accountCount, derivedKey]) => {
-      if (!keystore || !derivedKey) return
+    ({ mobile: { masterKey, keystore, accountCount, derivedKey } }) => [masterKey, keystore, accountCount, derivedKey],
+    async ([masterKey, keystore, accountCount, derivedKey]) => {
+      if (!keystore || !derivedKey) {
+        store.commit('setAccounts', getHDWalletAccounts(masterKey, accountCount))
+        return
+      }
       const aes = new AES(derivedKey)
       const wallet = {
         privateKey: await aes.decrypt(keystore.privateKey),

@@ -64,8 +64,8 @@ const initialize = function (App) {
  * First check if the device has loaded everything,
  * in this case is true, then load Vuejs application
  */
-document.addEventListener(
-  process.env.IS_CORDOVA ? 'deviceready' : 'onload',
-  initialize.bind(null, App),
-  false
-)
+if (process.env.IS_CORDOVA) {
+  document.addEventListener('deviceready', initialize.bind(null, App), false)
+} else {
+  window.addEventListener('load', initialize.bind(null, App), false)
+}

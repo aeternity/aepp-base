@@ -73,19 +73,39 @@ export default {
     },
     async confirmPhrase () {
       const isValid = this.selectedSeed === this.seed
-      await this.$store.dispatch('alert', isValid ? {
-        title: 'Correct Passphrase!',
-        text: 'Proceed to your æpp browser. Enjoy the æpp ecosystem!',
-        buttonText: 'Create password'
-      } : {
-        title: 'Incorrect passphrase',
-        text: 'You\'ve entered a wrong passphrase, try again before proceeding.',
-        buttonText: 'Try again'
-      })
-      if (isValid) {
-        this.$router.push({ name: 'set-password', params: { seed: this.seed } })
-      } else {
-        this.selectedWordIds = []
+
+      try {
+        await this.$store.dispatch('isDeviceSecure')
+        if (isValid) {
+          await this.$store.dispatch('createMasterKey', this.seed)
+          await this.$store.dispatch('alert', {
+            title: 'Correct Passphrase!',
+            text: 'Proceed to your æpp browser. Enjoy the æpp ecosystem!'
+          })
+        } else {
+          await this.$store.dispatch('alert', {
+            title: 'Incorrect passphrase',
+            text: 'You\'ve entered a wrong passphrase, try again before proceeding.',
+            buttonText: 'Try again'
+          })
+          this.selectedWordIds = []
+        }
+      } catch (e) {
+        await this.$store.dispatch('alert', isValid ? {
+          title: 'Correct Passphrase!',
+          text: 'Proceed to your æpp browser. Enjoy the æpp ecosystem!',
+          buttonText: 'Create password'
+        } : {
+          title: 'Incorrect passphrase',
+          text: 'You\'ve entered a wrong passphrase, try again before proceeding.',
+          buttonText: 'Try again'
+        })
+
+        if (isValid) {
+          this.$router.push({ name: 'set-password', params: { seed: this.seed } })
+        } else {
+          this.selectedWordIds = []
+        }
       }
     }
   }

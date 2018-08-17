@@ -28,7 +28,7 @@ export default [{
   path: '/',
   component: Intro,
   beforeEnter (to, from, next) {
-    if (!from.name && store.state.mobile.keystore) {
+    if (!from.name && (store.state.mobile.keystore || store.state.mobile.hasMasterKey)) {
       return next({ name: 'login' })
     }
     next()
@@ -62,8 +62,16 @@ export default [{
   path: '/login',
   component: Login,
   beforeEnter (to, from, next) {
-    if (!store.state.mobile.keystore) return next({ name: 'new-account' })
+    if (!store.state.mobile.keystore && !store.state.mobile.hasMasterKey) {
+      return next({ name: 'new-account' })
+    }
+
     if (store.getters.loggedIn) return next({ name: 'apps' })
+
+    if (store.state.mobile.hasMasterKey) {
+      return store.dispatch('unlockMasterKey').catch(() => next())
+    }
+
     next()
   }
 }, {
