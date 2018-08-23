@@ -81,15 +81,5 @@ export default {
       vertical-align: text-bottom;
     }
   }
-
-  /deep/ a {
-    color: inherit;
-    text-decoration: inherit;
-  }
-
-  /deep/ h1 {
-    font-size: 26px;
-    letter-spacing: 0.65px;
-  }
 }
 </style>

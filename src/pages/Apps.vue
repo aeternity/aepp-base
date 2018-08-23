@@ -178,6 +178,11 @@ export default {
       margin: auto #{270 / 1440 * 100vw};
     }
 
+    a {
+      color: $darker;
+      text-decoration: none;
+    }
+
     .app-shortcut {
       display: flex;
       flex-direction: column;

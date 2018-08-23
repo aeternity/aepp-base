@@ -43,6 +43,8 @@ export default {
   align-items: center;
   border-bottom: 2px solid #f0f0f0;
   padding: 0 20px;
+  text-decoration: none;
+  color: $darker;
 
   &.exciting {
     color: $aubergine;
