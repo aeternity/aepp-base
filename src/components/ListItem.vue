@@ -19,18 +19,18 @@ export default {
     type: {
       type: String,
       validator: value => ['exciting', 'dramatic'].includes(value),
-      default: undefined
+      default: undefined,
     },
-    inactive: { type: Boolean, default: false }
+    inactive: { type: Boolean, default: false },
   },
   computed: {
-    renderAs () {
-      if (this.to) return 'router-link'
-      if (this.inactive) return 'div'
-      return 'label'
-    }
-  }
-}
+    renderAs() {
+      if (this.to) return 'router-link';
+      if (this.inactive) return 'div';
+      return 'label';
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -43,6 +43,8 @@ export default {
   align-items: center;
   border-bottom: 2px solid #f0f0f0;
   padding: 0 20px;
+  text-decoration: none;
+  color: $darker;
 
   &.exciting {
     color: $aubergine;

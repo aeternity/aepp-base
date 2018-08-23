@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import Phone from '../components/OnboardingPhone'
+import Phone from '../components/OnboardingPhone.vue';
 
 export default {
-  components: { Phone }
-}
+  components: { Phone },
+};
 </script>
 
 <style lang="scss" scoped>

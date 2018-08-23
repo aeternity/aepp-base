@@ -49,21 +49,23 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import { AeIdentity, AeIcon, AeOverlay, AeIdentityLight } from '@aeternity/aepp-components'
+import { mapGetters, mapMutations } from 'vuex';
+import { AeIdentity, AeIcon, AeOverlay, AeIdentityLight } from '@aeternity/aepp-components';
 
 export default {
-  components: { AeIdentity, AeIcon, AeOverlay, AeIdentityLight },
+  components: {
+    AeIdentity, AeIcon, AeOverlay, AeIdentityLight,
+  },
   props: {
     'show-back-button': { type: Boolean, default: false },
-    closable: { type: Boolean, default: false }
+    closable: { type: Boolean, default: false },
   },
   computed: mapGetters({
     identity: 'activeIdentity',
-    loggedIn: 'loggedIn'
+    loggedIn: 'loggedIn',
   }),
-  methods: mapMutations(['toggleRemoteConnectionPrompt'])
-}
+  methods: mapMutations(['toggleRemoteConnectionPrompt']),
+};
 </script>
 
 <style scoped lang="scss">

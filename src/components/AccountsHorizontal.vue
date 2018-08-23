@@ -43,19 +43,19 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components'
-import { roundToken } from '../lib/filters'
+import { mapGetters, mapMutations } from 'vuex';
+import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components';
+import { roundToken } from '../lib/filters';
 
 export default {
   components: { AeIdentity, AeButton, AeDivider },
   filters: { roundToken },
   computed: mapGetters(['identities', 'activeIdentity', 'totalBalance']),
-  mounted () {
-    this.$store.dispatch('updateAllBalances')
+  mounted() {
+    this.$store.dispatch('updateAllBalances');
   },
-  methods: mapMutations(['selectIdentity'])
-}
+  methods: mapMutations(['selectIdentity']),
+};
 </script>
 
 <style scoped lang="scss">

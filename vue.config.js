@@ -1,26 +1,32 @@
-const parseBool = val => val ? JSON.parse(val) : false
+const parseBool = val => (val ? JSON.parse(val) : false);
 
-const { IS_MOBILE_DEVICE } = process.env
-const IS_CORDOVA = parseBool(process.env.IS_CORDOVA)
+const { IS_MOBILE_DEVICE, IS_PWA } = process.env;
+const IS_CORDOVA = parseBool(process.env.IS_CORDOVA);
 
 module.exports = {
   baseUrl: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   chainWebpack: config =>
-    config.plugin('define').tap(([definitions]) => {
-      Object.entries(definitions['process.env']).forEach(([k, v]) => {
-        definitions[`process.env.${k}`] = v
-      })
-      delete definitions['process.env']
+    config.plugin('define').tap((options) => {
+      const definitions = Object.assign({}, options[0]);
 
-      definitions['process.env.IS_CORDOVA'] = IS_CORDOVA
+      Object.entries(definitions['process.env']).forEach(([k, v]) => {
+        definitions[`process.env.${k}`] = v;
+      });
+      delete definitions['process.env'];
+
+      definitions['process.env.IS_CORDOVA'] = IS_CORDOVA;
 
       if (IS_CORDOVA || IS_MOBILE_DEVICE) {
         definitions['process.env.IS_MOBILE_DEVICE'] =
-          IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE)
+          IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
       }
 
-      return [definitions]
+      if (IS_PWA) {
+        definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA);
+      }
+
+      return [definitions];
     }),
   pwa: {
     name: 'Base æpp',
@@ -30,9 +36,9 @@ module.exports = {
       favicon16: 'favicons/favicon-16x16.png',
       appleTouchIcon: 'favicons/apple-touch-icon.png',
       maskIcon: 'favicons/safari-pinned-tab.svg',
-      msTileImage: 'favicons/mstile-150x150.png'
+      msTileImage: 'favicons/mstile-150x150.png',
     },
     themeColor: '#f7296e',
-    msTileColor: '#f7296e'
-  }
-}
+    msTileColor: '#f7296e',
+  },
+};

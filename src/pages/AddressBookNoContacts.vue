@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import { AeDivider } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage.vue'
-import FixedAddButton from '../components/FixedAddButton.vue'
+import { AeDivider } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage.vue';
+import FixedAddButton from '../components/FixedAddButton.vue';
 
 export default {
-  components: { AeDivider, MobilePage, FixedAddButton }
-}
+  components: { AeDivider, MobilePage, FixedAddButton },
+};
 </script>
 
 <style lang="scss" scoped>

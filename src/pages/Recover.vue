@@ -51,31 +51,33 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components'
-import { validateMnemonic } from '@aeternity/bip39'
-import MobilePage from '../components/MobilePage'
+import { mapState } from 'vuex';
+import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components';
+import { validateMnemonic } from '@aeternity/bip39';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
-  components: { MobilePage, AeTextarea, AeLabel, AeButton },
-  data () {
-    return { seed: '' }
+  components: {
+    MobilePage, AeTextarea, AeLabel, AeButton,
+  },
+  data() {
+    return { seed: '' };
   },
   computed: mapState(['keystore']),
   methods: {
-    async setSeed () {
-      if (!await this.$validator.validateAll()) return
+    async setSeed() {
+      if (!await this.$validator.validateAll()) return;
 
       if (validateMnemonic(this.seed)) {
-        this.$router.push({ name: 'set-password', params: { seed: this.seed } })
+        this.$router.push({ name: 'set-password', params: { seed: this.seed } });
       } else {
         this.$store.dispatch('setNotification', {
-          text: `Invalid passphrase`,
-          autoClose: true
-        })
+          text: 'Invalid passphrase',
+          autoClose: true,
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />

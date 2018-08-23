@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeIcon, AeAppIcon, AeDivider } from '@aeternity/aepp-components'
-import AddressBookNoContacts from './AddressBookNoContacts.vue'
-import AddressBookItem from '../components/AddressBookItem.vue'
-import FixedAddButton from '../components/FixedAddButton.vue'
-import MobilePage from '../components/MobilePage.vue'
+import { mapState } from 'vuex';
+import { AeIcon, AeAppIcon, AeDivider } from '@aeternity/aepp-components';
+import AddressBookNoContacts from './AddressBookNoContacts.vue';
+import AddressBookItem from '../components/AddressBookItem.vue';
+import FixedAddButton from '../components/FixedAddButton.vue';
+import MobilePage from '../components/MobilePage.vue';
 
 export default {
   components: {
@@ -51,13 +51,13 @@ export default {
     AddressBookItem,
     AddressBookNoContacts,
     FixedAddButton,
-    MobilePage
+    MobilePage,
   },
   data: () => ({
-    openIdx: -1
+    openIdx: -1,
   }),
-  computed: mapState(['addressBook'])
-}
+  computed: mapState(['addressBook']),
+};
 </script>
 
 <style lang="scss" scoped>

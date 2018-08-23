@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage'
-import HeaderDesktop from '../components/HeaderDesktop'
+import { AeButton } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage.vue';
+import HeaderDesktop from '../components/HeaderDesktop.vue';
 
 export default {
   components: { MobilePage, AeButton, HeaderDesktop },
@@ -54,18 +54,18 @@ export default {
       'onboarding-your-accounts',
       'onboarding-aepps',
       'onboarding-active-account',
-      'onboarding-secure-account'
-    ]
+      'onboarding-secure-account',
+    ],
   }),
   computed: {
-    currentStepIdx () {
-      return this.stepRouteNames.indexOf(this.$route.name)
+    currentStepIdx() {
+      return this.stepRouteNames.indexOf(this.$route.name);
     },
-    isLastStep () {
-      return this.currentStepIdx === this.stepRouteNames.length - 1
-    }
-  }
-}
+    isLastStep() {
+      return this.currentStepIdx === this.stepRouteNames.length - 1;
+    },
+  },
+};
 </script>
 
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />

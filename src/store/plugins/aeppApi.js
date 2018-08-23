@@ -1,4 +1,4 @@
-export default store => {
+export default (store) => {
   const methods = {
     getAccount: () =>
       store.getters.activeIdentity && store.getters.activeIdentity.address,
@@ -6,28 +6,28 @@ export default store => {
       store.dispatch('signTransaction', { transaction, appName: origin }),
     signPersonalMessage: ({ message, address }, origin) =>
       store.dispatch('signPersonalMessage', { message, address, appName: origin }),
-    handShake: () => null
-  }
+    handShake: () => null,
+  };
 
   window.addEventListener('message', async ({ data, origin, source }) => {
     if (!data.uuid || !methods[data.method]) {
       // this message isnt meant for us
-      return
+      return;
     }
 
-    let error = null
-    let payload = null
+    let error = null;
+    let payload = null;
     try {
-      payload = await methods[data.method](data.payload, origin)
+      payload = await methods[data.method](data.payload, origin);
     } catch (e) {
-      error = e.toString()
+      error = e.toString();
     }
 
     source.postMessage({
       uuid: data.uuid,
       method: `${data.method}Return`,
       error,
-      payload
-    }, origin)
-  })
-}
+      payload,
+    }, origin);
+  });
+};

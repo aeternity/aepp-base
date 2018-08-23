@@ -30,25 +30,25 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { AeIcon } from '@aeternity/aepp-components'
-import MobilePage from '../components/MobilePage.vue'
-import SettingsHeading from '../components/SettingsHeading'
-import ListItem from '../components/ListItem'
-import networks from '../lib/networksRegistry'
+import { mapState, mapMutations } from 'vuex';
+import { AeIcon } from '@aeternity/aepp-components';
+import MobilePage from '../components/MobilePage.vue';
+import SettingsHeading from '../components/SettingsHeading.vue';
+import ListItem from '../components/ListItem.vue';
+import networks from '../lib/networksRegistry';
 
 export default {
   components: {
     AeIcon,
     MobilePage,
     Heading: SettingsHeading,
-    Item: ListItem
+    Item: ListItem,
   },
   computed: mapState({
-    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name
+    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name,
   }),
-  methods: mapMutations(['signOut'])
-}
+  methods: mapMutations(['signOut']),
+};
 </script>
 
 <style src="./Settings.scss" lang="scss" scoped />

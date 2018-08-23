@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import { AeAppIcon } from '@aeternity/aepp-components'
-import Phone from '../components/OnboardingPhone'
+import { AeAppIcon } from '@aeternity/aepp-components';
+import Phone from '../components/OnboardingPhone.vue';
 
 export default {
-  components: { AeAppIcon, Phone }
-}
+  components: { AeAppIcon, Phone },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -28,31 +28,30 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { AeAppIcon } from '@aeternity/aepp-components'
-import renderQrCodeSvgBinary from '../lib/renderQrCodeSvgBinary'
-import Step from './Step'
+import { mapState } from 'vuex';
+import { AeAppIcon } from '@aeternity/aepp-components';
+import renderQrCodeSvgBinary from '../lib/renderQrCodeSvgBinary';
+import Step from './Step.vue';
 
 export default {
   components: { Step, AeAppIcon },
   computed: mapState({
-    peerId: ({ desktop }) => desktop.peerId
+    peerId: ({ desktop }) => desktop.peerId,
   }),
   watch: {
-    peerId () {
-      this.renderQrCode()
-    }
+    peerId() {
+      this.renderQrCode();
+    },
   },
-  mounted () {
-    this.renderQrCode()
+  mounted() {
+    this.renderQrCode();
   },
   methods: {
-    renderQrCode () {
-      this.$refs.qrCode.replaceWith(
-        renderQrCodeSvgBinary(Buffer.from(this.peerId, 'base64'), 170))
-    }
-  }
-}
+    renderQrCode() {
+      this.$refs.qrCode.replaceWith(renderQrCodeSvgBinary(Buffer.from(this.peerId, 'base64'), 170));
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
