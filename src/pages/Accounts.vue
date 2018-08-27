@@ -7,7 +7,7 @@
       @close="toggleIdManager">
       <label class="active-account">Active address</label>
       <ae-identity
-        :identity="activeIdentity"
+        v-bind="activeIdentity"
         class="active-account"
         active
       />
@@ -49,8 +49,9 @@
           placeholder="Placeholder" />
         <ae-button
           slot="buttons"
-          size="smaller"
+          size="small"
           type="exciting"
+          plain
           uppercase
           @click="modalVisible = false"
         >
@@ -58,8 +59,9 @@
         </ae-button>
         <ae-button
           slot="buttons"
-          size="smaller"
+          size="small"
           type="dramatic"
+          plain
           uppercase
           @click="handleAddAddress"
         >

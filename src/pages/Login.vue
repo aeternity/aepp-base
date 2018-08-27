@@ -18,7 +18,7 @@
         type="password"
       />
       <ae-button
-        :inactive="errors.any()"
+        :disabled="errors.any()"
         type="exciting"
       >Login</ae-button>
     </form>

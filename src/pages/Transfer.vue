@@ -22,7 +22,7 @@
         :key="i.address">
         <ae-identity
           :active="false"
-          :identity="i"
+          v-bind="i"
           :collapsed="false"
           size="big" />
       </swiper-slide>
@@ -42,7 +42,7 @@
         v-model="to"
         name="addressTo"
         data-vv-delay="1"
-        placeholder="ak$••••••••••••••••••••••••••••••••••••••••••••••••"
+        placeholder="ak$ ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• •••"
       />
       <div class="buttons">
         <ae-button
@@ -75,9 +75,8 @@
     <div class="fiat-amount">≈ {{ fiatAmount }} CHF</div>
 
     <ae-button
-      :inactive="errors.any()"
+      :disabled="errors.any()"
       type="dramatic"
-      class="send-button"
       @click="send"
     >
       <img
@@ -213,7 +212,7 @@ export default {
 <style lang="css" src="swiper/dist/css/swiper.css" />
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables';
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
 .transfer.mobile-page {
   .swiper-container /deep/ {
@@ -245,9 +244,7 @@ export default {
     margin-bottom: 15px;
 
     .ae-button {
-      width: auto;
       min-width: 25%;
-      margin: 0;
     }
   }
 
@@ -260,16 +257,6 @@ export default {
     margin-top: -20px;
     margin-bottom: 20px;
     text-transform: uppercase;
-  }
-
-  .send-button {
-    margin-bottom: 80px;
-
-    img {
-      height: 20px;
-      margin-left: 50px;
-      margin-right: -50px;
-    }
   }
 }
 </style>

@@ -18,7 +18,7 @@
         monospace
       />
       <ae-button
-        :inactive="errors.any()"
+        :disabled="errors.any()"
         type="dramatic"
       >Recover with Passphrase</ae-button>
     </form>

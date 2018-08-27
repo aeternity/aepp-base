@@ -60,3 +60,9 @@ export default {
 </script>
 
 <style lang="scss" scoped src="./AddressBook.scss" />
+
+<style lang="scss" scoped>
+.address-book .ae-link {
+  text-decoration: none;
+}
+</style>

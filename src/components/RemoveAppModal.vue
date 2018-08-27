@@ -8,8 +8,9 @@
 
     <template slot="buttons">
       <ae-button
-        size="smaller"
+        size="small"
         type="exciting"
+        plain
         uppercase
         @click="selectAppToRemove()"
       >
@@ -17,8 +18,9 @@
       </ae-button>
 
       <ae-button
-        size="smaller"
+        size="small"
         type="dramatic"
+        plain
         uppercase
         @click="removeSelectedApp"
       >

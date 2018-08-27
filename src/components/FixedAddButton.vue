@@ -27,7 +27,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
 @import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .fixed-add-button {

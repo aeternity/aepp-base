@@ -19,11 +19,10 @@
       />
       <div class="add-button-wrapper">
         <ae-button
-          :inactive="!url || appAddingByUrl || errors.has('url')"
-          class="add"
+          :disabled="!url || appAddingByUrl || errors.has('url')"
           plain
           type="dramatic"
-          size="smaller"
+          size="small"
           uppercase
         >
           <ae-icon
@@ -75,9 +74,10 @@
         <div class="content">
           <h2>{{ app.name }}</h2>
           <ae-button
-            :inactive="app.added"
+            :disabled="app.added"
             type="dramatic"
-            size="smaller"
+            size="small"
+            plain
             uppercase>
             <ae-icon
               slot="icon"
@@ -159,27 +159,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@aeternity/aepp-components/dist/variables";
+@import '~@aeternity/aepp-components/dist/variables.scss';
 
 .add-app.mobile-page {
   /deep/ .panel {
     margin-top: 0;
   }
 
-  .ae-button._size_smaller {
-    padding-right: 0;
-    padding-left: 0;
-
-    .ae-icon {
-      margin-left: 0;
-      margin-right: 6px;
+  form {
+    .ae-input {
+      margin-bottom: 4px;
     }
-  }
 
-  .add-button-wrapper {
-    text-align: right;
-    margin-top: -20px;
-    margin-bottom: 20px;
+    .add-button-wrapper {
+      text-align: right;
+    }
   }
 
   .app {
@@ -194,6 +188,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      align-items: flex-start;
       margin-left: 15px;
 
       &:before, &:after {

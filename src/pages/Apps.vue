@@ -128,7 +128,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@aeternity/aepp-components/dist/mixins";
+@import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .apps {
   @include abovePhone {
@@ -157,12 +157,6 @@ export default {
 
     @include phone {
       display: none;
-    }
-
-    .ae-button .ae-icon {
-      width: 24px;
-      height: 24px;
-      margin: 13px;
     }
   }
 
@@ -210,7 +204,7 @@ export default {
         &:hover .remove-app-btn, .remove-app-btn.visible {
           visibility: visible;
           opacity: 1;
-          transform: translate(48%, -50%) scale(.58, .58);
+          transform: translate(48%, -50%) scale(.8, .8);
           transition: opacity 300ms 500ms, transform 300ms 500ms, visibility 0s 500ms;
         }
 

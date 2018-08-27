@@ -11,7 +11,7 @@
         <h2>Active account</h2>
         <div>
           <ae-identity
-            :identity="activeIdentity"
+            v-bind="activeIdentity"
             active>
             <ae-divider v-if="identities.length > 1" />
           </ae-identity>
@@ -26,7 +26,7 @@
             v-for="(identity, index) in identities"
             v-if="identity !== activeIdentity"
             :key="identity.address"
-            :identity="identity"
+            v-bind="identity"
           >
             <ae-divider />
             <ae-button

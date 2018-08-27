@@ -7,7 +7,6 @@
           v-if="backButton || closeButton"
           :slot="backButton ? 'left' : 'right'"
           plain
-          size="small"
           @click="closeHandler"
         >
           <ae-icon
@@ -52,8 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@aeternity/aepp-components/dist/variables.scss";
-@import "~@aeternity/aepp-components/dist/mixins.scss";
+@import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .mobile-page {
   $overlay-padding: 10px;
