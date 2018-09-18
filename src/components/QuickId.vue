@@ -1,78 +1,61 @@
 <template>
-  <ae-identity-background
-    class="quick-id"
-    type="dramatic"
-    @click="showIdManager">
-    <template v-if="showBackButton">
-      <router-link
-        :to="{ name: 'apps' }"
-        class="back-button"
-        @click.native.stop
-      />
-      <div class="vertical-ruler" />
-    </template>
-    <ae-identity-light
-      v-bind="identity"
-      active
-      collapsed
-      invert />
-    <ae-icon
-      name="chevron"
-      rotate="270"
-      type="dramatic"
-      invert />
-  </ae-identity-background>
+  <div class="quick-id">
+    <router-link :to="{ name: 'apps' }">Browser</router-link>
+    <router-link :to="{ name: 'transfer' }">Wallet</router-link>
+    <router-link :to="{ name: 'accounts' }">
+      <ae-identity-avatar :address="identity.address" />
+    </router-link>
+    <router-link :to="{ name: 'address-book' }">Contacts</router-link>
+    <router-link :to="{ name: 'settings' }">Settings</router-link>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIdentityBackground, AeIdentityLight, AeIcon } from '@aeternity/aepp-components';
+import { AeIdentityAvatar } from '@aeternity/aepp-components';
 
 export default {
-  name: 'QuickId',
-  components: { AeIdentityBackground, AeIdentityLight, AeIcon },
-  props: {
-    'show-back-button': { type: Boolean, default: false },
-  },
+  components: { AeIdentityAvatar },
   computed: mapGetters({
     identity: 'activeIdentity',
   }),
-  methods: {
-    showIdManager() {
-      this.$store.commit('toggleIdManager');
-    },
-  },
 };
 </script>
 
 <style scoped lang="scss">
 .quick-id {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 40px);
-  max-width: 350px;
-  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
   align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: #001833;
 
-  .back-button {
-    width: 25px;
-    height: 25px;
-    background: url('../assets/icons/grid.svg') no-repeat;
-    background-size: contain;
-  }
+  a {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: 0.2px;
+    color: #76818c;
+    text-decoration: none;
 
-  .vertical-ruler {
-    margin: 0 15px;
-    height: 30px;
-    background-color: rgba(#ffffff, .5);
-    width: 2px;
-  }
+    .ae-identity-avatar {
+      width: 42px;
+      height: 42px;
+      border: 2px solid #000;
+      box-shadow: 0 0 0 2px #ff0d6a;
+    }
 
-  .ae-identity-light {
-    flex-grow: 1;
-    margin-right: 10px;
+    &.router-link-active {
+      color: #fff;
+
+      .ae-identity-avatar {
+        box-shadow: 0 0 0 2px #fff;
+      }
+    }
   }
 }
 </style>

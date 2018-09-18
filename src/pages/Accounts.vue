@@ -1,75 +1,75 @@
 <template>
-  <transition name="slide">
-    <mobile-page
-      class="accounts"
-      title="My Accounts"
-      close-button
-      @close="toggleIdManager">
-      <label class="active-account">Active address</label>
-      <ae-identity
-        v-bind="activeIdentity"
-        class="active-account"
-        active
+  <mobile-page
+    class="accounts"
+    title="My Accounts"
+  >
+    <label class="active-account">Active address</label>
+    <ae-identity
+      v-bind="activeIdentity"
+      class="active-account"
+      active
+    />
+
+    <list-item>
+      <div class="arrow">↪</div>
+      <div class="content">
+        <div class="title">Total Balance</div>
+        <div class="subtitle">{{ totalBalance }} AE</div>
+      </div>
+    </list-item>
+
+    <list-item
+      v-for="(identity, index) in identities"
+      :key="index">
+      <ae-identity-avatar :address="identity.address" />
+      <div class="content">
+        <div class="title">{{ identity.name }}</div>
+        <div class="subtitle">{{ identity.balance }} AE</div>
+      </div>
+      <ae-radio
+        slot="right"
+        :checked="index === selectedIdentityIdx"
+        @change="selectIdentity(index)"
       />
+    </list-item>
 
-      <list-item>
-        <div class="arrow">↪</div>
-        <div class="content">
-          <div class="title">Total Balance</div>
-          <div class="subtitle">{{ totalBalance }} AE</div>
-        </div>
-      </list-item>
+    <fixed-add-button
+      quick-id
+      @click="modalVisible = true"
+    />
 
-      <list-item
-        v-for="(identity, index) in identities"
-        :key="index">
-        <ae-identity-avatar :address="identity.address" />
-        <div class="content">
-          <div class="title">{{ identity.name }}</div>
-          <div class="subtitle">{{ identity.balance }} AE</div>
-        </div>
-        <ae-radio
-          slot="right"
-          :checked="index === selectedIdentityIdx"
-          @change="selectIdentity(index)"
-        />
-      </list-item>
-
-      <fixed-add-button @click="modalVisible = true" />
-
-      <ae-modal-light
-        v-if="modalVisible"
-        title="Add New Account"
-        @close="modalVisible = false"
+    <ae-modal-light
+      v-if="modalVisible"
+      title="Add New Account"
+      @close="modalVisible = false"
+    >
+      <ae-label :for="_uid">Name Account</ae-label>
+      <ae-input
+        :id="_uid"
+        v-model="newAccountName"
+        placeholder="Placeholder" />
+      <ae-button
+        slot="buttons"
+        size="small"
+        type="exciting"
+        plain
+        uppercase
+        @click="modalVisible = false"
       >
-        <ae-label :for="_uid">Name Account</ae-label>
-        <ae-input
-          :id="_uid"
-          v-model="newAccountName"
-          placeholder="Placeholder" />
-        <ae-button
-          slot="buttons"
-          size="small"
-          type="exciting"
-          plain
-          uppercase
-          @click="modalVisible = false"
-        >
-          cancel
-        </ae-button>
-        <ae-button
-          slot="buttons"
-          size="small"
-          type="dramatic"
-          plain
-          uppercase
-          @click="handleAddAddress"
-        >
-          add account
-        </ae-button>
-      </ae-modal-light>
-    </mobile-page>
-  </transition>
+        cancel
+      </ae-button>
+      <ae-button
+        slot="buttons"
+        size="small"
+        type="dramatic"
+        plain
+        uppercase
+        @click="handleAddAddress"
+      >
+        add account
+      </ae-button>
+    </ae-modal-light>
+  </mobile-page>
 </template>
 
 <script>
@@ -125,22 +125,7 @@ export default {
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
 .accounts {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
   background: linear-gradient(to bottom, white, #f1f4f7);
-
-  &.slide {
-    &-enter-active, &-leave-active {
-      transition: top 500ms, opacity 500ms;
-    }
-    &-enter, &-leave-to {
-      top: 100%;
-      opacity: 0;
-    }
-  }
 
   label.active-account {
     display: flex;
