@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import VeeValidate, { Validator } from 'vee-validate';
 import { focus } from 'vue-focus';
 import './lib/initEnv';
+import './lib/switchWebmanifest';
 import App from './App.vue';
 import router from './router';
 import store from './store';
