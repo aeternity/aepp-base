@@ -1,3 +1,4 @@
+os: osx
 language: node_js
 node_js:
 - '8'
@@ -9,10 +10,17 @@ before_install:
 install:
 - travis_wait npm install
 before_deploy:
-- npm run build
+- /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+- brew install imagemagick
+- npm run build:cordova
+- npx cordova prepare ios
+- npm run gen:cordova-resources
+- npm run build:ios
+- tar -czvf aeternity.app.tar.gz -C platforms/ios/build/emulator aeternity.app
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: bash scripts/deploy.sh
-    on:
-      all_branches: true
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: aeternity.app.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
