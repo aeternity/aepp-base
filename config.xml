@@ -30,9 +30,6 @@
     <feature name="SplashScreen">
         <param name="onload" value="true" />
     </feature>
-    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-        <string>To scan QR Codes</string>
-    </edit-config>
     <engine name="browser" spec="^5.0.3" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^6.3.0" />
