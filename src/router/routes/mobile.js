@@ -113,7 +113,4 @@ export default [{
   path: '/settings/remote-connection/new',
   component: SettingsRemoteConnectionNew,
   beforeEnter: checkLoggedIn(true),
-  meta: {
-    displayFooter: true,
-  },
 }];
