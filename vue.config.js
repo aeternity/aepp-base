@@ -30,7 +30,7 @@ module.exports = {
     }),
   pwa: {
     name: 'Base æpp',
-    manifestPath: 'favicons/site.webmanifest',
+    manifestPath: 'default.webmanifest',
     iconPaths: {
       favicon32: 'favicons/favicon-32x32.png',
       favicon16: 'favicons/favicon-16x16.png',
