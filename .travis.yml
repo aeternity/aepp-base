@@ -1,18 +1,31 @@
 language: node_js
+os:
+  - linux
+  - osx
 node_js:
-- '8'
+  - '8'
 cache:
   directories:
     - node_modules
+    - platforms
+    - plugins
 before_install:
-- npm i -g npm@6.1.0
+  - npm i -g npm@6.1.0
 install:
-- travis_wait npm install
-before_deploy:
-- npm run build
+  - travis_wait scripts/install.sh
+script:
+  - if [[ $TRAVIS_OS_NAME != "osx" ]]; then npm test; fi
+before_deploy: scripts/before-deploy.sh
 deploy:
   - provider: script
     skip_cleanup: true
-    script: bash scripts/deploy.sh
+    script: scripts/deploy.sh
     on:
       all_branches: true
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file: aeternity.app.tar.gz
+    skip_cleanup: true
+    on:
+      condition: $TRAVIS_OS_NAME = osx
+      tags: true
