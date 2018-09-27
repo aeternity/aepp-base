@@ -4,28 +4,17 @@ import mobileRoutes from './routes/mobile';
 import commonRoutes from './routes/common';
 import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt.vue';
 
-const router = new Router();
-
-if (
-  process.env.IS_MOBILE_DEVICE &&
-  !process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS
-) {
-  router.addRoutes([{
-    path: '/',
-    component: AddToHomeScreenPrompt,
-  }]);
-}
-
-if (
-  process.env.IS_MOBILE_DEVICE &&
-  (process.env.IS_CORDOVA || process.env.IS_PWA || process.env.IS_IOS)
-) {
-  router.addRoutes(mobileRoutes);
-}
-
-if (!process.env.IS_MOBILE_DEVICE || process.env.IS_CORDOVA || process.env.IS_PWA) {
-  router.addRoutes(commonRoutes);
-}
+const router = new Router({
+  routes:
+    process.env.IS_MOBILE_DEVICE
+      ? (!process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS
+        && [{
+          path: '/',
+          component: AddToHomeScreenPrompt,
+        }])
+        || [...mobileRoutes, ...commonRoutes]
+      : commonRoutes,
+});
 
 store.watch(
   (state, { loggedIn }) => loggedIn,
