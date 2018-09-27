@@ -27,6 +27,7 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <preference name="SplashScreen" value="screen" />
+    <preference name="DisallowOverscroll" value="true" />
     <feature name="SplashScreen">
         <param name="onload" value="true" />
     </feature>
