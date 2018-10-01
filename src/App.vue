@@ -61,9 +61,12 @@ export default {
 <style scoped lang="scss">
 #app {
   -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
 
   &.quick-id-hidden {
     padding-bottom: 0;
