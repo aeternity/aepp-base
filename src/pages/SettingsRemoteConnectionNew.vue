@@ -20,14 +20,14 @@
 
 <script>
 import ResultMetadataType from '@zxing/library/esm5/core/ResultMetadataType';
+import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
 import MobilePage from '../components/MobilePage.vue';
-import QrCodeReader from '../lib/QrCodeReader';
 
 export default {
   components: { MobilePage },
   data: () => ({
     cameraAllowed: false,
-    reader: new QrCodeReader(),
+    reader: new BrowserQRCodeReader(),
   }),
   watch: {
     async cameraAllowed(value) {
@@ -47,12 +47,7 @@ export default {
         }
         // eslint-disable-next-line no-await-in-loop
         const result = await this.reader.decodeFromInputVideoDevice(
-          {
-            facingMode: 'environment',
-            aspectRatio: 1,
-            width: { min: 360, ideal: 720, max: 1920 },
-            height: { min: 240, ideal: 720, max: 1080 },
-          },
+          undefined,
           this.$refs.qrCodeVideo,
         );
         data = Buffer.from(result.resultMetadata.get(ResultMetadataType.BYTE_SEGMENTS)[0]);
@@ -97,7 +92,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@aeternity/aepp-components/dist/mixins.scss';
+
 .settings {
+  @include phone {
+    /deep/ .panel .content {
+      margin-bottom: 0;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+
   .permission-denied {
     text-align: center;
     line-height: 1.56;
@@ -106,7 +111,14 @@ export default {
   }
 
   video {
+    display: block;
     width: 100%;
+    object-fit: cover;
+
+    @include phone {
+      position: absolute;
+      height: 100%;
+    }
   }
 }
 </style>

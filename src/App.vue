@@ -62,6 +62,8 @@ export default {
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
   display: flex;
   flex-direction: column;
 
