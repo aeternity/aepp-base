@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import ResultMetadataType from '@zxing/library/esm5/core/ResultMetadataType';
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
 import MobilePage from '../components/MobilePage.vue';
 
@@ -50,7 +49,7 @@ export default {
           undefined,
           this.$refs.qrCodeVideo,
         );
-        data = Buffer.from(result.resultMetadata.get(ResultMetadataType.BYTE_SEGMENTS)[0]);
+        data = Buffer.from(result.getText(), 'base64');
       } while (data.length !== 15);
 
       this.$store.commit('addFollower', {

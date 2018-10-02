@@ -1,17 +1,6 @@
 import { BrowserQRCodeSvgWriter } from '@zxing/library/esm5/browser/BrowserQRCodeSvgWriter';
-import Mode from '@zxing/library/esm5/core/qrcode/decoder/Mode';
 import ErrorCorrectionLevel from '@zxing/library/esm5/core/qrcode/decoder/ErrorCorrectionLevel';
 import Encoder from '@zxing/library/esm5/core/qrcode/encoder/Encoder';
-
-class BinaryEncoder extends Encoder {
-  static chooseMode() {
-    return Mode.BYTE;
-  }
-
-  static appendBytes(content, mode, bits) {
-    content.forEach(byte => bits.appendBits(byte, 8));
-  }
-}
 
 class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
   FILL_COLOR = '#311b58'
@@ -81,4 +70,4 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
 
 export default (content, side) =>
   new QRCodeFancySvgWriter(document.createElement('div'))
-    .renderResult(BinaryEncoder.encode(content, ErrorCorrectionLevel.L), side, side, 0);
+    .renderResult(Encoder.encode(content, ErrorCorrectionLevel.L), side, side, 0);
