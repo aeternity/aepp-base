@@ -20,7 +20,7 @@
     "@aeternity/aepp-sdk": "^0.15.0-0.1.0",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
-    "@zxing/library": "0.7.0",
+    "@zxing/library": "^0.8.3",
     "emoji-datasource-apple": "^4.0.3",
     "fuse.js": "^3.2.0",
     "lodash-es": "^4.17.10",
