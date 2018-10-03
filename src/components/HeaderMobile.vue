@@ -14,7 +14,7 @@
 
 <style lang="scss" scoped>
 .header-mobile {
-  margin: 20px 14px;
+  padding: 20px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;

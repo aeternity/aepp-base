@@ -1,37 +1,51 @@
 <template>
-  <mobile-page
-    :redirect-to-on-close="{ name: 'settings-remote-connection' }"
-    title="Remote Connection"
-    back-button
-    class="settings"
-  >
-    <video
+  <div class="settings-remote-connection-new">
+    <header-mobile>
+      <ae-button
+        slot="left"
+        :to="{ name: 'settings-remote-connection' }"
+        plain
+      >
+        <ae-icon
+          slot="icon"
+          name="arrow"
+          rotate="180"
+        />
+      </ae-button>
+      Remote Connection
+    </header-mobile>
+
+    <div
+      v-if="browserReader"
       v-show="cameraAllowed"
-      ref="qrCodeVideo"
-    />
+      class="video-wrapper"
+    >
+      <video ref="qrCodeVideo" />
+    </div>
     <div
       v-if="!cameraAllowed"
       class="permission-denied"
     >
       We don't have access to the camera to scan a QR code.
     </div>
-  </mobile-page>
+  </div>
 </template>
 
 <script>
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
-import MobilePage from '../components/MobilePage.vue';
+import { AeButton, AeIcon } from '@aeternity/aepp-components';
+import HeaderMobile from '../components/HeaderMobile.vue';
 
 export default {
-  components: { MobilePage },
+  components: { HeaderMobile, AeButton, AeIcon },
   data: () => ({
     cameraAllowed: false,
-    reader: new BrowserQRCodeReader(),
+    browserReader: !process.env.IS_CORDOVA && new BrowserQRCodeReader(),
   }),
   watch: {
     async cameraAllowed(value) {
       if (!value) {
-        this.reader.reset();
+        this.cancelScan();
         return;
       }
 
@@ -45,11 +59,7 @@ export default {
           });
         }
         // eslint-disable-next-line no-await-in-loop
-        const result = await this.reader.decodeFromInputVideoDevice(
-          undefined,
-          this.$refs.qrCodeVideo,
-        );
-        data = Buffer.from(result.getText(), 'base64');
+        data = Buffer.from(await this.scan(), 'base64');
       } while (data.length !== 15);
 
       this.$store.commit('addFollower', {
@@ -61,14 +71,10 @@ export default {
   },
   async mounted() {
     if (process.env.IS_CORDOVA) {
-      const { permissions } = window.cordova.plugins;
       await new Promise((resolve, reject) =>
-        permissions.requestPermission(
-          permissions.CAMERA,
-          ({ hasPermission }) =>
-            (hasPermission ? resolve() : reject(new Error('Denied to use the camera'))),
-          reject,
-        ));
+        window.QRScanner.prepare((error, status) =>
+          (!error && status.authorized
+            ? resolve() : reject(error || new Error('Denied to use the camera')))));
       this.cameraAllowed = true;
       return;
     }
@@ -85,7 +91,28 @@ export default {
     this.cameraAllowed = true;
   },
   beforeDestroy() {
-    this.reader.reset();
+    this.cancelScan();
+  },
+  methods: {
+    async scan() {
+      return process.env.IS_CORDOVA
+        ? new Promise((resolve, reject) => {
+          window.QRScanner.scan((error, text) =>
+            (!error && text ? resolve(text) : reject(error)));
+          window.QRScanner.show();
+          document.getElementById('app').style.background = 'transparent';
+        })
+        : (await this.browserReader.decodeFromInputVideoDevice(
+          undefined,
+          this.$refs.qrCodeVideo,
+        )).getText();
+    },
+    cancelScan() {
+      if (process.env.IS_CORDOVA) {
+        document.getElementById('app').style.background = '';
+        window.QRScanner.destroy();
+      } else this.browserReader.reset();
+    },
   },
 };
 </script>
@@ -93,32 +120,34 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/mixins.scss';
 
-.settings {
-  @include phone {
-    /deep/ .panel .content {
-      margin-bottom: 0;
-      overflow: hidden;
-      position: relative;
-    }
+.settings-remote-connection-new {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .header-mobile {
+    background: #fff;
   }
 
   .permission-denied {
     text-align: center;
     line-height: 1.56;
-    padding: 60px 20px;
+    padding: 0 20px;
+    margin: auto;
     font-size: 18px;
   }
 
-  video {
-    display: block;
-    width: 100%;
-    object-fit: cover;
+  .video-wrapper {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
 
-    @include phone {
+    video {
+      object-fit: cover;
       position: absolute;
+      width: 100%;
       height: 100%;
     }
   }
 }
 </style>
-<style src="./Settings.scss" lang="scss" scoped />

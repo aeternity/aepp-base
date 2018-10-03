@@ -163,7 +163,7 @@ export default {
   .shortcuts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-    margin: 50px 10px 10px 10px;
+    margin: 30px 10px 10px 10px;
     grid-gap: 30px 10px;
     justify-items: center;
 
