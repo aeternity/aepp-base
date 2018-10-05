@@ -30,7 +30,7 @@
 <script>
 import { mapState } from 'vuex';
 import { AeAppIcon } from '@aeternity/aepp-components';
-import renderQrCodeSvgBinary from '../lib/renderQrCodeSvgBinary';
+import renderQrCodeSvg from '../lib/renderQrCodeSvg';
 import Step from './Step.vue';
 
 export default {
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     renderQrCode() {
-      this.$refs.qrCode.replaceWith(renderQrCodeSvgBinary(Buffer.from(this.peerId, 'base64'), 170));
+      this.$refs.qrCode.replaceWith(renderQrCodeSvg(this.peerId, 170));
     },
   },
 };
