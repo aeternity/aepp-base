@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@aeternity/aepp-components": "2.0.12",
-    "@aeternity/aepp-sdk": "^0.15.0-0.1.0",
+    "@aeternity/aepp-sdk": "^0.22.0-0.1.0-beta.1",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
     "@zxing/library": "^0.8.3",
