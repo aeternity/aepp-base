@@ -38,23 +38,36 @@
           </ae-identity>
         </div>
       </div>
+      <ae-button
+        v-if="ableToCreateAccount"
+        type="dramatic"
+        @click="createAccount"
+      >
+        <ae-icon
+          slot="icon"
+          name="plus"
+          invert
+          type="exciting" />
+      </ae-button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { AeIdentity, AeButton, AeDivider } from '@aeternity/aepp-components';
+import { AeIdentity, AeButton, AeIcon, AeDivider } from '@aeternity/aepp-components';
 import { roundToken } from '../lib/filters';
 
 export default {
-  components: { AeIdentity, AeButton, AeDivider },
+  components: {
+    AeIdentity, AeButton, AeIcon, AeDivider,
+  },
   filters: { roundToken },
-  computed: mapGetters(['identities', 'activeIdentity', 'totalBalance']),
+  computed: mapGetters(['identities', 'activeIdentity', 'totalBalance', 'ableToCreateAccount']),
   mounted() {
     this.$store.dispatch('updateAllBalances');
   },
-  methods: mapMutations(['selectIdentity']),
+  methods: mapMutations(['selectIdentity', 'createAccount']),
 };
 </script>
 
@@ -150,10 +163,6 @@ export default {
 
         .ae-identity {
           margin-right: 30px;
-
-          &:last-child {
-            margin-right: 0;
-          }
         }
       }
     }

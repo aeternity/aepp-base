@@ -9,14 +9,25 @@ export default {
     remoteConnected: false,
     transactionToSignByRemote: null,
     showRemoteConnectionPrompt: false,
+    ledgerConnected: false,
+    ledgerAccountNumber: 1,
+    ledgerAddresses: [],
   },
 
   getters: {
-    addresses: (state, getters, { addresses }) => addresses,
-    loggedIn: ({ remoteConnected }) => remoteConnected,
+    addresses: ({ ledgerConnected, ledgerAddresses }, getters, { addresses }) =>
+      (ledgerConnected ? ledgerAddresses : addresses),
+    loggedIn: ({ ledgerConnected, remoteConnected }) => ledgerConnected || remoteConnected,
+    ableToCreateAccount: ({ ledgerConnected }) => ledgerConnected,
+    signingCancelable: ({ ledgerConnected }) => !ledgerConnected,
   },
 
   mutations: {
+    createAccount(state) {
+      if (state.ledgerConnected) {
+        state.ledgerAccountNumber += 1;
+      }
+    },
     setRemoteConnected(state, remoteConnected) {
       state.showRemoteConnectionPrompt = false;
       state.remoteConnected = remoteConnected;
@@ -27,6 +38,13 @@ export default {
     cancelTransaction() {},
     toggleRemoteConnectionPrompt(state) {
       state.showRemoteConnectionPrompt = !state.showRemoteConnectionPrompt;
+    },
+    setLedgerConnected(state, ledgerConnected) {
+      state.showRemoteConnectionPrompt = false;
+      state.ledgerConnected = ledgerConnected;
+    },
+    setLedgerAddresses(state, ledgerAddresses) {
+      state.ledgerAddresses = ledgerAddresses;
     },
   },
 
