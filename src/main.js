@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import VeeValidate, { Validator } from 'vee-validate';
 import { focus } from 'vue-focus';
+import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
 import App from './App.vue';

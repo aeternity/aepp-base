@@ -1,21 +1,34 @@
 <template>
   <div class="quick-id">
-    <router-link :to="{ name: 'apps' }">Browser</router-link>
-    <router-link :to="{ name: 'transfer' }">Wallet</router-link>
+    <router-link :to="{ name: 'apps' }">
+      <ae-icon name="grid" />
+      Browser
+    </router-link>
+    <router-link :to="{ name: 'transfer' }">
+      <ae-icon name="transfer" />
+      Wallet
+    </router-link>
     <router-link :to="{ name: 'accounts' }">
       <ae-identity-avatar :address="identity.address" />
     </router-link>
-    <router-link :to="{ name: 'address-book' }">Contacts</router-link>
-    <router-link :to="{ name: 'settings' }">Settings</router-link>
+    <router-link :to="{ name: 'address-book' }">
+      <ae-icon name="contacts" />
+      Contacts
+    </router-link>
+    <router-link :to="{ name: 'settings' }">
+      <ae-icon name="settings" />
+      Settings
+    </router-link>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { AeIdentityAvatar } from '@aeternity/aepp-components';
+import { AeIcon } from '@aeternity/aepp-components-3';
 
 export default {
-  components: { AeIdentityAvatar },
+  components: { AeIdentityAvatar, AeIcon },
   computed: mapGetters({
     identity: 'activeIdentity',
   }),
@@ -41,6 +54,13 @@ export default {
     letter-spacing: 0.2px;
     color: #76818c;
     text-decoration: none;
+    text-align: center;
+
+    .ae-icon {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 4px;
+    }
 
     .ae-identity-avatar {
       width: 42px;
