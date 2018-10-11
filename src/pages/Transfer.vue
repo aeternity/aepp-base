@@ -196,14 +196,14 @@ export default {
         transaction: {
           fee: 1,
           amount: Math.floor(amount),
-          sender: this.activeIdentity.address,
-          recipientPubkey: to,
+          senderId: this.activeIdentity.address,
+          recipientId: to,
           payload: '',
           ttl: Number.MAX_SAFE_INTEGER,
         },
         appName: 'Transfer',
       });
-      await this.epoch.api.postTx({ tx: signedTx });
+      await this.epoch.api.postTransaction({ tx: signedTx });
     },
   },
 };

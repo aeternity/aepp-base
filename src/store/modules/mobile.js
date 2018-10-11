@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import uuid from 'uuid/v4';
-import { Crypto } from '@aeternity/aepp-sdk/src';
+import { Crypto } from '@aeternity/aepp-sdk/es';
 import { mnemonicToSeed } from '@aeternity/bip39';
 import { generateHDWallet } from '@aeternity/hd-wallet/src';
 import AES from '../../lib/aes';
@@ -61,7 +61,7 @@ export default {
     },
     setAccounts(state, accounts) {
       state.accounts = accounts
-        .reduce((p, n) => ({ ...p, [Crypto.getReadablePublicKey(n.publicKey)]: n }), {});
+        .reduce((p, n) => ({ ...p, [Crypto.aeEncodeKey(n.publicKey)]: n }), {});
     },
     signOut(state) {
       state.keystore = null;
@@ -127,7 +127,7 @@ export default {
       { transaction, appName, id = uuid() },
     ) {
       const spendTx = (await epoch.api.postSpend(transaction)).tx;
-      const binaryTx = Crypto.decodeBase58Check(spendTx.split('$')[1]);
+      const binaryTx = Crypto.decodeBase58Check(spendTx.split('_')[1]);
       await new Promise((resolve, reject) =>
         commit('signTransaction', {
           transaction,
@@ -136,7 +136,7 @@ export default {
           reject,
           id,
         }));
-      const signature = Crypto.sign(binaryTx, accounts[transaction.sender].secretKey);
+      const signature = Crypto.sign(binaryTx, accounts[transaction.senderId].secretKey);
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
     },
     async signPersonalMessage(

@@ -6,17 +6,17 @@
     />
     <div class="flow">
       <div
-        :title="`from ${transaction.sender}`"
+        :title="`from ${transaction.senderId}`"
         class="id">
-        <ae-identity-avatar :address="transaction.sender" />
-        {{ transaction.sender }}
+        <ae-identity-avatar :address="transaction.senderId" />
+        {{ transaction.senderId }}
       </div>
       <ae-icon name="arrow" />
       <div
-        :title="`to ${transaction.recipientPubkey}`"
+        :title="`to ${transaction.recipientId}`"
         class="id">
-        <ae-identity-avatar :address="transaction.recipientPubkey" />
-        {{ transaction.recipientPubkey }}
+        <ae-identity-avatar :address="transaction.recipientId" />
+        {{ transaction.recipientId }}
       </div>
     </div>
 

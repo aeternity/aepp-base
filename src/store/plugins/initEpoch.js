@@ -1,12 +1,12 @@
-import Epoch from '@aeternity/aepp-sdk/src';
+import { EpochChain } from '@aeternity/aepp-sdk/es';
 
 export default store =>
   store.watch(
     ({ rpcUrl }) => rpcUrl,
     async (rpcUrl) => {
-      const epoch = await Epoch.create(rpcUrl);
+      const epoch = await EpochChain({ url: rpcUrl, internalUrl: rpcUrl });
       store.commit('setEpoch', epoch);
-      store.commit('setNetworkId', (await epoch.api.getVersion()).genesisHash.slice(-8));
+      store.commit('setNetworkId', (await epoch.api.getStatus()).genesisKeyBlockHash.slice(-8));
     },
     { immediate: true },
   );
