@@ -38,7 +38,6 @@ export default {
 <style scoped lang="scss">
 .quick-id {
   display: flex;
-  justify-content: space-around;
   align-items: center;
   position: fixed;
   left: 0;
@@ -48,6 +47,8 @@ export default {
   background-color: #001833;
 
   a {
+    flex-grow: 1;
+    flex-basis: 0;
     font-size: 11px;
     font-weight: 500;
     line-height: 1.45;
