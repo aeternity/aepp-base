@@ -1,7 +1,6 @@
 <template>
   <div>
-    <quick-id :show-back-button="showBackButton" />
-    <accounts v-if="showIdManager" />
+    <quick-id />
     <div
       v-if="messageToApprove || transactionToApprove"
       class="modal-dialogs-wrapper"
@@ -20,20 +19,15 @@
 
 <script>
 import { mapState } from 'vuex';
-import Accounts from '../pages/Accounts.vue';
 import QuickId from './QuickId.vue';
 import ApproveMessage from './ApproveMessage.vue';
 import ApproveTransaction from './ApproveTransaction.vue';
 
 export default {
   components: {
-    QuickId, Accounts, ApproveMessage, ApproveTransaction,
-  },
-  props: {
-    showBackButton: { type: Boolean, default: false },
+    QuickId, ApproveMessage, ApproveTransaction,
   },
   computed: {
-    ...mapState(['showIdManager']),
     ...mapState({
       messageToApprove: ({ mobile }) => mobile.messageToApprove,
       transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],

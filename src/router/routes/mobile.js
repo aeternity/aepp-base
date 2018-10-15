@@ -13,6 +13,7 @@ import NewAccount from '../../pages/NewAccount.vue';
 import NewAccountCreate from '../../pages/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
 import SetPassword from '../../pages/SetPassword.vue';
+import Accounts from '../../pages/Accounts.vue';
 import SettingsRemoteConnection from '../../pages/SettingsRemoteConnection.vue';
 
 const SettingsRemoteConnectionNew = () =>
@@ -100,6 +101,14 @@ export default [{
   component: SetPassword,
   beforeEnter: checkSeedPassed,
   props: true,
+}, {
+  name: 'accounts',
+  path: '/accounts',
+  component: Accounts,
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
 }, {
   name: 'settings-remote-connection',
   path: '/settings/remote-connection',
