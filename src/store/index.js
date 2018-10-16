@@ -9,6 +9,7 @@ import mobileModule from './modules/mobile';
 import persistState from './plugins/persistState';
 import pollBalance from './plugins/pollBalance';
 import initEpoch from './plugins/initEpoch';
+import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection';
 import decryptAccounts from './plugins/decryptAccounts';
@@ -39,6 +40,7 @@ const store = new Vuex.Store({
       } : {
         desktop: {
           peerId: desktop.peerId,
+          ledgerAccountNumber: desktop.ledgerAccountNumber,
         },
       },
     })),
@@ -48,7 +50,7 @@ const store = new Vuex.Store({
     aeppApi,
     registerServiceWorker,
     ...process.env.IS_MOBILE_DEVICE
-      ? [decryptAccounts, notificationOnRemoteConnection] : [],
+      ? [decryptAccounts, notificationOnRemoteConnection] : [ledgerConnection],
   ],
 
   modules: process.env.IS_MOBILE_DEVICE ? { mobile: mobileModule } : { desktop: desktopModule },

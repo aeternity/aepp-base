@@ -10,6 +10,7 @@
     </step>
     <div>
       <ae-button
+        v-if="signingCancelable"
         type="dramatic"
         @click="cancelTransaction">Cancel Transaction</ae-button>
     </div>
@@ -17,12 +18,13 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { AeAppIcon, AeButton } from '@aeternity/aepp-components';
 import Step from './Step.vue';
 
 export default {
   components: { Step, AeAppIcon, AeButton },
+  computed: mapGetters(['signingCancelable']),
   methods: mapMutations(['cancelTransaction']),
 };
 </script>

@@ -99,20 +99,18 @@ export default (store) => {
     return () => closeCbs.forEach(f => f());
   };
 
-  if (process.env.IS_MOBILE_DEVICE) {
-    let closeCb;
-    store.watch(
-      ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length,
-      (isConnectionNecessary) => {
-        if (isConnectionNecessary && !closeCb) closeCb = open();
-        if (!isConnectionNecessary && closeCb) {
-          closeCb();
-          closeCb = undefined;
-        }
-      },
-      { immediate: true },
-    );
-  } else {
-    open(store);
-  }
+  let closeCb;
+  store.watch(
+    process.env.IS_MOBILE_DEVICE
+      ? ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length
+      : ({ desktop: { ledgerConnected } }) => !ledgerConnected,
+    (isConnectionNecessary) => {
+      if (isConnectionNecessary && !closeCb) closeCb = open();
+      if (!isConnectionNecessary && closeCb) {
+        closeCb();
+        closeCb = undefined;
+      }
+    },
+    { immediate: true },
+  );
 };
