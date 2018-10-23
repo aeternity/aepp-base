@@ -6,7 +6,7 @@ export default store =>
     async (rpcUrl) => {
       const epoch = await EpochChain({ url: rpcUrl, internalUrl: rpcUrl });
       store.commit('setEpoch', epoch);
-      store.commit('setNetworkId', (await epoch.api.getStatus()).genesisKeyBlockHash.slice(-8));
+      store.commit('setNetworkId', epoch.genesisHash.slice(-8));
     },
     { immediate: true },
   );
