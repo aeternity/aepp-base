@@ -5,10 +5,15 @@
     <header>
       <ae-identicon :address="address" />
       <ae-input-plain
-        value="Main Account"
+        v-focus="editable"
+        v-if="editable"
+        v-model="accountName"
         placeholder="Account name"
         fill="white"
+        maxlength="16"
+        @blur.native="switchEdit(false)"
       />
+      <span v-else>{{ accountName }}</span>
       <div class="slot-icon">
         <slot name="icon" />
       </div>
@@ -31,18 +36,22 @@
 </template>
 
 <script>
-import { AeAddress, AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
+import { AeAddress, AeIdenticon, AeInputPlain, AeLabel } from '@aeternity/aepp-components-3';
 import AeCard from './AeCard.vue';
 
 export default {
-  name: 'AeAccount',
   components: {
     AeAddress,
     AeIdenticon,
     AeCard,
     AeInputPlain,
+    AeLabel,
   },
   props: {
+    index: {
+      type: Number,
+      required: true,
+    },
     address: {
       type: String,
       required: true,
@@ -58,6 +67,27 @@ export default {
     fill: {
       type: String,
       required: true,
+    },
+  },
+  data() {
+    return {
+      editable: false,
+    };
+  },
+  computed: {
+    accountName: {
+      get() {
+        return this.$store.getters.identities[this.index].name;
+      },
+      set(name) {
+        const { index } = this;
+        this.$store.commit('renameIdentity', { name, index });
+      },
+    },
+  },
+  methods: {
+    switchEdit(to) {
+      this.editable = to;
     },
   },
 };
@@ -80,6 +110,11 @@ export default {
       margin-left: auto;
     }
 
+    span {
+      @extend %face-sans-base;
+      color: $color-neutral-maximum;
+    }
+
     .ae-identicon {
       margin-right: rem(8px);
     }
@@ -94,7 +129,7 @@ export default {
     .security-status {
       @extend %face-uppercase-xs;
       white-space: pre-line;
-      margin-bottom: 0.25rem;
+      margin-bottom: rem(4px);
       font-weight: bold;
     }
 
@@ -118,7 +153,7 @@ export default {
 
     &:after {
       @extend %face-mono-xs;
-      margin-left: 5px;
+      margin-left: rem(5px);
       content: 'AE';
     }
   }

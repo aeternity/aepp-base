@@ -16,15 +16,40 @@
       class="swiper-container"
     >
       <swiper-slide
-        v-for="i in identities"
+        v-for="(i, index) in identities"
         :key="i.address"
         class="current-slide"
       >
         <ae-account
+          :ref="index"
+          :index="index"
           :address="i.address"
           :balance="i.balance"
           fill="primary"
-        />
+        >
+          <ae-dropdown slot="icon">
+            <ae-icon
+              slot="button"
+              fill="white"
+              name="more"
+              size="20px"
+            />
+            <li>
+              <ae-button @click="$clipboard($refs[index][0].accountName)">
+                <ae-icon
+                  name="copy"
+                />
+                Copy Address
+              </ae-button>
+            </li>
+            <li>
+              <ae-button @click="$refs[index][0].switchEdit(true)">
+                <ae-icon name="edit" />
+                Rename
+              </ae-button>
+            </li>
+          </ae-dropdown>
+        </ae-account>
       </swiper-slide>
       <div
         slot="pagination"
@@ -32,22 +57,20 @@
       />
     </swiper>
 
-    <ae-list>
-      <ae-list-item>
-        <div class="content">
-          <div class="title">Three words identifier</div>
-          <div class="subtitle">alive fussy bluetonguelizard</div>
+    <list-item>
+      <div class="content">
+        <div class="title">Three words identifier</div>
+        <div class="subtitle">alive fussy bluetonguelizard</div>
+      </div>
+    </list-item>
+    <list-item>
+      <div class="content">
+        <div class="title">Account Key</div>
+        <div class="subtitle">
+          <ae-address :value="activeIdentity.address" />
         </div>
-      </ae-list-item>
-      <ae-list-item>
-        <div class="content">
-          <div class="title">Account Key</div>
-          <div class="subtitle">
-            <ae-address :value="activeIdentity.address" />
-          </div>
-        </div>
-      </ae-list-item>
-    </ae-list>
+      </div>
+    </list-item>
 
     <fixed-add-button
       quick-id
@@ -90,13 +113,12 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import {
-  AeButton, AeLabel, AeInput, AeModalLight,
-  AeAddress, AeList, AeListItem,
-} from '@aeternity/aepp-components-3';
+import { AeLabel, AeInput, AeModalLight } from '@aeternity/aepp-components';
+import { AeButton, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
 import MobilePage from '../components/MobilePage.vue';
 import AeAccount from '../components/AeAccount.vue';
+import ListItem from '../components/ListItem.vue';
 import FixedAddButton from '../components/FixedAddButton.vue';
 import Guide from '../components/Guide.vue';
 
@@ -113,8 +135,9 @@ export default {
     Swiper,
     SwiperSlide,
     Guide,
-    AeList,
-    AeListItem,
+    ListItem,
+    AeIcon,
+    AeDropdown,
   },
   data: () => ({
     modalVisible: false,
@@ -136,6 +159,7 @@ export default {
         initialSlide: this.selectedIdentityIdx,
         on: {
           slideChange() {
+            self.$refs[this.activeIndex][0].switchEdit(false);
             self.selectIdentity(this.activeIndex);
           },
         },
@@ -169,15 +193,22 @@ export default {
 
     .swiper-wrapper {
       .current-slide {
-        width: 311px;
-        padding-bottom: 50px;
+        width: rem(311px);
+        padding-bottom: rem(50px);
+
+        .ae-dropdown {
+          &-button {
+            width: rem(20px);
+            height: rem(20px);
+          }
+        }
       }
     }
 
     .swiper-pagination {
       &-bullet {
-        width: 12px;
-        height: 12px;
+        width: rem(12px);
+        height: rem(12px);
         background: $color-neutral-negative-3;
 
         &-active {
@@ -187,33 +218,33 @@ export default {
     }
   }
 
-  .ae-list {
-    margin: auto;
-    width: 279px;
+  .list-item {
+    display: block;
+    margin: rem(20px) auto;
+    width: rem(279px);
+    height: auto;
+    padding: 0;
+    border: none;
+    border-top: rem(2px) solid $color-neutral-positive-1;
 
-    .ae-list-item {
-      padding: 0;
-      border-top-color: $color-neutral-positive-1;
+    .content {
+      margin: rem(20px) 0;
 
-      .content {
-        margin: 20px 0;
+      .title {
+        margin-bottom: rem(10px);
+        @extend %face-sans-xs;
+        font-weight: 500;
+        color: $color-neutral-negative-1;
+      }
 
-        .title {
-          margin-bottom: 10px;
-          @extend %face-sans-xs;
-          font-weight: 500;
-          color: $color-neutral-negative-1;
-        }
+      .subtitle {
+        @extend %face-mono-s;
+        color: $color-neutral-negative-3;
 
-        .subtitle {
-          @extend %face-mono-s;
-          color: $color-neutral-negative-3;
-
-          .ae-address {
-            grid-template-columns: repeat(6, 1fr);
-            grid-column-gap: 19px;
-            font-weight: normal;
-          }
+        .ae-address {
+          grid-template-columns: repeat(6, 1fr);
+          grid-column-gap: rem(19px);
+          font-weight: normal;
         }
       }
     }

@@ -31,6 +31,7 @@
     "socket.io-client": "^2.1.0",
     "swiper": "^4.3.3",
     "uuid": "^3.2.1",
+    "v-clipboard": "^2.0.1",
     "vee-validate": "^2.0.3",
     "vue": "^2.5.17",
     "vue-awesome-swiper": "^3.1.3",
