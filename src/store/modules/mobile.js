@@ -59,6 +59,9 @@ export default {
       state.names.push(name);
       state.accountCount += 1;
     },
+    renameIdentity(state, { index, name }) {
+      Vue.set(state.names, index, name);
+    },
     setAccounts(state, accounts) {
       state.accounts = accounts
         .reduce((p, n) => ({ ...p, [Crypto.aeEncodeKey(n.publicKey)]: n }), {});

@@ -1,36 +1,73 @@
 <template>
   <mobile-page
     class="accounts"
-    title="My Accounts"
   >
-    <label class="active-account">Active address</label>
-    <ae-identity
-      v-bind="activeIdentity"
-      class="active-account"
-      active
-    />
+    <guide
+      fill="primary"
+      icon="↪"
+    >
+      <em>Activate the account</em>
+      <br>that you want to use
+      <br>by swiping
+    </guide>
+
+    <swiper
+      :options="swiperOptions"
+      class="swiper-container"
+    >
+      <swiper-slide
+        v-for="(account, index) in identities"
+        :key="account.address"
+        class="current-slide"
+      >
+        <ae-account
+          v-bind="account"
+          :name-editable="index === selectedIdentityIdx && accountNameEditable"
+          fill="primary"
+          @name-input="name => $store.commit('renameIdentity', { name, index })"
+          @name-blur="accountNameEditable = false"
+        >
+          <ae-dropdown slot="icon">
+            <ae-icon
+              slot="button"
+              fill="white"
+              name="more"
+              size="20px"
+            />
+            <li>
+              <ae-button-new v-clipboard="account.address">
+                <ae-icon name="copy" />
+                Copy Address
+              </ae-button-new>
+            </li>
+            <li>
+              <ae-button-new @click="accountNameEditable = true">
+                <ae-icon name="edit" />
+                Rename
+              </ae-button-new>
+            </li>
+          </ae-dropdown>
+        </ae-account>
+      </swiper-slide>
+      <div
+        slot="pagination"
+        class="swiper-pagination"
+      />
+    </swiper>
 
     <list-item>
-      <div class="arrow">↪</div>
       <div class="content">
-        <div class="title">Total Balance</div>
-        <div class="subtitle">{{ totalBalance }} AE</div>
+        <div class="title">Three words identifier</div>
+        <div class="subtitle">alive fussy bluetonguelizard</div>
       </div>
     </list-item>
-
-    <list-item
-      v-for="(identity, index) in identities"
-      :key="index">
-      <ae-identity-avatar :address="identity.address" />
+    <list-item>
       <div class="content">
-        <div class="title">{{ identity.name }}</div>
-        <div class="subtitle">{{ identity.balance }} AE</div>
+        <div class="title">Account Key</div>
+        <div class="subtitle">
+          <ae-address :value="activeIdentity.address" />
+        </div>
       </div>
-      <ae-radio
-        slot="right"
-        :checked="index === selectedIdentityIdx"
-        @change="selectIdentity(index)"
-      />
     </list-item>
 
     <fixed-add-button
@@ -74,38 +111,60 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import {
-  AeIdentity, AeIdentityAvatar, AeButton, AeDivider,
-  AeLabel, AeInput, AeModalLight,
-} from '@aeternity/aepp-components';
+import { AeButton, AeLabel, AeInput, AeModalLight } from '@aeternity/aepp-components';
+import { AeButton as AeButtonNew, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
+import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
 import MobilePage from '../components/MobilePage.vue';
-import FixedAddButton from '../components/FixedAddButton.vue';
+import AeAccount from '../components/AeAccount.vue';
 import ListItem from '../components/ListItem.vue';
-import AeRadio from '../components/AeRadio.vue';
-import { roundToken } from '../lib/filters';
+import FixedAddButton from '../components/FixedAddButton.vue';
+import Guide from '../components/Guide.vue';
 
 export default {
   components: {
-    AeIdentity,
-    AeIdentityAvatar,
+    AeAccount,
+    AeAddress,
     AeButton,
-    AeDivider,
+    AeButtonNew,
     MobilePage,
     FixedAddButton,
     AeLabel,
     AeInput,
     AeModalLight,
+    Swiper,
+    SwiperSlide,
+    Guide,
     ListItem,
-    AeRadio,
+    AeIcon,
+    AeDropdown,
   },
-  filters: { roundToken },
   data: () => ({
     modalVisible: false,
     newAccountName: '',
+    accountNameEditable: false,
   }),
   computed: {
-    ...mapGetters(['totalBalance', 'activeIdentity', 'identities']),
+    ...mapGetters(['activeIdentity', 'identities']),
     ...mapState(['selectedIdentityIdx']),
+    swiperOptions() {
+      const self = this;
+
+      return {
+        spaceBetween: 10,
+        centeredSlides: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        initialSlide: this.selectedIdentityIdx,
+        on: {
+          slideChange() {
+            self.accountNameEditable = false;
+            self.selectIdentity(this.activeIndex);
+          },
+        },
+      };
+    },
   },
   mounted() {
     this.$store.dispatch('updateAllBalances');
@@ -121,53 +180,72 @@ export default {
 };
 </script>
 
+<style lang="css" src="swiper/dist/css/swiper.css" />
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .accounts {
   background: linear-gradient(to bottom, white, #f1f4f7);
 
-  label.active-account {
-    display: flex;
-    text-transform: uppercase;
-    font-size: 12px;
-    font-weight: 500;
-    color: $anthracite;
-    margin: 15px 0;
-    align-items: center;
+  .swiper-container /deep/ {
+    z-index: 0;
 
-    span {
-      flex-grow: 1;
-      text-align: right;
+    .swiper-wrapper {
+      .current-slide {
+        width: rem(311px);
+        padding-bottom: rem(50px);
+
+        .ae-dropdown {
+          &-button {
+            width: rem(20px);
+            height: rem(20px);
+          }
+        }
+      }
     }
-  }
 
-  .active-account {
-    margin-bottom: 22px;
+    .swiper-pagination {
+      &-bullet {
+        width: rem(12px);
+        height: rem(12px);
+        background: $color-neutral-negative-3;
+
+        &-active {
+          background: $color-primary;
+        }
+      }
+    }
   }
 
   .list-item {
-    .ae-identity-avatar, .arrow {
-      border: none;
-      width: 32px;
-      height: 32px;
-      text-align: center;
-      line-height: 32px;
-    }
+    display: block;
+    margin: rem(20px) auto;
+    width: rem(279px);
+    height: auto;
+    padding: 0;
+    border: none;
+    border-top: rem(2px) solid $color-neutral-positive-1;
 
     .content {
-      margin-left: 8px;
+      margin: rem(20px) 0;
 
       .title {
-        font-size: 15px;
+        margin-bottom: rem(10px);
+        @extend %face-sans-xs;
         font-weight: 500;
-        color: #203040;
+        color: $color-neutral-negative-1;
       }
 
       .subtitle {
-        font-family: 'IBM Plex Mono', monospace;
-        font-size: 13px;
-        color: #76818d;
+        @extend %face-mono-s;
+        color: $color-neutral-negative-3;
+
+        .ae-address {
+          grid-template-columns: repeat(6, 1fr);
+          grid-column-gap: rem(19px);
+          font-weight: normal;
+        }
       }
     }
   }

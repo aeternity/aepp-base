@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Clipboard from 'v-clipboard';
 import VeeValidate, { Validator } from 'vee-validate';
 import { focus } from 'vue-focus';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
@@ -19,6 +20,7 @@ Validator.extend('url_http', (value) => {
   }
 });
 
+Vue.use(Clipboard);
 Vue.use(Router);
 Vue.use(VeeValidate, {
   dictionary: {
