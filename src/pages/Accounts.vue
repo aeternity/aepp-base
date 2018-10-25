@@ -16,16 +16,16 @@
       class="swiper-container"
     >
       <swiper-slide
-        v-for="(i, index) in identities"
-        :key="i.address"
+        v-for="(account, index) in identities"
+        :key="account.address"
         class="current-slide"
       >
         <ae-account
-          :ref="index"
-          :index="index"
-          :address="i.address"
-          :balance="i.balance"
+          v-bind="account"
+          :name-editable="index === selectedIdentityIdx && accountNameEditable"
           fill="primary"
+          @name-input="name => $store.commit('renameIdentity', { name, index })"
+          @name-blur="accountNameEditable = false"
         >
           <ae-dropdown slot="icon">
             <ae-icon
@@ -35,18 +35,16 @@
               size="20px"
             />
             <li>
-              <ae-button @click="$clipboard($refs[index][0].accountName)">
-                <ae-icon
-                  name="copy"
-                />
+              <ae-button-new v-clipboard="account.address">
+                <ae-icon name="copy" />
                 Copy Address
-              </ae-button>
+              </ae-button-new>
             </li>
             <li>
-              <ae-button @click="$refs[index][0].switchEdit(true)">
+              <ae-button-new @click="accountNameEditable = true">
                 <ae-icon name="edit" />
                 Rename
-              </ae-button>
+              </ae-button-new>
             </li>
           </ae-dropdown>
         </ae-account>
@@ -113,8 +111,8 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import { AeLabel, AeInput, AeModalLight } from '@aeternity/aepp-components';
-import { AeButton, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
+import { AeButton, AeLabel, AeInput, AeModalLight } from '@aeternity/aepp-components';
+import { AeButton as AeButtonNew, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
 import MobilePage from '../components/MobilePage.vue';
 import AeAccount from '../components/AeAccount.vue';
@@ -127,6 +125,7 @@ export default {
     AeAccount,
     AeAddress,
     AeButton,
+    AeButtonNew,
     MobilePage,
     FixedAddButton,
     AeLabel,
@@ -142,6 +141,7 @@ export default {
   data: () => ({
     modalVisible: false,
     newAccountName: '',
+    accountNameEditable: false,
   }),
   computed: {
     ...mapGetters(['activeIdentity', 'identities']),
@@ -159,7 +159,7 @@ export default {
         initialSlide: this.selectedIdentityIdx,
         on: {
           slideChange() {
-            self.$refs[this.activeIndex][0].switchEdit(false);
+            self.accountNameEditable = false;
             self.selectIdentity(this.activeIndex);
           },
         },

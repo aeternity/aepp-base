@@ -5,15 +5,16 @@
     <header>
       <ae-identicon :address="address" />
       <ae-input-plain
-        v-focus="editable"
-        v-if="editable"
-        v-model="accountName"
+        v-focus="nameEditable"
+        v-if="nameEditable"
+        :value="name"
         placeholder="Account name"
         fill="white"
         maxlength="16"
-        @blur.native="switchEdit(false)"
+        @input="$emit('name-input', $event)"
+        @blur.native="$emit('name-blur')"
       />
-      <span v-else>{{ accountName }}</span>
+      <span v-else>{{ name }}</span>
       <div class="slot-icon">
         <slot name="icon" />
       </div>
@@ -48,8 +49,8 @@ export default {
     AeLabel,
   },
   props: {
-    index: {
-      type: Number,
+    name: {
+      type: String,
       required: true,
     },
     address: {
@@ -68,26 +69,9 @@ export default {
       type: String,
       required: true,
     },
-  },
-  data() {
-    return {
-      editable: false,
-    };
-  },
-  computed: {
-    accountName: {
-      get() {
-        return this.$store.getters.identities[this.index].name;
-      },
-      set(name) {
-        const { index } = this;
-        this.$store.commit('renameIdentity', { name, index });
-      },
-    },
-  },
-  methods: {
-    switchEdit(to) {
-      this.editable = to;
+    nameEditable: {
+      type: Boolean,
+      default: false,
     },
   },
 };
