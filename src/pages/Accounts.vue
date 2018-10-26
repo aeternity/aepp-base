@@ -178,9 +178,10 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+@import '../components/MobilePage.scss';
 
 .accounts {
-  background: linear-gradient(to bottom, white, #f1f4f7);
+  @include split-background($color-neutral-positive-2, 43%);
 
   .swiper-container /deep/ {
     z-index: 0;

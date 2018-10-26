@@ -1,0 +1,6 @@
+@mixin split-background($color, $percent) {
+  background-image: linear-gradient(0, #FFFFFF 50%, $color 50%);
+  background-size: auto 200%;
+  background-position: 0 $percent;
+  transition: background-position 0.5s;
+}
