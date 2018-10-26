@@ -21,7 +21,7 @@
     "@aeternity/aepp-sdk": "^0.24.0-0.1.0",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
-    "@aeternity/ledger-app-api": "0.0.2",
+    "@aeternity/ledger-app-api": "0.0.4",
     "@ledgerhq/hw-transport-u2f": "^4.21.0",
     "@zxing/library": "^0.8.3",
     "emoji-datasource-apple": "^4.0.3",
