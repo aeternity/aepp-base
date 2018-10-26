@@ -57,12 +57,6 @@
 
     <list-item>
       <div class="content">
-        <div class="title">Three words identifier</div>
-        <div class="subtitle">alive fussy bluetonguelizard</div>
-      </div>
-    </list-item>
-    <list-item>
-      <div class="content">
         <div class="title">Account Key</div>
         <div class="subtitle">
           <ae-address :value="activeIdentity.address" />

@@ -21,7 +21,7 @@ store.watch(
   (loggedIn) => {
     if (loggedIn) {
       if (process.env.IS_MOBILE_DEVICE || store.state.loginTarget) {
-        router.push(store.state.loginTarget || { name: 'apps' });
+        router.push(store.state.loginTarget || { name: 'accounts' });
         store.commit('setLoginTarget');
       }
     } else {

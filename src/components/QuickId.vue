@@ -1,19 +1,11 @@
 <template>
   <div class="quick-id">
-    <router-link :to="{ name: 'apps' }">
-      <ae-icon name="grid" />
-      Browser
-    </router-link>
     <router-link :to="{ name: 'transfer' }">
       <ae-icon name="transfer" />
-      Wallet
+      Transfer
     </router-link>
     <router-link :to="{ name: 'accounts' }">
       <ae-identity-avatar :address="identity.address" />
-    </router-link>
-    <router-link :to="{ name: 'address-book' }">
-      <ae-icon name="contacts" />
-      Contacts
     </router-link>
     <router-link :to="{ name: 'settings' }">
       <ae-icon name="settings" />
