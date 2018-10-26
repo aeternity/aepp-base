@@ -4,11 +4,17 @@ import Settings from '../../pages/Settings.vue';
 import SettingsNetwork from '../../pages/SettingsNetwork.vue';
 
 const Transfer = () => import('../../pages/Transfer.vue');
+const TransferQr = () => import('../../pages/TransferQr.vue');
 
 export default [{
   name: 'transfer',
-  path: '/transfer/:to?/:amount?',
+  path: '/transfer',
   component: Transfer,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'transferQr',
+  path: '/transferQr',
+  component: TransferQr,
   beforeEnter: checkLoggedIn(true),
 }, {
   name: 'settings',

@@ -1,8 +1,8 @@
 <template>
   <ae-card
-    :fill="fill"
+    :fill="qrSide ? 'neutral' : 'primary'"
     class="ae-account">
-    <header>
+    <header v-if="!qrSide">
       <ae-identicon :address="address" />
       <ae-input-plain
         v-focus="nameEditable"
@@ -20,24 +20,37 @@
       </div>
     </header>
 
-    <main>
-      <div class="security-status">{{ securityStatus }}</div>
-      <ae-address
+    <main :class="qrSide && 'mainQr'">
+      <ae-q-r-code
+        v-if="qrSide"
+        :options="{ size: 136 }"
         :value="address"
-        length="medium"
+      />
+      <ae-address
+        :class="qrSide && 'addressQr'"
+        :value="address"
+        :length="qrSide ? '' : 'medium'"
         gap="0"
       />
     </main>
 
     <template slot="toolbar">
-      <span class="balance-title">Balance</span>
-      <span class="balance-value">{{ balance }}</span>
+      <span class="balance-title">{{ qrSide ? name : 'Balance' }}</span>
+      <span
+        v-if="!qrSide"
+        class="balance-value"
+      >
+        {{ balance }}
+      </span>
     </template>
   </ae-card>
 </template>
 
 <script>
-import { AeAddress, AeIdenticon, AeInputPlain, AeLabel } from '@aeternity/aepp-components-3';
+import {
+  AeAddress, AeIdenticon, AeInputPlain,
+  AeLabel, AeQRCode,
+} from '@aeternity/aepp-components-3';
 import AeCard from './AeCard.vue';
 
 export default {
@@ -47,6 +60,7 @@ export default {
     AeCard,
     AeInputPlain,
     AeLabel,
+    AeQRCode,
   },
   props: {
     name: {
@@ -65,11 +79,11 @@ export default {
       type: String,
       default: 'normal\nsecured',
     },
-    fill: {
-      type: String,
-      required: true,
-    },
     nameEditable: {
+      type: Boolean,
+      default: false,
+    },
+    qrSide: {
       type: Boolean,
       default: false,
     },
@@ -107,8 +121,8 @@ export default {
   main {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    padding: rem(16px) rem(8px) rem(8px) rem(16px);
+    align-items: center;
+    padding: rem(24px) rem(8px) rem(12px) rem(12px);
 
     .security-status {
       @extend %face-uppercase-xs;
@@ -120,6 +134,10 @@ export default {
     .ae-address {
       margin-left: auto;
       width: rem(150px);
+    }
+
+    &.mainQr {
+      padding-top: rem(8px);
     }
   }
 

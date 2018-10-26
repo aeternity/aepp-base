@@ -1,27 +1,32 @@
 <template>
-  <mobile-page class="transfer">
+  <mobile-page
+    :close-button="true"
+    class="transfer"
+    @close="$router.push({ name: 'transfer' })"
+  >
     <guide
       fill="primary"
       icon="↪"
     >
-      <em>Receive</em> æternity tokens
-      <br>on the Mainnet
+      <em>Let others scan</em>
+      <br>your address
       <div class="note">
-        Select ‘Receive’ and show the
-        <br>QR in the Token Migration
+        Show the QR to receive
       </div>
     </guide>
 
     <ae-account
       v-bind="activeIdentity"
+      :qr-side="true"
+      class="qrAccount"
       fill="primary"
     />
 
-    <list-item @click="$router.push({ name: 'transferQr' })">
-      <img :src="manTippingHandEmoji">
+    <list-item v-clipboard="activeIdentity.address">
+      <img :src="writingHandEmoji">
       <div class="content">
-        <div class="title">Receive</div>
-        <div class="subtitle">Share your address</div>
+        <div class="title">Copy address</div>
+        <div class="subtitle">Save to clipboard</div>
       </div>
       <ae-icon
         slot="right"
@@ -34,7 +39,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
-import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
+import writingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAccount from '../components/AeAccount.vue';
@@ -50,7 +55,7 @@ export default {
   },
   data() {
     return {
-      manTippingHandEmoji: manTippingHandEmojiPath,
+      writingHandEmoji: writingHandEmojiPath,
     };
   },
   computed: {
@@ -64,6 +69,6 @@ export default {
 @import '../components/MobilePage.scss';
 
 .mobile-page {
-  @include split-background($color-neutral-positive-2, 37%);
+  @include split-background($color-neutral-positive-2, 45%);
 }
 </style>
