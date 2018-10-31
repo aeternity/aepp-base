@@ -57,7 +57,7 @@ export default [{
       return;
     }
     if (store.getters.loggedIn) {
-      next({ name: 'apps' });
+      next({ name: 'accounts' });
       return;
     }
     next();

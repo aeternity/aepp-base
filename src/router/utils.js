@@ -10,7 +10,7 @@ export const checkLoggedIn = requireLoggedIn => (to, from, next) => {
     } else if (requireLoggedIn) {
       store.commit('setLoginTarget', to.fullPath);
       if (from.name) next(false);
-      else next({ name: 'apps' });
+      else next({ name: 'accounts' });
       store.commit('toggleRemoteConnectionPrompt');
       return;
     }
