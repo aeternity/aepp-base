@@ -24,6 +24,7 @@ export default {
         'secondary',
         'neutral',
         'alternative',
+        'maximum',
       ].includes(value),
       default: '',
     },
@@ -63,6 +64,11 @@ export default {
   &.alternative {
     background: $color-alternative;
     color: $color-alternative-negative-3;
+  }
+
+  &.maximum {
+    background: $color-neutral-maximum;
+    color: $color-neutral-negative-3;
   }
 
   .ae-toolbar {
