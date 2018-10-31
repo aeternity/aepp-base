@@ -1,7 +1,7 @@
 <template>
   <div :class="['guide', fill]">
     <span class="icon">{{ icon }}</span>
-    <div>
+    <div :class="icon ? '' : 'no-icon'">
       <slot />
     </div>
   </div>
@@ -40,6 +40,10 @@ export default {
 
   .icon {
     margin-right: 11px;
+  }
+
+  .no-icon {
+    margin-left: 11px;
   }
 
   em {
