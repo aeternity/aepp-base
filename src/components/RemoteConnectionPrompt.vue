@@ -6,14 +6,14 @@
         <ae-app-icon
           :src="require('../assets/icons/base.svg')"
           class="base" />
-        <h2>Bæse</h2>
-        <p>1. Open the Bæse æpp on your mobile device</p>
+        <h2>Base</h2>
+        <p>1. Open the Base æpp on your mobile device</p>
         <p class="small">Not installed? Install from store</p>
       </step>
       <step>
         <ae-app-icon :src="require('../assets/icons/aepps/settings.svg')" />
         <h2>Settings</h2>
-        <p>2. Open your settings in the Bæse æpp</p>
+        <p>2. Open your settings in the Base æpp</p>
       </step>
       <step>
         <ae-app-icon :src="require('../assets/icons/remote-connect.svg')" />

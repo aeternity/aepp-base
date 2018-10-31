@@ -1,12 +1,12 @@
 <template>
   <div class="waiting-for-confirmation">
-    <h1>Sign the transaction in the Bæse æpp</h1>
+    <h1>Sign the transaction in the Base æpp</h1>
     <step>
       <ae-app-icon
         :src="require('../assets/icons/base.svg')"
         class="base" />
-      <h2>Bæse</h2>
-      <p>Open your Bæse æpp, check the transaction details and sign</p>
+      <h2>Base</h2>
+      <p>Open your Base æpp, check the transaction details and sign</p>
     </step>
     <div>
       <ae-button
