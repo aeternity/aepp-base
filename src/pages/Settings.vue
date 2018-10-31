@@ -1,69 +1,62 @@
 <template>
   <mobile-page
-    title="Settings"
     class="settings"
   >
-    <heading>General settings</heading>
-    <item :to="{ name: 'settings-network' }">
-      Network
-      <span
-        slot="right"
-        class="mute">{{ networkName }}</span>
-    </item>
+    <guide fill="primary">
+      <em>Settings</em>
+    </guide>
     <template v-if="$globals.IS_MOBILE_DEVICE">
-      <heading>Add-ons</heading>
-      <item :to="{ name: 'settings-remote-connection' }">
-        <img src="../assets/icons/remote-connect.svg" >
-        Remote connection
+      <ae-card
+        fill="maximum"
+        @click.native="signOut"
+      >
         <ae-icon
-          slot="right"
-          name="chevron" />
-      </item>
-      <heading>Accounts</heading>
-      <item
-        type="dramatic"
-        @click="signOut">
-        Sign out on this device completely
-      </item>
+          fill="primary"
+          face="round"
+          name="sign-out"
+        />
+        Sign out on this device
+      </ae-card>
     </template>
   </mobile-page>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components';
+import { mapMutations } from 'vuex';
+import { AeIcon } from '@aeternity/aepp-components-3';
+import AeCard from '../components/AeCard.vue';
 import MobilePage from '../components/MobilePage.vue';
-import SettingsHeading from '../components/SettingsHeading.vue';
-import ListItem from '../components/ListItem.vue';
-import networks from '../lib/networksRegistry';
+import Guide from '../components/Guide.vue';
 
 export default {
   components: {
     AeIcon,
     MobilePage,
-    Heading: SettingsHeading,
-    Item: ListItem,
+    Guide,
+    AeCard,
   },
-  computed: mapState({
-    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name,
-  }),
   methods: mapMutations(['signOut']),
 };
 </script>
 
-<style src="./Settings.scss" lang="scss" scoped />
-
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .settings {
-  .mute {
-    color: $grey;
-  }
+  background-color: $color-neutral-positive-2;
 
-  img {
-    width: 20px;
-    margin-right: 17px;
+  .ae-card {
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    padding: rem(20px);
+    width: 80%;
+    font-weight: 500;
+
+    .ae-icon {
+      margin-right: rem(11px);
+    }
   }
 }
 </style>
