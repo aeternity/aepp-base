@@ -3,18 +3,12 @@ import { checkLoggedIn } from '../utils';
 import Settings from '../../pages/Settings.vue';
 import SettingsNetwork from '../../pages/SettingsNetwork.vue';
 
-const Transfer = () => import('../../pages/Transfer.vue');
-const TransferQr = () => import('../../pages/TransferQr.vue');
+const Receive = () => import('../../pages/Receive.vue');
 
 export default [{
-  name: 'transfer',
-  path: '/transfer',
-  component: Transfer,
-  beforeEnter: checkLoggedIn(true),
-}, {
-  name: 'transferQr',
-  path: '/transferQr',
-  component: TransferQr,
+  name: 'receive',
+  path: '/receive',
+  component: Receive,
   beforeEnter: checkLoggedIn(true),
 }, {
   name: 'settings',

@@ -1,8 +1,8 @@
 <template>
   <div class="quick-id">
-    <router-link :to="{ name: 'transfer' }">
-      <ae-icon name="transfer" />
-      Transfer
+    <router-link :to="{ name: 'receive' }">
+      <ae-icon name="receive" />
+      Receive
     </router-link>
     <router-link :to="{ name: 'accounts' }">
       <ae-identity-avatar :address="identity.address" />

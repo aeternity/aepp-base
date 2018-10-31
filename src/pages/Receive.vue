@@ -1,12 +1,9 @@
 <template>
   <mobile-page
-    :close-button="true"
-    class="transfer"
-    @close="$router.push({ name: 'transfer' })"
+    class="receive"
   >
     <guide
       fill="primary"
-      icon="↪"
     >
       <em>Let others scan</em>
       <br>your address
@@ -65,10 +62,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './Transfer.scss';
 @import '../components/MobilePage.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
-.mobile-page {
-  @include split-background($color-neutral-positive-2, 45%);
+.receive {
+  @include split-background($color-neutral-positive-2, 37%);
+
+  .note {
+    @extend %face-sans-s;
+    font-weight: 500;
+  }
+
+  .ae-account {
+    margin: rem(39px) rem(16px);
+    width: auto;
+
+    &.qrAccount {
+      margin-top: rem(59px);
+    }
+  }
+
+  .list-item {
+    margin: rem(40px) rem(30px);
+    padding: rem(8px) rem(8px);
+    width: auto;
+    border: solid $color-neutral-positive-1;
+    border-width: 2px 0;
+
+    img {
+      margin: 0 rem(9px) rem(4px) 0;
+      width: rem(33px);
+    }
+
+    .content {
+      .title {
+        @extend %face-sans-s;
+        font-weight: 500;
+        color: $color-neutral-negative-3;
+      }
+
+      .subtitle {
+        @extend %face-sans-xs;
+        color: $color-neutral-negative-1;
+      }
+    }
+  }
 }
 </style>
