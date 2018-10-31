@@ -1,0 +1,30 @@
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+
+.wrapper {
+  height: rem(271px);
+  margin-top: rem(20px);
+  margin-bottom: rem(20px);
+  position: relative;
+
+  .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.guide {
+  flex-direction: column;
+  margin-left: 0;
+  text-align: center;
+
+  .note {
+    margin-top: rem(5px);
+    @extend %face-sans-base;
+    font-weight: 500;
+    color: $color-neutral-negative-2;
+  }
+}

@@ -2,11 +2,8 @@ import { checkLoggedIn } from '../utils';
 import store from '../../store/index';
 import Intro from '../../pages/Intro.vue';
 import Onboarding from '../../pages/Onboarding.vue';
-import OnboardingActiveAccount from '../../pages/OnboardingActiveAccount.vue';
-import OnboardingAepps from '../../pages/OnboardingAepps.vue';
-import OnboardingSecureAccount from '../../pages/OnboardingSecureAccount.vue';
 import OnboardingWelcome from '../../pages/OnboardingWelcome.vue';
-import OnboardingYourAccounts from '../../pages/OnboardingYourAccounts.vue';
+import OnboardingAccount from '../../pages/OnboardingAccount.vue';
 import Login from '../../pages/Login.vue';
 import Recover from '../../pages/Recover.vue';
 import NewAccount from '../../pages/NewAccount.vue';
@@ -46,21 +43,9 @@ export default [{
     path: '',
     component: OnboardingWelcome,
   }, {
-    name: 'onboarding-your-accounts',
-    path: 'your-accounts',
-    component: OnboardingYourAccounts,
-  }, {
-    name: 'onboarding-aepps',
-    path: 'aepps',
-    component: OnboardingAepps,
-  }, {
-    name: 'onboarding-active-account',
-    path: 'active-account',
-    component: OnboardingActiveAccount,
-  }, {
-    name: 'onboarding-secure-account',
-    path: 'secure-account',
-    component: OnboardingSecureAccount,
+    name: 'onboarding-account',
+    path: 'account',
+    component: OnboardingAccount,
   }],
 }, {
   name: 'login',

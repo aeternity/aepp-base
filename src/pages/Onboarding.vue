@@ -1,6 +1,5 @@
 <template>
   <mobile-page class="onboarding">
-    <header-desktop />
     <transition
       mode="out-in"
       appear
@@ -11,7 +10,6 @@
       <ae-button
         :to="{ name: 'new-account'}"
         size="small"
-        type="dramatic"
         plain
         uppercase
       >
@@ -29,11 +27,10 @@
         />
       </transition-group>
       <ae-button
-        :type="isLastStep ? 'exciting' : 'boring'"
-        :plain="!isLastStep"
         :to="{ name: isLastStep ? 'new-account' : stepRouteNames[currentStepIdx + 1] }"
         class="next"
         size="small"
+        plain
         uppercase
       >
         {{ isLastStep ? 'Start' : 'Next' }}
@@ -52,10 +49,7 @@ export default {
   data: () => ({
     stepRouteNames: [
       'onboarding',
-      'onboarding-your-accounts',
-      'onboarding-aepps',
-      'onboarding-active-account',
-      'onboarding-secure-account',
+      'onboarding-account',
     ],
   }),
   computed: {
@@ -72,9 +66,13 @@ export default {
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
 
 .onboarding.mobile-page {
-  /deep/ > .panel {
+  background-color: $color-neutral-positive-2;
+
+  .panel {
     @include abovePhone {
       min-height: 650px;
     }
@@ -95,8 +93,6 @@ export default {
   }
 
   footer {
-    padding-top: 20px;
-    border-top: 2px solid $silver;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -112,8 +108,8 @@ export default {
 
       a {
         display: inline-block;
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         margin: 5px;
         background-color: $silver;
         border-radius: 50%;
@@ -126,9 +122,10 @@ export default {
       }
     }
 
-    .ae-button.next /deep/ .label {
-      padding-left: 20px;
-      padding-right: 20px;
+    .ae-button /deep/ .label {
+      padding: 6px 25px;
+      @extend %face-sans-xs;
+      font-weight: bold;
     }
   }
 }
