@@ -12,12 +12,12 @@
     "build:android": "npm run build:cordova && cordova build android",
     "gen:cordova-resources": "cordova-splash && cordova-icon --icon=public/favicons/android-chrome-512x512.png",
     "lint": "vue-cli-service lint --no-fix",
-    "test": "#",
-    "test:unit": "#"
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@aeternity/aepp-components": "2.0.15",
-    "@aeternity/aepp-components-3": "3.0.0-alpha.5",
+    "@aeternity/aepp-components-3": "3.0.0-alpha.6",
     "@aeternity/aepp-sdk": "^0.24.0-0.1.0",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",

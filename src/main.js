@@ -4,6 +4,7 @@ import Clipboard from 'v-clipboard';
 import VeeValidate, { Validator } from 'vee-validate';
 import { focus } from 'vue-focus';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
+import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
 import App from './App.vue';
