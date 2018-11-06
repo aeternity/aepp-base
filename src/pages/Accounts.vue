@@ -190,7 +190,9 @@ export default {
     background: $color-neutral-maximum;
   }
 
-  @include split-background($color-neutral-positive-2, 43%);
+  .guide {
+    margin-left: rem(20px);
+  }
 
   .swiper-container /deep/ {
     z-index: 0;

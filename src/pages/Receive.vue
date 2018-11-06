@@ -76,7 +76,9 @@ export default {
     background: $color-neutral-maximum;
   }
 
-  @include split-background($color-neutral-positive-2, 37%);
+  .guide {
+    margin-left: rem(20px);
+  }
 
   .note {
     @extend %face-sans-s;

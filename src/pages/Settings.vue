@@ -46,6 +46,10 @@ export default {
 .settings {
   background-color: $color-neutral-positive-2;
 
+  .guide {
+    margin-left: rem(20px);
+  }
+
   .ae-card {
     flex-direction: row;
     align-items: center;

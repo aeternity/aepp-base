@@ -1,0 +1,8 @@
+@import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions';
+
+@include phone {
+  .mobile-page /deep/ .panel .content {
+    margin: 0 rem(48px);
+  }
+}
