@@ -1,9 +1,12 @@
 <template>
   <div :class="['guide', fill]">
-    <span class="icon">{{ icon }}</span>
-    <div :class="icon ? '' : 'no-icon'">
-      <slot />
-    </div>
+    <span
+      v-if="icon"
+      class="icon"
+    >
+      {{ icon }}
+    </span>
+    <div><slot /></div>
   </div>
 </template>
 
@@ -39,22 +42,27 @@ export default {
   color: $color-neutral-negative-3;
 
   .icon {
-    margin-right: 11px;
+    margin: rem(3px) rem(16px) 0 rem(-32px);
+    @extend %face-sans-base;
+    font-weight: bold;
   }
 
-  .no-icon {
-    margin-left: 11px;
-  }
+  img {
+    margin: 0 rem(5px);
+    width: rem(23px);
+  };
 
   em {
     font-style: normal;
+    color: $color-primary;
+  }
+
+  mark, strong {
+    font-weight: 500;
+    background: none;
   }
 
   &.primary {
-    em {
-      color: $color-primary;
-    }
-
     .icon {
       color: $color-primary;
     }
@@ -64,8 +72,16 @@ export default {
     color: $color-primary-positive-3;
 
     em {
-     color: $color-neutral-maximum;
+      color: $color-neutral-maximum;
     }
+  }
+
+  mark {
+    color: $color-secondary;
+  }
+
+  strong {
+    color: $color-alternative;
   }
 }
 </style>
