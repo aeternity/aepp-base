@@ -1,50 +1,41 @@
 <template>
   <mobile-page
     :redirect-to-on-close="{ name: 'intro' }"
-    title="Recover with phrase"
+    title="Recover account"
+    class="recover"
     close-button>
+    <guide
+      fill="primary"
+      icon="½"
+    >
+      Recover<img :src="dizzySymbolEmoji">your
+      <br><em>master account.</em>
+      <br>You will need your
+      <br><strong>recovery phrase</strong>, that
+      <br>you have written down
+      <br>during the setup.
+    </guide>
+
     <form @submit.prevent="setSeed">
-      <ae-label
-        :for="_uid"
-        :help-text="errors.first('seed')"
-        help-type="dramatic"
-      >Enter passphrase</ae-label>
       <ae-textarea
         v-validate="'required'"
         v-focus="true"
         :id="_uid"
         v-model="seed"
         name="seed"
+        placeholder="Recovery phrase"
         monospace
       />
-      <ae-button
-        :disabled="errors.any()"
-        type="dramatic"
-      >Recover with Passphrase</ae-button>
     </form>
 
     <template slot="footer">
-      <p>
-        Enter your password if you remember it again or
-        create a new account if you haven’t done that yet
-      </p>
       <ae-button
-        v-if="keystore"
-        :to="{ name: 'login' }"
-        size="small"
-        plain
-        type="exciting"
-        uppercase
+        :disabled="errors.any()"
+        type="secondary"
+        size="medium"
+        @click="setSeed"
       >
-        Login with an existing account
-      </ae-button>
-      <ae-button
-        :to="{ name: 'new-account' }"
-        size="small"
-        plain
-        type="exciting"
-        uppercase>
-        Create new account
+        Recover with Passphrase
       </ae-button>
     </template>
   </mobile-page>
@@ -52,16 +43,23 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeLabel, AeTextarea, AeButton } from '@aeternity/aepp-components';
+import { AeLabel, AeTextarea } from '@aeternity/aepp-components';
+import { AeInput } from '@aeternity/aepp-components-3';
 import { validateMnemonic } from '@aeternity/bip39';
+import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
 import MobilePage from '../components/MobilePage.vue';
+import Guide from '../components/Guide.vue';
+import AeButton from '../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, AeTextarea, AeLabel, AeButton,
+    MobilePage, AeTextarea, AeLabel, Guide, AeButton, AeInput,
   },
   data() {
-    return { seed: '' };
+    return {
+      dizzySymbolEmoji: dizzySymbolEmojiPath,
+      seed: '',
+    };
   },
   computed: mapState(['keystore']),
   methods: {
@@ -80,4 +78,32 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+
+.recover {
+  form {
+    margin: 0 rem(-15px);
+  }
+
+  .ae-textarea {
+    @extend %face-sans-base;
+    color: $color-neutral-negative-1;
+    border: none;
+    border-radius: 0;
+    background-color: $color-neutral-positive-3;
+
+    &:focus {
+      border-left: 2px solid $color-focus;
+    }
+
+    .label {
+      @extend %face-sans-xs;
+    }
+  }
+}
+</style>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
+<style lang="scss" src="./Intro.scss" scoped />
