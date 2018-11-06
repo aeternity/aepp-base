@@ -66,6 +66,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
+  padding-bottom: 0;
   background: $color-neutral-maximum;
 
   &.quick-id-hidden {
