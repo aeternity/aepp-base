@@ -74,7 +74,7 @@ export default {
 
   .panel {
     @include abovePhone {
-      min-height: 650px;
+      min-height: rem(650px);
     }
 
     > .header-mobile {
@@ -86,13 +86,15 @@ export default {
       margin-right: 0;
 
       h1, p {
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-left: rem(20px);
+        margin-right: rem(20px);
       }
     }
   }
 
   footer {
+    margin: 0 rem(20px) rem(20px) rem(20px);
+    padding-top: rem(20px);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -108,9 +110,9 @@ export default {
 
       a {
         display: inline-block;
-        width: 10px;
-        height: 10px;
-        margin: 5px;
+        width: rem(10px);
+        height: rem(10px);
+        margin: rem(5px);
         background-color: $silver;
         border-radius: 50%;
 
@@ -123,7 +125,7 @@ export default {
     }
 
     .ae-button /deep/ .label {
-      padding: 6px 25px;
+      padding: rem(6px) rem(25px);
       @extend %face-sans-xs;
       font-weight: bold;
     }

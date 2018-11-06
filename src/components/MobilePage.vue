@@ -2,26 +2,26 @@
   <div class="mobile-page">
     <div class="panel">
       <div :class="['top', !this.$slots['content-bottom'] && 'only']">
-      <header-mobile>
-        {{ title }}
-        <ae-button
-          v-if="backButton || closeButton"
-          :slot="backButton ? 'left' : 'right'"
+        <header-mobile>
+          {{ title }}
+          <ae-button
+            v-if="backButton || closeButton"
+            :slot="backButton ? 'left' : 'right'"
             size="small"
-          plain
-          @click="closeHandler"
-        >
-          <ae-icon
-            slot="icon"
+            plain
+            @click="closeHandler"
+          >
+            <ae-icon
+              slot="icon"
               :name="backButton ? 'back' : 'close'"
-            :rotate="backButton ? 180 : 0"
+              :rotate="backButton ? 180 : 0"
               size="20px"
-          />
-        </ae-button>
-      </header-mobile>
-      <div class="content">
-        <slot />
-      </div>
+            />
+          </ae-button>
+        </header-mobile>
+        <div class="content">
+          <slot />
+        </div>
       </div>
       <div
         v-if="!!this.$slots['content-bottom']"
@@ -65,6 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions';
 
 .mobile-page {
   $overlay-padding: 10px;
@@ -96,10 +97,10 @@ export default {
 
     @include abovePhone {
       background: linear-gradient(to bottom, white, #f1f4f7);
-      border-radius: 10px;
+      border-radius: rem(10px);
       margin: auto;
       width: $screen-phone - 2 * $overlay-padding;
-      min-height: 600px;
+      min-height: rem(600px);
     }
 
     .top.only {
