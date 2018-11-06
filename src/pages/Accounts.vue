@@ -55,7 +55,7 @@
       />
     </swiper>
 
-    <list-item>
+    <list-item slot="content-bottom">
       <div class="content">
         <div class="title">Account Key</div>
         <div class="subtitle">
@@ -181,6 +181,15 @@ export default {
 @import '../components/MobilePage.scss';
 
 .accounts {
+  /deep/ .top {
+    background: $color-neutral-positive-2;
+  }
+
+  /deep/ .bottom {
+    margin-top: -40px;
+    background: $color-neutral-maximum;
+  }
+
   @include split-background($color-neutral-positive-2, 43%);
 
   .swiper-container /deep/ {

@@ -19,17 +19,19 @@
       fill="primary"
     />
 
-    <list-item v-clipboard="activeIdentity.address">
-      <img :src="writingHandEmoji">
-      <div class="content">
-        <div class="title">Copy address</div>
-        <div class="subtitle">Save to clipboard</div>
-      </div>
-      <ae-icon
-        slot="right"
-        name="left-more"
-      />
-    </list-item>
+    <template slot="content-bottom">
+      <list-item v-clipboard="activeIdentity.address">
+        <img :src="writingHandEmoji">
+        <div class="content">
+          <div class="title">Copy address</div>
+          <div class="subtitle">Save to clipboard</div>
+        </div>
+        <ae-icon
+          slot="right"
+          name="left-more"
+        />
+      </list-item>
+    </template>
   </mobile-page>
 </template>
 
@@ -62,11 +64,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../components/MobilePage.scss';
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .receive {
+  /deep/ .top {
+    background: $color-neutral-positive-2;
+  }
+
+  /deep/ .bottom {
+    background: $color-neutral-maximum;
+  }
+
   @include split-background($color-neutral-positive-2, 37%);
 
   .note {
@@ -75,16 +84,12 @@ export default {
   }
 
   .ae-account {
-    margin: rem(39px) rem(16px);
+    margin: rem(39px) rem(16px) 0 rem(16px);
     width: auto;
-
-    &.qrAccount {
-      margin-top: rem(59px);
-    }
   }
 
   .list-item {
-    margin: rem(40px) rem(30px);
+    margin: rem(60px) rem(30px);
     padding: rem(8px) rem(8px);
     width: auto;
     border: solid $color-neutral-positive-1;

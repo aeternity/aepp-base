@@ -1,6 +1,7 @@
 <template>
   <div class="mobile-page">
     <div class="panel">
+      <div :class="['top', !this.$slots['content-bottom'] && 'only']">
       <header-mobile>
         {{ title }}
         <ae-button
@@ -18,6 +19,15 @@
       </header-mobile>
       <div class="content">
         <slot />
+      </div>
+      </div>
+      <div
+        v-if="!!this.$slots['content-bottom']"
+        class="bottom"
+      >
+        <div class="content">
+          <slot name="content-bottom" />
+        </div>
       </div>
       <div
         v-if="$slots.footer"
@@ -69,9 +79,13 @@ export default {
     box-sizing: border-box;
   }
 
-  > .panel {
+  > .panel, .top, .bottom {
     display: flex;
     flex-direction: column;
+  }
+
+  > .panel {
+    position: relative;
 
     @include phone {
       flex-grow: 1;
@@ -85,12 +99,21 @@ export default {
       min-height: 600px;
     }
 
-    > .content {
+    .top.only {
       flex-grow: 1;
     }
 
-    > .content, > .footer {
-      margin: 0 20px 20px 20px;
+    .bottom {
+      margin-top: -2rem;
+    }
+
+    .content {
+      flex-grow: 1;
+      margin: 0 rem(30px);
+    }
+
+    .footer {
+      margin: rem(32px);
     }
   }
 }

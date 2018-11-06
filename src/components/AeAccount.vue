@@ -96,67 +96,71 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions';
 
-.ae-account.ae-card {
-  header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: rem(12px) rem(16px) 0 rem(12px);
-    margin-bottom: rem(12px);
+.ae-account {
+  position: relative;
 
-    .slot-icon {
-      margin-left: auto;
+  &.ae-card {
+    header {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: rem(12px) rem(16px) 0 rem(12px);
+      margin-bottom: rem(12px);
+
+      .slot-icon {
+        margin-left: auto;
+      }
+
+      span {
+        @extend %face-sans-base;
+        color: $color-neutral-maximum;
+      }
+
+      .ae-identicon {
+        margin-right: rem(8px);
+      }
     }
 
-    span {
-      @extend %face-sans-base;
-      color: $color-neutral-maximum;
+    main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: rem(24px) rem(8px) rem(12px) rem(12px);
+
+      .security-status {
+        @extend %face-uppercase-xs;
+        white-space: pre-line;
+        margin-bottom: rem(4px);
+        font-weight: bold;
+      }
+
+      .ae-address {
+        margin-left: auto;
+        width: rem(150px);
+      }
+
+      &.mainQr {
+        padding-top: rem(8px);
+      }
     }
 
-    .ae-identicon {
-      margin-right: rem(8px);
-    }
-  }
-
-  main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: rem(24px) rem(8px) rem(12px) rem(12px);
-
-    .security-status {
-      @extend %face-uppercase-xs;
-      white-space: pre-line;
-      margin-bottom: rem(4px);
-      font-weight: bold;
+    .balance-title, .balance-value {
+      text-transform: none;
     }
 
-    .ae-address {
-      margin-left: auto;
-      width: rem(150px);
+    .balance-title {
+      @extend %face-sans-xs;
     }
 
-    &.mainQr {
-      padding-top: rem(8px);
-    }
-  }
+    .balance-value {
+      @extend %face-mono-base;
+      font-weight: normal;
 
-  .balance-title, .balance-value {
-    text-transform: none;
-  }
-
-  .balance-title {
-    @extend %face-sans-xs;
-  }
-
-  .balance-value {
-    @extend %face-mono-base;
-    font-weight: normal;
-
-    &:after {
-      @extend %face-mono-xs;
-      margin-left: rem(5px);
-      content: 'AE';
+      &:after {
+        @extend %face-mono-xs;
+        margin-left: rem(5px);
+        content: 'AE';
+      }
     }
   }
 }
