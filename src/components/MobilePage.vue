@@ -7,13 +7,15 @@
         <ae-button
           v-if="backButton || closeButton"
           :slot="backButton ? 'left' : 'right'"
+            size="small"
           plain
           @click="closeHandler"
         >
           <ae-icon
             slot="icon"
-            :name="backButton ? 'arrow' : 'close'"
+              :name="backButton ? 'back' : 'close'"
             :rotate="backButton ? 180 : 0"
+              size="20px"
           />
         </ae-button>
       </header-mobile>
@@ -39,8 +41,9 @@
 </template>
 
 <script>
-import { AeButton, AeIcon } from '@aeternity/aepp-components';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import HeaderMobile from './HeaderMobile.vue';
+import AeButton from '../components/AeButton.vue';
 
 export default {
   components: { AeButton, AeIcon, HeaderMobile },
