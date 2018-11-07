@@ -5,7 +5,7 @@
         <header-mobile>
           {{ title }}
           <ae-button
-            v-if="backButton || closeButton"
+            v-if="backButton || closeButton || addButton"
             :slot="backButton ? 'left' : 'right'"
             size="small"
             plain
@@ -13,7 +13,7 @@
           >
             <ae-icon
               slot="icon"
-              :name="backButton ? 'back' : 'close'"
+              :name="backButton ? 'back' : closeButton ? 'close' : 'plus'"
               :rotate="backButton ? 180 : 0"
               size="20px"
             />
@@ -52,10 +52,15 @@ export default {
     redirectToOnClose: { type: Object, default: undefined },
     backButton: { type: Boolean, default: false },
     closeButton: { type: Boolean, default: false },
+    addButton: { type: Boolean, default: false },
   },
   methods: {
     closeHandler() {
       this.$emit('close');
+      if (this.addButton) {
+        this.$router.push({ name: 'accounts-new' });
+        return;
+      }
       if (!this.redirectToOnClose) return;
       this.$router.push(this.redirectToOnClose);
     },
