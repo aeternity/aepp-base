@@ -5,8 +5,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve:prod": "vue-cli-service serve --mode production",
     "serve:android": "npm run build:cordova && cordova run android",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development",
     "build:cordova": "IS_CORDOVA=true npm run build",
     "build:ios": "npm run build:cordova && cordova build ios",
     "build:android": "npm run build:cordova && cordova build android",

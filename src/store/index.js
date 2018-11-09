@@ -166,8 +166,8 @@ const store = new Vuex.Store({
       addresses.forEach(address => dispatch('updateBalance', address));
     },
     async updateBalance({ state: { balances }, commit }, address) {
-      const response = await fetch(`https://api.backendless.com/CBD0589C-4114-2D15-FF41-6FC7F3EE8800/
-39EBBD6D-5A94-0739-FF27-B17F3957B700/data/TokenBurnings
+      const response = await fetch(`https://api.backendless.com/${process.env.VUE_APP_BL_ID}/
+${process.env.VUE_APP_BL_KEY}/data/${process.env.VUE_APP_BL_TABLE}
 ?pageSize=100&where=pubKey%20%3D%20%27${address}%27`);
       const json = await response.json();
       const balance = +json.reduce((r, item) => r.plus(item.value), BigNumber(0)).shiftedBy(-18);
