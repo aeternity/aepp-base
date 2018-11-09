@@ -93,8 +93,6 @@ export default {
   }
 
   footer {
-    margin: 0 rem(20px) rem(20px) rem(20px);
-    padding-top: rem(20px);
     display: flex;
     align-items: center;
     justify-content: space-between;
