@@ -18,7 +18,7 @@
       <ae-input
         v-validate="'required|min:4'"
         v-focus="true"
-        :id="_uid.toString()"
+        :id="`${_uid}-password`"
         v-model="password"
         :error="error"
         label="New password"
@@ -28,10 +28,10 @@
         @click.native="error = false"
       />
       <ae-input
-        v-validate="'confirmed:'+password"
+        v-validate="'confirmed:'+password+'|required'"
         v-focus="true"
-        :id="_uid.toString()"
-        v-model="password"
+        :id="`${_uid}-passwordRepeat`"
+        v-model="passwordRepeat"
         :error="error"
         label="Confirm new password"
         name="passwordRepeat"
@@ -39,30 +39,6 @@
         placeholder="Password"
         @click.native="error = false"
       />
-      <!-- <ae-label
-        :for="`${_uid}-password`"
-        :help-text="errors.first('password')"
-        help-type="dramatic"
-      >Enter your password</ae-label>
-      <ae-input
-        v-validate="'required|min:4'"
-        v-focus="true"
-        :id="`${_uid}-password`"
-        v-model="password"
-        name="password"
-        type="password"
-      />
-      <ae-label
-        :for="`${_uid}-passwordRepeat`"
-        :help-text="errors.first('passwordRepeat')"
-        help-type="dramatic"
-      >Confirm your password</ae-label>
-      <ae-input
-        v-validate="'confirmed:'+password"
-        :id="`${_uid}-passwordRepeat`"
-        name="passwordRepeat"
-        type="password"
-      /> -->
     </form>
 
     <template slot="footer">
@@ -79,8 +55,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeInput } from '@aeternity/aepp-components-3';
-import clappingHandsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f44f.png';
 import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
@@ -118,11 +92,6 @@ export default {
           password: this.password,
           seed: this.seed,
         });
-        this.$store.dispatch('setNotification', {
-          text: `You successfully ${this.recover ? 'recovered your' : 'created new'} account`,
-          icon: clappingHandsEmojiPath,
-          autoClose: true,
-        });
       } finally {
         this.working = false;
       }
@@ -147,6 +116,10 @@ export default {
 
   /deep/ .ae-input-container {
     margin-top: rem(15px);
+
+    input {
+      margin: 0;
+    }
   }
 }
 </style>
