@@ -17,12 +17,14 @@
     </guide>
 
     <form @submit.prevent="setSeed">
-      <ae-textarea
+      <ae-text-area
         v-validate="'required'"
         v-focus="true"
-        :id="_uid"
+        :id="`{$_uid}`"
+        :error="error"
         v-model="seed"
         name="seed"
+        label="Recovery phrase"
         placeholder="Recovery phrase"
         monospace
       />
@@ -31,7 +33,7 @@
     <template slot="footer">
       <ae-button
         :disabled="errors.any()"
-        type="secondary"
+        fill="secondary"
         size="medium"
         @click="setSeed"
       >
@@ -50,29 +52,31 @@ import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png'
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
+import AeTextArea from '../components/AeTextArea.vue';
 
 export default {
   components: {
-    MobilePage, AeTextarea, AeLabel, Guide, AeButton, AeInput,
+    MobilePage, AeTextarea, AeLabel, Guide, AeButton, AeInput, AeTextArea,
   },
   data() {
     return {
       dizzySymbolEmoji: dizzySymbolEmojiPath,
       seed: '',
+      error: false,
     };
   },
   computed: mapState(['keystore']),
   methods: {
     async setSeed() {
-      if (!await this.$validator.validateAll()) return;
+      if (!await this.$validator.validateAll()) {
+        this.error = true;
+        return;
+      }
 
       if (validateMnemonic(this.seed)) {
         this.$router.push({ name: 'set-password', params: { seed: this.seed } });
       } else {
-        this.$store.dispatch('setNotification', {
-          text: 'Invalid passphrase',
-          autoClose: true,
-        });
+        this.error = true;
       }
     },
   },
