@@ -5,8 +5,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve:prod": "vue-cli-service serve --mode production",
     "serve:android": "npm run build:cordova && cordova run android",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development",
     "build:cordova": "IS_CORDOVA=true npm run build",
     "build:ios": "npm run build:cordova && cordova build ios",
     "build:android": "npm run build:cordova && cordova build android",
@@ -24,6 +26,7 @@
     "@aeternity/ledger-app-api": "0.0.4",
     "@ledgerhq/hw-transport-u2f": "^4.21.0",
     "@zxing/library": "^0.8.3",
+    "bignumber.js": "^8.0.1",
     "emoji-datasource-apple": "^4.0.3",
     "fuse.js": "^3.2.0",
     "lodash-es": "^4.17.10",
