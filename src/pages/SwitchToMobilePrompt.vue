@@ -7,18 +7,20 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .switch-to-mobile-prompt {
   flex-grow: 1;
   display: flex;
+  background-color: $color-primary;
 
   p {
     text-align: center;
     margin: auto;
-    max-width: 300px;
-    font-size: 18px;
+    max-width: 500px;
+    font-size: 30px;
     line-height: 1.56;
+    color: $color-neutral-maximum;
   }
 }
 </style>
