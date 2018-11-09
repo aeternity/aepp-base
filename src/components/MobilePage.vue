@@ -114,6 +114,7 @@ export default {
 
     .bottom {
       margin-top: -2rem;
+      margin-bottom: rem(60px);
     }
 
     .content {
