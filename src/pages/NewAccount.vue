@@ -50,4 +50,4 @@ export default {
 </script>
 
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./Intro.scss" scoped />
+<style lang="scss" src="./FixedHeader.scss" scoped />
