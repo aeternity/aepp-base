@@ -5,7 +5,7 @@
       Receive
     </router-link>
     <router-link :to="{ name: 'accounts' }">
-      <ae-identity-avatar :address="identity.address" />
+      <ae-identity-avatar :address="identity ? identity.address : ''" />
     </router-link>
     <router-link :to="{ name: 'settings' }">
       <ae-icon name="settings" />

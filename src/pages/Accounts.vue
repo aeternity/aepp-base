@@ -18,7 +18,7 @@
     >
       <swiper-slide
         v-for="(account, index) in identities"
-        :key="account.address"
+        :key="account ? account.address : ''"
         class="current-slide"
       >
         <ae-account
@@ -36,7 +36,7 @@
               size="20px"
             />
             <li>
-              <ae-button-new v-clipboard="account.address">
+              <ae-button-new v-clipboard="account ? account.address : ''">
                 <ae-icon name="copy" />
                 Copy Address
               </ae-button-new>
@@ -60,7 +60,7 @@
       <div class="content">
         <div class="title">Account Key</div>
         <div class="subtitle">
-          <ae-address :value="activeIdentity.address" />
+          <ae-address :value="activeIdentity ? activeIdentity.address : ''" />
         </div>
       </div>
     </list-item>
