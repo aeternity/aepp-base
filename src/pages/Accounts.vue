@@ -36,7 +36,7 @@
               size="20px"
             />
             <li>
-              <ae-button-new v-clipboard="account ? account.address : ''">
+              <ae-button-new @click="copyValue(account.address)">
                 <ae-icon name="copy" />
                 Copy Address
               </ae-button-new>
@@ -72,6 +72,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeButton, AeLabel, AeInput, AeModalLight } from '@aeternity/aepp-components';
 import { AeButton as AeButtonNew, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
+import copy from 'clipboard-copy';
 import MobilePage from '../components/MobilePage.vue';
 import AeAccount from '../components/AeAccount.vue';
 import ListItem from '../components/ListItem.vue';
@@ -133,6 +134,9 @@ export default {
       this.createIdentity(this.newAccountName);
       this.newAccountName = '';
       this.modalVisible = false;
+    },
+    copyValue(value) {
+      copy(value);
     },
   },
 };

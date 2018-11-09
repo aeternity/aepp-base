@@ -20,7 +20,7 @@
     />
 
     <template slot="content-bottom">
-      <list-item v-clipboard="activeIdentity.address">
+      <list-item @click.native="copyValue(activeIdentity.address)">
         <img :src="writingHandEmoji">
         <div class="content">
           <div class="title">Copy address</div>
@@ -39,6 +39,7 @@
 import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import writingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
+import copy from 'clipboard-copy';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAccount from '../components/AeAccount.vue';
@@ -59,6 +60,11 @@ export default {
   },
   computed: {
     ...mapGetters(['activeIdentity']),
+  },
+  methods: {
+    copyValue(value) {
+      copy(value);
+    },
   },
 };
 </script>
