@@ -66,11 +66,12 @@
 
 <script>
 import { AeLabel } from '@aeternity/aepp-components';
-import { AeToolbar, AeIcon, AeInput } from '@aeternity/aepp-components-3';
+import { AeToolbar, AeIcon } from '@aeternity/aepp-components-3';
 import wavingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f44b.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
+import AeInput from '../components/AeInput.vue';
 
 export default {
   components: {

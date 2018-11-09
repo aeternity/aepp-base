@@ -85,6 +85,7 @@ import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
+import AeInput from '../components/AeInput.vue';
 
 export default {
   components: {
