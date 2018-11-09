@@ -3,6 +3,7 @@ import store from '../store';
 import mobileRoutes from './routes/mobile';
 import commonRoutes from './routes/common';
 import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt.vue';
+import SwitchToMobilePrompt from '../pages/SwitchToMobilePrompt.vue';
 
 const router = new Router({
   routes:
@@ -13,7 +14,10 @@ const router = new Router({
           component: AddToHomeScreenPrompt,
         }])
         || [...mobileRoutes, ...commonRoutes]
-      : commonRoutes,
+      : [{
+        path: '/',
+        component: SwitchToMobilePrompt,
+      }],
 });
 
 store.watch(
