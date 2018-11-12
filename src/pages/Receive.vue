@@ -5,10 +5,10 @@
     <guide
       fill="primary"
     >
-      <em>Let others scan</em>
-      <br>your address
+      <em>Receive</em> tokens
       <div class="note">
-        Show the QR to receive
+        Scan this QR code to receive
+        <br>tokens on this address
       </div>
     </guide>
 
@@ -20,15 +20,18 @@
     />
 
     <template slot="content-bottom">
-      <list-item @click.native="copyValue(activeIdentity.address)">
+      <list-item @click.native="copyAddress">
         <img :src="writingHandEmoji">
         <div class="content">
           <div class="title">Copy address</div>
           <div class="subtitle">Save to clipboard</div>
         </div>
         <ae-icon
+          v-if="copied"
           slot="right"
-          name="left-more"
+          fill="alternative"
+          face="round"
+          name="check"
         />
       </list-item>
     </template>
@@ -56,14 +59,16 @@ export default {
   data() {
     return {
       writingHandEmoji: writingHandEmojiPath,
+      copied: false,
     };
   },
   computed: {
     ...mapGetters(['activeIdentity']),
   },
   methods: {
-    copyValue(value) {
-      copy(value);
+    copyAddress() {
+      copy(this.activeIdentity.address);
+      this.copied = true;
     },
   },
 };
@@ -80,6 +85,7 @@ export default {
 
   /deep/ .bottom {
     background: $color-neutral-maximum;
+    margin-top: rem(-31px) !important;
   }
 
   .guide {
@@ -87,18 +93,14 @@ export default {
   }
 
   .note {
+    margin: rem(8px) 0;
     @extend %face-sans-s;
     font-weight: 500;
   }
 
-  .ae-account {
-    margin: rem(39px) rem(16px) 0 rem(16px);
-    width: auto;
-  }
-
   .list-item {
-    margin: rem(60px) rem(30px);
-    padding: rem(8px) rem(8px);
+    margin: rem(60px) rem(18px);
+    padding: rem(8px) 0 rem(8px) rem(8px);
     width: auto;
     border: solid $color-neutral-positive-1;
     border-width: 2px 0;
