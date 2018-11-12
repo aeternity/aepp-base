@@ -119,10 +119,6 @@ export default {
     margin: 0 rem(-15px);
   }
 
-  /deep/ .ae-input {
-    margin: 0 rem(-10px) rem(10px) rem(-10px);
-  }
-
   .ae-toolbar {
     justify-content: space-between;
     @extend %face-sans-xs;

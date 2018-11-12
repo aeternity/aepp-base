@@ -117,7 +117,6 @@ export default {
 
 .ae-input-box {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   background: $color-neutral-positive-3;
   min-height: 4rem;
@@ -126,7 +125,7 @@ export default {
 .ae-input-header {
   position: relative;
   display: flex;
-  flex: 0 0 100%;
+  flex: 0 0;
   justify-content: space-between;
   align-items: center;
   align-self: flex-start;
@@ -146,8 +145,7 @@ export default {
 
   align-self: center;
   justify-self: center;
-  flex: 0 0 100%;
-  height: 100%;
+  flex: 0 1 100%;
   width: 100%;
   padding: 0.5rem 1rem;
   background: transparent;
