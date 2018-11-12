@@ -13,20 +13,20 @@
 
     <template slot="footer">
       <ae-button
-        :to="{ name: 'new-account' }"
+        :to="{ name: keystore ? 'login' : 'recover' }"
         size="medium"
         fill="secondary"
       >
-        Create New Account
+        {{ keystore ? 'Login' : 'Recover' }}
       </ae-button>
       <ae-button
-        :to="{ name: keystore ? 'login' : 'recover' }"
+        :to="{ name: 'new-account' }"
         size="medium"
         fill="neutral"
         plain
         uppercase
       >
-        {{ keystore ? 'Login' : 'Recover' }}
+        Create New Account
       </ae-button>
       <hr>
       <ae-button
