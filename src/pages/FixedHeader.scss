@@ -6,6 +6,8 @@
   .mobile-page {
     /deep/ .header-mobile {
       position: fixed;
+      margin-bottom: rem(10px);	
+      padding: rem(24px) rem(10px);
       width: 95%;
       background-color: $color-neutral-maximum;
     }

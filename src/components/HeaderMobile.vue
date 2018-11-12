@@ -18,8 +18,7 @@
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .header-mobile {
-  margin-bottom: rem(10px);
-  padding: rem(24px) rem(10px);
+  padding: rem(5px) rem(10px) rem(5px) rem(10px);
   display: flex;
   justify-content: space-between;
   align-items: center;
