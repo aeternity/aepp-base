@@ -15,9 +15,9 @@
     <template slot="content-bottom">
       <ae-input
         :id="_uid.toString()"
+        v-model="newAccountName"
         label="Name"
         placeholder="Name"
-        @input="(event) => newAccountName=event.target.value"
       />
       <ae-button
         slot="buttons"
@@ -34,7 +34,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import { AeInput } from '@aeternity/aepp-components-3';
+import AeInput from '../components/AeInput.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
@@ -85,12 +85,12 @@ export default {
     margin-top: rem(-60px) !important;
 
     .content {
-      /deep/ .ae-input {
+      .ae-input {
         margin: 0;
       }
 
-      /deep/ .ae-button {
-         margin-top: rem(20px);
+      .ae-button {
+         margin: rem(20px) auto;
       }
     }
   }
