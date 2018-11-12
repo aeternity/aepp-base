@@ -20,7 +20,7 @@
         v-focus="true"
         :id="`${_uid}-password`"
         v-model="password"
-        :error="error"
+        :error="errors.first('password')"
         label="New password"
         name="password"
         type="password"
@@ -32,7 +32,7 @@
         v-focus="true"
         :id="`${_uid}-passwordRepeat`"
         v-model="passwordRepeat"
-        :error="error"
+        :error="errors.first('passwordRepeat')"
         label="Confirm new password"
         name="passwordRepeat"
         type="password"
@@ -40,7 +40,6 @@
         @click.native="error = false"
       />
     </form>
-
     <template slot="footer">
       <ae-button
         :disabled="errors.any() || working"
@@ -75,16 +74,12 @@ export default {
       working: false,
       recover: false,
       keyEmoji: keyEmojiPath,
-      error: false,
     };
   },
   computed: mapState(['keystore']),
   methods: {
     async createKeystore() {
-      if (!await this.$validator.validateAll()) {
-        this.error = true;
-        return;
-      }
+      if (!await this.$validator.validateAll()) return;
 
       this.working = true;
       try {
