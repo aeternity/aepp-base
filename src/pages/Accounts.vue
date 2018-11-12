@@ -5,15 +5,15 @@
   >
     <guide
       fill="primary"
-      icon="↪"
     >
       <em>Activate the account</em>
-      <br>that you want to use
-      <br>by swiping
+      <br>that you want to use by
+      <br>swiping
     </guide>
 
     <swiper
       :options="swiperOptions"
+      :key="identities.length > 1"
       class="swiper-container"
     >
       <swiper-slide
@@ -51,6 +51,7 @@
         </ae-account>
       </swiper-slide>
       <div
+        v-if="identities.length > 1"
         slot="pagination"
         class="swiper-pagination"
       />
@@ -184,6 +185,8 @@ export default {
     }
 
     .swiper-pagination {
+      margin-bottom: rem(16px);
+
       &-bullet {
         width: rem(12px);
         height: rem(12px);
@@ -198,15 +201,14 @@ export default {
 
   .list-item {
     display: block;
-    margin: rem(20px) auto;
+    margin: 0 auto;
     width: rem(279px);
     height: auto;
     padding: 0;
     border: none;
-    border-top: rem(2px) solid $color-neutral-positive-1;
 
     .content {
-      margin: rem(20px) 0;
+      margin: 0;
 
       .title {
         margin-bottom: rem(10px);
