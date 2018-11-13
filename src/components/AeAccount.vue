@@ -35,7 +35,7 @@
     </main>
 
     <template slot="toolbar">
-      <span class="balance-title">{{ qrSide ? name : 'Balance' }}</span>
+      <span class="balance-title">{{ qrSide ? name : '' }}</span>
       <span
         v-if="!qrSide"
         class="balance-value"
