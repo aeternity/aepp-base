@@ -9,7 +9,7 @@ RUN apt-get update && \
                        libfontconfig \
                        curl \
                        gradle \
-		               imagemagick &&\
+                       imagemagick &&\
     curl -sL https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.gz | tar xz --strip-components=1 &&\
     rm -rf /var/lib/apt/lists/*
 
