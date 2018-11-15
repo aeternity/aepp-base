@@ -22,8 +22,9 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(({
-      apps, rpcUrl, selectedIdentityIdx, addressBook, mobile, desktop,
+      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, mobile, desktop,
     }) => ({
+      migrations,
       ...process.env.IS_MOBILE_DEVICE ? {
         apps,
         rpcUrl,
@@ -56,6 +57,7 @@ const store = new Vuex.Store({
   modules: process.env.IS_MOBILE_DEVICE ? { mobile: mobileModule } : { desktop: desktopModule },
 
   state: {
+    migrations: {},
     loginTarget: '',
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
@@ -85,6 +87,9 @@ const store = new Vuex.Store({
   },
 
   mutations: {
+    markMigrationAsApplied(state, migrationId) {
+      Vue.set(state.migrations, migrationId, true);
+    },
     setLoginTarget(state, loginTarget) {
       state.loginTarget = loginTarget;
     },
