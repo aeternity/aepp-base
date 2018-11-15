@@ -6,26 +6,7 @@ import { Crypto } from '@aeternity/aepp-sdk/es';
 import { mnemonicToSeed } from '@aeternity/bip39';
 import { generateHDWallet } from '@aeternity/hd-wallet/src';
 import AES from '../../lib/aes';
-import { genRandomBuffer } from '../utils';
-
-const derivePasswordKey = async (password, salt) => {
-  const passwordKey = await window.crypto.subtle.importKey(
-    'raw',
-    new TextEncoder().encode(password),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveKey'],
-  );
-  return window.crypto.subtle.deriveKey(
-    {
-      name: 'PBKDF2', salt, iterations: 15000, hash: 'SHA-256',
-    },
-    passwordKey,
-    { name: 'AES-CTR', length: 128 },
-    false,
-    ['encrypt', 'decrypt'],
-  );
-};
+import { genRandomBuffer, derivePasswordKey } from '../utils';
 
 export default {
   state: {
