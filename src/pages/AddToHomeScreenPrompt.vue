@@ -7,18 +7,21 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .add-to-home-screen-prompt {
   flex-grow: 1;
   display: flex;
+  background-color: $color-primary;
 
   p {
     text-align: center;
     margin: auto;
-    max-width: 300px;
-    font-size: 18px;
+    max-width: rem(250px);
+    @extend %face-sans-l;
     line-height: 1.56;
+    color: $color-neutral-maximum;
   }
 }
 </style>
