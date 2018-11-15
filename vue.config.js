@@ -1,6 +1,7 @@
 const parseBool = val => (val ? JSON.parse(val) : false);
 
-const { IS_MOBILE_DEVICE, IS_PWA } = process.env;
+// eslint-disable-next-line camelcase
+const { IS_MOBILE_DEVICE, IS_PWA, npm_package_version } = process.env;
 const IS_CORDOVA = parseBool(process.env.IS_CORDOVA);
 
 module.exports = {
@@ -24,6 +25,11 @@ module.exports = {
 
       if (IS_PWA) {
         definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA);
+      }
+
+      // eslint-disable-next-line camelcase
+      if (npm_package_version) {
+        definitions['process.env.npm_package_version'] = JSON.stringify(npm_package_version);
       }
 
       return [definitions];
