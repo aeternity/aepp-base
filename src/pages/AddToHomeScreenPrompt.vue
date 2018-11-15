@@ -20,7 +20,6 @@
     margin: auto;
     max-width: rem(250px);
     @extend %face-sans-l;
-    line-height: 1.56;
     color: $color-neutral-maximum;
   }
 }
