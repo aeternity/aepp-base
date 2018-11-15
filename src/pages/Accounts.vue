@@ -1,23 +1,24 @@
 <template>
   <mobile-page
     class="accounts"
+    fill="neutral"
   >
     <guide
       fill="primary"
-      icon="↪"
     >
       <em>Activate the account</em>
-      <br>that you want to use
-      <br>by swiping
+      <br>that you want to use by
+      <br>swiping
     </guide>
 
     <swiper
       :options="swiperOptions"
+      :key="identities.length > 1"
       class="swiper-container"
     >
       <swiper-slide
         v-for="(account, index) in identities"
-        :key="account.address"
+        :key="account ? account.address : ''"
         class="current-slide"
       >
         <ae-account
@@ -35,7 +36,7 @@
               size="20px"
             />
             <li>
-              <ae-button-new v-clipboard="account.address">
+              <ae-button-new @click="copyValue(account.address)">
                 <ae-icon name="copy" />
                 Copy Address
               </ae-button-new>
@@ -50,22 +51,17 @@
         </ae-account>
       </swiper-slide>
       <div
+        v-if="identities.length > 1"
         slot="pagination"
         class="swiper-pagination"
       />
     </swiper>
 
-    <list-item>
-      <div class="content">
-        <div class="title">Three words identifier</div>
-        <div class="subtitle">alive fussy bluetonguelizard</div>
-      </div>
-    </list-item>
-    <list-item>
+    <list-item slot="content-bottom">
       <div class="content">
         <div class="title">Account Key</div>
         <div class="subtitle">
-          <ae-address :value="activeIdentity.address" />
+          <ae-address :value="activeIdentity ? activeIdentity.address : ''" />
         </div>
       </div>
     </list-item>
@@ -114,6 +110,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeButton, AeLabel, AeInput, AeModalLight } from '@aeternity/aepp-components';
 import { AeButton as AeButtonNew, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
+import copy from 'clipboard-copy';
 import MobilePage from '../components/MobilePage.vue';
 import AeAccount from '../components/AeAccount.vue';
 import ListItem from '../components/ListItem.vue';
@@ -176,6 +173,9 @@ export default {
       this.newAccountName = '';
       this.modalVisible = false;
     },
+    copyValue(value) {
+      copy(value);
+    },
   },
 };
 </script>
@@ -186,7 +186,17 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .accounts {
-  background: linear-gradient(to bottom, white, #f1f4f7);
+  /deep/ .panel .bottom {
+    margin-top: rem(-81px);
+
+    .content {
+      margin-top: rem(61px);
+    }
+  }
+
+  .guide {
+    margin-left: rem(20px);
+  }
 
   .swiper-container /deep/ {
     z-index: 0;
@@ -206,6 +216,8 @@ export default {
     }
 
     .swiper-pagination {
+      margin-bottom: rem(16px);
+
       &-bullet {
         width: rem(12px);
         height: rem(12px);
@@ -220,15 +232,14 @@ export default {
 
   .list-item {
     display: block;
-    margin: rem(20px) auto;
+    margin: 0 auto;
     width: rem(279px);
     height: auto;
     padding: 0;
     border: none;
-    border-top: rem(2px) solid $color-neutral-positive-1;
 
     .content {
-      margin: rem(20px) 0;
+      margin: 0;
 
       .title {
         margin-bottom: rem(10px);
@@ -242,6 +253,7 @@ export default {
         color: $color-neutral-negative-3;
 
         .ae-address {
+          position: inherit;
           grid-template-columns: repeat(6, 1fr);
           grid-column-gap: rem(19px);
           font-weight: normal;
