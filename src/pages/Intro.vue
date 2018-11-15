@@ -1,32 +1,34 @@
 <template>
   <mobile-page class="intro">
-    <div class="logo">
-      <img src="../assets/intro.svg">
-      <p>
-        æternity gives you easy access to the magic of blockchain
-        technology. Instantly login or see how it works.
-      </p>
-    </div>
+    <guide fill="neutral">
+      <em>Base æpp.</em>
+      <br>Interact with the
+      <br>æternity blockchain.
+      <br>In a human way.
+    </guide>
 
     <template slot="footer">
       <ae-button
-        :to="{ name: 'new-account' }"
-        type="exciting"
-      >
-        Create Account
-      </ae-button>
-      <ae-button
         :to="{ name: keystore ? 'login' : 'recover' }"
-        size="small"
-        type="dramatic"
-        plain
-        uppercase
+        size="medium"
+        fill="secondary"
       >
         {{ keystore ? 'Login' : 'Recover' }}
       </ae-button>
       <ae-button
+        :to="{ name: 'new-account' }"
+        size="medium"
+        fill="neutral"
+        plain
+        uppercase
+      >
+        Create New Account
+      </ae-button>
+      <hr>
+      <ae-button
         :to="{ name: 'onboarding' }"
-        size="small"
+        size="medium"
+        fill="neutral"
         plain
         uppercase>
         See how it works
@@ -37,11 +39,12 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeButton } from '@aeternity/aepp-components';
 import MobilePage from '../components/MobilePage.vue';
+import Guide from '../components/Guide.vue';
+import AeButton from '../components/AeButton.vue';
 
 export default {
-  components: { MobilePage, AeButton },
+  components: { MobilePage, AeButton, Guide },
   computed: mapState({
     keystore: state => state.mobile.keystore,
   }),
@@ -49,33 +52,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .intro.mobile-page {
-  background: transparent;
+  background: $color-primary;
 
   /deep/ .panel {
-    background: transparent;
-
     .content {
-      flex-shrink: 0;
-      display: flex;
-    }
-  }
-
-  .logo {
-    text-align: center;
-    margin: auto;
-
-    img, p {
-      margin: 12px;
+      margin: 0 rem(48px);
     }
 
-    p {
-      max-width: 300px;
-      font-size: 18px;
-      line-height: 1.56;
-      color: $anthracite;
+    .footer {
+      margin: 0 rem(32px);
+
+      > .ae-button {
+        margin: 0 auto;
+      }
+
+      hr {
+        margin: 0 rem(20px);
+        height: 2px;
+        border: none;
+        background-color: $color-primary-negative-1;
+      }
     }
   }
 }
