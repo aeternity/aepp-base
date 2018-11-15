@@ -3,20 +3,30 @@
     :redirect-to-on-close="{ name: 'intro' }"
     title="New Account"
     close-button
+    class="new-account"
   >
-    <h1>
-      Set up your aeternity account
-    </h1>
-    <p>
-      We are about to create a recovery phrase, please keep it safe on a piece of paper.
-      Check the spelling of each word and never create a screenshot or photo of this phrase.
-    </p>
+    <guide
+      fill="primary"
+      icon="⅓"
+    >
+      Set up<img :src="sparklesEmoji">your
+      <br><em>master account.</em>
+      <br>We’re about to create
+      <br>a recovery phrase,
+      <br>please <strong>keep it safe</strong>
+      <br>on a piece of paper!
+      <br>
+      <br><mark>Check the spelling</mark>
+      <br>of each word and <em>never</em>
+      <br>create a screenshot
+      <br>or photo of this phrase
+    </guide>
 
     <ae-button
       slot="footer"
       :to="{ name: 'new-account-create' }"
       size="medium"
-      type="exciting"
+      fill="secondary"
     >
       Generate Recovery Phrase
     </ae-button>
@@ -24,12 +34,20 @@
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components';
+import sparklesEmojiPath from 'emoji-datasource-apple/img/apple/64/2728.png';
+import AeButton from '../components/AeButton.vue';
 import MobilePage from '../components/MobilePage.vue';
+import Guide from '../components/Guide.vue';
 
 export default {
-  components: { MobilePage, AeButton },
+  components: { MobilePage, AeButton, Guide },
+  data() {
+    return {
+      sparklesEmoji: sparklesEmojiPath,
+    };
+  },
 };
 </script>
 
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
+<style lang="scss" src="./FixedHeader.scss" scoped />

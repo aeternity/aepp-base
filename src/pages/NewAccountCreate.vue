@@ -5,15 +5,18 @@
     title="New Account"
     back-button
   >
-    <h1>
-      Carefully keep this phrase safe!
-    </h1>
-    <p>
-      Write these 12 words down and
-      keep them in a safe place. You
-      need them to recover your account
-      in the future.
-    </p>
+    <guide
+      fill="primary"
+      icon="⅓"
+    >
+      <em>Carefully keep this
+      <br>phrase<img :src="keyEmoji">safe!</em>
+      <br>Write these 12 words
+      <br>down and keep them
+      <br><strong>in a safe place</strong>.You need
+      <br>them to <mark>recover</mark> your
+      <br>account in the future.
+    </guide>
     <p class="mnemonic">
       {{ seed }}
     </p>
@@ -21,7 +24,7 @@
     <template slot="footer">
       <ae-button
         size="medium"
-        type="exciting"
+        fill="secondary"
         @click="createSeed"
       >
         Next
@@ -36,16 +39,19 @@
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components';
 import { generateMnemonic } from '@aeternity/bip39';
+import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../components/MobilePage.vue';
+import Guide from '../components/Guide.vue';
+import AeButton from '../components/AeButton.vue';
 
 export default {
-  components: { MobilePage, AeButton },
+  components: { MobilePage, AeButton, Guide },
   data: () => ({
     seed: generateMnemonic(),
     readingPaused: false,
     readingEnded: false,
+    keyEmoji: keyEmojiPath,
   }),
   methods: {
     async createSeed() {
@@ -65,17 +71,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .new-account-create {
   .mnemonic {
-    font-family: 'Roboto Mono', monospace;
-    color: $aubergine;
-    font-size: 20px;
-    line-height: 1.55;
-    letter-spacing: 0.3px;
-    margin: 32px 0;
-    font-weight: 500;
+    @extend %face-mono-s;
+    line-height: 1.67;
+    color: $color-neutral-negative-3;
   }
 
   .progress {
@@ -85,7 +88,7 @@ export default {
     }
 
     height: 7px;
-    background: $maegenta;
+    background: $color-primary;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -94,3 +97,4 @@ export default {
 }
 </style>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
+<style lang="scss" src="./FixedHeader.scss" scoped />

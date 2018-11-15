@@ -5,54 +5,73 @@
     title="New Account"
     back-button
   >
-    <h1>
-      Confirm your<br>phrase
-    </h1>
-    <div
-      :class="{ mnemonic: selectedSeed }"
-      class="frame"
+    <guide
+      fill="primary"
+      icon="⅔"
     >
-      {{ selectedSeed || 'Tap the words below to add them here, note the correct order!' }}
-    </div>
-
-    <img
-      :src="require('emoji-datasource-apple/img/apple/64/1f446.png')"
-      class="icon-hand">
+      <em>Confirm<img :src="fingersCrossedEmoji">your phrase</em>
+      <br>Tap the words below
+      <br>to compose your phrase,
+      <br><mark>note</mark> correct order!
+    </guide>
 
     <div class="words">
-      <ae-button
+      <ae-badge
         v-for="(word, index) in seedPermutation"
         :disabled="selectedWordIds.includes(index)"
         :key="index"
-        size="small"
-        type="exciting"
-        uppercase
-        plain
-        @click="wordClick(index)"
+        @click.native="wordClick(index)"
       >
         {{ word }}
-      </ae-button>
+      </ae-badge>
+    </div>
+
+    <div
+      :class="{ 'error': error }"
+      class="frame"
+    >
+      <div class="message" />
+      <ae-badge
+        v-for="index in selectedWordIds"
+        :key="index"
+        @click.native="wordClick(index)"
+      >
+        {{ seedPermutation[index] }}
+        <ae-icon
+          name="close"
+          size="12px"
+        />
+      </ae-badge>
     </div>
 
     <ae-button
       slot="footer"
       :disabled="selectedWordIds.length !== seedPermutation.length"
       size="medium"
-      type="exciting"
+      fill="secondary"
       @click="confirmPhrase"
     >
-      Confirm Phrase
+      Confirm
     </ae-button>
   </mobile-page>
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components';
 import { shuffle } from 'lodash-es';
+import { AeBadge, AeIcon } from '@aeternity/aepp-components-3';
+import fingersCrossedEmojiPath from 'emoji-datasource-apple/img/apple/64/1f91e.png';
 import MobilePage from '../components/MobilePage.vue';
+import Guide from '../components/Guide.vue';
+import AeButton from '../components/AeButton.vue';
 
 export default {
-  components: { MobilePage, AeButton },
+  components: {
+    MobilePage,
+    AeButton,
+    Guide,
+    AeBadge,
+    AeIcon,
+  },
   props: {
     seed: { type: String, required: true },
   },
@@ -60,6 +79,8 @@ export default {
     return {
       seedPermutation: shuffle(this.seed.split(' ')),
       selectedWordIds: [],
+      fingersCrossedEmoji: fingersCrossedEmojiPath,
+      error: false,
     };
   },
   computed: {
@@ -68,25 +89,19 @@ export default {
     },
   },
   methods: {
-    wordClick(index) {
-      if (this.selectedWordIds.includes(index)) return;
-      this.selectedWordIds.push(index);
-    },
-    async confirmPhrase() {
-      const isValid = this.selectedSeed === this.seed;
-      await this.$store.dispatch('alert', isValid ? {
-        title: 'Correct Passphrase!',
-        text: 'Proceed to your æpp browser. Enjoy the æpp ecosystem!',
-        buttonText: 'Create password',
-      } : {
-        title: 'Incorrect passphrase',
-        text: 'You\'ve entered a wrong passphrase, try again before proceeding.',
-        buttonText: 'Try again',
-      });
-      if (isValid) {
-        this.$router.push({ name: 'set-password', params: { seed: this.seed } });
+    wordClick(id) {
+      this.error = false;
+      const ids = this.selectedWordIds;
+      if (ids.includes(id)) {
+        ids.splice(ids.indexOf(id), 1);
       } else {
-        this.selectedWordIds = [];
+        ids.push(id);
+      }
+    },
+    confirmPhrase() {
+      this.error = this.selectedSeed !== this.seed;
+      if (!this.error) {
+        this.$router.push({ name: 'set-password', params: { seed: this.seed } });
       }
     },
   },
@@ -95,54 +110,47 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .new-account-confirm {
-  .frame {
-    box-sizing: border-box;
-    height: 170px;
-    margin: 20px auto;
-    padding: 40px 60px 0;
-    border: 2px solid #d8d8d8;
-    border-radius: 10px;
-    font-size: 18px;
-    line-height: 1.56;
-    text-align: center;
-    color: $grey;
+  .ae-badge {
+    margin: rem(4px) rem(4px) 0 0;
 
-    &.mnemonic {
-      padding: 20px 30px 0;
-      font-family: 'Roboto Mono', monospace;
-      color: $aubergine;
-      font-size: 20px;
-      line-height: 1.55;
-      letter-spacing: 0.3px;
-      font-weight: 500;
+    .ae-icon {
+      margin-left: rem(8px);
     }
   }
 
-  .icon-hand {
-    display: block;
-    margin: 30px auto;
-    height: 40px;
-  }
+  .frame {
+    margin-top: rem(32px);
+    @extend %face-sans-xs;
+    color: $color-neutral-negative-1;
 
-  .words {
-    text-align: center;
+    .message {
+      margin-bottom: rem(14px);
 
-    .ae-button._plain {
-      margin: 3.5px 2.5px;
-      background-color: $aubergine;
-      color: $white;
-      border: 2px solid $aubergine;
-      box-sizing: content-box;
+      &:before {
+        content: "Your phrase";
+      }
+    }
 
-      &._disabled {
-        background-color: transparent;
-        border-color: $grey;
-        color: $grey;
+    &.error {
+      margin-left: rem(-15px);
+      padding-left: rem(15px);
+      border-left: 2px solid $color-primary;
+
+      .message {
+        margin-bottom: rem(7px);
+        color: $color-primary;
+
+        &:before {
+          content: "Oops! That doesn't match, try again";
+        }
       }
     }
   }
 }
 </style>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />
+<style lang="scss" src="./FixedHeader.scss" scoped />
