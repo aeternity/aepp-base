@@ -1,4 +1,5 @@
 import { merge } from 'lodash-es';
+import runMigrations from '../migrations';
 
 const KEY = 'vuex';
 
@@ -14,7 +15,9 @@ const getState = () =>
       ? new Uint8Array(value.data).buffer
       : value));
 
-export default reducer => (store) => {
+export default reducer => async (store) => {
+  await runMigrations(store, getState, setState);
+
   const savedState = getState();
 
   if (savedState) {
