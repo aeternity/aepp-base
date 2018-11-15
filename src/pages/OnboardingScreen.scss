@@ -1,0 +1,63 @@
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.onboarding-screen {
+  flex-grow: 1;
+
+  &.v-enter-active, &.v-leave-active {
+    img {
+      transition-property: background-position, opacity;
+    }
+  }
+
+  &.v-enter-active {
+    transition-duration: 1s;
+
+    img {
+      transition-timing-function: ease-out;
+      transition-duration: .5s;
+    }
+  }
+
+  &.v-leave-active {
+    transition-duration: .5s;
+
+    img {
+        transition-timing-function: ease-in;
+        transition-delay: .25s;
+        transition-duration: .25s;
+    }
+  }
+
+  &.v-enter, &.v-leave-to {
+    img {
+      opacity: 0;
+    }
+  }
+
+  &.v-enter .wrapper img {
+    background-position-y: top;
+  }
+
+  &.v-leave-to .wrapper img {
+    background-position-x: -25%;
+  }
+
+  .guide {
+    flex-direction: column;
+    margin-left: 0;
+    text-align: center;
+
+    .note {
+      margin-top: rem(5px);
+      @extend %face-sans-base;
+      font-weight: 500;
+      color: $color-neutral-negative-2;
+    }
+  }
+
+  img {
+    display: block;
+    margin: 0 auto rem(41px) auto;
+  }
+}
