@@ -9,6 +9,7 @@ cache:
     - node_modules
     - platforms
     - plugins
+    - /home/travis/.cache/Cypress
 before_install:
   - npm i -g npm@6.1.0
 install:
