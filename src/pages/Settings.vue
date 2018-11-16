@@ -8,14 +8,29 @@
     <template v-if="$globals.IS_MOBILE_DEVICE">
       <ae-card
         fill="maximum"
-        @click.native="signOut"
       >
-        <ae-icon
-          fill="primary"
-          face="round"
-          name="sign-out"
-        />
-        Sign out on this device
+        <list-item @click.native="logOut">
+          <ae-icon
+            fill="secondary"
+            face="round"
+            name="share"
+          />
+          <div class="content">
+            <div class="title">Logout</div>
+            <div class="subtitle">And login easily with your password</div>
+          </div>
+        </list-item>
+        <list-item @click.native="signOut">
+          <ae-icon
+            fill="primary"
+            face="round"
+            name="sign-out"
+          />
+          <div class="content">
+            <div class="title">Reset</div>
+            <div class="subtitle">After resetting, a recovery is required</div>
+          </div>
+        </list-item>
       </ae-card>
     </template>
     <div
@@ -31,6 +46,7 @@ import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../components/AeCard.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
+import ListItem from '../components/ListItem.vue';
 
 export default {
   components: {
@@ -38,13 +54,19 @@ export default {
     MobilePage,
     Guide,
     AeCard,
+    ListItem,
   },
   data() {
     return {
       version: process.env.npm_package_version,
     };
   },
-  methods: mapMutations(['signOut']),
+  methods: {
+    ...mapMutations(['signOut']),
+    logOut() {
+      this.$store.commit('setDerivedKey');
+    },
+  },
 };
 </script>
 
@@ -74,15 +96,36 @@ export default {
   }
 
   .ae-card {
-    flex-direction: row;
-    align-items: center;
     margin: 0 auto;
-    padding: rem(20px);
-    width: 80%;
-    font-weight: 500;
 
-    .ae-icon {
-      margin-right: rem(11px);
+    .list-item {
+      padding: rem(8px) 0 rem(8px) rem(20px);
+      width: auto;
+      border: none;
+
+      .content {
+        margin-left: rem(13px);
+
+        .title {
+          @extend %face-sans-s;
+          font-weight: 500;
+          color: $color-neutral-negative-3;
+        }
+
+        .subtitle {
+          @extend %face-sans-xs;
+          color: $color-neutral-negative-1;
+          letter-spacing: normal;
+        }
+      }
+
+      &:first-child {
+        border-bottom: 2px solid $color-neutral-positive-2;
+
+        .ae-icon {
+          transform: rotate(90deg);
+        }
+      }
     }
   }
 }
