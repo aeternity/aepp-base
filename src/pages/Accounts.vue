@@ -6,9 +6,11 @@
     <guide
       fill="primary"
     >
-      <em>Activate the account</em>
-      <br>that you want to use by
-      <br>swiping
+      Your <em>æternity accounts</em>
+      <div class="note">
+        Create more in the upper right corner
+        <br>and active an account by swiping
+      </div>
     </guide>
 
     <swiper
@@ -165,6 +167,12 @@ export default {
 
   .guide {
     margin-left: rem(20px);
+
+    .note {
+      margin: rem(8px) 0;
+      @extend %face-sans-s;
+      font-weight: 500;
+    }
   }
 
   .swiper-container /deep/ {
