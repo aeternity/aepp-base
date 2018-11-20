@@ -1,4 +1,5 @@
 import { merge } from 'lodash-es';
+import runMigrations from '../migrations';
 
 const KEY = 'vuex';
 
@@ -15,7 +16,7 @@ const getState = () =>
       : value));
 
 export default reducer => (store) => {
-  const savedState = getState();
+  const savedState = runMigrations(getState(), store);
 
   if (savedState) {
     store.replaceState(merge({}, store.state, savedState));
