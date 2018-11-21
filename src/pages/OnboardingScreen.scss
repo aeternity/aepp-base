@@ -35,14 +35,6 @@
     }
   }
 
-  &.v-enter .wrapper img {
-    background-position-y: top;
-  }
-
-  &.v-leave-to .wrapper img {
-    background-position-x: -25%;
-  }
-
   .guide {
     flex-direction: column;
     margin-left: 0;
