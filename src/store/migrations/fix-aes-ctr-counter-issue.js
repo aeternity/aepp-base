@@ -3,7 +3,7 @@ import AES from '../../lib/aes';
 
 export default {
   migrate(state, store) {
-    if (!process.env.IS_MOBILE_DEVICE) return undefined;
+    if (!process.env.IS_MOBILE_DEVICE) return state;
 
     const moduleName = 'migration-fix-aes-ctr-counter-issue';
     return new Promise(resolve => store.registerModule(moduleName, {
