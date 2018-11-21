@@ -108,8 +108,11 @@ export default {
     }
 
     .ae-button /deep/ .label {
-      padding: rem(6px) rem(25px);
+      padding-left: rem(25px);
+      padding-right: rem(25px);
       @extend %face-sans-xs;
+      line-height: inherit;
+      letter-spacing: 1.3px;
       font-weight: bold;
     }
   }
