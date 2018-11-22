@@ -175,7 +175,9 @@ const store = new Vuex.Store({
 ${process.env.VUE_APP_BL_KEY}/data/${process.env.VUE_APP_BL_TABLE}
 ?pageSize=100&where=pubKey%20%3D%20%27${address}%27`);
       const json = await response.json();
-      const balance = +json.reduce((r, item) => r.plus(item.value), BigNumber(0)).shiftedBy(-18);
+      const balance = +json
+        .filter(i => i.deliveryPeriod === +process.env.VUE_APP_BL_PERIOD)
+        .reduce((r, item) => r.plus(item.value), BigNumber(0)).shiftedBy(-18);
       if (balances[address] === balance) return;
       commit('setBalance', { address, balance });
     },
