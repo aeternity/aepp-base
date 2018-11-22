@@ -5,28 +5,15 @@
   flex-grow: 1;
 
   &.v-enter-active, &.v-leave-active {
+    transition-duration: .25s;
+
     img {
-      transition-property: background-position, opacity;
+      transition: opacity .25s ease-out;
     }
   }
 
-  &.v-enter-active {
-    transition-duration: 1s;
-
-    img {
-      transition-timing-function: ease-out;
-      transition-duration: .5s;
-    }
-  }
-
-  &.v-leave-active {
-    transition-duration: .5s;
-
-    img {
-        transition-timing-function: ease-in;
-        transition-delay: .25s;
-        transition-duration: .25s;
-    }
+  &.v-leave-active img {
+    transition-timing-function: ease-in;
   }
 
   &.v-enter, &.v-leave-to {
