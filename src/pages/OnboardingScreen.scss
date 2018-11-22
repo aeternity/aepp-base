@@ -3,6 +3,7 @@
 
 .onboarding-screen {
   flex-grow: 1;
+  text-align: center;
 
   &.v-enter-active, &.v-leave-active {
     transition-duration: .25s;
@@ -25,7 +26,6 @@
   .guide {
     flex-direction: column;
     margin-left: 0;
-    text-align: center;
 
     .note {
       margin-top: rem(5px);
@@ -36,7 +36,6 @@
   }
 
   img {
-    display: block;
-    margin: 0 auto rem(41px) auto;
+    margin-bottom: rem(30px);
   }
 }
