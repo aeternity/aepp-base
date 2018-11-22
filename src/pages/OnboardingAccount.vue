@@ -22,7 +22,7 @@ export default {
 
 <style lang="scss" src="./OnboardingScreen.scss" scoped />
 <style lang="scss" scoped>
-.onboarding-screen {
-  flex-grow: 0;
+.onboarding-screen img {
+  width: 190px;
 }
 </style>
