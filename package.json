@@ -19,10 +19,10 @@
   "dependencies": {
     "@aeternity/aepp-components": "2.0.15",
     "@aeternity/aepp-components-3": "3.0.0-alpha.7",
-    "@aeternity/aepp-sdk": "^0.24.0-0.1.0",
+    "@aeternity/aepp-sdk": "^0.25.0-0.1.1",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
-    "@aeternity/ledger-app-api": "0.0.4",
+    "@aeternity/ledger-app-api": "0.1.0",
     "@ledgerhq/hw-transport-u2f": "^4.21.0",
     "@zxing/library": "^0.8.3",
     "clipboard-copy": "^2.0.1",

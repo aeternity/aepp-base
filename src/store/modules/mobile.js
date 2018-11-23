@@ -107,7 +107,7 @@ export default {
       commit('setDerivedKey', passwordDerivedKey);
     },
     async signTransaction(
-      { state: { accounts }, commit, rootState: { epoch } },
+      { state: { accounts }, commit, rootState: { epoch, networkId } },
       { transaction, appName, id = uuid() },
     ) {
       const spendTx = (await epoch.api.postSpend(transaction)).tx;
@@ -120,7 +120,10 @@ export default {
           reject,
           id,
         }));
-      const signature = Crypto.sign(binaryTx, accounts[transaction.senderId].secretKey);
+      const signature = Crypto.sign(
+        Buffer.concat([Buffer.from(networkId), binaryTx]),
+        accounts[transaction.senderId].secretKey,
+      );
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
     },
     async signPersonalMessage(
