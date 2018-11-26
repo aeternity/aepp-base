@@ -40,7 +40,7 @@
         v-if="!qrSide"
         class="balance-value"
       >
-        {{ balance }}
+        {{ balance.toString() }}
       </span>
     </template>
   </ae-card>
@@ -51,6 +51,7 @@ import {
   AeAddress, AeIdenticon, AeInputPlain,
   AeLabel, AeQRCode,
 } from '@aeternity/aepp-components-3';
+import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
 
 export default {
@@ -72,7 +73,7 @@ export default {
       required: true,
     },
     balance: {
-      type: Number,
+      type: BigNumber,
       required: true,
     },
     securityStatus: {
