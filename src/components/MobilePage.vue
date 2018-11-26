@@ -1,23 +1,34 @@
 <template>
   <div class="mobile-page">
     <div class="panel">
-      <header-mobile>
-        {{ title }}
-        <ae-button
-          v-if="backButton || closeButton"
-          :slot="backButton ? 'left' : 'right'"
-          plain
-          @click="closeHandler"
-        >
-          <ae-icon
-            slot="icon"
-            :name="backButton ? 'arrow' : 'close'"
-            :rotate="backButton ? 180 : 0"
-          />
-        </ae-button>
-      </header-mobile>
-      <div class="content">
-        <slot />
+      <div :class="['top', !this.$slots['content-bottom'] && 'only', fill]">
+        <header-mobile>
+          {{ title }}
+          <ae-button
+            v-if="backButton || closeButton"
+            :slot="backButton ? 'left' : 'right'"
+            size="small"
+            plain
+            @click="closeHandler"
+          >
+            <ae-icon
+              slot="icon"
+              :name="backButton ? 'back' : 'close'"
+              :rotate="backButton ? 180 : 0"
+            />
+          </ae-button>
+        </header-mobile>
+        <div class="content">
+          <slot />
+        </div>
+      </div>
+      <div
+        v-if="!!this.$slots['content-bottom']"
+        class="bottom"
+      >
+        <div class="content">
+          <slot name="content-bottom" />
+        </div>
       </div>
       <div
         v-if="$slots.footer"
@@ -29,8 +40,9 @@
 </template>
 
 <script>
-import { AeButton, AeIcon } from '@aeternity/aepp-components';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import HeaderMobile from './HeaderMobile.vue';
+import AeButton from '../components/AeButton.vue';
 
 export default {
   components: { AeButton, AeIcon, HeaderMobile },
@@ -39,6 +51,15 @@ export default {
     redirectToOnClose: { type: Object, default: undefined },
     backButton: { type: Boolean, default: false },
     closeButton: { type: Boolean, default: false },
+    fill: {
+      type: String,
+      validator: value => [
+        'primary',
+        'neutral',
+        '',
+      ].includes(value),
+      default: '',
+    },
   },
   methods: {
     closeHandler() {
@@ -52,6 +73,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .mobile-page {
   $overlay-padding: 10px;
@@ -69,9 +92,13 @@ export default {
     box-sizing: border-box;
   }
 
-  > .panel {
+  > .panel, .top, .bottom {
     display: flex;
     flex-direction: column;
+  }
+
+  > .panel {
+    position: relative;
 
     @include phone {
       flex-grow: 1;
@@ -79,18 +106,43 @@ export default {
 
     @include abovePhone {
       background: linear-gradient(to bottom, white, #f1f4f7);
-      border-radius: 10px;
+      border-radius: rem(10px);
       margin: auto;
       width: $screen-phone - 2 * $overlay-padding;
-      min-height: 600px;
+      min-height: rem(600px);
     }
 
-    > .content {
+    .top {
+      &.primary {
+        background-color: $color-primary;
+      }
+
+      &.neutral {
+        background-color: $color-neutral-positive-2;
+      }
+
+      &.only {
+        flex-grow: 1;
+      }
+
+      .ae-icon {
+        font-size: rem(20px);
+      }
+    }
+
+    .bottom {
+      margin-top: -2rem;
+      margin-bottom: rem(60px);
+      background-color: $color-neutral-maximum;
+    }
+
+    .content {
       flex-grow: 1;
+      margin: 0 rem(30px);
     }
 
-    > .content, > .footer {
-      margin: 0 20px 20px 20px;
+    .footer {
+      margin: rem(32px);
     }
   }
 }
