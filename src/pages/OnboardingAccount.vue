@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-page">
+  <div class="onboarding-page account">
     <img src="../assets/onboarding/accounts.svg">
     <guide fill="primary">
       Create an
@@ -22,7 +22,7 @@ export default {
 
 <style lang="scss" src="./OnboardingPage.scss" scoped />
 <style lang="scss" scoped>
-.onboarding-page img {
+.onboarding-page.account img {
   width: 190px;
 }
 </style>
