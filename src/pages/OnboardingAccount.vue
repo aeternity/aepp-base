@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-screen">
+  <div class="onboarding-page">
     <img src="../assets/onboarding/accounts.svg">
     <guide fill="primary">
       Create an
@@ -20,9 +20,9 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./OnboardingScreen.scss" scoped />
+<style lang="scss" src="./OnboardingPage.scss" scoped />
 <style lang="scss" scoped>
-.onboarding-screen img {
+.onboarding-page img {
   width: 190px;
 }
 </style>

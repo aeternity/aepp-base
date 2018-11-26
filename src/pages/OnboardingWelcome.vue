@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-screen">
+  <div class="onboarding-page">
     <img src="../assets/onboarding/phones.svg">
     <guide fill="primary">
       <em>Base aepp</em>
@@ -21,4 +21,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./OnboardingScreen.scss" scoped>
+<style lang="scss" src="./OnboardingPage.scss" scoped>
