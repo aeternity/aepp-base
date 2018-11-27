@@ -46,6 +46,7 @@ export default async (store) => {
             const signature = Buffer.from(await sign(
               store.state.desktop.ledgerAddresses.indexOf(transaction.senderId),
               binaryTx,
+              store.state.networkId,
             ), 'hex');
             payload.resolve(Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx)));
           } catch (e) {
