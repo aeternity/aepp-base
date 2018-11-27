@@ -13,21 +13,26 @@
 </template>
 
 <style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
 .header-mobile {
-  padding: 20px 14px;
+  padding: rem(5px) rem(10px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   height: 32px;
+  @extend %face-sans-base;
+
+  .left {
+    width: rem(38px);
+    font-weight: 500;
+  }
 
   .title {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-    font-weight: bold;
-    font-size: 24px;
-    white-space: nowrap;
+    flex-grow: 2;
+    font-weight: 500;
   }
 }
 </style>
