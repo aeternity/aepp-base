@@ -110,8 +110,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/variables.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .new-account-confirm {
   .ae-badge {

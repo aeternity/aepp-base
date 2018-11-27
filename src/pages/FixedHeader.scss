@@ -1,6 +1,6 @@
 @import '~@aeternity/aepp-components/dist/mixins.scss';
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 @include phone {
   .mobile-page /deep/ {

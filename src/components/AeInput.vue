@@ -74,10 +74,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/mixins';
-@import '~@aeternity/aepp-components-3/src/styles/variables/animations';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '~@aeternity/aepp-components-3/src/styles/globals/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/animations.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .ae-input-container {
   user-select: none;
