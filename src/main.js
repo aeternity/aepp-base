@@ -5,13 +5,15 @@ import VeeValidate, { Validator } from 'vee-validate';
 import { focus } from 'vue-focus';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
+import BigNumber from 'bignumber.js';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 
-Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min);
+Validator.extend('min_value_exclusive', (value, [min]) => BigNumber(value).isGreaterThan(min));
+Validator.extend('max_value', (value, [max]) => BigNumber(value).isLessThanOrEqualTo(max));
 Validator.extend('url_http', (value) => {
   try {
     const url = new URL((/^\w+:\//.test(value) ? '' : 'http://') + value);
@@ -33,7 +35,8 @@ Vue.use(VeeValidate, {
         min_value_exclusive: (field, [min]) => `This field must be more than ${min}`,
         max_value: (field, [max]) => `This field must be ${max} or less`,
         not_in: () => 'This field must be a valid value',
-        decimal: () => 'This field must be numeric and may contain decimal points',
+        decimal: (field, [decimals = '*'] = []) =>
+          `This field must be numeric and may contain ${!decimals || decimals === '*' ? '' : decimals} decimal points`,
         url_http: () => 'This field is not a valid HTTP(S) URL',
         confirmed: () => 'The passwords do not match',
       },

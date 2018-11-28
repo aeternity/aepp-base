@@ -22,7 +22,7 @@
 
     <hr>
     <ae-amount
-      :value="transaction.amount"
+      :value="transaction.amount.toString()"
       color="black"
       size="med"
       unit="Æ"
@@ -31,19 +31,19 @@
       v-if="price"
       class="fiat-value"
     >
-      {{ transaction.amount * price | round(10) }} CHF
+      {{ transaction.amount.multipliedBy(price) | round(10) }} CHF
     </div>
     <hr>
 
     <div class="additional-fees">
       <span class="header">Additional fees</span>
       <div class="value">
-        <div class="additional-fees-eth">{{ transaction.fee }} Æ</div>
+        <div class="additional-fees-eth">{{ transaction.fee.toString() }} Æ</div>
         <div
           v-if="price"
           class="fiat-value"
         >
-          {{ transaction.fee * price | round(5) }} CHF
+          {{ transaction.fee.multipliedBy(price) | round(5) }} CHF
         </div>
       </div>
     </div>
@@ -69,8 +69,8 @@ export default {
   },
   filters: {
     round(value, decimal) {
-      const rounded = parseFloat(value.toFixed(decimal));
-      const start = rounded === value ? '' : '≈ ';
+      const rounded = +value.toFixed(decimal);
+      const start = value.isEqualTo(rounded) ? '' : '≈ ';
       return `${start}${rounded}`;
     },
   },

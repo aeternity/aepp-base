@@ -31,13 +31,14 @@
 
     <template slot="toolbar">
       <span class="balance-title">Balance</span>
-      <span class="balance-value">{{ balance }}</span>
+      <span class="balance-value">{{ balance.toString() }}</span>
     </template>
   </ae-card>
 </template>
 
 <script>
 import { AeAddress, AeIdenticon, AeInputPlain, AeLabel } from '@aeternity/aepp-components-3';
+import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
 
 export default {
@@ -58,7 +59,7 @@ export default {
       required: true,
     },
     balance: {
-      type: Number,
+      type: BigNumber,
       required: true,
     },
     securityStatus: {

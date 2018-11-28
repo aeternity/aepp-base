@@ -2,8 +2,10 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
+import BigNumber from 'bignumber.js';
 import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
+import { MAGNITUDE } from '../lib/constants';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import persistState from './plugins/persistState';
@@ -76,14 +78,14 @@ const store = new Vuex.Store({
   getters: {
     identities: ({ balances }, { addresses }, { mobile }) =>
       addresses.map((e, index) => ({
-        balance: balances[e] || 0,
+        balance: balances[e] || BigNumber(0),
         address: e,
         name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6),
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) =>
       identities[selectedIdentityIdx],
     totalBalance: (state, { identities }) =>
-      identities.reduce((sum, { balance }) => sum + balance, 0),
+      identities.reduce((sum, { balance }) => sum.plus(balance), BigNumber(0)),
   },
 
   mutations: {
@@ -170,8 +172,8 @@ const store = new Vuex.Store({
       addresses.forEach(address => dispatch('updateBalance', address));
     },
     async updateBalance({ state: { epoch, balances }, commit }, address) {
-      const balance = +await epoch.balance(address).catch(() => 0);
-      if (balances[address] === balance) return;
+      const balance = BigNumber(await epoch.balance(address).catch(() => 0)).shiftedBy(-MAGNITUDE);
+      if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
     },
   },

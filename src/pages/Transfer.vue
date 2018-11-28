@@ -23,6 +23,7 @@
         <ae-identity
           :active="false"
           v-bind="i"
+          :balance="+i.balance"
           :collapsed="false"
           size="big" />
       </swiper-slide>
@@ -63,7 +64,12 @@
       help-type="dramatic"
     >Amount</ae-label>
     <ae-amount-input
-      v-validate:amount="`required|decimal|min_value_exclusive:0|max_value:${maxAmount}`"
+      v-validate:amount="{
+        required: true,
+        decimal: MAGNITUDE,
+        min_value_exclusive: 0,
+        max_value: maxAmount.toString(),
+      }"
       :id="`${_uid}-currency`"
       :value="{ amount, symbol: 'AE' }"
       :units="[{ symbol: 'AE', name: 'æternity' }]"
@@ -88,6 +94,7 @@
 </template>
 
 <script>
+import BigNumber from 'bignumber.js';
 import { mapGetters, mapState } from 'vuex';
 import {
   AeButton,
@@ -99,6 +106,7 @@ import {
 } from '@aeternity/aepp-components';
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
 import { convertAEtoCHF } from '../lib/currencyConverter';
+import { MAGNITUDE } from '../lib/constants';
 import MobilePage from '../components/MobilePage.vue';
 
 export default {
@@ -117,6 +125,7 @@ export default {
     return {
       transactionType: undefined,
       aePrice: undefined,
+      MAGNITUDE,
     };
   },
   computed: {
@@ -126,7 +135,7 @@ export default {
       identitiesTo: (state, { identities, activeIdentity }) =>
         identities.filter(i => i.address !== activeIdentity.address),
       maxAmount: ({ balances }, { activeIdentity }) =>
-        (activeIdentity ? balances[activeIdentity.address] : 0),
+        (activeIdentity ? balances[activeIdentity.address] : BigNumber(0)),
     }),
     to: {
       get() {
@@ -157,7 +166,7 @@ export default {
       },
     },
     fiatAmount() {
-      const fiatAmount = this.aePrice * +this.amount;
+      const fiatAmount = BigNumber(this.amount).multipliedBy(this.aePrice);
       return Number.isNaN(fiatAmount) ? 'N/A' : fiatAmount.toFixed(2);
     },
     swiperOptionsTo() {
@@ -194,8 +203,8 @@ export default {
 
       const signedTx = await this.$store.dispatch('signTransaction', {
         transaction: {
-          fee: 1,
-          amount: Math.floor(amount),
+          fee: BigNumber(1).shiftedBy(-MAGNITUDE),
+          amount: BigNumber(amount),
           senderId: this.activeIdentity.address,
           recipientId: to,
           payload: '',

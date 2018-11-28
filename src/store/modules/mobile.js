@@ -2,11 +2,14 @@
 
 import Vue from 'vue';
 import uuid from 'uuid/v4';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk/es';
 import { mnemonicToSeed } from '@aeternity/bip39';
 import { generateHDWallet } from '@aeternity/hd-wallet/src';
 import AES from '../../lib/aes';
+import { MAGNITUDE } from '../../lib/constants';
 import { genRandomBuffer, derivePasswordKey } from '../utils';
+
+const JsTx = JsTxStamp();
 
 export default {
   state: {
@@ -110,7 +113,12 @@ export default {
       { state: { accounts }, commit, rootState: { epoch, networkId } },
       { transaction, appName, id = uuid() },
     ) {
-      const spendTx = (await epoch.api.postSpend(transaction)).tx;
+      const spendTx = JsTx.spendTxNative({
+        nonce: +(await epoch.api.getAccountByPubkey(transaction.senderId)).nonce + 1,
+        ...transaction,
+        fee: transaction.fee.shiftedBy(MAGNITUDE).toFixed(),
+        amount: transaction.amount.shiftedBy(MAGNITUDE).toFixed(),
+      }).tx;
       const binaryTx = Crypto.decodeBase58Check(spendTx.split('_')[1]);
       await new Promise((resolve, reject) =>
         commit('signTransaction', {
