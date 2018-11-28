@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import { omit, cloneDeep, isEqual, throttle } from 'lodash-es';
+import BigNumber from 'bignumber.js';
 import RpcPeer from '../../lib/rpc';
 import { genRandomBuffer } from '../utils';
 
@@ -72,7 +73,14 @@ export default (store) => {
 
       socket.on('message-from-follower', (followerId, request) =>
         new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
-          signTransaction: args => store.dispatch('signTransaction', args),
+          signTransaction: args => store.dispatch('signTransaction', {
+            ...args,
+            transaction: {
+              ...args.transaction,
+              amount: BigNumber(args.transaction.amount),
+              fee: BigNumber(args.transaction.fee),
+            },
+          }),
           cancelTransaction: args => store.commit('cancelTransaction', args),
         })
           .processMessage(request));
