@@ -1,7 +1,9 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'accounts-new' }"
     class="accounts"
     fill="neutral"
+    add-button
   >
     <guide
       fill="primary"
@@ -67,43 +69,6 @@
         </div>
       </div>
     </list-item>
-
-    <fixed-add-button
-      quick-id
-      @click="modalVisible = true"
-    />
-
-    <ae-modal-light
-      v-if="modalVisible"
-      title="Add New Account"
-      @close="modalVisible = false"
-    >
-      <ae-label :for="_uid">Name Account</ae-label>
-      <ae-input
-        :id="_uid"
-        v-model="newAccountName"
-        placeholder="Placeholder" />
-      <ae-button
-        slot="buttons"
-        size="small"
-        type="exciting"
-        plain
-        uppercase
-        @click="modalVisible = false"
-      >
-        cancel
-      </ae-button>
-      <ae-button
-        slot="buttons"
-        size="small"
-        type="dramatic"
-        plain
-        uppercase
-        @click="handleAddAddress"
-      >
-        add account
-      </ae-button>
-    </ae-modal-light>
   </mobile-page>
 </template>
 
