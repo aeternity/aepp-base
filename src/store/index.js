@@ -182,10 +182,10 @@ const store = new Vuex.Store({
       const spendTx = JsTx.spendTxNative({
         nonce: +(await epoch.api.getAccountByPubkey(transaction.senderId)).nonce + 1,
         ...transaction,
-        fee: transaction.fee.shiftedBy(MAGNITUDE).toFixed(),
-        amount: transaction.amount.shiftedBy(MAGNITUDE).toFixed(),
+        fee: transaction.fee.shiftedBy(MAGNITUDE),
+        amount: transaction.amount.shiftedBy(MAGNITUDE),
       }).tx;
-      return Crypto.decodeBase58Check(spendTx.split('_')[1]);
+      return Crypto.decodeBase64Check(spendTx.split('_')[1]);
     },
   },
 });
