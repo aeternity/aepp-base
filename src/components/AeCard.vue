@@ -1,7 +1,10 @@
 <template>
   <div :class="['ae-card', fill]">
     <slot />
-    <ae-toolbar :fill="fill">
+    <ae-toolbar
+      v-if="$slots['toolbar']"
+      :fill="fill"
+    >
       <slot name="toolbar" />
     </ae-toolbar>
   </div>
@@ -21,6 +24,7 @@ export default {
         'secondary',
         'neutral',
         'alternative',
+        'maximum',
       ].includes(value),
       default: '',
     },
@@ -60,6 +64,10 @@ export default {
   &.alternative {
     background: $color-alternative;
     color: $color-alternative-negative-3;
+  }
+
+  &.maximum {
+    background: $color-neutral-maximum;
   }
 
   .ae-toolbar {
