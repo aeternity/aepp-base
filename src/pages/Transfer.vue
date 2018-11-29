@@ -68,7 +68,7 @@
         required: true,
         decimal: MAGNITUDE,
         min_value_exclusive: 0,
-        max_value: maxAmount.toString(),
+        max_value: maxAmount.minus(!errors.has('fee') && fee || 0).toString(),
       }"
       :id="`${_uid}-currency`"
       :value="{ amount, symbol: 'AE' }"
@@ -79,6 +79,29 @@
       @input="value => amount = value.amount"
     />
     <div class="fiat-amount">≈ {{ fiatAmount }} CHF</div>
+
+    <ae-label
+      :for="`${_uid}-fee`"
+      :help-text="errors.first('fee')"
+      help-type="dramatic"
+    >Fee</ae-label>
+    <ae-amount-input
+      v-validate:fee="{
+        required: true,
+        decimal: MAGNITUDE,
+        min_value: MIN_SPEND_TX_FEE.toString(),
+        max_value: (() => {
+          const t = maxAmount.minus(!errors.has('currency') && amount || 0);
+          return (MAX_REASONABLE_FEE.isLessThan(t) ? MAX_REASONABLE_FEE : t).toString();
+        })(),
+      }"
+      :id="`${_uid}-fee`"
+      :value="{ amount: fee, symbol: 'AE' }"
+      :units="[{ symbol: 'AE', name: 'æternity' }]"
+      name="fee"
+      placeholder="0.00"
+      @input="value => fee = value.amount"
+    />
 
     <ae-button
       :disabled="errors.any()"
@@ -109,6 +132,9 @@ import { convertAEtoCHF } from '../lib/currencyConverter';
 import { MAGNITUDE } from '../lib/constants';
 import MobilePage from '../components/MobilePage.vue';
 
+const MIN_SPEND_TX_FEE = BigNumber(15000 + (100 * 20)).shiftedBy(-MAGNITUDE);
+const MAX_REASONABLE_FEE = MIN_SPEND_TX_FEE.multipliedBy(10);
+
 export default {
   components: {
     MobilePage,
@@ -125,7 +151,10 @@ export default {
     return {
       transactionType: undefined,
       aePrice: undefined,
+      fee: MIN_SPEND_TX_FEE.toFixed(),
       MAGNITUDE,
+      MIN_SPEND_TX_FEE,
+      MAX_REASONABLE_FEE,
     };
   },
   computed: {
@@ -198,11 +227,11 @@ export default {
     async send() {
       if (!await this.$validator.validateAll()) return;
 
-      const { to, amount } = this;
+      const { to, amount, fee } = this;
 
       const signedTx = await this.$store.dispatch('signTransaction', {
         transaction: {
-          fee: BigNumber(1).shiftedBy(-MAGNITUDE),
+          fee: BigNumber(fee),
           amount: BigNumber(amount),
           senderId: this.activeIdentity.address,
           recipientId: to,
