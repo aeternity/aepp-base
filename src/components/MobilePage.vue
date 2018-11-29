@@ -5,7 +5,7 @@
         <header-mobile>
           {{ title }}
           <ae-button
-            v-if="backButton || closeButton"
+            v-if="backButton || closeButton || addButton"
             :slot="backButton ? 'left' : 'right'"
             size="small"
             plain
@@ -13,7 +13,7 @@
           >
             <ae-icon
               slot="icon"
-              :name="backButton ? 'back' : 'close'"
+              :name="backButton ? 'back' : closeButton ? 'close' : 'plus'"
               :rotate="backButton ? 180 : 0"
             />
           </ae-button>
@@ -51,6 +51,7 @@ export default {
     redirectToOnClose: { type: Object, default: undefined },
     backButton: { type: Boolean, default: false },
     closeButton: { type: Boolean, default: false },
+    addButton: { type: Boolean, default: false },
     fill: {
       type: String,
       validator: value => [
@@ -115,6 +116,10 @@ export default {
     .top {
       &.primary {
         background-color: $color-primary;
+
+        .header-mobile .ae-icon {
+          color: $color-neutral-positive-3;
+        }
       }
 
       &.neutral {

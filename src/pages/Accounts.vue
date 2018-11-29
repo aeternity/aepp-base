@@ -1,14 +1,18 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'accounts-new' }"
     class="accounts"
     fill="neutral"
+    add-button
   >
     <guide
       fill="primary"
     >
-      <em>Activate the account</em>
-      <br>that you want to use by
-      <br>swiping
+      Your <em>æternity accounts</em>
+      <div class="note">
+        Create more in the upper right corner
+        <br>and active an account by swiping
+      </div>
     </guide>
 
     <swiper
@@ -65,43 +69,6 @@
         </div>
       </div>
     </list-item>
-
-    <fixed-add-button
-      quick-id
-      @click="modalVisible = true"
-    />
-
-    <ae-modal-light
-      v-if="modalVisible"
-      title="Add New Account"
-      @close="modalVisible = false"
-    >
-      <ae-label :for="_uid">Name Account</ae-label>
-      <ae-input
-        :id="_uid"
-        v-model="newAccountName"
-        placeholder="Placeholder" />
-      <ae-button
-        slot="buttons"
-        size="small"
-        type="exciting"
-        plain
-        uppercase
-        @click="modalVisible = false"
-      >
-        cancel
-      </ae-button>
-      <ae-button
-        slot="buttons"
-        size="small"
-        type="dramatic"
-        plain
-        uppercase
-        @click="handleAddAddress"
-      >
-        add account
-      </ae-button>
-    </ae-modal-light>
   </mobile-page>
 </template>
 
@@ -190,12 +157,18 @@ export default {
     margin-top: rem(-81px);
 
     .content {
-      margin-top: rem(61px);
+      margin-top: rem(30px);
     }
   }
 
   .guide {
     margin-left: rem(20px);
+
+    .note {
+      margin: rem(8px) 0;
+      @extend %face-sans-s;
+      font-weight: 500;
+    }
   }
 
   .swiper-container /deep/ {
