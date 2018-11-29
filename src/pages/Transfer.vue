@@ -199,7 +199,6 @@ export default {
       if (!await this.$validator.validateAll()) return;
 
       const { to, amount } = this;
-      if (!to || !amount) return;
 
       const signedTx = await this.$store.dispatch('signTransaction', {
         transaction: {
