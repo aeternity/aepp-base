@@ -13,6 +13,7 @@ import router from './router';
 import store from './store';
 
 Validator.extend('min_value_exclusive', (value, [min]) => BigNumber(value).isGreaterThan(min));
+Validator.extend('min_value', (value, [max]) => BigNumber(value).isGreaterThanOrEqualTo(max));
 Validator.extend('max_value', (value, [max]) => BigNumber(value).isLessThanOrEqualTo(max));
 Validator.extend('url_http', (value) => {
   try {
