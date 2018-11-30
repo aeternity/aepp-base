@@ -41,8 +41,7 @@ export default async (store) => {
           if (!payload) return;
           try {
             const { transaction } = payload.args;
-            const spendTx = (await store.state.epoch.api.postSpend(transaction)).tx;
-            const binaryTx = Crypto.decodeBase58Check(spendTx.split('_')[1]);
+            const binaryTx = await store.dispatch('genSpendTxBinary', transaction);
             const signature = Buffer.from(await sign(
               store.state.desktop.ledgerAddresses.indexOf(transaction.senderId),
               binaryTx,

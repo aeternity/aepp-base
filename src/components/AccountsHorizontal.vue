@@ -3,7 +3,7 @@
     <div class="title">
       <h1>Account Switcher</h1>
       <div v-if="identities.length > 1">
-        Total balance <span>{{ totalBalance | roundToken }} AE</span>
+        Total balance <span>{{ totalBalance.toString() }} AE</span>
       </div>
     </div>
     <div class="accounts">
@@ -12,6 +12,7 @@
         <div>
           <ae-identity
             v-bind="activeIdentity"
+            :balance="+activeIdentity.balance"
             active>
             <ae-divider v-if="identities.length > 1" />
           </ae-identity>
@@ -27,6 +28,7 @@
             v-if="identity !== activeIdentity"
             :key="identity.address"
             v-bind="identity"
+            :balance="+identity.balance"
           >
             <ae-divider />
             <ae-button
@@ -56,13 +58,11 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import { AeIdentity, AeButton, AeIcon, AeDivider } from '@aeternity/aepp-components';
-import { roundToken } from '../lib/filters';
 
 export default {
   components: {
     AeIdentity, AeButton, AeIcon, AeDivider,
   },
-  filters: { roundToken },
   computed: mapGetters(['identities', 'activeIdentity', 'totalBalance', 'ableToCreateAccount']),
   mounted() {
     this.$store.dispatch('updateAllBalances');

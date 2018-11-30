@@ -19,6 +19,7 @@
           <ae-identity-light
             v-if="loggedIn"
             v-bind="identity"
+            :balance="+identity.balance"
             collapsed />
           <div
             v-else

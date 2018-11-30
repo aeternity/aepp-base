@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
+import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk/es';
 import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
@@ -19,6 +20,7 @@ import aeppApi from './plugins/aeppApi';
 import registerServiceWorker from './plugins/registerServiceWorker';
 
 Vue.use(Vuex);
+const JsTx = JsTxStamp();
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
@@ -175,6 +177,15 @@ const store = new Vuex.Store({
       const balance = BigNumber(await epoch.balance(address).catch(() => 0)).shiftedBy(-MAGNITUDE);
       if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
+    },
+    async genSpendTxBinary({ state: { epoch } }, transaction) {
+      const spendTx = JsTx.spendTxNative({
+        nonce: +(await epoch.api.getAccountByPubkey(transaction.senderId)).nonce + 1,
+        ...transaction,
+        fee: transaction.fee.shiftedBy(MAGNITUDE).toFixed(),
+        amount: transaction.amount.shiftedBy(MAGNITUDE).toFixed(),
+      }).tx;
+      return Crypto.decodeBase58Check(spendTx.split('_')[1]);
     },
   },
 });
