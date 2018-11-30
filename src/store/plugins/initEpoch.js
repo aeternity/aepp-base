@@ -1,4 +1,5 @@
 import { EpochChain } from '@aeternity/aepp-sdk/es';
+import networksRegistry from '../../lib/networksRegistry';
 
 export default store =>
   store.watch(
@@ -6,7 +7,8 @@ export default store =>
     async (rpcUrl) => {
       const epoch = await EpochChain({ url: rpcUrl, internalUrl: rpcUrl });
       store.commit('setEpoch', epoch);
-      store.commit('setNetworkId', 'ae_mainnet');
+      const network = networksRegistry.find(({ url }) => url === rpcUrl);
+      store.commit('setNetworkId', network.id);
     },
     { immediate: true },
   );
