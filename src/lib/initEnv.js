@@ -7,6 +7,10 @@ Object.assign(process.env, {
   ...process.env.IS_PWA === undefined && {
     IS_PWA: matchMedia('(display-mode: standalone)').matches || navigator.standalone === true,
   },
+  // https://stackoverflow.com/a/6031480
+  ...process.env.IS_ANDROID === undefined && {
+    IS_ANDROID: /Android/.test(navigator.userAgent),
+  },
   // https://stackoverflow.com/a/9039885
   ...process.env.IS_IOS === undefined && {
     IS_IOS: /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,

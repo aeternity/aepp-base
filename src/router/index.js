@@ -3,19 +3,22 @@ import store from '../store';
 import mobileRoutes from './routes/mobile';
 import commonRoutes from './routes/common';
 import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt.vue';
+import SwitchToMobilePrompt from '../pages/SwitchToMobilePrompt.vue';
 
 const router = new Router({
   routes:
     process.env.IS_MOBILE_DEVICE
-      ? (!process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS
+      ? (process.env.IS_ANDROID && !process.env.IS_CORDOVA && !process.env.IS_PWA
         && [{
           path: '/',
           component: AddToHomeScreenPrompt,
         }])
       || [...mobileRoutes, ...commonRoutes]
-      : commonRoutes,
+      : [{
+        path: '/',
+        component: SwitchToMobilePrompt,
+      }],
 });
-
 
 store.watch(
   (state, { loggedIn }) => loggedIn,
