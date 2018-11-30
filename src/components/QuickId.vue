@@ -1,12 +1,8 @@
 <template>
   <div class="quick-id">
-    <router-link :to="{ name: 'apps' }">
-      <ae-icon name="grid" />
-      Browser
-    </router-link>
-    <router-link :to="{ name: 'transfer' }">
-      <ae-icon name="transfer" />
-      Wallet
+    <router-link :to="{ name: 'receive' }">
+      <ae-icon name="receive" />
+      Receive
     </router-link>
     <button
       :class="showAccountSwitcher ? 'router-link-active' : ''"
