@@ -1,8 +1,8 @@
 <template>
   <ae-card
-    :fill="fill"
+    :fill="qrSide ? 'neutral' : 'primary'"
     class="ae-account">
-    <header>
+    <header v-if="!qrSide">
       <ae-identicon :address="address" />
       <ae-input-plain
         v-focus="nameEditable"
@@ -20,25 +20,36 @@
       </div>
     </header>
 
-    <main>
-      <div class="security-status">{{ securityStatus }}</div>
-      <ae-address
+    <main :class="qrSide && 'mainQr'">
+      <ae-q-r-code
+        v-if="qrSide"
+        :options="{ size: 136 }"
         :value="address"
-        length="medium"
+      />
+      <ae-address
+        :class="qrSide && 'addressQr'"
+        :value="address"
+        :length="qrSide ? '' : 'medium'"
         gap="0"
       />
     </main>
 
-    <balance
-      slot="toolbar"
-      :balance="balance"
-      invert
-    />
+    <template slot="toolbar">
+      <span class="balance-title">{{ qrSide ? name : '' }}</span>
+      <balance
+        v-if="!qrSide"
+        :balance="balance"
+        invert
+      />
+    </template>
   </ae-card>
 </template>
 
 <script>
-import { AeAddress, AeIdenticon, AeInputPlain, AeLabel } from '@aeternity/aepp-components-3';
+import {
+  AeAddress, AeIdenticon, AeInputPlain,
+  AeLabel, AeQRCode,
+} from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
 import Balance from './Balance.vue';
@@ -51,6 +62,7 @@ export default {
     AeInputPlain,
     AeLabel,
     Balance,
+    AeQRCode,
   },
   props: {
     name: {
@@ -69,11 +81,11 @@ export default {
       type: String,
       default: 'normal\nsecured',
     },
-    fill: {
-      type: String,
-      required: true,
-    },
     nameEditable: {
+      type: Boolean,
+      default: false,
+    },
+    qrSide: {
       type: Boolean,
       default: false,
     },
@@ -86,19 +98,50 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
-.ae-account.ae-card {
-  header {
-    display: flex;
-    align-items: center;
-    margin: rem(12px) rem(16px);
+.ae-account {
+  position: relative;
 
-    .slot-icon {
-      margin-left: auto;
+  &.ae-card {
+    header {
+      display: flex;
+      align-items: center;
+      margin: rem(12px) rem(16px);
+
+      .slot-icon {
+        margin-left: auto;
+      }
+
+      span {
+        @extend %face-sans-base;
+        color: $color-neutral-maximum;
+      }
+
+      .ae-identicon {
+        margin-right: rem(8px);
+      }
     }
 
-    span {
-      @extend %face-sans-base;
-      color: $color-neutral-maximum;
+    main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: rem(24px) rem(8px) rem(12px) rem(12px);
+
+      .security-status {
+        @extend %face-uppercase-xs;
+        white-space: pre-line;
+        margin-bottom: rem(4px);
+        font-weight: bold;
+      }
+
+      .ae-address {
+        margin-left: auto;
+        width: rem(150px);
+      }
+
+      &.mainQr {
+        padding-top: rem(8px);
+      }
     }
 
     .ae-identicon {
@@ -126,6 +169,24 @@ export default {
 
   /deep/ .ae-toolbar {
     text-align: right;
+    .balance-title, .balance-value {
+      text-transform: none;
+    }
+
+    .balance-title {
+      @extend %face-sans-xs;
+    }
+
+    .balance-value {
+      @extend %face-mono-base;
+      font-weight: normal;
+
+      &:after {
+        @extend %face-mono-xs;
+        margin-left: rem(5px);
+        content: 'AE';
+      }
+    }
   }
 }
 </style>
