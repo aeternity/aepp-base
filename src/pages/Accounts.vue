@@ -212,7 +212,6 @@ export default {
         color: $color-neutral-negative-3;
 
         .ae-address {
-          position: inherit;
           grid-template-columns: repeat(6, 1fr);
           grid-column-gap: rem(19px);
           font-weight: normal;
