@@ -29,7 +29,7 @@
           v-bind="account"
           :name-editable="index === selectedIdentityIdx && accountNameEditable"
           fill="primary"
-          @name-input="name => $store.commit('renameIdentity', { name, index })"
+          @name-input="name => renameIdentity({ name, index })"
           @name-blur="accountNameEditable = false"
         >
           <ae-dropdown slot="icon">
@@ -40,16 +40,16 @@
               size="20px"
             />
             <li>
-              <ae-button-new @click="copyValue(account.address)">
+              <ae-button @click="copyValue(account.address)">
                 <ae-icon name="copy" />
                 Copy Address
-              </ae-button-new>
+              </ae-button>
             </li>
             <li>
-              <ae-button-new @click="accountNameEditable = true">
+              <ae-button @click="accountNameEditable = true">
                 <ae-icon name="edit" />
                 Rename
-              </ae-button-new>
+              </ae-button>
             </li>
           </ae-dropdown>
         </ae-account>
@@ -74,14 +74,12 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import { AeButton, AeLabel, AeInput, AeModalLight } from '@aeternity/aepp-components';
-import { AeButton as AeButtonNew, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
+import { AeButton, AeAddress, AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
 import { swiper as Swiper, swiperSlide as SwiperSlide } from 'vue-awesome-swiper';
 import copy from 'clipboard-copy';
 import MobilePage from '../components/MobilePage.vue';
 import AeAccount from '../components/AeAccount.vue';
 import ListItem from '../components/ListItem.vue';
-import FixedAddButton from '../components/FixedAddButton.vue';
 import Guide from '../components/Guide.vue';
 
 export default {
@@ -89,12 +87,7 @@ export default {
     AeAccount,
     AeAddress,
     AeButton,
-    AeButtonNew,
     MobilePage,
-    FixedAddButton,
-    AeLabel,
-    AeInput,
-    AeModalLight,
     Swiper,
     SwiperSlide,
     Guide,
@@ -103,8 +96,6 @@ export default {
     AeDropdown,
   },
   data: () => ({
-    modalVisible: false,
-    newAccountName: '',
     accountNameEditable: false,
   }),
   computed: {
@@ -134,12 +125,7 @@ export default {
     this.$store.dispatch('updateAllBalances');
   },
   methods: {
-    ...mapMutations(['selectIdentity', 'toggleIdManager', 'createIdentity']),
-    handleAddAddress() {
-      this.createIdentity(this.newAccountName);
-      this.newAccountName = '';
-      this.modalVisible = false;
-    },
+    ...mapMutations(['selectIdentity', 'renameIdentity']),
     copyValue(value) {
       copy(value);
     },
@@ -233,10 +219,6 @@ export default {
         }
       }
     }
-  }
-
-  .ae-overlay /deep/ .ae-modal-light main {
-    text-align: start;
   }
 }
 </style>
