@@ -132,7 +132,11 @@ import { convertAEtoCHF } from '../lib/currencyConverter';
 import { MAGNITUDE } from '../lib/constants';
 import MobilePage from '../components/MobilePage.vue';
 
-const MIN_SPEND_TX_FEE = BigNumber(15000 + (100 * 20)).shiftedBy(-MAGNITUDE);
+const BASE_GAS = 15000;
+const APPROXIMATE_SPENT_TX_LENGTH = 100;
+const GAS_PER_BYTE = 20;
+const MIN_SPEND_TX_FEE = BigNumber(BASE_GAS + (APPROXIMATE_SPENT_TX_LENGTH * GAS_PER_BYTE))
+  .shiftedBy(-MAGNITUDE);
 const MAX_REASONABLE_FEE = MIN_SPEND_TX_FEE.multipliedBy(10);
 
 export default {
