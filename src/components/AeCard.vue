@@ -2,7 +2,7 @@
   <div :class="['ae-card', fill]">
     <slot />
     <ae-toolbar
-      v-if="$slots['toolbar']"
+      v-if="!!this.$slots['toolbar']"
       :fill="fill"
     >
       <slot name="toolbar" />
