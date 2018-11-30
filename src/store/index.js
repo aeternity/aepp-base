@@ -6,7 +6,6 @@ import BigNumber from 'bignumber.js';
 import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk/es';
 import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
-import { MAGNITUDE } from '../lib/constants';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import persistState from './plugins/persistState';
@@ -173,9 +172,15 @@ const store = new Vuex.Store({
     updateAllBalances({ getters: { addresses }, dispatch }) {
       addresses.forEach(address => dispatch('updateBalance', address));
     },
-    async updateBalance({ state: { epoch, balances }, commit }, address) {
-      const balance = BigNumber(await epoch.balance(address).catch(() => 0)).shiftedBy(-MAGNITUDE);
-      if (balances[address] && balances[address].isEqualTo(balance)) return;
+    async updateBalance({ state: { balances }, commit }, address) {
+      const response = await fetch(`https://api.backendless.com/${process.env.VUE_APP_BL_ID}/
+${process.env.VUE_APP_BL_KEY}/data/${process.env.VUE_APP_BL_TABLE}
+?pageSize=100&where=pubKey%20%3D%20%27${address}%27`);
+      const json = await response.json();
+      const balance = json
+        .filter(i => i.deliveryPeriod === +process.env.VUE_APP_BL_PERIOD)
+        .reduce((r, item) => r.plus(item.value), BigNumber(0)).shiftedBy(-18);
+      if (balances[address] === balance) return;
       commit('setBalance', { address, balance });
     },
     async genSpendTxBinary({ state: { epoch } }, transaction) {
