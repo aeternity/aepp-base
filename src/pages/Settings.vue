@@ -32,32 +32,6 @@
           />
         </list-item>
       </template>
-      <list-item
-        :to="{ name: 'settings-network' }"
-        :subtitle="networkName"
-        title="Network"
-      >
-        <ae-icon
-          slot="icon"
-          fill="secondary"
-          face="round"
-          name="globe"
-        />
-      </list-item>
-      <list-item
-        v-if="$globals.IS_MOBILE_DEVICE"
-        :to="{ name: 'settings-remote-connection' }"
-        :subtitle=
-          "`${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
-        title="Remote connections"
-      >
-        <ae-icon
-          slot="icon"
-          fill="alternative"
-          face="round"
-          name="device"
-        />
-      </list-item>
     </ae-card>
     <div
       slot="content-bottom"
@@ -69,13 +43,12 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../components/AeCard.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import ListItem from '../components/ListItem.vue';
-import networks from '../lib/networksRegistry';
 
 export default {
   components: {
@@ -87,11 +60,6 @@ export default {
   },
   data: () => ({
     version: process.env.npm_package_version,
-  }),
-  computed: mapState({
-    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name,
-    remoteConnectionsCount: ({ mobile }) =>
-      Object.entries(mobile.followers).filter(([, f]) => f.connected).length,
   }),
   methods: {
     ...mapMutations(['signOut']),
