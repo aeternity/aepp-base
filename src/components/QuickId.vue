@@ -8,9 +8,12 @@
       <ae-icon name="transfer" />
       Wallet
     </router-link>
-    <router-link :to="{ name: 'accounts' }">
-      <ae-identity-avatar :address="identity.address" />
-    </router-link>
+    <button
+      :class="showAccountSwitcher ? 'router-link-active' : ''"
+      @click="() => !showAccountSwitcher && toggleAccountSwitcher()"
+    >
+      <ae-identity-avatar :address="activeIdentity.address" />
+    </button>
     <router-link :to="{ name: 'address-book' }">
       <ae-icon name="contacts" />
       Contacts
@@ -23,15 +26,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeIdentityAvatar } from '@aeternity/aepp-components';
 import { AeIcon } from '@aeternity/aepp-components-3';
 
 export default {
   components: { AeIdentityAvatar, AeIcon },
-  computed: mapGetters({
-    identity: 'activeIdentity',
-  }),
+  computed: {
+    ...mapGetters(['activeIdentity']),
+    ...mapState({
+      showAccountSwitcher: ({ mobile }) => mobile.showAccountSwitcher,
+    }),
+  },
+  methods: mapMutations(['toggleAccountSwitcher']),
 };
 </script>
 
@@ -46,7 +53,7 @@ export default {
   padding: 10px;
   background-color: #001833;
 
-  a {
+  a, button {
     flex-grow: 1;
     flex-basis: 0;
     font-size: 11px;
@@ -77,6 +84,12 @@ export default {
         box-shadow: 0 0 0 2px #fff;
       }
     }
+  }
+
+  button {
+    display: inline;
+    background-color: transparent;
+    border: none;
   }
 }
 </style>

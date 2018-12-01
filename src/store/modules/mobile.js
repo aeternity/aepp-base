@@ -18,6 +18,7 @@ export default {
     transactionsToApprove: {},
     messageToApprove: null,
     names: [],
+    showAccountSwitcher: false,
   },
 
   getters: {
@@ -77,6 +78,9 @@ export default {
     followerDisconnected(state, followerId) {
       Vue.delete(state.followers[followerId], 'connected');
       Vue.set(state.followers[followerId], 'disconnectedAt', Date.now());
+    },
+    toggleAccountSwitcher(state) {
+      state.showAccountSwitcher = !state.showAccountSwitcher;
     },
   },
 
