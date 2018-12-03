@@ -1,6 +1,6 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'accounts' }"
+    :redirect-to-on-close="{ name: 'transfer' }"
     class="accounts-new"
     fill="primary"
     close-button
@@ -52,7 +52,7 @@ export default {
     ...mapMutations(['createIdentity']),
     handleAddAddress() {
       this.createIdentity(this.newAccountName);
-      this.$router.push({ name: 'accounts' });
+      this.$router.push({ name: 'transfer' });
     },
   },
 };

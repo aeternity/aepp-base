@@ -10,7 +10,6 @@ import NewAccount from '../../pages/NewAccount.vue';
 import NewAccountCreate from '../../pages/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
 import SetPassword from '../../pages/SetPassword.vue';
-import Accounts from '../../pages/Accounts.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
 import Settings from '../../pages/Settings.vue';
 import SettingsNetwork from '../../pages/SettingsNetwork.vue';
@@ -89,14 +88,6 @@ export default [{
   component: SetPassword,
   beforeEnter: checkSeedPassed,
   props: true,
-}, {
-  name: 'accounts',
-  path: '/accounts',
-  component: Accounts,
-  beforeEnter: checkLoggedIn(true),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'accounts-new',
   path: '/accounts-new',
