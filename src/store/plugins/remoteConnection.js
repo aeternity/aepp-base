@@ -3,19 +3,14 @@ import {
   zipObject, cloneDeep, isEqual, throttle,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
-import { genRandomBuffer } from '../utils';
 
 const PAIR_SYNC_FIELDS = ['rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook'];
 
 export default (store) => {
-  const open = () => {
-    const query = {
-      key: process.env.IS_MOBILE_DEVICE
-        ? Buffer.from(genRandomBuffer(15)).toString('base64')
-        : store.state.desktop.peerId,
-    };
+  const open = async () => {
+    const query = { key: store.state.peerId };
     if (process.env.IS_MOBILE_DEVICE) {
-      query.followers = Object.keys(store.state.mobile.followers);
+      query.pushApiSubscription = 'not-available';
     }
     const socket = io(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
@@ -87,6 +82,15 @@ export default (store) => {
         cancelTransaction: () => followerSignPromises[followerId].cancel(),
       })
         .processMessage(request));
+
+      const followers = await new Promise(resolve => socket.emit('get-all-followers', resolve));
+      Object.entries(followers)
+        .filter(([, v]) => v.connected === true)
+        .forEach(([followerId]) => store.commit('followerConnected', followerId));
+
+      Object.keys(store.state.mobile.followers)
+        .filter(v => !followers[v])
+        .forEach(followerId => socket.emit('add-follower', followerId));
     } else {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true));
       socket.on('removed-from-group', () => store.commit('setRemoteConnected', false));
@@ -115,8 +119,8 @@ export default (store) => {
     process.env.IS_MOBILE_DEVICE
       ? ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length
       : ({ desktop: { ledgerConnected } }) => !ledgerConnected,
-    (isConnectionNecessary) => {
-      if (isConnectionNecessary && !closeCb) closeCb = open();
+    async (isConnectionNecessary) => {
+      if (isConnectionNecessary && !closeCb) closeCb = await open();
       if (!isConnectionNecessary && closeCb) {
         closeCb();
         closeCb = undefined;

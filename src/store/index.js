@@ -34,10 +34,11 @@ const store = new Vuex.Store({
       }),
       ({
         migrations, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
-        apps, cachedAppManifests,
+        apps, cachedAppManifests, peerId,
         mobile, desktop,
       }) => ({
         migrations,
+        peerId,
         ...process.env.IS_MOBILE_DEVICE ? {
           rpcUrl,
           selectedIdentityIdx,
@@ -55,7 +56,6 @@ const store = new Vuex.Store({
           },
         } : {
           desktop: {
-            peerId: desktop.peerId,
             ledgerAccountNumber: desktop.ledgerAccountNumber,
           },
         },

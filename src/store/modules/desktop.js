@@ -1,10 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
-import { genRandomBuffer } from '../utils';
-
 export default {
   state: {
-    peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     remoteConnected: false,
     transactionToSignByRemote: null,
     ledgerConnected: false,

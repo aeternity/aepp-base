@@ -6,7 +6,7 @@ import { update, flatMap, camelCase } from 'lodash-es';
 import store from '../index';
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { MAGNITUDE } from '../../lib/constants';
-import { fetchJson, mapKeysDeep } from '../utils';
+import { fetchJson, mapKeysDeep, genRandomBuffer } from '../utils';
 
 export default {
   state: {
@@ -23,6 +23,7 @@ export default {
     customNetworks: [],
     apps: [],
     cachedAppManifests: {},
+    peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
   },
 
   getters: {
