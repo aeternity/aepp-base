@@ -161,7 +161,7 @@ export default {
     }
 
     &_large {
-      @include size(100px, 23px, 47px, 130px);
+      @include size(65px, 15px, 47px, 30px);
     }
   }
 
