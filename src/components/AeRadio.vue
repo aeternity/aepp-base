@@ -7,14 +7,19 @@
       type="radio"
       @change="$emit('change')"
     >
-    <span class="wrapper">
-      <span class="indicator" />
-    </span>
+    <ae-icon
+      slot="right"
+      face="round"
+      name="check"
+    />
   </label>
 </template>
 
 <script>
+import { AeIcon } from '@aeternity/aepp-components-3';
+
 export default {
+  components: { AeIcon },
   props: {
     name: { type: String, default: '' },
     value: { type: [String, Number, Boolean], default: '' },
@@ -24,32 +29,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .ae-radio {
   input {
     display: none;
 
-    &:checked + .wrapper .indicator {
-      background-color: $maegenta;
+    &:checked + .ae-icon {
+      width: rem(24px);
+      height: rem(24px);
+      background-color: $color-primary;
+      border: none;
     }
   }
 
-  .wrapper {
-    border: 2px solid $silver;
-    border-radius: 30px;
-    display: inline-block;
-    cursor: pointer;
-    background-color: $white;
-
-    .indicator {
-      display: block;
-      width: 16px;
-      height: 16px;
-      border-radius: 8px;
-      margin: 4px;
-      transition: background-color 300ms;
-    }
+  .ae-icon {
+    width: rem(20px);
+    height: rem(20px);
+    font-size: rem(14px);
+    background-color: $color-neutral-maximum;
+    border: 2px solid $color-neutral-positive-1;
+    box-shadow: 0 0 rem(4px) $color-shadow-alpha-15;
+    transition: background-color 300ms;
   }
 }
 </style>
