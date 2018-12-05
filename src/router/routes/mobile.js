@@ -12,6 +12,8 @@ import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
 import SetPassword from '../../pages/SetPassword.vue';
 import Accounts from '../../pages/Accounts.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
+import Settings from '../../pages/Settings.vue';
+import SettingsNetwork from '../../pages/SettingsNetwork.vue';
 import SettingsRemoteConnection from '../../pages/SettingsRemoteConnection.vue';
 
 const SettingsRemoteConnectionNew = () =>
@@ -100,6 +102,22 @@ export default [{
   path: '/accounts-new',
   component: AccountsNew,
   beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'settings',
+  path: '/settings',
+  component: Settings,
+  beforeEnter: checkLoggedIn(false),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'settings-network',
+  path: '/settings/network',
+  component: SettingsNetwork,
+  beforeEnter: checkLoggedIn(false),
   meta: {
     displayFooter: true,
   },

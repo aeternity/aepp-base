@@ -40,7 +40,6 @@ export default {
   @extend %face-sans-base;
   display: flex;
   flex-direction: column;
-  width: 100%;
   border-radius: 8px;
   background: $color-neutral-positive-3;
   color: $color-neutral;

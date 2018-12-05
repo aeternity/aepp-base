@@ -1,0 +1,113 @@
+<template>
+  <div class="receive">
+    <guide><em>Receive</em> tokens</guide>
+
+    <note>
+      Let others scan your QR code or share your address
+    </note>
+
+    <ae-card fill="maximum">
+      <ae-qr-code
+        :class="{ inactive: !account }"
+        :data="address"
+        :size="260"
+      />
+
+      <div
+        v-if="account"
+        class="account-source"
+      >
+        Address from: <strong>{{ account.name }}</strong>
+      </div>
+      <ae-address :value="address" />
+
+      <ae-button
+        v-copy-to-clipboard="address"
+        :disabled="!account"
+        fill="secondary"
+      >Copy address</ae-button>
+
+      <ae-button
+        v-if="!account"
+        plain
+        class="connect-an-account"
+        @click="toggleRemoteConnectionPrompt"
+      >Connect an account first</ae-button>
+    </ae-card>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapMutations } from 'vuex';
+import { AeAddress, directives } from '@aeternity/aepp-components-3';
+import Guide from '../../components/Guide.vue';
+import Note from '../../components/Note.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeCard from '../../components/AeCard.vue';
+import AeQrCode from '../../components/AeQrCode.vue';
+
+export default {
+  components: {
+    Guide, Note, AeButton, AeCard, AeQrCode, AeAddress,
+  },
+  directives: {
+    copyToClipboard: directives.copyToClipboard,
+  },
+  computed: {
+    ...mapGetters({ account: 'activeIdentity' }),
+    address() {
+      return this.account ? this.account.address : `ak_${'·'.repeat(50)}`;
+    },
+  },
+  methods: mapMutations(['toggleRemoteConnectionPrompt']),
+};
+</script>
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.receive {
+  .ae-card {
+    margin: 0 rem(-15px);
+    padding: rem(60px);
+
+    .ae-qr-code, .ae-address, .ae-button {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .ae-qr-code {
+      margin-bottom: rem(50px);
+
+      &.inactive {
+        opacity: 0.2;
+      }
+    }
+
+    .account-source {
+      margin-bottom: rem(8px);
+      @extend %face-sans-xs;
+      color: $color-focus;
+    }
+
+    .ae-address {
+      grid-template-columns: repeat(9, 1fr);
+      color: $color-neutral-negative-1;
+      font-weight: normal;
+      margin-bottom: rem(50px);
+    }
+
+    .ae-button {
+      display: block;
+      width: rem(310px);
+    }
+
+    .ae-button.connect-an-account {
+      margin-top: rem(12px);
+      color: $color-neutral-minimum;
+    }
+  }
+}
+</style>

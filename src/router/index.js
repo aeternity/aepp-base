@@ -1,6 +1,7 @@
 import Router from 'vue-router';
 import store from '../store';
 import mobileRoutes from './routes/mobile';
+import desktopRoutes from './routes/desktop';
 import commonRoutes from './routes/common';
 import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt.vue';
 
@@ -13,7 +14,7 @@ const router = new Router({
           component: AddToHomeScreenPrompt,
         }])
         || [...mobileRoutes, ...commonRoutes]
-      : commonRoutes,
+      : [...desktopRoutes, ...commonRoutes],
 });
 
 store.watch(
