@@ -1,17 +1,6 @@
 <template>
   <div class="apps">
     <header-mobile>Browse æpps</header-mobile>
-    <header-desktop>
-      <ae-button
-        :to="{ name: 'add-app' }"
-        type="dramatic">
-        <ae-icon
-          slot="icon"
-          name="plus"
-          invert
-          type="exciting" />
-      </ae-button>
-    </header-desktop>
 
     <div class="shortcuts">
       <div
@@ -64,7 +53,6 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components';
 import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry';
-import HeaderDesktop from '../components/HeaderDesktop.vue';
 import HeaderMobile from '../components/HeaderMobile.vue';
 
 export default {
@@ -74,7 +62,6 @@ export default {
     AeButton,
     AeNotification,
     AeModalLight,
-    HeaderDesktop,
     HeaderMobile,
   },
   data() {
@@ -131,31 +118,8 @@ export default {
 @import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .apps {
-  @include abovePhone {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 30px 0 80px 0;
-    overflow-y: auto;
-  }
-
   .header-mobile {
     @include abovePhone {
-      display: none;
-    }
-  }
-
-  .header-desktop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-
-    @include phone {
       display: none;
     }
   }
@@ -166,11 +130,6 @@ export default {
     margin: 30px 10px 10px 10px;
     grid-gap: 30px 10px;
     justify-items: center;
-
-    @include abovePhone {
-      grid-gap: #{100 / 1024 * 100vh} #{114 / 1440 * 100vw};
-      margin: auto #{270 / 1440 * 100vw};
-    }
 
     a {
       color: $darker;
@@ -229,12 +188,6 @@ export default {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-      }
-
-      @include abovePhone {
-        &.add-app {
-          display: none;
-        }
       }
     }
   }

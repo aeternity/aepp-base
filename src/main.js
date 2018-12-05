@@ -9,6 +9,7 @@ import BigNumber from 'bignumber.js';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
 import App from './App.vue';
+import AppDesktop from './AppDesktop.vue';
 import router from './router';
 import store from './store';
 
@@ -58,5 +59,5 @@ Vue.prototype.$globals = {
 new Vue({
   store,
   router,
-  render: h => h(App),
+  render: h => h(process.env.IS_MOBILE_DEVICE ? App : AppDesktop),
 }).$mount('#app');
