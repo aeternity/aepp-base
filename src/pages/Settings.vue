@@ -5,8 +5,8 @@
     <guide fill="primary">
       <em>Settings</em>
     </guide>
-    <template v-if="$globals.IS_MOBILE_DEVICE">
-      <ae-card fill="maximum">
+    <ae-card fill="maximum">
+      <template v-if="$globals.IS_MOBILE_DEVICE">
         <list-item @click="logOut">
           <ae-icon
             fill="secondary"
@@ -29,33 +29,36 @@
             <div class="subtitle">After resetting, a recovery is required</div>
           </div>
         </list-item>
-        <list-item :to="{ name: 'settings-network' }">
-          <ae-icon
-            fill="secondary"
-            face="round"
-            name="globe"
-          />
-          <div class="content">
-            <div class="title">Network</div>
-            <div class="subtitle">{{ networkName }}</div>
+      </template>
+      <list-item :to="{ name: 'settings-network' }">
+        <ae-icon
+          fill="secondary"
+          face="round"
+          name="globe"
+        />
+        <div class="content">
+          <div class="title">Network</div>
+          <div class="subtitle">{{ networkName }}</div>
+        </div>
+      </list-item>
+      <list-item
+        v-if="$globals.IS_MOBILE_DEVICE"
+        :to="{ name: 'settings-remote-connection' }"
+      >
+        <ae-icon
+          fill="alternative"
+          face="round"
+          name="device"
+        />
+        <div class="content">
+          <div class="title">Remote connections</div>
+          <div class="subtitle">
+            {{ remoteConnectionsCount }}
+            device{{ remoteConnectionsCount === 1 ? '' : 's' }} connected
           </div>
-        </list-item>
-        <list-item :to="{ name: 'settings-remote-connection' }">
-          <ae-icon
-            fill="alternative"
-            face="round"
-            name="device"
-          />
-          <div class="content">
-            <div class="title">Remote connections</div>
-            <div class="subtitle">
-              {{ remoteConnectionsCount }}
-              device{{ remoteConnectionsCount === 1 ? '' : 's' }} connected
-            </div>
-          </div>
-        </list-item>
-      </ae-card>
-    </template>
+        </div>
+      </list-item>
+    </ae-card>
     <div
       slot="content-bottom"
       class="version"
