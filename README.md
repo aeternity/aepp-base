@@ -37,7 +37,7 @@ functions which issue API calls, e.g. instead of `web3.eth.accounts` use `web.et
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
@@ -64,7 +64,7 @@ npm test
 
 We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workflow [this is also helpful](https://gist.github.com/JamesMGreene/cdd0ac49f90c987e45ac).
 * Development of features happens in branches made from **develop** called feature/<the-feature> like feature/show-token-balance.
-* When development is finished a pull request to **develop** is created. At least one person has to review the PR and when everything is finde the PR gets merged.
+* When development is finished a pull request to **develop** is created. At least one person has to review the PR and when everything is fine the PR gets merged.
 * The develop branch gets deployed to the [stage environment](https://stage-identity.aepps.com) by travis.
 * To make a new release create a release branch called release/vX.X.X, also bump the version number in package.json in this branch.
 * Create a PR to master which then also has to be accepted.
