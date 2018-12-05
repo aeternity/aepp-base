@@ -76,7 +76,7 @@ We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workfl
 
 We have a stage (develop) and a live (master) branch and environments where these branches will be deployed to.
 * [stage environment](https://stage-identity.aepps.com)
-* [live environment](http://stage-identity.aepps.com)
+* [live environment](https://identity.aepps.com)
 
 ### stage
 * Is used to see changes to the code in effect in a "real" environment without the fear of breaking the live environment.
