@@ -1,4 +1,4 @@
-# Æternity identity
+# Base æpp
 
 ## Build Setup
 
