@@ -36,6 +36,8 @@
         />
       </list-item>
     </template>
+
+    <migrated-balance-modal />
   </mobile-page>
 </template>
 
@@ -48,6 +50,7 @@ import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAccount from '../components/AeAccount.vue';
 import ListItem from '../components/ListItem.vue';
+import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
 
 export default {
   components: {
@@ -56,6 +59,7 @@ export default {
     AeAccount,
     ListItem,
     AeIcon,
+    MigratedBalanceModal,
   },
   data() {
     return {
