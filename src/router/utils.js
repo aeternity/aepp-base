@@ -11,7 +11,7 @@ export const checkLoggedIn = requireLoggedIn => (to, from, next) => {
       store.commit('setLoginTarget', to.fullPath);
       if (from.name) next(false);
       else next({ name: 'apps' });
-      store.commit('toggleRemoteConnectionPrompt');
+      store.commit('toggleSidebar');
       return;
     }
   }

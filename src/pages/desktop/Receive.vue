@@ -31,7 +31,7 @@
         v-if="!account"
         plain
         class="connect-an-account"
-        @click="toggleRemoteConnectionPrompt"
+        @click="toggleSidebar"
       >Connect an account first</ae-button>
     </ae-card>
   </div>
@@ -59,7 +59,7 @@ export default {
       return this.account ? this.account.address : `ak_${'·'.repeat(50)}`;
     },
   },
-  methods: mapMutations(['toggleRemoteConnectionPrompt']),
+  methods: mapMutations(['toggleSidebar']),
 };
 </script>
 

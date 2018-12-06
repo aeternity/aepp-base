@@ -4,7 +4,6 @@
     :closable="!transactionToSignByRemote"
     @toggle="toggleDesktopFooter"
   >
-    <remote-connection-prompt v-if="showRemoteConnectionPrompt" />
     <waiting-for-confirmation v-if="transactionToSignByRemote" />
     <accounts-horizontal v-if="showIdManager" />
   </footer-modal>
@@ -14,14 +13,12 @@
 import { mapState } from 'vuex';
 import FooterModal from './FooterModal.vue';
 import AccountsHorizontal from './AccountsHorizontal.vue';
-import RemoteConnectionPrompt from './RemoteConnectionPrompt.vue';
 import WaitingForConfirmation from './WaitingForConfirmation.vue';
 
 export default {
   components: {
     FooterModal,
     AccountsHorizontal,
-    RemoteConnectionPrompt,
     WaitingForConfirmation,
   },
   props: {
@@ -30,7 +27,6 @@ export default {
   computed: {
     ...mapState(['showIdManager']),
     ...mapState({
-      showRemoteConnectionPrompt: ({ desktop }) => desktop.showRemoteConnectionPrompt,
       transactionToSignByRemote: ({ desktop }) => desktop.transactionToSignByRemote,
     }),
   },
@@ -38,7 +34,7 @@ export default {
     toggleDesktopFooter() {
       if (this.transactionToSignByRemote) return;
       this.$store.commit(`toggle${this.$store.getters.loggedIn
-        ? 'IdManager' : 'RemoteConnectionPrompt'}`);
+        ? 'IdManager' : 'Sidebar'}`);
     },
   },
 };
