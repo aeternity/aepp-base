@@ -2,7 +2,7 @@
   <ae-main
     id="app"
     :class="{ 'quick-id-hidden': !$route.meta.displayFooter }">
-    <router-view />
+    <router-view :class="{ grayscale }" />
     <ae-banner v-if="notification">
       <img
         v-if="notification.icon"
@@ -46,7 +46,10 @@ export default {
     AlertModal,
     AppFooter: process.env.IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop,
   },
-  computed: mapState(['notification']),
+  computed: mapState({
+    notification: ({ notification }) => notification,
+    grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
+  }),
   created() {
     // set domain to base host because of iframe cross domain policy, very nice hardcoded urls
     if (document.domain.includes('aepps.com')) {
@@ -68,6 +71,10 @@ export default {
   flex-direction: column;
   padding-bottom: 0;
   background: $color-neutral-maximum;
+
+  /deep/ .grayscale {
+    filter: grayscale(100%);
+  }
 
   &.quick-id-hidden {
     padding-bottom: 0;

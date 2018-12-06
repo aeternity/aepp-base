@@ -1,5 +1,6 @@
 <template>
   <div>
+    <account-switcher />
     <quick-id />
     <div
       v-if="messageToApprove || transactionToApprove"
@@ -22,10 +23,14 @@ import { mapState } from 'vuex';
 import QuickId from './QuickId.vue';
 import ApproveMessage from './ApproveMessage.vue';
 import ApproveTransaction from './ApproveTransaction.vue';
+import AccountSwitcher from './AccountSwitcher.vue';
 
 export default {
   components: {
-    QuickId, ApproveMessage, ApproveTransaction,
+    QuickId,
+    ApproveMessage,
+    ApproveTransaction,
+    AccountSwitcher,
   },
   computed: {
     ...mapState({
