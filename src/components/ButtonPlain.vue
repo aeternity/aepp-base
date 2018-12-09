@@ -12,5 +12,9 @@
   border: none;
   background: transparent;
   padding: 0;
+
+  &:focus:not([data-focus-visible-added]) {
+    outline: none;
+  }
 }
 </style>
