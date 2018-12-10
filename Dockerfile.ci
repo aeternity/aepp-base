@@ -18,11 +18,12 @@ ENV GRADLE_OPTS=${GRADLE_OPTS}\ -Dorg.gradle.daemon=false
 RUN mkdir app
 WORKDIR /app
 
-ADD . .
+COPY package*.json ./
 RUN npm config set unsafe-perm true # https://github.com/npm/npm/issues/17346
 RUN npm install && npx cordova telemetry off
 
 # As cordova changes global modules when adding a platform, we have to build the apk already during the docker build process
+COPY . .
 RUN npm run build:cordova
 RUN npx cordova prepare android
 RUN npm run gen:cordova-resources
