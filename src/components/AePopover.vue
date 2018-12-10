@@ -60,5 +60,6 @@ export default {
   border-radius: 4px;
   min-width: 310px;
   background: #fff;
+  overflow: hidden;
 }
 </style>
