@@ -74,7 +74,7 @@ import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../components/AeCard.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
-import ListItem from '../components/ListItem.vue';
+import ListItem from '../components/deprecated/ListItem.vue';
 import networks from '../lib/networksRegistry';
 
 export default {

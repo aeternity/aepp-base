@@ -67,7 +67,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
 import { directive as clickaway } from 'vue-clickaway';
-import ListItem from '../components/ListItem.vue';
+import ListItem from './deprecated/ListItem.vue';
 import AeCard from '../components/AeCard.vue';
 import AeRadio from '../components/AeRadio.vue';
 import prefixedAmount from '../filters/prefixedAmount';

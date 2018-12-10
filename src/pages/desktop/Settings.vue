@@ -49,7 +49,7 @@
 import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
-import ListItem from '../../components/ListItem.vue';
+import ListItem from '../../components/deprecated/ListItem.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import SettingsListItem from '../../components/SettingsListItem.vue';
