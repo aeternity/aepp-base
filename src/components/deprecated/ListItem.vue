@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/variables.scss';
 
 .list-item {
