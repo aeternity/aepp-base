@@ -14,14 +14,16 @@
         <div class="list">
           <list-item
             v-for="(account, index) in identities"
+            :title="account.name"
+            :subtitle="`${account.balance | prefixedAmount} AE`"
             :key="account.address"
+            subtitle-monospace
             @click="selectIdentity(index)"
           >
-            <ae-identicon :address="account.address" />
-            <div class="content">
-              <div class="title">{{ account.name }}</div>
-              <div class="subtitle">{{ account.balance | prefixedAmount }}</div>
-            </div>
+            <ae-identicon
+              slot="icon"
+              :address="account.address"
+            />
             <ae-radio
               slot="right"
               :checked="index === selectedIdentityIdx"
@@ -31,27 +33,27 @@
 
           <list-item
             :to="{ name: 'accounts-new' }"
+            title="Create a new account"
             @click.native="toggleAccountSwitcher"
           >
             <ae-icon
+              slot="icon"
               fill="primary"
               face="round"
               name="plus"
             />
-            <div class="content">
-              <div class="title">Create a new account</div>
-            </div>
           </list-item>
 
-          <list-item @click="toggleAccountSwitcher">
+          <list-item
+            title="Create a vault for AirGap"
+            @click="toggleAccountSwitcher"
+          >
             <ae-icon
+              slot="icon"
               fill="alternative"
               face="round"
               name="plus"
             />
-            <div class="content">
-              <div class="title">Create a vault for AirGap</div>
-            </div>
           </list-item>
         </div>
         <template slot="toolbar">
@@ -67,7 +69,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
 import { directive as clickaway } from 'vue-clickaway';
-import ListItem from './deprecated/ListItem.vue';
+import ListItem from './ListItem.vue';
 import AeCard from '../components/AeCard.vue';
 import AeRadio from '../components/AeRadio.vue';
 import prefixedAmount from '../filters/prefixedAmount';
@@ -144,39 +146,6 @@ export default {
     .list {
       max-height: rem(500px);
       overflow: scroll;
-
-      .list-item {
-        margin: 0 rem(15px);
-        padding: rem(4px) 0;
-        border: none;
-
-        .content {
-          margin-left: rem(13px);
-
-          .title {
-            @extend %face-sans-s;
-            font-weight: 500;
-            color: $color-neutral-negative-3;
-          }
-
-          .subtitle {
-            @extend %face-sans-xs;
-            color: $color-neutral-negative-1;
-            letter-spacing: normal;
-            text-align: left;
-
-            &:after {
-              @extend %face-mono-xs;
-              margin-left: rem(5px);
-              content: 'AE';
-            }
-          }
-        }
-
-        &:not(:last-child) {
-          border-bottom: 2px solid $color-neutral-positive-2;
-        }
-      }
     }
 
     /deep/ .ae-toolbar {

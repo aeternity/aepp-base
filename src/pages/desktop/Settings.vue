@@ -8,15 +8,13 @@
     </div>
 
     <ae-card fill="maximum">
-      <list-item>
+      <list-item title="Network">
         <ae-icon
+          slot="icon"
           fill="secondary"
           face="round"
           name="globe"
         />
-        <div class="content">
-          <div class="title">Network</div>
-        </div>
         <div
           slot="right"
           class="value"
@@ -36,11 +34,12 @@
       :anchor="showNetworkDropdown ? $refs.icon : null"
       @close="showNetworkDropdown = false"
     >
-      <settings-list-item
+      <list-item
         v-for="network in networks"
         :key="network.url"
+        :title="network.name"
         @click="setRPCUrl(network.url)"
-      >{{ network.name }}</settings-list-item>
+      />
     </ae-popover>
   </div>
 </template>
@@ -49,10 +48,9 @@
 import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
-import ListItem from '../../components/deprecated/ListItem.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
-import SettingsListItem from '../../components/SettingsListItem.vue';
+import ListItem from '../../components/ListItem.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import networks from '../../lib/networksRegistry';
 
@@ -63,7 +61,6 @@ export default {
     AeCard,
     Guide,
     ListItem,
-    SettingsListItem,
     ButtonPlain,
   },
   data: () => ({
@@ -87,27 +84,6 @@ export default {
     margin: 0 rem(-15px);
 
     .list-item {
-      margin: 0 rem(15px);
-      padding: rem(8px) 0;
-      width: auto;
-      border: none;
-
-      .content {
-        margin-left: rem(13px);
-
-        .title {
-          @extend %face-sans-s;
-          font-weight: 500;
-          color: $color-neutral-negative-3;
-        }
-
-        .subtitle {
-          @extend %face-sans-xs;
-          color: $color-neutral-negative-1;
-          letter-spacing: normal;
-        }
-      }
-
       .value {
         @extend %face-sans-xs;
         color: $color-neutral-negative-1;
@@ -122,10 +98,6 @@ export default {
             color: #000;
           }
         }
-      }
-
-      &:not(:last-child) {
-        border-bottom: 2px solid $color-neutral-positive-2;
       }
     }
   }
