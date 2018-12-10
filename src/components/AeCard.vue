@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { AeToolbar } from '@aeternity/aepp-components-3';
+import AeToolbar from './AeToolbar.vue';
 
 export default {
   components: { AeToolbar },

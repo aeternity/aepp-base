@@ -29,10 +29,11 @@
       />
     </main>
 
-    <template slot="toolbar">
-      <span class="balance-title">Balance</span>
-      <span class="balance-value">{{ balance | prefixedAmount }}</span>
-    </template>
+    <balance
+      slot="toolbar"
+      :balance="balance"
+      invert
+    />
   </ae-card>
 </template>
 
@@ -40,7 +41,7 @@
 import { AeAddress, AeIdenticon, AeInputPlain, AeLabel } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
-import prefixedAmount from '../filters/prefixedAmount';
+import Balance from './Balance.vue';
 
 export default {
   components: {
@@ -49,8 +50,8 @@ export default {
     AeCard,
     AeInputPlain,
     AeLabel,
+    Balance,
   },
-  filters: { prefixedAmount },
   props: {
     name: {
       type: String,
@@ -123,23 +124,8 @@ export default {
     }
   }
 
-  .balance-title, .balance-value {
-    text-transform: none;
-  }
-
-  .balance-title {
-    @extend %face-sans-xs;
-  }
-
-  .balance-value {
-    @extend %face-mono-base;
-    font-weight: normal;
-
-    &:after {
-      @extend %face-mono-xs;
-      margin-left: rem(5px);
-      content: 'AE';
-    }
+  .balance {
+    height: 100%;
   }
 }
 </style>
