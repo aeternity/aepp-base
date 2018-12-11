@@ -38,8 +38,6 @@ export default {
 
 .ae-card {
   @extend %face-sans-base;
-  display: flex;
-  flex-direction: column;
   border-radius: 8px;
   background: $color-neutral-positive-3;
   color: $color-neutral;
@@ -68,11 +66,6 @@ export default {
 
   &.maximum {
     background: $color-neutral-maximum;
-  }
-
-  .ae-toolbar {
-    display: flex;
-    justify-content: space-between;
   }
 }
 </style>
