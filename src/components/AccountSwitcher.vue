@@ -153,9 +153,11 @@ export default {
     }
 
     .balance {
+      display: block;
       margin: 0 rem(14px);
       padding: rem(5px) rem(2px);
       border-top: 2px solid $color-neutral-positive-2;
+      text-align: right;
     }
   }
 }

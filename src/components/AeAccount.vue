@@ -124,8 +124,8 @@ export default {
     }
   }
 
-  .balance {
-    height: 100%;
+  /deep/ .ae-toolbar {
+    text-align: right;
   }
 }
 </style>
