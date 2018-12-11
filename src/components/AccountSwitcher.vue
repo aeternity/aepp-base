@@ -15,7 +15,7 @@
           <list-item
             v-for="(account, index) in identities"
             :title="account.name"
-            :subtitle="`${account.balance | prefixedAmount} AE`"
+            :subtitle="`${prefixedAmount(account.balance)} AE`"
             :key="account.address"
             subtitle-monospace
             @click="selectIdentity(index)"
@@ -96,7 +96,10 @@ export default {
   mounted() {
     this.$store.dispatch('updateAllBalances');
   },
-  methods: mapMutations(['selectIdentity', 'toggleAccountSwitcher']),
+  methods: {
+    prefixedAmount,
+    ...mapMutations(['selectIdentity', 'toggleAccountSwitcher']),
+  },
 };
 </script>
 
