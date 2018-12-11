@@ -73,8 +73,6 @@ export default {
   .ae-toolbar {
     display: flex;
     justify-content: space-between;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
   }
 }
 </style>
