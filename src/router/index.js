@@ -34,8 +34,8 @@ store.watch(
 
 store.subscribe((mutation, state) => {
   switch (mutation.type) {
-    case 'toggleRemoteConnectionPrompt':
-      if (!state.desktop.showRemoteConnectionPrompt) store.commit('setLoginTarget');
+    case 'toggleSidebar':
+      if (!state.desktop.showSidebar) store.commit('setLoginTarget');
       break;
     default:
   }

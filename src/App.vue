@@ -20,7 +20,7 @@
         {{ notification.action.name }}
       </ae-button>
     </ae-banner>
-    <app-footer
+    <footer-mobile
       v-if="$route.meta.displayFooter"
       :show-back-button="$route.name !== 'apps'"
     />
@@ -33,7 +33,6 @@
 import { mapState } from 'vuex';
 import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components';
 import FooterMobile from './components/FooterMobile.vue';
-import FooterDesktop from './components/FooterDesktop.vue';
 import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
 
@@ -44,7 +43,7 @@ export default {
     AeButton,
     RemoveAppModal,
     AlertModal,
-    AppFooter: process.env.IS_MOBILE_DEVICE ? FooterMobile : FooterDesktop,
+    FooterMobile,
   },
   computed: mapState({
     notification: ({ notification }) => notification,

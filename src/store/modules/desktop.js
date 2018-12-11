@@ -8,10 +8,10 @@ export default {
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     remoteConnected: false,
     transactionToSignByRemote: null,
-    showRemoteConnectionPrompt: false,
     ledgerConnected: false,
     ledgerAccountNumber: 1,
     ledgerAddresses: [],
+    showSidebar: false,
   },
 
   getters: {
@@ -29,7 +29,7 @@ export default {
       }
     },
     setRemoteConnected(state, remoteConnected) {
-      state.showRemoteConnectionPrompt = false;
+      state.showSidebar = false;
       state.remoteConnected = remoteConnected;
     },
     setTransactionToSign(state, transaction) {
@@ -40,11 +40,14 @@ export default {
       state.showRemoteConnectionPrompt = !state.showRemoteConnectionPrompt;
     },
     setLedgerConnected(state, ledgerConnected) {
-      state.showRemoteConnectionPrompt = false;
+      state.showSidebar = false;
       state.ledgerConnected = ledgerConnected;
     },
     setLedgerAddresses(state, ledgerAddresses) {
       state.ledgerAddresses = ledgerAddresses;
+    },
+    toggleSidebar(state) {
+      state.showSidebar = !state.showSidebar;
     },
   },
 

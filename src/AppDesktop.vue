@@ -4,17 +4,20 @@
     <div class="page">
       <router-view />
     </div>
+    <sidebar-desktop />
     <footer-desktop :show-back-button="$route.name !== 'apps'" />
   </div>
 </template>
 
 <script>
 import HeaderDesktop from './components/desktop/Header.vue';
+import SidebarDesktop from './components/desktop/Sidebar.vue';
 import FooterDesktop from './components/FooterDesktop.vue';
 
 export default {
   components: {
     HeaderDesktop,
+    SidebarDesktop,
     FooterDesktop,
   },
 };

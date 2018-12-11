@@ -18,9 +18,10 @@
       </router-link>
     </div>
 
-    <div
+    <button-plain
       :class="{ empty: !account }"
       class="active-account"
+      @click="toggleSidebar"
     >
       <div class="details">
         {{ account ? account.name : 'Connect an account' }}
@@ -29,16 +30,17 @@
         </div>
       </div>
       <ae-identicon :address="account ? account.address : ''" />
-    </div>
+    </button-plain>
   </header>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
+import ButtonPlain from '../ButtonPlain.vue';
 
 export default {
-  components: { AeIcon, AeIdenticon },
+  components: { AeIcon, AeIdenticon, ButtonPlain },
   data: () => ({
     links: [{
       name: 'Browser',
@@ -55,6 +57,7 @@ export default {
     }],
   }),
   computed: mapGetters({ account: 'activeIdentity' }),
+  methods: mapMutations(['toggleSidebar']),
 };
 </script>
 

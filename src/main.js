@@ -5,6 +5,7 @@ import VeeValidate, { Validator } from 'vee-validate';
 import { focus } from 'vue-focus';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
+import 'focus-visible';
 import BigNumber from 'bignumber.js';
 import './lib/initEnv';
 import './lib/switchWebmanifest';

@@ -22,13 +22,12 @@
           class="value"
         >
           {{ networkName }}
-          <button @click="showNetworkDropdown = true">
+          <button-plain @click="showNetworkDropdown = true">
             <ae-icon
-              slot="trigger"
               ref="icon"
               name="left-more"
             />
-          </button>
+          </button-plain>
         </div>
       </list-item>
     </ae-card>
@@ -54,6 +53,7 @@ import ListItem from '../../components/ListItem.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import SettingsListItem from '../../components/SettingsListItem.vue';
+import ButtonPlain from '../../components/ButtonPlain.vue';
 import networks from '../../lib/networksRegistry';
 
 export default {
@@ -64,6 +64,7 @@ export default {
     Guide,
     ListItem,
     SettingsListItem,
+    ButtonPlain,
   },
   data: () => ({
     showNetworkDropdown: false,
@@ -111,11 +112,8 @@ export default {
         @extend %face-sans-xs;
         color: $color-neutral-negative-1;
 
-        button {
-          border: none;
-          background: transparent;
+        .button-plain {
           margin-left: rem(10px);
-          padding: 0;
 
           .ae-icon {
             vertical-align: middle;

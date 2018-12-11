@@ -24,7 +24,7 @@
           <div
             v-else
             class="connect-your-account"
-            @click="toggleRemoteConnectionPrompt">
+            @click="toggleSidebar">
             <span class="icon" />
             Connect your account
           </div>
@@ -65,7 +65,7 @@ export default {
     identity: 'activeIdentity',
     loggedIn: 'loggedIn',
   }),
-  methods: mapMutations(['toggleRemoteConnectionPrompt']),
+  methods: mapMutations(['toggleSidebar']),
 };
 </script>
 
