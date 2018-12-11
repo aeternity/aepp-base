@@ -122,6 +122,9 @@ export default [{
   path: '/send',
   component: Send,
   beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
 }, {
   name: 'send-to',
   path: '/send/:to',
