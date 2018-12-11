@@ -41,20 +41,8 @@ describe('router/index.js', () => {
         createRedirectTest(state, fromName, fromName);
 
       it(
-        'pushes INTRO path if current route is ACCOUNTS and no keystore is present',
-        createRedirectTest({}, 'accounts', 'intro'),
-      );
-
-      it(
         'pushes NEW_ACCOUNT path if current route is LOGIN and no keystore is present',
         createRedirectTest({}, 'login', 'new-account'),
-      );
-
-      it(
-        'pushes LOGIN path if current route is ACCOUNTS and keystore is present but not derivedKey',
-        createRedirectTest({
-          mobile: { keystore: {}, derivedKey: false },
-        }, 'accounts', 'login'),
       );
 
       it(
@@ -65,24 +53,10 @@ describe('router/index.js', () => {
       );
 
       it(
-        'pushes ACCOUNTS path if current route is LOGIN and keystore is present and derivedKey',
-        createRedirectTest({
-          mobile: { keystore: {}, derivedKey: true },
-        }, 'login', 'accounts'),
-      );
-
-      it(
         'does NOT redirect if current route is NEW_ACCOUNT and keystore is present and derivedKey',
         createNoRedirectTest({
           mobile: { keystore: {}, derivedKey: true },
         }, 'new-account'),
-      );
-
-      it(
-        'does not interfere when current route is APPS and keystore is present and derivedKey',
-        createNoRedirectTest({
-          mobile: { keystore: {}, derivedKey: true },
-        }, 'accounts'),
       );
 
       it(

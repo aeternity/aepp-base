@@ -11,7 +11,7 @@ module.exports = {
     '^.+\\.jsx?$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(lodash-es|emoji-datasource-apple)/)',
+    'node_modules/(?!(lodash-es|emoji-datasource-apple|@aeternity/aepp-components-3)/)',
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
