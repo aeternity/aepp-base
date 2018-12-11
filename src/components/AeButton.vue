@@ -74,8 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .ae-button {
   display: inline-block;
