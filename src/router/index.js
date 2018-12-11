@@ -25,12 +25,12 @@ store.watch(
   (loggedIn) => {
     if (loggedIn) {
       if (process.env.IS_MOBILE_DEVICE || store.state.loginTarget) {
-        router.push(store.state.loginTarget || { name: 'accounts' });
+        router.push(store.state.loginTarget || { name: 'transfer' });
         store.commit('setLoginTarget');
       }
     } else {
       store.commit('setLoginTarget', router.currentRoute.fullPath);
-      router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'accounts' });
+      router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'transfer' });
     }
   },
 );

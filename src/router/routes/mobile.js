@@ -11,6 +11,7 @@ import NewAccountCreate from '../../pages/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
 import SetPassword from '../../pages/SetPassword.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
+import Transfer from '../../pages/Transfer.vue';
 import Receive from '../../pages/Receive.vue';
 import Send from '../../pages/Send.vue';
 import SendTo from '../../pages/SendTo.vue';
@@ -63,7 +64,7 @@ export default [{
       return;
     }
     if (store.getters.loggedIn) {
-      next({ name: 'accounts' });
+      next({ name: 'transfer' });
       return;
     }
     next();
@@ -96,6 +97,14 @@ export default [{
   name: 'accounts-new',
   path: '/accounts-new',
   component: AccountsNew,
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'transfer',
+  path: '/transfer',
+  component: Transfer,
   beforeEnter: checkLoggedIn(true),
   meta: {
     displayFooter: true,
