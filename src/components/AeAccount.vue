@@ -88,7 +88,6 @@ export default {
 .ae-account.ae-card {
   header {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     padding: rem(12px) rem(16px) 0 rem(12px);
     margin-bottom: rem(12px);
@@ -121,7 +120,6 @@ export default {
     }
 
     .ae-address {
-      margin-left: auto;
       width: rem(150px);
     }
   }
