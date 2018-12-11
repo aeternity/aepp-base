@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import AeInput from '../components/AeInput.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
@@ -48,10 +48,14 @@ export default {
   data: () => ({
     newAccountName: '',
   }),
+  computed: mapState({
+    accountIndex: ({ mobile }) => mobile.accountCount - 1,
+  }),
   methods: {
-    ...mapMutations(['createIdentity']),
+    ...mapMutations(['createIdentity', 'selectIdentity']),
     handleAddAddress() {
       this.createIdentity(this.newAccountName);
+      this.selectIdentity(this.accountIndex);
       this.$router.push({ name: 'transfer' });
     },
   },
