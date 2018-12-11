@@ -135,7 +135,7 @@ export default {
 
     position: fixed;
     width: 84%;
-    bottom: 13%;
+    bottom: rem(90px);
     left: 8%;
     border-radius: rem(8px);
     background-color: $color-neutral-maximum;
