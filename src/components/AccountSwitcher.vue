@@ -93,6 +93,12 @@ export default {
       showAccountSwitcher: ({ mobile }) => mobile.showAccountSwitcher,
     }),
   },
+  watch: {
+    showAccountSwitcher(value) {
+      if (!value) return;
+      this.$store.dispatch('updateAllBalances');
+    },
+  },
   mounted() {
     this.$store.dispatch('updateAllBalances');
   },
