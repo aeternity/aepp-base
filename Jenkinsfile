@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage('Archive Artifacts') {
       steps {
-        sh 'cp /app/platforms/android/build/outputs/apk/debug/android-debug.apk $WORKSPACE/android-debug.apk'
+        sh 'cp /app/platforms/android/app/build/outputs/apk/debug/app-debug.apk $WORKSPACE/android-debug.apk'
         archiveArtifacts artifacts: 'android-debug.apk', fingerprint: true
       }
     }
