@@ -136,7 +136,7 @@ export default {
     }
 
     .list {
-      max-height: rem(500px);
+      max-height: 60vh;
       overflow: scroll;
     }
 
