@@ -85,10 +85,17 @@
       v-if="showMigratedBalanceModal"
       @click="showMigratedBalanceModal = false"
     />
+
+    <transfer-notification
+      v-if="$route.params.tx"
+      :amount="$route.params.amount"
+      :tx="$route.params.tx"
+    />
   </mobile-page>
 </template>
 
 <script>
+import BigNumber from 'bignumber.js';
 import { mapGetters, mapMutations } from 'vuex';
 import { AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
@@ -101,6 +108,7 @@ import AeAccount from '../components/AeAccount.vue';
 import AeButton from '../components/AeButton.vue';
 import ListItem from '../components/ListItem.vue';
 import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
+import TransferNotification from '../components/TransferNotification.vue';
 
 export default {
   components: {
@@ -112,6 +120,7 @@ export default {
     AeIcon,
     ListItem,
     MigratedBalanceModal,
+    TransferNotification,
   },
   data() {
     return {
@@ -120,6 +129,7 @@ export default {
       glowingStarEmoji: glowingStarEmojiPath,
       accountNameEditable: false,
       showMigratedBalanceModal: false,
+      BigNumber,
     };
   },
   computed: mapGetters(['activeIdentity']),

@@ -142,9 +142,9 @@ export default {
         appName: 'Transfer',
         acceptImmediately: true,
       });
-      await this.epoch.api.postTransaction({ tx: signedTx });
+      const { txHash } = await this.epoch.api.postTransaction({ tx: signedTx });
 
-      this.$router.push({ name: 'transfer' });
+      this.$router.push({ name: 'transfer', params: { tx: txHash, amount: this.$route.params.amount } });
     },
   },
 };
