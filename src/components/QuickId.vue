@@ -6,7 +6,7 @@
     </router-link>
     <button
       :class="showAccountSwitcher ? 'router-link-active' : ''"
-      @click="() => !showAccountSwitcher && toggleAccountSwitcher()"
+      @click="() => !showAccountSwitcher && toggleAndUpdateAccountSwitcher()"
     >
       <ae-identity-avatar :address="activeIdentity.address" />
     </button>
@@ -30,7 +30,13 @@ export default {
       showAccountSwitcher: ({ mobile }) => mobile.showAccountSwitcher,
     }),
   },
-  methods: mapMutations(['toggleAccountSwitcher']),
+  methods: {
+    ...mapMutations(['toggleAccountSwitcher']),
+    toggleAndUpdateAccountSwitcher() {
+      this.toggleAccountSwitcher();
+      this.$store.dispatch('updateAllBalances');
+    },
+  },
 };
 </script>
 
