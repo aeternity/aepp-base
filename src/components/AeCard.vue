@@ -44,6 +44,7 @@ export default {
   background: $color-neutral-positive-3;
   color: $color-neutral;
   box-shadow: 0 0 16px $color-shadow-alpha-15;
+  overflow: hidden;
 
   &.primary {
     background: $color-primary;

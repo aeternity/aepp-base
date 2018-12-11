@@ -2,13 +2,21 @@
   <component
     :is="renderAs"
     :to="to"
-    :class="{ inactive, [type]: true }"
     class="list-item"
     @click="$emit('click', $event)"
   >
-    <slot />
-    <div class="space" />
-    <slot name="right" />
+    <div class="content">
+      <slot name="icon" />
+      <div class="title">
+        {{ title }}
+        <small :class="{ monospace: subtitleMonospace }">
+          {{ subtitle }}
+        </small>
+      </div>
+      <slot />
+      <div class="space" />
+      <slot name="right" />
+    </div>
   </component>
 </template>
 
@@ -16,50 +24,64 @@
 export default {
   props: {
     to: { type: [Object, String], default: undefined },
-    type: {
-      type: String,
-      validator: value => ['exciting', 'dramatic'].includes(value),
-      default: undefined,
-    },
-    inactive: { type: Boolean, default: false },
+    title: { type: String, required: true },
+    subtitle: { type: String, default: undefined },
+    subtitleMonospace: { type: Boolean, default: false },
   },
   computed: {
     renderAs() {
       if (this.to) return 'router-link';
-      if (this.inactive) return 'div';
       return 'label';
     },
   },
 };
 </script>
 
-<style lang="scss">
-@import '~@aeternity/aepp-components/dist/variables.scss';
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .list-item {
-  height: 60px;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid #f0f0f0;
-  padding: 0 20px;
+  display: block;
+  padding: 0 rem(15px);
   text-decoration: none;
-  color: $darker;
 
-  &.exciting {
-    color: $aubergine;
+  &:hover {
+    background-color: $color-neutral-positive-3;
   }
 
-  &.dramatic {
-    color: $maegenta;
-  }
+  .content {
+    display: flex;
+    align-items: center;
+    height: rem(68px);
+    padding: 0 rem(2px);
+    border-bottom: 2px solid $color-neutral-positive-2;
+    @extend %face-sans-s;
+    font-weight: 500;
 
-  &:not(.inactive) {
-    cursor: pointer;
+    .title {
+      margin-left: rem(12px);
+      @extend %face-sans-s;
+      font-weight: 500;
+      color: $color-neutral-negative-3;
 
-    &:hover {
-      background-color: $smoke;
+      small {
+        display: block;
+        @extend %face-sans-xs;
+        letter-spacing: normal;
+        color: $color-neutral-negative-1;
+
+        &.monospace {
+          @extend %face-mono-xs;
+          letter-spacing: normal;
+        }
+      }
     }
+  }
+
+  &:last-child .content {
+    border-bottom: none;
   }
 
   .space {

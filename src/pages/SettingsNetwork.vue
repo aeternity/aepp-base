@@ -29,7 +29,7 @@ import { mapState, mapMutations } from 'vuex';
 import MobilePage from '../components/MobilePage.vue';
 import AeRadio from '../components/AeRadio.vue';
 import SettingsHeading from '../components/SettingsHeading.vue';
-import ListItem from '../components/ListItem.vue';
+import ListItem from '../components/deprecated/ListItem.vue';
 import networks from '../lib/networksRegistry';
 
 export default {

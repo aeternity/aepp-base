@@ -7,56 +7,56 @@
     </guide>
     <ae-card fill="maximum">
       <template v-if="$globals.IS_MOBILE_DEVICE">
-        <list-item @click="logOut">
+        <list-item
+          title="Logout"
+          subtitle="And login easily with your password"
+          @click="logOut"
+        >
           <ae-icon
+            slot="icon"
             fill="secondary"
             face="round"
             name="share"
           />
-          <div class="content">
-            <div class="title">Logout</div>
-            <div class="subtitle">And login easily with your password</div>
-          </div>
         </list-item>
-        <list-item @click="signOut">
+        <list-item
+          title="Reset"
+          subtitle="After resetting, a recovery is required"
+          @click="signOut"
+        >
           <ae-icon
+            slot="icon"
             fill="primary"
             face="round"
             name="sign-out"
           />
-          <div class="content">
-            <div class="title">Reset</div>
-            <div class="subtitle">After resetting, a recovery is required</div>
-          </div>
         </list-item>
       </template>
-      <list-item :to="{ name: 'settings-network' }">
+      <list-item
+        :to="{ name: 'settings-network' }"
+        :subtitle="networkName"
+        title="Network"
+      >
         <ae-icon
+          slot="icon"
           fill="secondary"
           face="round"
           name="globe"
         />
-        <div class="content">
-          <div class="title">Network</div>
-          <div class="subtitle">{{ networkName }}</div>
-        </div>
       </list-item>
       <list-item
         v-if="$globals.IS_MOBILE_DEVICE"
         :to="{ name: 'settings-remote-connection' }"
+        :subtitle=
+          "`${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
+        title="Remote connections"
       >
         <ae-icon
+          slot="icon"
           fill="alternative"
           face="round"
           name="device"
         />
-        <div class="content">
-          <div class="title">Remote connections</div>
-          <div class="subtitle">
-            {{ remoteConnectionsCount }}
-            device{{ remoteConnectionsCount === 1 ? '' : 's' }} connected
-          </div>
-        </div>
       </list-item>
     </ae-card>
     <div
@@ -131,35 +131,8 @@ export default {
   .ae-card {
     margin: 0 auto;
 
-    .list-item {
-      margin: 0 rem(15px);
-      padding: rem(8px) 0;
-      width: auto;
-      border: none;
-
-      .content {
-        margin-left: rem(13px);
-
-        .title {
-          @extend %face-sans-s;
-          font-weight: 500;
-          color: $color-neutral-negative-3;
-        }
-
-        .subtitle {
-          @extend %face-sans-xs;
-          color: $color-neutral-negative-1;
-          letter-spacing: normal;
-        }
-      }
-
-      &:not(:last-child) {
-        border-bottom: 2px solid $color-neutral-positive-2;
-      }
-
-      &:nth-child(2) .ae-icon {
-        transform: rotate(90deg);
-      }
+    .ae-icon-share {
+      transform: rotate(90deg);
     }
   }
 }
