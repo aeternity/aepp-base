@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
 import AeInput from '../components/AeInput.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
@@ -49,9 +48,9 @@ export default {
     newAccountName: '',
   }),
   methods: {
-    ...mapMutations(['createIdentity']),
     handleAddAddress() {
-      this.createIdentity(this.newAccountName);
+      this.$store.commit('createIdentity', this.newAccountName);
+      this.$store.commit('selectIdentity', this.$store.state.mobile.accountCount - 1);
       this.$router.push({ name: 'transfer' });
     },
   },
