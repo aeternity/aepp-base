@@ -68,7 +68,7 @@
           name="left-more"
         />
       </list-item>
-      <list-item :to="{ name: '' }">
+      <list-item @click="showMigratedBalanceModal = true">
         <img :src="glowingStarEmoji">
         <div class="content">
           <div class="title">Tokens to be migrated</div>
@@ -80,6 +80,11 @@
         />
       </list-item>
     </template>
+
+    <migrated-balance-modal
+      v-if="showMigratedBalanceModal"
+      @click="showMigratedBalanceModal = false"
+    />
   </mobile-page>
 </template>
 
@@ -95,6 +100,7 @@ import Guide from '../components/Guide.vue';
 import AeAccount from '../components/AeAccount.vue';
 import AeButton from '../components/AeButton.vue';
 import ListItem from '../components/ListItem.vue';
+import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
 
 export default {
   components: {
@@ -105,6 +111,7 @@ export default {
     AeButton,
     AeIcon,
     ListItem,
+    MigratedBalanceModal,
   },
   data() {
     return {
@@ -112,6 +119,7 @@ export default {
       manTippingHandEmoji: manTippingHandEmojiPath,
       glowingStarEmoji: glowingStarEmojiPath,
       accountNameEditable: false,
+      showMigratedBalanceModal: false,
     };
   },
   computed: mapGetters(['activeIdentity']),

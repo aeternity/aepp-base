@@ -1,8 +1,5 @@
 <template>
-  <ae-modal-light
-    v-if="showMigratedBalance"
-    class="migration-confirm"
-  >
+  <ae-modal-light class="migration-confirm">
     <div class="migration">
       <div class="label">
         {{ +migratedBalance }}
@@ -15,7 +12,7 @@
       size="medium"
       fill="primary"
       uppercase
-      @click="showMigratedBalance = false"
+      @click="$emit('click')"
     >
       Ok
     </ae-button>
@@ -43,12 +40,9 @@ export default {
     AeModalLight,
     AeButton,
   },
-  data() {
-    return {
-      showMigratedBalance: true,
-      migratedBalance: '',
-    };
-  },
+  data: () => ({
+    migratedBalance: '',
+  }),
   computed: {
     ...mapGetters(['activeIdentity']),
   },
