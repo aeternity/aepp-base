@@ -17,12 +17,14 @@
         <slot name="header" />
       </div>
       <textarea
+        ref="textarea"
         :id="id"
         :value="value"
         :type="type"
         :placeholder="placeholder"
-        :class="{ aemount }"
+        :class="{ aemount, monospace }"
         class="ae-input"
+        rows="3"
         @focus="focus = true"
         @blur="focus = false"
         @input="$emit($event.type, $event.target.value)"
@@ -63,6 +65,10 @@ export default {
       default: false,
     },
     error: {
+      type: Boolean,
+      default: false,
+    },
+    monospace: {
       type: Boolean,
       default: false,
     },
@@ -144,13 +150,19 @@ export default {
   @include placeholder-color($color-neutral-negative-1);
 
   align-self: center;
-  justify-self: center;
   flex: 0 1 100%;
   width: 100%;
-  padding: 0.5rem 1rem;
+  margin-bottom: rem(5px);
+  padding: 0.7rem 1rem;
   background: transparent;
   border: none;
   outline: none;
+
+  &.monospace {
+    @extend %face-mono-base;
+    font-weight: 500;
+    color: $color-neutral-negative-1;
+  }
 }
 
 .ae-input.aemount {

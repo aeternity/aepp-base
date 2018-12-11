@@ -33,12 +33,13 @@ export default {
     fill: {
       type: String,
       validator: value => [
+        '',
         'primary',
         'secondary',
         'neutral',
         'alternative',
       ].includes(value),
-      default: 'primary',
+      default: '',
     },
     size: {
       type: String,
@@ -81,8 +82,8 @@ export default {
   display: inline-block;
   border: none;
   border-radius: 100px;
-  color: $color-white;
-  background-color: $color-neutral;
+  color: $color-black;
+  background-color: $color-neutral-maximum;
   @extend %face-sans-xs;
   font-weight: 500;
   letter-spacing: 1.3px;
@@ -94,9 +95,11 @@ export default {
   &._fill {
     &_primary {
       background-color: $color-primary;
+      color: $color-white;
     }
     &_secondary {
       background-color: $color-secondary;
+      color: $color-white;
     }
     &_neutral {
       background-color: $color-neutral-maximum;

@@ -1,7 +1,9 @@
 <template>
   <mobile-page
+    :redirect-to-on-close="{ name: 'transfer' }"
     class="receive"
     fill="neutral"
+    back-button
   >
     <guide
       fill="primary"
@@ -15,9 +17,9 @@
 
     <ae-account
       v-bind="activeIdentity"
-      :qr-side="true"
       class="qrAccount"
       fill="primary"
+      qr-side
     />
 
     <template slot="content-bottom">

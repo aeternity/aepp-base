@@ -11,6 +11,10 @@ import NewAccountCreate from '../../pages/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
 import SetPassword from '../../pages/SetPassword.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
+import Receive from '../../pages/Receive.vue';
+import Send from '../../pages/Send.vue';
+import SendTo from '../../pages/SendTo.vue';
+import SendConfirm from '../../pages/SendConfirm.vue';
 import Settings from '../../pages/Settings.vue';
 import SettingsNetwork from '../../pages/SettingsNetwork.vue';
 import SettingsRemoteConnection from '../../pages/SettingsRemoteConnection.vue';
@@ -96,6 +100,29 @@ export default [{
   meta: {
     displayFooter: true,
   },
+}, {
+  name: 'receive',
+  path: '/receive',
+  component: Receive,
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'send',
+  path: '/send',
+  component: Send,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'send-to',
+  path: '/send/:to',
+  component: SendTo,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'send-confirm',
+  path: '/send/:to/:amount',
+  component: SendConfirm,
+  beforeEnter: checkLoggedIn(true),
 }, {
   name: 'settings',
   path: '/settings',

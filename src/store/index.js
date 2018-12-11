@@ -119,6 +119,9 @@ const store = new Vuex.Store({
     selectIdentity(state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx;
     },
+    renameIdentity(state, name) {
+      Vue.set(state.mobile.names, state.selectedIdentityIdx, name);
+    },
     setBalance(state, { address, balance }) {
       Vue.set(state.balances, address, balance);
     },
@@ -174,7 +177,8 @@ const store = new Vuex.Store({
       addresses.forEach(address => dispatch('updateBalance', address));
     },
     async updateBalance({ state: { epoch, balances }, commit }, address) {
-      const balance = BigNumber(await epoch.balance(address).catch(() => 0)).shiftedBy(-MAGNITUDE);
+      const balance = BigNumber(await epoch.balance(address).catch(() => 0)).shiftedBy(-MAGNITUDE)
+        || BigNumber(0);
       if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
     },

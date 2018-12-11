@@ -1,8 +1,8 @@
 <template>
   <div class="quick-id">
-    <router-link :to="{ name: 'receive' }">
-      <ae-icon name="receive" />
-      Receive
+    <router-link :to="{ name: 'transfer' }">
+      <ae-icon name="transfer" />
+      Transfer
     </router-link>
     <button
       :class="showAccountSwitcher ? 'router-link-active' : ''"
@@ -10,10 +10,6 @@
     >
       <ae-identity-avatar :address="activeIdentity.address" />
     </button>
-    <router-link :to="{ name: 'address-book' }">
-      <ae-icon name="contacts" />
-      Contacts
-    </router-link>
     <router-link :to="{ name: 'settings' }">
       <ae-icon name="settings" />
       Settings
