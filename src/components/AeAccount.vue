@@ -89,8 +89,7 @@ export default {
   header {
     display: flex;
     align-items: center;
-    padding: rem(12px) rem(16px) 0 rem(12px);
-    margin-bottom: rem(12px);
+    margin: rem(12px) rem(16px);
 
     .slot-icon {
       margin-left: auto;
@@ -110,7 +109,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: rem(16px) rem(8px) rem(8px) rem(16px);
+    margin: rem(32px) rem(8px) rem(8px) rem(16px);
 
     .security-status {
       @extend %face-uppercase-xs;
