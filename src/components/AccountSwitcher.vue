@@ -20,7 +20,7 @@
             <ae-identicon :address="account.address" />
             <div class="content">
               <div class="title">{{ account.name }}</div>
-              <div class="subtitle">{{ account.balance.toString() }}</div>
+              <div class="subtitle">{{ account.balance | prefixedAmount }}</div>
             </div>
             <ae-radio
               slot="right"
@@ -56,7 +56,7 @@
         </div>
         <template slot="toolbar">
           <span class="balance-title">Total Balance</span>
-          <span class="balance-value">{{ totalBalance.toString() }}</span>
+          <span class="balance-value">{{ totalBalance | prefixedAmount }}</span>
         </template>
       </ae-card>
     </transition>
@@ -70,6 +70,7 @@ import { directive as clickaway } from 'vue-clickaway';
 import ListItem from '../components/ListItem.vue';
 import AeCard from '../components/AeCard.vue';
 import AeRadio from '../components/AeRadio.vue';
+import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
   directives: {
@@ -82,6 +83,7 @@ export default {
     AeIdenticon,
     AeRadio,
   },
+  filters: { prefixedAmount },
   computed: {
     ...mapGetters(['activeIdentity', 'identities', 'totalBalance']),
     ...mapState({
