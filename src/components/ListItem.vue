@@ -7,7 +7,7 @@
   >
     <div class="content">
       <slot name="icon" />
-      <div class="title">
+      <div :class="['title', $slots.icon ? 'after-icon' : '']">
         {{ title }}
         <small :class="{ monospace: subtitleMonospace }">
           {{ subtitle }}
@@ -61,10 +61,13 @@ export default {
     font-weight: 500;
 
     .title {
-      margin-left: rem(12px);
       @extend %face-sans-s;
       font-weight: 500;
       color: $color-neutral-negative-3;
+
+      &.after-icon {
+        margin-left: rem(12px);
+      }
 
       small {
         display: block;
