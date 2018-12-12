@@ -6,15 +6,18 @@
     close-button
   >
     <guide fill="neutral">
-      <em>Create new account</em>
-      <br>choose  a name
-      <br>for your new account
+      <em>Create new subaccount</em>
+      <br>and name it
     </guide>
 
     <template slot="content-bottom">
       <ae-input
+        v-validate="'required'"
+        v-focus="true"
         :id="_uid.toString()"
+        :error="!!errors.first('newAccountName')"
         v-model="newAccountName"
+        name="newAccountName"
         label="Name"
         placeholder="Name"
       />
@@ -53,7 +56,8 @@ export default {
   }),
   methods: {
     ...mapMutations(['createIdentity', 'selectIdentity']),
-    handleAddAddress() {
+    async handleAddAddress() {
+      if (!await this.$validator.validateAll()) return;
       this.createIdentity(this.newAccountName);
       this.selectIdentity(this.accountIndex);
       this.$router.push({ name: 'transfer' });
