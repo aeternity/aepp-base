@@ -26,7 +26,7 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(({
-      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, mobile, desktop,
+      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, customNetworks, mobile, desktop,
     }) => ({
       migrations,
       ...process.env.IS_MOBILE_DEVICE ? {
@@ -34,6 +34,7 @@ const store = new Vuex.Store({
         rpcUrl,
         selectedIdentityIdx,
         addressBook,
+        customNetworks,
         mobile: {
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
@@ -75,6 +76,7 @@ const store = new Vuex.Store({
     notification: null,
     apps: Object.keys(appsRegistry),
     addressBook: [],
+    customNetworks: [],
   },
 
   getters: {
@@ -88,6 +90,15 @@ const store = new Vuex.Store({
       identities[selectedIdentityIdx],
     totalBalance: (state, { identities }) =>
       identities.reduce((sum, { balance }) => sum.plus(balance), BigNumber(0)),
+    networks: ({ customNetworks }) => [
+      ...networksRegistry,
+      ...customNetworks.map(network => ({ ...network, custom: true })),
+    ],
+    currentNetwork: ({ rpcUrl }, { networks }) =>
+      networks.find(({ url }) => url === rpcUrl) || {
+        name: rpcUrl,
+        url: rpcUrl,
+      },
   },
 
   mutations: {
@@ -136,6 +147,12 @@ const store = new Vuex.Store({
     },
     addAddressBookItem(state, item) {
       state.addressBook.push(item);
+    },
+    addNetwork(state, network) {
+      state.customNetworks.push(network);
+    },
+    removeNetwork(state, networkIdx) {
+      state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
     },
   },
 

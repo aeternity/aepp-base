@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../components/AeCard.vue';
 import MobilePage from '../components/MobilePage.vue';
@@ -72,6 +72,11 @@ export default {
   },
   data: () => ({
     version: process.env.npm_package_version,
+  }),
+  computed: mapState({
+    networkName: (state, { currentNetwork }) => currentNetwork.name,
+    remoteConnectionsCount: ({ mobile }) =>
+      Object.entries(mobile.followers).filter(([, f]) => f.connected).length,
   }),
   methods: {
     ...mapMutations(['signOut']),
