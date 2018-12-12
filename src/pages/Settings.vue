@@ -31,6 +31,18 @@
             name="sign-out"
           />
         </list-item>
+        <list-item
+          :to="{ name: 'settings-network' }"
+          :subtitle="networkName"
+          title="Network"
+        >
+          <ae-icon
+            slot="icon"
+            fill="secondary"
+            face="round"
+            name="globe"
+          />
+        </list-item>
       </template>
     </ae-card>
     <div
