@@ -11,7 +11,7 @@
           name="check"
         />
         <div class="title">
-          Transaction completed
+          Transfer completed
           <div class="subtitle">You've sent {{ amount.toString() }} AE</div>
         </div>
       </div>

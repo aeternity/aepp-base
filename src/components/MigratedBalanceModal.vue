@@ -4,7 +4,7 @@
       <div class="label">
         {{ +migratedBalance }}
       </div>
-      are being migrated to this account and will be available as balance soon!
+      are in migration now. They will be available after the next hardfork.
     </div>
     <ae-button
       slot="buttons"
@@ -70,7 +70,7 @@ ${process.env.VUE_APP_BL_KEY}/data/${process.env.VUE_APP_BL_TABLE}
   padding: rem(20px);
 
   /deep/ .ae-modal-light {
-    padding: rem(34px);
+    padding: rem(30px);
     padding-bottom: rem(10px);
     border-radius: rem(4px);
     background-color: $color-neutral-positive-3;

@@ -7,7 +7,7 @@
       fill="neutral"
       icon="³⁄₃"
     >
-      <em>Review your transfer</em>
+      <em>Complete your transfer</em>
       <br>from
       <ae-identicon
         :address="activeIdentity.address"

@@ -9,7 +9,7 @@
       <template v-if="$globals.IS_MOBILE_DEVICE">
         <list-item
           title="Logout"
-          subtitle="And login easily with your password"
+          subtitle="And see you soon!"
           @click="logOut"
         >
           <ae-icon
@@ -20,7 +20,7 @@
           />
         </list-item>
         <list-item
-          title="Reset"
+          title="Reset Key Storage"
           subtitle="After resetting, a recovery is required"
           @click="signOut"
         >

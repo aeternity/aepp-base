@@ -7,7 +7,7 @@
       fill="primary"
     >
       <em>Send and receive</em>
-      <br>æternity tokens
+      <br>AE
     </guide>
 
     <ae-account
@@ -50,7 +50,7 @@
         <img :src="moneyWithWingsEmoji">
         <div class="content">
           <div class="title">Send</div>
-          <div class="subtitle">Transfer funds</div>
+          <div class="subtitle">To others or subaccounts</div>
         </div>
         <ae-icon
           slot="right"
@@ -61,7 +61,7 @@
         <img :src="manTippingHandEmoji">
         <div class="content">
           <div class="title">Receive</div>
-          <div class="subtitle">Share your address</div>
+          <div class="subtitle">By sharing your address</div>
         </div>
         <ae-icon
           slot="right"
@@ -71,8 +71,8 @@
       <list-item @click="showMigratedBalanceModal = true">
         <img :src="glowingStarEmoji">
         <div class="content">
-          <div class="title">Tokens to be migrated</div>
-          <div class="subtitle">To this address (not shown in card)</div>
+          <div class="title">Tokens in migration</div>
+          <div class="subtitle">Available after next hardfork</div>
         </div>
         <ae-icon
           slot="right"

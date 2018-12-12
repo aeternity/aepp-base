@@ -8,10 +8,10 @@
     <guide
       fill="primary"
     >
-      <em>Receive</em> tokens
+      <em>Receive</em> AE
       <div class="note">
-        Scan this QR code to receive
-        <br>tokens on this address
+        Let the sender scan this QR code
+        <br>to obtain your address
       </div>
     </guide>
 
@@ -27,7 +27,7 @@
         <img :src="writingHandEmoji">
         <div class="content">
           <div class="title">Copy address</div>
-          <div class="subtitle">Save to clipboard</div>
+          <div class="subtitle">Share it with sender</div>
         </div>
         <ae-icon
           v-if="copied"
