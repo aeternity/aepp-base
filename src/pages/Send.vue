@@ -42,7 +42,7 @@
         size="medium"
         fill="secondary"
         uppercase
-        @click="$router.push({ name: 'send-to', params: { to: accountTo } })"
+        @click="setAddress"
       >
         Next
       </ae-button>
@@ -101,6 +101,15 @@ export default {
   }),
   computed: {
     ...mapGetters(['activeIdentity', 'identities']),
+  },
+  methods: {
+    async setAddress() {
+      if (!await this.$validator.validateAll()) {
+        this.error = true;
+        return;
+      }
+      this.$router.push({ name: 'send-to', params: { to: this.accountTo } });
+    },
   },
 };
 </script>

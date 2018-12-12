@@ -69,7 +69,7 @@
 
     <ae-button-group slot="footer">
       <ae-button
-        :to="{ name: 'send-to', params: { to: $route.params.to } }"
+        :to="{ name: 'transfer' }"
         uppercase
       >
         Cancel

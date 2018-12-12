@@ -49,10 +49,10 @@
     <ae-button
       slot="content-bottom"
       :disabled="errors.any()"
-      :to="{ name: 'send-confirm', params: { to: $route.params.to, amount: amount } }"
       size="medium"
       fill="secondary"
       uppercase
+      @click="setAmount"
     >
       Next
     </ae-button>
@@ -95,6 +95,15 @@ export default {
     formattedAddress() {
       const address = this.$route.params.to;
       return `${address.substr(0, 3)} ${address.substr(3, 2)}···${address.slice(-3)}`;
+    },
+  },
+  methods: {
+    async setAmount() {
+      if (!await this.$validator.validateAll()) {
+        this.error = true;
+        return;
+      }
+      this.$router.push({ name: 'send-confirm', params: { to: this.$route.params.to, amount: this.amount } });
     },
   },
 };
