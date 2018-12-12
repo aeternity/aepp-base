@@ -14,7 +14,8 @@ export default {
   getters: {
     addresses: ({ ledgerConnected, ledgerAddresses }, getters, { addresses }) => (
       ledgerConnected ? ledgerAddresses : addresses),
-    loggedIn: ({ ledgerConnected, remoteConnected }) => ledgerConnected || remoteConnected,
+    loggedIn: ({ ledgerConnected }, getters, { addresses }) => (
+      ledgerConnected || addresses.length > 0),
     ableToCreateAccount: ({ ledgerConnected }) => ledgerConnected,
     signingCancelable: ({ ledgerConnected }) => !ledgerConnected,
   },

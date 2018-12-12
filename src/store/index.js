@@ -34,16 +34,17 @@ const store = new Vuex.Store({
       }),
       ({
         migrations, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
-        apps, cachedAppManifests, peerId,
+        apps, cachedAppManifests, peerId, addresses,
         mobile, desktop,
       }) => ({
         migrations,
         peerId,
+        rpcUrl,
+        selectedIdentityIdx,
+        addressBook,
+        customNetworks,
+        addresses,
         ...process.env.IS_MOBILE_DEVICE ? {
-          rpcUrl,
-          selectedIdentityIdx,
-          addressBook,
-          customNetworks,
           apps,
           cachedAppManifests,
           mobile: {
