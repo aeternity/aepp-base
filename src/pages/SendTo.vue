@@ -42,7 +42,7 @@
       <span slot="header">AE</span>
       <ae-toolbar slot="footer">
         <span> Minimum transaction fee</span>
-        <span>{{ BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE).toString() + ' pico AE' }}</span>
+        <span>{{ BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE) | prefixedAmount }} AE</span>
       </ae-toolbar>
     </ae-input>
 
@@ -68,6 +68,7 @@ import Guide from '../components/Guide.vue';
 import AeInput from '../components/AeInput.vue';
 import AeButton from '../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
+import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
   components: {
@@ -78,6 +79,7 @@ export default {
     AeToolbar,
     AeButton,
   },
+  filters: { prefixedAmount },
   data: () => ({
     amount: '',
     MAGNITUDE,

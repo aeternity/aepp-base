@@ -26,7 +26,7 @@
       <span
         slot="right"
         class="content"
-      >{{ $route.params.amount }} AE</span>
+      >{{ BigNumber($route.params.amount) | prefixedAmount }} AE</span>
     </list-item>
     <list-item inactive>
       <span class="title"><img src="../assets/icons/turtle.svg"></span>
@@ -48,7 +48,7 @@
       <span
         slot="right"
         class="content"
-      >{{ formattedFee.toString() }} AE</span>
+      >{{ formattedFee | prefixedAmount }} AE</span>
     </list-item>
     <list-item inactive>
       <div class="title">Transaction speed</div>
@@ -95,6 +95,7 @@ import Guide from '../components/Guide.vue';
 import ListItem from '../components/deprecated/ListItem.vue';
 import AeButton from '../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
+import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
   components: {
@@ -106,6 +107,7 @@ export default {
     AeButtonGroup,
     AeAddress,
   },
+  filters: { prefixedAmount },
   data: () => ({
     amount: '',
     MAGNITUDE,

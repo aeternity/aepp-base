@@ -62,7 +62,7 @@
         }"
         :key="account.address"
         :title="account.name"
-        :subtitle="+account.balance"
+        :subtitle="account.balance | prefixedAmount"
       >
         <ae-identicon
           slot="icon"
@@ -85,6 +85,7 @@ import Guide from '../components/Guide.vue';
 import AeAddressInput from '../components/AeAddressInput.vue';
 import AeButton from '../components/AeButton.vue';
 import ListItem from '../components/ListItem.vue';
+import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
   components: {
@@ -97,6 +98,7 @@ export default {
     ListItem,
     AeIcon,
   },
+  filters: { prefixedAmount },
   data: () => ({
     accountTo: '',
   }),
