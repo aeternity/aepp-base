@@ -75,7 +75,6 @@ import AeCard from '../components/AeCard.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import ListItem from '../components/ListItem.vue';
-import networks from '../lib/networksRegistry';
 
 export default {
   components: {
@@ -89,7 +88,7 @@ export default {
     version: process.env.npm_package_version,
   }),
   computed: mapState({
-    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name,
+    networkName: (state, { currentNetwork }) => currentNetwork.name,
     remoteConnectionsCount: ({ mobile }) =>
       Object.entries(mobile.followers).filter(([, f]) => f.connected).length,
   }),

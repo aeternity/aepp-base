@@ -68,7 +68,7 @@ export default {
     networks,
   }),
   computed: mapState({
-    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name,
+    networkName: (state, { currentNetwork }) => currentNetwork.name,
   }),
   methods: mapMutations(['setRPCUrl']),
 };

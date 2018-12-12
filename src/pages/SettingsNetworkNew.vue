@@ -1,0 +1,127 @@
+<template>
+  <mobile-page
+    :redirect-to-on-close="{ name: 'settings-network' }"
+    title="Connect to another node"
+    back-button
+    class="settings-network settings-network-new"
+  >
+    <ae-card>
+      <guide>Connect to<br><em>another node</em></guide>
+      <form @submit.prevent="addNetwork">
+        <ae-input
+          v-validate="'required'"
+          v-model="name"
+          :error="errors.has('name')"
+          label="Node Name"
+          name="name"
+        />
+        <ae-input
+          v-validate="{
+            required: true,
+            url_http: true,
+            excluded: networks.map(({ url }) => url),
+          }"
+          v-model="url"
+          :error="errors.has('url')"
+          label="Node URL"
+          name="url"
+        />
+        <ae-input
+          v-validate="{
+            required: true,
+          }"
+          v-model="networkId"
+          :error="errors.has('network-id')"
+          label="Network ID"
+          name="network-id"
+        />
+        <ae-button
+          :disabled="errors.any()"
+          fill="secondary"
+        >
+          Connect
+        </ae-button>
+        <ae-button
+          :to="{ name: 'settings-network' }"
+          plain
+        >
+          Cancel
+        </ae-button>
+      </form>
+    </ae-card>
+  </mobile-page>
+</template>
+
+<script>
+import { mapState, mapGetters } from 'vuex';
+import MobilePage from '../components/MobilePage.vue';
+import AeCard from '../components/AeCard.vue';
+import AeButton from '../components/AeButton.vue';
+import Guide from '../components/Guide.vue';
+import AeInput from '../components/AeInput.vue';
+
+export default {
+  components: {
+    MobilePage,
+    AeCard,
+    Guide,
+    AeInput,
+    AeButton,
+  },
+  data: () => ({
+    name: '',
+    url: '',
+    networkId: 'ae_mainnet',
+  }),
+  computed: {
+    ...mapState(['rpcUrl']),
+    ...mapGetters(['networks']),
+  },
+  methods: {
+    async addNetwork() {
+      if (!await this.$validator.validateAll()) {
+        return;
+      }
+
+      const prefixedUrl =
+        new URL((/^\w+:\//.test(this.url) ? '' : 'http://') + this.url).toString();
+      this.$store.commit('addNetwork', {
+        name: this.name,
+        url: prefixedUrl,
+        networkId: this.networkId,
+      });
+      this.$store.commit('setRPCUrl', prefixedUrl);
+      this.$router.push({ name: 'settings-network' });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.settings-network-new {
+  background-color: $color-neutral-positive-2;
+
+  .ae-card {
+    padding: 0 rem(20px);
+
+    .guide {
+      margin-top: rem(27px);
+    }
+
+    .ae-button {
+      display: block;
+      min-width: rem(250px);
+      margin: rem(10px) auto;
+
+      &._plain {
+        color: $color-neutral-negative-3;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss" src="./SettingsNetwork.scss" scoped />
