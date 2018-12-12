@@ -23,7 +23,7 @@
       :error="!!errors.first('accountTo')"
       v-model="accountTo"
       name="accountTo"
-      label="Recipent"
+      label="To"
       data-vv-delay="1"
       placeholder="ak_"
     >
