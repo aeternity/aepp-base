@@ -35,7 +35,10 @@
     </main>
 
     <template slot="toolbar">
-      <span class="balance-title">{{ qrSide ? name : '' }}</span>
+      <span
+        v-if="qrSide"
+        class="balance-title"
+      >{{ name }}</span>
       <balance
         v-if="!qrSide"
         :balance="balance"
@@ -149,42 +152,16 @@ export default {
     }
   }
 
-  main {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin: rem(32px) rem(8px) rem(8px) rem(16px);
-
-    .security-status {
-      @extend %face-uppercase-xs;
-      white-space: pre-line;
-      margin-bottom: rem(4px);
-      font-weight: bold;
-    }
-
-    .ae-address {
-      width: rem(150px);
-    }
-  }
-
   /deep/ .ae-toolbar {
     text-align: right;
-    .balance-title, .balance-value {
-      text-transform: none;
-    }
+  }
 
-    .balance-title {
-      @extend %face-sans-xs;
-    }
+  &.qrAccount {
+    /deep/ .ae-toolbar {
+      text-align: left;
 
-    .balance-value {
-      @extend %face-mono-base;
-      font-weight: normal;
-
-      &:after {
-        @extend %face-mono-xs;
-        margin-left: rem(5px);
-        content: 'AE';
+      .balance-title {
+        @extend %face-sans-xs;
       }
     }
   }
