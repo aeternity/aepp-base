@@ -29,10 +29,11 @@
       />
     </main>
 
-    <template slot="toolbar">
-      <span class="balance-title">Balance</span>
-      <span class="balance-value">{{ balance | prefixedAmount }}</span>
-    </template>
+    <balance
+      slot="toolbar"
+      :balance="balance"
+      invert
+    />
   </ae-card>
 </template>
 
@@ -40,7 +41,7 @@
 import { AeAddress, AeIdenticon, AeInputPlain, AeLabel } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
-import prefixedAmount from '../filters/prefixedAmount';
+import Balance from './Balance.vue';
 
 export default {
   components: {
@@ -49,8 +50,8 @@ export default {
     AeCard,
     AeInputPlain,
     AeLabel,
+    Balance,
   },
-  filters: { prefixedAmount },
   props: {
     name: {
       type: String,
@@ -81,17 +82,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .ae-account.ae-card {
   header {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    padding: rem(12px) rem(16px) 0 rem(12px);
-    margin-bottom: rem(12px);
+    margin: rem(12px) rem(16px);
 
     .slot-icon {
       margin-left: auto;
@@ -111,7 +110,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: rem(16px) rem(8px) rem(8px) rem(16px);
+    margin: rem(32px) rem(8px) rem(8px) rem(16px);
 
     .security-status {
       @extend %face-uppercase-xs;
@@ -121,28 +120,12 @@ export default {
     }
 
     .ae-address {
-      margin-left: auto;
       width: rem(150px);
     }
   }
 
-  .balance-title, .balance-value {
-    text-transform: none;
-  }
-
-  .balance-title {
-    @extend %face-sans-xs;
-  }
-
-  .balance-value {
-    @extend %face-mono-base;
-    font-weight: normal;
-
-    &:after {
-      @extend %face-mono-xs;
-      margin-left: rem(5px);
-      content: 'AE';
-    }
+  /deep/ .ae-toolbar {
+    text-align: right;
   }
 }
 </style>

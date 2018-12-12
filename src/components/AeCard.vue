@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { AeToolbar } from '@aeternity/aepp-components-3';
+import AeToolbar from './AeToolbar.vue';
 
 export default {
   components: { AeToolbar },
@@ -33,13 +33,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .ae-card {
   @extend %face-sans-base;
-  display: flex;
-  flex-direction: column;
   border-radius: 8px;
   background: $color-neutral-positive-3;
   color: $color-neutral;
@@ -68,13 +66,6 @@ export default {
 
   &.maximum {
     background: $color-neutral-maximum;
-  }
-
-  .ae-toolbar {
-    display: flex;
-    justify-content: space-between;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
   }
 }
 </style>

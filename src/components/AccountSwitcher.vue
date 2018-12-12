@@ -56,10 +56,10 @@
             />
           </list-item>
         </div>
-        <template slot="toolbar">
-          <span class="balance-title">Total Balance</span>
-          <span class="balance-value">{{ totalBalance | prefixedAmount }}</span>
-        </template>
+        <balance
+          :balance="totalBalance"
+          total
+        />
       </ae-card>
     </transition>
   </div>
@@ -72,6 +72,7 @@ import { directive as clickaway } from 'vue-clickaway';
 import ListItem from './ListItem.vue';
 import AeCard from '../components/AeCard.vue';
 import AeRadio from '../components/AeRadio.vue';
+import Balance from './Balance.vue';
 import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
@@ -84,8 +85,8 @@ export default {
     AeCard,
     AeIdenticon,
     AeRadio,
+    Balance,
   },
-  filters: { prefixedAmount },
   computed: {
     ...mapGetters(['activeIdentity', 'identities', 'totalBalance']),
     ...mapState({
@@ -151,28 +152,12 @@ export default {
       overflow: scroll;
     }
 
-    /deep/ .ae-toolbar {
-      margin: 0 auto;
-      padding: 0;
-      width: 90%;
-      background-color: $color-neutral-maximum;
+    .balance {
+      display: block;
+      margin: 0 rem(14px);
+      padding: rem(5px) rem(2px);
       border-top: 2px solid $color-neutral-positive-2;
-
-      .balance-title {
-        @extend %face-sans-xs;
-        text-transform: none;
-      }
-
-      .balance-value {
-        @extend %face-mono-base;
-        font-weight: normal;
-
-        &:after {
-          @extend %face-mono-xs;
-          margin-left: rem(5px);
-          content: 'AE';
-        }
-      }
+      text-align: right;
     }
   }
 }
