@@ -122,6 +122,7 @@ export default {
     left: 8%;
     border-radius: rem(8px);
     background-color: $color-neutral-maximum;
+    overflow: visible;
 
     &:after {
       content: "";
