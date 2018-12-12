@@ -47,7 +47,9 @@ export default {
   },
   computed: mapState({
     notification: ({ notification }) => notification,
-    grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
+    ...process.env.IS_MOBILE_DEVICE && {
+      grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
+    },
   }),
   created() {
     // set domain to base host because of iframe cross domain policy, very nice hardcoded urls
