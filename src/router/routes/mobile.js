@@ -3,7 +3,8 @@ import store from '../../store/index';
 import Intro from '../../pages/Intro.vue';
 import Onboarding from '../../pages/Onboarding.vue';
 import OnboardingWelcome from '../../pages/OnboardingWelcome.vue';
-import OnboardingAccount from '../../pages/OnboardingAccount.vue';
+import OnboardingSubaccounts from '../../pages/OnboardingSubaccounts.vue';
+import OnboardingSend from '../../pages/OnboardingSend.vue';
 import Login from '../../pages/Login.vue';
 import Recover from '../../pages/Recover.vue';
 import NewAccount from '../../pages/NewAccount.vue';
@@ -50,9 +51,13 @@ export default [{
     path: '',
     component: OnboardingWelcome,
   }, {
-    name: 'onboarding-account',
-    path: 'account',
-    component: OnboardingAccount,
+    name: 'onboarding-subaccounts',
+    path: 'subaccounts',
+    component: OnboardingSubaccounts,
+  }, {
+    name: 'onboarding-send',
+    path: 'send',
+    component: OnboardingSend,
   }],
 }, {
   name: 'login',

@@ -1,12 +1,13 @@
 <template>
-  <div class="onboarding-page account">
-    <img src="../assets/onboarding/accounts.svg">
+  <div class="onboarding-page send">
+    <img src="../assets/onboarding/send.svg">
     <guide fill="primary">
-      Create an
-      <br><em>æternity account</em>
+      <em>Send & receive AE</em>
+      <br>effortlessly
       <div class="note">
-        Which you need for receiving
-        <br>Mainnet coins!
+        Transfer to others or
+        <br>subaccounts. Receive by
+        <br>sharing your address.
       </div>
     </guide>
   </div>
@@ -22,7 +23,7 @@ export default {
 
 <style lang="scss" src="./OnboardingPage.scss" scoped />
 <style lang="scss" scoped>
-.onboarding-page.account img {
+.onboarding-page.send img {
   width: 190px;
 }
 </style>
