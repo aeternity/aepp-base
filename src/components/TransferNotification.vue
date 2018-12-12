@@ -73,15 +73,15 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .transfer-notification {
-  &.fade-enter-active {
+  &.fade-enter-active, &.fade-leave-active {
     transition: opacity 0.25s ease-out;
   }
 
-  &.fade-enter {
+  &.fade-enter, &.fade-leave-to {
     opacity: 0;
   }
 
-  &.fade-enter-to {
+  &.fade-enter-to, &.fade-leave {
     opacity: 1;
   }
 

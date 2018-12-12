@@ -87,7 +87,7 @@
     />
 
     <transfer-notification
-      v-if="$route.params.tx"
+      v-if="showTransferNotification"
       :amount="$route.params.amount"
       :tx="$route.params.tx"
     />
@@ -102,6 +102,7 @@ import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.p
 import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import glowingStarEmojiPath from 'emoji-datasource-apple/img/apple/64/1f31f.png';
 import copy from 'clipboard-copy';
+import { setTimeout } from 'timers';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAccount from '../components/AeAccount.vue';
@@ -130,9 +131,15 @@ export default {
       accountNameEditable: false,
       showMigratedBalanceModal: false,
       BigNumber,
+      showTransferNotification: !!this.$route.params.tx,
     };
   },
   computed: mapGetters(['activeIdentity']),
+  mounted() {
+    if (this.showTransferNotification) {
+      setTimeout(() => { this.showTransferNotification = false; }, 5000);
+    }
+  },
   methods: {
     ...mapMutations(['renameIdentity']),
     copyAddress() {
