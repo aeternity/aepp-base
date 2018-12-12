@@ -1,14 +1,12 @@
 import { EpochChain } from '@aeternity/aepp-sdk/es';
-import networksRegistry from '../../lib/networksRegistry';
 
 export default store =>
   store.watch(
-    ({ rpcUrl }) => rpcUrl,
-    async (rpcUrl) => {
-      const epoch = await EpochChain({ url: rpcUrl, internalUrl: rpcUrl });
+    (state, { currentNetwork }) => currentNetwork,
+    async ({ url, id }) => {
+      const epoch = await EpochChain({ url, internalUrl: url });
       store.commit('setEpoch', epoch);
-      const network = networksRegistry.find(({ url }) => url === rpcUrl);
-      store.commit('setNetworkId', network.id);
+      store.commit('setNetworkId', id);
     },
     { immediate: true },
   );

@@ -19,7 +19,7 @@
           slot="right"
           class="value"
         >
-          {{ networkName }}
+          {{ currentNetwork.name }}
           <button-plain @click="showNetworkDropdown = true">
             <ae-icon
               ref="icon"
@@ -45,14 +45,13 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
-import networks from '../../lib/networksRegistry';
 
 export default {
   components: {
@@ -65,11 +64,8 @@ export default {
   },
   data: () => ({
     showNetworkDropdown: false,
-    networks,
   }),
-  computed: mapState({
-    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name,
-  }),
+  computed: mapGetters(['networks', 'currentNetwork']),
   methods: mapMutations(['setRPCUrl']),
 };
 </script>

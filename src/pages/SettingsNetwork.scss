@@ -1,0 +1,7 @@
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+
+.settings-network /deep/ .header-mobile {
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(27, 68, 121, 0.1);
+  margin-bottom: rem(32px);
+}

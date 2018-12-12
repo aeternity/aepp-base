@@ -13,6 +13,7 @@ import SetPassword from '../../pages/SetPassword.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
 import Settings from '../../pages/Settings.vue';
 import SettingsNetwork from '../../pages/SettingsNetwork.vue';
+import SettingsNetworkNew from '../../pages/SettingsNetworkNew.vue';
 import SettingsRemoteConnection from '../../pages/SettingsRemoteConnection.vue';
 
 const SettingsRemoteConnectionNew = () =>
@@ -108,6 +109,14 @@ export default [{
   name: 'settings-network',
   path: '/settings/network',
   component: SettingsNetwork,
+  beforeEnter: checkLoggedIn(false),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'settings-network-new',
+  path: '/settings/network/new',
+  component: SettingsNetworkNew,
   beforeEnter: checkLoggedIn(false),
   meta: {
     displayFooter: true,
