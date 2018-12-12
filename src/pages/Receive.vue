@@ -23,12 +23,15 @@
     />
 
     <template slot="content-bottom">
-      <list-item @click.native="copyAddress">
-        <img :src="writingHandEmoji">
-        <div class="content">
-          <div class="title">Copy address</div>
-          <div class="subtitle">Share it with sender</div>
-        </div>
+      <list-item
+        title="Copy address"
+        subtitle="Share it with sender"
+        @click.native="copyAddress"
+      >
+        <img
+          slot="icon"
+          :src="writingHandEmoji"
+        >
         <ae-icon
           v-if="copied"
           slot="right"
@@ -83,7 +86,7 @@ export default {
 
 .receive {
   /deep/ .panel .bottom {
-    margin-top: rem(-31px);
+    padding-top: rem(60px);
   }
 
   .guide {
@@ -97,28 +100,14 @@ export default {
   }
 
   .list-item {
-    margin: rem(60px) rem(18px);
-    padding: rem(8px) 0 rem(8px) rem(8px);
-    width: auto;
-    border: solid $color-neutral-positive-1;
-    border-width: 2px 0;
+    /deep/ .content {
+      border-top: none;
+      border-bottom: 2px solid $color-neutral-positive-1;
+    }
 
     img {
       margin: 0 rem(9px) rem(4px) 0;
       width: rem(33px);
-    }
-
-    .content {
-      .title {
-        @extend %face-sans-s;
-        font-weight: 500;
-        color: $color-neutral-negative-3;
-      }
-
-      .subtitle {
-        @extend %face-sans-xs;
-        color: $color-neutral-negative-1;
-      }
     }
   }
 }

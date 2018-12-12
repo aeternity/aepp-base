@@ -61,12 +61,13 @@
           params: { to: account ? account.address : '' }
         }"
         :key="account.address"
+        :title="account.name"
+        :subtitle="+account.balance"
       >
-        <ae-identicon :address="account.address"/>
-        <div class="content">
-          <div class="title">{{ account.name }}</div>
-          <div class="subtitle">{{ +account.balance }}</div>
-        </div>
+        <ae-identicon
+          slot="icon"
+          :address="account.address"
+        />
         <ae-icon
           slot="right"
           name="left-more"
@@ -122,6 +123,7 @@ export default {
   /deep/ {
     .panel .bottom {
       margin-top: rem(-32px);
+      margin-bottom: rem(100px);
 
       .content {
         .ae-input {
@@ -140,36 +142,13 @@ export default {
 
         .list-item {
           margin: 0 rem(15px);
-          padding: rem(4px);
+          padding: 0;
           border-top: solid $color-neutral-positive-1;
           border-bottom: none;
           border-width: 2px;
 
-          .ae-identicon {
-            margin: 0 rem(9px) rem(4px) 0;
-          }
-
           .content {
-            .title {
-              @extend %face-sans-s;
-              font-weight: 500;
-              color: $color-neutral-negative-3;
-            }
-
-            .subtitle {
-              @extend %face-sans-xs;
-              color: $color-neutral-negative-1;
-
-              &:after {
-                @extend %face-mono-xs;
-                margin-left: rem(5px);
-                content: 'AE';
-              }
-            }
-          }
-
-          .ae-icon {
-            font-size: rem(20px);
+            border: none;
           }
         }
       }

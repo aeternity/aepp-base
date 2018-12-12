@@ -92,7 +92,7 @@ import { AeIdenticon, AeAddress } from '@aeternity/aepp-components-3';
 import AeButtonGroup from '@aeternity/aepp-components-3/src/components/ae-button-group/ae-button-group.vue';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
-import ListItem from '../components/ListItem.vue';
+import ListItem from '../components/deprecated/ListItem.vue';
 import AeButton from '../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
 

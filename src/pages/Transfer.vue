@@ -46,34 +46,42 @@
     </ae-account>
 
     <template slot="content-bottom">
-      <list-item :to="{ name: 'send' }">
-        <img :src="moneyWithWingsEmoji">
-        <div class="content">
-          <div class="title">Send</div>
-          <div class="subtitle">To others or subaccounts</div>
-        </div>
+      <list-item
+        :to="{ name: 'send' }"
+        title="Send"
+        subtitle="To others or subaccounts"
+      >
+        <img
+          slot="icon"
+          :src="moneyWithWingsEmoji"
+        >
         <ae-icon
           slot="right"
           name="left-more"
         />
       </list-item>
-      <list-item :to="{ name: 'receive' }">
-        <img :src="manTippingHandEmoji">
-        <div class="content">
-          <div class="title">Receive</div>
-          <div class="subtitle">By sharing your address</div>
-        </div>
+      <list-item
+        :to="{ name: 'receive' }"
+        title="Receive"
+        subtitle="By sharing your address"
+      >
+        <img
+          slot="icon"
+          :src="manTippingHandEmoji"
+        >
         <ae-icon
           slot="right"
           name="left-more"
         />
       </list-item>
-      <list-item @click="showMigratedBalanceModal = true">
-        <img :src="glowingStarEmoji">
-        <div class="content">
-          <div class="title">Tokens in migration</div>
-          <div class="subtitle">Available after next hardfork</div>
-        </div>
+      <list-item
+        title="Tokens in migration"
+        subtitle="Available after next hardfork"
+        @click="showMigratedBalanceModal = true">
+        <img
+          slot="icon"
+          :src="glowingStarEmoji"
+        >
         <ae-icon
           slot="right"
           name="left-more"
@@ -187,26 +195,15 @@ export default {
   }
 
   .list-item {
-    padding: rem(8px);
-    border-bottom: solid $color-neutral-positive-1;
-    border-width: 2px 0;
+    border-bottom: 2px solid $color-neutral-positive-1;
+
+    /deep/ .content {
+      border: none;
+    }
 
     img {
       margin: 0 rem(9px) rem(4px) 0;
       width: rem(33px);
-    }
-
-    .content {
-      .title {
-        @extend %face-sans-s;
-        font-weight: 500;
-        color: $color-neutral-negative-3;
-      }
-
-      .subtitle {
-        @extend %face-sans-xs;
-        color: $color-neutral-negative-1;
-      }
     }
 
     &:last-child {
