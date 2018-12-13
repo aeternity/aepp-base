@@ -65,7 +65,6 @@ const store = new Vuex.Store({
     loginTarget: '',
     selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
-    showIdManager: false,
     balances: {},
     addresses: [],
     rpcUrl: networksRegistry[0].url,
@@ -127,9 +126,6 @@ const store = new Vuex.Store({
     },
     setNotification(state, options) {
       state.notification = options;
-    },
-    toggleIdManager(state) {
-      state.showIdManager = !state.showIdManager;
     },
     addAddressBookItem(state, item) {
       state.addressBook.push(item);
