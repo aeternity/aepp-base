@@ -26,7 +26,7 @@
       <div class="details">
         {{ account ? account.name : 'Connect an account' }}
         <div class="balance">
-          {{ account ? `${account.balance} AE` : 'With Base æpp or Ledger' }}
+          {{ account ? `${prefixedAmount(account.balance)} AE` : 'With Base æpp or Ledger' }}
         </div>
       </div>
       <ae-identicon :address="account ? account.address : ''" />
@@ -38,6 +38,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
+import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
   components: { AeIcon, AeIdenticon, ButtonPlain },
@@ -57,7 +58,10 @@ export default {
     }],
   }),
   computed: mapGetters({ account: 'activeIdentity' }),
-  methods: mapMutations(['toggleSidebar']),
+  methods: {
+    prefixedAmount,
+    ...mapMutations(['toggleSidebar']),
+  },
 };
 </script>
 
