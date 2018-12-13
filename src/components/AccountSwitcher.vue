@@ -18,7 +18,6 @@
             :subtitle="`${prefixedAmount(account.balance)} AE`"
             :key="account.address"
             subtitle-monospace
-            @click="selectIdentity(index)"
           >
             <ae-identicon
               slot="icon"
