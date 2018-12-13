@@ -36,9 +36,6 @@ export default {
       state.transactionToSignByRemote = transaction;
     },
     cancelTransaction() {},
-    toggleRemoteConnectionPrompt(state) {
-      state.showRemoteConnectionPrompt = !state.showRemoteConnectionPrompt;
-    },
     setLedgerConnected(state, ledgerConnected) {
       state.showSidebar = false;
       state.ledgerConnected = ledgerConnected;
