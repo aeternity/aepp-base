@@ -11,6 +11,7 @@ export default {
     ledgerConnected: false,
     ledgerAccountNumber: 1,
     ledgerAddresses: [],
+    showConfirmModalForAddress: '',
     showSidebar: false,
   },
 
@@ -42,12 +43,18 @@ export default {
     setLedgerConnected(state, ledgerConnected) {
       state.showSidebar = false;
       state.ledgerConnected = ledgerConnected;
+      if (!ledgerConnected) {
+        state.ledgerAddresses = [];
+      }
     },
-    setLedgerAddresses(state, ledgerAddresses) {
-      state.ledgerAddresses = ledgerAddresses;
+    addLedgerAddress(state, ledgerAddress) {
+      state.ledgerAddresses.push(ledgerAddress);
     },
     toggleSidebar(state) {
       state.showSidebar = !state.showSidebar;
+    },
+    showConfirmModalForAddress(state, address) {
+      state.showConfirmModalForAddress = address;
     },
   },
 

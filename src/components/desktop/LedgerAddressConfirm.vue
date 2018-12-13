@@ -1,5 +1,6 @@
 <template>
   <ae-modal-light
+    v-if="address"
     title="Confirm your Ledger address"
     class="ledger-address-confirm"
   >
@@ -12,18 +13,11 @@
         :value="address"
       />
     </div>
-    <ae-button
-      slot="buttons"
-      size="large"
-      fill="primary"
-      uppercase
-    >
-      Confirm address
-    </ae-button>
   </ae-modal-light>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { AeIcon, AeAddress } from '@aeternity/aepp-components-3';
 import AeModalLight from '../AeModalLight.vue';
 import AeButton from '../AeButton.vue';
@@ -35,12 +29,9 @@ export default {
     AeIcon,
     AeAddress,
   },
-  props: {
-    address: {
-      type: String,
-      default: undefined,
-    },
-  },
+  computed: mapState({
+    address: ({ desktop: { showConfirmModalForAddress } }) => showConfirmModalForAddress,
+  }),
 };
 </script>
 

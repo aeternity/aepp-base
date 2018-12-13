@@ -20,23 +20,31 @@ export default async (store) => {
     return ae.signTransaction(...args);
   };
 
-  const open = () => {
+  const open = async () => {
     const closeCbs = [];
 
-    closeCbs.push(store.watch(
-      ({ desktop: { ledgerAccountNumber } }) => ledgerAccountNumber,
-      async (accountNumber) => {
-        const addresses = [];
-        for (let i = 0; i < accountNumber; i += 1) {
-          addresses.push(await ae.getAddress(i)); // eslint-disable-line no-await-in-loop
-        }
-        store.commit('setLedgerAddresses', addresses);
-      },
-      { immediate: true },
-    ));
+    const addAddress = async (idx) => {
+      store.commit('showConfirmModalForAddress', await ae.getAddress(idx));
+      let address;
+      do {
+        // eslint-disable-next-line no-await-in-loop
+        address = await ae.getAddress(idx, true).catch(() => {});
+      } while (!address);
+      store.commit('showConfirmModalForAddress');
+      store.commit('addLedgerAddress', address);
+    };
+
+    for (let i = 0; i < store.state.desktop.ledgerAccountNumber; i += 1) {
+      await addAddress(i); // eslint-disable-line no-await-in-loop
+    }
 
     closeCbs.push(store.subscribe(async ({ type, payload }) => {
       switch (type) {
+        case 'createAccount':
+          if (store.state.desktop.ledgerConnected) {
+            addAddress(store.state.desktop.ledgerAccountNumber - 1);
+          }
+          break;
         case 'setTransactionToSign':
           if (!payload) return;
           try {
@@ -80,8 +88,8 @@ export default async (store) => {
   let closeCb;
   store.watch(
     ({ desktop: { ledgerConnected } }) => ledgerConnected,
-    (ledgerConnected) => {
-      if (ledgerConnected && !closeCb) closeCb = open();
+    async (ledgerConnected) => {
+      if (ledgerConnected && !closeCb) closeCb = await open();
       if (!ledgerConnected && closeCb) {
         closeCb();
         closeCb = undefined;
