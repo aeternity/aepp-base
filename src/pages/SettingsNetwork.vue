@@ -91,7 +91,7 @@ export default {
     display: block;
     height: rem(44px);
     line-height: rem(44px);
-    font-size: 11px;
+    font-size: rem(11px);
     color: $color-neutral-negative-1;
   }
 }

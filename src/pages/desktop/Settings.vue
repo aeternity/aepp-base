@@ -38,8 +38,13 @@
         v-for="network in networks"
         :key="network.url"
         :title="network.name"
-        @click="setRPCUrl(network.url)"
-      />
+      >
+        <ae-radio
+          slot="right"
+          :checked="network === currentNetwork"
+          @change="setRPCUrl(network.url)"
+        />
+      </list-item>
     </ae-popover>
   </div>
 </template>
@@ -51,6 +56,7 @@ import Guide from '../../components/Guide.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
+import AeRadio from '../../components/AeRadio.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 
 export default {
@@ -60,6 +66,7 @@ export default {
     AeCard,
     Guide,
     ListItem,
+    AeRadio,
     ButtonPlain,
   },
   data: () => ({
