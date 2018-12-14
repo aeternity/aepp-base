@@ -53,10 +53,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .ae-popover {
   position: absolute;
-  box-shadow: 0 0 8px rgba(27, 68, 121, 0.1);
+  box-shadow: 0 0 rem(8px) rgba(27, 68, 121, 0.1);
   border-radius: 4px;
   min-width: 310px;
   background: #fff;
