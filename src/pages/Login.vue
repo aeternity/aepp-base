@@ -2,7 +2,8 @@
   <mobile-page
     :redirect-to-on-close="{ name: 'intro' }"
     class="login"
-    close-button>
+    close-button
+  >
     <guide
       fill="primary"
     >
@@ -14,10 +15,10 @@
 
     <form @submit.prevent="unlockSavedKeystore">
       <ae-input
-        v-validate="'required|min:4'"
-        v-focus="true"
         :id="_uid.toString()"
         v-model="password"
+        v-validate="'required|min:4'"
+        v-focus="true"
         :label="error ? 'Password': ''"
         :error="error"
         :type="showPassword ? 'text' : 'password'"
@@ -65,7 +66,6 @@
 </template>
 
 <script>
-import { AeLabel } from '@aeternity/aepp-components';
 import { AeToolbar, AeIcon } from '@aeternity/aepp-components-3';
 import wavingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f44b.png';
 import MobilePage from '../components/MobilePage.vue';
@@ -75,7 +75,7 @@ import AeInput from '../components/AeInput.vue';
 
 export default {
   components: {
-    MobilePage, AeInput, AeLabel, AeButton, Guide, AeToolbar, AeIcon,
+    MobilePage, AeInput, AeButton, Guide, AeToolbar, AeIcon,
   },
   data() {
     return {

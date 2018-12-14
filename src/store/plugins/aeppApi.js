@@ -1,11 +1,8 @@
 export default (store) => {
   const methods = {
-    getAccount: () =>
-      store.getters.activeIdentity && store.getters.activeIdentity.address,
-    signTransaction: (transaction, origin) =>
-      store.dispatch('signTransaction', { transaction, appName: origin }),
-    signPersonalMessage: ({ message, address }, origin) =>
-      store.dispatch('signPersonalMessage', { message, address, appName: origin }),
+    getAccount: () => store.getters.activeIdentity && store.getters.activeIdentity.address,
+    signTransaction: (transaction, origin) => store.dispatch('signTransaction', { transaction, appName: origin }),
+    signPersonalMessage: ({ message, address }, origin) => store.dispatch('signPersonalMessage', { message, address, appName: origin }),
     handShake: () => null,
   };
 

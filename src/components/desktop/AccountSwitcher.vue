@@ -6,8 +6,8 @@
         fill="primary"
       >
         <button-plain
-          v-copy-to-clipboard="activeAccount.address"
           slot="icon"
+          v-copy-to-clipboard="activeAccount.address"
         >
           <ae-icon name="copy" />
         </button-plain>
@@ -17,9 +17,9 @@
     <main>
       <list-item
         v-for="(account, index) in accounts"
+        :key="account.address"
         :title="account.name"
         :subtitle="`${prefixedAmount(account.balance)} AE`"
-        :key="account.address"
         subtitle-monospace
       >
         <ae-identicon

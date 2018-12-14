@@ -38,11 +38,10 @@ import { appsRegistry } from '../lib/appsRegistry';
 export default {
   components: { AeModalLight, AeButton },
   computed: mapState({
-    app: ({ apps, selectedAppIdxToRemove: appIdx }) =>
-      appIdx !== -1 && ({
-        ...apps[appIdx],
-        ...appsRegistry[apps[appIdx]],
-      }),
+    app: ({ apps, selectedAppIdxToRemove: appIdx }) => appIdx !== -1 && ({
+      ...apps[appIdx],
+      ...appsRegistry[apps[appIdx]],
+    }),
   }),
   methods: mapMutations(['selectAppToRemove', 'removeSelectedApp']),
 };

@@ -18,8 +18,8 @@
     <div class="words">
       <ae-badge
         v-for="(word, index) in seedPermutation"
-        :disabled="selectedWordIds.includes(index)"
         :key="index"
+        :disabled="selectedWordIds.includes(index)"
         @click.native="wordClick(index)"
       >
         {{ word }}

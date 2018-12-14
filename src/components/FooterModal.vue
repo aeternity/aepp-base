@@ -3,13 +3,15 @@
     <transition name="fade">
       <ae-overlay
         v-if="$slots.default"
-        @click="$emit('toggle')" />
+        @click="$emit('toggle')"
+      />
     </transition>
     <div class="modal">
       <transition name="scroll">
         <div
           v-if="$slots.default"
-          class="content">
+          class="content"
+        >
           <slot />
         </div>
       </transition>

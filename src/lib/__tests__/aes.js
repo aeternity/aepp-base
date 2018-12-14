@@ -4,8 +4,7 @@ if (window.crypto && window.crypto.subtle) {
   throw new Error('This tests should be rewritten using provided Web Crypto API');
 }
 
-const getTestArray = length =>
-  Buffer.alloc(length).map((_, idx) => idx);
+const getTestArray = length => Buffer.alloc(length).map((_, idx) => idx);
 
 const testKey = getTestArray(16);
 const testData = getTestArray(24);

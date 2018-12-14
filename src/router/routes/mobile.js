@@ -16,8 +16,7 @@ import SettingsNetwork from '../../pages/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/SettingsNetworkNew.vue';
 import SettingsRemoteConnection from '../../pages/SettingsRemoteConnection.vue';
 
-const SettingsRemoteConnectionNew = () =>
-  import('../../pages/SettingsRemoteConnectionNew.vue');
+const SettingsRemoteConnectionNew = () => import('../../pages/SettingsRemoteConnectionNew.vue');
 
 const checkSeedPassed = (to, from, next) => {
   if (!to.params.seed) {

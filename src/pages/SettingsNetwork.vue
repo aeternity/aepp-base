@@ -50,7 +50,9 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { AeDropdown, AeIcon, AeButton as AeButton3, directives } from '@aeternity/aepp-components-3';
+import {
+  AeDropdown, AeIcon, AeButton as AeButton3, directives,
+} from '@aeternity/aepp-components-3';
 import MobilePage from '../components/MobilePage.vue';
 import AeCard from '../components/AeCard.vue';
 import ListItem from '../components/ListItem.vue';

@@ -11,11 +11,13 @@
         :for="`${_uid}-name`"
         :help-text="errors.first('name')"
         help-type="dramatic"
-      >Contact name</ae-label>
+      >
+        Contact name
+      </ae-label>
       <ae-input
-        v-validate="'required'"
         :id="`${_uid}-name`"
         v-model="name"
+        v-validate="'required'"
         name="name"
       />
 
@@ -23,11 +25,13 @@
         :for="`${_uid}-address`"
         :help-text="errors.first('address')"
         help-type="dramatic"
-      >Contact address</ae-label>
+      >
+        Contact address
+      </ae-label>
       <ae-address-input
-        v-validate="'required|min:51|max:53'"
         :id="`${_uid}-address`"
         v-model="address"
+        v-validate="'required|min:51|max:53'"
         name="address"
         placeholder="ak$ ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• •••"
       />
@@ -37,14 +41,17 @@
       slot="footer"
       :disabled="errors.any()"
       type="dramatic"
-      @click="addAddressBookItem">
+      @click="addAddressBookItem"
+    >
       Save contact
     </ae-button>
   </mobile-page>
 </template>
 
 <script>
-import { AeLabel, AeInput, AeAddressInput, AeButton, AeDivider } from '@aeternity/aepp-components';
+import {
+  AeLabel, AeInput, AeAddressInput, AeButton, AeDivider,
+} from '@aeternity/aepp-components';
 import MobilePage from '../components/MobilePage.vue';
 
 export default {

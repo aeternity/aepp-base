@@ -30,7 +30,8 @@
         size="medium"
         fill="neutral"
         plain
-        uppercase>
+        uppercase
+      >
         See how it works
       </ae-button>
     </template>

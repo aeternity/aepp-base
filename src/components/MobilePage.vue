@@ -32,7 +32,8 @@
       </div>
       <div
         v-if="$slots.footer"
-        class="footer">
+        class="footer"
+      >
         <slot name="footer" />
       </div>
     </div>
@@ -42,7 +43,7 @@
 <script>
 import { AeIcon } from '@aeternity/aepp-components-3';
 import HeaderMobile from './HeaderMobile.vue';
-import AeButton from '../components/AeButton.vue';
+import AeButton from './AeButton.vue';
 
 export default {
   components: { AeButton, AeIcon, HeaderMobile },

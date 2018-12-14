@@ -9,17 +9,17 @@
       icon="½"
     >
       You confirmed your
-      <br>phrase correctly! Now
-      <br><mark>choose a<img :src="keyEmoji">password</mark>
-      <br>and confirm.
+                    <br>phrase correctly! Now
+                    <br><mark>choose a<img :src="keyEmoji">password</mark>
+                    <br>and confirm.
     </guide>
 
     <form @submit.prevent="createKeystore">
       <ae-input
-        v-validate="'required|min:4'"
-        v-focus="true"
         :id="`${_uid}-password`"
         v-model="password"
+        v-validate="'required|min:4'"
+        v-focus="true"
         :error="errors.first('password')"
         label="New password"
         name="password"
@@ -28,10 +28,10 @@
         @click.native="error = false"
       />
       <ae-input
-        v-validate="'confirmed:'+password+'|required'"
-        v-focus="true"
         :id="`${_uid}-passwordRepeat`"
         v-model="passwordRepeat"
+        v-validate="'confirmed:'+password+'|required'"
+        v-focus="true"
         :error="errors.first('passwordRepeat')"
         label="Confirm new password"
         name="passwordRepeat"

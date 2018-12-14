@@ -117,14 +117,13 @@ export default {
       { transaction, appName, id = uuid() },
     ) {
       const binaryTx = await dispatch('genSpendTxBinary', transaction);
-      await new Promise((resolve, reject) =>
-        commit('signTransaction', {
-          transaction,
-          appName,
-          resolve,
-          reject,
-          id,
-        }));
+      await new Promise((resolve, reject) => commit('signTransaction', {
+        transaction,
+        appName,
+        resolve,
+        reject,
+        id,
+      }));
       const signature = Crypto.sign(
         Buffer.concat([Buffer.from(networkId), binaryTx]),
         accounts[transaction.senderId].secretKey,
@@ -135,10 +134,9 @@ export default {
       { state: { accounts }, commit },
       { message, address, appName },
     ) {
-      await new Promise((resolve, reject) =>
-        commit('setMessageToApprove', {
-          message, appName, resolve, reject,
-        }));
+      await new Promise((resolve, reject) => commit('setMessageToApprove', {
+        message, appName, resolve, reject,
+      }));
       const signature = Crypto.signPersonalMessage(message, accounts[address].secretKey);
       return Crypto.encodeBase58Check(Buffer.from(signature));
     },

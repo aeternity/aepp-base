@@ -6,20 +6,30 @@
   >
     <header>
       <h1>
-        <template v-if="!accountsCount">Connect an<br>account to start</template>
-        <template v-else>Your connected<br>account{{ accountsCount !== 1 ? 's': '' }}</template>
-        <button-plain @click="toggleSidebar"><ae-icon name="close" /></button-plain>
+        <template v-if="!accountsCount">
+          Connect an<br>account to start
+        </template>
+        <template v-else>
+          Your connected<br>account{{ accountsCount !== 1 ? 's': '' }}
+        </template>
+        <button-plain @click="toggleSidebar">
+          <ae-icon name="close" />
+        </button-plain>
       </h1>
 
       <div class="tabs">
         <button-plain
           :class="{ active: !ledgerTab }"
           @click="ledgerTab = false"
-        >Base æpp</button-plain>
+        >
+          Base æpp
+        </button-plain>
         <button-plain
           :class="{ active: ledgerTab }"
           @click="ledgerTab = true"
-        >Ledger</button-plain>
+        >
+          Ledger
+        </button-plain>
       </div>
     </header>
 
@@ -37,12 +47,10 @@ import SidebarModal from './SidebarModal.vue';
 import ConnectGuide from './ConnectGuide.vue';
 import AccountSwitcher from './AccountSwitcher.vue';
 import ButtonPlain from '../ButtonPlain.vue';
-import Guide from '../Guide.vue';
-import AeQrCode from '../AeQrCode.vue';
 
 export default {
   components: {
-    AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain, Guide, AeQrCode,
+    AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain,
   },
   data: () => ({
     ledgerTab: false,
@@ -51,8 +59,8 @@ export default {
     showSidebar: ({ desktop }) => desktop.showSidebar,
     accountsCount: (state, { identities }) => identities.length,
     currentTab({ desktop: { remoteConnected, ledgerConnected } }) {
-      return (ledgerConnected && this.ledgerTab) ||
-      (remoteConnected && !this.ledgerTab)
+      return (ledgerConnected && this.ledgerTab)
+      || (remoteConnected && !this.ledgerTab)
         ? 'account-switcher' : 'connect-guide';
     },
   }),

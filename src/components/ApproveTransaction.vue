@@ -7,14 +7,16 @@
     <div class="flow">
       <div
         :title="`from ${transaction.senderId}`"
-        class="id">
+        class="id"
+      >
         <ae-identity-avatar :address="transaction.senderId" />
         {{ transaction.senderId }}
       </div>
       <ae-icon name="arrow" />
       <div
         :title="`to ${transaction.recipientId}`"
-        class="id">
+        class="id"
+      >
         <ae-identity-avatar :address="transaction.recipientId" />
         {{ transaction.recipientId }}
       </div>
@@ -36,9 +38,13 @@
     <hr>
 
     <div class="additional-fees">
-      <span class="header">Additional fees</span>
+      <span class="header">
+        Additional fees
+      </span>
       <div class="value">
-        <div class="additional-fees-eth">{{ transaction.fee.toString() }} Æ</div>
+        <div class="additional-fees-eth">
+          {{ transaction.fee.toString() }} Æ
+        </div>
         <div
           v-if="price"
           class="fiat-value"
@@ -49,7 +55,8 @@
     </div>
     <approve-buttons
       @approve="approve"
-      @reject="close" />
+      @reject="close"
+    />
   </div>
 </template>
 

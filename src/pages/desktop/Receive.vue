@@ -25,14 +25,18 @@
         v-copy-to-clipboard="address"
         :disabled="!account"
         fill="secondary"
-      >Copy address</ae-button>
+      >
+        Copy address
+      </ae-button>
 
       <ae-button
         v-if="!account"
         plain
         class="connect-an-account"
         @click="toggleSidebar"
-      >Connect an account first</ae-button>
+      >
+        Connect an account first
+      </ae-button>
     </ae-card>
   </div>
 </template>

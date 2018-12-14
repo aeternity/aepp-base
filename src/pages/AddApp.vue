@@ -1,7 +1,8 @@
 <template>
   <mobile-page
     class="add-app"
-    title="Add an æpp">
+    title="Add an æpp"
+  >
     <form @submit.prevent="addAppByUrl">
       <ae-label
         :for="`${_uid}-url`"
@@ -11,9 +12,9 @@
         Enter æpp URL
       </ae-label>
       <ae-input
-        v-validate="'url_http'"
         :id="`${_uid}-url`"
         v-model="url"
+        v-validate="'url_http'"
         name="url"
         placeholder="Æpp URL"
       />
@@ -30,7 +31,8 @@
             slot="icon"
             name="plus"
             type="dramatic"
-            size="small" />
+            size="small"
+          />
           {{ appAddingByUrl ? 'Adding' : 'Add' }} æpp
         </ae-button>
       </div>
@@ -55,22 +57,26 @@
           slot="icon"
           type="exciting"
           invert
-          name="close" />
+          name="close"
+        />
       </ae-button>
     </ae-input>
     <ae-label>{{ searchTerm ? 'Search results' : 'All æpps' }}</ae-label>
     <template v-for="(app, idx) in apps">
       <ae-divider
         v-if="idx"
-        :key="`${app.id}-divider`" />
+        :key="`${app.id}-divider`"
+      />
       <div
         :key="`${app.id}-app`"
         :class="{ inactive: app.added }"
         class="app"
-        @click="addApp(app.id)">
+        @click="addApp(app.id)"
+      >
         <ae-app-icon
           :src="app.icon"
-          :full-size="app.iconFullSize" />
+          :full-size="app.iconFullSize"
+        />
         <div class="content">
           <h2>{{ app.name }}</h2>
           <ae-button
@@ -78,7 +84,8 @@
             type="dramatic"
             size="small"
             plain
-            uppercase>
+            uppercase
+          >
             <ae-icon
               slot="icon"
               :name="app.added ? 'check' : 'plus'"

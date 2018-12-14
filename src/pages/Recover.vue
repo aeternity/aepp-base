@@ -3,7 +3,8 @@
     :redirect-to-on-close="{ name: 'intro' }"
     title="Recover account"
     class="recover"
-    close-button>
+    close-button
+  >
     <guide
       fill="primary"
       icon="½"
@@ -18,11 +19,11 @@
 
     <form @submit.prevent="setSeed">
       <ae-text-area
+        :id="_uid.toString()"
+        v-model="seed"
         v-validate="'required'"
         v-focus="true"
-        :id="_uid.toString()"
         :error="error"
-        v-model="seed"
         name="seed"
         label="Recovery phrase"
         placeholder="Recovery phrase"
@@ -45,8 +46,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeLabel, AeTextarea } from '@aeternity/aepp-components';
-import { AeInput } from '@aeternity/aepp-components-3';
 import { validateMnemonic } from '@aeternity/bip39';
 import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
 import MobilePage from '../components/MobilePage.vue';
@@ -56,7 +55,7 @@ import AeTextArea from '../components/AeTextArea.vue';
 
 export default {
   components: {
-    MobilePage, AeTextarea, AeLabel, Guide, AeButton, AeInput, AeTextArea,
+    MobilePage, Guide, AeButton, AeTextArea,
   },
   data() {
     return {

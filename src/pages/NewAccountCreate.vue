@@ -9,8 +9,10 @@
       fill="primary"
       icon="⅓"
     >
-      <em>Carefully keep this
-      <br>phrase<img :src="keyEmoji">safe!</em>
+      <em>
+        Carefully keep this
+        <br>phrase<img :src="keyEmoji">safe!
+      </em>
       <br>Write these 12 words
       <br>down and keep them
       <br><strong>in a safe place</strong>.You need

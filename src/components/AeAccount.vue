@@ -1,12 +1,13 @@
 <template>
   <ae-card
     :fill="fill"
-    class="ae-account">
+    class="ae-account"
+  >
     <header>
       <ae-identicon :address="address" />
       <ae-input-plain
-        v-focus="nameEditable"
         v-if="nameEditable"
+        v-focus="nameEditable"
         :value="name"
         placeholder="Account name"
         fill="white"
@@ -14,14 +15,18 @@
         @input="$emit('name-input', $event)"
         @blur.native="$emit('name-blur')"
       />
-      <span v-else>{{ name }}</span>
+      <span v-else>
+        {{ name }}
+      </span>
       <div class="slot-icon">
         <slot name="icon" />
       </div>
     </header>
 
     <main>
-      <div class="security-status">{{ securityStatus }}</div>
+      <div class="security-status">
+        {{ securityStatus }}
+      </div>
       <ae-address
         :value="address"
         length="medium"
@@ -38,7 +43,7 @@
 </template>
 
 <script>
-import { AeAddress, AeIdenticon, AeInputPlain, AeLabel } from '@aeternity/aepp-components-3';
+import { AeAddress, AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
 import Balance from './Balance.vue';
@@ -49,7 +54,6 @@ export default {
     AeIdenticon,
     AeCard,
     AeInputPlain,
-    AeLabel,
     Balance,
   },
   props: {

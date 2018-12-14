@@ -10,7 +10,8 @@
       slot="icon"
       name="plus"
       invert
-      type="exciting" />
+      type="exciting"
+    />
   </ae-button>
 </template>
 
@@ -21,7 +22,7 @@ export default {
   components: { AeButton, AeIcon },
   props: {
     to: { type: [Object, String], default: undefined },
-    'quick-id': { type: Boolean, default: false },
+    quickId: { type: Boolean, default: false },
   },
 };
 </script>
