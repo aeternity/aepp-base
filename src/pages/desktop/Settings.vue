@@ -19,7 +19,7 @@
           slot="right"
           class="value"
         >
-          {{ networkName }}
+          {{ currentNetwork.name }}
           <button-plain @click="showNetworkDropdown = true">
             <ae-icon
               ref="icon"
@@ -38,21 +38,26 @@
         v-for="network in networks"
         :key="network.url"
         :title="network.name"
-        @click="setRPCUrl(network.url)"
-      />
+      >
+        <ae-radio
+          slot="right"
+          :checked="network === currentNetwork"
+          @change="setRPCUrl(network.url)"
+        />
+      </list-item>
     </ae-popover>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
+import AeRadio from '../../components/AeRadio.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
-import networks from '../../lib/networksRegistry';
 
 export default {
   components: {
@@ -61,15 +66,13 @@ export default {
     AeCard,
     Guide,
     ListItem,
+    AeRadio,
     ButtonPlain,
   },
   data: () => ({
     showNetworkDropdown: false,
-    networks,
   }),
-  computed: mapState({
-    networkName: ({ rpcUrl }) => networks.find(n => n.url === rpcUrl).name,
-  }),
+  computed: mapGetters(['networks', 'currentNetwork']),
   methods: mapMutations(['setRPCUrl']),
 };
 </script>

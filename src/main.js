@@ -9,6 +9,7 @@ import 'focus-visible';
 import BigNumber from 'bignumber.js';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
+import { toUrl } from './lib/utils';
 import App from './App.vue';
 import AppDesktop from './AppDesktop.vue';
 import router from './router';
@@ -19,7 +20,7 @@ Validator.extend('min_value', (value, [max]) => BigNumber(value).isGreaterThanOr
 Validator.extend('max_value', (value, [max]) => BigNumber(value).isLessThanOrEqualTo(max));
 Validator.extend('url_http', (value) => {
   try {
-    const url = new URL((/^\w+:\//.test(value) ? '' : 'http://') + value);
+    const url = toUrl(value);
     return ['http:', 'https:'].includes(url.protocol);
   } catch (e) {
     return false;
