@@ -57,7 +57,7 @@ export default {
 
 .ae-popover {
   position: absolute;
-  box-shadow: 0 0 rem(8px) rgba(27, 68, 121, 0.1);
+  box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.1);
   border-radius: 4px;
   min-width: 310px;
   background: #fff;
