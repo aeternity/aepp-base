@@ -6,6 +6,7 @@
     </div>
     <sidebar-desktop />
     <footer-desktop :show-back-button="$route.name !== 'apps'" />
+    <ledger-address-confirm />
   </div>
 </template>
 
@@ -13,12 +14,14 @@
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
 import FooterDesktop from './components/FooterDesktop.vue';
+import LedgerAddressConfirm from './components/desktop/LedgerAddressConfirm.vue';
 
 export default {
   components: {
     HeaderDesktop,
     SidebarDesktop,
     FooterDesktop,
+    LedgerAddressConfirm,
   },
 };
 </script>
