@@ -24,26 +24,32 @@
               slot="icon"
               invert
               type="exciting"
-              name="close" />
+              name="close"
+            />
           </ae-button>
           <router-link :to="app.path">
             <ae-app-icon
               :src="app.icon"
-              :full-size="app.iconFullSize" />
+              :full-size="app.iconFullSize"
+            />
           </router-link>
         </div>
         <router-link
           :to="app.path"
-          class="app-name">
+          class="app-name"
+        >
           {{ app.name }}
         </router-link>
       </div>
 
       <router-link
         :to="{ name: 'add-app' }"
-        class="app-shortcut add-app">
+        class="app-shortcut add-app"
+      >
         <ae-app-icon :src="require('../assets/icons/plus.svg')" />
-        <div class="app-name">Add an æpp</div>
+        <div class="app-name">
+          Add an æpp
+        </div>
       </router-link>
     </div>
   </div>
@@ -51,7 +57,9 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import { AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight } from '@aeternity/aepp-components';
+import {
+  AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight,
+} from '@aeternity/aepp-components';
 import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry';
 import HeaderMobile from '../components/HeaderMobile.vue';
 

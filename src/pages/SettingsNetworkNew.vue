@@ -9,26 +9,26 @@
       <guide>Connect to<br><em>another node</em></guide>
       <form @submit.prevent="addNetwork">
         <ae-input
-          v-validate="'required'"
           v-model="name"
+          v-validate="'required'"
           :error="errors.has('name')"
           label="Node Name"
           name="name"
         />
         <ae-input
+          v-model="url"
           v-validate="{
             required: true,
             url_http: true,
             excluded: networks.map(({ url }) => url),
           }"
-          v-model="url"
           :error="errors.has('url')"
           label="Node URL"
           name="url"
         />
         <ae-input
-          v-validate="'required'"
           v-model="networkId"
+          v-validate="'required'"
           :error="errors.has('network-id')"
           label="Network ID"
           name="network-id"

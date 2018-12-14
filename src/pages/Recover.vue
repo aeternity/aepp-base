@@ -3,7 +3,8 @@
     :redirect-to-on-close="{ name: 'intro' }"
     title="Recover account"
     class="recover"
-    close-button>
+    close-button
+  >
     <guide
       fill="primary"
       icon="½"
@@ -18,11 +19,11 @@
 
     <form @submit.prevent="setSeed">
       <ae-text-area
+        :id="_uid.toString()"
+        v-model="seed"
         v-validate="'required'"
         v-focus="true"
-        :id="_uid.toString()"
         :error="error"
-        v-model="seed"
         name="seed"
         label="Recovery phrase"
         placeholder="Recovery phrase"

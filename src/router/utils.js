@@ -7,7 +7,7 @@ export const checkLoggedIn = requireLoggedIn => (to, from, next) => {
       store.commit('setLoginTarget', to.fullPath);
       next({ name: store.state.mobile.keystore ? 'login' : 'intro' });
       return;
-    } else if (requireLoggedIn) {
+    } if (requireLoggedIn) {
       store.commit('setLoginTarget', to.fullPath);
       if (from.name) next(false);
       else next({ name: 'apps' });

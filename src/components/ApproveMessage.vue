@@ -2,11 +2,13 @@
   <div class="approve-message">
     <dialog-header
       :app-name="appName"
-      title="Requests to sign a message" />
+      title="Requests to sign a message"
+    />
     <div class="active-id-area">
       <div
         :title="`Active identity ${address}`"
-        class="id">
+        class="id"
+      >
         <ae-identity-avatar :address="address" />
         <div>{{ address }}</div>
       </div>
@@ -16,7 +18,8 @@
     </p>
     <approve-buttons
       @approve="approve"
-      @reject="close" />
+      @reject="close"
+    />
   </div>
 </template>
 

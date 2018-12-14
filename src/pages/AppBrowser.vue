@@ -3,11 +3,13 @@
     <iframe
       :class="{ loading }"
       :src="path"
-      @load="loading = false" />
+      @load="loading = false"
+    />
 
     <div
       v-if="loading"
-      class="loader" />
+      class="loader"
+    />
   </div>
 </template>
 

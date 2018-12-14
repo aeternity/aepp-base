@@ -2,7 +2,8 @@
   <mobile-page
     :redirect-to-on-close="{ name: 'intro' }"
     class="login"
-    close-button>
+    close-button
+  >
     <guide
       fill="primary"
     >
@@ -14,10 +15,10 @@
 
     <form @submit.prevent="unlockSavedKeystore">
       <ae-input
-        v-validate="'required|min:4'"
-        v-focus="true"
         :id="_uid.toString()"
         v-model="password"
+        v-validate="'required|min:4'"
+        v-focus="true"
         :label="error ? 'Password': ''"
         :error="error"
         :type="showPassword ? 'text' : 'password'"

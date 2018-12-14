@@ -7,8 +7,9 @@
     <ae-divider />
     <template v-for="(c, idx) in addressBook">
       <ae-link
+        :key="`${idx}-address`"
         :to="path(c.address)"
-        :key="`${idx}-address`">
+      >
         <address-book-item
           :name="c.name"
           :address="c.address"
@@ -16,7 +17,8 @@
           <ae-icon
             slot="icon"
             name="arrow"
-            rotate="-45" />
+            rotate="-45"
+          />
         </address-book-item>
       </ae-link>
       <ae-divider :key="`${idx}-divider`" />
@@ -24,7 +26,8 @@
 
     <fixed-add-button
       :to="{ name: 'address-book-new' }"
-      quick-id />
+      quick-id
+    />
   </mobile-page>
   <address-book-no-contacts v-else />
 </template>
@@ -48,7 +51,7 @@ export default {
     MobilePage,
   },
   props: {
-    'redirect-path-template': { type: String, required: true },
+    redirectPathTemplate: { type: String, required: true },
   },
   computed: mapState(['addressBook']),
   methods: {

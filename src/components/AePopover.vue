@@ -1,7 +1,7 @@
 <template>
   <div
-    v-clickaway="emitClose"
     v-if="anchor"
+    v-clickaway="emitClose"
     :style="style"
     class="ae-popover"
     @click="emitClose"

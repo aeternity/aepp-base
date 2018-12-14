@@ -9,7 +9,8 @@
     </div>
     <fixed-add-button
       :to="{ name: 'address-book-new' }"
-      quick-id />
+      quick-id
+    />
   </mobile-page>
 </template>
 

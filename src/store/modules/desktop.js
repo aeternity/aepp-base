@@ -16,8 +16,7 @@ export default {
   },
 
   getters: {
-    addresses: ({ ledgerConnected, ledgerAddresses }, getters, { addresses }) =>
-      (ledgerConnected ? ledgerAddresses : addresses),
+    addresses: ({ ledgerConnected, ledgerAddresses }, getters, { addresses }) => (ledgerConnected ? ledgerAddresses : addresses),
     loggedIn: ({ ledgerConnected, remoteConnected }) => ledgerConnected || remoteConnected,
     ableToCreateAccount: ({ ledgerConnected }) => ledgerConnected,
     signingCancelable: ({ ledgerConnected }) => !ledgerConnected,
@@ -60,8 +59,7 @@ export default {
       args.id = uuid();
       let result;
       try {
-        result = await new Promise((resolve, reject) =>
-          commit('setTransactionToSign', { resolve, reject, args }));
+        result = await new Promise((resolve, reject) => commit('setTransactionToSign', { resolve, reject, args }));
       } finally {
         commit('setTransactionToSign');
       }

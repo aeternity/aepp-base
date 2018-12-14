@@ -9,9 +9,12 @@
     <item
       v-for="f in followers"
       :key="f.id"
-      inactive>
+      inactive
+    >
       <div class="follower">
-        <span class="name">{{ f.name }}</span><br >
+        <span class="name">
+          {{ f.name }}
+        </span><br>
         <span class="status">
           {{ f.connected ? 'Connected' : `Disconnected at ${f.disconnectedAt}` }}
         </span>
@@ -23,12 +26,15 @@
         plain
         uppercase
         @click="removeFollower(f.id)"
-      >revoke</ae-button>
+      >
+        revoke
+      </ae-button>
     </item>
 
     <fixed-add-button
       :to="{ name: 'settings-remote-connection-new' }"
-      quick-id />
+      quick-id
+    />
   </mobile-page>
 </template>
 
@@ -49,12 +55,11 @@ export default {
     FixedAddButton,
   },
   computed: mapState({
-    followers: ({ mobile: { followers } }) =>
-      Object.values(followers)
-        .map(f => ({
-          ...f,
-          disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
-        })),
+    followers: ({ mobile: { followers } }) => Object.values(followers)
+      .map(f => ({
+        ...f,
+        disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
+      })),
   }),
   methods: mapMutations(['removeFollower']),
 };

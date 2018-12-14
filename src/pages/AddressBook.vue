@@ -7,20 +7,22 @@
     <ae-divider />
     <template v-for="(c, idx) in addressBook">
       <address-book-item
+        :key="`${idx}-address`"
         :name="c.name"
         :address="c.address"
-        :key="`${idx}-address`"
         @click="openIdx = openIdx === idx ? -1 : idx"
       >
         <ae-icon
           slot="icon"
           :rotate="idx === openIdx ? -90 : 90"
-          name="chevron" />
+          name="chevron"
+        />
       </address-book-item>
       <div
         v-if="idx === openIdx"
         :key="`${idx}-actions`"
-        class="actions">
+        class="actions"
+      >
         <router-link :to="{ name: 'transfer', params: { to: c.address } }">
           <ae-app-icon :src="require('../assets/icons/aepps/transfer.svg')" />
         </router-link>
@@ -30,7 +32,8 @@
 
     <fixed-add-button
       :to="{ name: 'address-book-new' }"
-      quick-id />
+      quick-id
+    />
   </mobile-page>
   <address-book-no-contacts v-else />
 </template>

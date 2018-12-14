@@ -13,7 +13,9 @@
             plain
             uppercase
             @click="$emit('close');"
-          >close</ae-button>
+          >
+            close
+          </ae-button>
         </slot>
       </div>
     </div>

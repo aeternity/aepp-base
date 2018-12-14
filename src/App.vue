@@ -1,12 +1,14 @@
 <template>
   <ae-main
     id="app"
-    :class="{ 'quick-id-hidden': !$route.meta.displayFooter }">
+    :class="{ 'quick-id-hidden': !$route.meta.displayFooter }"
+  >
     <router-view :class="{ grayscale }" />
     <ae-banner v-if="notification">
       <img
         v-if="notification.icon"
-        :src="notification.icon" >
+        :src="notification.icon"
+      >
       {{ notification.text }}
       <ae-button
         v-if="notification.action"

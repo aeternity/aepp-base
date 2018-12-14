@@ -1,7 +1,8 @@
 <template>
   <mobile-page
     class="transfer"
-    title="Transfer">
+    title="Transfer"
+  >
     <ae-switch
       v-if="identitiesTo.length"
       v-model="transactionType"
@@ -19,28 +20,33 @@
     >
       <swiper-slide
         v-for="i in identitiesTo"
-        :key="i.address">
+        :key="i.address"
+      >
         <ae-identity
           :active="false"
           v-bind="i"
           :balance="+i.balance"
           :collapsed="false"
-          size="big" />
+          size="big"
+        />
       </swiper-slide>
       <div
         slot="pagination"
-        class="swiper-pagination" />
+        class="swiper-pagination"
+      />
     </swiper>
     <div v-else>
       <ae-label
         :for="`${_uid}-addressTo`"
         :help-text="errors.first('addressTo')"
         help-type="dramatic"
-      >Receiving address</ae-label>
+      >
+        Receiving address
+      </ae-label>
       <ae-address-input
-        v-validate="'required|min:51|max:53'"
         :id="`${_uid}-addressTo`"
         v-model="to"
+        v-validate="'required|min:51|max:53'"
         name="addressTo"
         data-vv-delay="1"
         placeholder="ak$ ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• ••• •••"
@@ -54,7 +60,9 @@
           type="exciting"
           size="small"
           uppercase
-        >Contact</ae-button>
+        >
+          Contact
+        </ae-button>
       </div>
     </div>
 
@@ -62,15 +70,17 @@
       :for="`${_uid}-currency`"
       :help-text="errors.first('currency')"
       help-type="dramatic"
-    >Amount</ae-label>
+    >
+      Amount
+    </ae-label>
     <ae-amount-input
+      :id="`${_uid}-currency`"
       v-validate:amount="{
         required: true,
         decimal: MAGNITUDE,
         min_value_exclusive: 0,
         max_value: maxAmount.minus(!errors.has('fee') && fee || 0).toString(),
       }"
-      :id="`${_uid}-currency`"
       :value="{ amount, symbol: 'AE' }"
       :units="[{ symbol: 'AE', name: 'æternity' }]"
       name="currency"
@@ -78,14 +88,19 @@
       placeholder="0.00"
       @input="value => amount = value.amount"
     />
-    <div class="fiat-amount">≈ {{ fiatAmount }} CHF</div>
+    <div class="fiat-amount">
+      ≈ {{ fiatAmount }} CHF
+    </div>
 
     <ae-label
       :for="`${_uid}-fee`"
       :help-text="errors.first('fee')"
       help-type="dramatic"
-    >Fee</ae-label>
+    >
+      Fee
+    </ae-label>
     <ae-amount-input
+      :id="`${_uid}-fee`"
       v-validate:fee="{
         required: true,
         decimal: MAGNITUDE,
@@ -95,7 +110,6 @@
           return (MAX_REASONABLE_FEE.isLessThan(t) ? MAX_REASONABLE_FEE : t).toString();
         })(),
       }"
-      :id="`${_uid}-fee`"
       :value="{ amount: fee, symbol: 'AE' }"
       :units="[{ symbol: 'AE', name: 'æternity' }]"
       name="fee"
@@ -110,7 +124,8 @@
     >
       <img
         slot="icon"
-        :src="require('emoji-datasource-apple/img/apple/64/1f4b8.png')" >
+        :src="require('emoji-datasource-apple/img/apple/64/1f4b8.png')"
+      >
       Make Transaction
     </ae-button>
   </mobile-page>
@@ -165,10 +180,8 @@ export default {
     ...mapGetters(['identities', 'activeIdentity']),
     ...mapState({
       epoch: ({ epoch }) => epoch,
-      identitiesTo: (state, { identities, activeIdentity }) =>
-        identities.filter(i => i.address !== activeIdentity.address),
-      maxAmount: ({ balances }, { activeIdentity }) =>
-        (activeIdentity ? balances[activeIdentity.address] : BigNumber(0)),
+      identitiesTo: (state, { identities, activeIdentity }) => identities.filter(i => i.address !== activeIdentity.address),
+      maxAmount: ({ balances }, { activeIdentity }) => (activeIdentity ? balances[activeIdentity.address] : BigNumber(0)),
     }),
     to: {
       get() {

@@ -71,10 +71,8 @@ export default {
   },
   async mounted() {
     if (process.env.IS_CORDOVA) {
-      await new Promise((resolve, reject) =>
-        window.QRScanner.prepare((error, status) =>
-          (!error && status.authorized
-            ? resolve() : reject(error || new Error('Denied to use the camera')))));
+      await new Promise((resolve, reject) => window.QRScanner.prepare((error, status) => (!error && status.authorized
+        ? resolve() : reject(error || new Error('Denied to use the camera')))));
       this.cameraAllowed = true;
       return;
     }
@@ -97,8 +95,7 @@ export default {
     async scan() {
       return process.env.IS_CORDOVA
         ? new Promise((resolve, reject) => {
-          window.QRScanner.scan((error, text) =>
-            (!error && text ? resolve(text) : reject(error)));
+          window.QRScanner.scan((error, text) => (!error && text ? resolve(text) : reject(error)));
           window.QRScanner.show();
           document.getElementById('app').style.background = 'transparent';
         })

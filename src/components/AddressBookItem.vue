@@ -1,11 +1,16 @@
 <template>
   <div
     class="address-book-item"
-    @click="$emit('click')">
+    @click="$emit('click')"
+  >
     <ae-identity-avatar :address="address" />
     <div class="details">
-      <div class="name">{{ name }}</div>
-      <div class="address">{{ formattedAddress }}</div>
+      <div class="name">
+        {{ name }}
+      </div>
+      <div class="address">
+        {{ formattedAddress }}
+      </div>
     </div>
     <slot name="icon" />
   </div>

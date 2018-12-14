@@ -4,7 +4,8 @@
     <step>
       <ae-app-icon
         :src="require('../assets/icons/base.svg')"
-        class="base" />
+        class="base"
+      />
       <h2>Base</h2>
       <p>Open your Base æpp, check the transaction details and sign</p>
     </step>
@@ -12,7 +13,10 @@
       <ae-button
         v-if="signingCancelable"
         type="dramatic"
-        @click="cancelTransaction">Cancel Transaction</ae-button>
+        @click="cancelTransaction"
+      >
+        Cancel Transaction
+      </ae-button>
     </div>
   </div>
 </template>

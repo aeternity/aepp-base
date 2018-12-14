@@ -4,6 +4,7 @@ import Encoder from '@zxing/library/esm5/core/qrcode/encoder/Encoder';
 
 class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
   FILL_COLOR = '#311b58'
+
   POSITION_SIDE = 7
 
   renderResult(code, width, height, quietZone) {
@@ -32,10 +33,9 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
       for (let inputX = 0, outputX = leftPadding;
         inputX < inputWidth; inputX += 1, outputX += multiple) {
         if (input.get(inputX, inputY) === 1) {
-          const isPartOfPositionPattern =
-            (inputX < this.POSITION_SIDE && inputY < this.POSITION_SIDE) ||
-            (inputX > inputWidth - this.POSITION_SIDE - 1 && inputY < this.POSITION_SIDE) ||
-            (inputY > inputHeight - this.POSITION_SIDE - 1 && inputX < this.POSITION_SIDE);
+          const isPartOfPositionPattern = (inputX < this.POSITION_SIDE && inputY < this.POSITION_SIDE)
+            || (inputX > inputWidth - this.POSITION_SIDE - 1 && inputY < this.POSITION_SIDE)
+            || (inputY > inputHeight - this.POSITION_SIDE - 1 && inputX < this.POSITION_SIDE);
           const svgChildElement = this.createSvgChildElement(
             outputX,
             outputY,
@@ -68,6 +68,5 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
   }
 }
 
-export default (content, side) =>
-  new QRCodeFancySvgWriter(document.createElement('div'))
-    .renderResult(Encoder.encode(content, ErrorCorrectionLevel.L), side, side, 0);
+export default (content, side) => new QRCodeFancySvgWriter(document.createElement('div'))
+  .renderResult(Encoder.encode(content, ErrorCorrectionLevel.L), side, side, 0);

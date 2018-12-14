@@ -10,16 +10,16 @@
       icon="⅓"
     >
       Set up<img :src="sparklesEmoji">your
-      <br><em>master account.</em>
-      <br>We’re about to create
-      <br>a recovery phrase,
-      <br>please <strong>keep it safe</strong>
-      <br>on a piece of paper!
-      <br>
-      <br><mark>Check the spelling</mark>
-      <br>of each word and <em>never</em>
-      <br>create a screenshot
-      <br>or photo of this phrase
+          <br><em>master account.</em>
+          <br>We’re about to create
+          <br>a recovery phrase,
+          <br>please <strong>keep it safe</strong>
+          <br>on a piece of paper!
+          <br>
+          <br><mark>Check the spelling</mark>
+          <br>of each word and <em>never</em>
+          <br>create a screenshot
+          <br>or photo of this phrase
     </guide>
 
     <ae-button

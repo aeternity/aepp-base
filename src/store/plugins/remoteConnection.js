@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
-import { omit, cloneDeep, isEqual, throttle } from 'lodash-es';
+import {
+  omit, cloneDeep, isEqual, throttle,
+} from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import RpcPeer from '../../lib/rpc';
 import { genRandomBuffer } from '../utils';
@@ -34,13 +36,12 @@ export default (store) => {
     });
     socket.on('message', message => broadcast.processMessage(message));
 
-    const getStateForSync = (state, getters) =>
-      PAIR_SYNC_FIELDS.reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
+    const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS.reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
     const broadcastState = (state) => {
       if (
         isEqual(state, lastReceivedState) || (
-          process.env.IS_MOBILE_DEVICE &&
-          !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
+          process.env.IS_MOBILE_DEVICE
+          && !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return;
       broadcast.notification('setState', state);
       lastReceivedState = null;
@@ -48,8 +49,7 @@ export default (store) => {
     closeCbs.push(store.watch(getStateForSync, broadcastState));
 
     if (process.env.IS_MOBILE_DEVICE) {
-      const syncState = throttle(() =>
-        broadcastState(getStateForSync(store.state, store.getters)), 500);
+      const syncState = throttle(() => broadcastState(getStateForSync(store.state, store.getters)), 500);
 
       closeCbs.push(store.subscribe(({ type, payload }) => {
         switch (type) {
@@ -66,24 +66,21 @@ export default (store) => {
         }
       }));
 
-      socket.on('follower-connected', followerId =>
-        store.commit('followerConnected', followerId));
-      socket.on('follower-disconnected', followerId =>
-        store.commit('followerDisconnected', followerId));
+      socket.on('follower-connected', followerId => store.commit('followerConnected', followerId));
+      socket.on('follower-disconnected', followerId => store.commit('followerDisconnected', followerId));
 
-      socket.on('message-from-follower', (followerId, request) =>
-        new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
-          signTransaction: args => store.dispatch('signTransaction', {
-            ...args,
-            transaction: {
-              ...args.transaction,
-              amount: BigNumber(args.transaction.amount),
-              fee: BigNumber(args.transaction.fee),
-            },
-          }),
-          cancelTransaction: args => store.commit('cancelTransaction', args),
-        })
-          .processMessage(request));
+      socket.on('message-from-follower', (followerId, request) => new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
+        signTransaction: args => store.dispatch('signTransaction', {
+          ...args,
+          transaction: {
+            ...args.transaction,
+            amount: BigNumber(args.transaction.amount),
+            fee: BigNumber(args.transaction.fee),
+          },
+        }),
+        cancelTransaction: args => store.commit('cancelTransaction', args),
+      })
+        .processMessage(request));
     } else {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true));
       socket.on('removed-from-group', () => store.commit('setRemoteConnected', false));

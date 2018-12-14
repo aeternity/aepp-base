@@ -4,20 +4,24 @@
       size="small"
       plain
       type="normal"
-      @click="reject">
+      @click="reject"
+    >
       <ae-icon
         slot="icon"
-        name="error"/>
+        name="error"
+      />
       {{ rejectLabel }}
     </ae-button>
     <ae-button
       size="small"
       plain
       type="dramatic"
-      @click="approve">
+      @click="approve"
+    >
       <ae-icon
         slot="icon"
-        name="check"/>
+        name="check"
+      />
       {{ approveLabel }}
     </ae-button>
   </div>

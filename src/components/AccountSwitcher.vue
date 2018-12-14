@@ -14,9 +14,9 @@
         <div class="list">
           <list-item
             v-for="(account, index) in identities"
+            :key="account.address"
             :title="account.name"
             :subtitle="`${prefixedAmount(account.balance)} AE`"
-            :key="account.address"
             subtitle-monospace
           >
             <ae-identicon
@@ -69,8 +69,8 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
 import { directive as clickaway } from 'vue-clickaway';
 import ListItem from './ListItem.vue';
-import AeCard from '../components/AeCard.vue';
-import AeRadio from '../components/AeRadio.vue';
+import AeCard from './AeCard.vue';
+import AeRadio from './AeRadio.vue';
 import Balance from './Balance.vue';
 import prefixedAmount from '../filters/prefixedAmount';
 
