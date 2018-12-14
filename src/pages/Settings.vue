@@ -47,7 +47,8 @@
       <list-item
         v-if="$globals.IS_MOBILE_DEVICE"
         :to="{ name: 'settings-remote-connection' }"
-        :subtitle="`${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
+        :subtitle="
+          `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
         title="Remote connections"
       >
         <ae-icon
@@ -88,7 +89,8 @@ export default {
   }),
   computed: mapState({
     networkName: (state, { currentNetwork }) => currentNetwork.name,
-    remoteConnectionsCount: ({ mobile }) => Object.entries(mobile.followers).filter(([, f]) => f.connected).length,
+    remoteConnectionsCount: ({ mobile }) => Object.entries(mobile.followers)
+      .filter(([, f]) => f.connected).length,
   }),
   methods: {
     ...mapMutations(['signOut']),

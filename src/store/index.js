@@ -39,7 +39,8 @@ const store = new Vuex.Store({
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
           followers: Object.entries(mobile.followers)
-            .reduce((p, [k, { id, name, disconnectedAt }]) => ({ ...p, [k]: { id, name, disconnectedAt } }), {}),
+            .reduce((p, [k, { id, name, disconnectedAt }]) => (
+              { ...p, [k]: { id, name, disconnectedAt } }), {}),
           names: mobile.names,
         },
       } : {
@@ -84,7 +85,8 @@ const store = new Vuex.Store({
       name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6),
     })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) => identities[selectedIdentityIdx],
-    totalBalance: (state, { identities }) => identities.reduce((sum, { balance }) => sum.plus(balance), BigNumber(0)),
+    totalBalance: (state, { identities }) => identities
+      .reduce((sum, { balance }) => sum.plus(balance), BigNumber(0)),
     networks: ({ customNetworks }) => [
       ...networksRegistry,
       ...customNetworks.map(network => ({ ...network, custom: true })),

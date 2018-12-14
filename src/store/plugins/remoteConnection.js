@@ -36,7 +36,8 @@ export default (store) => {
     });
     socket.on('message', message => broadcast.processMessage(message));
 
-    const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS.reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
+    const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS
+      .reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
     const broadcastState = (state) => {
       if (
         isEqual(state, lastReceivedState) || (
@@ -49,7 +50,9 @@ export default (store) => {
     closeCbs.push(store.watch(getStateForSync, broadcastState));
 
     if (process.env.IS_MOBILE_DEVICE) {
-      const syncState = throttle(() => broadcastState(getStateForSync(store.state, store.getters)), 500);
+      const syncState = throttle(
+        () => broadcastState(getStateForSync(store.state, store.getters)), 500,
+      );
 
       closeCbs.push(store.subscribe(({ type, payload }) => {
         switch (type) {

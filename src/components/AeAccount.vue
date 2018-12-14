@@ -43,9 +43,7 @@
 </template>
 
 <script>
-import {
-  AeAddress, AeIdenticon, AeInputPlain, AeLabel,
-} from '@aeternity/aepp-components-3';
+import { AeAddress, AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
 import Balance from './Balance.vue';
@@ -56,7 +54,6 @@ export default {
     AeIdenticon,
     AeCard,
     AeInputPlain,
-    AeLabel,
     Balance,
   },
   props: {

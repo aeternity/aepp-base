@@ -57,9 +57,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import {
-  AeAppIcon, AeButton, AeIcon, AeNotification, AeModalLight,
-} from '@aeternity/aepp-components';
+import { AeAppIcon, AeButton, AeIcon } from '@aeternity/aepp-components';
 import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry';
 import HeaderMobile from '../components/HeaderMobile.vue';
 
@@ -68,8 +66,6 @@ export default {
     AeAppIcon,
     AeIcon,
     AeButton,
-    AeNotification,
-    AeModalLight,
     HeaderMobile,
   },
   data() {

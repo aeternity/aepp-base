@@ -47,12 +47,10 @@ import SidebarModal from './SidebarModal.vue';
 import ConnectGuide from './ConnectGuide.vue';
 import AccountSwitcher from './AccountSwitcher.vue';
 import ButtonPlain from '../ButtonPlain.vue';
-import Guide from '../Guide.vue';
-import AeQrCode from '../AeQrCode.vue';
 
 export default {
   components: {
-    AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain, Guide, AeQrCode,
+    AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain,
   },
   data: () => ({
     ledgerTab: false,

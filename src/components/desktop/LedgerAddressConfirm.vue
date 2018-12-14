@@ -4,7 +4,7 @@
     title="Confirm your Ledger address"
     class="ledger-address-confirm"
   >
-    Check your Ledger and confirm if the address below is the same
+    <span>Check your Ledger and confirm if the address below is the same</span>
     <div class="address-confirm">
       <div class="label">
         Address from: <strong>Ledger</strong>
@@ -18,15 +18,12 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeIcon, AeAddress } from '@aeternity/aepp-components-3';
+import { AeAddress } from '@aeternity/aepp-components-3';
 import AeModalLight from '../AeModalLight.vue';
-import AeButton from '../AeButton.vue';
 
 export default {
   components: {
     AeModalLight,
-    AeButton,
-    AeIcon,
     AeAddress,
   },
   computed: mapState({

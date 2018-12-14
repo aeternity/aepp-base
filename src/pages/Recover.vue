@@ -46,8 +46,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeLabel, AeTextarea } from '@aeternity/aepp-components';
-import { AeInput } from '@aeternity/aepp-components-3';
 import { validateMnemonic } from '@aeternity/bip39';
 import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
 import MobilePage from '../components/MobilePage.vue';
@@ -57,7 +55,7 @@ import AeTextArea from '../components/AeTextArea.vue';
 
 export default {
   components: {
-    MobilePage, AeTextarea, AeLabel, Guide, AeButton, AeInput, AeTextArea,
+    MobilePage, Guide, AeButton, AeTextArea,
   },
   data() {
     return {

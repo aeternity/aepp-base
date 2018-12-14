@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import { noop } from 'lodash-es';
 import '../../lib/initEnv';
 import router from '..';
-import { mockStore } from '../../store';
+import { mockStore } from '../../store'; // eslint-disable-line import/named
 
 jest.mock('../../lib/initEnv.js');
 jest.mock('../../store');
@@ -37,7 +37,9 @@ describe('router/index.js', () => {
         expect(router.currentRoute.name).toBe(expectedRedirectName);
       };
 
-      const createNoRedirectTest = (state, fromName) => createRedirectTest(state, fromName, fromName);
+      const createNoRedirectTest = (state, fromName) => createRedirectTest(
+        state, fromName, fromName,
+      );
 
       it(
         'pushes INTRO path if current route is APPS and no keystore is present',
