@@ -62,6 +62,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .connect-guide {
+  margin: rem(60px) rem(40px);
+
   .guide {
     font-size: rem(17px);
     margin-bottom: rem(20px);

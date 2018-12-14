@@ -6,7 +6,8 @@
   >
     <header>
       <h1>
-        Connect an<br>account to start
+        <template v-if="!accountsCount">Connect an<br>account to start</template>
+        <template v-else>Your connected<br>account{{ accountsCount !== 1 ? 's': '' }}</template>
         <button-plain @click="toggleSidebar"><ae-icon name="close" /></button-plain>
       </h1>
 
@@ -22,9 +23,10 @@
       </div>
     </header>
 
-    <main>
-      <connect-guide :for-ledger="ledgerTab" />
-    </main>
+    <component
+      :is="currentTab"
+      :for-ledger="ledgerTab"
+    />
   </sidebar-modal>
 </template>
 
@@ -33,19 +35,26 @@ import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import SidebarModal from './SidebarModal.vue';
 import ConnectGuide from './ConnectGuide.vue';
+import AccountSwitcher from './AccountSwitcher.vue';
 import ButtonPlain from '../ButtonPlain.vue';
 import Guide from '../Guide.vue';
 import AeQrCode from '../AeQrCode.vue';
 
 export default {
   components: {
-    AeIcon, SidebarModal, ConnectGuide, ButtonPlain, Guide, AeQrCode,
+    AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain, Guide, AeQrCode,
   },
   data: () => ({
     ledgerTab: false,
   }),
   computed: mapState({
     showSidebar: ({ desktop }) => desktop.showSidebar,
+    accountsCount: (state, { identities }) => identities.length,
+    currentTab({ desktop: { remoteConnected, ledgerConnected } }) {
+      return (ledgerConnected && this.ledgerTab) ||
+      (remoteConnected && !this.ledgerTab)
+        ? 'account-switcher' : 'connect-guide';
+    },
   }),
   methods: mapMutations(['toggleSidebar']),
 };
@@ -56,6 +65,11 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .sidebar {
+  /deep/ .modal {
+    display: flex;
+    flex-direction: column;
+  }
+
   header {
     background-color: $color-neutral-positive-2;
 
@@ -94,10 +108,6 @@ export default {
         }
       }
     }
-  }
-
-  main {
-    margin: rem(60px) rem(40px);
   }
 }
 </style>
