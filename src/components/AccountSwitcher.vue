@@ -93,6 +93,12 @@ export default {
       showAccountSwitcher: ({ mobile }) => mobile.showAccountSwitcher,
     }),
   },
+  watch: {
+    showAccountSwitcher(value) {
+      if (!value) return;
+      this.$store.dispatch('updateAllBalances');
+    },
+  },
   mounted() {
     this.$store.dispatch('updateAllBalances');
   },
@@ -129,10 +135,11 @@ export default {
 
     position: fixed;
     width: 84%;
-    bottom: 13%;
+    bottom: rem(90px);
     left: 8%;
     border-radius: rem(8px);
     background-color: $color-neutral-maximum;
+    overflow: visible;
 
     &:after {
       content: "";
@@ -147,8 +154,9 @@ export default {
     }
 
     .list {
-      max-height: rem(500px);
-      overflow: scroll;
+      max-height: 60vh;
+      overflow-y: scroll;
+      border-radius: rem(8px) rem(8px) 0 0;
     }
 
     .balance {
