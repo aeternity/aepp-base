@@ -140,6 +140,10 @@ export default {
 }
 
 .ae-input {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  border-radius: 10px;
   @extend %face-sans-base;
   @include placeholder-color($color-neutral-negative-1);
 
@@ -147,6 +151,7 @@ export default {
   justify-self: center;
   flex: 0 1 100%;
   width: 100%;
+  margin: 10px 0 30px 0;
   padding: 0.5rem 1rem;
   background: transparent;
   border: none;
