@@ -155,7 +155,8 @@ export default {
 
     .list {
       max-height: 60vh;
-      overflow: scroll;
+      overflow-y: scroll;
+      border-radius: rem(8px) rem(8px) 0 0;
     }
 
     .balance {
