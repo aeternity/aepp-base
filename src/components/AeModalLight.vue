@@ -70,7 +70,7 @@ export default {
     margin: auto;
     padding: rem(60px) rem(60px);
     border-radius: rem(8px);
-    box-shadow: 0 0 rem(8px) 0 rgba(#1B4479, 0.1);;
+    box-shadow: 0 0 rem(8px) 0 rgba(#1B4479, 0.1);
     background: $color-neutral-maximum;
 
     h1 {
