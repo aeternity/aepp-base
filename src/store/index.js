@@ -3,7 +3,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
-import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk/es';
+import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk';
 import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
@@ -70,7 +70,6 @@ const store = new Vuex.Store({
     addresses: [],
     rpcUrl: networksRegistry[0].url,
     epoch: null,
-    networkId: null,
     alert: null,
     notification: null,
     apps: Object.keys(appsRegistry),
@@ -109,9 +108,6 @@ const store = new Vuex.Store({
     },
     setEpoch(state, epoch) {
       state.epoch = epoch;
-    },
-    setNetworkId(state, networkId) {
-      state.networkId = networkId;
     },
     addApp(state, app) {
       state.apps.push(app);

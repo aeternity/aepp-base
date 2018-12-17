@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import uuid from 'uuid/v4';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { mnemonicToSeed } from '@aeternity/bip39';
 import { generateHDWallet } from '@aeternity/hd-wallet/src';
 import AES from '../../lib/aes';
@@ -112,7 +112,7 @@ export default {
     },
     async signTransaction(
       {
-        state: { accounts }, commit, dispatch, rootState: { networkId },
+        state: { accounts }, commit, dispatch, rootState: { epoch: { nodeNetworkId } },
       },
       { transaction, appName, id = uuid() },
     ) {
@@ -125,7 +125,7 @@ export default {
         id,
       }));
       const signature = Crypto.sign(
-        Buffer.concat([Buffer.from(networkId), binaryTx]),
+        Buffer.concat([Buffer.from(nodeNetworkId), binaryTx]),
         accounts[transaction.senderId].secretKey,
       );
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));

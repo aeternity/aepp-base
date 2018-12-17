@@ -1,6 +1,6 @@
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import Ae from '@aeternity/ledger-app-api';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 
 export default async (store) => {
   const transport = await new TransportU2F();
@@ -53,7 +53,7 @@ export default async (store) => {
             const signature = Buffer.from(await sign(
               store.state.desktop.ledgerAddresses.indexOf(transaction.senderId),
               binaryTx,
-              store.state.networkId,
+              store.state.epoch.nodeNetworkId,
             ), 'hex');
             payload.resolve(Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx)));
           } catch (e) {

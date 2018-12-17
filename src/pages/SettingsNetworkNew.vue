@@ -26,13 +26,6 @@
           label="Node URL"
           name="url"
         />
-        <ae-input
-          v-model="networkId"
-          v-validate="'required'"
-          :error="errors.has('network-id')"
-          label="Network ID"
-          name="network-id"
-        />
         <ae-button
           :disabled="errors.any()"
           fill="secondary"
@@ -70,7 +63,6 @@ export default {
   data: () => ({
     name: '',
     url: '',
-    networkId: 'ae_mainnet',
   }),
   computed: mapGetters(['networks']),
   methods: {
@@ -83,7 +75,6 @@ export default {
       this.$store.commit('addNetwork', {
         name: this.name,
         url,
-        networkId: this.networkId,
       });
       this.$store.commit('setRPCUrl', url);
       this.$router.push({ name: 'settings-network' });
