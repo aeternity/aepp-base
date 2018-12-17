@@ -1,4 +1,4 @@
-import { EpochChain } from '@aeternity/aepp-sdk/es';
+import { EpochChain } from '@aeternity/aepp-sdk';
 
 export default store => store.watch(
   (state, { currentNetwork }) => currentNetwork.url,

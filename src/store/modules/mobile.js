@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import uuid from 'uuid/v4';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { mnemonicToSeed } from '@aeternity/bip39';
 import { generateHDWallet } from '@aeternity/hd-wallet/src';
 import AES from '../../lib/aes';

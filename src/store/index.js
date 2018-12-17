@@ -3,7 +3,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
-import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk/es';
+import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk';
 import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
