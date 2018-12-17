@@ -1,24 +1,29 @@
 <template>
   <ae-overlay>
-    <div class="ae-modal-light">
-      <h1>{{ title }}</h1>
-      <main>
-        <slot />
-      </main>
-      <div class="buttons">
-        <slot name="buttons">
-          <ae-button
-            v-if="closeButton"
-            size="small"
-            plain
-            uppercase
-            @click="$emit('close');"
-          >
-            close
-          </ae-button>
-        </slot>
+    <transition
+      appear
+      name="scale"
+    >
+      <div class="ae-modal-light">
+        <h1>{{ title }}</h1>
+        <main>
+          <slot />
+        </main>
+        <div class="buttons">
+          <slot name="buttons">
+            <ae-button
+              v-if="closeButton"
+              size="small"
+              plain
+              uppercase
+              @click="$emit('close');"
+            >
+              close
+            </ae-button>
+          </slot>
+        </div>
       </div>
-    </div>
+    </transition>
   </ae-overlay>
 </template>
 
@@ -54,10 +59,18 @@ export default {
   );
 
   .ae-modal-light {
+    &.scale-enter-active {
+      transition: transform 0.2s ease-out;
+    }
+
+    &.scale-enter {
+      transform: scale(0);
+    }
+
     margin: auto;
     padding: rem(60px) rem(60px);
     border-radius: rem(8px);
-    box-shadow: 0 0 rem(8px) 0 rgba(#1B4479, 0.1);;
+    box-shadow: 0 0 rem(8px) 0 rgba(#1B4479, 0.1);
     background: $color-neutral-maximum;
 
     h1 {
@@ -74,7 +87,8 @@ export default {
 
     .buttons {
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
+      align-items: center;
     }
   }
 }
