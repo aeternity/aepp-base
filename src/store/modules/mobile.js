@@ -112,7 +112,7 @@ export default {
     },
     async signTransaction(
       {
-        state: { accounts }, commit, dispatch, rootState: { networkId },
+        state: { accounts }, commit, dispatch, rootState: { epoch: { nodeNetworkId } },
       },
       { transaction, appName, id = uuid() },
     ) {
@@ -125,7 +125,7 @@ export default {
         id,
       }));
       const signature = Crypto.sign(
-        Buffer.concat([Buffer.from(networkId), binaryTx]),
+        Buffer.concat([Buffer.from(nodeNetworkId), binaryTx]),
         accounts[transaction.senderId].secretKey,
       );
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));

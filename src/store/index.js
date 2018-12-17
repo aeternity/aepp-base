@@ -70,7 +70,6 @@ const store = new Vuex.Store({
     addresses: [],
     rpcUrl: networksRegistry[0].url,
     epoch: null,
-    networkId: null,
     alert: null,
     notification: null,
     apps: Object.keys(appsRegistry),
@@ -109,9 +108,6 @@ const store = new Vuex.Store({
     },
     setEpoch(state, epoch) {
       state.epoch = epoch;
-    },
-    setNetworkId(state, networkId) {
-      state.networkId = networkId;
     },
     addApp(state, app) {
       state.apps.push(app);
