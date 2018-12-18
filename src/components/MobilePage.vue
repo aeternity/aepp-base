@@ -145,6 +145,10 @@ export default {
     .content {
       flex-grow: 1;
       margin: 0 rem(30px);
+
+      .ae-card, .ae-input-container {
+        position: relative;
+      }
     }
 
     .footer {
