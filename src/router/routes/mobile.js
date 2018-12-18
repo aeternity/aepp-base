@@ -11,6 +11,7 @@ import NewAccountCreate from '../../pages/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
 import SetPassword from '../../pages/SetPassword.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
+import Transfer from '../../pages/Transfer.vue';
 import Receive from '../../pages/Receive.vue';
 import Send from '../../pages/Send.vue';
 import SendAmount from '../../pages/SendAmount.vue';
@@ -97,6 +98,15 @@ export default [{
   path: '/accounts-new',
   component: AccountsNew,
   beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'transfer',
+  path: '/transfer',
+  component: Transfer,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
   meta: {
     displayFooter: true,
   },
