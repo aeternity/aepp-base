@@ -72,6 +72,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
 
 .transfer-notification {
   &.fade-enter-active, &.fade-leave-active {
@@ -115,25 +116,24 @@ export default {
 
   .footer {
     display: flex;
-    justify-content: space-around;
     padding: rem(8px) 0;
     background-color: $color-neutral-positive-2;
     border-radius: 0 0 rem(8px) rem(8px);
 
     .ae-button {
+      flex-grow: 1;
+      flex-basis: 0;
       height: rem(20px);
+      line-height: rem(20px);
       border-radius: 0;
+      font-family: $font-sans;
+      font-size: rem(11px);
+      font-weight: 500;
+      letter-spacing: rem(1.1px);
+      color: $color-neutral-negative-3;
 
       &:first-child {
         border-right: 1px solid $color-neutral-positive-1;
-      }
-
-      /deep/ .label {
-        @extend %face-sans-xs;
-        font-size: rem(11px);
-        font-weight: 500;
-        letter-spacing: rem(1.1px);
-        color: $color-neutral-negative-3;
       }
     }
   }
