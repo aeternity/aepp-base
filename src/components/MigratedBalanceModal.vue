@@ -1,6 +1,5 @@
 <template>
   <ae-modal-light
-    v-if="showMigratedBalance"
     class="migration-confirm"
   >
     <div class="balance">
@@ -15,7 +14,7 @@
       size="medium"
       fill="primary"
       uppercase
-      @click="showMigratedBalance = false"
+      @click="$emit('close')"
     >
       Ok
     </ae-button>
@@ -46,7 +45,6 @@ export default {
   },
   data() {
     return {
-      showMigratedBalance: true,
       migratedBalance: '',
     };
   },
