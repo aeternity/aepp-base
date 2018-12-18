@@ -122,9 +122,6 @@ const store = new Vuex.Store({
     selectIdentity(state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx;
     },
-    renameIdentity(state, name) {
-      Vue.set(state.mobile.names, state.selectedIdentityIdx, name);
-    },
     setBalance(state, { address, balance }) {
       Vue.set(state.balances, address, balance);
     },

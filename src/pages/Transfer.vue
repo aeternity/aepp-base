@@ -160,7 +160,9 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['renameIdentity']),
+    renameIdentity(name) {
+      this.$store.commit('renameIdentity', { index: this.$store.state.selectedIdentityIdx, name });
+    },
     copyAddress() {
       copy(this.activeIdentity.address);
     },
