@@ -75,6 +75,7 @@ const store = new Vuex.Store({
     apps: Object.keys(appsRegistry),
     addressBook: [],
     customNetworks: [],
+    qrCodeReaderTask: null,
   },
 
   getters: {
@@ -140,6 +141,9 @@ const store = new Vuex.Store({
     removeNetwork(state, networkIdx) {
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
     },
+    setQrCodeReaderTask(state, qrCodeReaderTask) {
+      state.qrCodeReaderTask = qrCodeReaderTask;
+    },
   },
 
   actions: {
@@ -192,6 +196,11 @@ const store = new Vuex.Store({
         amount: transaction.amount.shiftedBy(MAGNITUDE),
       }).tx;
       return Crypto.decodeBase64Check(spendTx.split('_')[1]);
+    },
+    readQrCode({ commit }, title) {
+      return new Promise((resolve, reject) => commit(
+        'setQrCodeReaderTask', { resolve, reject, title },
+      ));
     },
   },
 });
