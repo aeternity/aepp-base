@@ -13,7 +13,7 @@ import SetPassword from '../../pages/SetPassword.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
 import Receive from '../../pages/Receive.vue';
 import Send from '../../pages/Send.vue';
-import SendTo from '../../pages/SendTo.vue';
+import SendAmount from '../../pages/SendAmount.vue';
 import SendConfirm from '../../pages/SendConfirm.vue';
 import Settings from '../../pages/Settings.vue';
 import SettingsNetwork from '../../pages/SettingsNetwork.vue';
@@ -119,7 +119,7 @@ export default [{
 }, {
   name: 'send-to',
   path: '/send/:to',
-  component: SendTo,
+  component: SendAmount,
   beforeEnter: checkLoggedIn(true),
   props: true,
 }, {

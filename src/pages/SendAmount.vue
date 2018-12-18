@@ -33,7 +33,7 @@
       v-validate="{
         required: true,
         decimal: MAGNITUDE,
-        min_value: BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE).toString(),
+        min_value: MIN_SPEND_TX_FEE.toString(),
         max_value: maxAmount.minus(fee).toString(),
       }"
       :error="!!errors.first('amount')"
@@ -48,7 +48,7 @@
       </span>
       <ae-toolbar slot="footer">
         <span> Minimum transaction fee</span>
-        <span>{{ BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE) | prefixedAmount }} AE</span>
+        <span>{{ MIN_SPEND_TX_FEE | prefixedAmount }} AE</span>
       </ae-toolbar>
     </ae-input>
 
@@ -73,7 +73,7 @@ import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeInput from '../components/AeInput.vue';
 import AeButton from '../components/AeButton.vue';
-import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
+import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../lib/constants';
 import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
@@ -95,8 +95,7 @@ export default {
   data: () => ({
     amount: '',
     MAGNITUDE,
-    MIN_SPEND_TX_FEE,
-    MAX_REASONABLE_FEE,
+    MIN_SPEND_TX_FEE: BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE),
     fee: BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE).toFixed(),
     BigNumber,
   }),
