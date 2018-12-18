@@ -3,7 +3,11 @@
     id="app"
     :class="{ 'quick-id-hidden': !$route.meta.displayFooter }"
   >
-    <router-view :class="{ grayscale }" />
+    <qr-code-reader v-if="qrCodeReaderTask" />
+    <router-view
+      v-else
+      :class="{ grayscale }"
+    />
     <ae-banner v-if="notification">
       <img
         v-if="notification.icon"
@@ -37,10 +41,12 @@ import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components';
 import FooterMobile from './components/FooterMobile.vue';
 import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
+import QrCodeReader from './components/QrCodeReader.vue';
 
 export default {
   components: {
     AeMain,
+    QrCodeReader,
     AeBanner,
     AeButton,
     RemoveAppModal,
@@ -50,6 +56,7 @@ export default {
   computed: mapState({
     notification: ({ notification }) => notification,
     grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
+    qrCodeReaderTask: ({ qrCodeReaderTask }) => qrCodeReaderTask,
   }),
   created() {
     // set domain to base host because of iframe cross domain policy, very nice hardcoded urls
