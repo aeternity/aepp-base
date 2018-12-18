@@ -1,0 +1,101 @@
+<template>
+  <mobile-page
+    :redirect-to-on-close="{ name: 'transfer' }"
+    class="receive"
+    fill="neutral"
+    back-button
+  >
+    <guide
+      fill="primary"
+    >
+      <em>Receive</em> tokens
+      <div class="note">
+        Scan this QR code to receive
+        <br>tokens on this address
+      </div>
+    </guide>
+
+    <ae-account-reverse
+      v-bind="activeIdentity"
+      fill="neutral"
+    />
+
+    <list-item
+      slot="content-bottom"
+      title="Copy address"
+      subtitle="Share it with sender"
+      @click.native="copyAddress"
+    >
+      <img
+        slot="icon"
+        :src="writingHandEmoji"
+      >
+      <ae-icon
+        v-if="copied"
+        slot="right"
+        fill="alternative"
+        face="round"
+        name="check"
+      />
+    </list-item>
+  </mobile-page>
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+import { AeIcon } from '@aeternity/aepp-components-3';
+import writingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
+import copy from 'clipboard-copy';
+import MobilePage from '../components/MobilePage.vue';
+import Guide from '../components/Guide.vue';
+import AeAccountReverse from '../components/AeAccountReverse.vue';
+import ListItem from '../components/ListItem.vue';
+
+export default {
+  components: {
+    MobilePage,
+    Guide,
+    AeAccountReverse,
+    ListItem,
+    AeIcon,
+  },
+  data() {
+    return {
+      writingHandEmoji: writingHandEmojiPath,
+      copied: false,
+    };
+  },
+  computed: mapGetters(['activeIdentity']),
+  methods: {
+    copyAddress() {
+      copy(this.activeIdentity.address);
+      this.copied = true;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.receive {
+  /deep/ .panel .bottom {
+    padding-top: rem(60px);
+  }
+
+  .guide {
+    margin-left: rem(20px);
+  }
+
+  .note {
+    margin: rem(8px) 0;
+    @extend %face-sans-s;
+    font-weight: 500;
+  }
+
+  .list-item /deep/ .content {
+    border-bottom: 2px solid $color-neutral-positive-1;
+  }
+}
+</style>

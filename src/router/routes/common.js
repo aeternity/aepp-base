@@ -16,9 +16,10 @@ export default [{
   beforeEnter: checkLoggedIn(false),
 }, {
   name: 'transfer',
-  path: '/transfer/:to?/:amount?',
+  path: '/transfer',
   component: Transfer,
   beforeEnter: checkLoggedIn(true),
+  props: true,
 }, {
   name: 'add-app',
   path: '/add-app',
