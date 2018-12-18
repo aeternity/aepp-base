@@ -105,13 +105,12 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 import { AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import glowingStarEmojiPath from 'emoji-datasource-apple/img/apple/64/1f31f.png';
 import copy from 'clipboard-copy';
-import { setTimeout } from 'timers';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAccount from '../components/AeAccount.vue';
@@ -180,25 +179,25 @@ export default {
       padding-top: rem(40px);
     }
 
-    .ae-dropdown {
-      .ae-icon {
-        font-size: rem(20px);
-      }
+    .ae-dropdown-button {
+       width: rem(20px);
+       height: rem(20px);
+    }
+  }
 
-      .ae-dropdown-button {
-        width: rem(20px);
-        height: rem(20px);
-      }
+  .ae-dropdown {
+    .ae-icon {
+      font-size: rem(20px);
+    }
 
-      li {
-        padding: 0;
+    li {
+      padding: 0;
 
-        .ae-button {
-          display: flex;
-          @extend %face-sans-s;
-          text-transform: none;
-          letter-spacing: 0;
-        }
+      .ae-button {
+        display: flex;
+        @extend %face-sans-s;
+        text-transform: none;
+        letter-spacing: 0;
       }
     }
   }

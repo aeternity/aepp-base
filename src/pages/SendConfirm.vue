@@ -36,7 +36,10 @@
         {{ BigNumber(amount) | prefixedAmount }} AE
       </span>
     </list-item>
-    <list-item inactive>
+    <list-item
+      class="list-bottom"
+      inactive
+    >
       <span class="title">
         <img src="../assets/icons/turtle.svg">
       </span>
@@ -47,14 +50,20 @@
         <img src="../assets/icons/rabbit.svg">
       </span>
     </list-item>
-    <list-item inactive>
+    <list-item
+      class="list-border-bottom"
+      inactive
+    >
       <range
         v-model="fee"
         :min="MIN_SPEND_TX_FEE"
         :max="MAX_REASONABLE_FEE"
       />
     </list-item>
-    <list-item inactive>
+    <list-item
+      class="list-border-bottom"
+      inactive
+    >
       <div class="title">
         Gas Price
       </div>
@@ -65,7 +74,10 @@
         {{ formattedFee | prefixedAmount }} AE
       </span>
     </list-item>
-    <list-item inactive>
+    <list-item
+      class="list-border"
+      inactive
+    >
       <div class="title">
         Transaction speed
       </div>
@@ -208,23 +220,21 @@ export default {
     border: none;
     border-top: rem(2px) solid $color-primary-negative-1;
 
-    &:nth-child(3),
-    &:nth-child(4),
-    &:nth-child(5),
-    &:nth-child(6), {
-      border: none;
+    &.list-bottom,
+    &.list-border-bottom,
+    &.list-border {
       height: rem(28px);
     }
 
-    &:nth-child(3) {
-      border-top: rem(2px) solid $color-primary-negative-1;
-    }
-
-    &:nth-child(3) {
+    &.list-bottom {
       padding-top: rem(20px);
     }
 
-    &:nth-child(6) {
+    &.list-border-bottom, &.list-border {
+      border: none;
+    }
+
+    &.list-border {
       padding-bottom: rem(20px);
     }
 
@@ -246,18 +256,17 @@ export default {
 
     .subtitle {
       .ae-address {
-          grid-template-columns: repeat(6, 1fr);
-          grid-column-gap: rem(19px);
-          font-weight: normal;
-          color: $color-neutral-maximum;
-        }
+        grid-template-columns: repeat(6, 1fr);
+        grid-column-gap: rem(19px);
+        font-weight: normal;
+        color: $color-neutral-maximum;
+      }
     }
 
     .content {
       @extend %face-mono-xs;
       font-weight: 400;
       color: $color-neutral-maximum;
-      background: transparent;
     }
   }
 }

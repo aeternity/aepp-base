@@ -21,7 +21,7 @@
       :id="`${_uid}-accountTo`"
       v-model="accountTo"
       v-validate="'required|min:51|max:53'"
-      :error="!!errors.first('accountTo')"
+      :error="errors.has('accountTo')"
       name="accountTo"
       label="Recipent"
       placeholder="ak_"
@@ -99,9 +99,7 @@ export default {
   data: () => ({
     accountTo: '',
   }),
-  computed: {
-    ...mapGetters(['activeIdentity', 'identities']),
-  },
+  computed: mapGetters(['activeIdentity', 'identities']),
   mounted() {
     this.$store.dispatch('updateAllBalances');
   },
@@ -120,38 +118,30 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .send {
-  /deep/ {
-    .panel .bottom {
-      margin-top: rem(-32px);
-      margin-bottom: rem(100px);
+  /deep/ .panel .bottom {
+    margin-top: rem(-32px);
+    margin-bottom: rem(100px);
+  }
 
-      .content {
-        .ae-input {
-          margin: 0;
-        }
+  .ae-button {
+    margin: rem(60px) auto rem(30px) auto;
+  }
 
-        .ae-button {
-           margin: rem(60px) auto rem(30px) auto;
-        }
+  .own-account {
+    margin: 0 0 rem(20px) rem(16px);
+    font-weight: 500;
+    color: $color-neutral-negative-1;
+  }
 
-        .own-account {
-          margin: 0 0 rem(20px) rem(16px);
-          font-weight: 500;
-          color: $color-neutral-negative-1;
-        }
+  .list-item {
+    margin: 0 rem(15px);
+    padding: 0;
+    border-top: solid $color-neutral-positive-1;
+    border-bottom: none;
+    border-width: 2px;
 
-        .list-item {
-          margin: 0 rem(15px);
-          padding: 0;
-          border-top: solid $color-neutral-positive-1;
-          border-bottom: none;
-          border-width: 2px;
-
-          .content {
-            border: none;
-          }
-        }
-      }
+    .content {
+      border: none;
     }
   }
 

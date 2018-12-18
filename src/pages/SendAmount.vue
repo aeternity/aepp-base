@@ -1,7 +1,7 @@
 <template>
   <mobile-page
     :redirect-to-on-close="{ name: 'send' }"
-    class="send-to"
+    class="send-amount"
     fill="primary"
     close-button
   >
@@ -126,35 +126,31 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.send-to {
+.send-amount {
   /deep/ {
-    .ae-input-container {
-      .ae-input-box {
-        .ae-input-header span {
-          margin-right: rem(30px);
-          @extend %face-sans-xs;
-          color: $color-neutral-negative-3
-        }
-
-        .ae-input.aemount {
-          margin: 0;
-        }
+    .ae-input-container .ae-input-box {
+      .ae-input-header span {
+        margin-right: rem(30px);
+        @extend %face-sans-xs;
+        color: $color-neutral-negative-3
       }
 
-      .ae-toolbar {
-        justify-content: space-between;
+      .ae-input.aemount {
+        margin: 0;
       }
     }
 
     .panel .bottom {
       margin-top: rem(-32px);
-
-      .content {
-        .ae-button {
-           margin: rem(60px) auto rem(30px) auto;
-        }
-      }
     }
+  }
+
+  .ae-toolbar {
+    justify-content: space-between;
+  }
+
+  .ae-button {
+    margin: rem(60px) auto rem(30px) auto;
   }
 
   .guide {
