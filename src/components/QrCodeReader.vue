@@ -6,13 +6,13 @@
     <header-mobile>
       <ae-button
         slot="left"
+        size="small"
         @click="cancelReading"
         plain
       >
         <ae-icon
           slot="icon"
-          name="arrow"
-          rotate="180"
+          name="back"
         />
       </ae-button>
       {{ qrCodeReaderTask.title }}
@@ -37,8 +37,9 @@
 <script>
 import { mapState } from 'vuex';
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
-import { AeButton, AeIcon } from '@aeternity/aepp-components';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import HeaderMobile from './HeaderMobile.vue';
+import AeButton from './AeButton.vue';
 
 export default {
   components: { HeaderMobile, AeButton, AeIcon },
@@ -112,7 +113,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .qr-code-reader {
   display: flex;
@@ -121,6 +122,10 @@ export default {
 
   .header-mobile {
     background: #fff;
+
+    .ae-button .ae-icon {
+      font-size: rem(20px);
+    }
   }
 
   .permission-denied {
