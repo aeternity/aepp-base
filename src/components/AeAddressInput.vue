@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     formattedValue() {
-      return this.formatAddress(this.value).address;
+      return this.formatAddress(this.value);
     },
   },
   methods: {
@@ -53,44 +53,30 @@ export default {
       const { textarea } = this.$children[0].$refs;
       const { selectionStart, value } = textarea;
 
-      const { address, cursor } = this.formatAddress(value, selectionStart);
+      const address = this.formatAddress(value);
       if (address !== value) {
         textarea.value = address;
+        const cursor = this.getNewCursor(value, selectionStart);
         const setSelection = () => textarea.setSelectionRange(cursor, cursor);
         setSelection();
         setTimeout(setSelection, 0);
       }
       this.$emit('input', address.replace(/[ \n]/g, ''));
     },
-    formatAddress(address, cursor = address.length) {
-      if (['', 'a', 'ak'].includes(address)) return { address, cursor };
+    formatAddress(address) {
+      if (['', 'a', 'ak'].includes(address)) return address;
 
-      const [beginUnprefixed, end] = [[address.startsWith('ak_') ? 3 : 0, cursor], [cursor]]
-        .map(args => address.slice(...args).replace(/[^1-9A-HJ-NP-Za-km-z]/g, ''));
+      const res = address
+        .slice(address.startsWith('ak_') ? 3 : 0)
+        .replace(/[^1-9A-HJ-NP-Za-km-z]/g, '');
 
-      const begin = `ak_${beginUnprefixed}`;
-
-      const splitBy = 3;
-      const addSpaces = (addressPart, firstLength) => {
-        const fl = firstLength || splitBy;
-        const res = [];
-        let i = -1;
-        const group = () => (i >= 0
-          ? addressPart.slice((splitBy * i) + fl, (splitBy * (i + 1)) + fl)
-          : addressPart.slice(0, fl));
-        while (group() !== '') {
-          res.push(group());
-          i += 1;
-        }
-        return [res.join(' '), res.length ? res[res.length - 1].length : 0];
-      };
-
-      const [beginS, lastLength] = addSpaces(begin);
-      const [endS] = addSpaces(end, splitBy - lastLength);
-
-      const res = `${beginS}${endS && lastLength === splitBy ? ' ' : ''}${endS}`.slice(0, 70);
-
-      return { address: res, cursor: beginS.length };
+      return `ak_${res}`
+        .match(/.{1,3}/g)
+        .join(' ')
+        .slice(0, 70);
+    },
+    getNewCursor(address, cursor) {
+      return this.formatAddress(address.slice(0, cursor)).length;
     },
   },
 };
