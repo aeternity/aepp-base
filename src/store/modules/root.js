@@ -19,6 +19,7 @@ export default {
     sdk: null,
     alert: null,
     notification: null,
+    serviceWorkerRegistration: null,
     addressBook: [],
     customNetworks: [],
     apps: [],
@@ -146,6 +147,9 @@ export default {
     },
     setCachedAppManifest({ cachedAppManifests }, { host, manifest }) {
       Vue.set(cachedAppManifests, host, manifest);
+    },
+    setServiceWorkerRegistration(state, serviceWorkerRegistration) {
+      state.serviceWorkerRegistration = serviceWorkerRegistration;
     },
   },
 

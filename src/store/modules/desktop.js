@@ -33,7 +33,9 @@ export default {
     setTransactionToSign(state, transaction) {
       state.transactionToSignByRemote = transaction;
     },
-    cancelTransaction() {},
+    cancelTransaction({ transactionToSignByRemote }) {
+      transactionToSignByRemote.reject(new Error('Payment rejected by user'));
+    },
     setLedgerConnected(state, ledgerConnected) {
       state.showSidebar = false;
       state.ledgerConnected = ledgerConnected;

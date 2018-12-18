@@ -7,10 +7,24 @@ import RpcPeer from '../../lib/rpc';
 const PAIR_SYNC_FIELDS = ['rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook'];
 
 export default (store) => {
+  const getPushApiSubscription = async () => {
+    const { serviceWorkerRegistration } = store.state;
+    try {
+      const subscription = await serviceWorkerRegistration.pushManager.getSubscription()
+        || await serviceWorkerRegistration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: Buffer.from(process.env.VUE_APP_VAPID_PUBLIC_KEY, 'base64'),
+        });
+      return JSON.stringify(subscription);
+    } catch (e) {
+      return 'not-available';
+    }
+  };
+
   const open = async () => {
     const query = { key: store.state.peerId };
     if (process.env.IS_MOBILE_DEVICE) {
-      query.pushApiSubscription = 'not-available';
+      query.pushApiSubscription = await getPushApiSubscription();
     }
     const socket = io(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
