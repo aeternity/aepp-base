@@ -24,9 +24,6 @@
     </header>
 
     <main>
-      <div class="security-status">
-        {{ securityStatus }}
-      </div>
       <ae-address
         :value="address"
         length="medium"
@@ -69,10 +66,6 @@ export default {
       type: BigNumber,
       required: true,
     },
-    securityStatus: {
-      type: String,
-      default: 'normal\nsecured',
-    },
     fill: {
       type: String,
       required: true,
@@ -88,7 +81,6 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .ae-account.ae-card {
   header {
@@ -112,16 +104,8 @@ export default {
 
   main {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: flex-end;
     margin: rem(32px) rem(8px) rem(8px) rem(16px);
-
-    .security-status {
-      @extend %face-uppercase-xs;
-      white-space: pre-line;
-      margin-bottom: rem(4px);
-      font-weight: bold;
-    }
 
     .ae-address {
       width: rem(150px);
