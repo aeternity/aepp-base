@@ -71,7 +71,7 @@ export default {
         .replace(/[^1-9A-HJ-NP-Za-km-z]/g, '');
 
       return `ak_${res}`
-        .match(/.{1,3}/g)
+        .match(/^ak_|.{2}(?=.{47,48}$)|.{1,3}/g)
         .join(' ')
         .slice(0, 70);
     },

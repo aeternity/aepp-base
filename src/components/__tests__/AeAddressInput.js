@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import AeAddressInput from '../AeAddressInput.vue';
 
 const testAddress = 'ak_12345678912345678912345678912345678912345678912345';
-const testAddressFormatted = 'ak_ 123 456 789 123 456 789 123 456 789 123 456 789 123 456 789 123 45';
+const testAddressFormatted = 'ak_ 12 345 678 912 345 678 912 345 678 912 345 678 912 345 678 912 345';
 
 describe('AeAddressInput', () => {
   it('formats passed value', () => {
