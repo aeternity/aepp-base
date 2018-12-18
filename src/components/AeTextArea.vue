@@ -18,11 +18,13 @@
       </div>
       <textarea
         :id="id"
+        ref="textarea"
         :value="value"
         :type="type"
         :placeholder="placeholder"
-        :class="{ aemount }"
+        :class="{ aemount, monospace }"
         class="ae-input"
+        rows="3"
         @focus="focus = true"
         @blur="focus = false"
         @input="$emit($event.type, $event.target.value)"
@@ -63,6 +65,10 @@ export default {
       default: false,
     },
     error: {
+      type: Boolean,
+      default: false,
+    },
+    monospace: {
       type: Boolean,
       default: false,
     },
@@ -148,7 +154,6 @@ export default {
   @include placeholder-color($color-neutral-negative-1);
 
   align-self: center;
-  justify-self: center;
   flex: 0 1 100%;
   width: 100%;
   margin: 10px 0 30px 0;
@@ -156,6 +161,12 @@ export default {
   background: transparent;
   border: none;
   outline: none;
+
+  &.monospace {
+    @extend %face-mono-base;
+    font-weight: 500;
+    color: $color-neutral-negative-1;
+  }
 }
 
 .ae-input.aemount {
