@@ -52,6 +52,10 @@ export default {
       routeName: 'receive',
       iconName: 'receive',
     }, {
+      name: 'Contacts',
+      routeName: 'address-book',
+      iconName: 'contacts',
+    }, {
       name: 'Settings',
       routeName: 'settings',
       iconName: 'settings',
