@@ -90,14 +90,18 @@ export default {
     formatAddress(address) {
       if (['', 'a', 'ak'].includes(address)) return address;
 
-      const res = address
+      let res = address
         .slice(address.startsWith('ak_') ? 3 : 0)
         .replace(/[^1-9A-HJ-NP-Za-km-z]/g, '');
 
-      return `ak_${res}`
-        .match(/^ak_|.{2}(?=.{47,48}$)|.{1,3}/g)
-        .join(' ')
-        .slice(0, 70);
+      if (!res) return 'ak_';
+
+      res = res
+        .slice(0, 50)
+        .match(/^.{2}(?!.{46}$)|.{1,3}/g)
+        .join(' ');
+
+      return `ak_ ${res}`;
     },
     getNewCursor(address, cursor) {
       return this.formatAddress(address.slice(0, cursor)).length;
