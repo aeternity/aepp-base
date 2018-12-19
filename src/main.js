@@ -7,6 +7,7 @@ import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
 import 'focus-visible';
 import BigNumber from 'bignumber.js';
+import { Crypto } from '@aeternity/aepp-sdk';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
 import { toUrl } from './lib/utils';
@@ -26,6 +27,7 @@ Validator.extend('url_http', (value) => {
     return false;
   }
 });
+Validator.extend('address', value => Crypto.isAddressValid(value));
 
 Vue.use(Clipboard);
 Vue.use(Router);

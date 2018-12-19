@@ -20,7 +20,7 @@
     <ae-address-input
       :id="`${_uid}-accountTo`"
       v-model="accountTo"
-      v-validate="'required|min:51|max:53'"
+      v-validate="'required|address'"
       :error="errors.has('accountTo')"
       name="accountTo"
       label="Recipent"
