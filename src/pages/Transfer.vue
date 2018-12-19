@@ -213,6 +213,10 @@ export default {
       border: none;
     }
 
+    .ae-icon {
+      font-size: rem(20px);
+    }
+
     &:last-child {
       border: none;
     }
