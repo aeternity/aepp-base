@@ -44,20 +44,6 @@
           name="globe"
         />
       </list-item>
-      <list-item
-        v-if="$globals.IS_MOBILE_DEVICE"
-        :to="{ name: 'settings-remote-connection' }"
-        :subtitle="
-          `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
-        title="Remote connections"
-      >
-        <ae-icon
-          slot="icon"
-          fill="alternative"
-          face="round"
-          name="device"
-        />
-      </list-item>
     </ae-card>
     <div
       slot="content-bottom"

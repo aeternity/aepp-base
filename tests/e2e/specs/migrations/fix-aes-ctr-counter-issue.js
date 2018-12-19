@@ -37,7 +37,7 @@ describe('Migration: Fix AES-CTR counter issue', () => {
       .contains('Login')
       .click()
       .url()
-      .should('contain', '/apps')
+      .should('contain', '/transfer')
       .then(() => {
         const state = JSON.parse(localStorage.vuex);
         expect(state.migrations[0]).equal(true);
