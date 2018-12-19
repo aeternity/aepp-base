@@ -19,7 +19,7 @@ describe('AeAddressInput', () => {
     const emittedValue = wrapper.emitted('input')[0][0];
     expect(emittedValue).toEqual('ak_beef');
     wrapper.setProps({ value: emittedValue });
-    expect(textarea.element.value).toBe('ak_ bee f');
+    expect(textarea.element.value).toBe('ak_ be ef');
   });
 
   it('removes non-base58 symbols', () => {
@@ -33,7 +33,7 @@ describe('AeAddressInput', () => {
     const emittedValue = wrapper.emitted('input')[0][0];
     expect(emittedValue).toEqual('ak_19AHJNPZakmz');
     wrapper.setProps({ value: emittedValue });
-    expect(textarea.element.value).toBe('ak_ 19A HJN PZa kmz');
+    expect(textarea.element.value).toBe('ak_ 19 AHJ NPZ akm z');
   });
 
   it('emitted input event contains address without space symbols', () => {
