@@ -6,9 +6,8 @@
     close-button
   >
     <guide fill="neutral">
-      <em>Create new account</em>
-      <br>choose  a name
-      <br>for your new account
+      <em>Create new subaccount</em>
+      <br>and name it
     </guide>
 
     <template slot="content-bottom">

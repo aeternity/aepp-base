@@ -7,7 +7,7 @@
       fill="primary"
     >
       <em>Send and receive</em>
-      <br>æternity tokens
+      <br>AE
     </guide>
 
     <ae-account
