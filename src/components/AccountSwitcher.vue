@@ -32,7 +32,7 @@
 
           <list-item
             :to="{ name: 'accounts-new' }"
-            title="Create a new account"
+            title="New subaccount"
             @click.native="toggleAccountSwitcher"
           >
             <ae-icon

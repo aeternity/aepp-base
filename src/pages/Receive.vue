@@ -8,10 +8,10 @@
     <guide
       fill="primary"
     >
-      <em>Receive</em> tokens
+      <em>Receive</em> AE
       <div class="note">
-        Scan this QR code to receive
-        <br>tokens on this address
+        Let the sender scan this QR code
+        <br>to obtain your address
       </div>
     </guide>
 
