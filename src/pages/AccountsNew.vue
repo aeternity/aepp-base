@@ -14,6 +14,10 @@
       <ae-input
         :id="_uid.toString()"
         v-model="newAccountName"
+        v-validate="'required'"
+        v-focus="true"
+        :error="errors.has('newAccountName')"
+        name="newAccountName"
         label="Name"
         placeholder="Name"
       />
@@ -47,7 +51,8 @@ export default {
     newAccountName: '',
   }),
   methods: {
-    handleAddAddress() {
+    async handleAddAddress() {
+      if (!await this.$validator.validateAll()) return;
       this.$store.commit('createIdentity', this.newAccountName);
       this.$store.commit('selectIdentity', this.$store.state.mobile.accountCount - 1);
       this.$router.push({ name: 'transfer' });
