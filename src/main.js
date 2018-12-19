@@ -12,7 +12,7 @@ import './lib/initEnv';
 import './lib/switchWebmanifest';
 import { toUrl } from './lib/utils';
 import App from './App.vue';
-import AppDesktop from './AppDesktop.vue';
+import SwitchToMobilePrompt from './pages/SwitchToMobilePrompt.vue';
 import router from './router';
 import store from './store';
 
@@ -62,5 +62,5 @@ Vue.prototype.$globals = {
 new Vue({
   store,
   router,
-  render: h => h(process.env.IS_MOBILE_DEVICE ? App : AppDesktop),
+  render: h => h(process.env.IS_MOBILE_DEVICE ? App : SwitchToMobilePrompt),
 }).$mount('#app');
