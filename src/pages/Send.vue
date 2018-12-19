@@ -23,7 +23,7 @@
       v-validate="'required|address'"
       :error="errors.has('accountTo')"
       name="accountTo"
-      label="Recipent"
+      label="To"
       placeholder="ak_"
     >
       <ae-toolbar slot="footer">
