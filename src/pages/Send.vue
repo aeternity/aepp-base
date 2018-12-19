@@ -121,6 +121,10 @@ export default {
   /deep/ .panel .bottom {
     margin-top: rem(-32px);
     margin-bottom: rem(100px);
+
+    .list-item .content {
+      border: none;
+    }
   }
 
   .ae-button {
@@ -136,13 +140,7 @@ export default {
   .list-item {
     margin: 0 rem(15px);
     padding: 0;
-    border-top: solid $color-neutral-positive-1;
-    border-bottom: none;
-    border-width: 2px;
-
-    .content {
-      border: none;
-    }
+    border-top: 2px solid $color-neutral-positive-1;
   }
 
   .guide {
