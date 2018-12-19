@@ -74,7 +74,7 @@ export default {
 
       res = res
         .slice(0, 50)
-        .match(/^.{2}|.{1,3}/g)
+        .match(/^.{2}(?!.{46}$)|.{1,3}/g)
         .join(' ');
 
       return `ak_ ${res}`;

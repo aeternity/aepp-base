@@ -3,11 +3,18 @@ import AeAddressInput from '../AeAddressInput.vue';
 
 const testAddress = 'ak_12345678912345678912345678912345678912345678912345';
 const testAddressFormatted = 'ak_ 12 345 678 912 345 678 912 345 678 912 345 678 912 345 678 912 345';
+const testAddress51 = 'ak_xXRgaNBuFudv8QHVX52BYmfFyBEZDSWrdMWt2PNk8Mo2ZgHQ';
+const testAddress51Formatted = 'ak_ xXR gaN BuF udv 8QH VX5 2BY mfF yBE ZDS Wrd MWt 2PN k8M o2Z gHQ';
 
 describe('AeAddressInput', () => {
   it('formats passed value', () => {
     const wrapper = mount(AeAddressInput, { propsData: { value: testAddress } });
     expect(wrapper.find('textarea').element.value).toBe(testAddressFormatted);
+  });
+
+  it('formats passed value of 51 characters', () => {
+    const wrapper = mount(AeAddressInput, { propsData: { value: testAddress51 } });
+    expect(wrapper.find('textarea').element.value).toBe(testAddress51Formatted);
   });
 
   it('adds prefix on input', () => {
