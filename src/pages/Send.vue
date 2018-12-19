@@ -61,6 +61,7 @@
         }"
         :title="account.name"
         :subtitle="prefixedAmount(account.balance) + ' AE'"
+        subtitle-monospace
       >
         <ae-identicon
           slot="icon"
@@ -141,6 +142,10 @@ export default {
     margin: 0 rem(15px);
     padding: 0;
     border-top: 2px solid $color-neutral-positive-1;
+
+    .ae-icon {
+      font-size: rem(20px);
+    }
   }
 
   .guide {
