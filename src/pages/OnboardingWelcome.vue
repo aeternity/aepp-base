@@ -3,11 +3,11 @@
     <img src="../assets/onboarding/phones.svg">
     <guide fill="primary">
       <em>Base aepp</em>
-      <br>your port to æternity
+      <br>æternity begins here
       <div class="note">
-        Will consist of the ae wallet,
-        <br>decentralised aepps & manage
-        <br>accounts.
+        Send & receive AE from your
+        <br>wallet, manage accounts and
+        <br>explore æpps.
       </div>
     </guide>
   </div>
