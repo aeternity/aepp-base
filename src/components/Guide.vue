@@ -71,6 +71,10 @@ export default {
   &.neutral {
     color: $color-primary-positive-3;
 
+    .icon {
+      color: $color-neutral-maximum;
+    }
+
     em {
       color: $color-neutral-maximum;
     }

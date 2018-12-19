@@ -114,16 +114,23 @@ export default {
       {
         state: { accounts }, commit, dispatch, rootState: { epoch: { nodeNetworkId } },
       },
-      { transaction, appName, id = uuid() },
-    ) {
-      const binaryTx = await dispatch('genSpendTxBinary', transaction);
-      await new Promise((resolve, reject) => commit('signTransaction', {
+      {
         transaction,
         appName,
-        resolve,
-        reject,
-        id,
-      }));
+        id = uuid(),
+        acceptImmediately,
+      },
+    ) {
+      const binaryTx = await dispatch('genSpendTxBinary', transaction);
+      if (!acceptImmediately) {
+        await new Promise((resolve, reject) => commit('signTransaction', {
+          transaction,
+          appName,
+          resolve,
+          reject,
+          id,
+        }));
+      }
       const signature = Crypto.sign(
         Buffer.concat([Buffer.from(nodeNetworkId), binaryTx]),
         accounts[transaction.senderId].secretKey,

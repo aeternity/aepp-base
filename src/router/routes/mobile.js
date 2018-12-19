@@ -11,6 +11,11 @@ import NewAccountCreate from '../../pages/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
 import SetPassword from '../../pages/SetPassword.vue';
 import AccountsNew from '../../pages/AccountsNew.vue';
+import Transfer from '../../pages/Transfer.vue';
+import Receive from '../../pages/Receive.vue';
+import Send from '../../pages/Send.vue';
+import SendAmount from '../../pages/SendAmount.vue';
+import SendConfirm from '../../pages/SendConfirm.vue';
 import Settings from '../../pages/Settings.vue';
 import SettingsNetwork from '../../pages/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/SettingsNetworkNew.vue';
@@ -96,6 +101,43 @@ export default [{
   meta: {
     displayFooter: true,
   },
+}, {
+  name: 'transfer',
+  path: '/transfer',
+  component: Transfer,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'receive',
+  path: '/receive',
+  component: Receive,
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'send',
+  path: '/send',
+  component: Send,
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'send-to',
+  path: '/send/:to',
+  component: SendAmount,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
+}, {
+  name: 'send-confirm',
+  path: '/send/:to/:amount',
+  component: SendConfirm,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
 }, {
   name: 'settings',
   path: '/settings',

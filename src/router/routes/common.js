@@ -7,18 +7,11 @@ import AddressBook from '../../pages/AddressBook.vue';
 import AddressBookNew from '../../pages/AddressBookNew.vue';
 import AddressBookChoose from '../../pages/AddressBookChoose.vue';
 
-const Transfer = () => import('../../pages/Transfer.vue');
-
 export default [{
   name: 'apps',
   path: process.env.IS_MOBILE_DEVICE ? '/apps' : '/',
   component: Apps,
   beforeEnter: checkLoggedIn(false),
-}, {
-  name: 'transfer',
-  path: '/transfer/:to?/:amount?',
-  component: Transfer,
-  beforeEnter: checkLoggedIn(true),
 }, {
   name: 'add-app',
   path: '/add-app',

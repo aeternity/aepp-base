@@ -6,7 +6,7 @@
     </router-link>
     <router-link :to="{ name: 'transfer' }">
       <ae-icon name="transfer" />
-      Wallet
+      Transfer
     </router-link>
     <button
       :class="showAccountSwitcher ? 'router-link-active' : ''"
