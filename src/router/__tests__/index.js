@@ -42,8 +42,8 @@ describe('router/index.js', () => {
       );
 
       it(
-        'pushes INTRO path if current route is APPS and no keystore is present',
-        createRedirectTest({}, 'apps', 'intro'),
+        'pushes INTRO path if current route is TRANSFER and no keystore is present',
+        createRedirectTest({}, 'transfer', 'intro'),
       );
 
       it(
@@ -52,10 +52,10 @@ describe('router/index.js', () => {
       );
 
       it(
-        'pushes LOGIN path if current route is APPS and keystore is present but not derivedKey',
+        'pushes LOGIN path if current route is TRANSFER and keystore is present but not derivedKey',
         createRedirectTest({
           mobile: { keystore: {}, derivedKey: false },
-        }, 'apps', 'login'),
+        }, 'transfer', 'login'),
       );
 
       it(
@@ -66,10 +66,10 @@ describe('router/index.js', () => {
       );
 
       it(
-        'pushes APPS path if current route is LOGIN and keystore is present and derivedKey',
+        'pushes TRANSFER path if current route is LOGIN and keystore is present and derivedKey',
         createRedirectTest({
           mobile: { keystore: {}, derivedKey: true },
-        }, 'login', 'apps'),
+        }, 'login', 'transfer'),
       );
 
       it(
@@ -80,10 +80,10 @@ describe('router/index.js', () => {
       );
 
       it(
-        'does not interfere when current route is APPS and keystore is present and derivedKey',
+        'does not interfere when current route is TRANSFER and keystore is present and derivedKey',
         createNoRedirectTest({
           mobile: { keystore: {}, derivedKey: true },
-        }, 'apps'),
+        }, 'transfer'),
       );
 
       it(

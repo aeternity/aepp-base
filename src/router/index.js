@@ -1,7 +1,6 @@
 import Router from 'vue-router';
 import store from '../store';
 import mobileRoutes from './routes/mobile';
-import desktopRoutes from './routes/desktop';
 import commonRoutes from './routes/common';
 import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt.vue';
 
@@ -14,7 +13,7 @@ const router = new Router({
           component: AddToHomeScreenPrompt,
         }])
         || [...mobileRoutes, ...commonRoutes]
-      : [...desktopRoutes, ...commonRoutes],
+      : commonRoutes,
 });
 
 store.watch(
@@ -22,12 +21,12 @@ store.watch(
   (loggedIn) => {
     if (loggedIn) {
       if (process.env.IS_MOBILE_DEVICE || store.state.loginTarget) {
-        router.push(store.state.loginTarget || { name: 'apps' });
+        router.push(store.state.loginTarget || { name: 'transfer' });
         store.commit('setLoginTarget');
       }
     } else {
       store.commit('setLoginTarget', router.currentRoute.fullPath);
-      router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'apps' });
+      router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'transfer' });
     }
   },
 );

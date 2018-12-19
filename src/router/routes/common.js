@@ -1,41 +1,16 @@
 import { merge } from 'lodash-es';
 import { checkLoggedIn } from '../utils';
-import Apps from '../../pages/Apps.vue';
-import AppBrowser from '../../pages/AppBrowser.vue';
-import AddApp from '../../pages/AddApp.vue';
-import AddressBook from '../../pages/AddressBook.vue';
-import AddressBookNew from '../../pages/AddressBookNew.vue';
-import AddressBookChoose from '../../pages/AddressBookChoose.vue';
+import Receive from '../../pages/Receive.vue';
+import Settings from '../../pages/Settings.vue';
 
 export default [{
-  name: 'apps',
-  path: process.env.IS_MOBILE_DEVICE ? '/apps' : '/',
-  component: Apps,
-  beforeEnter: checkLoggedIn(false),
-}, {
-  name: 'add-app',
-  path: '/add-app',
-  component: AddApp,
+  name: 'receive',
+  path: '/receive',
+  component: Receive,
   beforeEnter: checkLoggedIn(true),
 }, {
-  name: 'address-book',
-  path: '/addresses',
-  component: AddressBook,
-  beforeEnter: checkLoggedIn(true),
-}, {
-  name: 'address-book-new',
-  path: '/addresses/new',
-  component: AddressBookNew,
-  beforeEnter: checkLoggedIn(true),
-}, {
-  name: 'address-book-choose',
-  path: '/addresses/choose/:redirectPathTemplate',
-  component: AddressBookChoose,
-  beforeEnter: checkLoggedIn(true),
-  props: true,
-}, {
-  name: 'app-browser',
-  path: '/:name/:path*',
-  component: AppBrowser,
+  name: 'settings',
+  path: '/settings',
+  component: Settings,
   beforeEnter: checkLoggedIn(false),
 }].map(route => merge(route, { meta: { displayFooter: true } }));
