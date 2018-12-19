@@ -3,11 +3,11 @@
     id="app"
     :class="{ 'quick-id-hidden': !$route.meta.displayFooter }"
   >
-    <qr-code-reader v-if="qrCodeReaderTask" />
     <router-view
-      v-else
+      v-show="!qrCodeReaderTask"
       :class="{ grayscale }"
     />
+    <qr-code-reader v-if="qrCodeReaderTask" />
     <ae-banner v-if="notification">
       <img
         v-if="notification.icon"

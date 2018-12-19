@@ -11,20 +11,41 @@
     @input="handleInput"
   >
     <template slot="footer">
-      <slot name="footer" />
+      <ae-toolbar>
+        <button-plain
+          @click="readValueFromQrCode"
+        >
+          <ae-icon name="camera" />
+          Scan
+        </button-plain>
+
+        <ae-identicon
+          v-if="isValueValid"
+          :address="value"
+          size="s"
+        />
+        <span v-else-if="value.length">
+          Invalid AE Address
+        </span>
+      </ae-toolbar>
     </template>
   </ae-textarea>
 </template>
 
 <script>
-import { directives } from '@aeternity/aepp-components-3';
+import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
+import { Crypto } from '@aeternity/aepp-sdk';
 import AeTextarea from './AeTextArea.vue';
+import AeToolbar from './AeToolbar.vue';
+import ButtonPlain from './ButtonPlain.vue';
 
 export default {
   directives: {
     removeSpacesOnCopy: directives.removeSpacesOnCopy,
   },
-  components: { AeTextarea },
+  components: {
+    AeIdenticon, AeIcon, AeTextarea, AeToolbar, ButtonPlain,
+  },
   props: {
     value: {
       type: String,
@@ -46,6 +67,9 @@ export default {
   computed: {
     formattedValue() {
       return this.formatAddress(this.value);
+    },
+    isValueValid() {
+      return Crypto.isAddressValid(this.value);
     },
   },
   methods: {
@@ -78,6 +102,44 @@ export default {
     getNewCursor(address, cursor) {
       return this.formatAddress(address.slice(0, cursor)).length;
     },
+    async readValueFromQrCode() {
+      this.$children[0].$refs.textarea.value = await this.$store
+        .dispatch('readQrCode', 'Scan AE Address');
+      this.handleInput();
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.ae-address-input {
+  .ae-toolbar {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+
+    &, .button-plain {
+      font-family: $font-sans;
+      font-size: rem(11px);
+      font-weight: 500;
+      letter-spacing: rem(1.1px);
+      text-transform: uppercase;
+      color: $color-neutral-negative-1;
+    }
+
+    .button-plain {
+      display: flex;
+      align-items: center;
+
+      .ae-icon {
+        margin-right: rem(4px);
+        font-size: rem(14px);
+      }
+    }
+  }
+}
+</style>
