@@ -46,6 +46,7 @@ export default {
   display: block;
   padding: 0 rem(15px);
   text-decoration: none;
+  color: $color-neutral-negative-3;
 
   &:hover {
     background-color: $color-neutral-positive-3;
