@@ -36,18 +36,6 @@
               name="plus"
             />
           </ListItem>
-
-          <ListItem
-            title="Create a vault for AirGap"
-            @click="toggleAccountSwitcher"
-          >
-            <AeIcon
-              slot="icon"
-              fill="alternative"
-              face="round"
-              name="plus"
-            />
-          </ListItem>
         </div>
         <Balance
           :balance="totalBalance"
