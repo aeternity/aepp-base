@@ -27,7 +27,6 @@
         name="seed"
         label="Recovery phrase"
         placeholder="Recovery phrase"
-        monospace
       />
     </form>
 
@@ -83,29 +82,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
-.recover {
-  form {
-    margin: 0 rem(-15px);
-  }
-
-  .ae-textarea {
-    @extend %face-sans-base;
-    color: $color-neutral-negative-1;
-    border: none;
-    border-radius: 0;
-    background-color: $color-neutral-positive-3;
-
-    &:focus {
-      border-left: 2px solid $color-focus;
-    }
-
-    .label {
-      @extend %face-sans-xs;
-    }
-  }
+.recover form {
+  margin: 0 rem(-15px);
 }
 </style>
 <style lang="scss" src="../components/MobilePageContent.scss" scoped />

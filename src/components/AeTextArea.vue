@@ -152,7 +152,7 @@ export default {
   border-radius: 10px;
   @extend %face-sans-base;
   @include placeholder-color($color-neutral-negative-1);
-
+  color: $color-neutral-negative-1;
   align-self: center;
   flex: 0 1 100%;
   width: 100%;
@@ -165,7 +165,6 @@ export default {
   &.monospace {
     @extend %face-mono-base;
     font-weight: 500;
-    color: $color-neutral-negative-1;
   }
 }
 
