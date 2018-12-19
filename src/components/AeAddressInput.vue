@@ -71,9 +71,9 @@ export default {
         .replace(/[^1-9A-HJ-NP-Za-km-z]/g, '');
 
       return `ak_${res}`
+        .slice(0, 53)
         .match(/^ak_|.{2}(?=.{47,48}$)|.{1,3}/g)
-        .join(' ')
-        .slice(0, 70);
+        .join(' ');
     },
     getNewCursor(address, cursor) {
       return this.formatAddress(address.slice(0, cursor)).length;
