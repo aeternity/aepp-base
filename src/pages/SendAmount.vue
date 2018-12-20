@@ -28,7 +28,6 @@
     </guide>
 
     <ae-input
-      :id="_uid.toString()"
       v-model="amount"
       v-validate="{
         required: true,
@@ -36,7 +35,7 @@
         min_value: MIN_SPEND_TX_FEE.toString(),
         max_value: maxAmount.minus(fee).toString(),
       }"
-      :error="!!errors.first('amount')"
+      :error="errors.has('amount')"
       type="number"
       name="amount"
       label="Amount"
@@ -112,10 +111,7 @@ export default {
   },
   methods: {
     async setAmount() {
-      if (!await this.$validator.validateAll()) {
-        this.error = true;
-        return;
-      }
+      if (!await this.$validator.validateAll()) return;
       this.$router.push({ name: 'send-confirm', params: { to: this.to, amount: this.amount } });
     },
   },

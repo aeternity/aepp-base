@@ -18,22 +18,13 @@
     </guide>
 
     <ae-address-input
-      :id="`${_uid}-accountTo`"
       v-model="accountTo"
       v-validate="'required|address'"
       :error="errors.has('accountTo')"
       name="accountTo"
       label="To"
       placeholder="ak_"
-    >
-      <ae-toolbar slot="footer">
-        <ae-identicon
-          v-if="accountTo"
-          :address="accountTo"
-          size="s"
-        />
-      </ae-toolbar>
-    </ae-address-input>
+    />
 
     <template slot="content-bottom">
       <ae-button
@@ -53,7 +44,7 @@
         Or transfer between accounts
       </div>
       <list-item
-        v-for="account in identities.filter(i => i != activeIdentity)"
+        v-for="account in identities.filter(i => i !== activeIdentity)"
         :key="account.address"
         :to="{
           name: 'send-to',
@@ -78,7 +69,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIdenticon, AeToolbar, AeIcon } from '@aeternity/aepp-components-3';
+import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAddressInput from '../components/AeAddressInput.vue';
@@ -92,7 +83,6 @@ export default {
     Guide,
     AeIdenticon,
     AeAddressInput,
-    AeToolbar,
     AeButton,
     ListItem,
     AeIcon,
