@@ -112,10 +112,7 @@ export default {
   },
   methods: {
     async setAmount() {
-      if (!await this.$validator.validateAll()) {
-        this.error = true;
-        return;
-      }
+      if (!await this.$validator.validateAll()) return;
       this.$router.push({ name: 'send-confirm', params: { to: this.to, amount: this.amount } });
     },
   },
