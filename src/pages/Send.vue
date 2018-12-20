@@ -25,15 +25,7 @@
       name="accountTo"
       label="To"
       placeholder="ak_"
-    >
-      <ae-toolbar slot="footer">
-        <ae-identicon
-          v-if="accountTo"
-          :address="accountTo"
-          size="s"
-        />
-      </ae-toolbar>
-    </ae-address-input>
+    />
 
     <template slot="content-bottom">
       <ae-button
@@ -78,7 +70,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIdenticon, AeToolbar, AeIcon } from '@aeternity/aepp-components-3';
+import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAddressInput from '../components/AeAddressInput.vue';
@@ -92,7 +84,6 @@ export default {
     Guide,
     AeIdenticon,
     AeAddressInput,
-    AeToolbar,
     AeButton,
     ListItem,
     AeIcon,
