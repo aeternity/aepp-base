@@ -36,7 +36,7 @@
         min_value: MIN_SPEND_TX_FEE.toString(),
         max_value: maxAmount.minus(fee).toString(),
       }"
-      :error="!!errors.first('amount')"
+      :error="errors.has('amount')"
       type="number"
       name="amount"
       label="Amount"
