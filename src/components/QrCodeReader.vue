@@ -7,8 +7,8 @@
       <ae-button
         slot="left"
         size="small"
-        @click="cancelReading"
         plain
+        @click="cancelReading"
       >
         <ae-icon
           slot="icon"
