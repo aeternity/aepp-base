@@ -12,7 +12,6 @@
 
     <template slot="content-bottom">
       <ae-input
-        :id="_uid.toString()"
         v-model="newAccountName"
         v-validate="'required'"
         v-focus="true"

@@ -19,7 +19,6 @@
 
     <form @submit.prevent="setSeed">
       <ae-text-area
-        :id="_uid.toString()"
         v-model="seed"
         v-validate="'required'"
         v-focus="true"

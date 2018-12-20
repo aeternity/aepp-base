@@ -16,7 +16,6 @@
 
     <form @submit.prevent="createKeystore">
       <ae-input
-        :id="`${_uid}-password`"
         v-model="password"
         v-validate="'required|min:4'"
         v-focus="true"
@@ -28,7 +27,6 @@
         @click.native="error = false"
       />
       <ae-input
-        :id="`${_uid}-passwordRepeat`"
         v-model="passwordRepeat"
         v-validate="'confirmed:'+password+'|required'"
         v-focus="true"

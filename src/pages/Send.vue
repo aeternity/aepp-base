@@ -18,7 +18,6 @@
     </guide>
 
     <ae-address-input
-      :id="`${_uid}-accountTo`"
       v-model="accountTo"
       v-validate="'required|address'"
       :error="errors.has('accountTo')"

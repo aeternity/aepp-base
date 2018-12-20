@@ -28,7 +28,6 @@
     </guide>
 
     <ae-input
-      :id="_uid.toString()"
       v-model="amount"
       v-validate="{
         required: true,

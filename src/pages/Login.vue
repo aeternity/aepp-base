@@ -15,7 +15,6 @@
 
     <form @submit.prevent="unlockSavedKeystore">
       <ae-input
-        :id="_uid.toString()"
         v-model="password"
         v-validate="'required|min:4'"
         v-focus="true"
