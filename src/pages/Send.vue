@@ -53,7 +53,7 @@
         Or transfer between accounts
       </div>
       <list-item
-        v-for="account in identities.filter(i => i != activeIdentity)"
+        v-for="account in identities.filter(i => i !== activeIdentity)"
         :key="account.address"
         :to="{
           name: 'send-to',
