@@ -70,6 +70,7 @@ export default {
     copyAddress() {
       copy(this.activeIdentity.address);
       this.copied = true;
+      setTimeout(() => { this.copied = false; }, 2000);
     },
   },
 };
