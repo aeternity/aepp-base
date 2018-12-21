@@ -32,7 +32,7 @@
       v-validate="{
         required: true,
         decimal: MAGNITUDE,
-        min_value: MIN_SPEND_TX_FEE.toString(),
+        min_value: 0,
         max_value: maxAmount.minus(fee).toString(),
       }"
       :error="errors.has('amount')"
