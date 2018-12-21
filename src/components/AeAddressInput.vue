@@ -35,7 +35,7 @@
 <script>
 import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
 import { Crypto } from '@aeternity/aepp-sdk';
-import AeTextarea from './AeTextArea.vue';
+import AeTextarea from './AeTextarea.vue';
 import AeToolbar from './AeToolbar.vue';
 import ButtonPlain from './ButtonPlain.vue';
 

@@ -18,7 +18,7 @@
     </guide>
 
     <form @submit.prevent="setSeed">
-      <ae-text-area
+      <ae-textarea
         v-model="seed"
         v-validate="'required'"
         v-focus="true"
@@ -48,11 +48,11 @@ import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png'
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
-import AeTextArea from '../components/AeTextArea.vue';
+import AeTextarea from '../components/AeTextarea.vue';
 
 export default {
   components: {
-    MobilePage, Guide, AeButton, AeTextArea,
+    MobilePage, Guide, AeButton, AeTextarea,
   },
   data() {
     return {
