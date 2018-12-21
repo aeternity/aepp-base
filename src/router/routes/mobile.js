@@ -137,6 +137,9 @@ export default [{
   component: SendAmount,
   beforeEnter: checkLoggedIn(true),
   props: true,
+  meta: {
+    displayFooter: true,
+  },
 }, {
   name: 'send-confirm',
   path: '/send/:to/:amount',
