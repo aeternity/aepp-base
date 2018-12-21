@@ -62,7 +62,7 @@ export default {
       } else {
         this.readingPaused = true;
         await this.$store.dispatch('alert', {
-          title: 'That was to fast',
+          title: 'That was too fast',
           text: 'Please make sure to write it down on paper, and don\'t loose it!',
         });
         this.readingPaused = false;
