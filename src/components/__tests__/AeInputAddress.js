@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import AeAddressInput from '../AeAddressInput.vue';
+import AeAddressInput from '../AeInputAddress.vue';
 
 const testAddress = 'ak_12345678912345678912345678912345678912345678912345';
 const testAddressFormatted = 'ak_ 12 345 678 912 345 678 912 345 678 912 345 678 912 345 678 912 345';

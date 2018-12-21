@@ -17,7 +17,7 @@
       /><em>{{ activeIdentity.name }}</em>
     </guide>
 
-    <ae-address-input
+    <ae-input-address
       v-model="accountTo"
       v-validate="'required|address'"
       :error="errors.has('accountTo')"
@@ -64,7 +64,7 @@ import { mapGetters } from 'vuex';
 import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
-import AeAddressInput from '../components/AeAddressInput.vue';
+import AeInputAddress from '../components/AeInputAddress.vue';
 import AeButton from '../components/AeButton.vue';
 import ListItemAccount from '../components/ListItemAccount.vue';
 
@@ -73,7 +73,7 @@ export default {
     MobilePage,
     Guide,
     AeIdenticon,
-    AeAddressInput,
+    AeInputAddress,
     AeButton,
     ListItemAccount,
     AeIcon,

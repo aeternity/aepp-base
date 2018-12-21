@@ -5,7 +5,7 @@
     :label="label"
     :placeholder="placeholder"
     :error="error"
-    class="ae-address-input"
+    class="ae-input-address"
     type="textarea"
     monospace
     @input="handleInput"
@@ -119,7 +119,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.ae-address-input {
+.ae-input-address {
   .ae-toolbar {
     display: flex;
     flex-direction: row-reverse;
