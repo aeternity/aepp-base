@@ -5,7 +5,7 @@
     back-button
     class="settings-network"
   >
-    <ae-card>
+    <ae-card fill="maximum">
       <list-item
         v-for="network in networks"
         :key="network.url"

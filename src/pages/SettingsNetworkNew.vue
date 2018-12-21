@@ -5,7 +5,7 @@
     back-button
     class="settings-network settings-network-new"
   >
-    <ae-card>
+    <ae-card fill="maximum">
       <guide>Connect to<br><em>another node</em></guide>
       <form @submit.prevent="addNetwork">
         <ae-input
@@ -95,6 +95,18 @@ export default {
 
     .guide {
       margin-top: rem(27px);
+    }
+
+    .ae-input-container {
+      margin-bottom: rem(16px);
+
+      &:last-of-type {
+        margin-bottom: rem(32px);
+      }
+
+      /deep/ input {
+        margin: 0;
+      }
     }
 
     .ae-button {
