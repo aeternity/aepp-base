@@ -36,8 +36,24 @@
         {{ BigNumber(amount) | prefixedAmount }} AE
       </span>
     </list-item>
+
     <list-item
       class="list-bottom"
+      inactive
+    >
+      <div class="title">
+        Transaction fee
+      </div>
+      <span
+        slot="right"
+        class="content"
+      >
+        {{ formattedFee | prefixedAmount }} AE
+      </span>
+    </list-item>
+
+    <list-item
+      class="list-border-bottom"
       inactive
     >
       <span class="title">
@@ -50,8 +66,9 @@
         <img src="../assets/icons/rabbit.svg">
       </span>
     </list-item>
+
     <list-item
-      class="list-border-bottom"
+      class="list-border"
       inactive
     >
       <range
@@ -60,40 +77,13 @@
         :max="MAX_REASONABLE_FEE"
       />
     </list-item>
-    <list-item
-      class="list-border-bottom"
-      inactive
-    >
-      <div class="title">
-        Gas Price
-      </div>
-      <span
-        slot="right"
-        class="content"
-      >
-        {{ formattedFee | prefixedAmount }} AE
-      </span>
-    </list-item>
-    <list-item
-      class="list-border"
-      inactive
-    >
-      <div class="title">
-        Transaction speed
-      </div>
-      <span
-        slot="right"
-        class="content"
-      >
-        {{ transactionSpeed }}
-      </span>
-    </list-item>
+
     <list-item
       inactive
       class="account"
     >
       <div class="title">
-        Recipient Account Key
+        Recipient Account
       </div>
       <div class="subtitle">
         <ae-address :value="to" />
@@ -157,7 +147,6 @@ export default {
     MAX_REASONABLE_FEE,
     fee: MIN_SPEND_TX_FEE,
     BigNumber,
-    transactionSpeed: '< 2 min',
   }),
   computed: {
     ...mapGetters(['activeIdentity']),
@@ -228,6 +217,11 @@ export default {
 
     &.list-bottom {
       padding-top: rem(20px);
+      padding-bottom: rem(10px);
+
+      .content {
+        text-transform: uppercase;
+      }
     }
 
     &.list-border-bottom, &.list-border {

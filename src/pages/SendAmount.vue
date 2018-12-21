@@ -46,8 +46,8 @@
         AE
       </span>
       <ae-toolbar slot="footer">
-        <span> Minimum transaction fee</span>
-        <span>{{ MIN_SPEND_TX_FEE | prefixedAmount }} AE</span>
+        <span class="minimum-fee"> Minimum transaction fee</span>
+        <span class="fee-amount">{{ MIN_SPEND_TX_FEE | prefixedAmount }} AE</span>
       </ae-toolbar>
     </ae-input>
 
@@ -143,6 +143,17 @@ export default {
 
   .ae-toolbar {
     justify-content: space-between;
+
+    .minimum-fee {
+      font-size: rem(13px);
+      font-weight: normal;
+      text-transform: none;
+      letter-spacing: rem(0.3px);
+    }
+
+    .fee-amount {
+      @extend %face-mono-xs;
+    }
   }
 
   .ae-button {
