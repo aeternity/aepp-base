@@ -19,7 +19,7 @@
       >
         Address from: <strong>{{ account.name }}</strong>
       </div>
-      <ae-address :value="address" />
+      <ae-address :address="address" />
 
       <ae-button
         v-copy-to-clipboard="address"
@@ -43,12 +43,13 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { AeAddress, directives } from '@aeternity/aepp-components-3';
+import { directives } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
 import AeButton from '../../components/AeButton.vue';
 import AeCard from '../../components/AeCard.vue';
 import AeQrCode from '../../components/AeQrCode.vue';
+import AeAddress from '../../components/AeAddress.vue';
 
 export default {
   components: {
@@ -97,7 +98,7 @@ export default {
     }
 
     .ae-address {
-      grid-template-columns: repeat(9, 1fr);
+      display: block;
       color: $color-neutral-negative-1;
       font-weight: normal;
       margin-bottom: rem(50px);

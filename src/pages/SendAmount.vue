@@ -21,9 +21,10 @@
         size="s"
       />
       <em>
-        <span class="address">
-          {{ formattedAddress }}
-        </span>
+        <ae-address
+          :address="to"
+          length="short"
+        />
       </em>
     </guide>
 
@@ -70,6 +71,7 @@ import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeInput from '../components/AeInput.vue';
 import AeButton from '../components/AeButton.vue';
+import AeAddress from '../components/AeAddress.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../lib/constants';
 import prefixedAmount from '../filters/prefixedAmount';
 
@@ -81,6 +83,7 @@ export default {
     AeInput,
     AeToolbar,
     AeButton,
+    AeAddress,
   },
   filters: { prefixedAmount },
   props: {
@@ -102,10 +105,6 @@ export default {
       maxAmount: ({ balances }, { activeIdentity }) => (
         activeIdentity ? balances[activeIdentity.address] : BigNumber(0)),
     }),
-    formattedAddress() {
-      const address = this.to;
-      return `${address.substr(0, 3)} ${address.substr(3, 2)}···${address.slice(-3)}`;
-    },
   },
   methods: {
     async setAmount() {
@@ -162,11 +161,10 @@ export default {
     margin: 0 0 rem(30px) rem(30px);
 
     .ae-identicon {
-      margin: 0 rem(2px) rem(-4px) rem(2px);
+      margin: 0 rem(6px) rem(-4px) rem(2px);
     }
 
-    .address {
-      @extend %face-mono-base;
+    .ae-address {
       font-size: rem(23px);
     }
   }

@@ -19,9 +19,10 @@
         size="s"
       />
       <em>
-        <span class="address">
-          {{ formattedAddress }}
-        </span>
+        <ae-address
+          :address="to"
+          length="short"
+        />
       </em>
     </guide>
 
@@ -86,7 +87,10 @@
         Recipient Account
       </div>
       <div class="subtitle">
-        <ae-address :value="to" />
+        <ae-address
+          :address="to"
+          split-by="6"
+        />
       </div>
     </list-item>
 
@@ -110,12 +114,13 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters, mapState } from 'vuex';
-import { AeIdenticon, AeButtonGroup, AeAddress } from '@aeternity/aepp-components-3';
+import { AeIdenticon, AeButtonGroup } from '@aeternity/aepp-components-3';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import ListItem from '../components/deprecated/ListItem.vue';
 import Range from '../components/Range.vue';
 import AeButton from '../components/AeButton.vue';
+import AeAddress from '../components/AeAddress.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
 import prefixedAmount from '../filters/prefixedAmount';
 
@@ -150,10 +155,6 @@ export default {
   computed: {
     ...mapGetters(['activeIdentity']),
     ...mapState(['epoch']),
-    formattedAddress() {
-      const address = this.to;
-      return `${address.substr(0, 3)} ${address.substr(3, 2)}···${address.slice(-3)}`;
-    },
     formattedFee() {
       return BigNumber(this.fee).shiftedBy(-MAGNITUDE);
     },
@@ -193,11 +194,10 @@ export default {
     margin: 0 0 rem(30px) rem(20px);
 
     .ae-identicon {
-      margin: 0 rem(2px) rem(-4px) rem(2px);
+      margin: 0 rem(6px) rem(-4px) rem(2px);
     }
 
-    .address {
-      @extend %face-mono-base;
+    .ae-address {
       font-size: rem(23px);
     }
   }
@@ -249,10 +249,9 @@ export default {
 
     .subtitle {
       .ae-address {
-        grid-template-columns: repeat(6, 1fr);
-        grid-column-gap: rem(19px);
         font-weight: normal;
         color: $color-neutral-maximum;
+        letter-spacing: rem(1.5px);
       }
     }
 

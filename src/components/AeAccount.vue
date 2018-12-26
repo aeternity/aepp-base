@@ -25,9 +25,8 @@
 
     <main>
       <ae-address
-        :value="address"
+        :address="address"
         length="medium"
-        gap="0"
       />
     </main>
 
@@ -40,9 +39,10 @@
 </template>
 
 <script>
-import { AeAddress, AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
+import { AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
+import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 
 export default {
@@ -105,11 +105,7 @@ export default {
   main {
     display: flex;
     justify-content: flex-end;
-    margin: rem(32px) rem(8px) rem(8px) rem(16px);
-
-    .ae-address {
-      width: rem(150px);
-    }
+    margin: rem(32px) rem(16px) rem(8px) rem(16px);
   }
 
   /deep/ .ae-toolbar {

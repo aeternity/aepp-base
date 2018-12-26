@@ -10,7 +10,8 @@
         Address from: <strong>Ledger</strong>
       </div>
       <ae-address
-        :value="address"
+        :address="address"
+        split-by="9"
       />
     </div>
   </ae-modal-light>
@@ -18,8 +19,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeAddress } from '@aeternity/aepp-components-3';
 import AeModalLight from '../AeModalLight.vue';
+import AeAddress from '../AeAddress.vue';
 
 export default {
   components: {
@@ -50,8 +51,6 @@ export default {
     }
 
     .ae-address {
-      grid-template-columns: repeat(9, 1fr);
-      grid-column-gap: rem(19px);
       font-weight: normal;
     }
   }
