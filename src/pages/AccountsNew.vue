@@ -21,10 +21,7 @@
         placeholder="Name"
       />
       <ae-button
-        slot="buttons"
-        size="medium"
         fill="secondary"
-        uppercase
         @click="handleAddAddress"
       >
         Create

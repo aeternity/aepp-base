@@ -103,6 +103,10 @@ export default {
     }
   }
 
+  .ae-button {
+    min-width: 0;
+  }
+
   .ok {
     width: rem(251px);
   }

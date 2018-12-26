@@ -33,14 +33,12 @@
             >
               Try again or
             </span>
-            <ae-button
+            <router-link
               :to="{ name: 'recover' }"
               class="recover"
-              size="small"
-              plain
             >
               {{ error ? 'recover' : 'Recover account' }}
-            </ae-button>
+            </router-link>
           </span>
           <ae-icon
             name="eye"
@@ -54,7 +52,6 @@
     <template slot="footer">
       <ae-button
         :disabled="errors.any()"
-        size="medium"
         fill="secondary"
         @click="unlockSavedKeystore"
       >
@@ -125,15 +122,7 @@ export default {
     text-transform: none;
 
     .recover {
-      height: auto;
       color: $color-neutral-negative-1;
-
-      /deep/ .label {
-        padding: 0;
-        @extend %face-sans-xs;
-        text-decoration: underline;
-        text-transform: none;
-      }
     }
   }
 }

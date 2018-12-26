@@ -47,7 +47,6 @@
     <ae-button
       slot="footer"
       :disabled="selectedWordIds.length !== seedPermutation.length"
-      size="medium"
       fill="secondary"
       @click="confirmPhrase"
     >

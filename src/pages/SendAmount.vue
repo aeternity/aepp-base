@@ -54,9 +54,7 @@
     <ae-button
       slot="content-bottom"
       :disabled="errors.any()"
-      size="medium"
       fill="secondary"
-      uppercase
       @click="setAmount"
     >
       Next

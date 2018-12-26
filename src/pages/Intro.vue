@@ -10,27 +10,22 @@
     <template slot="footer">
       <ae-button
         :to="{ name: keystore ? 'login' : 'recover' }"
-        size="medium"
         fill="secondary"
       >
         {{ keystore ? 'Login' : 'Recover' }}
       </ae-button>
       <ae-button
         :to="{ name: 'new-account' }"
-        size="medium"
-        fill="neutral"
+        fill="light"
         plain
-        uppercase
       >
         Create New Account
       </ae-button>
       <hr>
       <ae-button
         :to="{ name: 'onboarding' }"
-        size="medium"
-        fill="neutral"
+        fill="light"
         plain
-        uppercase
       >
         See how it works
       </ae-button>

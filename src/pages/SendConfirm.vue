@@ -92,14 +92,13 @@
 
     <ae-button-group slot="footer">
       <ae-button
+        fill="light"
         :to="{ name: 'transfer' }"
-        uppercase
       >
         Cancel
       </ae-button>
       <ae-button
         fill="secondary"
-        uppercase
         @click="send"
       >
         Confirm
@@ -262,6 +261,12 @@ export default {
       font-weight: 400;
       color: $color-neutral-maximum;
     }
+  }
+
+  .ae-button-group .ae-button {
+    min-width: 0;
+    border-radius: 0;
+    margin: 0;
   }
 }
 </style>
