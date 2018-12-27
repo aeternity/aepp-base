@@ -1,46 +1,36 @@
 <template>
-  <ae-modal-light
-    class="migration-confirm"
-  >
+  <ae-modal class="migrated-balance-modal">
     <div class="balance">
       <div class="label">
         {{ migratedBalance }}
       </div>
       are in migration now. They will be available after the next hardfork.
     </div>
-    <ae-button
-      slot="buttons"
-      class="ok"
-      size="medium"
-      fill="primary"
-      uppercase
-      @click="$emit('close')"
-    >
-      Ok
-    </ae-button>
-    <ae-button
-      slot="buttons"
-      :to="'https://token-migration.aepps.com/#/status/result/' + activeIdentity.address"
-      class="see"
-      size="medium"
-      uppercase
-      plain
-    >
-      See migrations
-    </ae-button>
-  </ae-modal-light>
+
+    <div class="buttons">
+      <ae-button @click="$emit('close')">
+        Ok
+      </ae-button>
+      <ae-button
+        :to="'https://token-migration.aepps.com/#/status/result/' + activeIdentity.address"
+        plain
+      >
+        See migrations
+      </ae-button>
+    </div>
+  </ae-modal>
 </template>
 
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
-import AeModalLight from './AeModalLight.vue';
+import AeModal from './AeModal.vue';
 import AeButton from './AeButton.vue';
 import { MAGNITUDE } from '../lib/constants';
 
 export default {
   components: {
-    AeModalLight,
+    AeModal,
     AeButton,
   },
   data() {
@@ -63,28 +53,21 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.migration-confirm {
-  background-image: linear-gradient(
-    to bottom, rgba($color-neutral-positive-2, 0.8), rgba($color-neutral-positive-2, 0.8)
-  );
-  padding: 0 rem(20px);
+.migrated-balance-modal.ae-modal {
+  background-color: rgba($color-neutral-positive-2, 0.8);
 
-  /deep/ .ae-modal-light {
-    padding: rem(30px);
-    padding-bottom: rem(10px);
+  /deep/ .modal {
+    width: rem(275px);
+    padding: rem(50px) rem(30px) rem(10px) rem(30px);
     border-radius: rem(4px);
     background-color: $color-neutral-positive-3;
-    text-align: center;
-
-    .buttons {
-      margin-top: rem(30px);
-    }
   }
 
   .balance {
-    @extend %face-sans-xs;
+    @extend %face-sans-s;
     font-weight: normal;
-    color: $color-neutral-negative-1;
+    color: $color-neutral-negative-3;
+    text-align: center;
 
     .label {
       margin-bottom: rem(8px);
@@ -93,7 +76,6 @@ export default {
       font-weight: bold;
       word-break: break-all;
       line-height: rem(40px);
-      color: $color-neutral-negative-3;
 
       &:after {
         margin-left: rem(-8px);
@@ -103,17 +85,14 @@ export default {
     }
   }
 
-  .ae-button {
-    min-width: 0;
-  }
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: rem(20px);
 
-  .ok {
-    width: rem(251px);
-  }
-
-  .see {
-    font-weight: bold;
-    color: $color-neutral-negative-3;
+    .ae-button {
+      min-width: 0;
+    }
   }
 }
 </style>
