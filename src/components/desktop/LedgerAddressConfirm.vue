@@ -5,27 +5,23 @@
     class="ledger-address-confirm"
   >
     <span>Check your Ledger and confirm if the address below is the same</span>
-    <div class="address-confirm">
-      <div class="label">
-        Address from: <strong>Ledger</strong>
-      </div>
-      <ae-address
-        :address="address"
-        split-by="9"
-      />
-    </div>
+
+    <ae-address-panel
+      title="Ledger Address"
+      :address="address"
+    />
   </ae-modal-light>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import AeModalLight from '../AeModalLight.vue';
-import AeAddress from '../AeAddress.vue';
+import AeAddressPanel from './AeAddressPanel.vue';
 
 export default {
   components: {
     AeModalLight,
-    AeAddress,
+    AeAddressPanel,
   },
   computed: mapState({
     address: ({ desktop: { showConfirmModalForAddress } }) => showConfirmModalForAddress,
@@ -38,25 +34,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .ledger-address-confirm {
-  .address-confirm {
-    margin: rem(60px) 0;
-    padding: rem(20px);
-    padding-top: rem(10px);
-    background-color: $color-neutral-positive-3;
-    border-radius: rem(4px);
-
-    .label {
-      margin-bottom: rem(8px);
-      color: $color-focus;
-    }
-
-    .ae-address {
-      font-weight: normal;
-    }
-  }
-
-  .ae-button {
-    width: rem(400px);
+  .ae-address-panel {
+    margin: rem(60px) auto;
   }
 }
 </style>

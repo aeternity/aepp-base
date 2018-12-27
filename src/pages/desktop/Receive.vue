@@ -13,13 +13,7 @@
         :size="260"
       />
 
-      <div
-        v-if="account"
-        class="account-source"
-      >
-        Address from: <strong>{{ account.name }}</strong>
-      </div>
-      <ae-address :address="address" />
+      <ae-address-panel :address="address" />
 
       <ae-button
         v-copy-to-clipboard="address"
@@ -49,11 +43,11 @@ import Note from '../../components/Note.vue';
 import AeButton from '../../components/AeButton.vue';
 import AeCard from '../../components/AeCard.vue';
 import AeQrCode from '../../components/AeQrCode.vue';
-import AeAddress from '../../components/AeAddress.vue';
+import AeAddressPanel from '../../components/desktop/AeAddressPanel.vue';
 
 export default {
   components: {
-    Guide, Note, AeButton, AeCard, AeQrCode, AeAddress,
+    Guide, Note, AeButton, AeCard, AeQrCode, AeAddressPanel,
   },
   directives: {
     copyToClipboard: directives.copyToClipboard,
@@ -78,7 +72,7 @@ export default {
     margin: 0 rem(-15px);
     padding: rem(60px);
 
-    .ae-qr-code, .ae-address, .ae-button {
+    .ae-qr-code, .ae-address-panel, .ae-button {
       margin-left: auto;
       margin-right: auto;
     }
@@ -91,16 +85,7 @@ export default {
       }
     }
 
-    .account-source {
-      margin-bottom: rem(8px);
-      @extend %face-sans-xs;
-      color: $color-focus;
-    }
-
-    .ae-address {
-      display: block;
-      color: $color-neutral-negative-1;
-      font-weight: normal;
+    .ae-address-panel {
       margin-bottom: rem(50px);
     }
 
