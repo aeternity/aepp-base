@@ -1,6 +1,5 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: recover ? 'recover' : 'new-account' }"
     class="set-password"
     title="New Account"
   >
@@ -70,7 +69,6 @@ export default {
       password: '',
       passwordRepeat: '',
       working: false,
-      recover: false,
       keyEmoji: keyEmojiPath,
     };
   },
@@ -89,11 +87,6 @@ export default {
         this.working = false;
       }
     },
-  },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      vm.recover = from.name === 'recover'; // eslint-disable-line no-param-reassign
-    });
   },
 };
 </script>
