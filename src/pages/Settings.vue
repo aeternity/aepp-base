@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../components/AeCard.vue';
 import MobilePage from '../components/MobilePage.vue';
@@ -93,7 +93,10 @@ export default {
       .filter(([, f]) => f.connected).length,
   }),
   methods: {
-    ...mapMutations(['signOut']),
+    signOut() {
+      this.$store.commit('signOut');
+      setTimeout(() => this.$store.commit('setLoginTarget'));
+    },
     logOut() {
       this.$store.commit('setDerivedKey');
     },
