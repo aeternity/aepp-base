@@ -1,6 +1,5 @@
 <template>
-  <component
-    :is="to ? 'ae-link' : 'button-plain'"
+  <button-plain
     :class="[fill, size, { plain }]"
     :to="to"
     :disabled="disabled"
@@ -8,15 +7,14 @@
     @click="$emit('click', $event)"
   >
     <slot />
-  </component>
+  </button-plain>
 </template>
 
 <script>
-import { AeLink } from '@aeternity/aepp-components';
 import ButtonPlain from './ButtonPlain.vue';
 
 export default {
-  components: { AeLink, ButtonPlain },
+  components: { ButtonPlain },
   props: {
     fill: {
       type: String,
@@ -49,14 +47,11 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .ae-button {
-  display: inline-block;
   margin: rem(3px);
   @extend %face-sans-xs;
   letter-spacing: rem(1.3px);
   font-weight: bold;
-  text-decoration: none;
   text-transform: uppercase;
-  cursor: pointer;
 
   &.primary {
     background-color: $color-primary;
