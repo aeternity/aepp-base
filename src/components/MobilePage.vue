@@ -4,19 +4,16 @@
       <div :class="['top', !this.$slots['content-bottom'] && 'only', fill]">
         <header-mobile>
           {{ title }}
-          <ae-button
+          <button-plain
             v-if="backButton || closeButton || addButton"
             :slot="backButton ? 'left' : 'right'"
-            size="small"
-            plain
             @click="closeHandler"
           >
             <ae-icon
-              slot="icon"
               :name="backButton ? 'back' : closeButton ? 'close' : 'plus'"
               :rotate="backButton ? 180 : 0"
             />
-          </ae-button>
+          </button-plain>
         </header-mobile>
         <div class="content">
           <slot />
@@ -43,10 +40,10 @@
 <script>
 import { AeIcon } from '@aeternity/aepp-components-3';
 import HeaderMobile from './HeaderMobile.vue';
-import AeButton from './AeButton.vue';
+import ButtonPlain from './ButtonPlain.vue';
 
 export default {
-  components: { AeButton, AeIcon, HeaderMobile },
+  components: { ButtonPlain, AeIcon, HeaderMobile },
   props: {
     title: { type: String, default: '' },
     redirectToOnClose: { type: Object, default: undefined },
@@ -132,7 +129,7 @@ export default {
       }
 
       .ae-icon {
-        font-size: rem(20px);
+        font-size: rem(22px);
       }
     }
 

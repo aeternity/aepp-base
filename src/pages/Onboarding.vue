@@ -11,7 +11,6 @@
         :to="{ name: 'new-account'}"
         size="small"
         plain
-        uppercase
       >
         Skip
       </ae-button>
@@ -28,10 +27,8 @@
       </transition-group>
       <ae-button
         :to="{ name: isLastStep ? 'new-account' : stepRouteNames[currentStepIdx + 1] }"
-        class="next"
         size="small"
         plain
-        uppercase
       >
         {{ isLastStep ? 'Start' : 'Next' }}
       </ae-button>
@@ -40,7 +37,7 @@
 </template>
 
 <script>
-import { AeButton } from '@aeternity/aepp-components';
+import AeButton from '../components/AeButton.vue';
 import MobilePage from '../components/MobilePage.vue';
 
 export default {
@@ -106,15 +103,6 @@ export default {
           z-index: 1;
         }
       }
-    }
-
-    .ae-button /deep/ .label {
-      padding-left: rem(25px);
-      padding-right: rem(25px);
-      @extend %face-sans-xs;
-      line-height: inherit;
-      letter-spacing: 1.3px;
-      font-weight: bold;
     }
   }
 }

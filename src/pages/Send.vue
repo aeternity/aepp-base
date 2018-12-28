@@ -29,9 +29,7 @@
     <template slot="content-bottom">
       <ae-button
         :disabled="errors.any()"
-        size="medium"
         fill="secondary"
-        uppercase
         @click="setAddress"
       >
         Next

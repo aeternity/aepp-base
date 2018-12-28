@@ -25,7 +25,6 @@
 
     <template slot="footer">
       <ae-button
-        size="medium"
         fill="secondary"
         @click="createSeed"
       >

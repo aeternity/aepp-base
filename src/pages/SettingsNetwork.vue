@@ -38,12 +38,12 @@
           @change="setRPCUrl(network.url)"
         />
       </list-item>
-      <ae-button
+      <router-link
         :to="{ name: 'settings-network-new' }"
-        plain
+        class="connect-to-node"
       >
         Connect to another node
-      </ae-button>
+      </router-link>
     </ae-card>
   </mobile-page>
 </template>
@@ -57,7 +57,6 @@ import MobilePage from '../components/MobilePage.vue';
 import AeCard from '../components/AeCard.vue';
 import ListItem from '../components/ListItem.vue';
 import AeRadio from '../components/AeRadio.vue';
-import AeButton from '../components/AeButton.vue';
 
 export default {
   components: {
@@ -68,7 +67,6 @@ export default {
     AeIcon,
     AeButton3,
     AeRadio,
-    AeButton,
   },
   directives: {
     copyToClipboard: directives.copyToClipboard,
@@ -89,12 +87,17 @@ export default {
     font-size: rem(24px);
   }
 
-  .ae-button._plain {
+  .connect-to-node {
     display: block;
     height: rem(44px);
     line-height: rem(44px);
+    letter-spacing: 1.1px;
+    text-align: center;
     font-size: rem(11px);
+    font-weight: 500;
     color: $color-neutral-negative-1;
+    text-decoration: none;
+    text-transform: uppercase;
   }
 }
 </style>

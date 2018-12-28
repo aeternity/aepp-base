@@ -9,8 +9,8 @@
         :data="activeIdentity.address"
       />
       <ae-address
-        :value="activeIdentity.address"
-        gap="0"
+        :address="activeIdentity.address"
+        split-by="3"
       />
     </main>
 
@@ -24,9 +24,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeAddress } from '@aeternity/aepp-components-3';
 import AeCard from './AeCard.vue';
 import AeQrCode from './AeQrCode.vue';
+import AeAddress from './AeAddress.vue';
 
 export default {
   components: {
@@ -53,14 +53,9 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: rem(8px);
-
-    .ae-address {
-      width: rem(150px);
-    }
+    padding: rem(12px);
 
     .ae-qr-code {
-      margin-left: rem(8px);
       background-color: $color-neutral-maximum;
     }
   }

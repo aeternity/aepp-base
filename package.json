@@ -13,6 +13,8 @@
     "gen:cordova-resources": "cordova-splash && cordova-icon --icon=public/favicons/android-chrome-512x512.png",
     "lint": "vue-cli-service lint --no-fix",
     "test": "npm run lint && npm run test:unit && npm run test:e2e -- --headless",
+    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
+    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -46,6 +48,8 @@
     "vuex-persistedstate": "^2.4.2"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^4.1.0",
+    "@storybook/addon-links": "^4.1.0",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-e2e-cypress": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
@@ -65,6 +69,7 @@
     "jest-canvas-mock": "^1.1.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.3",
+    "vue-cli-plugin-storybook": "^0.5.0",
     "vue-template-compiler": "^2.5.17"
   },
   "engines": {

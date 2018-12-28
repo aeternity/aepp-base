@@ -25,7 +25,6 @@
     <ae-button
       slot="footer"
       :to="{ name: 'new-account-create' }"
-      size="medium"
       fill="secondary"
     >
       Generate Recovery Phrase

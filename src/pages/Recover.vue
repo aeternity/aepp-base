@@ -33,7 +33,6 @@
       <ae-button
         :disabled="errors.any()"
         fill="secondary"
-        size="medium"
         @click="setSeed"
       >
         Recover with Passphrase

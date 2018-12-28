@@ -1,75 +1,45 @@
 <template>
   <component
-    :is="to ? 'ae-link' : 'button'"
-    :class="cssClass"
+    :is="to ? 'ae-link' : 'button-plain'"
+    :class="[fill, size, { plain }]"
     :to="to"
     :disabled="disabled"
     class="ae-button"
     @click="$emit('click', $event)"
   >
-    <div
-      v-if="$slots.icon"
-      class="icon"
-    >
-      <!-- @slot Button icon -->
-      <slot name="icon" />
-    </div>
-    <div
-      v-if="$slots.default"
-      class="label"
-    >
-      <!-- @slot Button content -->
-      <slot />
-    </div>
+    <slot />
   </component>
 </template>
 
 <script>
 import { AeLink } from '@aeternity/aepp-components';
+import ButtonPlain from './ButtonPlain.vue';
 
 export default {
-  components: { AeLink },
+  components: { AeLink, ButtonPlain },
   props: {
     fill: {
       type: String,
       validator: value => [
-        '',
         'primary',
         'secondary',
-        'neutral',
         'alternative',
+        'dark',
+        'light',
       ].includes(value),
-      default: '',
+      default() {
+        if ([true, ''].includes(this.$options.propsData.plain)) return 'dark';
+        return 'primary';
+      },
     },
     size: {
       type: String,
-      validator: value => [
-        'small',
-        'medium',
-        'large',
-      ].includes(value),
+      validator: value => ['small', 'medium'].includes(value),
       default: 'medium',
     },
     disabled: { type: Boolean, default: false },
-    invert: { type: Boolean, default: false },
-    uppercase: { type: Boolean, default: true },
     plain: { type: Boolean, default: false },
-    to: { type: [String, Object], default: undefined },
-  },
-  computed: {
-    cssClass() {
-      const classes = [
-        `_size_${this.size}`,
-        `_fill_${this.fill}`,
-      ];
-      if (this.uppercase) classes.push('_uppercase');
-      if (this.invert) classes.push('_invert');
-      if (this.disabled) classes.push('_disabled');
-      if (this.plain) classes.push('_plain');
-      if (this.$slots.icon) classes.push('_has-icon');
-      if (this.$slots.default) classes.push('_has-label');
-      return classes;
-    },
+    to: { type: [String, Object], default: null },
   },
 };
 </script>
@@ -80,144 +50,74 @@ export default {
 
 .ae-button {
   display: inline-block;
-  border: none;
-  border-radius: 100px;
-  color: $color-black;
-  background-color: $color-neutral-maximum;
+  margin: rem(3px);
   @extend %face-sans-xs;
-  font-weight: 500;
-  letter-spacing: 1.3px;
+  letter-spacing: rem(1.3px);
+  font-weight: bold;
   text-decoration: none;
+  text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.11);
-  padding: 0;
 
-  &._fill {
-    &_primary {
-      background-color: $color-primary;
-      color: $color-white;
-    }
-    &_secondary {
-      background-color: $color-secondary;
-      color: $color-white;
-    }
-    &_neutral {
-      background-color: $color-neutral-maximum;
-      color: $color-black;
-    }
-    &_alternative {
-      background-color: $color-alternative;
-      color: $color-white;
-    }
+  &.primary {
+    background-color: $color-primary;
+    color: #fff;
   }
 
-  &._size {
-    @mixin size ($buttonHeight, $fontSize, $iconSize, $labelGap) {
-      height: $buttonHeight;
-      line-height: $buttonHeight;
-      font-size: $fontSize;
-
-      .icon {
-        width: $buttonHeight;
-        color: $color-black;
-
-        /deep/ {
-          .ae-icon, img {
-            width: $iconSize;
-            height: $iconSize;
-          }
-
-          img {
-            vertical-align: middle;
-          }
-        }
-      }
-
-      .label {
-        padding: 0 $labelGap;
-      }
-
-      &._plain {
-        .label {
-          padding: 0 ($buttonHeight - $fontSize) / 2;
-        }
-
-        &._has-icon {
-          .label {
-            padding-left: $buttonHeight;
-          }
-
-          i {
-            position: relative;
-            top: $iconSize / 4;
-          }
-        }
-      }
-    }
-
-    &_small {
-      @include size(30px, 14px, 16px, 50px);
-    }
-
-    &_medium {
-      @include size(56px, 13px, 24px, 10px);
-    }
-
-    &_large {
-      @include size(65px, 15px, 47px, 30px);
-    }
+  &.secondary {
+    background-color: $color-secondary;
+    color: #fff;
   }
 
-  &._invert._fill {
-    &_primary {
-      color: $color-primary;
-    }
-    &_secondary {
-      color: $color-secondary;
-    }
-    &_neutral {
-      color: $color-neutral;
-    }
-    &_alternative {
-      color: $color-alternative;
-    }
+  &.alternative {
+    background-color: $color-alternative;
+    color: #fff;
   }
 
-  &._plain {
-    background-color: transparent;
-    box-shadow: none;
-
-    &._fill {
-      &_primary {
-        color: $color-primary;
-      }
-      &_secondary {
-        color: $color-secondary;
-      }
-      &_neutral {
-        color: $color-neutral-maximum;
-      }
-      &_alternative {
-        color: $color-alternative;
-      }
-    }
+  &.dark {
+    background-color: $color-neutral-minimum;
+    color: #fff;
   }
 
-  &._uppercase {
-    text-transform: uppercase;
+  &.light {
+    background-color: $color-neutral-maximum;
+    color: #000;
   }
 
-  &._has-label .icon {
-    position: absolute;
-  }
-
-  .label {
+  &.medium {
+    min-width: rem(311px);
+    height: rem(56px);
+    border-radius: rem(32px);
+    line-height: rem(56px);
     text-align: center;
   }
 
-  &._disabled {
-    background-color: $color-neutral-positive-1;
+  &[disabled] {
+    opacity: 0.2;
     cursor: not-allowed;
+  }
+
+  &.plain {
+    background-color: transparent;
+
+    &.primary {
+      color: $color-primary;
+    }
+
+    &.secondary {
+      color: $color-secondary;
+    }
+
+    &.alternative {
+      color: $color-alternative;
+    }
+
+    &.dark {
+      color: $color-neutral-minimum;
+    }
+
+    &.light {
+      color: $color-neutral-maximum;
+    }
   }
 }
 </style>
