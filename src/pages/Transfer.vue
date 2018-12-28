@@ -25,19 +25,13 @@
           name="more"
         />
         <li>
-          <ae-button
-            plain
-            @click="copyAddress"
-          >
+          <ae-button @click="copyAddress">
             <ae-icon name="copy" />
             Copy Address
           </ae-button>
         </li>
         <li>
-          <ae-button
-            plain
-            @click="accountNameEditable = true"
-          >
+          <ae-button @click="accountNameEditable = true">
             <ae-icon name="edit" />
             Rename
           </ae-button>
@@ -106,7 +100,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
-import { AeIcon, AeDropdown } from '@aeternity/aepp-components-3';
+import { AeIcon, AeDropdown, AeButton } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import glowingStarEmojiPath from 'emoji-datasource-apple/img/apple/64/1f31f.png';
@@ -114,7 +108,6 @@ import copy from 'clipboard-copy';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAccount from '../components/AeAccount.vue';
-import AeButton from '../components/AeButton.vue';
 import ListItem from '../components/ListItem.vue';
 import TransferNotification from '../components/TransferNotification.vue';
 import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
@@ -182,23 +175,6 @@ export default {
     .ae-dropdown-button {
        width: rem(20px);
        height: rem(20px);
-    }
-  }
-
-  .ae-dropdown {
-    .ae-icon {
-      font-size: rem(20px);
-    }
-
-    li {
-      padding: 0;
-
-      .ae-button {
-        display: flex;
-        @extend %face-sans-s;
-        text-transform: none;
-        letter-spacing: 0;
-      }
     }
   }
 
