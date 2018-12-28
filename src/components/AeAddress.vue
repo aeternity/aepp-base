@@ -57,7 +57,7 @@ export default {
           name: 'remove-spaces-on-copy',
         }],
       },
-      this.lines.reduce((p, line, idx) => [...p, ...idx ? [createElement('br')] : [], line], []),
+      this.lines.reduce((p, line, idx) => [...p, idx ? createElement('br') : null, line], []),
     );
   },
 };
