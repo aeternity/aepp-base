@@ -4,17 +4,12 @@
     class="qr-code-reader"
   >
     <header-mobile>
-      <ae-button
+      <button-plain
         slot="left"
-        size="small"
-        plain
         @click="cancelReading"
       >
-        <ae-icon
-          slot="icon"
-          name="back"
-        />
-      </ae-button>
+        <ae-icon name="back" />
+      </button-plain>
       {{ qrCodeReaderTask.title }}
     </header-mobile>
 
@@ -39,10 +34,10 @@ import { mapState } from 'vuex';
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import HeaderMobile from './HeaderMobile.vue';
-import AeButton from './AeButton.vue';
+import ButtonPlain from './ButtonPlain.vue';
 
 export default {
-  components: { HeaderMobile, AeButton, AeIcon },
+  components: { HeaderMobile, ButtonPlain, AeIcon },
   data: () => ({
     cameraAllowed: false,
     browserReader: !process.env.IS_CORDOVA && new BrowserQRCodeReader(),
@@ -123,8 +118,8 @@ export default {
   .header-mobile {
     background: #fff;
 
-    .ae-button .ae-icon {
-      font-size: rem(20px);
+    .button-plain .ae-icon {
+      font-size: rem(22px);
     }
   }
 
