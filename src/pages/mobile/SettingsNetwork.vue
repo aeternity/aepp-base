@@ -3,7 +3,7 @@
     :redirect-to-on-close="{ name: 'settings' }"
     title="Network"
     back-button
-    class="settings-network"
+    class="settings settings-network"
   >
     <ae-card fill="maximum">
       <list-item
@@ -78,14 +78,12 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import './Settings.scss';
+@import './SettingsHeader.scss';
 
 .settings-network {
-  background-color: $color-neutral-positive-2;
-
   .ae-icon-more {
     font-size: rem(24px);
   }
 }
 </style>
-
-<style lang="scss" src="./SettingsNetwork.scss" scoped />

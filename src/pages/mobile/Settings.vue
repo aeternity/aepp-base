@@ -107,10 +107,9 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import './Settings.scss';
 
 .settings {
-  background-color: $color-neutral-positive-2;
-
   /deep/ .panel {
     justify-content: space-between;
 

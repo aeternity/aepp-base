@@ -3,7 +3,7 @@
     :redirect-to-on-close="{ name: 'settings-network' }"
     title="Connect to another node"
     back-button
-    class="settings-network settings-network-new"
+    class="settings settings-network-new"
   >
     <ae-card fill="maximum">
       <guide>Connect to<br><em>another node</em></guide>
@@ -86,10 +86,10 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import './Settings.scss';
+@import './SettingsHeader.scss';
 
 .settings-network-new {
-  background-color: $color-neutral-positive-2;
-
   .ae-card {
     padding: 0 rem(20px);
 
@@ -121,5 +121,3 @@ export default {
   }
 }
 </style>
-
-<style lang="scss" src="./SettingsNetwork.scss" scoped />

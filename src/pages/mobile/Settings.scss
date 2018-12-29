@@ -1,8 +1,5 @@
-@import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-@include phone {
-  .settings.mobile-page /deep/ .panel .content {
-    margin-left: 0;
-    margin-right: 0;
-  }
+.settings {
+  background-color: $color-neutral-positive-2;
 }

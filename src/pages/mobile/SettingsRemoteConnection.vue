@@ -5,54 +5,47 @@
     back-button
     class="settings"
   >
-    <heading>Connected devices</heading>
-    <item
-      v-for="f in followers"
-      :key="f.id"
-      inactive
-    >
-      <div class="follower">
-        <span class="name">
-          {{ f.name }}
-        </span><br>
-        <span class="status">
-          {{ f.connected ? 'Connected' : `Disconnected at ${f.disconnectedAt}` }}
-        </span>
-      </div>
-      <ae-button
-        slot="right"
-        type="dramatic"
-        size="small"
-        plain
-        uppercase
-        @click="removeFollower(f.id)"
+    <ae-card fill="maximum">
+      <list-item
+        v-for="follower in followers"
+        :key="follower.id"
+        :title="follower.name"
+        :subtitle="follower.connected ? 'Connected' : `Disconnected at ${follower.disconnectedAt}`"
+        inactive
       >
-        revoke
-      </ae-button>
-    </item>
+        <ae-button
+          slot="right"
+          fill="primary"
+          size="small"
+          plain
+          @click="removeFollower(follower.id)"
+        >
+          revoke
+        </ae-button>
+      </list-item>
 
-    <fixed-add-button
-      :to="{ name: 'settings-remote-connection-new' }"
-      quick-id
-    />
+      <list-item-button :to="{ name: 'settings-remote-connection-new' }">
+        Connect device
+      </list-item-button>
+    </ae-card>
   </mobile-page>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { AeButton } from '@aeternity/aepp-components';
 import MobilePage from '../../components/MobilePage.vue';
-import SettingsHeading from '../../components/SettingsHeading.vue';
-import ListItem from '../../components/deprecated/ListItem.vue';
-import FixedAddButton from '../../components/FixedAddButton.vue';
+import AeCard from '../../components/AeCard.vue';
+import ListItem from '../../components/ListItem.vue';
+import ListItemButton from '../../components/ListItemButton.vue';
+import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    AeButton,
     MobilePage,
-    Heading: SettingsHeading,
-    Item: ListItem,
-    FixedAddButton,
+    AeCard,
+    ListItem,
+    ListItemButton,
+    AeButton,
   },
   computed: mapState({
     followers: ({ mobile: { followers } }) => Object.values(followers)
@@ -65,26 +58,7 @@ export default {
 };
 </script>
 
-<style src="./Settings.scss" lang="scss" scoped />
-
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
-
-.settings {
-  .list-item {
-    height: 84px;
-
-    .follower {
-      .name {
-        line-height: 1.56;
-      }
-
-      .status {
-        line-height: 1.44;
-        color: $grey;
-        font-size: 16px;
-      }
-    }
-  }
-}
+@import './Settings.scss';
+@import './SettingsHeader.scss';
 </style>
