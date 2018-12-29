@@ -17,12 +17,12 @@ import Receive from '../../pages/Receive.vue';
 import Send from '../../pages/Send.vue';
 import SendAmount from '../../pages/SendAmount.vue';
 import SendConfirm from '../../pages/SendConfirm.vue';
-import Settings from '../../pages/Settings.vue';
-import SettingsNetwork from '../../pages/SettingsNetwork.vue';
-import SettingsNetworkNew from '../../pages/SettingsNetworkNew.vue';
-import SettingsRemoteConnection from '../../pages/SettingsRemoteConnection.vue';
+import Settings from '../../pages/mobile/Settings.vue';
+import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
+import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
+import SettingsRemoteConnection from '../../pages/mobile/SettingsRemoteConnection.vue';
 
-const SettingsRemoteConnectionNew = () => import('../../pages/SettingsRemoteConnectionNew.vue');
+const SettingsRemoteConnectionNew = () => import('../../pages/mobile/SettingsRemoteConnectionNew.vue');
 
 const checkSeedPassed = (to, from, next) => {
   if (!to.params.seed) {

@@ -45,12 +45,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import MobilePage from '../components/MobilePage.vue';
-import AeCard from '../components/AeCard.vue';
-import Guide from '../components/Guide.vue';
-import AeInput from '../components/AeInput.vue';
-import AeButton from '../components/AeButton.vue';
-import { toUrl } from '../lib/utils';
+import MobilePage from '../../components/MobilePage.vue';
+import AeCard from '../../components/AeCard.vue';
+import Guide from '../../components/Guide.vue';
+import AeInput from '../../components/AeInput.vue';
+import AeButton from '../../components/AeButton.vue';
+import { toUrl } from '../../lib/utils';
 
 export default {
   components: {
