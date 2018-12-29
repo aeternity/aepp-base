@@ -43,6 +43,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
+
 .quick-id {
   display: flex;
   align-items: center;
@@ -56,6 +58,7 @@ export default {
   a, button {
     flex-grow: 1;
     flex-basis: 0;
+    font-family: $font-sans;
     font-size: 11px;
     font-weight: 500;
     line-height: 1.45;
