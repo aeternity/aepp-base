@@ -113,10 +113,6 @@ export default {
       display: block;
       min-width: rem(250px);
       margin: rem(10px) auto;
-
-      &._plain {
-        color: $color-neutral-negative-3;
-      }
     }
   }
 }
