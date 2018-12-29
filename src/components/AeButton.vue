@@ -1,10 +1,9 @@
 <template>
   <button-plain
     :class="[fill, size, { plain }]"
-    :to="to"
-    :disabled="disabled"
+    v-bind="$attrs"
     class="ae-button"
-    @click="$emit('click', $event)"
+    v-on="$listeners"
   >
     <slot />
   </button-plain>
@@ -35,9 +34,7 @@ export default {
       validator: value => ['small', 'medium'].includes(value),
       default: 'medium',
     },
-    disabled: { type: Boolean, default: false },
     plain: { type: Boolean, default: false },
-    to: { type: [String, Object], default: null },
   },
 };
 </script>
