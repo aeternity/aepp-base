@@ -9,6 +9,7 @@ import AeButton from '../components/AeButton.vue';
 import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
 import LedgerAddressConfirmModal from '../components/desktop/LedgerAddressConfirmModal.vue';
+import SignTransactionConfirmModal from '../components/desktop/SignTransactionConfirmModal.vue';
 import { account } from './mock-data';
 
 Vue.use(Vuex);
@@ -55,4 +56,16 @@ storiesOf('AeModal', module)
         },
       },
     }),
+  }))
+  .add('SignTransactionConfirmModal', () => ({
+    components: { SignTransactionConfirmModal },
+    template: '<sign-transaction-confirm-modal />',
+    store: new Vuex.Store({
+      state: {
+        desktop: {
+          showSignTransactionModalForAddress: account.address,
+        },
+      },
+    }),
+  }))
   }));

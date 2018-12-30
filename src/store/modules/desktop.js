@@ -12,6 +12,7 @@ export default {
     ledgerAccountNumber: 1,
     ledgerAddresses: [],
     showConfirmModalForAddress: '',
+    showSignTransactionModalForAddress: '',
     showSidebar: false,
   },
 
@@ -52,6 +53,9 @@ export default {
     },
     showConfirmModalForAddress(state, address) {
       state.showConfirmModalForAddress = address;
+    },
+    showSignTransactionModalForAddress(state, address) {
+      state.showSignTransactionModalForAddress = address;
     },
   },
 
