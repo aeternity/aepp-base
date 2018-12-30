@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[fill, { disabled }]"
+    :class="[fill]"
     class="ae-toolbar"
   >
     <slot />
@@ -21,10 +21,6 @@ export default {
       ].includes(value),
       default: '',
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
   },
 };
 </script>
@@ -40,17 +36,8 @@ export default {
   background: $color-neutral-positive-2;
   color: $color-neutral-negative-1;
 
-  &.disabled {
-    cursor: not-allowed;
-    color: rgba($color-neutral-negative-1, 0.5);
-  }
-
   &.primary, &.secondary, &.neutral, &.alternative {
     color: #fff;
-
-    &.disabled {
-      color: rgba(#fff, 0.5);
-    }
   }
 
   &.primary {
