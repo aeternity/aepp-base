@@ -4,7 +4,10 @@
     @close="$emit('close')"
   >
     <header>
-      <div class="logo" />
+      <img
+        class="logo"
+        src="../../assets/ledger-logo.svg"
+      >
       {{ title }}
       <div>
         <button-plain
@@ -70,7 +73,6 @@ export default {
 
     .logo {
       height: rem(24px);
-      background-color: #333745;
     }
 
     .button-plain .ae-icon {
