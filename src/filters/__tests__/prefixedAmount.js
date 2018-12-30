@@ -8,7 +8,7 @@ describe('prefixedAmount', () => {
   });
 
   it('displays fees', () => {
-    expect(prefixedAmount(BigNumber(17120).shiftedBy(-MAGNITUDE), 0)).toBe('0.01712 pico');
+    expect(prefixedAmount(BigNumber(17120).shiftedBy(-MAGNITUDE), 0)).toBe('0.01712 Pico');
   });
 
   it('displays balance', () => {
@@ -18,19 +18,19 @@ describe('prefixedAmount', () => {
   it('generates proper values', () => {
     const t = BigNumber(`0.${'123456789'.repeat(3)}`).shiftedBy(-MAGNITUDE);
     [
-      '0.00000012 pico',
-      '0.00000123 pico',
-      '0.00001235 pico',
-      '0.00012346 pico',
-      '0.00123457 pico',
-      '0.01234568 pico',
-      '0.12345679 pico',
-      '1.23456789 pico',
-      '12.3456789 pico',
-      '123.456789 pico',
-      '1234.56789 pico',
-      '12345.6789 pico',
-      '123456.789 pico',
+      '0.00000012 Pico',
+      '0.00000123 Pico',
+      '0.00001235 Pico',
+      '0.00012346 Pico',
+      '0.00123457 Pico',
+      '0.01234568 Pico',
+      '0.12345679 Pico',
+      '1.23456789 Pico',
+      '12.3456789 Pico',
+      '123.456789 Pico',
+      '1234.56789 Pico',
+      '12345.6789 Pico',
+      '123456.789 Pico',
       '0.00000123',
       '0.00001235',
       '0.00012346',
@@ -46,17 +46,17 @@ describe('prefixedAmount', () => {
       '1234567.89',
       '12345678.9',
       '123456789',
-      '1.23456789 giga',
-      '12.3456789 giga',
-      '123.456789 giga',
-      '1234.56789 giga',
-      '12345.6789 giga',
-      '123456.789 giga',
-      '1234567.89 giga',
-      '12345678.9 giga',
-      '123456789 giga',
-      '1.23456789 exa',
-      '12.3456789 exa',
+      '1.23456789 Giga',
+      '12.3456789 Giga',
+      '123.456789 Giga',
+      '1234.56789 Giga',
+      '12345.6789 Giga',
+      '123456.789 Giga',
+      '1234567.89 Giga',
+      '12345678.9 Giga',
+      '123456789 Giga',
+      '1.23456789 Exa',
+      '12.3456789 Exa',
     ].forEach((res, idx) => expect(prefixedAmount(t.shiftedBy(idx))).toBe(res));
   });
 });
