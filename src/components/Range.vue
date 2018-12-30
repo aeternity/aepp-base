@@ -1,6 +1,6 @@
 <template>
   <input
-    class="range"
+    :class="['range', fill]"
     :min="min"
     :max="max"
     :value="value"
@@ -12,6 +12,14 @@
 <script>
 export default {
   props: {
+    fill: {
+      type: String,
+      validator: value => [
+        '',
+        'neutral',
+      ].includes(value),
+      default: '',
+    },
     min: {
       type: Number,
       required: true,
@@ -32,21 +40,87 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-@mixin range-track() {
+@mixin range-track($background-color) {
   width: 100%;
   height: rem(2px);
-  background: $color-primary-positive-1;
+  background: $background-color;
 }
 
-@mixin range-thumb() {
+@mixin range-thumb($background-color) {
   height: rem(15px);
   width: rem(15px);
   border-radius: rem(48px);
-  background: $color-neutral-maximum;
+  background: $background-color;
   cursor: pointer;
 }
 
 .range {
+  &::-webkit-slider-runnable-track {
+    @include range-track($color-neutral-positive-1);
+  }
+
+  &::-moz-range-track {
+    @include range-track($color-neutral-positive-1);
+  }
+
+  &::-ms-track {
+    @include range-track($color-neutral-positive-1);
+  }
+
+  &::-ms-fill-lower {
+    @include range-track($color-neutral-positive-1);
+  }
+
+  &::-ms-fill-upper {
+    @include range-track($color-neutral-positive-1);
+  }
+
+   &::-webkit-slider-thumb {
+    @include range-thumb($color-primary);
+  }
+
+  &::-moz-range-thumb {
+    @include range-thumb($color-primary);
+  }
+
+  &::-ms-thumb  {
+    @include range-thumb($color-primary);
+  }
+
+  &.neutral {
+    &::-webkit-slider-runnable-track {
+      @include range-track($color-primary-positive-1);
+    }
+
+    &::-moz-range-track {
+      @include range-track($color-primary-positive-1);
+    }
+
+    &::-ms-track {
+      @include range-track($color-primary-positive-1);
+    }
+
+    &::-ms-fill-lower {
+      @include range-track($color-primary-positive-1);
+    }
+
+    &::-ms-fill-upper {
+      @include range-track($color-primary-positive-1);
+    }
+
+     &::-webkit-slider-thumb {
+      @include range-thumb($color-neutral-maximum);
+    }
+
+    &::-moz-range-thumb {
+      @include range-thumb($color-neutral-maximum);
+    }
+
+    &::-ms-thumb  {
+      @include range-thumb($color-neutral-maximum);
+    }
+  }
+
   -webkit-appearance: none;
   width: 100%;
   cursor: pointer;
@@ -55,24 +129,9 @@ export default {
     outline: none;
   }
 
-  &::-webkit-slider-runnable-track {
-    @include range-track;
-  }
-
-  &::-moz-range-track {
-    @include range-track;
-  }
-
-  &::-ms-track {
-    @include range-track;
-  }
-
-  &::-ms-fill-lower {
-    @include range-track;
-  }
-
-  &::-ms-fill-upper {
-    @include range-track;
+   &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    margin-top: rem(-6px);
   }
 
   &::-ms-track {
@@ -81,18 +140,5 @@ export default {
     color: transparent;
   }
 
-  &::-webkit-slider-thumb {
-    @include range-thumb;
-    -webkit-appearance: none;
-    margin-top: rem(-6px);
-  }
-
-  &::-moz-range-thumb {
-    @include range-thumb;
-  }
-
-  &::-ms-thumb  {
-    @include range-thumb;
-  }
 }
 </style>
