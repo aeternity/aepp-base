@@ -38,7 +38,6 @@ export default {
   line-height: 2rem;
   padding: 0 1rem;
   background: $color-neutral-positive-2;
-  font-weight: 500;
   color: $color-neutral-negative-1;
 
   &.disabled {
