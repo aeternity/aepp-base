@@ -3,31 +3,36 @@
     title="Define the Transaction fee"
     class="transaction-fee"
   >
-    <ae-input
-      v-model="fee"
-      v-validate="{
-        required: true,
-        decimal: MAGNITUDE,
-        min_value: MIN_SPEND_TX_FEE,
-        max_value: MAX_REASONABLE_FEE,
-      }"
-      :error="errors.has('fee')"
-      type="number"
-      name="fee"
-      label="Transaction Fee"
-      placeholder="0.0"
-      aemount
+    <form
+      :id="_uid"
+      @submit.prevent="setTransactionFee"
     >
-      <span slot="header">
-        Pico AE
-      </span>
-    </ae-input>
+      <ae-input
+        v-model="fee"
+        v-validate="{
+          required: true,
+          decimal: MAGNITUDE,
+          min_value: MIN_SPEND_TX_FEE,
+          max_value: MAX_REASONABLE_FEE,
+        }"
+        :error="errors.has('fee')"
+        type="number"
+        name="fee"
+        label="Transaction Fee"
+        placeholder="0.0"
+        aemount
+      >
+        <span slot="header">
+          Pico AE
+        </span>
+      </ae-input>
 
-    <ae-input-range
-      v-model="fee"
-      :min="MIN_SPEND_TX_FEE"
-      :max="MAX_REASONABLE_FEE"
-    />
+      <ae-input-range
+        v-model="fee"
+        :min="MIN_SPEND_TX_FEE"
+        :max="MAX_REASONABLE_FEE"
+      />
+    </form>
 
     <div class="note">
       A higher transaction fee leads to a faster
@@ -38,7 +43,7 @@
       slot="footer"
       size="small"
       plain
-      @click="next"
+      :form="_uid"
     >
       Next
     </ae-button>
@@ -76,7 +81,7 @@ export default {
     },
   }),
   methods: {
-    async next() {
+    async setTransactionFee() {
       await this.$validator.validateAll();
     },
   },
