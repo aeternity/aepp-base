@@ -7,7 +7,6 @@
     <sidebar-desktop />
     <footer-desktop :show-back-button="$route.name !== 'apps'" />
     <ledger-address-confirm-modal />
-    <sign-transaction-confirm-modal />
   </div>
 </template>
 
@@ -16,7 +15,6 @@ import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
 import FooterDesktop from './components/FooterDesktop.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
-import SignTransactionConfirmModal from './components/desktop/SignTransactionConfirmModal.vue';
 
 export default {
   components: {
@@ -24,7 +22,6 @@ export default {
     SidebarDesktop,
     FooterDesktop,
     LedgerAddressConfirmModal,
-    SignTransactionConfirmModal,
   },
 };
 </script>

@@ -1,6 +1,5 @@
 <template>
   <ledger-modal
-    v-if="address"
     title="Sign transaction on the Ledger"
     class="sign-transaction-confirm"
   >
@@ -19,7 +18,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeLoader from '../AeLoader.vue';
 
@@ -28,10 +26,6 @@ export default {
     LedgerModal,
     AeLoader,
   },
-  computed: mapState({
-    address: ({ desktop: { showSignTransactionModalForAddress } }) => (
-      showSignTransactionModalForAddress),
-  }),
 };
 </script>
 
