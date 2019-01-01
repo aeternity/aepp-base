@@ -2,9 +2,7 @@
   <input
     class="ae-input-range"
     :class="[fill]"
-    :min="min"
-    :max="max"
-    :value="value"
+    v-bind="$attrs"
     type="range"
     @input="$emit($event.type, +$event.target.value)"
   >
@@ -20,18 +18,6 @@ export default {
         'neutral',
       ].includes(value),
       default: '',
-    },
-    min: {
-      type: Number,
-      required: true,
-    },
-    max: {
-      type: Number,
-      required: true,
-    },
-    value: {
-      type: Number,
-      default: undefined,
     },
   },
 };
