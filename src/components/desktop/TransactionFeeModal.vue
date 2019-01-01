@@ -34,12 +34,14 @@
       <br>transaction time.
     </div>
 
-    <button-plain
+    <ae-button
       slot="footer"
+      size="small"
+      plain
       @click="next"
     >
       Next
-    </button-plain>
+    </ae-button>
   </ledger-modal>
 </template>
 
@@ -49,7 +51,7 @@ import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeInput from '../AeInput.vue';
 import AeInputRange from '../AeInputRange.vue';
-import ButtonPlain from '../ButtonPlain.vue';
+import AeButton from '../AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../../lib/constants';
 
 export default {
@@ -57,7 +59,7 @@ export default {
     LedgerModal,
     AeInput,
     AeInputRange,
-    ButtonPlain,
+    AeButton,
   },
   data: () => ({
     fee: MIN_SPEND_TX_FEE,
@@ -124,12 +126,8 @@ export default {
     text-align: center;
   }
 
-  .button-plain {
+  .ae-button {
     float: right;
-    @extend %face-sans-xs;
-    color: $color-neutral-minimum;
-    font-weight: bold;
-    text-transform: uppercase;
   }
 }
 </style>
