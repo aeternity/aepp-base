@@ -55,12 +55,16 @@ export default {
       @include range-track($color-neutral-positive-1);
     }
 
+    &::-moz-range-progress {
+      @include range-track($color-primary);
+    }
+
     &::-ms-track {
       @include range-track($color-neutral-positive-1);
     }
 
     &::-ms-fill-lower {
-      @include range-track($color-neutral-positive-1);
+      @include range-track($color-primary);
     }
 
     &::-ms-fill-upper {
@@ -89,12 +93,16 @@ export default {
       @include range-track($color-primary-positive-1);
     }
 
+    &::-moz-range-progress {
+      @include range-track($color-neutral-maximum);
+    }
+
     &::-ms-track {
       @include range-track($color-primary-positive-1);
     }
 
     &::-ms-fill-lower {
-      @include range-track($color-primary-positive-1);
+      @include range-track($color-neutral-maximum);
     }
 
     &::-ms-fill-upper {
