@@ -13,7 +13,7 @@
       }"
       :error="errors.has('fee')"
       type="number"
-      name="amount"
+      name="fee"
       label="Transaction Fee"
       placeholder="0.0"
       aemount
