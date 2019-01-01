@@ -2,6 +2,7 @@
   <ledger-modal
     title="Define the Transaction fee"
     class="transaction-fee"
+    closable
   >
     <form
       :id="_uid"
