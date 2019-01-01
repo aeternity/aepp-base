@@ -1,6 +1,7 @@
 <template>
   <input
-    :class="['range', fill]"
+    class="ae-input-range"
+    :class="[fill]"
     :min="min"
     :max="max"
     :value="value"
@@ -54,7 +55,7 @@ export default {
   cursor: pointer;
 }
 
-.range {
+.ae-input-range {
   &::-webkit-slider-runnable-track {
     @include range-track($color-neutral-positive-1);
   }

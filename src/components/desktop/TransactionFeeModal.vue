@@ -23,7 +23,7 @@
       </span>
     </ae-input>
 
-    <range
+    <ae-input-range
       v-model="fee"
       :min="MIN_SPEND_TX_FEE"
       :max="MAX_REASONABLE_FEE"
@@ -48,7 +48,7 @@ import BigNumber from 'bignumber.js';
 import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeInput from '../AeInput.vue';
-import Range from '../Range.vue';
+import AeInputRange from '../AeInputRange.vue';
 import ButtonPlain from '../ButtonPlain.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../../lib/constants';
 
@@ -56,7 +56,7 @@ export default {
   components: {
     LedgerModal,
     AeInput,
-    Range,
+    AeInputRange,
     ButtonPlain,
   },
   data: () => ({
@@ -112,7 +112,7 @@ export default {
     }
   }
 
-  .range {
+  .ae-input-range {
     display: block;
     margin: rem(40px) auto;
     width: rem(279px);
