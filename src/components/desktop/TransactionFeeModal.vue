@@ -18,7 +18,9 @@
       placeholder="0.0"
       aemount
     >
-      <span slot="header">Pico AE</span>
+      <span slot="header">
+        Pico AE
+      </span>
     </ae-input>
 
     <range
