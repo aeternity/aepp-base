@@ -1,7 +1,7 @@
 <template>
   <ledger-modal
     v-if="address"
-    title="Sign transcation on the Ledger"
+    title="Sign transaction on the Ledger"
     class="sign-transaction-confirm"
   >
     <div class="ledger-image" />
