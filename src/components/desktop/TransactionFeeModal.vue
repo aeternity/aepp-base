@@ -51,8 +51,6 @@
 </template>
 
 <script>
-import BigNumber from 'bignumber.js';
-import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeInput from '../AeInput.vue';
 import AeInputRange from '../AeInputRange.vue';
@@ -71,14 +69,6 @@ export default {
     MAGNITUDE,
     MIN_SPEND_TX_FEE,
     MAX_REASONABLE_FEE,
-    BigNumber,
-  }),
-  computed: mapState({
-    address: ({ desktop: { showSignTransactionModalForAddress } }) => (
-      showSignTransactionModalForAddress),
-    formattedFee() {
-      return BigNumber(this.fee).shiftedBy(-MAGNITUDE);
-    },
   }),
   methods: {
     async setTransactionFee() {
@@ -104,7 +94,6 @@ export default {
     margin: rem(60px) auto;
     width: rem(311px);
     height: rem(96px);
-    color: red;
 
     /deep/ {
       .ae-input-header span {

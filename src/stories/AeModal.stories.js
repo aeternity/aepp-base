@@ -80,22 +80,8 @@ storiesOf('AeModal', module)
   .add('SignTransactionConfirmModal', () => ({
     components: { SignTransactionConfirmModal },
     template: '<sign-transaction-confirm-modal />',
-    store: new Vuex.Store({
-      state: {
-        desktop: {
-          showSignTransactionModalForAddress: account.address,
-        },
-      },
-    }),
   }))
   .add('TransactionFeeModal', () => ({
     components: { TransactionFeeModal },
     template: '<transaction-fee-modal />',
-    store: new Vuex.Store({
-      state: {
-        desktop: {
-          showSignTransactionModalForAddress: account.address,
-        },
-      },
-    }),
   }));
