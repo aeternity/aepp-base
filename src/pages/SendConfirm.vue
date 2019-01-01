@@ -74,6 +74,7 @@
     >
       <ae-input-range
         v-model="fee"
+        fill="light"
         :min="MIN_SPEND_TX_FEE"
         :max="MAX_REASONABLE_FEE"
       />
