@@ -123,6 +123,10 @@ export default {
     margin-top: rem(-6px);
   }
 
+  &::-moz-range-thumb {
+    border: none;
+  }
+
   &::-ms-track {
     background: transparent;
     border-color: transparent;
