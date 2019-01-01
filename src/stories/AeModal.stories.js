@@ -10,8 +10,8 @@ import AeButton from '../components/AeButton.vue';
 import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
 import LedgerAddressConfirmModal from '../components/desktop/LedgerAddressConfirmModal.vue';
-import SignTransactionConfirmModal from '../components/desktop/SignTransactionConfirmModal.vue';
-import TransactionFeeModal from '../components/desktop/TransactionFeeModal.vue';
+import LedgerSignTransactionConfirmModal from '../components/desktop/LedgerSignTransactionConfirmModal.vue';
+import LedgerTransactionFeeModal from '../components/desktop/LedgerTransactionFeeModal.vue';
 import { account } from './mock-data';
 
 Vue.use(Vuex);
@@ -60,11 +60,11 @@ storiesOf('AeModal', module)
       },
     }),
   }))
-  .add('SignTransactionConfirmModal', () => ({
-    components: { SignTransactionConfirmModal },
-    template: '<sign-transaction-confirm-modal />',
+  .add('LedgerSignTransactionConfirmModal', () => ({
+    components: { LedgerSignTransactionConfirmModal },
+    template: '<ledger-sign-transaction-confirm-modal />',
   }))
-  .add('TransactionFeeModal', () => ({
-    components: { TransactionFeeModal },
-    template: '<transaction-fee-modal />',
+  .add('LedgerTransactionFeeModal', () => ({
+    components: { LedgerTransactionFeeModal },
+    template: '<ledger-transaction-fee-modal />',
   }));
