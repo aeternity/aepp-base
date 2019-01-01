@@ -32,93 +32,53 @@ export default {
   width: 100%;
   cursor: pointer;
 
+  $colors: (
+    primary: (
+      track-color: $color-neutral-positive-1,
+      progress-color: $color-primary,
+      thumb-color: $color-primary,
+    ),
+    light: (
+      track-color: $color-primary-positive-1,
+      progress-color: $color-neutral-maximum,
+      thumb-color: $color-neutral-maximum,
+    ),
+  );
+
   @mixin range-track($background-color) {
     width: 100%;
     height: rem(2px);
     background: $background-color;
   }
 
-  @mixin range-thumb($background-color) {
-    height: rem(15px);
-    width: rem(15px);
-    border-radius: rem(48px);
-    background: $background-color;
-    cursor: pointer;
-  }
+  @each $fill, $colors in $colors {
+    &.#{$fill} {
+      @each $name in (
+        -webkit-slider-runnable-track,
+        -moz-range-track,
+        -ms-track,
+        -ms-fill-upper,
+      ) {
+        &::#{$name} {
+          @include range-track(map-get($colors, track-color));
+        }
+      }
 
-  &.primary {
-    &::-webkit-slider-runnable-track {
-      @include range-track($color-neutral-positive-1);
-    }
+      @each $name in -moz-range-progress -ms-fill-lower {
+        &::#{$name} {
+          @include range-track(map-get($colors, progress-color));
+        }
+      }
 
-    &::-moz-range-track {
-      @include range-track($color-neutral-positive-1);
-    }
-
-    &::-moz-range-progress {
-      @include range-track($color-primary);
-    }
-
-    &::-ms-track {
-      @include range-track($color-neutral-positive-1);
-    }
-
-    &::-ms-fill-lower {
-      @include range-track($color-primary);
-    }
-
-    &::-ms-fill-upper {
-      @include range-track($color-neutral-positive-1);
-    }
-
-    &::-webkit-slider-thumb {
-      @include range-thumb($color-primary);
-    }
-
-    &::-moz-range-thumb {
-      @include range-thumb($color-primary);
-    }
-
-    &::-ms-thumb {
-      @include range-thumb($color-primary);
-    }
-  }
-
-  &.light {
-    &::-webkit-slider-runnable-track {
-      @include range-track($color-primary-positive-1);
-    }
-
-    &::-moz-range-track {
-      @include range-track($color-primary-positive-1);
-    }
-
-    &::-moz-range-progress {
-      @include range-track($color-neutral-maximum);
-    }
-
-    &::-ms-track {
-      @include range-track($color-primary-positive-1);
-    }
-
-    &::-ms-fill-lower {
-      @include range-track($color-neutral-maximum);
-    }
-
-    &::-ms-fill-upper {
-      @include range-track($color-primary-positive-1);
-    }
-
-    &::-webkit-slider-thumb {
-      @include range-thumb($color-neutral-maximum);
-    }
-
-    &::-moz-range-thumb {
-      @include range-thumb($color-neutral-maximum);
-    }
-
-    &::-ms-thumb  {
-      @include range-thumb($color-neutral-maximum);
+      @each $name in -webkit-slider-thumb -moz-range-thumb -ms-thumb {
+        &::#{$name} {
+          height: rem(15px);
+          width: rem(15px);
+          border-radius: rem(48px);
+          background: map-get($colors, thumb-color);
+          cursor: pointer;
+        }
+      }
     }
   }
 
