@@ -2,68 +2,84 @@
   <ae-textarea
     v-remove-spaces-on-copy
     :value="formattedValue"
-    :label="label"
-    :placeholder="placeholder"
-    :error="error"
+    placeholder="ak_ …"
     class="ae-input-address"
-    type="textarea"
+    rows="3"
     monospace
+    v-bind="$attrs"
     @input="handleInput"
   >
     <template slot="footer">
-      <ae-toolbar>
-        <button-plain
-          @click="readValueFromQrCode"
-        >
-          <ae-icon name="camera" />
-          Scan
-        </button-plain>
+      <ae-identicon
+        v-if="isValueValid"
+        :address="value"
+        size="s"
+      />
+      <span v-else-if="value.length">
+        Invalid AE Address
+      </span>
+    </template>
 
-        <ae-identicon
-          v-if="isValueValid"
-          :address="value"
-          size="s"
-        />
-        <span v-else-if="value.length">
-          Invalid AE Address
-        </span>
-      </ae-toolbar>
+    <template slot="footer-right">
+      <template v-if="!$globals.IS_MOBILE_DEVICE">
+        <ae-toolbar-button
+          v-if="accounts.length"
+          ref="accounts-button"
+          type="button"
+          @click="showAccountsDropdown = true"
+        >
+          <ae-icon name="card" />
+        </ae-toolbar-button>
+
+        <ae-popover
+          :anchor="showAccountsDropdown ? $refs['accounts-button'] : null"
+          @close="showAccountsDropdown = false"
+        >
+          <list-item-account
+            v-for="account in accounts"
+            :key="account.address"
+            v-bind="account"
+            @click="setAddress(account.address)"
+          />
+        </ae-popover>
+      </template>
+
+      <ae-toolbar-button
+        type="button"
+        @click="readValueFromQrCode"
+      >
+        <ae-icon name="camera" />
+        {{ $globals.IS_MOBILE_DEVICE ? 'Scan' : '' }}
+      </ae-toolbar-button>
     </template>
   </ae-textarea>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
 import { Crypto } from '@aeternity/aepp-sdk';
 import AeTextarea from './AeTextarea.vue';
-import AeToolbar from './AeToolbar.vue';
-import ButtonPlain from './ButtonPlain.vue';
+import AeToolbarButton from './AeToolbarButton.vue';
+import AePopover from './AePopover.vue';
+import ListItemAccount from './ListItemAccount.vue';
 
 export default {
   directives: {
     removeSpacesOnCopy: directives.removeSpacesOnCopy,
   },
   components: {
-    AeIdenticon, AeIcon, AeTextarea, AeToolbar, ButtonPlain,
+    AeIdenticon, AeIcon, AeTextarea, AeToolbarButton, AePopover, ListItemAccount,
   },
   props: {
     value: {
       type: String,
       default: '',
     },
-    label: {
-      type: String,
-      default: '',
-    },
-    placeholder: {
-      type: String,
-      default: '',
-    },
-    error: {
-      type: Boolean,
-      default: false,
-    },
   },
+  data: () => ({
+    showAccountsDropdown: false,
+  }),
   computed: {
     formattedValue() {
       return this.formatAddress(this.value);
@@ -71,10 +87,14 @@ export default {
     isValueValid() {
       return Crypto.isAddressValid(this.value);
     },
+    ...mapState({
+      accounts: (state, { identities, activeIdentity }) => identities
+        .filter(i => i !== activeIdentity),
+    }),
   },
   methods: {
     handleInput() {
-      const { textarea } = this.$children[0].$refs;
+      const textarea = this.$children[0].$el.querySelector('textarea');
       const { selectionStart, value } = textarea;
 
       const address = this.formatAddress(value);
@@ -106,10 +126,12 @@ export default {
     getNewCursor(address, cursor) {
       return this.formatAddress(address.slice(0, cursor)).length;
     },
-    async readValueFromQrCode() {
-      this.$children[0].$refs.textarea.value = await this.$store
-        .dispatch('readQrCode', 'Scan AE Address');
+    setAddress(newAddress) {
+      this.$children[0].$el.querySelector('textarea').value = newAddress;
       this.handleInput();
+    },
+    async readValueFromQrCode() {
+      this.setAddress(await this.$store.dispatch('readQrCode', 'Scan AE Address'));
     },
   },
 };
@@ -120,30 +142,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .ae-input-address {
-  .ae-toolbar {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
-
-    &, .button-plain {
-      font-family: $font-sans;
-      font-size: rem(11px);
-      font-weight: 500;
-      letter-spacing: rem(1.1px);
-      text-transform: uppercase;
-      color: $color-neutral-negative-1;
-    }
-
-    .button-plain {
-      display: flex;
-      align-items: center;
-
-      .ae-icon {
-        margin-right: rem(4px);
-        font-size: rem(14px);
-      }
-    }
+  .ae-identicon {
+    vertical-align: -.55em;
   }
 }
 </style>
