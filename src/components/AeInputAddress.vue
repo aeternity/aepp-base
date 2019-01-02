@@ -1,13 +1,15 @@
 <template>
-  <ae-textarea
+  <ae-textarea-formatted
     v-remove-spaces-on-copy
-    :value="formattedValue"
+    :value="value"
     placeholder="ak_ …"
     class="ae-input-address"
     rows="3"
     monospace
+    :format-display-value="formatDisplayAddress"
+    :format-emit-value="formatEmitAddress"
     v-bind="$attrs"
-    @input="handleInput"
+    v-on="$listeners"
   >
     <template slot="footer">
       <ae-identicon
@@ -52,14 +54,14 @@
         {{ $globals.IS_MOBILE_DEVICE ? 'Scan' : '' }}
       </ae-toolbar-button>
     </template>
-  </ae-textarea>
+  </ae-textarea-formatted>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
 import { Crypto } from '@aeternity/aepp-sdk';
-import AeTextarea from './AeTextarea.vue';
+import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
@@ -69,7 +71,7 @@ export default {
     removeSpacesOnCopy: directives.removeSpacesOnCopy,
   },
   components: {
-    AeIdenticon, AeIcon, AeTextarea, AeToolbarButton, AePopover, ListItemAccount,
+    AeIdenticon, AeIcon, AeTextareaFormatted, AeToolbarButton, AePopover, ListItemAccount,
   },
   props: {
     value: {
@@ -81,9 +83,6 @@ export default {
     showAccountsDropdown: false,
   }),
   computed: {
-    formattedValue() {
-      return this.formatAddress(this.value);
-    },
     isValueValid() {
       return Crypto.isAddressValid(this.value);
     },
@@ -93,21 +92,7 @@ export default {
     }),
   },
   methods: {
-    handleInput() {
-      const textarea = this.$children[0].$el.querySelector('textarea');
-      const { selectionStart, value } = textarea;
-
-      const address = this.formatAddress(value);
-      if (address !== value) {
-        textarea.value = address;
-        const cursor = this.getNewCursor(value, selectionStart);
-        const setSelection = () => textarea.setSelectionRange(cursor, cursor);
-        setSelection();
-        setTimeout(setSelection, 0);
-      }
-      this.$emit('input', address.replace(/[ \n]/g, ''));
-    },
-    formatAddress(address) {
+    formatDisplayAddress(address) {
       if (['', 'a', 'ak'].includes(address)) return address;
 
       let res = address
@@ -123,12 +108,12 @@ export default {
 
       return `ak_ ${res}`;
     },
-    getNewCursor(address, cursor) {
-      return this.formatAddress(address.slice(0, cursor)).length;
+    formatEmitAddress(address) {
+      return address.replace(/ /g, '');
     },
     setAddress(newAddress) {
       this.$children[0].$el.querySelector('textarea').value = newAddress;
-      this.handleInput();
+      this.$children[0].handleInput();
     },
     async readValueFromQrCode() {
       this.setAddress(await this.$store.dispatch('readQrCode', 'Scan AE Address'));
