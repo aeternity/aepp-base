@@ -1,9 +1,9 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'transfer' }"
     class="accounts-new"
     fill="primary"
     close-button
+    @close="$router.back()"
   >
     <guide fill="neutral">
       <em>Create new subaccount</em>
@@ -51,7 +51,7 @@ export default {
       if (!await this.$validator.validateAll()) return;
       this.$store.commit('createIdentity', this.newAccountName);
       this.$store.commit('selectIdentity', this.$store.state.mobile.accountCount - 1);
-      this.$router.push({ name: 'transfer' });
+      this.$router.back();
     },
   },
 };

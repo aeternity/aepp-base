@@ -27,9 +27,11 @@ export default {
     title: { type: String, required: true },
     subtitle: { type: String, default: undefined },
     subtitleMonospace: { type: Boolean, default: false },
+    inactive: { type: Boolean, default: false },
   },
   computed: {
     renderAs() {
+      if (this.inactive) return 'div';
       if (this.to) return 'router-link';
       return 'label';
     },

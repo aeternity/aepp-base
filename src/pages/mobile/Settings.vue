@@ -69,12 +69,12 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
-import AeCard from '../components/AeCard.vue';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import ListItem from '../components/ListItem.vue';
+import AeCard from '../../components/AeCard.vue';
+import MobilePage from '../../components/MobilePage.vue';
+import Guide from '../../components/Guide.vue';
+import ListItem from '../../components/ListItem.vue';
 
 export default {
   components: {
@@ -93,7 +93,10 @@ export default {
       .filter(([, f]) => f.connected).length,
   }),
   methods: {
-    ...mapMutations(['signOut']),
+    signOut() {
+      this.$store.commit('signOut');
+      setTimeout(() => this.$store.commit('setLoginTarget'));
+    },
     logOut() {
       this.$store.commit('setDerivedKey');
     },
@@ -104,10 +107,9 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import './Settings.scss';
 
 .settings {
-  background-color: $color-neutral-positive-2;
-
   /deep/ .panel {
     justify-content: space-between;
 

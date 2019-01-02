@@ -3,7 +3,7 @@
     :redirect-to-on-close="{ name: 'settings-network' }"
     title="Connect to another node"
     back-button
-    class="settings-network settings-network-new"
+    class="settings settings-network-new"
   >
     <ae-card fill="maximum">
       <guide>Connect to<br><em>another node</em></guide>
@@ -45,12 +45,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import MobilePage from '../components/MobilePage.vue';
-import AeCard from '../components/AeCard.vue';
-import Guide from '../components/Guide.vue';
-import AeInput from '../components/AeInput.vue';
-import AeButton from '../components/AeButton.vue';
-import { toUrl } from '../lib/utils';
+import MobilePage from '../../components/MobilePage.vue';
+import AeCard from '../../components/AeCard.vue';
+import Guide from '../../components/Guide.vue';
+import AeInput from '../../components/AeInput.vue';
+import AeButton from '../../components/AeButton.vue';
+import { toUrl } from '../../lib/utils';
 
 export default {
   components: {
@@ -86,10 +86,10 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import './Settings.scss';
+@import './SettingsHeader.scss';
 
 .settings-network-new {
-  background-color: $color-neutral-positive-2;
-
   .ae-card {
     padding: 0 rem(20px);
 
@@ -113,13 +113,7 @@ export default {
       display: block;
       min-width: rem(250px);
       margin: rem(10px) auto;
-
-      &._plain {
-        color: $color-neutral-negative-3;
-      }
     }
   }
 }
 </style>
-
-<style lang="scss" src="./SettingsNetwork.scss" scoped />

@@ -1,8 +1,0 @@
-@import '~@aeternity/aepp-components/dist/mixins.scss';
-
-@include phone {
-  .settings.mobile-page /deep/ .panel .content {
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
