@@ -55,5 +55,9 @@ export default {
   &.alternative {
     background: $color-alternative-negative-2;
   }
+
+  /deep/ a {
+    color: inherit;
+  }
 }
 </style>
