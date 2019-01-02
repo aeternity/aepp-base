@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { focus } from 'vue-focus';
 import { AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
@@ -46,6 +47,7 @@ import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 
 export default {
+  directives: { focus },
   components: {
     AeAddress,
     AeIdenticon,

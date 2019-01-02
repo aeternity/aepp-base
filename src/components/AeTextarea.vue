@@ -10,6 +10,7 @@
     />
     <textarea
       :id="id"
+      v-focus.lazy="autofocus"
       slot-scope="{ setFocus, id }"
       v-bind="$attrs"
       :class="{ monospace }"
@@ -21,11 +22,14 @@
 </template>
 
 <script>
+import { focus } from 'vue-focus';
 import AeInputWrapper from './AeInputWrapper.vue';
 
 export default {
   components: { AeInputWrapper },
+  directives: { focus },
   props: {
+    autofocus: { type: Boolean, default: false },
     monospace: { type: Boolean, default: false },
   },
 };
