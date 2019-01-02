@@ -41,26 +41,20 @@
       >
         Or transfer between accounts
       </div>
-      <list-item
+      <list-item-account
         v-for="account in identities.filter(i => i !== activeIdentity)"
         :key="account.address"
         :to="{
           name: 'send-to',
           params: { to: account.address }
         }"
-        :title="account.name"
-        :subtitle="prefixedAmount(account.balance) + ' AE'"
-        subtitle-monospace
+        v-bind="account"
       >
-        <ae-identicon
-          slot="icon"
-          :address="account.address"
-        />
         <ae-icon
           slot="right"
           name="left-more"
         />
-      </list-item>
+      </list-item-account>
     </template>
   </mobile-page>
 </template>
@@ -72,8 +66,7 @@ import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeAddressInput from '../components/AeAddressInput.vue';
 import AeButton from '../components/AeButton.vue';
-import ListItem from '../components/ListItem.vue';
-import prefixedAmount from '../filters/prefixedAmount';
+import ListItemAccount from '../components/ListItemAccount.vue';
 
 export default {
   components: {
@@ -82,7 +75,7 @@ export default {
     AeIdenticon,
     AeAddressInput,
     AeButton,
-    ListItem,
+    ListItemAccount,
     AeIcon,
   },
   data: () => ({
@@ -93,7 +86,6 @@ export default {
     this.$store.dispatch('updateAllBalances');
   },
   methods: {
-    prefixedAmount,
     async setAddress() {
       if (!await this.$validator.validateAll()) return;
       this.$router.push({ name: 'send-to', params: { to: this.accountTo } });

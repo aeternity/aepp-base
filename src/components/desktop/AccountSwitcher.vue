@@ -15,23 +15,17 @@
     </header>
 
     <main>
-      <list-item
+      <list-item-account
         v-for="(account, index) in accounts"
         :key="account.address"
-        :title="account.name"
-        :subtitle="`${prefixedAmount(account.balance)} AE`"
-        subtitle-monospace
+        v-bind="account"
       >
-        <ae-identicon
-          slot="icon"
-          :address="account.address"
-        />
         <ae-radio
           slot="right"
           :checked="account === activeAccount"
           @change="selectIdentity(index)"
         />
-      </list-item>
+      </list-item-account>
 
       <list-item
         v-if="ableToCreateAccount"
@@ -56,17 +50,18 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { AeIcon, AeIdenticon, directives } from '@aeternity/aepp-components-3';
+import { AeIcon, directives } from '@aeternity/aepp-components-3';
 import AeAccount from '../AeAccount.vue';
 import ButtonPlain from '../ButtonPlain.vue';
 import ListItem from '../ListItem.vue';
+import ListItemAccount from '../ListItemAccount.vue';
 import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
   components: {
-    AeAccount, ButtonPlain, AeIcon, ListItem, AeIdenticon, AeRadio, Balance,
+    AeAccount, ButtonPlain, AeIcon, ListItem, ListItemAccount, AeRadio, Balance,
   },
   directives: {
     copyToClipboard: directives.copyToClipboard,

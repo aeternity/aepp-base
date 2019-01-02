@@ -12,23 +12,17 @@
         fill="maximum"
       >
         <div class="list">
-          <list-item
+          <list-item-account
             v-for="(account, index) in identities"
             :key="account.address"
-            :title="account.name"
-            :subtitle="`${prefixedAmount(account.balance)} AE`"
-            subtitle-monospace
+            v-bind="account"
           >
-            <ae-identicon
-              slot="icon"
-              :address="account.address"
-            />
             <ae-radio
               slot="right"
               :checked="index === selectedIdentityIdx"
               @change="selectIdentity(index)"
             />
-          </list-item>
+          </list-item-account>
 
           <list-item
             :to="{ name: 'accounts-new' }"
@@ -66,13 +60,13 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import { directive as clickaway } from 'vue-clickaway';
 import ListItem from './ListItem.vue';
+import ListItemAccount from './ListItemAccount.vue';
 import AeCard from './AeCard.vue';
 import AeRadio from './AeRadio.vue';
 import Balance from './Balance.vue';
-import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
   directives: {
@@ -81,8 +75,8 @@ export default {
   components: {
     AeIcon,
     ListItem,
+    ListItemAccount,
     AeCard,
-    AeIdenticon,
     AeRadio,
     Balance,
   },
@@ -102,10 +96,7 @@ export default {
   mounted() {
     this.$store.dispatch('updateAllBalances');
   },
-  methods: {
-    prefixedAmount,
-    ...mapMutations(['selectIdentity', 'toggleAccountSwitcher']),
-  },
+  methods: mapMutations(['selectIdentity', 'toggleAccountSwitcher']),
 };
 </script>
 
