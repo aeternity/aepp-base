@@ -10,21 +10,23 @@
     <div class="confirm">
       Confirm the address
     </div>
-    <div class="note">
+    <ledger-modal-note>
       And we will import the it and connected to the
       <br>account you just created.
-    </div>
+    </ledger-modal-note>
   </ledger-modal>
 </template>
 
 <script>
 import LedgerModal from './LedgerModal.vue';
 import AeLoader from '../AeLoader.vue';
+import LedgerModalNote from './LedgerModalNote.vue';
 
 export default {
   components: {
     LedgerModal,
     AeLoader,
+    LedgerModalNote,
   },
 };
 </script>
@@ -51,12 +53,6 @@ export default {
     @extend %face-sans-l;
     font-weight: 500;
     color: $color-neutral-minimum;
-    text-align: center;
-  }
-
-  .note {
-    @extend %face-sans-s;
-    color: $color-neutral-negative-1;
     text-align: center;
   }
 }

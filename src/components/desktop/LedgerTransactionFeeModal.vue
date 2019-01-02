@@ -35,10 +35,10 @@
       />
     </form>
 
-    <div class="note">
+    <ledger-modal-note fill="dark">
       A higher transaction fee leads to a faster
       <br>transaction time.
-    </div>
+    </ledger-modal-note>
 
     <ae-button
       slot="footer"
@@ -55,6 +55,7 @@
 import LedgerModal from './LedgerModal.vue';
 import AeInput from '../AeInput.vue';
 import AeInputRange from '../AeInputRange.vue';
+import LedgerModalNote from './LedgerModalNote.vue';
 import AeButton from '../AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../../lib/constants';
 
@@ -63,6 +64,7 @@ export default {
     LedgerModal,
     AeInput,
     AeInputRange,
+    LedgerModalNote,
     AeButton,
   },
   data: () => ({
@@ -113,12 +115,6 @@ export default {
     display: block;
     margin: rem(40px) auto;
     width: rem(279px);
-  }
-
-  .note {
-    @extend %face-sans-s;
-    color: $color-neutral-negative-3;
-    text-align: center;
   }
 
   .ae-button {

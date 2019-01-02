@@ -11,13 +11,13 @@
       :address="address"
     />
 
-    <div class="note">
+    <ledger-modal-note>
       {{
         create
           ? 'To create a new account on your Ledger, confirm your address there first'
           : 'To proceed, confirm your address on the Ledger'
       }}
-    </div>
+    </ledger-modal-note>
   </ledger-modal>
 </template>
 
@@ -25,11 +25,13 @@
 import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeAddressPanel from './AeAddressPanel.vue';
+import LedgerModalNote from './LedgerModalNote.vue';
 
 export default {
   components: {
     LedgerModal,
     AeAddressPanel,
+    LedgerModalNote,
   },
   props: {
     create: { type: Boolean, default: false },
@@ -42,7 +44,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .ledger-address-confirm {
   .ledger-image {
@@ -54,12 +56,6 @@ export default {
 
   .ae-address-panel {
     margin: rem(60px) auto;
-  }
-
-  .note {
-    @extend %face-sans-s;
-    color: $color-neutral-negative-1;
-    text-align: center;
   }
 }
 </style>
