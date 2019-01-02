@@ -72,8 +72,9 @@
       class="list-border"
       inactive
     >
-      <range
+      <ae-input-range
         v-model="fee"
+        fill="light"
         :min="MIN_SPEND_TX_FEE"
         :max="MAX_REASONABLE_FEE"
       />
@@ -118,7 +119,7 @@ import { AeIdenticon, AeButtonGroup } from '@aeternity/aepp-components-3';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import ListItem from '../components/deprecated/ListItem.vue';
-import Range from '../components/Range.vue';
+import AeInputRange from '../components/AeInputRange.vue';
 import AeButton from '../components/AeButton.vue';
 import AeAddress from '../components/AeAddress.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
@@ -130,7 +131,7 @@ export default {
     Guide,
     AeIdenticon,
     ListItem,
-    Range,
+    AeInputRange,
     AeButton,
     AeButtonGroup,
     AeAddress,

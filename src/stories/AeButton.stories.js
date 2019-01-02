@@ -2,6 +2,7 @@
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import AeButton from '../components/AeButton.vue';
+import { primary, alternative } from './backgrounds';
 
 storiesOf('AeButton', module)
   .add('with text', () => ({
@@ -20,7 +21,7 @@ storiesOf('AeButton', module)
   .add('Intro', () => ({
     components: { AeButton },
     template: `
-      <div style="background: #ff0d6a; display: flex; flex-direction: column">
+      <div style="display: flex; flex-direction: column">
         <ae-button fill="secondary">
           Login
         </ae-button>
@@ -31,7 +32,9 @@ storiesOf('AeButton', module)
           See how it works
         </ae-button>
       </div>`,
-  }))
+  }), {
+    backgrounds: [primary],
+  })
   .add('New Account', () => ({
     components: { AeButton },
     template: '<ae-button fill="secondary" disabled>Confirm</ae-button>',
@@ -42,8 +45,7 @@ storiesOf('AeButton', module)
   }))
   .add('Scan with AirGap Vault', () => ({
     components: { AeButton },
-    template: `
-      <div style="background: #14ccb7">
-        <ae-button fill="light">Done</ae-button>
-      </div>`,
-  }));
+    template: '<ae-button fill="light">Done</ae-button>',
+  }), {
+    backgrounds: [alternative],
+  });
