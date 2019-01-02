@@ -47,8 +47,12 @@
         AE
       </span>
       <ae-toolbar slot="footer">
-        <span class="minimum-fee"> Minimum transaction fee</span>
-        <span class="fee-amount">{{ MIN_SPEND_TX_FEE | prefixedAmount }} AE</span>
+        <span class="minimum-fee">
+          Minimum transaction fee
+        </span>
+        <span class="fee-amount">
+          {{ MIN_SPEND_TX_FEE | prefixedAmount }} AE
+        </span>
       </ae-toolbar>
     </ae-input>
 
