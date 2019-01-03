@@ -6,7 +6,6 @@
         <RouterView />
       </div>
       <SidebarDesktop />
-      <FooterDesktop :show-back-button="$route.name !== 'apps'" />
     </div>
     <Component
       :is="component"
@@ -19,13 +18,11 @@
 import { mapGetters } from 'vuex';
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
-import FooterDesktop from './components/desktop/FooterDesktop.vue';
 
 export default {
   components: {
     HeaderDesktop,
     SidebarDesktop,
-    FooterDesktop,
   },
   computed: mapGetters('modals', ['component', 'hidePage', 'props']),
 };

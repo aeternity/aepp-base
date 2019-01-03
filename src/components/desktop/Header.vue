@@ -29,7 +29,7 @@
       <div class="details">
         {{ account ? account.name : 'Connect an account' }}
         <div class="balance">
-          {{ account ? `${prefixedAmount(account.balance)} AE` : 'With Base æpp or Ledger' }}
+          {{ account ? `${prefixedAmount(account.balance)} AE` : 'With Ledger' }}
         </div>
       </div>
       <AeIdenticon :address="account ? account.address : ''" />
@@ -59,10 +59,6 @@ export default {
       name: 'Receive',
       routeName: 'receive',
       iconName: 'receive',
-    }, {
-      name: 'Contacts',
-      routeName: 'address-book',
-      iconName: 'contacts',
     }, {
       name: 'Settings',
       routeName: 'settings',
