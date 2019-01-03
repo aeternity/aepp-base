@@ -83,6 +83,12 @@ export default {
         .filter(i => i !== activeIdentity),
     }),
   },
+  watch: {
+    showAccountsDropdown(value) {
+      if (!value) return;
+      this.$store.dispatch('updateAllBalances');
+    },
+  },
   methods: {
     formatDisplayAddress(address) {
       if (['', 'a', 'ak'].includes(address)) return address;
