@@ -5,9 +5,7 @@
       height: `${size}px`,
     }"
     class="ae-qr-code"
-  >
-    <div ref="qrCode" />
-  </div>
+  />
 </template>
 
 <script>
@@ -34,7 +32,8 @@ export default {
   },
   methods: {
     renderQrCode() {
-      this.$refs.qrCode.replaceWith(renderQrCodeSvg(this.data, this.size));
+      if (this.$el.firstChild) this.$el.removeChild(this.$el.firstChild);
+      this.$el.appendChild(renderQrCodeSvg(this.data, this.size));
     },
   },
 };
