@@ -1,6 +1,6 @@
 <template>
   <footer-modal>
-    <waiting-for-confirmation v-if="transactionToSignByRemote" />
+    <waiting-for-confirmation v-if="!ledgerConnected && transactionToSignByRemote" />
   </footer-modal>
 </template>
 
@@ -19,6 +19,7 @@ export default {
   },
   computed: {
     ...mapState({
+      ledgerConnected: ({ desktop }) => desktop.ledgerConnected,
       transactionToSignByRemote: ({ desktop }) => desktop.transactionToSignByRemote,
     }),
   },

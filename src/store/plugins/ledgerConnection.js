@@ -52,6 +52,8 @@ export default async (store) => {
           if (!payload) return;
           try {
             const { transaction } = payload.args;
+            transaction.fee = await store.dispatch('getLedgerTransactionFee');
+            store.commit('setShowLedgerSignTransactionConfirmModal', true);
             const binaryTx = await store.dispatch('genSpendTxBinary', transaction);
             const signature = Buffer.from(await sign(
               store.state.desktop.ledgerAddresses.indexOf(transaction.senderId),
@@ -61,6 +63,8 @@ export default async (store) => {
             payload.resolve(Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx)));
           } catch (e) {
             payload.reject(e);
+          } finally {
+            store.commit('setShowLedgerSignTransactionConfirmModal', false);
           }
           break;
         default:
