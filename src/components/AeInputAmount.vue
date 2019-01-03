@@ -11,6 +11,7 @@
       :value="value"
       v-bind="$attrs"
       type="number"
+      step="any"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       @input="$emit('input', $event.target.value)"
