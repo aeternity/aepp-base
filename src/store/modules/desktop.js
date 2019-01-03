@@ -11,7 +11,7 @@ export default {
     ledgerConnected: false,
     ledgerAccountNumber: 1,
     ledgerAddresses: [],
-    showConfirmModalForAddress: '',
+    ledgerAddressConfirmModalProps: null,
     showSidebar: false,
   },
 
@@ -50,8 +50,8 @@ export default {
     toggleSidebar(state) {
       state.showSidebar = !state.showSidebar;
     },
-    showConfirmModalForAddress(state, address) {
-      state.showConfirmModalForAddress = address;
+    setLedgerAddressConfirmModalProps(state, props) {
+      state.ledgerAddressConfirmModalProps = props;
     },
   },
 

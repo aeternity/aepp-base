@@ -23,14 +23,17 @@ export default async (store) => {
   const open = async () => {
     const closeCbs = [];
 
-    const addAddress = async (idx) => {
-      store.commit('showConfirmModalForAddress', await ae.getAddress(idx));
+    const addAddress = async (idx, create = false) => {
+      store.commit('setLedgerAddressConfirmModalProps', {
+        address: await ae.getAddress(idx),
+        create,
+      });
       let address;
       do {
         // eslint-disable-next-line no-await-in-loop
         address = await ae.getAddress(idx, true).catch(() => {});
       } while (!address);
-      store.commit('showConfirmModalForAddress');
+      store.commit('setLedgerAddressConfirmModalProps', null);
       store.commit('addLedgerAddress', address);
     };
 
@@ -42,7 +45,7 @@ export default async (store) => {
       switch (type) {
         case 'createAccount':
           if (store.state.desktop.ledgerConnected) {
-            addAddress(store.state.desktop.ledgerAccountNumber - 1);
+            addAddress(store.state.desktop.ledgerAccountNumber - 1, true);
           }
           break;
         case 'setTransactionToSign':

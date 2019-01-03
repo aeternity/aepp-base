@@ -55,7 +55,10 @@ storiesOf('AeModal', module)
     store: new Vuex.Store({
       state: {
         desktop: {
-          showConfirmModalForAddress: account.address,
+          ledgerAddressConfirmModalProps: {
+            address: account.address,
+            create: false,
+          },
         },
       },
     }),
