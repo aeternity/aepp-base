@@ -13,7 +13,10 @@
         :key="link.routeName"
         :to="{ name: link.routeName }"
       >
-        <ae-icon :name="link.iconName" />
+        <ae-icon
+          :name="link.iconName"
+          :class="link.iconClass"
+        />
         {{ link.name }}
       </router-link>
     </div>
@@ -48,9 +51,18 @@ export default {
       routeName: 'apps',
       iconName: 'grid',
     }, {
+      name: 'Send',
+      routeName: 'send',
+      iconName: 'receive',
+      iconClass: 'send',
+    }, {
       name: 'Receive',
       routeName: 'receive',
       iconName: 'receive',
+    }, {
+      name: 'Contacts',
+      routeName: 'address-book',
+      iconName: 'contacts',
     }, {
       name: 'Settings',
       routeName: 'settings',
@@ -122,6 +134,10 @@ export default {
       .ae-icon {
         font-size: rem(20px);
         vertical-align: middle;
+
+        &.send {
+          transform: rotate(180deg);
+        }
       }
 
       &.router-link-exact-active {

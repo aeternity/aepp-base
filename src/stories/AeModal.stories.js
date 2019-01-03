@@ -55,7 +55,10 @@ storiesOf('AeModal', module)
     store: new Vuex.Store({
       state: {
         desktop: {
-          showConfirmModalForAddress: account.address,
+          ledgerAddressConfirmModalProps: {
+            address: account.address,
+            create: false,
+          },
         },
       },
     }),
@@ -63,8 +66,25 @@ storiesOf('AeModal', module)
   .add('LedgerSignTransactionConfirmModal', () => ({
     components: { LedgerSignTransactionConfirmModal },
     template: '<ledger-sign-transaction-confirm-modal />',
+    store: new Vuex.Store({
+      state: {
+        desktop: {
+          showLedgerSignTransactionConfirmModal: true,
+        },
+      },
+    }),
   }))
   .add('LedgerTransactionFeeModal', () => ({
     components: { LedgerTransactionFeeModal },
     template: '<ledger-transaction-fee-modal />',
+    store: new Vuex.Store({
+      state: {
+        desktop: {
+          ledgerTransactionFeeModalProps: {
+            resolve: action('resolve'),
+            reject: action('reject'),
+          },
+        },
+      },
+    }),
   }));

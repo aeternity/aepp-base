@@ -1,4 +1,8 @@
 export const MAGNITUDE = 18;
+export const MAGNITUDE_EXA = 18;
+export const MAGNITUDE_GIGA = 9;
+export const MAGNITUDE_PICO = -12;
+
 export const BASE_GAS = 15000;
 export const APPROXIMATE_SPENT_TX_LENGTH = 100;
 export const GAS_PER_BYTE = 20;

@@ -1,5 +1,5 @@
 <template>
-  <div :class="['guide', fill]">
+  <div :class="['guide', fill, { desktop: !$globals.IS_MOBILE_DEVICE }]">
     <span
       v-if="icon"
       class="icon"
@@ -40,6 +40,12 @@ export default {
   font-weight: 500;
   letter-spacing: -0.5px;
   color: $color-neutral-negative-3;
+
+  &.desktop {
+    font-size: rem(30px);
+    line-height: rem(39px);
+    margin-bottom: rem(15px);
+  }
 
   .icon {
     margin: rem(3px) rem(16px) 0 rem(-32px);

@@ -21,13 +21,15 @@
       <div class="footer">
         <ae-button
           :to="`https://explorer.aepps.com/#/tx/${transactionHash}`"
-          fill="neutral"
+          fill="dark"
+          size="small"
           plain
         >
           View on explorer
         </ae-button>
         <ae-button
-          fill="neutral"
+          fill="dark"
+          size="small"
           plain
           @click="copyTx"
         >
@@ -125,8 +127,6 @@ export default {
       flex-basis: 0;
       height: rem(20px);
       line-height: rem(20px);
-      border-radius: 0;
-      font-family: $font-sans;
       font-size: rem(11px);
       font-weight: 500;
       letter-spacing: rem(1.1px);

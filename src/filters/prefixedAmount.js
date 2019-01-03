@@ -1,8 +1,10 @@
+import { MAGNITUDE_EXA, MAGNITUDE_GIGA, MAGNITUDE_PICO } from '../lib/constants';
+
 const prefixes = [
-  { name: 'Exa', magnitude: 18 },
-  { name: 'Giga', magnitude: 9 },
+  { name: 'Exa', magnitude: MAGNITUDE_EXA },
+  { name: 'Giga', magnitude: MAGNITUDE_GIGA },
   { name: '', magnitude: 0 },
-  { name: 'Pico', magnitude: -12 },
+  { name: 'Pico', magnitude: MAGNITUDE_PICO },
 ];
 
 const getNearestPrefix = exponent => prefixes.reduce((p, n) => (

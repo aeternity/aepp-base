@@ -7,6 +7,7 @@ import OnboardingSubaccounts from '../../pages/OnboardingSubaccounts.vue';
 import OnboardingSend from '../../pages/OnboardingSend.vue';
 import Login from '../../pages/Login.vue';
 import Recover from '../../pages/Recover.vue';
+import Apps from '../../pages/Apps.vue';
 import NewAccount from '../../pages/NewAccount.vue';
 import NewAccountCreate from '../../pages/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/NewAccountConfirm.vue';
@@ -98,6 +99,14 @@ export default [{
   component: SetPassword,
   beforeEnter: checkSeedPassed,
   props: true,
+}, {
+  name: 'apps',
+  path: '/apps',
+  component: Apps,
+  beforeEnter: checkLoggedIn(false),
+  meta: {
+    displayFooter: true,
+  },
 }, {
   name: 'accounts-new',
   path: '/accounts-new',

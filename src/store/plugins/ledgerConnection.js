@@ -23,14 +23,17 @@ export default async (store) => {
   const open = async () => {
     const closeCbs = [];
 
-    const addAddress = async (idx) => {
-      store.commit('showConfirmModalForAddress', await ae.getAddress(idx));
+    const addAddress = async (idx, create = false) => {
+      store.commit('setLedgerAddressConfirmModalProps', {
+        address: await ae.getAddress(idx),
+        create,
+      });
       let address;
       do {
         // eslint-disable-next-line no-await-in-loop
         address = await ae.getAddress(idx, true).catch(() => {});
       } while (!address);
-      store.commit('showConfirmModalForAddress');
+      store.commit('setLedgerAddressConfirmModalProps', null);
       store.commit('addLedgerAddress', address);
     };
 
@@ -42,13 +45,15 @@ export default async (store) => {
       switch (type) {
         case 'createAccount':
           if (store.state.desktop.ledgerConnected) {
-            addAddress(store.state.desktop.ledgerAccountNumber - 1);
+            addAddress(store.state.desktop.ledgerAccountNumber - 1, true);
           }
           break;
         case 'setTransactionToSign':
           if (!payload) return;
           try {
             const { transaction } = payload.args;
+            transaction.fee = await store.dispatch('getLedgerTransactionFee');
+            store.commit('setShowLedgerSignTransactionConfirmModal', true);
             const binaryTx = await store.dispatch('genSpendTxBinary', transaction);
             const signature = Buffer.from(await sign(
               store.state.desktop.ledgerAddresses.indexOf(transaction.senderId),
@@ -58,6 +63,8 @@ export default async (store) => {
             payload.resolve(Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx)));
           } catch (e) {
             payload.reject(e);
+          } finally {
+            store.commit('setShowLedgerSignTransactionConfirmModal', false);
           }
           break;
         default:
