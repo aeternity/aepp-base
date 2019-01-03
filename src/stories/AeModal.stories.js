@@ -66,6 +66,13 @@ storiesOf('AeModal', module)
   .add('LedgerSignTransactionConfirmModal', () => ({
     components: { LedgerSignTransactionConfirmModal },
     template: '<ledger-sign-transaction-confirm-modal />',
+    store: new Vuex.Store({
+      state: {
+        desktop: {
+          showLedgerSignTransactionConfirmModal: true,
+        },
+      },
+    }),
   }))
   .add('LedgerTransactionFeeModal', () => ({
     components: { LedgerTransactionFeeModal },

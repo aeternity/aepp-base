@@ -13,6 +13,7 @@ export default {
     ledgerAddresses: [],
     ledgerAddressConfirmModalProps: null,
     ledgerTransactionFeeModalProps: null,
+    showLedgerSignTransactionConfirmModal: false,
     showSidebar: false,
   },
 
@@ -56,6 +57,9 @@ export default {
     },
     setLedgerTransactionFeeModalProps(state, props) {
       state.ledgerTransactionFeeModalProps = props;
+    },
+    setShowLedgerSignTransactionConfirmModal(state, show) {
+      state.showLedgerSignTransactionConfirmModal = show;
     },
   },
 
