@@ -5,6 +5,7 @@
     header-right="AE"
     :footer="footer || 'Minimum transaction fee:'"
     :footer-right="footerRight || (footer ? '' : minSpendTxFee)"
+    :value="value"
     v-bind="$attrs"
     v-on="$listeners"
   />
@@ -19,6 +20,7 @@ import prefixedAmount from '../filters/prefixedAmount';
 export default {
   components: { AeInputAmount },
   props: {
+    value: { type: [String, Number], default: '' },
     footer: { type: String, default: '' },
     footerRight: { type: String, default: '' },
   },

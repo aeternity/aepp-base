@@ -12,6 +12,7 @@
       :id="id"
       v-focus.lazy="autofocus"
       slot-scope="{ setFocus, id }"
+      :value="value"
       v-bind="$attrs"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
@@ -28,6 +29,7 @@ export default {
   components: { AeInputWrapper },
   directives: { focus },
   props: {
+    value: { type: String, default: '' },
     autofocus: { type: Boolean, default: false },
   },
 };

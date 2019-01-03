@@ -2,6 +2,7 @@
   <ae-input
     class="ae-input-password"
     :type="showPassword ? 'text' : 'password'"
+    :value="value"
     v-bind="$attrs"
     :header="header"
     v-on="$listeners"
@@ -30,6 +31,7 @@ import AeToolbarButton from './AeToolbarButton.vue';
 export default {
   components: { AeInput, AeToolbarButton, AeIcon },
   props: {
+    value: { type: String, default: '' },
     header: { type: String, default: 'Password' },
     hideRevealButton: { type: Boolean, default: false },
   },

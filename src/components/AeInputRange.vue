@@ -2,6 +2,7 @@
   <input
     class="ae-input-range"
     :class="[fill]"
+    :value="value"
     v-bind="$attrs"
     type="range"
     @input="$emit($event.type, +$event.target.value)"
@@ -11,6 +12,7 @@
 <script>
 export default {
   props: {
+    value: { type: [String, Number], default: '' },
     fill: {
       type: String,
       validator: value => [
