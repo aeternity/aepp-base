@@ -27,6 +27,7 @@ export default {
   background: transparent;
   padding: 0;
   text-decoration: none;
+  text-align: center;
   font: inherit;
   cursor: pointer;
 
