@@ -114,6 +114,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  min-height: 100vh;
 
   .header-mobile {
     background: #fff;

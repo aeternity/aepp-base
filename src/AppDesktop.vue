@@ -1,24 +1,29 @@
 <template>
   <div class="app-desktop">
-    <header-desktop />
-    <div class="page">
-      <router-view />
+    <div v-show="!qrCodeReaderTask">
+      <header-desktop />
+      <div class="page">
+        <router-view />
+      </div>
+      <sidebar-desktop />
+      <footer-desktop :show-back-button="$route.name !== 'apps'" />
+      <ledger-address-confirm-modal />
+      <ledger-transaction-fee-modal />
+      <ledger-sign-transaction-confirm-modal />
     </div>
-    <sidebar-desktop />
-    <footer-desktop :show-back-button="$route.name !== 'apps'" />
-    <ledger-address-confirm-modal />
-    <ledger-transaction-fee-modal />
-    <ledger-sign-transaction-confirm-modal />
+    <qr-code-reader v-if="qrCodeReaderTask" />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
 import FooterDesktop from './components/FooterDesktop.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
+import QrCodeReader from './components/QrCodeReader.vue';
 
 export default {
   components: {
@@ -28,7 +33,11 @@ export default {
     LedgerAddressConfirmModal,
     LedgerTransactionFeeModal,
     LedgerSignTransactionConfirmModal,
+    QrCodeReader,
   },
+  computed: mapState({
+    qrCodeReaderTask: ({ qrCodeReaderTask }) => qrCodeReaderTask,
+  }),
 };
 </script>
 
