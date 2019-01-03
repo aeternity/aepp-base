@@ -70,4 +70,14 @@ storiesOf('AeModal', module)
   .add('LedgerTransactionFeeModal', () => ({
     components: { LedgerTransactionFeeModal },
     template: '<ledger-transaction-fee-modal />',
+    store: new Vuex.Store({
+      state: {
+        desktop: {
+          ledgerTransactionFeeModalProps: {
+            resolve: action('resolve'),
+            reject: action('reject'),
+          },
+        },
+      },
+    }),
   }));

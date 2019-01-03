@@ -12,6 +12,7 @@ export default {
     ledgerAccountNumber: 1,
     ledgerAddresses: [],
     ledgerAddressConfirmModalProps: null,
+    ledgerTransactionFeeModalProps: null,
     showSidebar: false,
   },
 
@@ -53,6 +54,9 @@ export default {
     setLedgerAddressConfirmModalProps(state, props) {
       state.ledgerAddressConfirmModalProps = props;
     },
+    setLedgerTransactionFeeModalProps(state, props) {
+      state.ledgerTransactionFeeModalProps = props;
+    },
   },
 
   actions: {
@@ -63,6 +67,17 @@ export default {
         result = await new Promise((resolve, reject) => commit('setTransactionToSign', { resolve, reject, args }));
       } finally {
         commit('setTransactionToSign');
+      }
+      return result;
+    },
+    async getLedgerTransactionFee({ commit }) {
+      let result;
+      try {
+        result = await new Promise((resolve, reject) => commit(
+          'setLedgerTransactionFeeModalProps', { resolve, reject },
+        ));
+      } finally {
+        commit('setLedgerTransactionFeeModalProps', null);
       }
       return result;
     },
