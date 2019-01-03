@@ -16,21 +16,6 @@
           <ae-icon name="close" />
         </button-plain>
       </h1>
-
-      <div class="tabs">
-        <button-plain
-          :class="{ active: !ledgerTab }"
-          @click="ledgerTab = false"
-        >
-          Base æpp
-        </button-plain>
-        <button-plain
-          :class="{ active: ledgerTab }"
-          @click="ledgerTab = true"
-        >
-          Ledger
-        </button-plain>
-      </div>
     </header>
 
     <component
@@ -53,7 +38,7 @@ export default {
     AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain,
   },
   data: () => ({
-    ledgerTab: false,
+    ledgerTab: true,
   }),
   computed: mapState({
     showSidebar: ({ desktop }) => desktop.showSidebar,

@@ -6,7 +6,6 @@
         <router-view />
       </div>
       <sidebar-desktop />
-      <footer-desktop :show-back-button="$route.name !== 'apps'" />
       <ledger-address-confirm-modal />
       <ledger-transaction-fee-modal />
       <ledger-sign-transaction-confirm-modal />
@@ -19,7 +18,6 @@
 import { mapState } from 'vuex';
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
-import FooterDesktop from './components/FooterDesktop.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
@@ -29,7 +27,6 @@ export default {
   components: {
     HeaderDesktop,
     SidebarDesktop,
-    FooterDesktop,
     LedgerAddressConfirmModal,
     LedgerTransactionFeeModal,
     LedgerSignTransactionConfirmModal,

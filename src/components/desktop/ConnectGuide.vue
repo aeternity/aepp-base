@@ -29,10 +29,10 @@
         How to connect the <em>Ledger</em>
       </guide>
       <div class="steps">
-        <guide icon="½">
+        <guide icon="¹⁄₂">
           Connect the Ledger via USB and unlock on the device
         </guide>
-        <guide icon="1">
+        <guide icon="²⁄₂">
           Open the æternity app on the Ledger
         </guide>
       </div>
