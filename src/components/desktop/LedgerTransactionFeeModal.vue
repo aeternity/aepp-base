@@ -8,7 +8,7 @@
       :id="_uid"
       @submit.prevent="setTransactionFee"
     >
-      <ae-input
+      <ae-input-amount
         v-model="fee"
         v-validate="{
           required: true,
@@ -17,16 +17,11 @@
           max_value: MAX_REASONABLE_FEE,
         }"
         :error="errors.has('fee')"
-        type="number"
+        :footer="errors.first('fee')"
+        header="Transaction Fee"
+        header-right="Pico AE"
         name="fee"
-        label="Transaction Fee"
-        placeholder="0.0"
-        aemount
-      >
-        <span slot="header">
-          Pico AE
-        </span>
-      </ae-input>
+      />
 
       <ae-input-range
         v-model="fee"
@@ -53,7 +48,7 @@
 
 <script>
 import LedgerModal from './LedgerModal.vue';
-import AeInput from '../AeInput.vue';
+import AeInputAmount from '../AeInputAmount.vue';
 import AeInputRange from '../AeInputRange.vue';
 import LedgerModalNote from './LedgerModalNote.vue';
 import AeButton from '../AeButton.vue';
@@ -62,7 +57,7 @@ import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../../lib/const
 export default {
   components: {
     LedgerModal,
-    AeInput,
+    AeInputAmount,
     AeInputRange,
     LedgerModalNote,
     AeButton,
@@ -93,22 +88,9 @@ export default {
     margin: rem(60px) auto;
   }
 
-  .ae-input-container {
+  .ae-input-amount {
     margin: rem(60px) auto;
     width: rem(311px);
-    height: rem(96px);
-
-    /deep/ {
-      .ae-input-header span {
-        margin-right: rem(30px);
-        @extend %face-sans-xs;
-        color: $color-neutral-negative-3
-      }
-
-      .ae-input.aemount {
-        margin: 0;
-      }
-    }
   }
 
   .ae-input-range {

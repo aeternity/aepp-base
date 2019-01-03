@@ -20,10 +20,11 @@
     <ae-input-address
       v-model="accountTo"
       v-validate="'required|address'"
+      autofocus
       :error="errors.has('accountTo')"
+      :footer="errors.first('accountTo')"
       name="accountTo"
-      label="To"
-      placeholder="ak_"
+      header="Recipient"
     />
 
     <template slot="content-bottom">

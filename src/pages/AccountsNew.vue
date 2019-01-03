@@ -14,10 +14,11 @@
       <ae-input
         v-model="newAccountName"
         v-validate="'required'"
-        v-focus="true"
+        autofocus
         :error="errors.has('newAccountName')"
+        :footer="errors.first('newAccountName')"
         name="newAccountName"
-        label="Name"
+        header="Name"
         placeholder="Name"
       />
       <ae-button
@@ -70,21 +71,15 @@ export default {
 
     .panel .bottom {
       margin-top: rem(-60px);
-
-      .content {
-        .ae-input {
-          margin: 0;
-        }
-
-        .ae-button {
-           margin: rem(20px) auto;
-        }
-      }
     }
   }
 
   .guide {
     margin: 0 0 rem(50px) rem(20px);
+  }
+
+  .ae-button {
+    margin: rem(20px) auto;
   }
 }
 </style>

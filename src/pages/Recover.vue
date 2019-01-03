@@ -18,14 +18,13 @@
     </guide>
 
     <form @submit.prevent="setSeed">
-      <ae-textarea
+      <ae-input-mnemonic
         v-model="seed"
-        v-validate="'required'"
-        v-focus="true"
-        :error="error"
+        v-validate="'required|mnemonic'"
+        autofocus
+        :error="errors.has('seed')"
+        :footer="errors.first('seed')"
         name="seed"
-        label="Recovery phrase"
-        placeholder="Recovery phrase"
       />
     </form>
 
@@ -43,16 +42,15 @@
 
 <script>
 import { mapState } from 'vuex';
-import { validateMnemonic } from '@aeternity/bip39';
 import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
-import AeTextarea from '../components/AeTextarea.vue';
+import AeInputMnemonic from '../components/AeInputMnemonic.vue';
 
 export default {
   components: {
-    MobilePage, Guide, AeButton, AeTextarea,
+    MobilePage, Guide, AeButton, AeInputMnemonic,
   },
   data() {
     return {
@@ -64,16 +62,9 @@ export default {
   computed: mapState(['keystore']),
   methods: {
     async setSeed() {
-      if (!await this.$validator.validateAll()) {
-        this.error = true;
-        return;
-      }
+      if (!await this.$validator.validateAll()) return;
 
-      if (validateMnemonic(this.seed)) {
-        this.$router.push({ name: 'set-password', params: { seed: this.seed } });
-      } else {
-        this.error = true;
-      }
+      this.$router.push({ name: 'set-password', params: { seed: this.seed } });
     },
   },
 };

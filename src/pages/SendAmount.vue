@@ -28,33 +28,18 @@
       </em>
     </guide>
 
-    <ae-input
+    <ae-input-amount-ae
       v-model="amount"
       v-validate="{
         required: true,
         decimal: MAGNITUDE,
         min_value: 0,
-        max_value: maxAmount.minus(fee).toString(),
+        max_value: maxAmount.minus(MIN_SPEND_TX_FEE).toString(),
       }"
       :error="errors.has('amount')"
-      type="number"
+      :footer="errors.first('amount')"
       name="amount"
-      label="Amount"
-      placeholder="0.0"
-      aemount
-    >
-      <span slot="header">
-        AE
-      </span>
-      <ae-toolbar slot="footer">
-        <span class="minimum-fee">
-          Minimum transaction fee
-        </span>
-        <span class="fee-amount">
-          {{ MIN_SPEND_TX_FEE | prefixedAmount }} AE
-        </span>
-      </ae-toolbar>
-    </ae-input>
+    />
 
     <ae-button
       slot="content-bottom"
@@ -70,26 +55,23 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters, mapState } from 'vuex';
-import { AeIdenticon, AeToolbar } from '@aeternity/aepp-components-3';
+import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
-import AeInput from '../components/AeInput.vue';
+import AeInputAmountAe from '../components/AeInputAmountAe.vue';
 import AeButton from '../components/AeButton.vue';
 import AeAddress from '../components/AeAddress.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../lib/constants';
-import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
   components: {
     MobilePage,
     Guide,
     AeIdenticon,
-    AeInput,
-    AeToolbar,
+    AeInputAmountAe,
     AeButton,
     AeAddress,
   },
-  filters: { prefixedAmount },
   props: {
     to: {
       type: String,
@@ -100,7 +82,6 @@ export default {
     amount: '',
     MAGNITUDE,
     MIN_SPEND_TX_FEE: BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE),
-    fee: BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE).toFixed(),
     BigNumber,
   }),
   computed: {
@@ -125,35 +106,8 @@ export default {
 
 .send-amount {
   /deep/ {
-    .ae-input-container .ae-input-box {
-      .ae-input-header span {
-        margin-right: rem(30px);
-        @extend %face-sans-xs;
-        color: $color-neutral-negative-3
-      }
-
-      .ae-input.aemount {
-        margin: 0;
-      }
-    }
-
     .panel .bottom {
       margin-top: rem(-32px);
-    }
-  }
-
-  .ae-toolbar {
-    justify-content: space-between;
-
-    .minimum-fee {
-      font-size: rem(13px);
-      font-weight: normal;
-      text-transform: none;
-      letter-spacing: rem(0.3px);
-    }
-
-    .fee-amount {
-      @extend %face-mono-xs;
     }
   }
 
