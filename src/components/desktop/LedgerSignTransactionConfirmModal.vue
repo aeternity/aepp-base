@@ -8,12 +8,8 @@
     <ae-loader />
 
     <div class="confirm">
-      Confirm the address
+      Sign the transaction on the Ledger
     </div>
-    <ledger-modal-note>
-      And we will import the it and connected to the
-      <br>account you just created.
-    </ledger-modal-note>
   </ledger-modal>
 </template>
 
@@ -21,14 +17,12 @@
 import LedgerModal from './LedgerModal.vue';
 import AeLoader from '../AeLoader.vue';
 import LedgerModalNanoS from './LedgerModalNanoS.vue';
-import LedgerModalNote from './LedgerModalNote.vue';
 
 export default {
   components: {
     LedgerModal,
     AeLoader,
     LedgerModalNanoS,
-    LedgerModalNote,
   },
 };
 </script>
@@ -40,11 +34,10 @@ export default {
 .sign-transaction-confirm {
   .ae-loader {
     display: block;
-    margin: rem(30px) auto;
+    margin: rem(60px) auto;
   }
 
   .confirm {
-    margin: rem(10px);
     @extend %face-sans-l;
     font-weight: 500;
     color: $color-neutral-minimum;
