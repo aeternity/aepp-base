@@ -3,7 +3,7 @@
     title="Sign transaction on the Ledger"
     class="sign-transaction-confirm"
   >
-    <div class="ledger-image" />
+    <ledger-modal-nano-s />
 
     <ae-loader />
 
@@ -20,12 +20,14 @@
 <script>
 import LedgerModal from './LedgerModal.vue';
 import AeLoader from '../AeLoader.vue';
+import LedgerModalNanoS from './LedgerModalNanoS.vue';
 import LedgerModalNote from './LedgerModalNote.vue';
 
 export default {
   components: {
     LedgerModal,
     AeLoader,
+    LedgerModalNanoS,
     LedgerModalNote,
   },
 };
@@ -36,13 +38,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .sign-transaction-confirm {
-  .ledger-image {
-    background: #333745;
-    width: rem(220px);
-    height: rem(50px);
-    margin: rem(60px) auto;
-  }
-
   .ae-loader {
     display: block;
     margin: rem(30px) auto;

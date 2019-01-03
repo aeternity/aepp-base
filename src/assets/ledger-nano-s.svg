@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="247" height="69" viewBox="0 0 247 69">
+    <defs>
+        <filter id="a" width="120.5%" height="120.5%" x="-10.3%" y="-10.3%" filterUnits="objectBoundingBox">
+            <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="5"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.828 0 0 0 0 0.864 0 0 0 0 0.9 0 0 0 1 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path id="b" d="M1.354 3.146a.5.5 0 1 0-.708.708l2.5 2.5a.5.5 0 0 0 .708 0l5.5-5.5a.5.5 0 1 0-.708-.708L3.5 5.293 1.354 3.146z"/>
+        <path id="c" d="M4.148 3.5l2.426 2.426a.458.458 0 0 1-.648.648L3.5 4.148 1.074 6.574a.458.458 0 0 1-.648-.648L2.852 3.5.426 1.074a.458.458 0 0 1 .648-.648L3.5 2.852 5.926.426a.458.458 0 0 1 .648.648L4.148 3.5z"/>
+        <circle id="e" cx="97.561" cy="34.796" r="11.127"/>
+        <filter id="d" width="158.4%" height="158.4%" x="-29.2%" y="-29.2%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius=".5" result="shadowSpreadOuter1"/>
+            <feOffset in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.572 0 0 0 0 0.611 0 0 0 0 0.65 0 0 0 1 0"/>
+        </filter>
+        <filter id="f" width="176.4%" height="176.4%" x="-38.2%" y="-38.2%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceAlpha" result="shadowBlurInner1" stdDeviation="4"/>
+            <feOffset in="shadowBlurInner1" result="shadowOffsetInner1"/>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"/>
+            <feColorMatrix in="shadowInnerInner1" values="0 0 0 0 0.57254902 0 0 0 0 0.611764706 0 0 0 0 0.650980392 0 0 0 0.28 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" filter="url(#a)" transform="rotate(-45 35.503 35.559)">
+        <path fill="#001833" d="M66.2 93.661l27.206-27.206a4 4 0 0 1 5.657 0l92.446 92.446a4 4 0 0 1 0 5.657l-27.206 27.206a4 4 0 0 1-5.657 0L66.2 99.318a4 4 0 0 1 0-5.657z"/>
+        <path fill="#001833" d="M128.362 99.705l1.976-1.975a2 2 0 0 1 2.828 0l11.512 11.512a2 2 0 0 1 0 2.828l-1.975 1.976a2 2 0 0 1-2.829 0l-11.512-11.512a2 2 0 0 1 0-2.829zM171.496 142.839l1.975-1.976a2 2 0 0 1 2.829 0l11.512 11.512a2 2 0 0 1 0 2.829l-1.976 1.975a2 2 0 0 1-2.828 0l-11.512-11.512a2 2 0 0 1 0-2.828z"/>
+        <path fill="#203040" d="M112.588 124.382l11.296-11.295a2 2 0 0 1 2.828 0l48.034 48.033a2 2 0 0 1 0 2.829l-11.296 11.295a2 2 0 0 1-2.828 0l-48.034-48.033a2 2 0 0 1 0-2.829z"/>
+        <use fill="#1A7AFB" fill-rule="nonzero" transform="rotate(45 -108.11 271.359)" xlink:href="#b"/>
+        <use fill="#1A7AFB" fill-rule="nonzero" transform="rotate(45 -82.035 210.949)" xlink:href="#c"/>
+        <path fill="#D3DCE6" d="M115.502 115.775c-9.075 9.075-23.788 9.075-32.863 0L3.796 36.932a4 4 0 0 1 0-5.657L31.002 4.069a4 4 0 0 1 5.657 0l78.843 78.843c9.075 9.075 9.075 23.788 0 32.863z"/>
+        <g transform="rotate(90 65.88 66.509)">
+            <use fill="#000" filter="url(#d)" xlink:href="#e"/>
+            <use fill="#FFF" xlink:href="#e"/>
+            <use fill="#000" filter="url(#f)" xlink:href="#e"/>
+            <use stroke="#929CA6" xlink:href="#e"/>
+        </g>
+        <path fill="#929CA6" fill-rule="nonzero" d="M47.296 32.64l-6.415-6.415-8.691 8.691 8.61 8.61 6.43-6.43c1.224-1.217 1.276-3.246.066-4.455zm-8.386-8.385l-1.076-1.076c-1.21-1.21-3.238-1.25-4.508.02l-1.087 1.087 3.32 3.32 3.351-3.35zm-8.705 2.066l3.32 3.32-3.351 3.35-3.32-3.32 3.35-3.35zm1.893 19.275l1.076 1.076c1.21 1.21 3.238 1.25 4.509-.021l1.082-1.083-3.32-3.32-3.347 3.348zm-1.946-8.642l3.32 3.32-3.351 3.351-3.32-3.32 3.35-3.35zm-5.29-5.29l-1.087 1.086c-1.22 1.221-1.28 3.25-.021 4.509l1.076 1.076 3.351-3.351-3.32-3.32z"/>
+    </g>
+</svg>

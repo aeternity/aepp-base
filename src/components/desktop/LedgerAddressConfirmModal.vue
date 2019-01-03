@@ -4,7 +4,7 @@
     :title="`${create ? 'Create' : 'Confirm'} your address on the Ledger`"
     class="ledger-address-confirm"
   >
-    <div class="ledger-image" />
+    <ledger-modal-nano-s />
 
     <ae-address-panel
       title="Ledger Address"
@@ -25,12 +25,14 @@
 import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeAddressPanel from './AeAddressPanel.vue';
+import LedgerModalNanoS from './LedgerModalNanoS.vue';
 import LedgerModalNote from './LedgerModalNote.vue';
 
 export default {
   components: {
     LedgerModal,
     AeAddressPanel,
+    LedgerModalNanoS,
     LedgerModalNote,
   },
   props: {
@@ -47,13 +49,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .ledger-address-confirm {
-  .ledger-image {
-    background: #333745;
-    width: rem(220px);
-    height: rem(50px);
-    margin: rem(60px) auto;
-  }
-
   .ae-address-panel {
     margin: rem(60px) auto;
   }
