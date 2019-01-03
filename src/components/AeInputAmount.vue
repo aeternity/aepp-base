@@ -1,19 +1,17 @@
 <template>
   <ae-input-wrapper
-    class="ae-input"
+    class="ae-input-amount"
     v-bind="$attrs"
   >
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
     <input
       :id="id"
       v-focus.lazy="autofocus"
       slot-scope="{ setFocus, id }"
+      placeholder="0.0"
       :value="value"
       v-bind="$attrs"
+      type="number"
+      step="any"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       @input="$emit('input', $event.target.value)"
@@ -29,7 +27,7 @@ export default {
   components: { AeInputWrapper },
   directives: { focus },
   props: {
-    value: { type: String, default: '' },
+    value: { type: [String, Number], default: '' },
     autofocus: { type: Boolean, default: false },
   },
 };
@@ -39,19 +37,26 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
-.ae-input input {
+.ae-input-amount input {
   display: block;
   width: 100%;
-  margin: rem(1px) 0 rem(7px) 0;
+  margin: 0 0 rem(16px) 0;
   padding: 0;
   background: transparent;
   border: none;
   outline: none;
-  @extend %face-sans-base;
+  -moz-appearance: textfield;
+  @extend %face-mono-xl;
+  text-align: center;
+  font-weight: 300;
   color: $color-neutral-negative-3;
 
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
   &::placeholder {
-    color: $color-neutral-negative-1;
+    color: $color-neutral;
   }
 }
 </style>

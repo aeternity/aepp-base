@@ -1,6 +1,7 @@
 import VeeValidate, { Validator } from 'vee-validate';
 import BigNumber from 'bignumber.js';
 import { Crypto } from '@aeternity/aepp-sdk';
+import { validateMnemonic } from '@aeternity/bip39';
 import { toUrl } from './utils';
 
 Validator.extend('min_value_exclusive', (value, [min]) => BigNumber(value).isGreaterThan(min));
@@ -15,6 +16,7 @@ Validator.extend('url_http', (value) => {
   }
 });
 Validator.extend('address', value => Crypto.isAddressValid(value));
+Validator.extend('mnemonic', value => validateMnemonic(value));
 
 export default {
   install: Vue => Vue.use(VeeValidate, {
@@ -30,6 +32,8 @@ export default {
           decimal: (field, [decimals = '*'] = []) => `This field must be numeric and may contain ${!decimals || decimals === '*' ? '' : decimals} decimal points`,
           url_http: () => 'This field is not a valid HTTP(S) URL',
           confirmed: () => 'The passwords do not match',
+          address: () => 'Invalid AE Address',
+          mnemonic: () => 'Invalid recovery phrase',
         },
       },
     },

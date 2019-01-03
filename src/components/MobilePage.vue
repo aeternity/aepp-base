@@ -131,6 +131,10 @@ export default {
       .ae-icon {
         font-size: rem(22px);
       }
+
+      .ae-input-wrapper:last-child {
+        margin-bottom: 0;
+      }
     }
 
     .bottom {
@@ -143,7 +147,7 @@ export default {
       flex-grow: 1;
       margin: 0 rem(30px);
 
-      .ae-card, .ae-input-container {
+      .ae-card, .ae-input-wrapper {
         position: relative;
       }
     }

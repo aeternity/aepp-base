@@ -13,39 +13,38 @@
                     <br>and confirm.
     </guide>
 
-    <form @submit.prevent="createKeystore">
-      <ae-input
+    <form
+      :id="_uid"
+      @submit.prevent="createKeystore"
+    >
+      <ae-input-password
         v-model="password"
         v-validate="'required|min:4'"
-        v-focus="true"
+        autofocus
         :error="errors.has('password')"
-        label="New password"
+        :footer="errors.first('password')"
         name="password"
-        type="password"
-        placeholder="Password"
-        @click.native="error = false"
+        hide-reveal-button
       />
-      <ae-input
-        v-model="passwordRepeat"
-        v-validate="'confirmed:'+password+'|required'"
-        v-focus="true"
-        :error="errors.has('passwordRepeat')"
-        label="Confirm new password"
-        name="passwordRepeat"
-        type="password"
-        placeholder="Password"
-        @click.native="error = false"
+      <ae-input-password
+        v-model="passwordConfirm"
+        v-validate="`required|confirmed:${password}`"
+        :error="errors.has('passwordConfirm')"
+        :footer="errors.first('passwordConfirm')"
+        header="Repeat password"
+        name="passwordConfirm"
+        hide-reveal-button
       />
     </form>
-    <template slot="footer">
-      <ae-button
-        :disabled="errors.any() || working"
-        fill="secondary"
-        @click="createKeystore"
-      >
-        Confirm
-      </ae-button>
-    </template>
+
+    <ae-button
+      slot="footer"
+      :form="_uid"
+      :disabled="errors.any() || working"
+      fill="secondary"
+    >
+      Confirm
+    </ae-button>
   </mobile-page>
 </template>
 
@@ -55,11 +54,11 @@ import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
-import AeInput from '../components/AeInput.vue';
+import AeInputPassword from '../components/AeInputPassword.vue';
 
 export default {
   components: {
-    MobilePage, AeInput, AeButton, Guide,
+    MobilePage, AeInputPassword, AeButton, Guide,
   },
   props: {
     seed: { type: String, required: true },
@@ -67,7 +66,7 @@ export default {
   data() {
     return {
       password: '',
-      passwordRepeat: '',
+      passwordConfirm: '',
       working: false,
       keyEmoji: keyEmojiPath,
     };
@@ -92,20 +91,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .set-password {
   form {
     margin: 0 rem(-15px);
-  }
-
-  /deep/ .ae-input-container {
-    margin-top: rem(15px);
-
-    input {
-      margin: 0;
-    }
   }
 }
 </style>

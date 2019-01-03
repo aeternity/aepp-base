@@ -14,44 +14,36 @@
     </guide>
 
     <form @submit.prevent="unlockSavedKeystore">
-      <ae-input
+      <ae-input-password
         v-model="password"
         v-validate="'required|min:4'"
-        v-focus="true"
-        :label="error ? 'Password': ''"
-        :error="error"
-        :type="showPassword ? 'text' : 'password'"
+        autofocus
+        :error="errors.has('password') || wrongPassword"
         name="password"
-        placeholder="Password"
-        @click.native="error = false"
+        @input="wrongPassword = false"
       >
-        <ae-toolbar slot="footer">
-          <span>
-            <span
-              v-if="error"
-              class="error"
-            >
-              Try again or
-            </span>
-            <router-link
-              :to="{ name: 'recover' }"
-              class="recover"
-            >
-              {{ error ? 'recover' : 'Recover account' }}
+        <template slot="footer">
+          <template v-if="errors.has('password')">
+            {{ errors.first('password') }}
+          </template>
+          <template v-else-if="wrongPassword">
+            Try again or
+            <router-link :to="{ name: 'recover' }">
+              recover
             </router-link>
-          </span>
-          <ae-icon
-            name="eye"
-            size="16px"
-            @click.native="showPassword = !showPassword"
-          />
-        </ae-toolbar>
-      </ae-input>
+          </template>
+          <template v-else>
+            <router-link :to="{ name: 'recover' }">
+              Recover account
+            </router-link>
+          </template>
+        </template>
+      </ae-input-password>
     </form>
 
     <template slot="footer">
       <ae-button
-        :disabled="errors.any()"
+        :disabled="errors.any() || wrongPassword"
         fill="secondary"
         @click="unlockSavedKeystore"
       >
@@ -62,36 +54,31 @@
 </template>
 
 <script>
-import { AeToolbar, AeIcon } from '@aeternity/aepp-components-3';
 import wavingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f44b.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
-import AeInput from '../components/AeInput.vue';
+import AeInputPassword from '../components/AeInputPassword.vue';
 
 export default {
   components: {
-    MobilePage, AeInput, AeButton, Guide, AeToolbar, AeIcon,
+    MobilePage, AeInputPassword, AeButton, Guide,
   },
   data() {
     return {
       wavingHandEmoji: wavingHandEmojiPath,
       password: '',
-      showPassword: false,
-      error: false,
+      wrongPassword: false,
     };
   },
   methods: {
     async unlockSavedKeystore() {
-      if (!await this.$validator.validateAll()) {
-        this.error = true;
-        return;
-      }
+      if (!await this.$validator.validateAll()) return;
 
       try {
         await this.$store.dispatch('unlockKeystore', this.password);
       } catch (e) {
-        this.error = true;
+        this.wrongPassword = true;
       }
     },
   },
@@ -113,17 +100,6 @@ export default {
 
   form {
     margin: 0 rem(-15px);
-  }
-
-  .ae-toolbar {
-    justify-content: space-between;
-    @extend %face-sans-xs;
-    color: $color-neutral-negative-1;
-    text-transform: none;
-
-    .recover {
-      color: $color-neutral-negative-1;
-    }
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[fill, { disabled }]"
+    :class="[fill]"
     class="ae-toolbar"
   >
     <slot />
@@ -21,10 +21,6 @@ export default {
       ].includes(value),
       default: '',
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
   },
 };
 </script>
@@ -38,20 +34,10 @@ export default {
   line-height: 2rem;
   padding: 0 1rem;
   background: $color-neutral-positive-2;
-  font-weight: 500;
   color: $color-neutral-negative-1;
-
-  &.disabled {
-    cursor: not-allowed;
-    color: rgba($color-neutral-negative-1, 0.5);
-  }
 
   &.primary, &.secondary, &.neutral, &.alternative {
     color: #fff;
-
-    &.disabled {
-      color: rgba(#fff, 0.5);
-    }
   }
 
   &.primary {
@@ -68,6 +54,10 @@ export default {
 
   &.alternative {
     background: $color-alternative-negative-2;
+  }
+
+  /deep/ a {
+    color: inherit;
   }
 }
 </style>

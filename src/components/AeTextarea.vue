@@ -1,6 +1,6 @@
 <template>
   <ae-input-wrapper
-    class="ae-input"
+    class="ae-textarea"
     v-bind="$attrs"
   >
     <slot
@@ -8,16 +8,16 @@
       :slot="slot"
       :name="slot"
     />
-    <input
+    <textarea
       :id="id"
       v-focus.lazy="autofocus"
       slot-scope="{ setFocus, id }"
-      :value="value"
       v-bind="$attrs"
+      :class="{ monospace }"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       @input="$emit('input', $event.target.value)"
-    >
+    />
   </ae-input-wrapper>
 </template>
 
@@ -29,8 +29,8 @@ export default {
   components: { AeInputWrapper },
   directives: { focus },
   props: {
-    value: { type: String, default: '' },
     autofocus: { type: Boolean, default: false },
+    monospace: { type: Boolean, default: false },
   },
 };
 </script>
@@ -39,19 +39,26 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
-.ae-input input {
+.ae-textarea textarea {
   display: block;
   width: 100%;
-  margin: rem(1px) 0 rem(7px) 0;
+  margin: rem(10px) 0 rem(14px) 0;
   padding: 0;
   background: transparent;
   border: none;
   outline: none;
+  resize: none;
   @extend %face-sans-base;
-  color: $color-neutral-negative-3;
+  color: $color-neutral-negative-1;
+
+  &.monospace {
+    @extend %face-mono-base;
+    font-weight: 500;
+  }
 
   &::placeholder {
-    color: $color-neutral-negative-1;
+    color: $color-neutral;
+    font-weight: normal;
   }
 }
 </style>

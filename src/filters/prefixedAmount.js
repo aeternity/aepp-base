@@ -1,8 +1,8 @@
 const prefixes = [
-  { name: 'exa', magnitude: 18 },
-  { name: 'giga', magnitude: 9 },
+  { name: 'Exa', magnitude: 18 },
+  { name: 'Giga', magnitude: 9 },
   { name: '', magnitude: 0 },
-  { name: 'pico', magnitude: -12 },
+  { name: 'Pico', magnitude: -12 },
 ];
 
 const getNearestPrefix = exponent => prefixes.reduce((p, n) => (

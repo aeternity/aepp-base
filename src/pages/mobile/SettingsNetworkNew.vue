@@ -12,7 +12,9 @@
           v-model="name"
           v-validate="'required'"
           :error="errors.has('name')"
-          label="Node Name"
+          :footer="errors.first('name')"
+          autofocus
+          header="Node Name"
           name="name"
         />
         <ae-input
@@ -23,7 +25,8 @@
             excluded: networks.map(({ url }) => url),
           }"
           :error="errors.has('url')"
-          label="Node URL"
+          :footer="errors.first('url')"
+          header="Node URL"
           name="url"
         />
         <ae-button
@@ -97,22 +100,15 @@ export default {
       margin-top: rem(27px);
     }
 
-    .ae-input-container {
-      margin-bottom: rem(16px);
-
-      &:last-of-type {
-        margin-bottom: rem(32px);
-      }
-
-      /deep/ input {
-        margin: 0;
-      }
+    .ae-input + .ae-button {
+      margin-top: rem(32px);
     }
 
     .ae-button {
       display: block;
       min-width: rem(250px);
-      margin: rem(10px) auto;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }
