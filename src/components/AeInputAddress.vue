@@ -11,16 +11,12 @@
     v-bind="$attrs"
     v-on="$listeners"
   >
-    <template slot="footer">
-      <ae-identicon
-        v-if="isValueValid"
-        :address="value"
-        size="s"
-      />
-      <span v-else-if="value.length">
-        Invalid AE Address
-      </span>
-    </template>
+    <ae-identicon
+      v-if="!$attrs.footer && !$slots.footer && value"
+      slot="footer"
+      :address="value"
+      size="s"
+    />
 
     <template slot="footer-right">
       <template v-if="!$globals.IS_MOBILE_DEVICE">
@@ -60,7 +56,6 @@
 <script>
 import { mapState } from 'vuex';
 import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
-import { Crypto } from '@aeternity/aepp-sdk';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import AePopover from './AePopover.vue';
@@ -83,9 +78,6 @@ export default {
     showAccountsDropdown: false,
   }),
   computed: {
-    isValueValid() {
-      return Crypto.isAddressValid(this.value);
-    },
     ...mapState({
       accounts: (state, { identities, activeIdentity }) => identities
         .filter(i => i !== activeIdentity),
