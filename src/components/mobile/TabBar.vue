@@ -51,12 +51,13 @@ export default {
 
 <style scoped lang="scss">
 @import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 @import '~@aeternity/aepp-components-3/src/styles/fallback/variables.scss';
 
 .tab-bar {
   position: sticky;
   bottom: 0;
-  background-color: #001833;
+  background-color: $color-neutral-minimum;
 
   .wrapper {
     display: flex;
@@ -73,7 +74,7 @@ export default {
       font-weight: 500;
       line-height: 1.45;
       letter-spacing: 0.2px;
-      color: #76818c;
+      color: $color-neutral-negative-1;
       text-align: center;
 
       .ae-icon {
@@ -86,7 +87,7 @@ export default {
         width: 42px;
         height: 42px;
         border: 2px solid #000;
-        box-shadow: 0 0 0 2px #ff0d6a;
+        box-shadow: 0 0 0 2px $color-primary;
       }
 
       &.router-link-active {
