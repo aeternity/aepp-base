@@ -33,9 +33,9 @@
 
 <script>
 import sparklesEmojiPath from 'emoji-datasource-apple/img/apple/64/2728.png';
-import AeButton from '../components/AeButton.vue';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
 
 export default {
   components: { MobilePage, AeButton, Guide },

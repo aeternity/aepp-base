@@ -44,10 +44,10 @@
 <script>
 import { mapState } from 'vuex';
 import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
-import AeInputMnemonic from '../components/AeInputMnemonic.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeInputMnemonic from '../../components/AeInputMnemonic.vue';
 
 export default {
   components: {

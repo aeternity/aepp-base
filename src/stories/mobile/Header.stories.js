@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import MobileHeader from '../../components/HeaderMobile.vue';
+import MobileHeader from '../../components/mobile/Header.vue';
 import { lorem } from '../mock-data';
 
 const base = {

@@ -73,7 +73,7 @@
 import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../../components/AeCard.vue';
-import MobilePage from '../../components/MobilePage.vue';
+import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 

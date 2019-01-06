@@ -28,7 +28,7 @@
 <script>
 import { mapState } from 'vuex';
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
-import HeaderMobile from './HeaderMobile.vue';
+import HeaderMobile from './mobile/Header.vue';
 
 export default {
   components: { HeaderMobile },

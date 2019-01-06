@@ -3,7 +3,7 @@ import store from '../store';
 import mobileRoutes from './routes/mobile';
 import desktopRoutes from './routes/desktop';
 import commonRoutes from './routes/common';
-import AddToHomeScreenPrompt from '../pages/AddToHomeScreenPrompt.vue';
+import AddToHomeScreenPrompt from '../pages/mobile/AddToHomeScreenPrompt.vue';
 
 const router = new Router({
   routes:

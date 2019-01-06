@@ -61,13 +61,13 @@
       inactive
     >
       <span class="title">
-        <img src="../assets/icons/turtle.svg">
+        <img src="../../assets/icons/turtle.svg">
       </span>
       <span
         slot="right"
         class="content"
       >
-        <img src="../assets/icons/rabbit.svg">
+        <img src="../../assets/icons/rabbit.svg">
       </span>
     </list-item>
 
@@ -119,14 +119,14 @@
 import BigNumber from 'bignumber.js';
 import { mapGetters, mapState } from 'vuex';
 import { AeIdenticon, AeButtonGroup } from '@aeternity/aepp-components-3';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import ListItem from '../components/deprecated/ListItem.vue';
-import AeInputRange from '../components/AeInputRange.vue';
-import AeButton from '../components/AeButton.vue';
-import AeAddress from '../components/AeAddress.vue';
-import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
-import prefixedAmount from '../filters/prefixedAmount';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import ListItem from '../../components/deprecated/ListItem.vue';
+import AeInputRange from '../../components/AeInputRange.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeAddress from '../../components/AeAddress.vue';
+import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../../lib/constants';
+import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
   components: {

@@ -72,11 +72,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeInputAddress from '../components/AeInputAddress.vue';
-import AeButton from '../components/AeButton.vue';
-import ListItemAccount from '../components/ListItemAccount.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeInputAddress from '../../components/AeInputAddress.vue';
+import AeButton from '../../components/AeButton.vue';
+import ListItemAccount from '../../components/ListItemAccount.vue';
 
 export default {
   components: {

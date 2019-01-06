@@ -52,9 +52,9 @@ import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
 import QrCodeReader from './components/QrCodeReader.vue';
 import TabBar from './components/mobile/TabBar.vue';
-import ApproveMessage from './components/ApproveMessage.vue';
-import ApproveTransaction from './components/ApproveTransaction.vue';
-import AccountSwitcher from './components/AccountSwitcher.vue';
+import ApproveMessage from './components/mobile/ApproveMessage.vue';
+import ApproveTransaction from './components/mobile/ApproveTransaction.vue';
+import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
 
 export default {
   components: {

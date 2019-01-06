@@ -42,9 +42,9 @@
 <script>
 import { generateMnemonic } from '@aeternity/bip39';
 import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: { MobilePage, AeButton, Guide },

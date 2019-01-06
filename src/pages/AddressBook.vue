@@ -44,7 +44,7 @@ import { AeIcon, AeAppIcon, AeDivider } from '@aeternity/aepp-components';
 import AddressBookNoContacts from './AddressBookNoContacts.vue';
 import AddressBookItem from '../components/AddressBookItem.vue';
 import FixedAddButton from '../components/FixedAddButton.vue';
-import MobilePage from '../components/MobilePage.vue';
+import MobilePage from '../components/mobile/Page.vue';
 
 export default {
   components: {

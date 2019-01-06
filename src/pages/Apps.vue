@@ -59,7 +59,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeAppIcon, AeButton, AeIcon } from '@aeternity/aepp-components';
 import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry';
-import HeaderMobile from '../components/HeaderMobile.vue';
+import HeaderMobile from '../components/mobile/Header.vue';
 
 export default {
   components: {

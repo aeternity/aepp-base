@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import HeaderMobile from './HeaderMobile.vue';
+import HeaderMobile from './Header.vue';
 
 export default {
   components: { HeaderMobile },

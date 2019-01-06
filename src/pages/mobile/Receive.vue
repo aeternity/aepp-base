@@ -46,10 +46,10 @@ import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import writingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
 import copy from 'clipboard-copy';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeAccountReverse from '../components/AeAccountReverse.vue';
-import ListItem from '../components/ListItem.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeAccountReverse from '../../components/mobile/AeAccountReverse.vue';
+import ListItem from '../../components/ListItem.vue';
 
 export default {
   components: {

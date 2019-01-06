@@ -108,12 +108,12 @@ import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.p
 import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import glowingStarEmojiPath from 'emoji-datasource-apple/img/apple/64/1f31f.png';
 import copy from 'clipboard-copy';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeAccount from '../components/AeAccount.vue';
-import ListItem from '../components/ListItem.vue';
-import TransferNotification from '../components/TransferNotification.vue';
-import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeAccount from '../../components/AeAccount.vue';
+import ListItem from '../../components/ListItem.vue';
+import TransferNotification from '../../components/TransferNotification.vue';
+import MigratedBalanceModal from '../../components/mobile/MigratedBalanceModal.vue';
 
 export default {
   components: {

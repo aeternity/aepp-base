@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import MobilePage from '../../components/MobilePage.vue';
+import MobilePage from '../../components/mobile/Page.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import { lorem } from '../mock-data';
 

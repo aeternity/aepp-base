@@ -1,6 +1,6 @@
 <template>
   <div class="onboarding-page">
-    <img src="../assets/onboarding/phones.svg">
+    <img src="../../assets/onboarding/phones.svg">
     <guide fill="primary">
       <em>Base aepp</em>
       <br>æternity begins here
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Guide from '../components/Guide.vue';
+import Guide from '../../components/Guide.vue';
 
 export default {
   components: { Guide },

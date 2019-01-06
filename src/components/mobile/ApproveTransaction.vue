@@ -62,7 +62,7 @@
 
 <script>
 import { AeAmount, AeIcon, AeIdentityAvatar } from '@aeternity/aepp-components';
-import { convertAEtoCHF } from '../lib/currencyConverter';
+import { convertAEtoCHF } from '../../lib/currencyConverter';
 import ApproveButtons from './ApproveButtons.vue';
 import DialogHeader from './DialogHeader.vue';
 

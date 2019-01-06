@@ -31,7 +31,7 @@
 
 <script>
 import { AeIcon } from '@aeternity/aepp-components-3';
-import ButtonPlain from './ButtonPlain.vue';
+import ButtonPlain from '../ButtonPlain.vue';
 
 export default {
   components: { ButtonPlain, AeIcon },

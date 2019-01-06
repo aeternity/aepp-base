@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import AeButton from '../components/AeButton.vue';
-import MobilePage from '../components/MobilePage.vue';
+import AeButton from '../../components/AeButton.vue';
+import MobilePage from '../../components/mobile/Page.vue';
 
 export default {
   components: { MobilePage, AeButton },

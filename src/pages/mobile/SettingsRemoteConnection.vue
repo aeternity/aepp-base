@@ -34,7 +34,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import MobilePage from '../../components/MobilePage.vue';
+import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemButton from '../../components/ListItemButton.vue';

@@ -48,10 +48,10 @@
 <script>
 import { mapState } from 'vuex';
 import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
-import AeInputPassword from '../components/AeInputPassword.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeInputPassword from '../../components/AeInputPassword.vue';
 
 export default {
   components: {

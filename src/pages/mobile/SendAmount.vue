@@ -67,12 +67,12 @@
 import BigNumber from 'bignumber.js';
 import { mapGetters, mapState } from 'vuex';
 import { AeIdenticon } from '@aeternity/aepp-components-3';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeInputAmountAe from '../components/AeInputAmountAe.vue';
-import AeButton from '../components/AeButton.vue';
-import AeAddress from '../components/AeAddress.vue';
-import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../lib/constants';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeAddress from '../../components/AeAddress.vue';
+import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
 
 export default {
   components: {

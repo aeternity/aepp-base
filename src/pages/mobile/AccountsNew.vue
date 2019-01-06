@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import AeInput from '../components/AeInput.vue';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
+import AeInput from '../../components/AeInput.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {

@@ -19,7 +19,7 @@
 import { mapState } from 'vuex';
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
-import FooterDesktop from './components/FooterDesktop.vue';
+import FooterDesktop from './components/desktop/FooterDesktop.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';

@@ -62,11 +62,11 @@
 <script>
 import { shuffle } from 'lodash-es';
 import fingersCrossedEmojiPath from 'emoji-datasource-apple/img/apple/64/1f91e.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
-import ButtonMnemonicWord from '../components/mobile/ButtonMnemonicWord.vue';
-import AeInputWrapper from '../components/AeInputWrapper.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
+import ButtonMnemonicWord from '../../components/mobile/ButtonMnemonicWord.vue';
+import AeInputWrapper from '../../components/AeInputWrapper.vue';
 
 export default {
   components: {
