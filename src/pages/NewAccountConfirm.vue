@@ -24,20 +24,29 @@
       {{ word }}
     </button-mnemonic-word>
 
-    <div
-      :class="{ error }"
-      class="frame"
+    <ae-input-wrapper
+      :error="error"
+      :header="error ? 'Oops! That doesn\'t match, try again' : 'Your phrase'"
     >
-      <div class="message" />
+      <template v-if="selectedWordIds.length">
+        <button-mnemonic-word
+          v-for="index in selectedWordIds"
+          :key="index"
+          icon-close
+          @click="wordClick(index)"
+        >
+          {{ seedPermutation[index] }}
+        </button-mnemonic-word>
+      </template>
       <button-mnemonic-word
-        v-for="index in selectedWordIds"
-        :key="index"
-        icon-close
-        @click="wordClick(index)"
+        v-for="placeholderWord in ['first', 'second', 'third', '···']"
+        v-else
+        :key="placeholderWord"
+        disabled
       >
-        {{ seedPermutation[index] }}
+        {{ placeholderWord }}
       </button-mnemonic-word>
-    </div>
+    </ae-input-wrapper>
 
     <ae-button
       slot="footer"
@@ -57,12 +66,14 @@ import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
 import ButtonMnemonicWord from '../components/mobile/ButtonMnemonicWord.vue';
+import AeInputWrapper from '../components/AeInputWrapper.vue';
 
 export default {
   components: {
     MobilePage,
     AeButton,
     Guide,
+    AeInputWrapper,
     ButtonMnemonicWord,
   },
   props: {
@@ -102,37 +113,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
-.new-account-confirm {
-  .frame {
-    margin-top: rem(32px);
-    @extend %face-sans-xs;
-    color: $color-neutral-negative-1;
-
-    .message {
-      margin-bottom: rem(14px);
-
-      &:before {
-        content: "Your phrase";
-      }
-    }
-
-    &.error {
-      margin-left: rem(-15px);
-      padding-left: rem(15px);
-      border-left: 2px solid $color-primary;
-
-      .message {
-        margin-bottom: rem(7px);
-        color: $color-primary;
-
-        &:before {
-          content: "Oops! That doesn't match, try again";
-        }
-      }
-    }
-  }
+.new-account-confirm .ae-input-wrapper {
+  margin-top: rem(32px);
+  background: transparent;
 }
 </style>
