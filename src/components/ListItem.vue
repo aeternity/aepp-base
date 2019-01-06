@@ -46,7 +46,7 @@ export default {
 
 .list-item {
   display: block;
-  padding: 0 rem(15px);
+  padding: 0 rem(16px);
   text-decoration: none;
   color: $color-neutral-negative-3;
 
@@ -58,7 +58,6 @@ export default {
     display: flex;
     align-items: center;
     height: rem(68px);
-    padding: 0 rem(2px);
     border-bottom: 2px solid $color-neutral-positive-2;
     @extend %face-sans-s;
     font-weight: 500;

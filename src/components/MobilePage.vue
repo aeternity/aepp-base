@@ -1,160 +1,172 @@
 <template>
-  <div class="mobile-page">
-    <div class="panel">
-      <div :class="['top', !this.$slots['content-bottom'] && 'only', fill]">
-        <header-mobile>
-          {{ title }}
-          <button-plain
-            v-if="backButton || closeButton || addButton"
-            :slot="backButton ? 'left' : 'right'"
-            @click="closeHandler"
-          >
-            <ae-icon
-              :name="backButton ? 'back' : closeButton ? 'close' : 'plus'"
-              :rotate="backButton ? 180 : 0"
-            />
-          </button-plain>
-        </header-mobile>
-        <div class="content">
-          <slot />
-        </div>
+  <div
+    :class="fill"
+    class="mobile-page"
+  >
+    <header-mobile
+      :fill="headerFill || fill"
+      :shadow="!!headerFill && headerFill !== fill && !$slots.header"
+      v-bind="$attrs"
+      padded
+      v-on="$listeners"
+    />
+
+    <header
+      v-if="$slots.header"
+      :class="headerFill"
+    >
+      <div class="wrapper">
+        <slot name="header" />
       </div>
-      <div
-        v-if="!!this.$slots['content-bottom']"
-        class="bottom"
-      >
-        <div class="content">
-          <slot name="content-bottom" />
-        </div>
+    </header>
+
+    <main>
+      <div class="wrapper">
+        <slot />
       </div>
-      <div
-        v-if="$slots.footer"
-        class="footer"
-      >
+    </main>
+
+    <footer v-if="$slots.footer">
+      <div class="wrapper">
         <slot name="footer" />
       </div>
-    </div>
+    </footer>
   </div>
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
 import HeaderMobile from './HeaderMobile.vue';
-import ButtonPlain from './ButtonPlain.vue';
 
 export default {
-  components: { ButtonPlain, AeIcon, HeaderMobile },
+  components: { HeaderMobile },
   props: {
-    title: { type: String, default: '' },
-    redirectToOnClose: { type: Object, default: undefined },
-    backButton: { type: Boolean, default: false },
-    closeButton: { type: Boolean, default: false },
-    addButton: { type: Boolean, default: false },
-    fill: {
+    headerFill: {
       type: String,
       validator: value => [
         'primary',
+        'alternative',
         'neutral',
+        'light',
         '',
       ].includes(value),
       default: '',
     },
-  },
-  methods: {
-    closeHandler() {
-      this.$emit('close');
-      if (!this.redirectToOnClose) return;
-      this.$router.push(this.redirectToOnClose);
+    fill: {
+      type: String,
+      validator: value => [
+        'primary',
+        'alternative',
+        'neutral',
+        'light',
+      ].includes(value),
+      default: 'light',
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/fallback/mixins.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .mobile-page {
-  $overlay-padding: 10px;
-
   flex-grow: 1;
   display: flex;
+  flex-direction: column;
 
-  @include phone {
-    flex-direction: column;
+  &,
+  header {
+    &.primary {
+      background-color: $color-primary;
+    }
+
+    &.alternative {
+      background-color: $color-alternative;
+    }
+
+    &.neutral {
+      background-color: $color-neutral-positive-2;
+    }
+
+    &.light {
+      background-color: $color-neutral-maximum;
+    }
   }
 
-  @include abovePhone {
-    background: $smoke;
-    padding: $overlay-padding;
+  .wrapper {
+    max-width: $screen-phone;
     box-sizing: border-box;
-  }
+    margin: 0 auto;
+    padding: 0 rem(48px);
 
-  > .panel, .top, .bottom {
-    display: flex;
-    flex-direction: column;
-  }
+    /deep/ {
+      > .ae-button.medium {
+        display: block;
+        width: stretch;
+        min-width: 0;
+      }
 
-  > .panel {
-    position: relative;
+      > .ae-button.medium,
+      > .ae-button-group {
+        margin-left: rem(-16px);
+        margin-right: rem(-16px);
 
-    @include phone {
-      flex-grow: 1;
-    }
-
-    @include abovePhone {
-      background: linear-gradient(to bottom, white, #f1f4f7);
-      border-radius: rem(10px);
-      margin: auto;
-      width: $screen-phone - 2 * $overlay-padding;
-      min-height: rem(600px);
-    }
-
-    .top {
-      &.primary {
-        background-color: $color-primary;
-
-        .header-mobile .ae-icon {
-          color: $color-neutral-positive-3;
+        &:last-child {
+          margin-bottom: rem(32px);
         }
       }
 
-      &.neutral {
-        background-color: $color-neutral-positive-2;
+      .ae-input-wrapper {
+        margin-left: rem(-16px);
+        margin-right: rem(-16px);
       }
 
-      &.only {
-        flex-grow: 1;
+      > .ae-card {
+        margin-left: rem(-16px);
+        margin-right: rem(-16px);
+
+        .ae-input-wrapper {
+          margin-left: 0;
+          margin-right: 0;
+        }
       }
 
-      .ae-icon {
-        font-size: rem(22px);
+      > .list-item {
+        margin-left: rem(-16px);
+        margin-right: rem(-16px);
       }
+    }
+  }
 
-      .ae-input-wrapper:last-child {
-        margin-bottom: 0;
+  header {
+    .wrapper /deep/ {
+      .ae-input-wrapper:last-child,
+      > .ae-card:last-child {
+        margin-bottom: rem(-32px);
       }
     }
 
-    .bottom {
-      margin-top: -2rem;
-      margin-bottom: rem(60px);
-      background-color: $color-neutral-maximum;
+    & + * {
+      margin-top: rem(32px);
     }
+  }
 
-    .content {
-      flex-grow: 1;
-      margin: 0 rem(30px);
+  main {
+    flex-grow: 1;
+    padding-top: rem(16px);
+    padding-bottom: rem(32px);
 
-      .ae-card, .ae-input-wrapper {
-        position: relative;
+    /deep/ {
+      .ae-card:first-child {
+        margin-top: rem(16px);
       }
     }
+  }
 
-    .footer {
-      margin: rem(32px);
-    }
+  footer /deep/ .ae-button:not(.medium) {
+    margin-bottom: rem(23px);
+    margin-top: rem(23px);
   }
 }
 </style>
