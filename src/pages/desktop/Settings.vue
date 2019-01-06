@@ -2,10 +2,10 @@
   <div class="settings">
     <guide><em>Settings</em></guide>
 
-    <div class="note">
+    <note>
       Now you can only switch between networks,
       other settings will be added as soon as we add features.
-    </div>
+    </note>
 
     <ae-card fill="maximum">
       <list-item title="Network">
@@ -53,6 +53,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
+import Note from '../../components/Note.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -65,6 +66,7 @@ export default {
     AePopover,
     AeCard,
     Guide,
+    Note,
     ListItem,
     AeRadio,
     ButtonPlain,
