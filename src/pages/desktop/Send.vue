@@ -16,6 +16,7 @@
         v-validate="'required|address'"
         :error="errors.has('accountTo')"
         :footer="errors.first('accountTo')"
+        autofocus
         name="accountTo"
         header="To"
       />

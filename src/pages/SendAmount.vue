@@ -38,6 +38,7 @@
       }"
       :error="errors.has('amount')"
       :footer="errors.first('amount')"
+      autofocus
       name="amount"
     />
 

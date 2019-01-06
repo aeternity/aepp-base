@@ -20,6 +20,7 @@
         }"
         :error="errors.has('fee')"
         :footer="errors.first('fee')"
+        autofocus
         header="Transaction Fee"
         header-right="Pico AE"
         name="fee"
