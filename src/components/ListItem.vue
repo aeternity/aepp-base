@@ -14,7 +14,10 @@
         </small>
       </div>
       <slot />
-      <div class="space" />
+      <div
+        v-if="$slots.right"
+        class="space"
+      />
       <slot name="right" />
     </div>
   </component>
