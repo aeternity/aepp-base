@@ -17,21 +17,26 @@
       /><em>{{ activeIdentity.name }}</em>
     </guide>
 
-    <ae-input-address
-      v-model="accountTo"
-      v-validate="'required|address'"
-      autofocus
-      :error="errors.has('accountTo')"
-      :footer="errors.first('accountTo')"
-      name="accountTo"
-      header="Recipient"
-    />
+    <form
+      :id="_uid"
+      @submit.prevent="setAddress"
+    >
+      <ae-input-address
+        v-model="accountTo"
+        v-validate="'required|address'"
+        autofocus
+        :error="errors.has('accountTo')"
+        :footer="errors.first('accountTo')"
+        name="accountTo"
+        header="Recipient"
+      />
+    </form>
 
     <template slot="content-bottom">
       <ae-button
         :disabled="errors.any()"
+        :form="_uid"
         fill="secondary"
-        @click="setAddress"
       >
         Next
       </ae-button>

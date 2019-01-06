@@ -13,7 +13,10 @@
       <br><mark>your account</mark> with phrase
     </guide>
 
-    <form @submit.prevent="unlockSavedKeystore">
+    <form
+      :id="_uid"
+      @submit.prevent="unlockSavedKeystore"
+    >
       <ae-input-password
         v-model="password"
         v-validate="'required|min:4'"
@@ -41,15 +44,14 @@
       </ae-input-password>
     </form>
 
-    <template slot="footer">
-      <ae-button
-        :disabled="errors.any() || wrongPassword"
-        fill="secondary"
-        @click="unlockSavedKeystore"
-      >
-        Login
-      </ae-button>
-    </template>
+    <ae-button
+      slot="footer"
+      :disabled="errors.any() || wrongPassword"
+      :form="_uid"
+      fill="secondary"
+    >
+      Login
+    </ae-button>
   </mobile-page>
 </template>
 

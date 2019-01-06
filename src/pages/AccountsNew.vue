@@ -10,7 +10,10 @@
       <br>and name it
     </guide>
 
-    <template slot="content-bottom">
+    <form
+      slot="content-bottom"
+      @submit.prevent="handleAddAddress"
+    >
       <ae-input
         v-model="newAccountName"
         v-validate="'required'"
@@ -21,13 +24,10 @@
         header="Name"
         placeholder="Name"
       />
-      <ae-button
-        fill="secondary"
-        @click="handleAddAddress"
-      >
+      <ae-button fill="secondary">
         Create
       </ae-button>
-    </template>
+    </form>
   </mobile-page>
 </template>
 

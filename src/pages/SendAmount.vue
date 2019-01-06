@@ -28,25 +28,30 @@
       </em>
     </guide>
 
-    <ae-input-amount-ae
-      v-model="amount"
-      v-validate="{
-        required: true,
-        decimal: MAGNITUDE,
-        min_value_exclusive: 0,
-        max_value: maxAmount.minus(MIN_SPEND_TX_FEE).toString(),
-      }"
-      :error="errors.has('amount')"
-      :footer="errors.first('amount')"
-      autofocus
-      name="amount"
-    />
+    <form
+      :id="_uid"
+      @submit.prevent="setAmount"
+    >
+      <ae-input-amount-ae
+        v-model="amount"
+        v-validate="{
+          required: true,
+          decimal: MAGNITUDE,
+          min_value_exclusive: 0,
+          max_value: maxAmount.minus(MIN_SPEND_TX_FEE).toString(),
+        }"
+        :error="errors.has('amount')"
+        :footer="errors.first('amount')"
+        autofocus
+        name="amount"
+      />
+    </form>
 
     <ae-button
       slot="content-bottom"
       :disabled="errors.any()"
+      :form="_uid"
       fill="secondary"
-      @click="setAmount"
     >
       Next
     </ae-button>

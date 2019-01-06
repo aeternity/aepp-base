@@ -17,7 +17,10 @@
       <br>during the setup.
     </guide>
 
-    <form @submit.prevent="setSeed">
+    <form
+      :id="_uid"
+      @submit.prevent="setSeed"
+    >
       <ae-input-mnemonic
         v-model="seed"
         v-validate="'required|mnemonic'"
@@ -28,15 +31,14 @@
       />
     </form>
 
-    <template slot="footer">
-      <ae-button
-        :disabled="errors.any()"
-        fill="secondary"
-        @click="setSeed"
-      >
-        Recover with Passphrase
-      </ae-button>
-    </template>
+    <ae-button
+      slot="footer"
+      :disabled="errors.any()"
+      :form="_uid"
+      fill="secondary"
+    >
+      Recover with Passphrase
+    </ae-button>
   </mobile-page>
 </template>
 
