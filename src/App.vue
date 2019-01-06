@@ -75,14 +75,6 @@ export default {
     messageToApprove: ({ mobile }) => mobile.messageToApprove,
     transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],
   }),
-  created() {
-    // set domain to base host because of iframe cross domain policy, very nice hardcoded urls
-    if (document.domain.includes('aepps.com')) {
-      document.domain = 'aepps.com';
-    } else if (document.domain.includes('aepps.dev')) {
-      document.domain = 'aepps.dev';
-    }
-  },
 };
 </script>
 
