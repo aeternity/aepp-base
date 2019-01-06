@@ -45,6 +45,7 @@
       :to="{ name: 'send' }"
       title="Send"
       subtitle="To others or subaccounts"
+      border-dark
     >
       <img
         slot="icon"
@@ -59,6 +60,7 @@
       :to="{ name: 'receive' }"
       title="Receive"
       subtitle="By sharing your address"
+      border-dark
     >
       <img
         slot="icon"
@@ -72,6 +74,7 @@
     <list-item
       title="Tokens in migration"
       subtitle="Available after next hardfork"
+      border-dark
       @click="showMigratedBalanceModal = true"
     >
       <img
@@ -172,20 +175,8 @@ export default {
     height: rem(20px);
   }
 
-  .list-item {
-    border-bottom: 2px solid $color-neutral-positive-1;
-
-    /deep/ .content {
-      border: none;
-    }
-
-    .ae-icon {
-      font-size: rem(20px);
-    }
-
-    &:last-child {
-      border: none;
-    }
+  .list-item .ae-icon {
+    font-size: rem(20px);
   }
 }
 </style>

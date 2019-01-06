@@ -58,6 +58,7 @@
         name: 'send-to',
         params: { to: account.address }
       }"
+      border-dark
       v-bind="account"
     >
       <ae-icon
@@ -110,24 +111,16 @@ export default {
 
 .send {
   .own-account {
-    margin: rem(20px) 0;
+    margin-top: rem(20px);
+    padding-bottom: rem(20px);
+    border-bottom: 2px solid $color-neutral-positive-1;
     @extend %face-sans-s;
     font-weight: 500;
     color: $color-neutral-negative-1;
   }
 
-  .list-item {
-    margin: 0 rem(16px);
-    padding: 0;
-    border-top: 2px solid $color-neutral-positive-1;
-
-    /deep/ .content {
-      border: none;
-    }
-
-    .ae-icon {
-      font-size: rem(20px);
-    }
+  .list-item .ae-icon {
+    font-size: rem(20px);
   }
 }
 </style>

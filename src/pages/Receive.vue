@@ -23,6 +23,7 @@
     <list-item
       title="Copy address"
       subtitle="Share it with sender"
+      border-dark
       @click.native="copyAddress"
     >
       <img
@@ -84,10 +85,6 @@ export default {
     margin: rem(8px) 0;
     @extend %face-sans-s;
     font-weight: 500;
-  }
-
-  .list-item /deep/ .content {
-    border-bottom: 2px solid $color-neutral-positive-1;
   }
 }
 </style>
