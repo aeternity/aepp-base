@@ -47,7 +47,7 @@
       v-if="identities.length > 1"
       class="own-account"
     >
-      Or transfer between accounts
+      Or transfer to your own account
     </div>
     <list-item-account
       v-for="account in identities.filter(i => i !== activeIdentity)"
