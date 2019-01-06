@@ -1,5 +1,5 @@
 <template>
-  <div class="quick-id">
+  <div class="tab-bar">
     <router-link :to="{ name: 'apps' }">
       <ae-icon name="grid" />
       Browser
@@ -45,7 +45,7 @@ export default {
 <style scoped lang="scss">
 @import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
 
-.quick-id {
+.tab-bar {
   display: flex;
   align-items: center;
   position: fixed;

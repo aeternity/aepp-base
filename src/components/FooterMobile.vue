@@ -1,7 +1,7 @@
 <template>
   <div>
     <account-switcher />
-    <quick-id />
+    <tab-bar />
     <div
       v-if="messageToApprove || transactionToApprove"
       class="modal-dialogs-wrapper"
@@ -20,14 +20,14 @@
 
 <script>
 import { mapState } from 'vuex';
-import QuickId from './QuickId.vue';
+import TabBar from './mobile/TabBar.vue';
 import ApproveMessage from './ApproveMessage.vue';
 import ApproveTransaction from './ApproveTransaction.vue';
 import AccountSwitcher from './AccountSwitcher.vue';
 
 export default {
   components: {
-    QuickId,
+    TabBar,
     ApproveMessage,
     ApproveTransaction,
     AccountSwitcher,
