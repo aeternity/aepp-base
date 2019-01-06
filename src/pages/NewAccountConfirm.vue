@@ -15,33 +15,28 @@
       <br><mark>note</mark> correct order!
     </guide>
 
-    <div class="words">
-      <ae-badge
-        v-for="(word, index) in seedPermutation"
-        :key="index"
-        :disabled="selectedWordIds.includes(index)"
-        @click.native="wordClick(index)"
-      >
-        {{ word }}
-      </ae-badge>
-    </div>
+    <button-mnemonic-word
+      v-for="(word, index) in seedPermutation"
+      :key="index"
+      :disabled="selectedWordIds.includes(index)"
+      @click="wordClick(index)"
+    >
+      {{ word }}
+    </button-mnemonic-word>
 
     <div
-      :class="{ 'error': error }"
+      :class="{ error }"
       class="frame"
     >
       <div class="message" />
-      <ae-badge
+      <button-mnemonic-word
         v-for="index in selectedWordIds"
         :key="index"
-        @click.native="wordClick(index)"
+        icon-close
+        @click="wordClick(index)"
       >
         {{ seedPermutation[index] }}
-        <ae-icon
-          name="close"
-          size="12px"
-        />
-      </ae-badge>
+      </button-mnemonic-word>
     </div>
 
     <ae-button
@@ -57,19 +52,18 @@
 
 <script>
 import { shuffle } from 'lodash-es';
-import { AeBadge, AeIcon } from '@aeternity/aepp-components-3';
 import fingersCrossedEmojiPath from 'emoji-datasource-apple/img/apple/64/1f91e.png';
 import MobilePage from '../components/MobilePage.vue';
 import Guide from '../components/Guide.vue';
 import AeButton from '../components/AeButton.vue';
+import ButtonMnemonicWord from '../components/mobile/ButtonMnemonicWord.vue';
 
 export default {
   components: {
     MobilePage,
     AeButton,
     Guide,
-    AeBadge,
-    AeIcon,
+    ButtonMnemonicWord,
   },
   props: {
     seed: { type: String, required: true },
@@ -112,14 +106,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .new-account-confirm {
-  .ae-badge {
-    margin: rem(4px) rem(4px) 0 0;
-
-    .ae-icon {
-      margin-left: rem(8px);
-    }
-  }
-
   .frame {
     margin-top: rem(32px);
     @extend %face-sans-xs;
