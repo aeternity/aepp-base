@@ -104,6 +104,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .send {
   .guide {
@@ -114,6 +115,7 @@ export default {
 
   .own-account {
     margin: rem(20px) 0;
+    @extend %face-sans-s;
     font-weight: 500;
     color: $color-neutral-negative-1;
   }
