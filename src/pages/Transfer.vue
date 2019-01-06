@@ -1,88 +1,88 @@
 <template>
   <mobile-page
-    class="receive"
-    fill="neutral"
+    class="transfer"
+    header-fill="neutral"
   >
-    <guide
-      fill="primary"
-    >
-      <em>Send and receive</em>
-      <br>AE
-    </guide>
+    <template slot="header">
+      <guide
+        fill="primary"
+      >
+        <em>Send and receive</em>
+        <br>AE
+      </guide>
 
-    <ae-account
-      v-bind="activeIdentity"
-      :name-editable="accountNameEditable"
-      fill="primary"
-      security-status=""
-      @name-input="name => renameIdentity(name)"
-      @name-blur="accountNameEditable = false"
-    >
-      <ae-dropdown slot="icon">
-        <ae-icon
-          slot="button"
-          fill="white"
-          name="more"
-        />
-        <li>
-          <ae-button @click="copyAddress">
-            <ae-icon name="copy" />
-            Copy Address
-          </ae-button>
-        </li>
-        <li>
-          <ae-button @click="accountNameEditable = true">
-            <ae-icon name="edit" />
-            Rename
-          </ae-button>
-        </li>
-      </ae-dropdown>
-    </ae-account>
-
-    <template slot="content-bottom">
-      <list-item
-        :to="{ name: 'send' }"
-        title="Send"
-        subtitle="To others or subaccounts"
+      <ae-account
+        v-bind="activeIdentity"
+        :name-editable="accountNameEditable"
+        fill="primary"
+        security-status=""
+        @name-input="name => renameIdentity(name)"
+        @name-blur="accountNameEditable = false"
       >
-        <img
-          slot="icon"
-          :src="moneyWithWingsEmoji"
-        >
-        <ae-icon
-          slot="right"
-          name="left-more"
-        />
-      </list-item>
-      <list-item
-        :to="{ name: 'receive' }"
-        title="Receive"
-        subtitle="By sharing your address"
-      >
-        <img
-          slot="icon"
-          :src="manTippingHandEmoji"
-        >
-        <ae-icon
-          slot="right"
-          name="left-more"
-        />
-      </list-item>
-      <list-item
-        title="Tokens in migration"
-        subtitle="Available after next hardfork"
-        @click="showMigratedBalanceModal = true"
-      >
-        <img
-          slot="icon"
-          :src="glowingStarEmoji"
-        >
-        <ae-icon
-          slot="right"
-          name="left-more"
-        />
-      </list-item>
+        <ae-dropdown slot="icon">
+          <ae-icon
+            slot="button"
+            fill="white"
+            name="more"
+          />
+          <li>
+            <ae-button @click="copyAddress">
+              <ae-icon name="copy" />
+              Copy Address
+            </ae-button>
+          </li>
+          <li>
+            <ae-button @click="accountNameEditable = true">
+              <ae-icon name="edit" />
+              Rename
+            </ae-button>
+          </li>
+        </ae-dropdown>
+      </ae-account>
     </template>
+
+    <list-item
+      :to="{ name: 'send' }"
+      title="Send"
+      subtitle="To others or subaccounts"
+    >
+      <img
+        slot="icon"
+        :src="moneyWithWingsEmoji"
+      >
+      <ae-icon
+        slot="right"
+        name="left-more"
+      />
+    </list-item>
+    <list-item
+      :to="{ name: 'receive' }"
+      title="Receive"
+      subtitle="By sharing your address"
+    >
+      <img
+        slot="icon"
+        :src="manTippingHandEmoji"
+      >
+      <ae-icon
+        slot="right"
+        name="left-more"
+      />
+    </list-item>
+    <list-item
+      title="Tokens in migration"
+      subtitle="Available after next hardfork"
+      @click="showMigratedBalanceModal = true"
+    >
+      <img
+        slot="icon"
+        :src="glowingStarEmoji"
+      >
+      <ae-icon
+        slot="right"
+        name="left-more"
+      />
+    </list-item>
 
     <transfer-notification
       v-if="showTransferNotification"
@@ -163,23 +163,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.receive {
-  /deep/ {
-    .panel .bottom {
-      padding-top: rem(40px);
-    }
-
-    .ae-dropdown-button {
-       width: rem(20px);
-       height: rem(20px);
-    }
-  }
-
-  .guide {
-    margin-left: rem(20px);
+.transfer {
+  .ae-dropdown /deep/ .ae-dropdown-button {
+    width: rem(20px);
+    height: rem(20px);
   }
 
   .list-item {

@@ -1,8 +1,5 @@
 <template>
-  <mobile-page
-    class="set-password"
-    title="New Account"
-  >
+  <mobile-page title="New Account">
     <guide
       fill="primary"
       icon="½"
@@ -89,15 +86,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
-.set-password {
-  form {
-    margin: 0 rem(-15px);
-  }
-}
-</style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />

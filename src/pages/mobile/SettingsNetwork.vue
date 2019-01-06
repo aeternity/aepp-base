@@ -1,9 +1,11 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'settings' }"
+    :left-button-to="{ name: 'settings' }"
+    left-button-icon-name="back"
     title="Network"
-    back-button
-    class="settings settings-network"
+    header-fill="light"
+    fill="neutral"
+    class="settings-network"
   >
     <ae-card fill="maximum">
       <list-item
@@ -77,9 +79,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import './Settings.scss';
-@import './SettingsHeader.scss';
 
 .settings-network {
   .ae-icon-more {

@@ -1,6 +1,7 @@
 <template>
   <mobile-page
     class="settings"
+    fill="neutral"
   >
     <guide fill="primary">
       <em>Settings</em>
@@ -60,7 +61,7 @@
       </list-item>
     </ae-card>
     <div
-      slot="content-bottom"
+      slot="footer"
       class="version"
     >
       Version {{ version }}
@@ -107,34 +108,19 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import './Settings.scss';
 
 .settings {
-  /deep/ .panel {
-    justify-content: space-between;
-
-    .bottom {
-      margin-bottom: rem(87px);
-      background-color: $color-neutral-positive-2;
-
-      .content {
-        margin: 0 auto;
-        @extend %face-sans-s;
-        color: $color-neutral-negative-1;
-      }
-    }
-  }
-
-  .guide {
-    margin-left: rem(20px);
-  }
-
   .ae-card {
-    margin: 0 auto;
-
     .ae-icon-share {
       transform: rotate(90deg);
     }
+  }
+
+  .version {
+    margin: rem(24px) 0;
+    @extend %face-sans-s;
+    color: $color-neutral-negative-1;
+    text-align: center;
   }
 }
 </style>

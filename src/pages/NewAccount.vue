@@ -1,9 +1,8 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'intro' }"
+    :right-button-to="{ name: 'intro' }"
+    right-button-icon-name="close"
     title="New Account"
-    close-button
-    class="new-account"
   >
     <guide
       fill="primary"
@@ -47,6 +46,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />

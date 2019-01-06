@@ -1,33 +1,38 @@
 <template>
   <mobile-page
-    class="accounts-new"
-    fill="primary"
-    close-button
-    @close="$router.back()"
+    header-fill="primary"
+    right-button-icon-name="close"
+    @right-button-click="$router.back()"
   >
-    <guide fill="neutral">
-      <em>Create new subaccount</em>
-      <br>and name it
-    </guide>
+    <template slot="header">
+      <guide fill="neutral">
+        <em>Create new subaccount</em>
+        <br>and name it
+      </guide>
 
-    <form
-      slot="content-bottom"
-      @submit.prevent="handleAddAddress"
+      <form
+        :id="_uid"
+        @submit.prevent="handleAddAddress"
+      >
+        <ae-input
+          v-model="newAccountName"
+          v-validate="'required'"
+          autofocus
+          :error="errors.has('newAccountName')"
+          :footer="errors.first('newAccountName')"
+          name="newAccountName"
+          header="Name"
+          placeholder="Name"
+        />
+      </form>
+    </template>
+
+    <ae-button
+      fill="secondary"
+      :form="_uid"
     >
-      <ae-input
-        v-model="newAccountName"
-        v-validate="'required'"
-        autofocus
-        :error="errors.has('newAccountName')"
-        :footer="errors.first('newAccountName')"
-        name="newAccountName"
-        header="Name"
-        placeholder="Name"
-      />
-      <ae-button fill="secondary">
-        Create
-      </ae-button>
-    </form>
+      Create
+    </ae-button>
   </mobile-page>
 </template>
 
@@ -57,30 +62,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-
-.accounts-new {
-  /deep/ {
-    .top {
-      position: relative;
-      margin-bottom: rem(30px);
-    }
-
-    .panel .bottom {
-      margin-top: rem(-60px);
-    }
-  }
-
-  .guide {
-    margin: 0 0 rem(50px) rem(20px);
-  }
-
-  .ae-button {
-    margin: rem(20px) auto;
-  }
-}
-</style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />

@@ -1,9 +1,9 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'new-account-create' }"
+    :left-button-to="{ name: 'new-account-create' }"
+    left-button-icon-name="back"
     class="new-account-confirm"
     title="New Account"
-    back-button
   >
     <guide
       fill="primary"
@@ -108,7 +108,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
@@ -151,5 +150,3 @@ export default {
   }
 }
 </style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />

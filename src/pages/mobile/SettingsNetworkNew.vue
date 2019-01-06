@@ -1,9 +1,11 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'settings-network' }"
+    :left-button-to="{ name: 'settings-network' }"
+    left-button-icon-name="back"
     title="Connect to another node"
-    back-button
-    class="settings settings-network-new"
+    header-fill="light"
+    fill="neutral"
+    class="settings-network-new"
   >
     <ae-card fill="maximum">
       <guide>Connect to<br><em>another node</em></guide>
@@ -89,8 +91,6 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import './Settings.scss';
-@import './SettingsHeader.scss';
 
 .settings-network-new {
   .ae-card {

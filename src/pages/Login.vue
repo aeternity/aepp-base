@@ -1,8 +1,7 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'intro' }"
-    class="login"
-    close-button
+    :right-button-to="{ name: 'intro' }"
+    right-button-icon-name="close"
   >
     <guide
       fill="primary"
@@ -86,24 +85,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-
-.login {
-  .guide {
-    margin-bottom: rem(19px);
-
-    /deep/ div {
-      margin: 0 auto;
-    }
-  }
-
-  form {
-    margin: 0 rem(-15px);
-  }
-}
-</style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />

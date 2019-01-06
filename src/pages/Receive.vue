@@ -1,27 +1,26 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'transfer' }"
+    :left-button-to="{ name: 'transfer' }"
+    left-button-icon-name="back"
     class="receive"
-    fill="neutral"
-    back-button
+    header-fill="neutral"
   >
-    <guide
-      fill="primary"
-    >
-      <em>Receive</em> AE
-      <div class="note">
-        Let the sender scan this QR code
-        <br>to obtain your address
-      </div>
-    </guide>
+    <template slot="header">
+      <guide fill="primary">
+        <em>Receive</em> AE
+        <div class="note">
+          Let the sender scan this QR code
+          <br>to obtain your address
+        </div>
+      </guide>
 
-    <ae-account-reverse
-      v-bind="activeIdentity"
-      fill="neutral"
-    />
+      <ae-account-reverse
+        v-bind="activeIdentity"
+        fill="neutral"
+      />
+    </template>
 
     <list-item
-      slot="content-bottom"
       title="Copy address"
       subtitle="Share it with sender"
       @click.native="copyAddress"
@@ -81,14 +80,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .receive {
-  /deep/ .panel .bottom {
-    padding-top: rem(60px);
-  }
-
-  .guide {
-    margin-left: rem(20px);
-  }
-
   .note {
     margin: rem(8px) 0;
     @extend %face-sans-s;

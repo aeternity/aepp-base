@@ -188,12 +188,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.send-confirm {
-  background: $color-primary;
-
+.send-confirm.mobile-page {
   .guide {
-    margin: 0 0 rem(30px) rem(20px);
-
     .ae-identicon {
       margin: 0 rem(6px) rem(-4px) rem(2px);
     }
@@ -204,7 +200,7 @@ export default {
   }
 
   .list-item {
-    margin: 0 rem(20px);
+    margin: 0;
     padding: 0;
     border: none;
     border-top: rem(2px) solid $color-primary-negative-1;

@@ -1,54 +1,57 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'send' }"
+    :left-button-to="{ name: 'send' }"
+    :right-button-to="{ name: 'transfer' }"
+    left-button-icon-name="back"
+    right-button-icon-name="close"
     class="send-amount"
-    fill="primary"
-    close-button
+    header-fill="primary"
   >
-    <guide
-      fill="neutral"
-      icon="⅔"
-    >
-      <em>New Transfer</em>
-      <br>from
-      <ae-identicon
-        :address="activeIdentity.address"
-        size="s"
-      /><em>{{ activeIdentity.name }}</em>
-      <br>to
-      <ae-identicon
-        :address="to"
-        size="s"
-      />
-      <em>
-        <ae-address
+    <template slot="header">
+      <guide
+        fill="neutral"
+        icon="⅔"
+      >
+        <em>New Transfer</em>
+        <br>from
+        <ae-identicon
+          :address="activeIdentity.address"
+          size="s"
+        /><em>{{ activeIdentity.name }}</em>
+        <br>to
+        <ae-identicon
           :address="to"
-          length="short"
+          size="s"
         />
-      </em>
-    </guide>
+        <em>
+          <ae-address
+            :address="to"
+            length="short"
+          />
+        </em>
+      </guide>
 
-    <form
-      :id="_uid"
-      @submit.prevent="setAmount"
-    >
-      <ae-input-amount-ae
-        v-model="amount"
-        v-validate="{
-          required: true,
-          decimal: MAGNITUDE,
-          min_value_exclusive: 0,
-          max_value: maxAmount.minus(MIN_SPEND_TX_FEE).toString(),
-        }"
-        :error="errors.has('amount')"
-        :footer="errors.first('amount')"
-        autofocus
-        name="amount"
-      />
-    </form>
+      <form
+        :id="_uid"
+        @submit.prevent="setAmount"
+      >
+        <ae-input-amount-ae
+          v-model="amount"
+          v-validate="{
+            required: true,
+            decimal: MAGNITUDE,
+            min_value_exclusive: 0,
+            max_value: maxAmount.minus(MIN_SPEND_TX_FEE).toString(),
+          }"
+          :error="errors.has('amount')"
+          :footer="errors.first('amount')"
+          autofocus
+          name="amount"
+        />
+      </form>
+    </template>
 
     <ae-button
-      slot="content-bottom"
       :disabled="errors.any()"
       :form="_uid"
       fill="secondary"
@@ -111,19 +114,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .send-amount {
-  /deep/ {
-    .panel .bottom {
-      margin-top: rem(-32px);
-    }
-  }
-
-  .ae-button {
-    margin: rem(60px) auto rem(30px) auto;
-  }
-
   .guide {
-    margin: 0 0 rem(30px) rem(30px);
-
     .ae-identicon {
       margin: 0 rem(6px) rem(-4px) rem(2px);
     }
@@ -134,4 +125,3 @@ export default {
   }
 }
 </style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />

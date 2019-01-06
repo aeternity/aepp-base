@@ -1,9 +1,10 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'settings' }"
+    :left-button-to="{ name: 'settings' }"
+    left-button-icon-name="back"
     title="Remote Connection"
-    back-button
-    class="settings"
+    header-fill="light"
+    fill="neutral"
   >
     <ae-card fill="maximum">
       <list-item
@@ -57,8 +58,3 @@ export default {
   methods: mapMutations(['removeFollower']),
 };
 </script>
-
-<style lang="scss" scoped>
-@import './Settings.scss';
-@import './SettingsHeader.scss';
-</style>

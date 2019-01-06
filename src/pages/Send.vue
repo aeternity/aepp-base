@@ -1,67 +1,68 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'transfer' }"
+    :right-button-to="{ name: 'transfer' }"
+    right-button-icon-name="close"
+    header-fill="primary"
     class="send"
-    fill="primary"
-    close-button
   >
-    <guide
-      fill="neutral"
-      icon="⅓"
-    >
-      <em>New Transfer</em>
-      <br>from
-      <ae-identicon
-        :address="activeIdentity.address"
-        size="s"
-      /><em>{{ activeIdentity.name }}</em>
-    </guide>
-
-    <form
-      :id="_uid"
-      @submit.prevent="setAddress"
-    >
-      <ae-input-address
-        v-model="accountTo"
-        v-validate="'required|address'"
-        autofocus
-        :error="errors.has('accountTo')"
-        :footer="errors.first('accountTo')"
-        name="accountTo"
-        header="Recipient"
-      />
-    </form>
-
-    <template slot="content-bottom">
-      <ae-button
-        :disabled="errors.any()"
-        :form="_uid"
-        fill="secondary"
+    <template slot="header">
+      <guide
+        fill="neutral"
+        icon="⅓"
       >
-        Next
-      </ae-button>
+        <em>New Transfer</em>
+        <br>from
+        <ae-identicon
+          :address="activeIdentity.address"
+          size="s"
+        /><em>{{ activeIdentity.name }}</em>
+      </guide>
 
-      <div
-        v-if="identities.length > 1"
-        class="own-account"
+      <form
+        :id="_uid"
+        @submit.prevent="setAddress"
       >
-        Or transfer between accounts
-      </div>
-      <list-item-account
-        v-for="account in identities.filter(i => i !== activeIdentity)"
-        :key="account.address"
-        :to="{
-          name: 'send-to',
-          params: { to: account.address }
-        }"
-        v-bind="account"
-      >
-        <ae-icon
-          slot="right"
-          name="left-more"
+        <ae-input-address
+          v-model="accountTo"
+          v-validate="'required|address'"
+          autofocus
+          :error="errors.has('accountTo')"
+          :footer="errors.first('accountTo')"
+          name="accountTo"
+          header="Recipient"
         />
-      </list-item-account>
+      </form>
     </template>
+
+    <ae-button
+      :disabled="errors.any()"
+      :form="_uid"
+      fill="secondary"
+      @click="setAddress"
+    >
+      Next
+    </ae-button>
+
+    <div
+      v-if="identities.length > 1"
+      class="own-account"
+    >
+      Or transfer between accounts
+    </div>
+    <list-item-account
+      v-for="account in identities.filter(i => i !== activeIdentity)"
+      :key="account.address"
+      :to="{
+        name: 'send-to',
+        params: { to: account.address }
+      }"
+      v-bind="account"
+    >
+      <ae-icon
+        slot="right"
+        name="left-more"
+      />
+    </list-item-account>
   </mobile-page>
 </template>
 
@@ -101,46 +102,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .send {
-  /deep/ .panel .bottom {
-    margin-top: rem(-32px);
-    margin-bottom: rem(100px);
-
-    .list-item .content {
-      border: none;
+  .guide {
+    .ae-identicon {
+      margin: 0 rem(2px) rem(-4px) rem(2px);
     }
   }
 
-  .ae-button {
-    margin: rem(60px) auto rem(30px) auto;
-  }
-
   .own-account {
-    margin: 0 0 rem(20px) rem(16px);
+    margin: rem(20px) 0;
     font-weight: 500;
     color: $color-neutral-negative-1;
   }
 
   .list-item {
-    margin: 0 rem(15px);
+    margin: 0 rem(16px);
     padding: 0;
     border-top: 2px solid $color-neutral-positive-1;
+
+    /deep/ .content {
+      border: none;
+    }
 
     .ae-icon {
       font-size: rem(20px);
     }
   }
-
-  .guide {
-    margin: 0 0 rem(30px) rem(30px);
-
-    .ae-identicon {
-      margin: 0 rem(2px) rem(-4px) rem(2px);
-    }
-  }
 }
 </style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />

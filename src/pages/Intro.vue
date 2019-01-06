@@ -1,5 +1,8 @@
 <template>
-  <mobile-page class="intro">
+  <mobile-page
+    class="intro"
+    fill="primary"
+  >
     <guide fill="neutral">
       <em>Base æpp.</em>
       <br>Interact with the
@@ -48,32 +51,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .intro.mobile-page {
-  background: $color-primary;
+  hr {
+    margin: 0 rem(-16px);
+    height: 2px;
+    border: none;
+    background-color: $color-primary-negative-1;
+  }
 
-  /deep/ .panel {
-    .content {
-      margin: 0 rem(48px);
-    }
-
-    .footer {
-      margin: 0 rem(32px);
-
-      > .ae-button {
-        margin: 0 auto;
-      }
-
-      hr {
-        margin: 0 rem(20px);
-        height: 2px;
-        border: none;
-        background-color: $color-primary-negative-1;
-      }
-    }
+  .ae-button.medium.plain:last-child {
+    margin-bottom: 0;
   }
 }
 </style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />

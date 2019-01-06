@@ -1,9 +1,9 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'address-book' }"
+    :right-button-to="{ name: 'address-book' }"
+    right-button-icon-name="back"
     class="address-book"
     title="Addresses"
-    back-button
   >
     <ae-divider />
     <form @submit.prevent="addAddressBookItem">
@@ -73,5 +73,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
 <style lang="scss" scoped src="./AddressBook.scss" />

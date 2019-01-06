@@ -1,9 +1,8 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'intro' }"
+    :right-button-to="{ name: 'intro' }"
+    right-button-icon-name="close"
     title="Recover account"
-    class="recover"
-    close-button
   >
     <guide
       fill="primary"
@@ -71,13 +70,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
-.recover form {
-  margin: 0 rem(-15px);
-}
-</style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />
