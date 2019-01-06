@@ -4,7 +4,6 @@
     :right-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
     right-button-icon-name="close"
-    class="send-amount"
     header-fill="primary"
   >
     <template slot="header">
@@ -17,12 +16,15 @@
         <ae-identicon
           :address="activeIdentity.address"
           size="s"
-        /><em>{{ activeIdentity.name }}</em>
+        />
+        {{ ' ' }}
+        <em>{{ activeIdentity.name }}</em>
         <br>to
         <ae-identicon
           :address="to"
           size="s"
         />
+        {{ ' ' }}
         <em>
           <ae-address
             :address="to"
@@ -108,20 +110,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-
-.send-amount {
-  .guide {
-    .ae-identicon {
-      margin: 0 rem(6px) rem(-4px) rem(2px);
-    }
-
-    .ae-address {
-      font-size: rem(23px);
-    }
-  }
-}
-</style>

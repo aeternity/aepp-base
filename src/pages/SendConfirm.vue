@@ -12,12 +12,15 @@
       <ae-identicon
         :address="activeIdentity.address"
         size="s"
-      /><em>{{ activeIdentity.name }}</em>
+      />
+      {{ ' ' }}
+      <em>{{ activeIdentity.name }}</em>
       <br>to
       <ae-identicon
         :address="to"
         size="s"
       />
+      {{ ' ' }}
       <em>
         <ae-address
           :address="to"
@@ -189,16 +192,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .send-confirm.mobile-page {
-  .guide {
-    .ae-identicon {
-      margin: 0 rem(6px) rem(-4px) rem(2px);
-    }
-
-    .ae-address {
-      font-size: rem(23px);
-    }
-  }
-
   .list-item {
     margin: 0;
     padding: 0;

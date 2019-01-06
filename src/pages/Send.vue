@@ -15,7 +15,9 @@
         <ae-identicon
           :address="activeIdentity.address"
           size="s"
-        /><em>{{ activeIdentity.name }}</em>
+        />
+        {{ ' ' }}
+        <em>{{ activeIdentity.name }}</em>
       </guide>
 
       <form
@@ -107,12 +109,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .send {
-  .guide {
-    .ae-identicon {
-      margin: 0 rem(2px) rem(-4px) rem(2px);
-    }
-  }
-
   .own-account {
     margin: rem(20px) 0;
     @extend %face-sans-s;
