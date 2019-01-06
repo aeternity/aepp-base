@@ -25,7 +25,7 @@
     </ae-banner>
 
     <account-switcher />
-    <tab-bar v-if="$route.meta.displayFooter" />
+    <tab-bar v-if="$route.meta.displayFooter && !qrCodeReaderTask" />
     <div
       v-if="messageToApprove || transactionToApprove"
       class="modal-dialogs-wrapper"
