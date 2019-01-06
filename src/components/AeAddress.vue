@@ -68,24 +68,27 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .ae-address {
-  position: relative;
   @extend %face-mono-base;
   font-weight: 500;
   letter-spacing: rem(1.9px);
 
-  &.v-copied-to-clipboard:before {
-    content: 'address copied';
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: $color-neutral-negative-3;
-    background: rgba($color-neutral-positive-1, 0.9);
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+  &.v-copied-to-clipboard {
+    position: relative;
+
+    &:before {
+      content: 'address copied';
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: $color-neutral-negative-3;
+      background: rgba($color-neutral-positive-1, 0.9);
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+    }
   }
 
   &.short.v-copied-to-clipboard:before {
