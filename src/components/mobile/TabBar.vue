@@ -49,9 +49,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/fallback/variables.scss';
 
 .tab-bar {
-  position: fixed;
-  left: 0;
-  right: 0;
+  position: sticky;
   bottom: 0;
   background-color: #001833;
 

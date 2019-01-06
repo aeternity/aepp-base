@@ -122,6 +122,8 @@ export default {
 @import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .apps {
+  flex-grow: 1;
+
   .header-mobile {
     @include abovePhone {
       display: none;
