@@ -1,28 +1,32 @@
 <template>
   <div class="tab-bar">
     <div class="wrapper">
-      <router-link :to="{ name: 'apps' }">
+      <button-plain :to="{ name: 'apps' }">
         <ae-icon name="grid" />
         Browser
-      </router-link>
-      <router-link :to="{ name: 'transfer' }">
+      </button-plain>
+
+      <button-plain :to="{ name: 'transfer' }">
         <ae-icon name="transfer" />
         Transfer
-      </router-link>
-      <button
+      </button-plain>
+
+      <button-plain
         :class="showAccountSwitcher ? 'router-link-active' : ''"
         @click="() => !showAccountSwitcher && toggleAccountSwitcher()"
       >
         <ae-identity-avatar :address="activeIdentity.address" />
-      </button>
-      <router-link :to="{ name: 'address-book' }">
+      </button-plain>
+
+      <button-plain :to="{ name: 'address-book' }">
         <ae-icon name="contacts" />
         Contacts
-      </router-link>
-      <router-link :to="{ name: 'settings' }">
+      </button-plain>
+
+      <button-plain :to="{ name: 'settings' }">
         <ae-icon name="settings" />
         Settings
-      </router-link>
+      </button-plain>
     </div>
   </div>
 </template>
@@ -31,9 +35,10 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeIdentityAvatar } from '@aeternity/aepp-components';
 import { AeIcon } from '@aeternity/aepp-components-3';
+import ButtonPlain from '../ButtonPlain.vue';
 
 export default {
-  components: { AeIdentityAvatar, AeIcon },
+  components: { AeIdentityAvatar, AeIcon, ButtonPlain },
   computed: {
     ...mapGetters(['activeIdentity']),
     ...mapState({
@@ -60,7 +65,7 @@ export default {
     margin: 0 auto;
     padding: 10px;
 
-    a, button {
+    .button-plain {
       flex-grow: 1;
       flex-basis: 0;
       font-family: $font-sans;
@@ -69,7 +74,6 @@ export default {
       line-height: 1.45;
       letter-spacing: 0.2px;
       color: #76818c;
-      text-decoration: none;
       text-align: center;
 
       .ae-icon {
@@ -92,12 +96,6 @@ export default {
           box-shadow: 0 0 0 2px #fff;
         }
       }
-    }
-
-    button {
-      display: inline;
-      background-color: transparent;
-      border: none;
     }
   }
 }
