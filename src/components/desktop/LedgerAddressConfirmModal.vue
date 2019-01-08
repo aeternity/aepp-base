@@ -1,19 +1,18 @@
 <template>
   <ledger-modal
-    v-if="props"
-    :title="`${props.create ? 'Create' : 'Confirm'} your address on the Ledger`"
+    :title="`${create ? 'Create' : 'Confirm'} your address on the Ledger`"
     class="ledger-address-confirm"
   >
     <ledger-modal-nano-s />
 
     <ae-address-panel
       title="Ledger Address"
-      :address="props.address"
+      :address="address"
     />
 
     <ledger-modal-note>
       {{
-        props.create
+        create
           ? 'To create a new account on your Ledger, confirm your address there first'
           : 'To proceed, confirm your address on the Ledger'
       }}
@@ -22,7 +21,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeAddressPanel from './AeAddressPanel.vue';
 import LedgerModalNanoS from './LedgerModalNanoS.vue';
@@ -35,9 +33,10 @@ export default {
     LedgerModalNanoS,
     LedgerModalNote,
   },
-  computed: mapState({
-    props: ({ desktop }) => desktop.ledgerAddressConfirmModalProps,
-  }),
+  props: {
+    create: { type: Boolean, default: false },
+    address: { type: String, required: true },
+  },
 };
 </script>
 

@@ -1,6 +1,5 @@
 <template>
   <ledger-modal
-    v-if="props"
     title="Define the Transaction fee"
     class="transaction-fee"
     closable
@@ -53,7 +52,6 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeInputAmount from '../AeInputAmount.vue';
 import AeInputRange from '../AeInputRange.vue';
@@ -76,23 +74,24 @@ export default {
     LedgerModalNote,
     AeButton,
   },
+  props: {
+    resolve: { type: Function, required: true },
+    reject: { type: Function, required: true },
+  },
   data: () => ({
     fee: MIN_SPEND_TX_FEE_PICO,
     decimal: MAGNITUDE + MAGNITUDE_PICO,
     MIN_SPEND_TX_FEE_PICO,
     MAX_REASONABLE_FEE_PICO,
   }),
-  computed: mapState({
-    props: ({ desktop }) => desktop.ledgerTransactionFeeModalProps,
-  }),
   methods: {
     async handleSubmit() {
       if (!await this.$validator.validateAll()) return;
 
-      this.props.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_PICO));
+      this.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_PICO));
     },
     handleClose() {
-      this.props.reject(new Error('Canceled by user'));
+      this.reject(new Error('Canceled by user'));
     },
   },
 };

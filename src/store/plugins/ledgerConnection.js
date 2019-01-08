@@ -24,7 +24,7 @@ export default async (store) => {
     const closeCbs = [];
 
     const addAddress = async (idx, create = false) => {
-      store.commit('setLedgerAddressConfirmModalProps', {
+      const conformModalPromise = store.dispatch('modals/confirmLedgerAddress', {
         address: await ae.getAddress(idx),
         create,
       });
@@ -33,7 +33,7 @@ export default async (store) => {
         // eslint-disable-next-line no-await-in-loop
         address = await ae.getAddress(idx, true).catch(() => {});
       } while (!address);
-      store.commit('setLedgerAddressConfirmModalProps', null);
+      conformModalPromise.cancel();
       store.commit('addLedgerAddress', address);
     };
 
@@ -48,12 +48,13 @@ export default async (store) => {
             addAddress(store.state.desktop.ledgerAccountNumber - 1, true);
           }
           break;
-        case 'setTransactionToSign':
+        case 'setTransactionToSign': {
           if (!payload) return;
+          let conformModalPromise;
           try {
             const { transaction } = payload.args;
-            transaction.fee = await store.dispatch('getLedgerTransactionFee');
-            store.commit('setShowLedgerSignTransactionConfirmModal', true);
+            transaction.fee = await store.dispatch('modals/getLedgerTransactionFee');
+            conformModalPromise = store.dispatch('modals/confirmLedgerSignTransaction');
             const binaryTx = await store.dispatch('genSpendTxBinary', transaction);
             const signature = Buffer.from(await sign(
               store.state.desktop.ledgerAddresses.indexOf(transaction.senderId),
@@ -64,9 +65,10 @@ export default async (store) => {
           } catch (e) {
             payload.reject(e);
           } finally {
-            store.commit('setShowLedgerSignTransactionConfirmModal', false);
+            if (conformModalPromise) conformModalPromise.cancel();
           }
           break;
+        }
         default:
       }
     }));

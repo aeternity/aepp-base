@@ -6,6 +6,7 @@ import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
 import 'focus-visible';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
+import './register-modals';
 import VeeValidate from './lib/veeValidatePlugin';
 import App from './App.vue';
 import AppDesktop from './AppDesktop.vue';

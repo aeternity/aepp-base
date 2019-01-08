@@ -28,6 +28,7 @@
     "@ledgerhq/hw-transport-u2f": "^4.21.0",
     "@zxing/library": "^0.8.3",
     "bignumber.js": "^8.0.1",
+    "bluebird": "^3.5.3",
     "clipboard-copy": "^2.0.1",
     "emoji-datasource-apple": "^4.0.3",
     "focus-visible": "^4.1.5",
@@ -86,6 +87,7 @@
   "sideEffects": [
     "./src/lib/initEnv.js",
     "./src/lib/switchWebmanifest.js",
+    "./src/register-modals.js",
     "*.css",
     "*.scss",
     "*.vue"

@@ -1,10 +1,14 @@
 <template>
   <div id="app">
     <router-view
-      v-show="!qrCodeReaderTask"
+      v-show="!hidePage"
       :class="{ grayscale }"
     />
-    <qr-code-reader v-if="qrCodeReaderTask" />
+    <component
+      :is="component"
+      v-bind="props"
+    />
+
     <ae-banner v-if="notification">
       <img
         v-if="notification.icon"
@@ -25,7 +29,7 @@
     </ae-banner>
 
     <account-switcher />
-    <tab-bar v-if="$route.meta.displayFooter && !qrCodeReaderTask" />
+    <tab-bar v-if="$route.meta.displayFooter && !hidePage" />
     <div
       v-if="messageToApprove || transactionToApprove"
       class="modal-dialogs-wrapper"
@@ -46,11 +50,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import { AeBanner, AeButton } from '@aeternity/aepp-components';
 import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
-import QrCodeReader from './components/QrCodeReader.vue';
 import TabBar from './components/mobile/TabBar.vue';
 import ApproveMessage from './components/mobile/ApproveMessage.vue';
 import ApproveTransaction from './components/mobile/ApproveTransaction.vue';
@@ -58,7 +61,6 @@ import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
 
 export default {
   components: {
-    QrCodeReader,
     AeBanner,
     AeButton,
     RemoveAppModal,
@@ -68,13 +70,15 @@ export default {
     ApproveTransaction,
     AccountSwitcher,
   },
-  computed: mapState({
-    notification: ({ notification }) => notification,
-    grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
-    qrCodeReaderTask: ({ qrCodeReaderTask }) => qrCodeReaderTask,
-    messageToApprove: ({ mobile }) => mobile.messageToApprove,
-    transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],
-  }),
+  computed: {
+    ...mapState({
+      notification: ({ notification }) => notification,
+      grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
+      messageToApprove: ({ mobile }) => mobile.messageToApprove,
+      transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],
+    }),
+    ...mapGetters('modals', ['component', 'hidePage', 'props']),
+  },
 };
 </script>
 
