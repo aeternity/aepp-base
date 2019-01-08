@@ -58,13 +58,8 @@ import AeInputRange from '../AeInputRange.vue';
 import LedgerModalNote from './LedgerModalNote.vue';
 import AeButton from '../AeButton.vue';
 import {
-  MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE, MAGNITUDE_PICO,
+  MAGNITUDE, MIN_SPEND_TX_FEE_PICO, MAX_REASONABLE_FEE_PICO, MAGNITUDE_PICO,
 } from '../../lib/constants';
-
-const toPico = value => BigNumber(value)
-  .shiftedBy(-MAGNITUDE - MAGNITUDE_PICO).toFixed();
-const MIN_SPEND_TX_FEE_PICO = toPico(MIN_SPEND_TX_FEE);
-const MAX_REASONABLE_FEE_PICO = toPico(MAX_REASONABLE_FEE);
 
 export default {
   components: {
