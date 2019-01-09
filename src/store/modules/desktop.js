@@ -1,6 +1,5 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
-import uuid from 'uuid/v4';
 import { genRandomBuffer } from '../utils';
 
 export default {
@@ -53,7 +52,6 @@ export default {
 
   actions: {
     async signTransaction({ commit }, args) {
-      args.id = uuid();
       let result;
       try {
         result = await new Promise((resolve, reject) => commit('setTransactionToSign', { resolve, reject, args }));

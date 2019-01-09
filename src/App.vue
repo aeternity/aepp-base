@@ -30,15 +30,6 @@
 
     <account-switcher />
     <tab-bar v-if="$route.meta.displayFooter && !hidePage" />
-    <div
-      v-if="transactionToApprove"
-      class="modal-dialogs-wrapper"
-    >
-      <approve-transaction
-        v-if="transactionToApprove"
-        v-bind="transactionToApprove"
-      />
-    </div>
 
     <remove-app-modal />
     <alert-modal />
@@ -51,7 +42,6 @@ import { AeBanner, AeButton } from '@aeternity/aepp-components';
 import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
 import TabBar from './components/mobile/TabBar.vue';
-import ApproveTransaction from './components/mobile/ApproveTransaction.vue';
 import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
 
 export default {
@@ -61,14 +51,12 @@ export default {
     RemoveAppModal,
     AlertModal,
     TabBar,
-    ApproveTransaction,
     AccountSwitcher,
   },
   computed: {
     ...mapState({
       notification: ({ notification }) => notification,
       grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
-      transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],
     }),
     ...mapGetters('modals', ['component', 'hidePage', 'props']),
   },
@@ -100,19 +88,6 @@ export default {
       margin-right: 4px;
       vertical-align: text-bottom;
     }
-  }
-
-  .modal-dialogs-wrapper {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-image: linear-gradient(to bottom, rgba(30,30,30,.9), rgba(50, 10, 60, .9));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000000;
   }
 }
 </style>
