@@ -1,32 +1,14 @@
 <template>
-  <mobile-page
-    class="confirm-spend-modal"
-    fill="primary"
-  >
-    <guide
-      fill="neutral"
-      :icon="stepIcon"
-    >
-      <em>Complete your transfer</em>
-      <br>from
+  <mobile-page fill="primary">
+    <guide fill="neutral">
+      <em>Create a new contract</em>
+      <br>by
       <ae-identicon
         :address="activeIdentity.address"
         size="s"
       />
       {{ ' ' }}
       <em>{{ activeIdentity.name }}</em>
-      <br>to
-      <ae-identicon
-        :address="recipientId"
-        size="s"
-      />
-      {{ ' ' }}
-      <em>
-        <ae-address
-          :address="recipientId"
-          length="short"
-        />
-      </em>
     </guide>
 
     <confirm-modal-amount :amount="amount" />
@@ -36,9 +18,14 @@
       :min="minFee"
     />
 
-    <confirm-modal-address
-      name="Recipient Account"
-      :address="recipientId"
+    <confirm-modal-raw-data
+      name="Contract compiled code"
+      :data="code"
+    />
+
+    <confirm-modal-raw-data
+      name="Contract constructor call data"
+      :data="callData"
     />
 
     <ae-button-group slot="footer">
@@ -61,12 +48,11 @@
 <script>
 import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
+import Guide from '../Guide.vue';
 import ConfirmModalAmount from './ConfirmModalAmount.vue';
 import ConfirmModalFeeInput from './ConfirmModalFeeInput.vue';
-import ConfirmModalAddress from './ConfirmModalAddress.vue';
-import Guide from '../Guide.vue';
+import ConfirmModalRawData from './ConfirmModalRawData.vue';
 import AeButton from '../AeButton.vue';
-import AeAddress from '../AeAddress.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
 import ConfirmModalAmountFeeMixin from './ConfirmModalAmountFeeMixin';
 
@@ -75,17 +61,16 @@ export default {
     MobilePage,
     Guide,
     AeIdenticon,
-    AeButton,
-    AeButtonGroup,
-    AeAddress,
     ConfirmModalAmount,
     ConfirmModalFeeInput,
-    ConfirmModalAddress,
+    ConfirmModalRawData,
+    AeButton,
+    AeButtonGroup,
   },
   mixins: [ConfirmModalAmountFeeMixin],
   props: {
-    stepIcon: { type: String, default: '' },
-    recipientId: { type: String, required: true },
+    code: { type: String, required: true },
+    callData: { type: String, required: true },
   },
 };
 </script>
