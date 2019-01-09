@@ -1,7 +1,6 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import uuid from 'uuid/v4';
 import { Crypto } from '@aeternity/aepp-sdk';
 import { mnemonicToSeed } from '@aeternity/bip39';
 import { generateHDWallet } from '@aeternity/hd-wallet/src';
@@ -15,8 +14,6 @@ export default {
     accountCount: 0,
     accounts: {},
     followers: {},
-    transactionsToApprove: {},
-    messageToApprove: null,
     names: [],
     showAccountSwitcher: false,
   },
@@ -51,20 +48,6 @@ export default {
     signOut(state) {
       state.keystore = null;
       state.derivedKey = null;
-    },
-    signTransaction(state, transaction) {
-      Vue.set(state.transactionsToApprove, transaction.id, transaction);
-    },
-    approveTransaction(state, transactionId) {
-      state.transactionsToApprove[transactionId].resolve();
-      Vue.delete(state.transactionsToApprove, transactionId);
-    },
-    cancelTransaction(state, transactionId) {
-      state.transactionsToApprove[transactionId].reject(new Error('Payment rejected by user'));
-      Vue.delete(state.transactionsToApprove, transactionId);
-    },
-    setMessageToApprove(state, message) {
-      state.messageToApprove = message;
     },
     addFollower(state, follower) {
       Vue.set(state.followers, follower.id, follower);
@@ -110,42 +93,23 @@ export default {
       if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password');
       commit('setDerivedKey', passwordDerivedKey);
     },
-    async signTransaction(
+    signTransaction(
       {
-        state: { accounts }, commit, dispatch, rootState: { epoch: { nodeNetworkId } },
+        state: { accounts }, dispatch, rootState: { epoch: { nodeNetworkId } },
       },
-      {
-        transaction,
-        appName,
-        id = uuid(),
-        acceptImmediately,
-      },
+      { transaction, stepIcon },
     ) {
-      const binaryTx = await dispatch('genSpendTxBinary', transaction);
-      if (!acceptImmediately) {
-        await new Promise((resolve, reject) => commit('signTransaction', {
-          transaction,
-          appName,
-          resolve,
-          reject,
-          id,
-        }));
-      }
-      const signature = Crypto.sign(
-        Buffer.concat([Buffer.from(nodeNetworkId), binaryTx]),
-        accounts[transaction.senderId].secretKey,
-      );
-      return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
-    },
-    async signPersonalMessage(
-      { state: { accounts }, commit },
-      { message, address, appName },
-    ) {
-      await new Promise((resolve, reject) => commit('setMessageToApprove', {
-        message, appName, resolve, reject,
-      }));
-      const signature = Crypto.signPersonalMessage(message, accounts[address].secretKey);
-      return Crypto.encodeBase58Check(Buffer.from(signature));
+      return dispatch('modals/confirmSpendTx', {
+        ...transaction,
+        stepIcon,
+      }).then(async (fee) => {
+        const binaryTx = await dispatch('genSpendTxBinary', { ...transaction, fee });
+        const signature = Crypto.sign(
+          Buffer.concat([Buffer.from(nodeNetworkId), binaryTx]),
+          accounts[transaction.senderId].secretKey,
+        );
+        return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
+      });
     },
   },
 };

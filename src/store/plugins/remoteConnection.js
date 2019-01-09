@@ -72,16 +72,25 @@ export default (store) => {
       socket.on('follower-connected', followerId => store.commit('followerConnected', followerId));
       socket.on('follower-disconnected', followerId => store.commit('followerDisconnected', followerId));
 
+      const followerSignPromises = {};
       socket.on('message-from-follower', (followerId, request) => new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
-        signTransaction: args => store.dispatch('signTransaction', {
-          ...args,
-          transaction: {
-            ...args.transaction,
-            amount: BigNumber(args.transaction.amount),
-            fee: BigNumber(args.transaction.fee),
-          },
-        }),
-        cancelTransaction: args => store.commit('cancelTransaction', args),
+        signTransaction: (args) => {
+          const promise = store.dispatch('signTransaction', {
+            ...args,
+            transaction: {
+              ...args.transaction,
+              amount: BigNumber(args.transaction.amount),
+              fee: BigNumber(args.transaction.fee),
+            },
+          });
+          followerSignPromises[followerId] = promise;
+          return Promise.race([
+            new Promise((resolve, reject) => promise
+              .finally(() => promise.isCancelled() && reject(new Error('Canceled')))),
+            followerSignPromises[followerId],
+          ]);
+        },
+        cancelTransaction: () => followerSignPromises[followerId].cancel(),
       })
         .processMessage(request));
     } else {

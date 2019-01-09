@@ -26,34 +26,28 @@ export default {
     ...mapState(['epoch']),
   },
   async mounted() {
-    const amount = BigNumber(this.amount);
-    const recipientId = this.to;
-    let fee;
     try {
-      fee = await this.$store.dispatch('modals/confirmSpendTx', {
-        amount,
-        recipientId,
-        stepIcon: '³⁄₃',
+      const signedTx = await this.$store.dispatch('signTransaction', {
+        transaction: {
+          amount: BigNumber(this.amount),
+          senderId: this.activeIdentity.address,
+          recipientId: this.to,
+          payload: '',
+          ttl: Number.MAX_SAFE_INTEGER,
+        },
       });
-    } catch {
-      this.$router.push({ name: 'transfer' });
-      return;
+      const { txHash } = await this.epoch.api.postTransaction({ tx: signedTx });
+      this.$router.push({
+        name: 'transfer',
+        params: { transactionHash: txHash, amount: this.amount },
+      });
+    } catch (e) {
+      if (e.message === 'Rejected by user') {
+        this.$router.push({ name: 'transfer' });
+        return;
+      }
+      throw e;
     }
-
-    const signedTx = await this.$store.dispatch('signTransaction', {
-      transaction: {
-        fee,
-        amount,
-        senderId: this.activeIdentity.address,
-        recipientId,
-        payload: '',
-        ttl: Number.MAX_SAFE_INTEGER,
-      },
-      acceptImmediately: true,
-    });
-    const { txHash } = await this.epoch.api.postTransaction({ tx: signedTx });
-
-    this.$router.push({ name: 'transfer', params: { transactionHash: txHash, amount: this.amount } });
   },
 };
 </script>
