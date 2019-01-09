@@ -1,9 +1,10 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'settings' }"
+    :left-button-to="{ name: 'settings' }"
+    left-button-icon-name="back"
     title="Remote Connection"
-    back-button
-    class="settings"
+    header-fill="light"
+    fill="neutral"
   >
     <ae-card fill="maximum">
       <list-item
@@ -33,7 +34,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import MobilePage from '../../components/MobilePage.vue';
+import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemButton from '../../components/ListItemButton.vue';
@@ -57,8 +58,3 @@ export default {
   methods: mapMutations(['removeFollower']),
 };
 </script>
-
-<style lang="scss" scoped>
-@import './Settings.scss';
-@import './SettingsHeader.scss';
-</style>

@@ -1,9 +1,11 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'settings' }"
+    :left-button-to="{ name: 'settings' }"
+    left-button-icon-name="back"
     title="Network"
-    back-button
-    class="settings settings-network"
+    header-fill="light"
+    fill="neutral"
+    class="settings-network"
   >
     <ae-card fill="maximum">
       <list-item
@@ -50,7 +52,7 @@ import { mapGetters, mapMutations } from 'vuex';
 import {
   AeDropdown, AeIcon, AeButton as AeButton3, directives,
 } from '@aeternity/aepp-components-3';
-import MobilePage from '../../components/MobilePage.vue';
+import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemButton from '../../components/ListItemButton.vue';
@@ -77,9 +79,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import './Settings.scss';
-@import './SettingsHeader.scss';
 
 .settings-network {
   .ae-icon-more {

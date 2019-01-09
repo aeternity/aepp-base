@@ -1,8 +1,5 @@
 <template>
-  <ae-main
-    id="app"
-    :class="{ 'quick-id-hidden': !$route.meta.displayFooter }"
-  >
+  <div id="app">
     <router-view
       v-show="!qrCodeReaderTask"
       :class="{ grayscale }"
@@ -26,46 +23,58 @@
         {{ notification.action.name }}
       </ae-button>
     </ae-banner>
-    <footer-mobile
-      v-if="$route.meta.displayFooter"
-      :show-back-button="$route.name !== 'apps'"
-    />
+
+    <account-switcher />
+    <tab-bar v-if="$route.meta.displayFooter && !qrCodeReaderTask" />
+    <div
+      v-if="messageToApprove || transactionToApprove"
+      class="modal-dialogs-wrapper"
+    >
+      <approve-message
+        v-if="messageToApprove"
+        v-bind="messageToApprove"
+      />
+      <approve-transaction
+        v-if="transactionToApprove"
+        v-bind="transactionToApprove"
+      />
+    </div>
+
     <remove-app-modal />
     <alert-modal />
-  </ae-main>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { AeMain, AeBanner, AeButton } from '@aeternity/aepp-components';
-import FooterMobile from './components/FooterMobile.vue';
+import { AeBanner, AeButton } from '@aeternity/aepp-components';
 import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
 import QrCodeReader from './components/QrCodeReader.vue';
+import TabBar from './components/mobile/TabBar.vue';
+import ApproveMessage from './components/mobile/ApproveMessage.vue';
+import ApproveTransaction from './components/mobile/ApproveTransaction.vue';
+import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
 
 export default {
   components: {
-    AeMain,
     QrCodeReader,
     AeBanner,
     AeButton,
     RemoveAppModal,
     AlertModal,
-    FooterMobile,
+    TabBar,
+    ApproveMessage,
+    ApproveTransaction,
+    AccountSwitcher,
   },
   computed: mapState({
     notification: ({ notification }) => notification,
     grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
     qrCodeReaderTask: ({ qrCodeReaderTask }) => qrCodeReaderTask,
+    messageToApprove: ({ mobile }) => mobile.messageToApprove,
+    transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],
   }),
-  created() {
-    // set domain to base host because of iframe cross domain policy, very nice hardcoded urls
-    if (document.domain.includes('aepps.com')) {
-      document.domain = 'aepps.com';
-    } else if (document.domain.includes('aepps.dev')) {
-      document.domain = 'aepps.dev';
-    }
-  },
 };
 </script>
 
@@ -77,15 +86,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
-  padding-bottom: 0;
-  background: $color-neutral-maximum;
+  min-height: 100vh;
 
   /deep/ .grayscale {
     filter: grayscale(100%);
-  }
-
-  &.quick-id-hidden {
-    padding-bottom: 0;
   }
 
   .ae-banner {
@@ -99,6 +103,19 @@ export default {
       margin-right: 4px;
       vertical-align: text-bottom;
     }
+  }
+
+  .modal-dialogs-wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom, rgba(30,30,30,.9), rgba(50, 10, 60, .9));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000000;
   }
 }
 </style>

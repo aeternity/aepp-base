@@ -1,9 +1,9 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'new-account' }"
+    :left-button-to="{ name: 'new-account' }"
+    left-button-icon-name="back"
     class="new-account-create"
     title="New Account"
-    back-button
   >
     <guide
       fill="primary"
@@ -23,28 +23,28 @@
       {{ seed }}
     </p>
 
-    <template slot="footer">
-      <ae-button
-        fill="secondary"
-        @click="createSeed"
-      >
-        Next
-      </ae-button>
-      <div
-        :style="{ animationPlayState: readingPaused ? 'paused' : 'running' }"
-        class="progress"
-        @animationend="readingEnded = true"
-      />
-    </template>
+    <ae-button
+      slot="footer"
+      fill="secondary"
+      @click="createSeed"
+    >
+      Next
+    </ae-button>
+
+    <div
+      :style="{ animationPlayState: readingPaused ? 'paused' : 'running' }"
+      class="progress"
+      @animationend="readingEnded = true"
+    />
   </mobile-page>
 </template>
 
 <script>
 import { generateMnemonic } from '@aeternity/bip39';
 import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: { MobilePage, AeButton, Guide },
@@ -97,5 +97,3 @@ export default {
   }
 }
 </style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />

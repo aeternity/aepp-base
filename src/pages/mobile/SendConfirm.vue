@@ -12,12 +12,15 @@
       <ae-identicon
         :address="activeIdentity.address"
         size="s"
-      /><em>{{ activeIdentity.name }}</em>
+      />
+      {{ ' ' }}
+      <em>{{ activeIdentity.name }}</em>
       <br>to
       <ae-identicon
         :address="to"
         size="s"
       />
+      {{ ' ' }}
       <em>
         <ae-address
           :address="to"
@@ -58,13 +61,13 @@
       inactive
     >
       <span class="title">
-        <img src="../assets/icons/turtle.svg">
+        <img src="../../assets/icons/turtle.svg">
       </span>
       <span
         slot="right"
         class="content"
       >
-        <img src="../assets/icons/rabbit.svg">
+        <img src="../../assets/icons/rabbit.svg">
       </span>
     </list-item>
 
@@ -116,14 +119,14 @@
 import BigNumber from 'bignumber.js';
 import { mapGetters, mapState } from 'vuex';
 import { AeIdenticon, AeButtonGroup } from '@aeternity/aepp-components-3';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import ListItem from '../components/deprecated/ListItem.vue';
-import AeInputRange from '../components/AeInputRange.vue';
-import AeButton from '../components/AeButton.vue';
-import AeAddress from '../components/AeAddress.vue';
-import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../lib/constants';
-import prefixedAmount from '../filters/prefixedAmount';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import ListItem from '../../components/deprecated/ListItem.vue';
+import AeInputRange from '../../components/AeInputRange.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeAddress from '../../components/AeAddress.vue';
+import { MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE } from '../../lib/constants';
+import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
   components: {
@@ -188,23 +191,9 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.send-confirm {
-  background: $color-primary;
-
-  .guide {
-    margin: 0 0 rem(30px) rem(20px);
-
-    .ae-identicon {
-      margin: 0 rem(6px) rem(-4px) rem(2px);
-    }
-
-    .ae-address {
-      font-size: rem(23px);
-    }
-  }
-
+.send-confirm.mobile-page {
   .list-item {
-    margin: 0 rem(20px);
+    margin: 0;
     padding: 0;
     border: none;
     border-top: rem(2px) solid $color-primary-negative-1;

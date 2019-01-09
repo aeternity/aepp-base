@@ -1,12 +1,16 @@
 <template>
-  <mobile-page class="onboarding">
+  <mobile-page
+    class="onboarding"
+    fill="neutral"
+  >
     <transition
       mode="out-in"
       appear
     >
       <router-view />
     </transition>
-    <footer slot="footer">
+
+    <template slot="footer">
       <ae-button
         :to="{ name: 'new-account'}"
         size="small"
@@ -32,13 +36,13 @@
       >
         {{ isLastStep ? 'Start' : 'Next' }}
       </ae-button>
-    </footer>
+    </template>
   </mobile-page>
 </template>
 
 <script>
-import AeButton from '../components/AeButton.vue';
-import MobilePage from '../components/MobilePage.vue';
+import AeButton from '../../components/AeButton.vue';
+import MobilePage from '../../components/mobile/Page.vue';
 
 export default {
   components: { MobilePage, AeButton },
@@ -60,48 +64,38 @@ export default {
 };
 </script>
 
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/mixins.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .onboarding.mobile-page {
-  background-color: $color-neutral-positive-2;
-
-  /deep/ .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-  footer {
+  /deep/ footer .wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
 
-    .step-dots {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%);
+  .step-dots {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 
-      &-move {
-        transition: transform .2s;
-      }
+    &-move {
+      transition: transform .2s;
+    }
 
-      a {
-        display: inline-block;
-        width: rem(10px);
-        height: rem(10px);
-        margin: rem(5px);
-        background-color: $color-neutral-positive-1;
-        border-radius: 50%;
+    a {
+      display: inline-block;
+      width: rem(10px);
+      height: rem(10px);
+      margin: rem(5px);
+      background-color: $color-neutral-positive-1;
+      border-radius: 50%;
 
-        &.active {
-          background-color: $color-primary;
-          position: relative;
-          z-index: 1;
-        }
+      &.active {
+        background-color: $color-primary;
+        position: relative;
+        z-index: 1;
       }
     }
   }

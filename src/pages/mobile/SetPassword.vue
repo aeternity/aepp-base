@@ -1,8 +1,5 @@
 <template>
-  <mobile-page
-    class="set-password"
-    title="New Account"
-  >
+  <mobile-page title="New Account">
     <guide
       fill="primary"
       icon="½"
@@ -51,10 +48,10 @@
 <script>
 import { mapState } from 'vuex';
 import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
-import AeInputPassword from '../components/AeInputPassword.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeInputPassword from '../../components/AeInputPassword.vue';
 
 export default {
   components: {
@@ -89,15 +86,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
-.set-password {
-  form {
-    margin: 0 rem(-15px);
-  }
-}
-</style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />

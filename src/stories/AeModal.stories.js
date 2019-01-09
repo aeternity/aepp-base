@@ -7,7 +7,7 @@ import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
 import VeeValidate from '../lib/veeValidatePlugin';
 import AeButton from '../components/AeButton.vue';
-import MigratedBalanceModal from '../components/MigratedBalanceModal.vue';
+import MigratedBalanceModal from '../components/mobile/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
 import LedgerAddressConfirmModal from '../components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerSignTransactionConfirmModal from '../components/desktop/LedgerSignTransactionConfirmModal.vue';

@@ -3,7 +3,7 @@
     <h1>Sign the transaction in the Base æpp</h1>
     <step>
       <ae-app-icon
-        :src="require('../assets/icons/base.svg')"
+        :src="require('../../assets/icons/base.svg')"
         class="base"
       />
       <h2>Base</h2>

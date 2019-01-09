@@ -62,11 +62,11 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import { directive as clickaway } from 'vue-clickaway';
-import ListItem from './ListItem.vue';
-import ListItemAccount from './ListItemAccount.vue';
-import AeCard from './AeCard.vue';
-import AeRadio from './AeRadio.vue';
-import Balance from './Balance.vue';
+import ListItem from '../ListItem.vue';
+import ListItemAccount from '../ListItemAccount.vue';
+import AeCard from '../AeCard.vue';
+import AeRadio from '../AeRadio.vue';
+import Balance from '../Balance.vue';
 
 export default {
   directives: {

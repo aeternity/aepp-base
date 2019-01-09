@@ -5,7 +5,10 @@
     class="list-item"
     @click="$emit('click', $event)"
   >
-    <div class="content">
+    <div
+      :class="{ 'border-dark': borderDark }"
+      class="content"
+    >
       <slot name="icon" />
       <div :class="['title', $slots.icon ? 'after-icon' : '']">
         {{ title }}
@@ -14,7 +17,10 @@
         </small>
       </div>
       <slot />
-      <div class="space" />
+      <div
+        v-if="$slots.right"
+        class="space"
+      />
       <slot name="right" />
     </div>
   </component>
@@ -28,6 +34,7 @@ export default {
     subtitle: { type: String, default: undefined },
     subtitleMonospace: { type: Boolean, default: false },
     inactive: { type: Boolean, default: false },
+    borderDark: { type: Boolean, default: false },
   },
   computed: {
     renderAs() {
@@ -46,7 +53,7 @@ export default {
 
 .list-item {
   display: block;
-  padding: 0 rem(15px);
+  padding: 0 rem(16px);
   text-decoration: none;
   color: $color-neutral-negative-3;
 
@@ -58,10 +65,13 @@ export default {
     display: flex;
     align-items: center;
     height: rem(68px);
-    padding: 0 rem(2px);
     border-bottom: 2px solid $color-neutral-positive-2;
     @extend %face-sans-s;
     font-weight: 500;
+
+    &.border-dark {
+      border-bottom-color: $color-neutral-positive-1;
+    }
 
     .title {
       @extend %face-sans-s;

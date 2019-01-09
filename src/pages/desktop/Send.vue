@@ -16,6 +16,7 @@
         v-validate="'required|address'"
         :error="errors.has('accountTo')"
         :footer="errors.first('accountTo')"
+        autofocus
         name="accountTo"
         header="To"
       />
@@ -110,11 +111,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
 .send {
-  .guide .ae-identicon {
-    vertical-align: middle;
-    margin-right: rem(5px);
-  }
-
   .ae-input-wrapper {
     margin-bottom: rem(42px);
     background: #fff;

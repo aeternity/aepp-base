@@ -16,7 +16,7 @@
 
 <script>
 import { AeDivider } from '@aeternity/aepp-components';
-import MobilePage from '../components/MobilePage.vue';
+import MobilePage from '../components/mobile/Page.vue';
 import FixedAddButton from '../components/FixedAddButton.vue';
 
 export default {

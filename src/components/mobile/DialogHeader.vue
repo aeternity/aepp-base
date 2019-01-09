@@ -10,7 +10,7 @@
 
 <script>
 import { AeAppIcon } from '@aeternity/aepp-components';
-import { DEFAULT_ICON } from '../lib/appsRegistry';
+import { DEFAULT_ICON } from '../../lib/appsRegistry';
 
 export default {
   components: {

@@ -1,6 +1,6 @@
 <template>
   <div class="onboarding-page subaccounts">
-    <img src="../assets/onboarding/subaccounts.svg">
+    <img src="../../assets/onboarding/subaccounts.svg">
     <guide fill="primary">
       <em>Create subaccounts</em>
       <br>in seconds
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Guide from '../components/Guide.vue';
+import Guide from '../../components/Guide.vue';
 
 export default {
   components: { Guide },

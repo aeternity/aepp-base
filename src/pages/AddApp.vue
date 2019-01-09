@@ -112,7 +112,7 @@ import {
   AeDivider,
 } from '@aeternity/aepp-components';
 import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry';
-import MobilePage from '../components/MobilePage.vue';
+import MobilePage from '../components/mobile/Page.vue';
 
 const allApps = Object.entries(appsRegistry)
   .filter(([, { unremovable }]) => !unremovable)

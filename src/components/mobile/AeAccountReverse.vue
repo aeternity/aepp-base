@@ -24,9 +24,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import AeCard from './AeCard.vue';
-import AeQrCode from './AeQrCode.vue';
-import AeAddress from './AeAddress.vue';
+import AeCard from '../AeCard.vue';
+import AeQrCode from '../AeQrCode.vue';
+import AeAddress from '../AeAddress.vue';
 
 export default {
   components: {
@@ -45,8 +45,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../../node_modules/@aeternity/aepp-components-3/src/styles/placeholders/typography';
+@import '../../../node_modules/@aeternity/aepp-components-3/src/styles/variables/colors';
 
 .ae-account-reverse {
   main {

@@ -1,29 +1,29 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'transfer' }"
+    :left-button-to="{ name: 'transfer' }"
+    left-button-icon-name="back"
     class="receive"
-    fill="neutral"
-    back-button
+    header-fill="neutral"
   >
-    <guide
-      fill="primary"
-    >
-      <em>Receive</em> AE
-      <div class="note">
-        Let the sender scan this QR code
-        <br>to obtain your address
-      </div>
-    </guide>
+    <template slot="header">
+      <guide fill="primary">
+        <em>Receive</em> AE
+        <div class="note">
+          Let the sender scan this QR code
+          <br>to obtain your address
+        </div>
+      </guide>
 
-    <ae-account-reverse
-      v-bind="activeIdentity"
-      fill="neutral"
-    />
+      <ae-account-reverse
+        v-bind="activeIdentity"
+        fill="neutral"
+      />
+    </template>
 
     <list-item
-      slot="content-bottom"
       title="Copy address"
       subtitle="Share it with sender"
+      border-dark
       @click.native="copyAddress"
     >
       <img
@@ -46,10 +46,10 @@ import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import writingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
 import copy from 'clipboard-copy';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeAccountReverse from '../components/AeAccountReverse.vue';
-import ListItem from '../components/ListItem.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeAccountReverse from '../../components/mobile/AeAccountReverse.vue';
+import ListItem from '../../components/ListItem.vue';
 
 export default {
   components: {
@@ -81,22 +81,10 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .receive {
-  /deep/ .panel .bottom {
-    padding-top: rem(60px);
-  }
-
-  .guide {
-    margin-left: rem(20px);
-  }
-
   .note {
     margin: rem(8px) 0;
     @extend %face-sans-s;
     font-weight: 500;
-  }
-
-  .list-item /deep/ .content {
-    border-bottom: 2px solid $color-neutral-positive-1;
   }
 }
 </style>

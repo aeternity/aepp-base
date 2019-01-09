@@ -1,6 +1,6 @@
 <template>
   <div class="onboarding-page send">
-    <img src="../assets/onboarding/send.svg">
+    <img src="../../assets/onboarding/send.svg">
     <guide fill="primary">
       <em>Send & receive AE</em>
       <br>effortlessly
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Guide from '../components/Guide.vue';
+import Guide from '../../components/Guide.vue';
 
 export default {
   components: { Guide },

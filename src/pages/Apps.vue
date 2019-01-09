@@ -59,7 +59,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { AeAppIcon, AeButton, AeIcon } from '@aeternity/aepp-components';
 import { DEFAULT_ICON, appsRegistry } from '../lib/appsRegistry';
-import HeaderMobile from '../components/HeaderMobile.vue';
+import HeaderMobile from '../components/mobile/Header.vue';
 
 export default {
   components: {
@@ -122,6 +122,8 @@ export default {
 @import '~@aeternity/aepp-components/dist/mixins.scss';
 
 .apps {
+  flex-grow: 1;
+
   .header-mobile {
     @include abovePhone {
       display: none;

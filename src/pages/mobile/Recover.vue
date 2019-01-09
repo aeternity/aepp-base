@@ -1,9 +1,8 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'intro' }"
+    :right-button-to="{ name: 'intro' }"
+    right-button-icon-name="close"
     title="Recover account"
-    class="recover"
-    close-button
   >
     <guide
       fill="primary"
@@ -17,7 +16,10 @@
       <br>during the setup.
     </guide>
 
-    <form @submit.prevent="setSeed">
+    <form
+      :id="_uid"
+      @submit.prevent="setSeed"
+    >
       <ae-input-mnemonic
         v-model="seed"
         v-validate="'required|mnemonic'"
@@ -28,25 +30,24 @@
       />
     </form>
 
-    <template slot="footer">
-      <ae-button
-        :disabled="errors.any()"
-        fill="secondary"
-        @click="setSeed"
-      >
-        Recover with Passphrase
-      </ae-button>
-    </template>
+    <ae-button
+      slot="footer"
+      :disabled="errors.any()"
+      :form="_uid"
+      fill="secondary"
+    >
+      Recover with Passphrase
+    </ae-button>
   </mobile-page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
-import AeInputMnemonic from '../components/AeInputMnemonic.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeInputMnemonic from '../../components/AeInputMnemonic.vue';
 
 export default {
   components: {
@@ -69,13 +70,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
-.recover form {
-  margin: 0 rem(-15px);
-}
-</style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />

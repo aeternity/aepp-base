@@ -58,6 +58,14 @@ export default {
     width: rem(23px);
   }
 
+  .ae-identicon {
+    vertical-align: middle;
+  }
+
+  .ae-address.short {
+    font-size: inherit;
+  }
+
   em {
     font-style: normal;
     color: $color-primary;

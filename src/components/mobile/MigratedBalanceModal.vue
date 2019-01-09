@@ -24,9 +24,9 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
-import AeModal from './AeModal.vue';
-import AeButton from './AeButton.vue';
-import { MAGNITUDE } from '../lib/constants';
+import AeModal from '../AeModal.vue';
+import AeButton from '../AeButton.vue';
+import { MAGNITUDE } from '../../lib/constants';
 
 export default {
   components: {

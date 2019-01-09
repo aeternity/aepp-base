@@ -1,8 +1,7 @@
 <template>
   <mobile-page
-    :redirect-to-on-close="{ name: 'intro' }"
-    class="login"
-    close-button
+    :right-button-to="{ name: 'intro' }"
+    right-button-icon-name="close"
   >
     <guide
       fill="primary"
@@ -13,7 +12,10 @@
       <br><mark>your account</mark> with phrase
     </guide>
 
-    <form @submit.prevent="unlockSavedKeystore">
+    <form
+      :id="_uid"
+      @submit.prevent="unlockSavedKeystore"
+    >
       <ae-input-password
         v-model="password"
         v-validate="'required|min:4'"
@@ -41,24 +43,23 @@
       </ae-input-password>
     </form>
 
-    <template slot="footer">
-      <ae-button
-        :disabled="errors.any() || wrongPassword"
-        fill="secondary"
-        @click="unlockSavedKeystore"
-      >
-        Login
-      </ae-button>
-    </template>
+    <ae-button
+      slot="footer"
+      :disabled="errors.any() || wrongPassword"
+      :form="_uid"
+      fill="secondary"
+    >
+      Login
+    </ae-button>
   </mobile-page>
 </template>
 
 <script>
 import wavingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f44b.png';
-import MobilePage from '../components/MobilePage.vue';
-import Guide from '../components/Guide.vue';
-import AeButton from '../components/AeButton.vue';
-import AeInputPassword from '../components/AeInputPassword.vue';
+import MobilePage from '../../components/mobile/Page.vue';
+import Guide from '../../components/Guide.vue';
+import AeButton from '../../components/AeButton.vue';
+import AeInputPassword from '../../components/AeInputPassword.vue';
 
 export default {
   components: {
@@ -84,24 +85,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-
-.login {
-  .guide {
-    margin-bottom: rem(19px);
-
-    /deep/ div {
-      margin: 0 auto;
-    }
-  }
-
-  form {
-    margin: 0 rem(-15px);
-  }
-}
-</style>
-<style lang="scss" src="../components/MobilePageContent.scss" scoped />
-<style lang="scss" src="./FixedHeader.scss" scoped />
