@@ -31,13 +31,9 @@
     <account-switcher />
     <tab-bar v-if="$route.meta.displayFooter && !hidePage" />
     <div
-      v-if="messageToApprove || transactionToApprove"
+      v-if="transactionToApprove"
       class="modal-dialogs-wrapper"
     >
-      <approve-message
-        v-if="messageToApprove"
-        v-bind="messageToApprove"
-      />
       <approve-transaction
         v-if="transactionToApprove"
         v-bind="transactionToApprove"
@@ -55,7 +51,6 @@ import { AeBanner, AeButton } from '@aeternity/aepp-components';
 import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
 import TabBar from './components/mobile/TabBar.vue';
-import ApproveMessage from './components/mobile/ApproveMessage.vue';
 import ApproveTransaction from './components/mobile/ApproveTransaction.vue';
 import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
 
@@ -66,7 +61,6 @@ export default {
     RemoveAppModal,
     AlertModal,
     TabBar,
-    ApproveMessage,
     ApproveTransaction,
     AccountSwitcher,
   },
@@ -74,7 +68,6 @@ export default {
     ...mapState({
       notification: ({ notification }) => notification,
       grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
-      messageToApprove: ({ mobile }) => mobile.messageToApprove,
       transactionToApprove: ({ mobile }) => Object.values(mobile.transactionsToApprove)[0],
     }),
     ...mapGetters('modals', ['component', 'hidePage', 'props']),

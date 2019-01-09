@@ -16,7 +16,6 @@ export default {
     accounts: {},
     followers: {},
     transactionsToApprove: {},
-    messageToApprove: null,
     names: [],
     showAccountSwitcher: false,
   },
@@ -62,9 +61,6 @@ export default {
     cancelTransaction(state, transactionId) {
       state.transactionsToApprove[transactionId].reject(new Error('Payment rejected by user'));
       Vue.delete(state.transactionsToApprove, transactionId);
-    },
-    setMessageToApprove(state, message) {
-      state.messageToApprove = message;
     },
     addFollower(state, follower) {
       Vue.set(state.followers, follower.id, follower);
@@ -136,16 +132,6 @@ export default {
         accounts[transaction.senderId].secretKey,
       );
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
-    },
-    async signPersonalMessage(
-      { state: { accounts }, commit },
-      { message, address, appName },
-    ) {
-      await new Promise((resolve, reject) => commit('setMessageToApprove', {
-        message, appName, resolve, reject,
-      }));
-      const signature = Crypto.signPersonalMessage(message, accounts[address].secretKey);
-      return Crypto.encodeBase58Check(Buffer.from(signature));
     },
   },
 };
