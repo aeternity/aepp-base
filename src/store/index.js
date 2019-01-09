@@ -3,7 +3,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
-import { Crypto, JsTx as JsTxStamp } from '@aeternity/aepp-sdk';
+import { Crypto } from '@aeternity/aepp-sdk';
+import { spendTxNative } from '@aeternity/aepp-sdk/es/tx/js';
 import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
@@ -20,7 +21,6 @@ import aeppApi from './plugins/aeppApi';
 import registerServiceWorker from './plugins/registerServiceWorker';
 
 Vue.use(Vuex);
-const JsTx = JsTxStamp();
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
@@ -184,12 +184,13 @@ const store = new Vuex.Store({
       addresses.forEach(address => dispatch('updateBalance', address));
     },
     async updateBalance({ state: { epoch, balances }, commit }, address) {
-      const balance = BigNumber(await epoch.balance(address).catch(() => 0)).shiftedBy(-MAGNITUDE);
+      const balance = BigNumber(await epoch.balance(address, { format: false }).catch(() => 0))
+        .shiftedBy(-MAGNITUDE);
       if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
     },
     async genSpendTxBinary({ state: { epoch } }, transaction) {
-      const spendTx = JsTx.spendTxNative({
+      const spendTx = spendTxNative({
         nonce: +(await epoch.api.getAccountByPubkey(transaction.senderId)).nonce + 1,
         ...transaction,
         fee: transaction.fee.shiftedBy(MAGNITUDE),
