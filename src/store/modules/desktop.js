@@ -11,9 +11,6 @@ export default {
     ledgerConnected: false,
     ledgerAccountNumber: 1,
     ledgerAddresses: [],
-    ledgerAddressConfirmModalProps: null,
-    ledgerTransactionFeeModalProps: null,
-    showLedgerSignTransactionConfirmModal: false,
     showSidebar: false,
   },
 
@@ -52,15 +49,6 @@ export default {
     toggleSidebar(state) {
       state.showSidebar = !state.showSidebar;
     },
-    setLedgerAddressConfirmModalProps(state, props) {
-      state.ledgerAddressConfirmModalProps = props;
-    },
-    setLedgerTransactionFeeModalProps(state, props) {
-      state.ledgerTransactionFeeModalProps = props;
-    },
-    setShowLedgerSignTransactionConfirmModal(state, show) {
-      state.showLedgerSignTransactionConfirmModal = show;
-    },
   },
 
   actions: {
@@ -71,17 +59,6 @@ export default {
         result = await new Promise((resolve, reject) => commit('setTransactionToSign', { resolve, reject, args }));
       } finally {
         commit('setTransactionToSign');
-      }
-      return result;
-    },
-    async getLedgerTransactionFee({ commit }) {
-      let result;
-      try {
-        result = await new Promise((resolve, reject) => commit(
-          'setLedgerTransactionFeeModalProps', { resolve, reject },
-        ));
-      } finally {
-        commit('setLedgerTransactionFeeModalProps', null);
       }
       return result;
     },

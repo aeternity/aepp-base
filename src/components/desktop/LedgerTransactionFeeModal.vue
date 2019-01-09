@@ -1,6 +1,5 @@
 <template>
   <ledger-modal
-    v-if="props"
     title="Define the Transaction fee"
     class="transaction-fee"
     closable
@@ -53,20 +52,14 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapState } from 'vuex';
 import LedgerModal from './LedgerModal.vue';
 import AeInputAmount from '../AeInputAmount.vue';
 import AeInputRange from '../AeInputRange.vue';
 import LedgerModalNote from './LedgerModalNote.vue';
 import AeButton from '../AeButton.vue';
 import {
-  MAGNITUDE, MIN_SPEND_TX_FEE, MAX_REASONABLE_FEE, MAGNITUDE_PICO,
+  MAGNITUDE, MIN_SPEND_TX_FEE_PICO, MAX_REASONABLE_FEE_PICO, MAGNITUDE_PICO,
 } from '../../lib/constants';
-
-const toPico = value => BigNumber(value)
-  .shiftedBy(-MAGNITUDE - MAGNITUDE_PICO).toFixed();
-const MIN_SPEND_TX_FEE_PICO = toPico(MIN_SPEND_TX_FEE);
-const MAX_REASONABLE_FEE_PICO = toPico(MAX_REASONABLE_FEE);
 
 export default {
   components: {
@@ -76,23 +69,24 @@ export default {
     LedgerModalNote,
     AeButton,
   },
+  props: {
+    resolve: { type: Function, required: true },
+    reject: { type: Function, required: true },
+  },
   data: () => ({
     fee: MIN_SPEND_TX_FEE_PICO,
     decimal: MAGNITUDE + MAGNITUDE_PICO,
     MIN_SPEND_TX_FEE_PICO,
     MAX_REASONABLE_FEE_PICO,
   }),
-  computed: mapState({
-    props: ({ desktop }) => desktop.ledgerTransactionFeeModalProps,
-  }),
   methods: {
     async handleSubmit() {
       if (!await this.$validator.validateAll()) return;
 
-      this.props.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_PICO));
+      this.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_PICO));
     },
     handleClose() {
-      this.props.reject(new Error('Canceled by user'));
+      this.reject(new Error('Canceled by user'));
     },
   },
 };

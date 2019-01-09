@@ -1,10 +1,7 @@
 <template>
-  <div
-    v-if="qrCodeReaderTask"
-    class="qr-code-reader"
-  >
+  <div class="qr-code-reader">
     <header-mobile
-      :title="qrCodeReaderTask.title"
+      :title="title"
       left-button-icon-name="back"
       @left-button-click="cancelReading"
     />
@@ -26,17 +23,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
 import HeaderMobile from './mobile/Header.vue';
 
 export default {
   components: { HeaderMobile },
+  props: {
+    title: { type: String, required: true },
+    resolve: { type: Function, required: true },
+    reject: { type: Function, required: true },
+  },
   data: () => ({
     cameraAllowed: false,
     browserReader: !process.env.IS_CORDOVA && new BrowserQRCodeReader(),
   }),
-  computed: mapState(['qrCodeReaderTask']),
   watch: {
     async cameraAllowed(value) {
       if (!value) {
@@ -44,8 +44,7 @@ export default {
         return;
       }
 
-      this.qrCodeReaderTask.resolve(await this.scan());
-      this.$store.commit('setQrCodeReaderTask');
+      this.resolve(await this.scan());
     },
   },
   async mounted() {
@@ -94,8 +93,7 @@ export default {
     },
     cancelReading() {
       this.stopReading();
-      this.qrCodeReaderTask.reject(new Error('Cancelled by user'));
-      this.$store.commit('setQrCodeReaderTask');
+      this.reject(new Error('Cancelled by user'));
     },
   },
 };

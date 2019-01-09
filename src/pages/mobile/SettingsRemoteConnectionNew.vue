@@ -17,7 +17,7 @@ export default {
 
       try {
         // eslint-disable-next-line no-await-in-loop
-        data = await this.$store.dispatch('readQrCode', 'Remote Connection');
+        data = await this.$store.dispatch('modals/readQrCode', { title: 'Remote Connection' });
       } catch (e) {
         this.$router.push({ name: 'settings-remote-connection' });
         return;

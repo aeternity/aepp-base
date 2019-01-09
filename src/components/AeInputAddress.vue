@@ -114,7 +114,7 @@ export default {
       this.$children[0].handleInput();
     },
     async readValueFromQrCode() {
-      this.setAddress(await this.$store.dispatch('readQrCode', 'Scan AE Address'));
+      this.setAddress(await this.$store.dispatch('modals/readQrCode', { title: 'Scan AE Address' }));
     },
   },
 };
