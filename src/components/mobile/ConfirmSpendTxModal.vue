@@ -52,12 +52,10 @@
       />
     </confirm-modal-field>
 
-    <confirm-modal-field name="Recipient Account">
-      <ae-address
-        :address="recipientId"
-        split-by="6"
-      />
-    </confirm-modal-field>
+    <confirm-modal-address
+      name="Recipient Account"
+      :address="recipientId"
+    />
 
     <ae-button-group slot="footer">
       <ae-button
@@ -83,6 +81,7 @@ import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
 import ConfirmModalField from './ConfirmModalField.vue';
 import ConfirmModalRow from './ConfirmModalRow.vue';
+import ConfirmModalAddress from './ConfirmModalAddress.vue';
 import Guide from '../Guide.vue';
 import AeInputRange from '../AeInputRange.vue';
 import AeButton from '../AeButton.vue';
@@ -102,6 +101,7 @@ export default {
     AeAddress,
     ConfirmModalField,
     ConfirmModalRow,
+    ConfirmModalAddress,
   },
   props: {
     stepIcon: { type: String, default: '' },
@@ -130,17 +130,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .confirm-spend-tx-modal.mobile-page .confirm-modal-field {
   .turtle-rabbit {
     margin: rem(23px) 0 rem(6px) 0;
-  }
-
-  .ae-address {
-    font-weight: normal;
-    color: $color-neutral-maximum;
-    letter-spacing: rem(1.5px);
   }
 }
 </style>

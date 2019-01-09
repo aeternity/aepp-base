@@ -1,6 +1,9 @@
 import { registerModal } from './store/plugins/modals';
 import QrCodeReader from './components/QrCodeReader.vue';
 import ConfirmAccountAccessModal from './components/mobile/ConfirmAccountAccessModal.vue';
+import ConfirmContractCallModal from './components/mobile/ConfirmContractCallModal.vue';
+import ConfirmContractDeployModal from './components/mobile/ConfirmContractDeployModal.vue';
+import ConfirmSignModal from './components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendTxModal from './components/mobile/ConfirmSpendTxModal.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
@@ -10,6 +13,9 @@ registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
 
 if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal, hidePage: true });
+  registerModal({ name: 'confirmContractCall', component: ConfirmContractCallModal, hidePage: true });
+  registerModal({ name: 'confirmContractDeploy', component: ConfirmContractDeployModal, hidePage: true });
+  registerModal({ name: 'confirmSign', component: ConfirmSignModal, hidePage: true });
   registerModal({ name: 'confirmSpendTx', component: ConfirmSpendTxModal, hidePage: true });
 } else {
   registerModal({ name: 'confirmLedgerAddress', component: LedgerAddressConfirmModal });
