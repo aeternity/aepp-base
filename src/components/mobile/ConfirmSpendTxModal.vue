@@ -29,12 +29,12 @@
       </em>
     </guide>
 
-    <confirm-modal-value
+    <confirm-modal-field
       name="Amount"
       :value="`${prefixedAmount(amount)} AE`"
     />
 
-    <confirm-modal-value
+    <confirm-modal-field
       name="Transaction fee"
       :value="`${fee} PICO AE`"
     >
@@ -50,14 +50,14 @@
         :max="MAX_REASONABLE_FEE_PICO"
         step="0.001"
       />
-    </confirm-modal-value>
+    </confirm-modal-field>
 
-    <confirm-modal-value name="Recipient Account">
+    <confirm-modal-field name="Recipient Account">
       <ae-address
         :address="recipientId"
         split-by="6"
       />
-    </confirm-modal-value>
+    </confirm-modal-field>
 
     <ae-button-group slot="footer">
       <ae-button
@@ -81,7 +81,7 @@ import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
 import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
-import ConfirmModalValue from './ConfirmModalValue.vue';
+import ConfirmModalField from './ConfirmModalField.vue';
 import ConfirmModalRow from './ConfirmModalRow.vue';
 import Guide from '../Guide.vue';
 import AeInputRange from '../AeInputRange.vue';
@@ -100,7 +100,7 @@ export default {
     AeButton,
     AeButtonGroup,
     AeAddress,
-    ConfirmModalValue,
+    ConfirmModalField,
     ConfirmModalRow,
   },
   props: {
@@ -132,7 +132,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.confirm-spend-tx-modal.mobile-page .confirm-modal-value {
+.confirm-spend-tx-modal.mobile-page .confirm-modal-field {
   .turtle-rabbit {
     margin: rem(23px) 0 rem(6px) 0;
   }

@@ -1,5 +1,5 @@
 <template>
-  <confirm-modal-item class="confirm-modal-value">
+  <confirm-modal-item class="confirm-modal-field">
     <confirm-modal-row :class="{ 'not-last': $slots.default }">
       <span class="name">
         {{ name }}
@@ -35,7 +35,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.confirm-modal-value {
+.confirm-modal-field {
   .confirm-modal-row {
     &.not-last {
       margin-bottom: rem(8px);
