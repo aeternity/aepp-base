@@ -38,12 +38,11 @@ export default {
 
 <style lang="scss" scoped>
 .app-browser {
-  overflow: hidden;
+  flex-grow: 1;
+  position: relative;
 
   iframe, .loader {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
     width: 100%;
     height: 100%;
   }
