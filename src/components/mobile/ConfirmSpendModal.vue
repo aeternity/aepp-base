@@ -1,6 +1,6 @@
 <template>
   <mobile-page
-    class="confirm-spend-tx-modal"
+    class="confirm-spend-modal"
     fill="primary"
   >
     <guide
@@ -131,7 +131,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
-.confirm-spend-tx-modal.mobile-page .confirm-modal-field {
+.confirm-spend-modal.mobile-page .confirm-modal-field {
   .turtle-rabbit {
     margin: rem(23px) 0 rem(6px) 0;
   }

@@ -99,7 +99,7 @@ export default {
       },
       { transaction, stepIcon },
     ) {
-      return dispatch('modals/confirmSpendTx', {
+      return dispatch('modals/confirmSpend', {
         ...transaction,
         stepIcon,
       }).then(async (fee) => {

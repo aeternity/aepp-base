@@ -7,7 +7,7 @@ import ConfirmAccountAccessModal from '../../components/mobile/ConfirmAccountAcc
 import ConfirmContractCallModal from '../../components/mobile/ConfirmContractCallModal.vue';
 import ConfirmContractDeployModal from '../../components/mobile/ConfirmContractDeployModal.vue';
 import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
-import ConfirmSpendTxModal from '../../components/mobile/ConfirmSpendTxModal.vue';
+import ConfirmSpendModal from '../../components/mobile/ConfirmSpendModal.vue';
 import { account, accounts, contractAddress } from '../mock-data';
 
 const base = {
@@ -67,9 +67,9 @@ storiesOf('mobile ConfirmModal', module)
   }))
   .add('ConfirmSpendTxModal', () => ({
     ...base,
-    components: { ConfirmSpendTxModal },
+    components: { ConfirmSpendModal },
     template: `
-      <confirm-spend-tx-modal
+      <confirm-spend-modal
         :resolve="resolve"
         :reject="reject"
         :recipientId="recipientId"
