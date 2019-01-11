@@ -17,7 +17,7 @@ import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection';
 import decryptAccounts from './plugins/decryptAccounts';
-import aeppApi from './plugins/aeppApi';
+import initSdk from './plugins/initSdk';
 import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
 
@@ -54,11 +54,10 @@ const store = new Vuex.Store({
     pollBalance,
     initEpoch,
     remoteConnection,
-    aeppApi,
     modals,
     registerServiceWorker,
     ...process.env.IS_MOBILE_DEVICE
-      ? [decryptAccounts, notificationOnRemoteConnection] : [ledgerConnection],
+      ? [decryptAccounts, initSdk, notificationOnRemoteConnection] : [ledgerConnection],
   ],
 
   modules: process.env.IS_MOBILE_DEVICE ? { mobile: mobileModule } : { desktop: desktopModule },
@@ -72,6 +71,7 @@ const store = new Vuex.Store({
     addresses: [],
     rpcUrl: networksRegistry[0].url,
     epoch: null,
+    sdk: null,
     alert: null,
     notification: null,
     apps: Object.keys(appsRegistry),
@@ -110,6 +110,12 @@ const store = new Vuex.Store({
     },
     setEpoch(state, epoch) {
       state.epoch = epoch;
+    },
+    setSdk(state, sdk) {
+      state.sdk = sdk;
+    },
+    assignToSdk(state, object) {
+      Object.assign(state.sdk, object);
     },
     addApp(state, app) {
       state.apps.push(app);

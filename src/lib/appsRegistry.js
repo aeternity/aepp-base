@@ -22,4 +22,8 @@ export const appsRegistry = {
     iconFullSize: true,
     path: 'addresses',
   },
+  6: {
+    name: 'Drone Project',
+    path: 'localhost:9001',
+  },
 };
