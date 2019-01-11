@@ -97,7 +97,7 @@ export default {
         },
         appName: 'Transfer',
       });
-      const { txHash } = await this.$store.state.epoch.api
+      const { txHash } = await this.$store.state.sdk.api
         .postTransaction({ tx: signedTx });
 
       this.transferNotification = { transactionHash: txHash, amount };

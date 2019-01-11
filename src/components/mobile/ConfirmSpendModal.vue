@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
 import ConfirmModalAmount from './ConfirmModalAmount.vue';
@@ -84,8 +85,10 @@ export default {
   },
   mixins: [ConfirmModalAmountFeeMixin],
   props: {
-    stepIcon: { type: String, default: '' },
     recipientId: { type: String, required: true },
   },
+  computed: mapState({
+    stepIcon: state => state.mobile.stepIcon,
+  }),
 };
 </script>

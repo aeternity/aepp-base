@@ -6,7 +6,7 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapGetters, mapState } from 'vuex';
+import { MAGNITUDE } from '../../lib/constants';
 import AeLoader from '../../components/AeLoader.vue';
 
 export default {
@@ -21,25 +21,18 @@ export default {
       required: true,
     },
   },
-  computed: {
-    ...mapGetters(['activeIdentity']),
-    ...mapState(['epoch']),
-  },
   async mounted() {
     try {
-      const signedTx = await this.$store.dispatch('signTransaction', {
-        transaction: {
-          amount: BigNumber(this.amount),
-          senderId: this.activeIdentity.address,
-          recipientId: this.to,
-          payload: '',
-          ttl: Number.MAX_SAFE_INTEGER,
-        },
-      });
-      const { txHash } = await this.epoch.api.postTransaction({ tx: signedTx });
+      this.$store.commit('setStepIcon', '³⁄₃');
+      const { hash } = await this.$store.state.sdk.spend(
+        BigNumber(this.amount).shiftedBy(MAGNITUDE),
+        this.to,
+      );
+      this.$store.commit('setStepIcon', '');
+
       this.$router.push({
         name: 'transfer',
-        params: { transactionHash: txHash, amount: this.amount },
+        params: { transactionHash: hash, amount: this.amount },
       });
     } catch (e) {
       if (e.message === 'Rejected by user') {

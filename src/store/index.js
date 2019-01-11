@@ -12,12 +12,11 @@ import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import persistState from './plugins/persistState';
 import pollBalance from './plugins/pollBalance';
-import initEpoch from './plugins/initEpoch';
 import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection';
 import decryptAccounts from './plugins/decryptAccounts';
-import aeppApi from './plugins/aeppApi';
+import initSdk from './plugins/initSdk';
 import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
 
@@ -52,9 +51,8 @@ const store = new Vuex.Store({
       },
     })),
     pollBalance,
-    initEpoch,
+    initSdk,
     remoteConnection,
-    aeppApi,
     modals,
     registerServiceWorker,
     ...process.env.IS_MOBILE_DEVICE
@@ -71,7 +69,7 @@ const store = new Vuex.Store({
     balances: {},
     addresses: [],
     rpcUrl: networksRegistry[0].url,
-    epoch: null,
+    sdk: null,
     alert: null,
     notification: null,
     apps: Object.keys(appsRegistry),
@@ -108,8 +106,11 @@ const store = new Vuex.Store({
     setRPCUrl(state, rpcUrl) {
       state.rpcUrl = rpcUrl;
     },
-    setEpoch(state, epoch) {
-      state.epoch = epoch;
+    setSdk(state, sdk) {
+      state.sdk = sdk;
+    },
+    assignToSdk(state, object) {
+      Object.assign(state.sdk, object);
     },
     addApp(state, app) {
       state.apps.push(app);
@@ -181,15 +182,15 @@ const store = new Vuex.Store({
     updateAllBalances({ getters: { addresses }, dispatch }) {
       addresses.forEach(address => dispatch('updateBalance', address));
     },
-    async updateBalance({ state: { epoch, balances }, commit }, address) {
-      const balance = BigNumber(await epoch.balance(address, { format: false }).catch(() => 0))
+    async updateBalance({ state: { sdk, balances }, commit }, address) {
+      const balance = BigNumber(await sdk.balance(address, { format: false }).catch(() => 0))
         .shiftedBy(-MAGNITUDE);
       if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
     },
-    async genSpendTxBinary({ state: { epoch } }, transaction) {
+    async genSpendTxBinary({ state: { sdk } }, transaction) {
       const spendTx = spendTxNative({
-        nonce: +(await epoch.api.getAccountByPubkey(transaction.senderId)).nonce + 1,
+        nonce: +(await sdk.api.getAccountByPubkey(transaction.senderId)).nonce + 1,
         ...transaction,
         fee: transaction.fee.shiftedBy(MAGNITUDE),
         amount: transaction.amount.shiftedBy(MAGNITUDE),
