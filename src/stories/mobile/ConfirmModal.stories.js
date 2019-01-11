@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
 import ConfirmAccountAccessModal from '../../components/mobile/ConfirmAccountAccessModal.vue';
-import ConfirmSpendTxModal from '../../components/mobile/ConfirmSpendTxModal.vue';
+import ConfirmSpendModal from '../../components/mobile/ConfirmSpendModal.vue';
 import { account, accounts } from '../mock-data';
 
 storiesOf('mobile ConfirmModal', module)
@@ -21,10 +21,10 @@ storiesOf('mobile ConfirmModal', module)
       reject: action('reject'),
     },
   }))
-  .add('ConfirmSpendTxModal', () => ({
-    components: { ConfirmSpendTxModal },
+  .add('ConfirmSpendModal', () => ({
+    components: { ConfirmSpendModal },
     template: `
-      <confirm-spend-tx-modal
+      <confirm-spend-modal
         :resolve="resolve"
         :reject="reject"
         :recipientId="recipientId"
