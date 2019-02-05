@@ -8,30 +8,25 @@
     </note>
 
     <div class="shortcuts">
-      <a
-        href="https://explorer.aepps.com/"
-        target="_blank"
-      >
-        <img src="../../assets/icons/aepps/blockchain-explorer.svg">
-        Blockchain Explorer
-      </a>
-      <a
-        href="http://token-migration.aepps.com/"
-        target="_blank"
-      >
-        <img src="../../assets/icons/aepps/token-migration.svg">
-        Token Migration
-      </a>
+      <app-shortcut
+        v-for="(app, idx) in aeternityApps"
+        :key="idx"
+        v-bind="app"
+        :to="`https://${app.path}`"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { aeternityApps } from '../../lib/appsRegistry';
 import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
+import AppShortcut from '../../components/AppShortcut.vue';
 
 export default {
-  components: { Guide, Note },
+  components: { Guide, Note, AppShortcut },
+  data: () => ({ aeternityApps }),
 };
 </script>
 
@@ -44,23 +39,8 @@ export default {
   .shortcuts {
     display: flex;
 
-    a {
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      @extend %face-sans-s;
-      font-weight: 500;
-      color: $color-neutral-negative-3;
-      width: 80px;
+    .app-shortcut {
       margin-right: 95px;
-
-      img {
-        width: rem(75px);
-        height: rem(75px);
-        border-radius: rem(18px);
-        box-shadow: 0 0 16px rgba(0, 33, 87, 0.15);
-        margin-bottom: 5px;
-      }
     }
   }
 }
