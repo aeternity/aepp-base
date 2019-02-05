@@ -65,13 +65,8 @@ export default {
     display: flex;
     align-items: center;
     height: rem(68px);
-    border-bottom: 2px solid $color-neutral-positive-2;
     @extend %face-sans-s;
     font-weight: 500;
-
-    &.border-dark {
-      border-bottom-color: $color-neutral-positive-1;
-    }
 
     .title {
       @extend %face-sans-s;
@@ -101,8 +96,12 @@ export default {
     }
   }
 
-  &:last-child .content {
-    border-bottom: none;
+  & + .list-item {
+    border-top: 2px solid $color-neutral-positive-2;
+
+    &.border-dark {
+      border-top-color: $color-neutral-positive-1;
+    }
   }
 
   .space {

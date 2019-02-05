@@ -1,92 +1,97 @@
 <template>
   <div class="app-browser">
-    <iframe
-      :class="{ loading }"
-      :src="path"
-      @load="loading = false"
-    />
+    <header>
+      <url-form
+        :current-url="url"
+        @new-url="newUrlHandler"
+      />
 
-    <div
-      v-if="loading"
-      class="loader"
+      <button-plain>
+        <ae-icon name="bookmark" />
+      </button-plain>
+      <button-plain :to="{ name: 'apps' }">
+        <ae-icon name="home" />
+      </button-plain>
+    </header>
+
+    <progress-fake v-if="loading" />
+
+    <iframe
+      ref="iframe"
+      :src="url"
+      @load="loading = false"
     />
   </div>
 </template>
 
 <script>
+import { AeIcon } from '@aeternity/aepp-components-3';
+import UrlForm from '../components/mobile/UrlForm.vue';
+import ButtonPlain from '../components/ButtonPlain.vue';
+import ProgressFake from '../components/ProgressFake.vue';
+
 export default {
+  components: {
+    UrlForm, ButtonPlain, AeIcon, ProgressFake,
+  },
   data() {
     return {
       loading: true,
-      path: `http${window.location.protocol === 'https:' ? 's' : ''}:/${this.$route.fullPath}`,
+      newUrl: '',
     };
   },
-  beforeMount() {
-    window.addEventListener('message', this.updateUrl, false);
-  },
-  beforeDestroy() {
-    window.removeEventListener('message', this.updateUrl, false);
+  computed: {
+    url() {
+      return `http${window.location.protocol === 'https:' ? 's' : ''}:/${this.$route.fullPath}`;
+    },
   },
   methods: {
-    updateUrl({ data: { method, payload: url } }) {
-      if (method !== 'urlChanged') return;
-      this.$router.replace(url.replace(/^https?:\//i, ''));
+    newUrlHandler() {
+      this.loading = true;
+      this.$refs.iframe.focus();
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+
 .app-browser {
   flex-grow: 1;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 
-  iframe, .loader {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  header {
+    display: flex;
+    height: rem(54px);
+    line-height: rem(54px);
+    box-shadow: inset 0 0 rem(8px) rgba(#1B4479, 0.1);
+
+    .url-form {
+      flex-grow: 1;
+    }
+
+    .button-plain {
+      padding: 0 rem(14px);
+      color: $color-neutral-negative-3;
+
+      .ae-icon {
+        font-size: rem(20px);
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .progress-fake {
+    margin-top: rem(-2px);
   }
 
   iframe {
+    flex-grow: 1;
     border: none;
-    transition: filter 2s;
-
-    &.loading {
-      filter: blur(3px);
-    }
-  }
-
-  .loader {
-    background-color: rgba(#000, 0.15);
-    cursor: wait;
-
-    @keyframes sk-bounce {
-      0%, 100% {
-        transform: scale(0.0);
-      }
-      50% {
-        transform: scale(1.0);
-      }
-    }
-
-    &:before, &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 30%;
-      $circleSide: 60px;
-      left: calc(50% - #{$circleSide / 2});
-      height: $circleSide;
-      width: $circleSide;
-      background-color: #F03C6E;
-      opacity: 0.6;
-      border-radius: 50%;
-      animation: sk-bounce 2.0s infinite ease-in-out;
-    }
-
-    &:after {
-      animation-delay: -1s;
-    }
   }
 }
 </style>
