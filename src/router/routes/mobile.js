@@ -7,7 +7,7 @@ import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue'
 import OnboardingSend from '../../pages/mobile/OnboardingSend.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
-import Apps from '../../pages/Apps.vue';
+import Apps from '../../pages/mobile/Apps.vue';
 import NewAccount from '../../pages/mobile/NewAccount.vue';
 import NewAccountCreate from '../../pages/mobile/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/mobile/NewAccountConfirm.vue';
