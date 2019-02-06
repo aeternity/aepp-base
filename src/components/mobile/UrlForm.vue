@@ -1,11 +1,13 @@
 <template>
   <form
     class="url-form"
+    novalidate
     @submit.prevent="submitHandler"
   >
     <input
       :value="newUrl || currentUrl"
       placeholder="Search or type URL"
+      type="url"
       spellcheck="false"
       @input="newUrl = $event.target.value"
       @focus="focusHandler"
