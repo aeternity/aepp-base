@@ -1,11 +1,14 @@
 <template>
   <form
     class="url-form"
+    novalidate
     @submit.prevent="submitHandler"
   >
     <input
       :value="newUrl || currentUrl"
       placeholder="Search or type URL"
+      type="url"
+      spellcheck="false"
       @input="newUrl = $event.target.value"
       @focus="focusHandler"
     >
@@ -20,6 +23,7 @@ export default {
   data: () => ({ newUrl: '' }),
   methods: {
     submitHandler() {
+      if (!this.newUrl) return;
       this.$emit('new-url');
       this.$router.push(`/${this.newUrl.replace(/^https?:\/\//i, '')}`);
       this.newUrl = '';
