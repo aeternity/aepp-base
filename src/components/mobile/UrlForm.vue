@@ -21,6 +21,7 @@ export default {
   data: () => ({ newUrl: '' }),
   methods: {
     submitHandler() {
+      if (!this.newUrl) return;
       this.$emit('new-url');
       this.$router.push(`/${this.newUrl.replace(/^https?:\//i, '')}`);
       this.newUrl = '';
