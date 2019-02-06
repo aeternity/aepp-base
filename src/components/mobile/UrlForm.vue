@@ -21,7 +21,7 @@ export default {
   methods: {
     submitHandler() {
       this.$emit('new-url');
-      this.$router.push(`/${this.newUrl.replace(/^https?:\//i, '')}`);
+      this.$router.push(`/${this.newUrl.replace(/^https?:\/\//i, '')}`);
       this.newUrl = '';
     },
     focusHandler({ target }) {
