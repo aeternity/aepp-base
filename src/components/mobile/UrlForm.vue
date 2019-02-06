@@ -6,6 +6,7 @@
     <input
       :value="newUrl || currentUrl"
       placeholder="Search or type URL"
+      spellcheck="false"
       @input="newUrl = $event.target.value"
       @focus="focusHandler"
     >
