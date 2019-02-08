@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import { Crypto } from '@aeternity/aepp-sdk';
+import { Crypto } from '@aeternity/aepp-sdk/es';
 import { mnemonicToSeed } from '@aeternity/bip39';
 import { generateHDWallet } from '@aeternity/hd-wallet/src';
 import AES from '../../lib/aes';
