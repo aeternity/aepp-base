@@ -12,7 +12,7 @@ import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFee
 registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
 
 if (process.env.IS_MOBILE_DEVICE) {
-  registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal, hidePage: true });
+  registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal });
   registerModal({ name: 'confirmContractCall', component: ConfirmContractCallModal, hidePage: true });
   registerModal({ name: 'confirmContractDeploy', component: ConfirmContractDeployModal, hidePage: true });
   registerModal({ name: 'confirmSign', component: ConfirmSignModal, hidePage: true });
