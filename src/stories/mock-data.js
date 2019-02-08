@@ -1,6 +1,6 @@
 import { times } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { Crypto } from '@aeternity/aepp-sdk';
+import { Crypto } from '@aeternity/aepp-sdk/es';
 
 export const address = 'ak_2swhLkgBPeeADxVTAVCJnZLY5NZtCFiM93JxsEaMuC59euuFRQ';
 

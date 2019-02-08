@@ -45,4 +45,5 @@ module.exports = {
     themeColor: '#f7296e',
     msTileColor: '#f7296e',
   },
+  transpileDependencies: ['@aeternity/aepp-sdk'],
 };

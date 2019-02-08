@@ -1,6 +1,6 @@
 import VeeValidate, { Validator } from 'vee-validate';
 import BigNumber from 'bignumber.js';
-import { Crypto } from '@aeternity/aepp-sdk';
+import { Crypto } from '@aeternity/aepp-sdk/es';
 import { validateMnemonic } from '@aeternity/bip39';
 import { toUrl } from './utils';
 

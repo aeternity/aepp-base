@@ -1,6 +1,6 @@
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import Ae from '@aeternity/ledger-app-api';
-import { Crypto } from '@aeternity/aepp-sdk';
+import { Crypto } from '@aeternity/aepp-sdk/es';
 
 export default async (store) => {
   const transport = await new TransportU2F();
