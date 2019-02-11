@@ -16,6 +16,7 @@ export default {
     followers: {},
     names: [],
     showAccountSwitcher: false,
+    stepIcon: '',
   },
 
   getters: {
@@ -65,6 +66,9 @@ export default {
     toggleAccountSwitcher(state) {
       state.showAccountSwitcher = !state.showAccountSwitcher;
     },
+    setStepIcon(state, icon = '') {
+      state.stepIcon = icon;
+    },
   },
 
   actions: {
@@ -95,11 +99,11 @@ export default {
     },
     signTransaction(
       {
-        state: { accounts }, dispatch, rootState: { epoch: { nodeNetworkId } },
+        state: { accounts }, dispatch, rootState: { sdk: { nodeNetworkId } },
       },
       { transaction, stepIcon },
     ) {
-      return dispatch('modals/confirmSpendTx', {
+      return dispatch('modals/confirmSpend', {
         ...transaction,
         stepIcon,
       }).then(async (fee) => {
