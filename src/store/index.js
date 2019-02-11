@@ -26,7 +26,8 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(({
-      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, customNetworks, mobile, desktop,
+      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, customNetworks, bookmarkedApps,
+      mobile, desktop,
     }) => ({
       migrations,
       ...process.env.IS_MOBILE_DEVICE ? {
@@ -35,6 +36,7 @@ const store = new Vuex.Store({
         selectedIdentityIdx,
         addressBook,
         customNetworks,
+        bookmarkedApps,
         mobile: {
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
@@ -75,6 +77,7 @@ const store = new Vuex.Store({
     apps: Object.keys(appsRegistry),
     addressBook: [],
     customNetworks: [],
+    bookmarkedApps: [],
   },
 
   getters: {
@@ -142,6 +145,13 @@ const store = new Vuex.Store({
     },
     removeNetwork(state, networkIdx) {
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
+    },
+    toggleAppBookmarking(state, host) {
+      if (state.bookmarkedApps.some(app => app.host === host)) {
+        state.bookmarkedApps = state.bookmarkedApps.filter(app => app.host !== host);
+        return;
+      }
+      state.bookmarkedApps.push({ host });
     },
   },
 

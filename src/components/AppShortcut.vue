@@ -13,12 +13,13 @@
 
 <script>
 import { AeLink } from '@aeternity/aepp-components-3';
+import { DEFAULT_ICON } from '../lib/appsRegistry';
 
 export default {
   components: { AeLink },
   props: {
     name: { type: String, required: true },
-    icon: { type: String, required: true },
+    icon: { type: String, default: DEFAULT_ICON },
   },
 };
 </script>

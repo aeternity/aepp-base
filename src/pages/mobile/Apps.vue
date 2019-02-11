@@ -9,10 +9,10 @@
 
     <div class="shortcuts">
       <app-shortcut
-        v-for="(app, idx) in aeternityApps"
+        v-for="(app, idx) in bookmarkedApps"
         :key="`app-shortcut-aeternity-app-${idx}`"
         v-bind="app"
-        :to="app.path"
+        :to="{ path: app.host }"
       />
     </div>
 
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { aeternityApps } from '../../lib/appsRegistry';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -63,6 +64,10 @@ export default {
   },
   data: () => ({
     aeternityApps,
+  }),
+  computed: mapState({
+    bookmarkedApps: ({ bookmarkedApps }) => bookmarkedApps
+      .map(app => ({ ...app, name: app.name || app.host })),
   }),
 };
 </script>
