@@ -126,7 +126,7 @@ export default [{
   },
 }, {
   name: 'receive',
-  path: '/receive',
+  path: '/transfer/receive',
   component: Receive,
   beforeEnter: checkLoggedIn(true),
   meta: {
@@ -134,7 +134,7 @@ export default [{
   },
 }, {
   name: 'send',
-  path: '/send',
+  path: '/transfer/send',
   component: Send,
   beforeEnter: checkLoggedIn(true),
   meta: {
@@ -142,7 +142,7 @@ export default [{
   },
 }, {
   name: 'send-to',
-  path: '/send/:to',
+  path: '/transfer/send/:to',
   component: SendAmount,
   beforeEnter: checkLoggedIn(true),
   props: true,
@@ -151,7 +151,7 @@ export default [{
   },
 }, {
   name: 'send-confirm',
-  path: '/send/:to/:amount',
+  path: '/transfer/send/:to/:amount',
   component: SendConfirm,
   beforeEnter: checkLoggedIn(true),
   props: true,
