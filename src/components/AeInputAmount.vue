@@ -8,6 +8,7 @@
       v-focus.lazy="autofocus"
       slot-scope="{ setFocus, id }"
       placeholder="0.0"
+      autocomplete="off"
       :value="value"
       v-bind="$attrs"
       type="number"
