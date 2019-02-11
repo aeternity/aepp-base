@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { sync } from 'vuex-router-sync';
 import Clipboard from 'v-clipboard';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
@@ -16,6 +17,7 @@ import store from './store';
 Vue.use(Clipboard);
 Vue.use(Router);
 Vue.use(VeeValidate);
+sync(store, router);
 
 if (process.env.NODE_ENV === 'development') {
   window.store = store;
