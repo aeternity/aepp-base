@@ -1,5 +1,5 @@
 <template>
-  <ae-link
+  <button-plain
     v-bind="$attrs"
     class="app-shortcut"
   >
@@ -8,15 +8,15 @@
       :alt="name"
     >
     {{ name }}
-  </ae-link>
+  </button-plain>
 </template>
 
 <script>
-import { AeLink } from '@aeternity/aepp-components-3';
 import { DEFAULT_ICON } from '../lib/appsRegistry';
+import ButtonPlain from './ButtonPlain.vue';
 
 export default {
-  components: { AeLink },
+  components: { ButtonPlain },
   props: {
     name: { type: String, required: true },
     icon: { type: String, default: DEFAULT_ICON },
@@ -30,10 +30,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .app-shortcut {
-  display: block;
   width: 80px;
-  text-decoration: none;
-  text-align: center;
   @extend %face-sans-s;
   font-weight: 500;
   color: $color-neutral-negative-3;
