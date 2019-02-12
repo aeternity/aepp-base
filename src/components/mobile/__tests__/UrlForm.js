@@ -4,10 +4,10 @@ import UrlForm from '../UrlForm.vue';
 describe('UrlForm', () => {
   [{
     typedAddress: 'example.com',
-    routerPath: '/example.com',
+    routerPath: '/browser/example.com',
   }, {
     typedAddress: 'https://example.com/test',
-    routerPath: '/example.com/test',
+    routerPath: '/browser/example.com/test',
   }].forEach(({ typedAddress, routerPath }) => it(
     `passes address "${typedAddress}" to router properly`,
     () => {

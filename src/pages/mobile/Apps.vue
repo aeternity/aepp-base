@@ -12,7 +12,7 @@
         v-for="(app, idx) in bookmarkedApps"
         :key="`app-shortcut-aeternity-app-${idx}`"
         v-bind="app"
-        :to="{ path: app.host }"
+        :to="{ name: 'app-browser', params: { path: app.host } }"
       />
     </div>
 
@@ -22,7 +22,7 @@
       <template v-for="(app, idx) in aeternityApps">
         <list-item
           :key="`list-item-aeternity-app-${idx}`"
-          :to="app.path"
+          :to="{ name: 'app-browser', params: { path: app.path } }"
           :title="app.name"
           :subtitle="app.path"
         >

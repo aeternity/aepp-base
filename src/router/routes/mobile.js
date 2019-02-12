@@ -8,6 +8,7 @@ import OnboardingSend from '../../pages/mobile/OnboardingSend.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
 import Apps from '../../pages/mobile/Apps.vue';
+import AppBrowser from '../../pages/mobile/AppBrowser.vue';
 import NewAccount from '../../pages/mobile/NewAccount.vue';
 import NewAccountCreate from '../../pages/mobile/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/mobile/NewAccountConfirm.vue';
@@ -101,8 +102,16 @@ export default [{
   props: true,
 }, {
   name: 'apps',
-  path: '/apps',
+  path: '/browser',
   component: Apps,
+  beforeEnter: checkLoggedIn(false),
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'app-browser',
+  path: '/browser/:path+',
+  component: AppBrowser,
   beforeEnter: checkLoggedIn(false),
   meta: {
     displayFooter: true,
