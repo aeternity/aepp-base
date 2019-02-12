@@ -1,16 +1,15 @@
 import BigNumber from 'bignumber.js';
+import { get } from 'lodash-es';
 import {
   Ae, Transaction, Contract, EpochChain, EpochContract, EpochOracle, Crypto, TxBuilder,
 } from '@aeternity/aepp-sdk/es';
 import Rpc from '@aeternity/aepp-sdk/es/rpc/server';
 import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
 import { MAGNITUDE } from '../../lib/constants';
-import { appsRegistry } from '../../lib/appsRegistry';
 
 export default store => store.watch(
   (state, { currentNetwork }) => currentNetwork.url,
   async (url) => {
-    const appsPermissions = {};
     const sign = data => Crypto.sign(
       data,
       store.state.mobile.accounts[store.getters.activeIdentity.address].secretKey,
@@ -27,13 +26,8 @@ export default store => store.watch(
             ...methods
               .map(m => [m, ({ params, origin }) => {
                 const { host } = new URL(origin);
-                const app = Object.entries(appsRegistry).find(([, a]) => a.path === host);
-                const appId = app ? app[0] : host;
-                appsPermissions[appId] = appsPermissions[appId] || {};
-                return this[m](...params, {
-                  appName: app ? app[1].name : host,
-                  appPermissions: appsPermissions[appId],
-                });
+                const app = store.getters.getBookmarkedApp(host) || { host };
+                return this[m](...params, { app });
               }])
               .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
             ...this.rpcMethods,
@@ -42,11 +36,44 @@ export default store => store.watch(
         methods: {
           async address(options) {
             if (options) {
-              const { appName, appPermissions } = options;
-              if (!appPermissions.address) {
-                await store.dispatch('modals/confirmAccountAccess', { appName });
+              const { app } = options;
+              const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
+              if (!accessToAccounts.includes(store.getters.activeIdentity.address)) {
+                const promise = store.dispatch(
+                  'modals/confirmAccountAccess',
+                  { appName: app.name || app.host },
+                );
+                const { route: initialRoute } = store.state;
+                const unsubscribe = store.watch(
+                  ({ route }, { activeIdentity: { address } }) => ({ route, address }),
+                  ({ route, address }) => {
+                    if (accessToAccounts.includes(address) || route !== initialRoute) {
+                      promise.cancel();
+                    }
+                  },
+                );
+
+                try {
+                  await Promise.race([
+                    promise,
+                    new Promise((resolve, reject) => promise.finally(() => {
+                      if (!promise.isCancelled()) return;
+                      if (initialRoute !== store.state.route) {
+                        reject(new Error('User navigated outside'));
+                      } else if (accessToAccounts.includes(store.getters.activeIdentity.address)) {
+                        resolve();
+                      } else reject(new Error('Unexpected state'));
+                    })),
+                  ]);
+                } finally {
+                  unsubscribe();
+                }
+
+                const { address: accountAddress } = store.getters.activeIdentity;
+                if (!accessToAccounts.includes(accountAddress)) {
+                  store.commit('grantAccessToAccount', { appHost: app.host, accountAddress });
+                }
               }
-              appPermissions.address = true;
             }
             return store.getters.activeIdentity.address;
           },

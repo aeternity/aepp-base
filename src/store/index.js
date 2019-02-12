@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
+import { update } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { spendTxNative } from '@aeternity/aepp-sdk/es/tx/js';
 import { appsRegistry } from '../lib/appsRegistry';
@@ -26,7 +27,8 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(({
-      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, customNetworks, mobile, desktop,
+      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, customNetworks, bookmarkedApps,
+      mobile, desktop,
     }) => ({
       migrations,
       ...process.env.IS_MOBILE_DEVICE ? {
@@ -35,6 +37,7 @@ const store = new Vuex.Store({
         selectedIdentityIdx,
         addressBook,
         customNetworks,
+        bookmarkedApps,
         mobile: {
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
@@ -75,6 +78,7 @@ const store = new Vuex.Store({
     apps: Object.keys(appsRegistry),
     addressBook: [],
     customNetworks: [],
+    bookmarkedApps: [],
   },
 
   getters: {
@@ -94,6 +98,8 @@ const store = new Vuex.Store({
       name: rpcUrl,
       url: rpcUrl,
     },
+    getBookmarkedApp: ({ bookmarkedApps }) => appHost => bookmarkedApps
+      .find(({ host }) => host === appHost),
   },
 
   mutations: {
@@ -142,6 +148,28 @@ const store = new Vuex.Store({
     },
     removeNetwork(state, networkIdx) {
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
+    },
+    toggleAppBookmarking(state, host) {
+      if (store.getters.getBookmarkedApp(host)) {
+        state.bookmarkedApps = state.bookmarkedApps.filter(app => app.host !== host);
+        return;
+      }
+      state.bookmarkedApps.push({ host });
+    },
+    grantAccessToAccount(state, { appHost, accountAddress }) {
+      if (!store.getters.getBookmarkedApp(appHost)) {
+        store.commit('toggleAppBookmarking', appHost);
+      }
+
+      const app = store.getters.getBookmarkedApp(appHost);
+      update(
+        app,
+        'permissions.accessToAccounts',
+        (arr = []) => {
+          arr.push(accountAddress);
+          return arr;
+        },
+      );
     },
   },
 

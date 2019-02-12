@@ -4,7 +4,7 @@ import addressesIcon from '../assets/icons/aepps/addresses.svg';
 import blockchainExplorerIcon from '../assets/icons/aepps/blockchain-explorer.svg';
 import tokenMigrationIcon from '../assets/icons/aepps/token-migration.svg';
 
-export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
+export { default as DEFAULT_ICON } from '../assets/icons/aepps/blockchain-explorer.svg';
 
 export const appsRegistry = {
   2: {

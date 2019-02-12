@@ -6,8 +6,8 @@
         @new-url="newUrlHandler"
       />
 
-      <button-plain>
-        <ae-icon name="bookmark" />
+      <button-plain @click="toggleBookmarking">
+        <ae-icon :name="bookmarked ? 'bookmark-full' : 'bookmark'" />
       </button-plain>
       <button-plain :to="{ name: 'apps' }">
         <ae-icon name="home" />
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import UrlForm from '../components/mobile/UrlForm.vue';
 import ButtonPlain from '../components/ButtonPlain.vue';
@@ -44,11 +45,22 @@ export default {
     url() {
       return `http${window.location.protocol === 'https:' ? 's' : ''}:/${this.$route.fullPath}`;
     },
+    host() {
+      return new URL(this.url).host;
+    },
+    ...mapState({
+      bookmarked({ bookmarkedApps }) {
+        return bookmarkedApps.some(({ host }) => host === this.host);
+      },
+    }),
   },
   methods: {
     newUrlHandler() {
       this.loading = true;
       this.$refs.iframe.focus();
+    },
+    toggleBookmarking() {
+      this.$store.commit('toggleAppBookmarking', this.host);
     },
   },
 };
