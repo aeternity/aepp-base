@@ -1,6 +1,5 @@
 import { merge } from 'lodash-es';
 import { checkLoggedIn } from '../utils';
-import AppBrowser from '../../pages/AppBrowser.vue';
 import AddApp from '../../pages/AddApp.vue';
 import AddressBook from '../../pages/AddressBook.vue';
 import AddressBookNew from '../../pages/AddressBookNew.vue';
@@ -27,9 +26,4 @@ export default [{
   component: AddressBookChoose,
   beforeEnter: checkLoggedIn(true),
   props: true,
-}, {
-  name: 'app-browser',
-  path: '/:name/:path*',
-  component: AppBrowser,
-  beforeEnter: checkLoggedIn(false),
 }].map(route => merge(route, { meta: { displayFooter: true } }));

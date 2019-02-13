@@ -27,9 +27,9 @@
 <script>
 import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
-import UrlForm from '../components/mobile/UrlForm.vue';
-import ButtonPlain from '../components/ButtonPlain.vue';
-import ProgressFake from '../components/ProgressFake.vue';
+import UrlForm from '../../components/mobile/UrlForm.vue';
+import ButtonPlain from '../../components/ButtonPlain.vue';
+import ProgressFake from '../../components/ProgressFake.vue';
 
 export default {
   components: {
@@ -43,7 +43,8 @@ export default {
   },
   computed: {
     url() {
-      return `http${window.location.protocol === 'https:' ? 's' : ''}:/${this.$route.fullPath}`;
+      const path = this.$route.fullPath.replace('/browser/', '');
+      return `http${window.location.protocol === 'https:' ? 's' : ''}://${path}`;
     },
     host() {
       return new URL(this.url).host;
