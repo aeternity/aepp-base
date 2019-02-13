@@ -17,6 +17,7 @@ export default {
     names: [],
     showAccountSwitcher: false,
     stepIcon: '',
+    browserPath: '',
   },
 
   getters: {
@@ -68,6 +69,9 @@ export default {
     },
     setStepIcon(state, icon = '') {
       state.stepIcon = icon;
+    },
+    setBrowserPath(state, browserPath) {
+      state.browserPath = browserPath;
     },
   },
 

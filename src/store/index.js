@@ -20,6 +20,7 @@ import decryptAccounts from './plugins/decryptAccounts';
 import initSdk from './plugins/initSdk';
 import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
+import browserPathTracker from './plugins/browserPathTracker';
 
 Vue.use(Vuex);
 
@@ -59,7 +60,7 @@ const store = new Vuex.Store({
     modals,
     registerServiceWorker,
     ...process.env.IS_MOBILE_DEVICE
-      ? [decryptAccounts, notificationOnRemoteConnection] : [ledgerConnection],
+      ? [decryptAccounts, notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
   ],
 
   modules: process.env.IS_MOBILE_DEVICE ? { mobile: mobileModule } : { desktop: desktopModule },

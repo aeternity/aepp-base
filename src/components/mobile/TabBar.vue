@@ -1,7 +1,7 @@
 <template>
   <div class="tab-bar">
     <div class="wrapper">
-      <button-plain :to="{ name: 'apps' }">
+      <button-plain :to="browserPath || { name: 'apps' }">
         <ae-icon name="grid" />
         Browser
       </button-plain>
@@ -43,6 +43,7 @@ export default {
     ...mapGetters(['activeIdentity']),
     ...mapState({
       showAccountSwitcher: ({ mobile }) => mobile.showAccountSwitcher,
+      browserPath: ({ mobile }) => mobile.browserPath,
     }),
   },
   methods: mapMutations(['toggleAccountSwitcher']),
