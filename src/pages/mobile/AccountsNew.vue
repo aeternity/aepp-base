@@ -18,6 +18,7 @@
           v-model="newAccountName"
           v-validate="'required'"
           autofocus
+          autocomplete="off"
           :error="errors.has('newAccountName')"
           :footer="errors.first('newAccountName')"
           name="newAccountName"
