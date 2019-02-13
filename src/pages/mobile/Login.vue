@@ -16,10 +16,12 @@
       :id="_uid"
       @submit.prevent="unlockSavedKeystore"
     >
+      <password-purpose />
       <ae-input-password
         v-model="password"
         v-validate="'required|min:4'"
         autofocus
+        autocomplete="current-password"
         :error="errors.has('password') || wrongPassword"
         name="password"
         @input="wrongPassword = false"
@@ -59,11 +61,12 @@ import wavingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f44b.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
+import PasswordPurpose from '../../components/mobile/PasswordPurpose.vue';
 import AeInputPassword from '../../components/AeInputPassword.vue';
 
 export default {
   components: {
-    MobilePage, AeInputPassword, AeButton, Guide,
+    MobilePage, PasswordPurpose, AeInputPassword, AeButton, Guide,
   },
   data() {
     return {
