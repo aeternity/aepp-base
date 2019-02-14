@@ -57,7 +57,7 @@ export default {
     width: rem(23px);
   }
 
-  .ae-identicon {
+  img, .ae-identicon {
     vertical-align: middle;
   }
 

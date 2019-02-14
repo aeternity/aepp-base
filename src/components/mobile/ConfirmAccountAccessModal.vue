@@ -1,7 +1,10 @@
 <template>
   <ae-modal class="confirm-account-access-modal">
     <guide>
-      {{ appName }}
+      <img
+        v-if="app.icon"
+        :src="app.icon"
+      > {{ app.name }}
       <br>requests access to
       <br><ae-identicon
         :address="activeIdentity.address"
@@ -51,11 +54,16 @@ export default {
     AeButton,
   },
   props: {
-    appName: { type: String, required: true },
+    appHost: { type: String, required: true },
     resolve: { type: Function, required: true },
     reject: { type: Function, required: true },
   },
-  computed: mapGetters(['activeIdentity']),
+  computed: {
+    ...mapGetters(['activeIdentity']),
+    app() {
+      return this.$store.getters.getAppMetadata(this.appHost);
+    },
+  },
   methods: {
     denyHandler() {
       this.reject(new Error('Rejected by user'));

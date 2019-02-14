@@ -8,7 +8,7 @@ import ConfirmContractDeployModal from '../../components/mobile/ConfirmContractD
 import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendModal from '../../components/mobile/ConfirmSpendModal.vue';
 import {
-  account, accounts, contractAddress, callData, code, amount, fee, minFee,
+  account, accounts, contractAddress, callData, code, amount, fee, minFee, appIcon,
 } from '../mock-data';
 
 const base = {
@@ -20,6 +20,10 @@ const base = {
     state: { mobile: { stepIcon: '³⁄₃' } },
     getters: {
       activeIdentity: () => account,
+      getAppMetadata: () => host => ({
+        name: `App on ${host}`,
+        icon: appIcon,
+      }),
     },
   }),
 };
@@ -34,7 +38,7 @@ storiesOf('mobile ConfirmModal', module)
     components: { ConfirmAccountAccessModal },
     template: `
       <confirm-account-access-modal
-        app-name="Test app"
+        app-host="test-host"
         :resolve="resolve"
         :reject="reject"
       />`,
