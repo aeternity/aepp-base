@@ -4,5 +4,5 @@
     type="text"
     autocomplete="username"
     value="Master account encryption"
-  />
+  >
 </template>
