@@ -6,8 +6,8 @@
     <guide
       fill="primary"
     >
-      <em>Hello!</em><img :src="wavingHandEmoji">
-      <mark>Login</mark> to æternity
+      <em>Hello!</em>{{ ' ' }}<img :src="wavingHandEmoji">
+      {{ ' ' }}<mark>Login</mark> to æternity
       <br>with password or <mark>recover</mark>
       <br><mark>your account</mark> with phrase
     </guide>

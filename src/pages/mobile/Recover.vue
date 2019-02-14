@@ -8,7 +8,7 @@
       fill="primary"
       icon="½"
     >
-      Recover<img :src="dizzySymbolEmoji">your
+      Recover <img :src="dizzySymbolEmoji"> your
       <br><em>master account.</em>
       <br>You will need your
       <br><strong>recovery phrase</strong>, that

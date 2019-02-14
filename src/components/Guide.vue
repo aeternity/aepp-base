@@ -54,7 +54,6 @@ export default {
   }
 
   img {
-    margin: 0 rem(5px);
     width: rem(23px);
   }
 
