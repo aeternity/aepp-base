@@ -41,7 +41,7 @@ export default store => store.watch(
               if (!accessToAccounts.includes(store.getters.activeIdentity.address)) {
                 const promise = store.dispatch(
                   'modals/confirmAccountAccess',
-                  { appName: app.name || app.host },
+                  { appHost: app.host },
                 );
                 const { route: initialRoute } = store.state;
                 const unsubscribe = store.watch(

@@ -1,3 +1,11 @@
+const packagesToTranspile = [
+  'lodash-es',
+  'emoji-datasource-apple',
+  '@aeternity/aepp-sdk',
+  '@aeternity/hd-wallet',
+  'register-service-worker',
+];
+
 module.exports = {
   setupFiles: ['jest-canvas-mock'],
   moduleFileExtensions: [
@@ -12,7 +20,7 @@ module.exports = {
     '^.+\\.jsx?$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(lodash-es|emoji-datasource-apple)/)',
+    `node_modules/(?!(${packagesToTranspile.join('|')})/)`,
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
