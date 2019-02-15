@@ -9,7 +9,7 @@
       fill="primary"
       icon="⅔"
     >
-      <em>Confirm<img :src="fingersCrossedEmoji">your phrase</em>
+      <em>Confirm <img :src="fingersCrossedEmoji"> your phrase</em>
       <br>Tap the words below
       <br>to compose your phrase,
       <br><mark>note</mark> correct order!

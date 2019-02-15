@@ -34,6 +34,7 @@ export default {
   @extend %face-sans-s;
   font-weight: 500;
   color: $color-neutral-negative-3;
+  overflow-wrap: break-word;
 
   img {
     width: rem(75px);

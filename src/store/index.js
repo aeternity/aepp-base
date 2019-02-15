@@ -3,7 +3,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
-import { update } from 'lodash-es';
+import { update, flatMap } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { spendTxNative } from '@aeternity/aepp-sdk/es/tx/js';
 import { appsRegistry } from '../lib/appsRegistry';
@@ -28,7 +28,8 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(({
-      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, customNetworks, bookmarkedApps,
+      migrations, apps, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
+      bookmarkedApps, cachedAppManifests,
       mobile, desktop,
     }) => ({
       migrations,
@@ -39,6 +40,7 @@ const store = new Vuex.Store({
         addressBook,
         customNetworks,
         bookmarkedApps,
+        cachedAppManifests,
         mobile: {
           keystore: mobile.keystore,
           accountCount: mobile.accountCount,
@@ -80,6 +82,7 @@ const store = new Vuex.Store({
     addressBook: [],
     customNetworks: [],
     bookmarkedApps: [],
+    cachedAppManifests: {},
   },
 
   getters: {
@@ -101,6 +104,44 @@ const store = new Vuex.Store({
     },
     getBookmarkedApp: ({ bookmarkedApps }) => appHost => bookmarkedApps
       .find(({ host }) => host === appHost),
+    getAppMetadata: ({ cachedAppManifests }) => (host) => {
+      const manifest = cachedAppManifests[host];
+
+      if (typeof manifest !== 'object') {
+        if (manifest !== 'fetching') {
+          store.commit('setCachedAppManifest', {
+            host,
+            manifest: 'fetching',
+          });
+          store.dispatch('fetchAppManifest', host)
+            .then(fetchedManifest => store.commit('setCachedAppManifest', {
+              host,
+              manifest: fetchedManifest,
+            }));
+        }
+        return { name: host };
+      }
+
+      const metadata = {
+        name: manifest.short_name || manifest.name || host,
+      };
+
+      const icons = flatMap(
+        manifest.icons || [],
+        ({ sizes = '', ...icon }) => sizes.split(' ').map(size => ({ ...icon, size })),
+      )
+        .map(({ size, ...icon }) => ({ ...icon, side: Math.max(...size.split('x')) }));
+      const icon = icons.reduce((p, i) => {
+        if (!p) return i || p;
+        if (p.side < 75) return i.side > p.side ? i : p;
+        return i.side > 75 && i.side < p.side ? i : p;
+      }, null);
+      if (icon) {
+        metadata.icon = new URL(icon.src, `http://${host}`).toString();
+      }
+
+      return metadata;
+    },
   },
 
   mutations: {
@@ -172,6 +213,9 @@ const store = new Vuex.Store({
         },
       );
     },
+    setCachedAppManifest({ cachedAppManifests }, { host, manifest }) {
+      Vue.set(cachedAppManifests, host, manifest);
+    },
   },
 
   actions: {
@@ -225,6 +269,27 @@ const store = new Vuex.Store({
         amount: transaction.amount.shiftedBy(MAGNITUDE),
       }).tx;
       return Crypto.decodeBase64Check(spendTx.split('_')[1]);
+    },
+    async fetchAppManifest(_, host) {
+      const fetchTextCors = async url => (
+        await fetch(`https://cors-anywhere.herokuapp.com/${url}`)).text();
+      try {
+        const appUrl = new URL(`http://${host}`);
+        if (appUrl.hostname === 'localhost') return {};
+
+        const parser = new DOMParser();
+        const document = parser.parseFromString(await fetchTextCors(appUrl), 'text/html');
+        const base = document.createElement('base');
+        base.href = appUrl;
+        document.head.appendChild(base);
+        const manifestUrl = document.querySelector('link[rel=manifest]').href;
+
+        const manifest = JSON.parse(await fetchTextCors(manifestUrl));
+        manifest.fetchedAt = new Date().toJSON();
+        return manifest;
+      } catch (e) {
+        return {};
+      }
     },
   },
 });

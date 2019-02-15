@@ -66,8 +66,8 @@ export default {
     aeternityApps,
   }),
   computed: mapState({
-    bookmarkedApps: ({ bookmarkedApps }) => bookmarkedApps
-      .map(app => ({ ...app, name: app.name || app.host })),
+    bookmarkedApps: ({ bookmarkedApps }, { getAppMetadata }) => bookmarkedApps
+      .map(app => ({ ...app, ...getAppMetadata(app.host) })),
   }),
 };
 </script>

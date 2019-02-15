@@ -8,7 +8,7 @@
       fill="primary"
       icon="⅓"
     >
-      Set up<img :src="sparklesEmoji">your
+      Set up <img :src="sparklesEmoji"> your
           <br><em>master account.</em>
           <br>We’re about to create
           <br>a recovery phrase,

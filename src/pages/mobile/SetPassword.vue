@@ -6,7 +6,7 @@
     >
       You confirmed your
                     <br>phrase correctly! Now
-                    <br><mark>choose a<img :src="keyEmoji">password</mark>
+                    <br><mark>choose a <img :src="keyEmoji"> password</mark>
                     <br>and confirm.
     </guide>
 

@@ -11,7 +11,7 @@
     >
       <em>
         Carefully keep this
-        <br>phrase<img :src="keyEmoji">safe!
+        <br>phrase <img :src="keyEmoji"> safe!
       </em>
       <br>Write these 12 words
       <br>down and keep them

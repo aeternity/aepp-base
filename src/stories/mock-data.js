@@ -3,6 +3,8 @@ import BigNumber from 'bignumber.js';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { MAGNITUDE } from '../lib/constants';
 
+export { default as appIcon } from '../assets/icons/aepps/blockchain-explorer.svg';
+
 export const address = 'ak_2swhLkgBPeeADxVTAVCJnZLY5NZtCFiM93JxsEaMuC59euuFRQ';
 export const contractAddress = 'ct_2ZkyFFLRwooiSEzZg9BVh43mKZJbxoUHNkEVhT336pM5vVfNQ1';
 export const callData = 'cb_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBo8mdjOP9QiDmrpHdJ7/qL6H7yhPIH+z2ZmHAc1TiHxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSgG2A';
