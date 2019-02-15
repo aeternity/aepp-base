@@ -4,7 +4,12 @@
     right-button-icon-name="close"
     title="Recover Account"
   >
-    <guide icon="½">
+    <guide>
+      <ae-fraction
+        slot="icon"
+        numerator="1"
+        denominator="2"
+      />
       Enter <img :src="dizzySymbolEmoji"> your <strong>recovery</strong>
       <br><strong>phrase</strong>.
       <br>The one you wrote
@@ -42,12 +47,13 @@ import { mapState } from 'vuex';
 import dizzySymbolEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
+import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
 import AeInputMnemonic from '../../components/AeInputMnemonic.vue';
 
 export default {
   components: {
-    MobilePage, Guide, AeButton, AeInputMnemonic,
+    MobilePage, Guide, AeFraction, AeButton, AeInputMnemonic,
   },
   data() {
     return {

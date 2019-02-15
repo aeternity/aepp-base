@@ -5,28 +5,36 @@
         How to connect the <em>Base æpp</em>
       </guide>
       <div class="steps">
-        <guide
-          size="small"
-          icon="¼"
-        >
+        <guide size="small">
+          <ae-fraction
+            slot="icon"
+            numerator="1"
+            denominator="4"
+          />
           Open the Base æpp on your mobile device
         </guide>
-        <guide
-          size="small"
-          icon="½"
-        >
+        <guide size="small">
+          <ae-fraction
+            slot="icon"
+            numerator="2"
+            denominator="4"
+          />
           Go to Settings <ae-icon name="settings" /> in the tabbar
         </guide>
-        <guide
-          size="small"
-          icon="¾"
-        >
+        <guide size="small">
+          <ae-fraction
+            slot="icon"
+            numerator="3"
+            denominator="4"
+          />
           Click on Remote Connections <ae-icon name="device" /> and add a new one
         </guide>
-        <guide
-          size="small"
-          icon="1"
-        >
+        <guide size="small">
+          <ae-fraction
+            slot="icon"
+            numerator="4"
+            denominator="4"
+          />
           Scan the QR code below
         </guide>
       </div>
@@ -41,16 +49,20 @@
         How to connect the <em>Ledger</em>
       </guide>
       <div class="steps">
-        <guide
-          size="small"
-          icon="½"
-        >
+        <guide size="small">
+          <ae-fraction
+            slot="icon"
+            numerator="1"
+            denominator="2"
+          />
           Connect the Ledger via USB and unlock on the device
         </guide>
-        <guide
-          size="small"
-          icon="1"
-        >
+        <guide size="small">
+          <ae-fraction
+            slot="icon"
+            numerator="2"
+            denominator="2"
+          />
           Open the æternity app on the Ledger
         </guide>
       </div>
@@ -63,9 +75,12 @@ import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../Guide.vue';
 import AeQrCode from '../AeQrCode.vue';
+import AeFraction from '../AeFraction.vue';
 
 export default {
-  components: { AeIcon, Guide, AeQrCode },
+  components: {
+    AeIcon, Guide, AeQrCode, AeFraction,
+  },
   props: {
     forLedger: { type: Boolean, default: false },
   },
@@ -82,24 +97,20 @@ export default {
 .connect-guide {
   margin: rem(60px) rem(40px);
 
-  .steps .guide {
-    margin-left: rem(40px);
+  .steps .guide .ae-icon {
+    width: rem(23px);
+    height: rem(23px);
+    border-radius: rem(5px);
+    font-size: rem(15px);
+    vertical-align: middle;
+    color: $color-neutral-positive-2;
 
-    .ae-icon {
-      width: rem(23px);
-      height: rem(23px);
-      border-radius: rem(5px);
-      font-size: rem(15px);
-      vertical-align: middle;
-      color: $color-neutral-positive-2;
+    &-settings {
+      background-color: $color-neutral-minimum;
+    }
 
-      &-settings {
-        background-color: $color-neutral-minimum;
-      }
-
-      &-device {
-        background-color: $color-alternative;
-      }
+    &-device {
+      background-color: $color-alternative;
     }
   }
 

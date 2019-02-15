@@ -5,7 +5,12 @@
     class="new-account-confirm"
     title="New Account"
   >
-    <guide icon="⅔">
+    <guide>
+      <ae-fraction
+        slot="icon"
+        numerator="3"
+        denominator="4"
+      />
       <em>Tap the words</em> in the
       <br>correct order to recreate
       <br>your phrase.
@@ -60,6 +65,7 @@ import { shuffle } from 'lodash-es';
 import fingersCrossedEmojiPath from 'emoji-datasource-apple/img/apple/64/1f91e.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
+import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
 import ButtonMnemonicWord from '../../components/mobile/ButtonMnemonicWord.vue';
 import AeInputWrapper from '../../components/AeInputWrapper.vue';
@@ -69,6 +75,7 @@ export default {
     MobilePage,
     AeButton,
     Guide,
+    AeFraction,
     AeInputWrapper,
     ButtonMnemonicWord,
   },
