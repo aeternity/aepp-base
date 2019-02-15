@@ -2,18 +2,17 @@
   <mobile-page
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
-    title="Recover account"
+    title="Recover Account"
   >
     <guide
       fill="primary"
       icon="½"
     >
-      Recover <img :src="dizzySymbolEmoji"> your
-      <br><em>master account.</em>
-      <br>You will need your
-      <br><strong>recovery phrase</strong>, that
-      <br>you have written down
-      <br>during the setup.
+      Enter <img :src="dizzySymbolEmoji"> your <strong>recovery</strong>
+      <br><strong>phrase</strong>.
+      <br>The one you wrote
+      <br>down during <mark>account</mark>
+      <br><mark>creation</mark>.
     </guide>
 
     <form
@@ -36,7 +35,7 @@
       :form="_uid"
       fill="secondary"
     >
-      Recover with Passphrase
+      Recover account
     </ae-button>
   </mobile-page>
 </template>

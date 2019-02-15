@@ -7,11 +7,8 @@
   >
     <template slot="header">
       <guide fill="primary">
-        <em>Receive</em> AE
-        <div class="note">
-          Let the sender scan this QR code
-          <br>to obtain your address
-        </div>
+        <em>Let others scan</em>
+        <br>your address
       </guide>
 
       <ae-account-reverse

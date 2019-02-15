@@ -5,9 +5,8 @@
       <em>Base aepp</em>
       <br>æternity begins here
       <div class="note">
-        Send & receive AE from your
-        <br>wallet, manage accounts and
-        <br>explore æpps.
+        Send & receive AE, explore æpps
+        <br>and manage accounts.
       </div>
     </guide>
   </div>

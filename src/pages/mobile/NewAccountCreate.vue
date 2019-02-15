@@ -9,15 +9,13 @@
       fill="primary"
       icon="⅓"
     >
-      <em>
-        Carefully keep this
-        <br>phrase <img :src="keyEmoji"> safe!
-      </em>
-      <br>Write these 12 words
-      <br>down and keep them
-      <br><strong>in a safe place</strong>.You need
-      <br>them to <mark>recover</mark> your
-      <br>account in the future.
+      You need the <em>recovery</em>
+               <br><em>phrase</em> in case you
+               <br>forget your <strong>password</strong>.
+               <br>
+               <br>Now go ahead, <mark>write it</mark>
+               <br><mark>down</mark> in the correct
+               <br>order.
     </guide>
     <p class="mnemonic">
       {{ seed }}
@@ -28,7 +26,7 @@
       fill="secondary"
       @click="createSeed"
     >
-      Next
+      I wrote it down
     </ae-button>
 
     <div

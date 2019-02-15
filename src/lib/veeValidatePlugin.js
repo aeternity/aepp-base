@@ -31,7 +31,7 @@ export default {
           not_in: () => 'This field must be a valid value',
           decimal: (field, [decimals = '*'] = []) => `This field must be numeric and may contain ${!decimals || decimals === '*' ? '' : decimals} decimal points`,
           url_http: () => 'This field is not a valid HTTP(S) URL',
-          confirmed: () => 'The passwords do not match',
+          confirmed: () => 'Passwords don\'t match, try again',
           address: () => 'Invalid AE Address',
           mnemonic: () => 'Invalid recovery phrase',
         },

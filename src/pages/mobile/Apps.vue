@@ -7,14 +7,18 @@
 
     <url-form @input="searchTerm = $event" />
 
-    <div class="shortcuts">
-      <app-shortcut
-        v-for="(app, idx) in bookmarkedAppsToShow"
-        :key="`app-shortcut-aeternity-app-${idx}`"
-        v-bind="app"
-        :to="{ name: 'app-browser', params: { path: app.host } }"
-      />
-    </div>
+    <template v-if="bookmarkedApps.length">
+      <guide>My æpps</guide>
+
+      <div class="shortcuts">
+        <app-shortcut
+          v-for="(app, idx) in bookmarkedAppsToShow"
+          :key="`app-shortcut-aeternity-app-${idx}`"
+          v-bind="app"
+          :to="{ name: 'app-browser', params: { path: app.host } }"
+        />
+      </div>
+    </template>
 
     <guide>æternity æpps</guide>
 
@@ -98,7 +102,7 @@ export default {
   }
 
   .shortcuts {
-    margin: rem(40px) rem(-10px);
+    margin: rem(20px) rem(-10px);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
     grid-gap: 30px 10px;

@@ -5,7 +5,7 @@
       <em>Send & receive AE</em>
       <br>effortlessly
       <div class="note">
-        Transfer to others or
+        Transfer to contacts and
         <br>subaccounts. Receive by
         <br>sharing your address.
       </div>

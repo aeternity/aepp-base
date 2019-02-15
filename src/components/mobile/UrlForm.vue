@@ -6,7 +6,7 @@
   >
     <input
       :value="newUrl || currentUrl"
-      placeholder="Search or type URL"
+      placeholder="Search aepps or type any URL"
       type="url"
       spellcheck="false"
       @input="inputHandler"
