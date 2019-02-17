@@ -2,13 +2,11 @@
   <div class="settings">
     <guide><em>Settings</em></guide>
 
-    <note>
-      Now you can only switch between networks,
-      other settings will be added as soon as we add features.
-    </note>
-
     <ae-card fill="maximum">
-      <list-item title="Network">
+      <list-item
+        title="Network"
+        :subtitle="networkId ? `Network ID ${networkId}` : ''"
+      >
         <ae-icon
           slot="icon"
           fill="secondary"
@@ -20,7 +18,7 @@
           class="value"
         >
           {{ currentNetwork.name }}
-          <button-plain @click="showNetworkDropdown = true">
+          <button-plain @click="networkMode = 'switch'">
             <ae-icon
               ref="icon"
               name="left-more"
@@ -31,34 +29,33 @@
     </ae-card>
 
     <ae-popover
-      :anchor="showNetworkDropdown ? $refs.icon : null"
-      @close="showNetworkDropdown = false"
+      :anchor="networkMode ? $refs.icon : null"
+      @close="closePopover"
     >
-      <list-item
-        v-for="network in networks"
-        :key="network.url"
-        :title="network.name"
-      >
-        <ae-radio
-          slot="right"
-          :checked="network === currentNetwork"
-          @change="setRPCUrl(network.url)"
-        />
-      </list-item>
+      <network-switcher
+        v-if="networkMode === 'switch'"
+        @network-add-button-click="networkMode = 'add'"
+        @switch="networkMode = false"
+      />
+      <network-add
+        v-else-if="networkMode === 'add'"
+        @finally="networkMode = 'switch'"
+      />
     </ae-popover>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { defer } from 'lodash-es';
+import { mapState, mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
-import Note from '../../components/Note.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
-import AeRadio from '../../components/AeRadio.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
+import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
+import NetworkAdd from '../../components/NetworkAdd.vue';
 
 export default {
   components: {
@@ -66,16 +63,25 @@ export default {
     AePopover,
     AeCard,
     Guide,
-    Note,
     ListItem,
-    AeRadio,
     ButtonPlain,
+    NetworkSwitcher,
+    NetworkAdd,
   },
   data: () => ({
-    showNetworkDropdown: false,
+    networkMode: false,
   }),
-  computed: mapGetters(['networks', 'currentNetwork']),
-  methods: mapMutations(['setRPCUrl']),
+  computed: {
+    ...mapGetters(['currentNetwork']),
+    ...mapState({
+      networkId: state => state.sdk && state.sdk.nodeNetworkId,
+    }),
+  },
+  methods: {
+    closePopover() {
+      defer(() => { this.networkMode = false; });
+    },
+  },
 };
 </script>
 
