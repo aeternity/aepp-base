@@ -112,6 +112,7 @@ export default {
     setAddress(newAddress) {
       this.$children[0].$el.querySelector('textarea').value = newAddress;
       this.$children[0].handleInput();
+      this.showAccountsDropdown = false;
     },
     async readValueFromQrCode() {
       this.setAddress(await this.$store.dispatch('modals/readQrCode', { title: 'Scan AE Address' }));
