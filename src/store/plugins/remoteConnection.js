@@ -22,8 +22,6 @@ export default (store) => {
     const socket = io(BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
-    socket.on('exception', console.error);
-
     let lastReceivedState;
     const broadcast = new RpcPeer(message => socket.emit('message-to-all', message), {
       setState(state) {
