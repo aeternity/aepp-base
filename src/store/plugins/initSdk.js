@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { get } from 'lodash-es';
 import {
-  Ae, Transaction, Contract, EpochChain, EpochContract, EpochOracle, Crypto, TxBuilder,
+  Ae, ChainNode, Transaction, Contract, Crypto, TxBuilder,
 } from '@aeternity/aepp-sdk/es';
 import Rpc from '@aeternity/aepp-sdk/es/rpc/server';
 import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
@@ -16,7 +16,7 @@ export default store => store.watch(
     );
 
     const sdk = await Ae.compose(
-      Transaction, Contract, EpochChain, EpochContract, EpochOracle, Rpc, {
+      ChainNode, Transaction, Contract, Rpc, {
         init(options, { stamp }) {
           const methods = [
             ...stamp.compose.deepConfiguration.Ae.methods,

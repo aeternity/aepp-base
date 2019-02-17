@@ -5,7 +5,6 @@ import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
 import { update, flatMap } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
-import { spendTxNative } from '@aeternity/aepp-sdk/es/tx/js';
 import networksRegistry from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
 import desktopModule from './modules/desktop';
@@ -222,18 +221,17 @@ const store = new Vuex.Store({
       addresses.forEach(address => dispatch('updateBalance', address));
     },
     async updateBalance({ state: { sdk, balances }, commit }, address) {
-      const balance = BigNumber(await sdk.balance(address, { format: false }).catch(() => 0))
+      const balance = BigNumber(await sdk.balance(address).catch(() => 0))
         .shiftedBy(-MAGNITUDE);
       if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
     },
     async genSpendTxBinary({ state: { sdk } }, transaction) {
-      const spendTx = spendTxNative({
-        nonce: +(await sdk.api.getAccountByPubkey(transaction.senderId)).nonce + 1,
+      const spendTx = await sdk.spendTx({
         ...transaction,
         fee: transaction.fee.shiftedBy(MAGNITUDE),
         amount: transaction.amount.shiftedBy(MAGNITUDE),
-      }).tx;
+      });
       return Crypto.decodeBase64Check(spendTx.split('_')[1]);
     },
     async fetchAppManifest(_, host) {
