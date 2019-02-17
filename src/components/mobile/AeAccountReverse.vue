@@ -45,8 +45,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../node_modules/@aeternity/aepp-components-3/src/styles/placeholders/typography';
-@import '../../../node_modules/@aeternity/aepp-components-3/src/styles/variables/colors';
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .ae-account-reverse {
   main {
