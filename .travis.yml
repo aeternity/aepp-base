@@ -3,15 +3,13 @@ os:
   - linux
   - osx
 node_js:
-  - '8'
+  - '10'
 cache:
   directories:
     - node_modules
     - platforms
     - plugins
     - /home/travis/.cache/Cypress
-before_install:
-  - npm i -g npm@6.1.0
 install:
   - travis_wait scripts/install.sh
 script:

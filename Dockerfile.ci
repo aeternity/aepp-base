@@ -1,6 +1,6 @@
 FROM tamasbarta/docker-android-sdk:27.0.3
 
-ENV NODEJS_VERSION=8.11.2 \
+ENV NODEJS_VERSION=10.15.1 \
     PATH=$PATH:/opt/node/bin
 
 RUN apt-get update && \
