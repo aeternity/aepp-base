@@ -1,7 +1,7 @@
 <template>
   <div class="onboarding-page">
     <img src="../../assets/onboarding/phones.svg">
-    <guide fill="primary">
+    <guide>
       <em>Base aepp</em>
       <br>æternity begins here
       <div class="note">

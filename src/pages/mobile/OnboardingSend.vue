@@ -1,7 +1,7 @@
 <template>
   <div class="onboarding-page send">
     <img src="../../assets/onboarding/send.svg">
-    <guide fill="primary">
+    <guide>
       <em>Send & receive AE</em>
       <br>effortlessly
       <div class="note">

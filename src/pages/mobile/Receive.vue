@@ -5,7 +5,7 @@
     header-fill="neutral"
   >
     <template slot="header">
-      <guide fill="primary">
+      <guide>
         <em>Let others scan</em>
         <br>your address
       </guide>

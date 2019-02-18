@@ -5,10 +5,7 @@
     class="new-account-confirm"
     title="New Account"
   >
-    <guide
-      fill="primary"
-      icon="⅔"
-    >
+    <guide icon="⅔">
       <em>Tap the words</em> in the
       <br>correct order to recreate
       <br>your phrase.

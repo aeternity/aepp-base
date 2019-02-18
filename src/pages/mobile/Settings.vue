@@ -3,7 +3,7 @@
     class="settings"
     fill="neutral"
   >
-    <guide fill="primary">
+    <guide>
       <em>Settings</em>
     </guide>
     <ae-card fill="maximum">

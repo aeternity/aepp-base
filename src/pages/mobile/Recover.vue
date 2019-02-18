@@ -4,10 +4,7 @@
     right-button-icon-name="close"
     title="Recover Account"
   >
-    <guide
-      fill="primary"
-      icon="½"
-    >
+    <guide icon="½">
       Enter <img :src="dizzySymbolEmoji"> your <strong>recovery</strong>
       <br><strong>phrase</strong>.
       <br>The one you wrote

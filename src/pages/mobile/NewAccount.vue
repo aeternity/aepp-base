@@ -4,10 +4,7 @@
     right-button-icon-name="close"
     title="New Account"
   >
-    <guide
-      fill="primary"
-      icon="⅓"
-    >
+    <guide icon="⅓">
       First, you will get a
                           <br>phrase for <strong>account</strong>
                           <br><strong>recovery</strong>.

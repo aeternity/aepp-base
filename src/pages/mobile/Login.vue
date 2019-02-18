@@ -3,9 +3,7 @@
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
   >
-    <guide
-      fill="primary"
-    >
+    <guide>
       <em>Hello!</em>{{ ' ' }}<img :src="wavingHandEmoji">
       {{ ' ' }}<mark>Log in</mark> to
       <br>æternity with your

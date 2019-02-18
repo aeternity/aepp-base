@@ -1,7 +1,7 @@
 <template>
   <div class="onboarding-page subaccounts">
     <img src="../../assets/onboarding/subaccounts.svg">
-    <guide fill="primary">
+    <guide>
       <em>Create subaccounts</em>
       <br>in seconds
       <div class="note">

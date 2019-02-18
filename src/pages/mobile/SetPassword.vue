@@ -1,9 +1,6 @@
 <template>
   <mobile-page title="New Account">
-    <guide
-      fill="primary"
-      icon="½"
-    >
+    <guide icon="½">
       You confirmed your
                     <br>phrase correctly! Now
                     <br><mark>choose a <img :src="keyEmoji"> password</mark>

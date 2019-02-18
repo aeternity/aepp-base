@@ -5,10 +5,7 @@
     class="new-account-create"
     title="New Account"
   >
-    <guide
-      fill="primary"
-      icon="⅓"
-    >
+    <guide icon="⅓">
       You need the <em>recovery</em>
                <br><em>phrase</em> in case you
                <br>forget your <strong>password</strong>.

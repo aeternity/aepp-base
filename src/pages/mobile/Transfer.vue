@@ -4,9 +4,7 @@
     header-fill="neutral"
   >
     <template slot="header">
-      <guide
-        fill="primary"
-      >
+      <guide>
         <em>Send and receive</em>
         <br>æternity tokens
       </guide>
