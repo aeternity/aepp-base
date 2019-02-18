@@ -11,7 +11,7 @@
     "build:ios": "npm run build:cordova && cordova build ios",
     "build:android": "npm run build:cordova && cordova build android",
     "gen:cordova-resources": "cordova-splash && cordova-icon --icon=public/favicons/android-chrome-512x512.png",
-    "lint": "vue-cli-service lint --no-fix",
+    "lint": "NODE_ENV=production vue-cli-service lint --no-fix",
     "test": "npm run lint && npm run test:unit && npm run test:e2e -- --headless",
     "storybook:build": "vue-cli-service storybook:build -c config/storybook",
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
