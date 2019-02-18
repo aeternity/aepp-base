@@ -6,7 +6,6 @@ import BigNumber from 'bignumber.js';
 import { update, flatMap } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { spendTxNative } from '@aeternity/aepp-sdk/es/tx/js';
-import { appsRegistry } from '../lib/appsRegistry';
 import networksRegistry from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
 import desktopModule from './modules/desktop';
@@ -70,7 +69,6 @@ const store = new Vuex.Store({
   state: {
     migrations: {},
     loginTarget: '',
-    selectedAppIdxToRemove: -1,
     selectedIdentityIdx: 0,
     balances: {},
     addresses: [],
@@ -78,7 +76,6 @@ const store = new Vuex.Store({
     sdk: null,
     alert: null,
     notification: null,
-    apps: Object.keys(appsRegistry),
     addressBook: [],
     customNetworks: [],
     bookmarkedApps: [],
@@ -160,16 +157,6 @@ const store = new Vuex.Store({
     assignToSdk(state, object) {
       Object.assign(state.sdk, object);
     },
-    addApp(state, app) {
-      state.apps.push(app);
-    },
-    selectAppToRemove(state, selectedAppIdxToRemove = -1) {
-      state.selectedAppIdxToRemove = selectedAppIdxToRemove;
-    },
-    removeSelectedApp(state) {
-      state.apps.splice(state.selectedAppIdxToRemove, 1);
-      state.selectedAppIdxToRemove = -1;
-    },
     selectIdentity(state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx;
     },
@@ -231,26 +218,6 @@ const store = new Vuex.Store({
     setNotification({ commit }, options) {
       commit('setNotification', options);
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000);
-    },
-    async addApp({ commit }, arg) {
-      if (appsRegistry[arg]) {
-        commit('addApp', arg);
-        return;
-      }
-
-      const path = arg.replace(/^https?:\/\//i, '');
-      let name;
-      try {
-        const response = await fetch(`https://cors-anywhere.herokuapp.com/${path}`);
-        const text = await response.text();
-        const el = document.createElement('html');
-        el.innerHTML = text;
-        name = el.getElementsByTagName('title')[0].innerText;
-      } catch (e) {
-        console.error(e);
-      }
-      name = name || prompt('Enter Title');
-      commit('addApp', { path, name });
     },
     updateAllBalances({ getters: { addresses }, dispatch }) {
       addresses.forEach(address => dispatch('updateBalance', address));

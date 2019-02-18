@@ -5,11 +5,11 @@
   >
     <guide><em>Browse æpps</em></guide>
 
-    <url-form />
+    <url-form @input="searchTerm = $event" />
 
     <div class="shortcuts">
       <app-shortcut
-        v-for="(app, idx) in bookmarkedApps"
+        v-for="(app, idx) in bookmarkedAppsToShow"
         :key="`app-shortcut-aeternity-app-${idx}`"
         v-bind="app"
         :to="{ name: 'app-browser', params: { path: app.host } }"
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import Fuse from 'fuse.js';
 import { mapState } from 'vuex';
 import { aeternityApps } from '../../lib/appsRegistry';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -64,11 +65,24 @@ export default {
   },
   data: () => ({
     aeternityApps,
+    searchTerm: '',
   }),
-  computed: mapState({
-    bookmarkedApps: ({ bookmarkedApps }, { getAppMetadata }) => bookmarkedApps
-      .map(app => ({ ...app, ...getAppMetadata(app.host) })),
-  }),
+  computed: {
+    ...mapState({
+      bookmarkedApps: ({ bookmarkedApps }, { getAppMetadata }) => bookmarkedApps
+        .map(app => ({ ...app, ...getAppMetadata(app.host) })),
+    }),
+    fuse() {
+      return new Fuse(this.bookmarkedApps, {
+        tokenize: true,
+        matchAllTokens: true,
+        keys: ['name', 'host'],
+      });
+    },
+    bookmarkedAppsToShow() {
+      return this.searchTerm ? this.fuse.search(this.searchTerm) : this.bookmarkedApps;
+    },
+  },
 };
 </script>
 

@@ -31,7 +31,6 @@
     <account-switcher />
     <tab-bar v-if="$route.meta.displayFooter && !hidePage" />
 
-    <remove-app-modal />
     <alert-modal />
   </div>
 </template>
@@ -39,7 +38,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import { AeBanner, AeButton } from '@aeternity/aepp-components';
-import RemoveAppModal from './components/RemoveAppModal.vue';
 import AlertModal from './components/AlertModal.vue';
 import TabBar from './components/mobile/TabBar.vue';
 import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
@@ -48,7 +46,6 @@ export default {
   components: {
     AeBanner,
     AeButton,
-    RemoveAppModal,
     AlertModal,
     TabBar,
     AccountSwitcher,

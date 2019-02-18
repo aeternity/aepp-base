@@ -9,7 +9,7 @@
       placeholder="Search or type URL"
       type="url"
       spellcheck="false"
-      @input="newUrl = $event.target.value"
+      @input="inputHandler"
       @focus="focusHandler"
     >
   </form>
@@ -30,6 +30,10 @@ export default {
     },
     focusHandler({ target }) {
       target.setSelectionRange(0, target.value.length);
+    },
+    inputHandler(event) {
+      this.newUrl = event.target.value;
+      this.$emit('input', event.target.value);
     },
   },
 };
