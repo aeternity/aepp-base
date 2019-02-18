@@ -96,7 +96,7 @@ export default {
     }
   }
 
-  & + .list-item {
+  & + .list-item .content {
     border-top: 2px solid $color-neutral-positive-2;
 
     &.border-dark {

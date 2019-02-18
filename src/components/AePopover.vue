@@ -4,7 +4,6 @@
     v-clickaway="emitClose"
     :style="style"
     class="ae-popover"
-    @click="emitClose"
   >
     <slot />
   </div>

@@ -4,7 +4,9 @@
     class="list-item-button"
     v-on="$listeners"
   >
-    <slot />
+    <div class="content">
+      <slot />
+    </div>
   </button-plain>
 </template>
 
@@ -22,8 +24,10 @@ export default {
 
 .list-item-button {
   display: block;
+  box-sizing: border-box;
   width: 100%;
   height: rem(44px);
+  padding: 0 rem(16px);
   @extend %face-uppercase-xs;
   line-height: rem(44px);
   letter-spacing: 1.1px;
@@ -34,5 +38,9 @@ export default {
   &:hover {
     background-color: $color-neutral-positive-3;
   }
+}
+
+.list-item + .list-item-button .content {
+  border-top: 2px solid $color-neutral-positive-2;
 }
 </style>
