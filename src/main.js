@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import { sync } from 'vuex-router-sync';
 import Clipboard from 'v-clipboard';
+import 'normalize.css';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import '@aeternity/aepp-components-3/dist/aepp.fonts.css';
 import 'focus-visible';
