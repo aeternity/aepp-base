@@ -8,7 +8,7 @@
         fill="primary"
       >
         <em>Send and receive</em>
-        <br>AE
+        <br>æternity tokens
       </guide>
 
       <ae-account
@@ -44,7 +44,7 @@
     <list-item
       :to="{ name: 'send' }"
       title="Send"
-      subtitle="To others or subaccounts"
+      subtitle="Transfer funds"
       border-dark
     >
       <img
@@ -59,7 +59,7 @@
     <list-item
       :to="{ name: 'receive' }"
       title="Receive"
-      subtitle="By sharing your address"
+      subtitle="Share your address"
       border-dark
     >
       <img

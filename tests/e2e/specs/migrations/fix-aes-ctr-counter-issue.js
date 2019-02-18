@@ -34,7 +34,7 @@ describe('Migration: Fix AES-CTR counter issue', () => {
       .visit('/#/login')
       .get('input[type=password]').type('1234')
       .get('button')
-      .contains('Login')
+      .contains('Log in')
       .click()
       .url()
       .should('contain', '/browser')

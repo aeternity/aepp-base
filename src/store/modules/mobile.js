@@ -33,7 +33,7 @@ export default {
       state.derivedKey = derivedKey;
     },
     resetAccountCount(state) {
-      state.names = ['My First Account'];
+      state.names = ['Main Account'];
       state.accountCount = 1;
     },
     createIdentity(state, name) {

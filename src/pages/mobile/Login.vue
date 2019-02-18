@@ -7,9 +7,9 @@
       fill="primary"
     >
       <em>Hello!</em>{{ ' ' }}<img :src="wavingHandEmoji">
-      {{ ' ' }}<mark>Login</mark> to æternity
-      <br>with password or <mark>recover</mark>
-      <br><mark>your account</mark> with phrase
+      {{ ' ' }}<mark>Log in</mark> to
+      <br>æternity with your
+      <br>password
     </guide>
 
     <form
@@ -33,7 +33,7 @@
           <template v-else-if="wrongPassword">
             Try again or
             <router-link :to="{ name: 'recover' }">
-              recover
+              recover account
             </router-link>
           </template>
           <template v-else>
@@ -51,7 +51,7 @@
       :form="_uid"
       fill="secondary"
     >
-      Login
+      Log in
     </ae-button>
   </mobile-page>
 </template>

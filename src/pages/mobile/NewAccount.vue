@@ -8,17 +8,15 @@
       fill="primary"
       icon="⅓"
     >
-      Set up <img :src="sparklesEmoji"> your
-          <br><em>master account.</em>
-          <br>We’re about to create
-          <br>a recovery phrase,
-          <br>please <strong>keep it safe</strong>
-          <br>on a piece of paper!
-          <br>
-          <br><mark>Check the spelling</mark>
-          <br>of each word and <em>never</em>
-          <br>create a screenshot
-          <br>or photo of this phrase
+      First, you will get a
+                          <br>phrase for <strong>account</strong>
+                          <br><strong>recovery</strong>.
+                          <br>
+                          <br>So grab a piece of
+                          <br>paper and a pen, <mark>write</mark>
+                          <br><mark>it down</mark>.
+                          <br>
+                          <br>And hide it from all <em>evil</em>.
     </guide>
 
     <ae-button

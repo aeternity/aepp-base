@@ -9,10 +9,9 @@
       fill="primary"
       icon="⅔"
     >
-      <em>Confirm <img :src="fingersCrossedEmoji"> your phrase</em>
-      <br>Tap the words below
-      <br>to compose your phrase,
-      <br><mark>note</mark> correct order!
+      <em>Tap the words</em> in the
+      <br>correct order to recreate
+      <br>your phrase.
     </guide>
 
     <button-mnemonic-word
@@ -26,7 +25,7 @@
 
     <ae-input-wrapper
       :error="error"
-      :header="error ? 'Oops! That doesn\'t match, try again' : 'Your phrase'"
+      :header="error ? 'Oops! Not the correct order, try again' : 'Your recovery phrase'"
     >
       <template v-if="selectedWordIds.length">
         <button-mnemonic-word

@@ -16,7 +16,7 @@ export const minFee = BigNumber('1579000').shiftedBy(-MAGNITUDE);
 export const account = {
   balance: BigNumber('14.999999999999813'),
   address,
-  name: 'My First Account',
+  name: 'Main Account',
 };
 
 export const accounts = times(5, idx => ({

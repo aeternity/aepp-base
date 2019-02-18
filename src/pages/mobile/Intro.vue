@@ -4,10 +4,9 @@
     fill="primary"
   >
     <guide fill="neutral">
-      <em>Base æpp.</em>
-      <br>Interact with the
-      <br>æternity blockchain.
-      <br>In a human way.
+      <em>Base æpp</em>
+      <br>æternity blockchain
+      <br>power in your hands.
     </guide>
 
     <template slot="footer">

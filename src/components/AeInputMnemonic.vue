@@ -2,7 +2,6 @@
   <ae-textarea-formatted
     class="ae-input-mnemonic"
     header="Recovery phrase"
-    placeholder="Recovery phrase"
     rows="3"
     :format-display-value="formatMnemonic"
     v-bind="$attrs"

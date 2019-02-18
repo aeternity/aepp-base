@@ -5,9 +5,8 @@
       <em>Create subaccounts</em>
       <br>in seconds
       <div class="note">
-        Use dedicated accounts to
-        <br>safely store AE, to experiment
-        <br>and fuel æpps.
+        Create dedicated accounts for
+        <br>spending, storage and to fuel æpps.
       </div>
     </guide>
   </div>
