@@ -2,7 +2,6 @@
   <mobile-page
     :left-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
-    class="receive"
     header-fill="neutral"
   >
     <template slot="header">
@@ -72,16 +71,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-
-.receive {
-  .note {
-    margin: rem(8px) 0;
-    @extend %face-sans-s;
-    font-weight: 500;
-  }
-}
-</style>
