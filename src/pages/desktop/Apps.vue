@@ -1,6 +1,8 @@
 <template>
   <div class="apps">
-    <guide>æpps <em>browser</em> (beta)</guide>
+    <guide size="big">
+      æpps <em>browser</em> (beta)
+    </guide>
 
     <note>
       æpps running working with the æternity blockchain will be visible here.

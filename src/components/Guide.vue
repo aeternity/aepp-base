@@ -1,5 +1,5 @@
 <template>
-  <div :class="['guide', fill, { desktop: !$globals.IS_MOBILE_DEVICE }]">
+  <div :class="['guide', fill, size]">
     <span
       v-if="icon"
       class="icon"
@@ -23,6 +23,11 @@ export default {
       ].includes(value),
       default: 'primary',
     },
+    size: {
+      type: String,
+      validator: value => ['small', 'medium', 'big'].includes(value),
+      default: 'medium',
+    },
     icon: {
       type: String,
       default: undefined,
@@ -39,20 +44,27 @@ export default {
   display: flex;
   margin-bottom: rem(27px);
 
-  &.desktop {
+  &.small {
+    @extend %face-sans-base;
+  }
+
+  &.medium {
+    @extend %face-sans-l;
+  }
+
+  &.big {
+    font-family: $font-sans;
     font-size: rem(30px);
     line-height: rem(39px);
     margin-bottom: rem(15px);
   }
 
   .icon {
-    margin: rem(3px) rem(16px) 0 rem(-32px);
-    @extend %face-sans-base;
+    margin: 0 rem(16px) 0 rem(-32px);
     font-weight: bold;
   }
 
   .content {
-    @extend %face-sans-l;
     font-weight: 500;
     letter-spacing: -0.5px;
 
