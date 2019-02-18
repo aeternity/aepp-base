@@ -7,7 +7,7 @@
       >
         <button-plain
           slot="icon"
-          v-copy-to-clipboard="activeAccount.address"
+          v-copy-on-click="activeAccount.address"
         >
           <ae-icon name="copy" />
         </button-plain>
@@ -50,7 +50,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { AeIcon, directives } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import AeAccount from '../AeAccount.vue';
 import ButtonPlain from '../ButtonPlain.vue';
 import ListItem from '../ListItem.vue';
@@ -58,13 +58,14 @@ import ListItemAccount from '../ListItemAccount.vue';
 import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
+import copyOnClick from '../../directives/copyOnClick';
 
 export default {
   components: {
     AeAccount, ButtonPlain, AeIcon, ListItem, ListItemAccount, AeRadio, Balance,
   },
   directives: {
-    copyToClipboard: directives.copyToClipboard,
+    copyOnClick,
   },
   props: {
     forLedger: { type: Boolean, default: false },

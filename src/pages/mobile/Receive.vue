@@ -1,5 +1,6 @@
 <template>
   <mobile-page
+    class="receive"
     :left-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
     header-fill="neutral"
@@ -17,17 +18,17 @@
     </template>
 
     <list-item
+      v-copy-on-click="activeIdentity.address"
+      class="copy"
       title="Copy address"
       subtitle="Share it with sender"
       border-dark
-      @click.native="copyAddress"
     >
       <img
         slot="icon"
         :src="writingHandEmoji"
       >
       <ae-icon
-        v-if="copied"
         slot="right"
         fill="alternative"
         face="round"
@@ -41,7 +42,7 @@
 import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import writingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
-import copy from 'clipboard-copy';
+import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccountReverse from '../../components/mobile/AeAccountReverse.vue';
@@ -55,19 +56,18 @@ export default {
     ListItem,
     AeIcon,
   },
+  directives: { copyOnClick },
   data() {
     return {
       writingHandEmoji: writingHandEmojiPath,
-      copied: false,
     };
   },
   computed: mapGetters(['activeIdentity']),
-  methods: {
-    copyAddress() {
-      copy(this.activeIdentity.address);
-      this.copied = true;
-      setTimeout(() => { this.copied = false; }, 2000);
-    },
-  },
 };
 </script>
+
+<style lang="scss" scoped>
+.receive .list-item.copy:not(.v-copied) .ae-icon {
+  display: none;
+}
+</style>
