@@ -31,7 +31,7 @@
       </ae-button>
       <ae-button
         :to="finallyTo"
-        type="button"
+        v-bind="!finallyTo && { type: 'button' }"
         plain
         @click="$emit('finally')"
       >
