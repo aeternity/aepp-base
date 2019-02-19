@@ -31,6 +31,8 @@
 
         <AePopover
           :anchor="showAccountsDropdown ? $refs['accounts-button'] : null"
+          :anchor-origin="{ vertical: 'bottom', horizontal: 'right' }"
+          :transform-origin="{ vertical: 'top', horizontal: 'right' }"
           @close="showAccountsDropdown = false"
         >
           <ListItemAccount

@@ -9,6 +9,20 @@
         <br>æternity tokens
       </Guide>
 
+      <Menu
+        :anchor="showAccountMenu ? $refs.accountButton : null"
+        :anchor-origin="{ vertical: 'top', horizontal: 'right' }"
+        :transform-origin="{ vertical: 'top', horizontal: 'right' }"
+        @close="showAccountMenu = false"
+      >
+        <MenuItem @click="copyAddress">
+          <AeIcon name="copy" />Copy Address
+        </MenuItem>
+        <MenuItem @click="accountNameEditable = true">
+          <AeIcon name="edit" />Rename
+        </MenuItem>
+      </Menu>
+
       <AeAccount
         v-bind="activeIdentity"
         :name-editable="accountNameEditable"
@@ -17,25 +31,16 @@
         @name-input="name => renameIdentity(name)"
         @name-blur="accountNameEditable = false"
       >
-        <AeDropdown slot="icon">
+        <ButtonPlain
+          slot="icon"
+          ref="accountButton"
+          @click="showAccountMenu = true"
+        >
           <AeIcon
-            slot="button"
             fill="white"
             name="more"
           />
-          <li>
-            <AeButton @click="copyAddress">
-              <AeIcon name="copy" />
-              Copy Address
-            </AeButton>
-          </li>
-          <li>
-            <AeButton @click="accountNameEditable = true">
-              <AeIcon name="edit" />
-              Rename
-            </AeButton>
-          </li>
-        </AeDropdown>
+        </ButtonPlain>
       </AeAccount>
     </template>
 
@@ -101,7 +106,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
-import { AeIcon, AeDropdown, AeButton } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import glowingStarEmojiPath from 'emoji-datasource-apple/img/apple/64/1f31f.png';
@@ -109,6 +114,9 @@ import copy from 'clipboard-copy';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
+import ButtonPlain from '../../components/ButtonPlain.vue';
+import Menu from '../../components/Menu.vue';
+import MenuItem from '../../components/MenuItem.vue';
 import ListItem from '../../components/ListItem.vue';
 import TransferNotification from '../../components/TransferNotification.vue';
 import MigratedBalanceModal from '../../components/mobile/MigratedBalanceModal.vue';
@@ -118,8 +126,9 @@ export default {
     MobilePage,
     Guide,
     AeAccount,
-    AeDropdown,
-    AeButton,
+    ButtonPlain,
+    Menu,
+    MenuItem,
     AeIcon,
     ListItem,
     TransferNotification,
@@ -140,6 +149,7 @@ export default {
       moneyWithWingsEmoji: moneyWithWingsEmojiPath,
       manTippingHandEmoji: manTippingHandEmojiPath,
       glowingStarEmoji: glowingStarEmojiPath,
+      showAccountMenu: false,
       accountNameEditable: false,
       showMigratedBalanceModal: false,
       BigNumber,
@@ -168,11 +178,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .transfer {
-  .ae-dropdown /deep/ .ae-dropdown-button {
-    width: rem(20px);
-    height: rem(20px);
-  }
-
   .list-item .ae-icon {
     font-size: rem(20px);
   }

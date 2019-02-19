@@ -32,6 +32,8 @@
 
     <AePopover
       :anchor="networkMode ? $refs.icon : null"
+      :anchor-origin="{ vertical: 'bottom', horizontal: 'right' }"
+      :transform-origin="{ vertical: 'top', horizontal: 'right' }"
       @close="closePopover"
     >
       <NetworkSwitcher
