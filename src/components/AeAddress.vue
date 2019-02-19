@@ -1,10 +1,11 @@
 <script>
 import { times, chunk } from 'lodash-es';
 import { directives } from '@aeternity/aepp-components-3';
+import copyOnClick from '../directives/copyOnClick';
 
 export default {
   directives: {
-    copyToClipboard: directives.copyToClipboard,
+    copyOnClick,
     removeSpacesOnCopy: directives.removeSpacesOnCopy,
   },
   props: {
@@ -51,7 +52,7 @@ export default {
       {
         class: ['ae-address', this.length],
         directives: [{
-          name: 'copy-to-clipboard',
+          name: 'copy-on-click',
           value: this.address,
         }, {
           name: 'remove-spaces-on-copy',
@@ -72,7 +73,7 @@ export default {
   font-weight: 500;
   letter-spacing: rem(1.9px);
 
-  &.v-copied-to-clipboard {
+  &.v-copied {
     position: relative;
 
     &:before {
@@ -91,7 +92,7 @@ export default {
     }
   }
 
-  &.short.v-copied-to-clipboard:before {
+  &.short.v-copied:before {
     content: 'copied';
   }
 }

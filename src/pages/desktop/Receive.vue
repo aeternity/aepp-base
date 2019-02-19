@@ -16,7 +16,7 @@
       <ae-address-panel :address="address" />
 
       <ae-button
-        v-copy-to-clipboard="address"
+        v-copy-on-click="address"
         :disabled="!account"
         fill="secondary"
       >
@@ -37,7 +37,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { directives } from '@aeternity/aepp-components-3';
+import copyOnClick from '../../directives/copyOnClick';
 import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
 import AeButton from '../../components/AeButton.vue';
@@ -50,7 +50,7 @@ export default {
     Guide, Note, AeButton, AeCard, AeQrCode, AeAddressPanel,
   },
   directives: {
-    copyToClipboard: directives.copyToClipboard,
+    copyOnClick,
   },
   computed: {
     ...mapGetters({ account: 'activeIdentity' }),

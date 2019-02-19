@@ -16,7 +16,7 @@
           name="more"
         />
         <li>
-          <ae-button-3 v-copyToClipboard="network.url">
+          <ae-button-3 v-copy-on-click="network.url">
             <ae-icon name="copy" />Copy link
           </ae-button-3>
         </li>
@@ -43,9 +43,8 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import {
-  AeDropdown, AeIcon, AeButton as AeButton3, directives,
-} from '@aeternity/aepp-components-3';
+import { AeDropdown, AeIcon, AeButton as AeButton3 } from '@aeternity/aepp-components-3';
+import copyOnClick from '../directives/copyOnClick';
 import ListItem from './ListItem.vue';
 import ListItemButton from './ListItemButton.vue';
 import AeRadio from './AeRadio.vue';
@@ -60,7 +59,7 @@ export default {
     AeRadio,
   },
   directives: {
-    copyToClipboard: directives.copyToClipboard,
+    copyOnClick,
   },
   props: {
     networkAddButtonTo: { type: [Object, String], default: null },
