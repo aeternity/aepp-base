@@ -3,6 +3,9 @@ import Ae from '@aeternity/ledger-app-api';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 
 export default async (store) => {
+  const isSupported = await TransportU2F.isSupported();
+  store.commit('setLedgerSupported', isSupported);
+  if (!isSupported) return;
   const transport = await new TransportU2F();
   const ae = new Ae(transport);
   // eslint-disable-next-line no-underscore-dangle

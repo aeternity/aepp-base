@@ -50,7 +50,7 @@
       />
     </template>
 
-    <template v-else>
+    <template v-else-if="ledgerSupported">
       <Guide size="small">
         How to connect from <em>Ledger</em>
       </Guide>
@@ -79,6 +79,21 @@
         Confirm your Ledger address
       </Guide>
     </template>
+
+    <div
+      v-else
+      class="no-ledger-support"
+    >
+      <img src="../../assets/switch-to-chrome.svg">
+      <Guide>
+        Please switch to
+        <br>Google Chrome
+      </Guide>
+      <note>
+        Interacting with the Ledger is only
+        <br>supported by Chrome for now.
+      </note>
+    </div>
   </div>
 </template>
 
@@ -88,16 +103,18 @@ import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../Guide.vue';
 import AeQrCode from '../AeQrCode.vue';
 import AeFraction from '../AeFraction.vue';
+import Note from '../Note.vue';
 
 export default {
   components: {
-    AeIcon, Guide, AeQrCode, AeFraction,
+    AeIcon, Guide, AeQrCode, AeFraction, Note,
   },
   props: {
     forLedger: { type: Boolean, default: false },
   },
   computed: mapState({
     peerId: ({ desktop }) => desktop.peerId,
+    ledgerSupported: ({ desktop }) => desktop.ledgerSupported,
   }),
 };
 </script>
@@ -128,6 +145,20 @@ export default {
 
   .ae-qr-code {
     margin: rem(40px) auto;
+  }
+
+  .no-ledger-support {
+    text-align: center;
+
+    img {
+      margin-top: rem(60px);
+      margin-bottom: rem(20px);
+    }
+
+    .guide {
+      display: block;
+      margin-bottom: rem(10px);
+    }
   }
 }
 </style>
