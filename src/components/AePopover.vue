@@ -18,7 +18,7 @@ export default {
   directives: { clickaway },
   props: {
     anchor: {
-      type: Vue,
+      type: [Vue, Element],
       default: null,
     },
   },
@@ -34,7 +34,8 @@ export default {
   methods: {
     updateStyles() {
       if (!this.anchor) return;
-      const { right, bottom } = this.anchor.$el.getBoundingClientRect();
+      const anchorEl = this.anchor instanceof Vue ? this.anchor.$el : this.anchor;
+      const { right, bottom } = anchorEl.getBoundingClientRect();
       const { width } = this.$el.getBoundingClientRect();
       const style = {
         left: `${right - width}px`,
