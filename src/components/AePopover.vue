@@ -14,6 +14,14 @@ import Vue from 'vue';
 import { isEqual } from 'lodash-es';
 import { directive as clickaway } from 'vue-clickaway';
 
+const originProp = {
+  type: Object,
+  default: () => ({ vertical: 'top', horizontal: 'left' }),
+  validator: ({ vertical, horizontal }) => (
+    ['top', 'center', 'bottom'].includes(vertical)
+    && ['left', 'center', 'right'].includes(horizontal)),
+};
+
 export default {
   directives: { clickaway },
   props: {
@@ -21,6 +29,8 @@ export default {
       type: [Vue, Element],
       default: null,
     },
+    anchorOrigin: originProp,
+    transformOrigin: originProp,
   },
   data: () => ({
     style: {},
@@ -35,11 +45,40 @@ export default {
     updateStyles() {
       if (!this.anchor) return;
       const anchorEl = this.anchor instanceof Vue ? this.anchor.$el : this.anchor;
-      const { right, bottom } = anchorEl.getBoundingClientRect();
-      const { width } = this.$el.getBoundingClientRect();
+      const {
+        top, right, bottom, left,
+      } = anchorEl.getBoundingClientRect();
+      const anchorPoint = {
+        x: {
+          left,
+          center: (left + right) / 2,
+          right,
+        }[this.anchorOrigin.horizontal],
+        y: {
+          top,
+          center: (top + bottom) / 2,
+          bottom,
+        }[this.anchorOrigin.vertical],
+      };
+
+      const { width, height } = this.$el.getBoundingClientRect();
+      const popoverPoint = {
+        x:
+          anchorPoint.x - {
+            left: 0,
+            center: width / 2,
+            right: width,
+          }[this.transformOrigin.horizontal],
+        y:
+          anchorPoint.y - {
+            top: 0,
+            center: height / 2,
+            bottom: height,
+          }[this.transformOrigin.vertical],
+      };
       const style = {
-        left: `${right - width}px`,
-        top: `${bottom}px`,
+        top: `${popoverPoint.y}px`,
+        left: `${popoverPoint.x}px`,
       };
       if (isEqual(style, this.style)) return;
       this.style = style;
