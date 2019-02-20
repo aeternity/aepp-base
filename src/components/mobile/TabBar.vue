@@ -3,7 +3,7 @@
     <div class="wrapper">
       <button-plain :to="browserPath || { name: 'apps' }">
         <ae-icon name="grid" />
-        Browser
+        æpps
       </button-plain>
 
       <button-plain :to="{ name: 'transfer' }">
