@@ -1,6 +1,8 @@
 <template>
   <div class="settings">
-    <guide><em>Settings</em></guide>
+    <guide size="big">
+      <em>Settings</em>
+    </guide>
 
     <ae-card fill="maximum">
       <list-item

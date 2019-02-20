@@ -1,6 +1,8 @@
 <template>
   <div class="receive">
-    <guide><em>Receive</em> tokens</guide>
+    <guide size="big">
+      <em>Receive</em> tokens
+    </guide>
 
     <note>
       Let others scan your QR code or share your address

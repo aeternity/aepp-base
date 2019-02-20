@@ -1,12 +1,14 @@
 <template>
-  <div :class="['guide', fill, { desktop: !$globals.IS_MOBILE_DEVICE }]">
+  <div :class="['guide', fill, size]">
     <span
       v-if="icon"
       class="icon"
     >
       {{ icon }}
     </span>
-    <div><slot /></div>
+    <div class="content">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -20,6 +22,11 @@ export default {
         'neutral',
       ].includes(value),
       default: 'primary',
+    },
+    size: {
+      type: String,
+      validator: value => ['small', 'medium', 'big'].includes(value),
+      default: 'medium',
     },
     icon: {
       type: String,
@@ -36,69 +43,87 @@ export default {
 .guide {
   display: flex;
   margin-bottom: rem(27px);
-  @extend %face-sans-l;
-  font-weight: 500;
-  letter-spacing: -0.5px;
-  color: $color-neutral-negative-3;
 
-  &.desktop {
+  &.small {
+    @extend %face-sans-base;
+  }
+
+  &.medium {
+    @extend %face-sans-l;
+  }
+
+  &.big {
+    font-family: $font-sans;
     font-size: rem(30px);
     line-height: rem(39px);
     margin-bottom: rem(15px);
   }
 
   .icon {
-    margin: rem(3px) rem(16px) 0 rem(-32px);
-    @extend %face-sans-base;
+    margin: 0 rem(16px) 0 rem(-32px);
     font-weight: bold;
   }
 
-  img {
-    width: rem(23px);
-  }
-
-  img, .ae-identicon {
-    vertical-align: middle;
-  }
-
-  .ae-address.short {
-    font-size: inherit;
-  }
-
-  em {
-    font-style: normal;
-    color: $color-primary;
-  }
-
-  mark, strong {
+  .content {
     font-weight: 500;
-    background: none;
+    letter-spacing: -0.5px;
+
+    img {
+      width: rem(23px);
+    }
+
+    img, .ae-identicon {
+      vertical-align: middle;
+    }
+
+    .ae-address.short {
+      font-size: inherit;
+    }
+
+    em {
+      font-style: normal;
+    }
+
+    mark, strong {
+      font-weight: 500;
+    }
+
+    mark {
+      color: $color-secondary;
+      background: none;
+    }
+
+    strong {
+      color: $color-alternative;
+    }
   }
 
   &.primary {
     .icon {
       color: $color-primary;
     }
+
+    .content {
+      color: $color-neutral-negative-3;
+
+      em {
+        color: $color-primary;
+      }
+    }
   }
 
   &.neutral {
-    color: $color-primary-positive-3;
-
     .icon {
       color: $color-neutral-maximum;
     }
 
-    em {
-      color: $color-neutral-maximum;
+    .content {
+      color: $color-primary-positive-3;
+
+      em {
+        color: $color-neutral-maximum;
+      }
     }
-  }
-
-  mark {
-    color: $color-secondary;
-  }
-
-  strong {
-    color: $color-alternative;
   }
 }
 </style>

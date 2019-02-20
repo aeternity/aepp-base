@@ -1,20 +1,32 @@
 <template>
   <div class="connect-guide">
     <template v-if="!forLedger">
-      <guide>
+      <guide size="small">
         How to connect the <em>Base æpp</em>
       </guide>
       <div class="steps">
-        <guide icon="¼">
+        <guide
+          size="small"
+          icon="¼"
+        >
           Open the Base æpp on your mobile device
         </guide>
-        <guide icon="½">
+        <guide
+          size="small"
+          icon="½"
+        >
           Go to Settings <ae-icon name="settings" /> in the tabbar
         </guide>
-        <guide icon="¾">
+        <guide
+          size="small"
+          icon="¾"
+        >
           Click on Remote Connections <ae-icon name="device" /> and add a new one
         </guide>
-        <guide icon="1">
+        <guide
+          size="small"
+          icon="1"
+        >
           Scan the QR code below
         </guide>
       </div>
@@ -25,14 +37,20 @@
     </template>
 
     <template v-else>
-      <guide>
+      <guide size="small">
         How to connect the <em>Ledger</em>
       </guide>
       <div class="steps">
-        <guide icon="½">
+        <guide
+          size="small"
+          icon="½"
+        >
           Connect the Ledger via USB and unlock on the device
         </guide>
-        <guide icon="1">
+        <guide
+          size="small"
+          icon="1"
+        >
           Open the æternity app on the Ledger
         </guide>
       </div>
