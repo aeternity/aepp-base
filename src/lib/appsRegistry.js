@@ -1,5 +1,5 @@
 import blockchainExplorerIcon from '../assets/icons/aepps/blockchain-explorer.svg';
-import tokenMigrationIcon from '../assets/icons/aepps/token-migration.svg';
+import tokenMigrationIcon from '../assets/icons/aepps/token-migration.jpg';
 
 export { default as DEFAULT_ICON } from '../assets/icons/aepps/blockchain-explorer.svg';
 
