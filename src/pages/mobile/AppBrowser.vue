@@ -3,7 +3,7 @@
     <header>
       <UrlForm
         :current-url="url"
-        @new-url="newUrlHandler"
+        @new-url="reload"
       />
 
       <ButtonPlain @click="toggleBookmarking">
@@ -12,7 +12,24 @@
       <ButtonPlain :to="{ name: 'apps' }">
         <AeIcon name="home" />
       </ButtonPlain>
+      <ButtonPlain
+        ref="menuButton"
+        @click="showMenu = true"
+      >
+        <AeIcon name="more" />
+      </ButtonPlain>
     </header>
+
+    <Menu
+      :anchor="showMenu ? $refs.menuButton : null"
+      :anchor-origin="{ vertical: 'top', horizontal: 'right' }"
+      :transform-origin="{ vertical: 'top', horizontal: 'right' }"
+      @close="showMenu = false"
+    >
+      <MenuItem @click="reload">
+        <AeIcon name="reload" />Refresh aepp
+      </MenuItem>
+    </Menu>
 
     <ProgressFake v-if="loading" />
 
@@ -29,16 +46,19 @@ import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
+import Menu from '../../components/Menu.vue';
+import MenuItem from '../../components/MenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
 
 export default {
   components: {
-    UrlForm, ButtonPlain, AeIcon, ProgressFake,
+    UrlForm, ButtonPlain, AeIcon, Menu, MenuItem, ProgressFake,
   },
   data() {
     return {
       loading: true,
       newUrl: '',
+      showMenu: false,
     };
   },
   computed: {
@@ -55,9 +75,15 @@ export default {
       },
     }),
   },
+  mounted() {
+    const handler = () => { this.showMenu = false; };
+    window.addEventListener('blur', handler);
+    this.$once('hook:destroyed', () => window.removeEventListener('blur', handler));
+  },
   methods: {
-    newUrlHandler() {
+    reload() {
       this.loading = true;
+      this.$refs.iframe.src += '';
       this.$refs.iframe.focus();
     },
     toggleBookmarking() {
