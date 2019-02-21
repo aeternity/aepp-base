@@ -1,6 +1,6 @@
 <template>
   <Component
-    :is="to ? 'ae-link' : 'button'"
+    :is="to ? 'AeLink' : 'button'"
     :to="to"
     class="button-plain"
     @click="$emit('click', $event)"
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { AeLink } from '@aeternity/aepp-components';
+import AeLink from './AeLink.vue';
 
 export default {
   components: { AeLink },
