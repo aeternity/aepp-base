@@ -82,11 +82,6 @@ export default {
 .connect-guide {
   margin: rem(60px) rem(40px);
 
-  .guide {
-    font-size: rem(17px);
-    margin-bottom: rem(20px);
-  }
-
   .steps .guide {
     margin-left: rem(40px);
 

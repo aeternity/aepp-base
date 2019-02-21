@@ -46,6 +46,7 @@ export default {
 
   &.small {
     @extend %face-sans-base;
+    margin-bottom: rem(20px);
   }
 
   &.medium {
