@@ -7,10 +7,12 @@
     header-fill="primary"
   >
     <template slot="header">
-      <guide
-        fill="neutral"
-        icon="⅔"
-      >
+      <guide fill="neutral">
+        <ae-fraction
+          slot="icon"
+          numerator="2"
+          denominator="3"
+        />
         <em>New Transfer</em>
         <br>from
         <ae-identicon
@@ -69,6 +71,7 @@ import { mapGetters, mapState } from 'vuex';
 import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
+import AeFraction from '../../components/AeFraction.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
 import AeAddress from '../../components/AeAddress.vue';
@@ -78,6 +81,7 @@ export default {
   components: {
     MobilePage,
     Guide,
+    AeFraction,
     AeIdenticon,
     AeInputAmountAe,
     AeButton,

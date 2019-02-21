@@ -1,10 +1,13 @@
 <template>
-  <div :class="['guide', fill, size]">
+  <div
+    class="guide"
+    :class="[fill, size, { 'has-icon': $slots.icon }]"
+  >
     <span
-      v-if="icon"
+      v-if="$slots.icon"
       class="icon"
     >
-      {{ icon }}
+      <slot name="icon" />
     </span>
     <div class="content">
       <slot />
@@ -28,10 +31,6 @@ export default {
       validator: value => ['small', 'medium', 'big'].includes(value),
       default: 'medium',
     },
-    icon: {
-      type: String,
-      default: undefined,
-    },
   },
 };
 </script>
@@ -46,6 +45,7 @@ export default {
 
   &.small {
     @extend %face-sans-base;
+    margin-bottom: rem(20px);
   }
 
   &.medium {
@@ -60,8 +60,9 @@ export default {
   }
 
   .icon {
-    margin: 0 rem(16px) 0 rem(-32px);
-    font-weight: bold;
+    flex-shrink: 0;
+    width: rem(30px);
+    padding-left: rem(6px);
   }
 
   .content {

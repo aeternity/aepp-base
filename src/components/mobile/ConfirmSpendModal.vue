@@ -3,10 +3,12 @@
     class="confirm-spend-modal"
     fill="primary"
   >
-    <guide
-      fill="neutral"
-      :icon="stepIcon"
-    >
+    <guide fill="neutral">
+      <ae-fraction
+        v-if="stepFraction"
+        slot="icon"
+        v-bind="stepFraction"
+      />
       <em>Complete your transfer</em>
       <br>from
       <ae-identicon
@@ -66,6 +68,7 @@ import ConfirmModalAmount from './ConfirmModalAmount.vue';
 import ConfirmModalFeeInput from './ConfirmModalFeeInput.vue';
 import ConfirmModalAddress from './ConfirmModalAddress.vue';
 import Guide from '../Guide.vue';
+import AeFraction from '../AeFraction.vue';
 import AeButton from '../AeButton.vue';
 import AeAddress from '../AeAddress.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
@@ -75,6 +78,7 @@ export default {
   components: {
     MobilePage,
     Guide,
+    AeFraction,
     AeIdenticon,
     AeButton,
     AeButtonGroup,
@@ -88,7 +92,7 @@ export default {
     recipientId: { type: String, required: true },
   },
   computed: mapState({
-    stepIcon: state => state.mobile.stepIcon,
+    stepFraction: state => state.mobile.stepFraction,
   }),
 };
 </script>

@@ -1,10 +1,22 @@
 <template>
-  <mobile-page title="New Account">
-    <guide icon="½">
-      You confirmed your
-                    <br>phrase correctly! Now
-                    <br><mark>choose a <img :src="keyEmoji"> password</mark>
-                    <br>and confirm.
+  <mobile-page :title="recover ? 'Recover Account' : 'New Account'">
+    <guide>
+      <ae-fraction
+        slot="icon"
+        :numerator="recover ? 2 : 4"
+        :denominator="recover ? 2 : 4"
+      />
+
+      <template v-if="recover">
+        You recovered your
+                      <br>account <em>successfully</em>!
+                      <br>Now <mark>choose a new <img :src="keyEmoji"></mark>
+                      <br><mark>password</mark> and confirm.
+      </template>
+      <template v-else>
+        Great, that's done. Now
+        <br>create <mark>your <img :src="keyEmoji"> password</mark>
+      </template>
     </guide>
 
     <form
@@ -50,13 +62,14 @@ import { mapState } from 'vuex';
 import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
+import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
 import PasswordPurpose from '../../components/mobile/PasswordPurpose.vue';
 import AeInputPassword from '../../components/AeInputPassword.vue';
 
 export default {
   components: {
-    MobilePage, PasswordPurpose, AeInputPassword, AeButton, Guide,
+    MobilePage, PasswordPurpose, AeInputPassword, AeButton, Guide, AeFraction,
   },
   props: {
     seed: { type: String, required: true },
@@ -65,6 +78,7 @@ export default {
     return {
       password: '',
       passwordConfirm: '',
+      recover: false,
       working: false,
       keyEmoji: keyEmojiPath,
     };
@@ -84,6 +98,11 @@ export default {
         this.working = false;
       }
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.recover = from.name === 'recover'; // eslint-disable-line no-param-reassign
+    });
   },
 };
 </script>

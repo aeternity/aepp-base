@@ -23,12 +23,15 @@ export default {
   },
   async mounted() {
     try {
-      this.$store.commit('setStepIcon', '³⁄₃');
+      this.$store.commit('setStepFraction', {
+        numerator: 3,
+        denominator: 3,
+      });
       const { hash } = await this.$store.state.sdk.spend(
         BigNumber(this.amount).shiftedBy(MAGNITUDE),
         this.to,
       );
-      this.$store.commit('setStepIcon', '');
+      this.$store.commit('setStepFraction');
 
       this.$router.push({
         name: 'transfer',

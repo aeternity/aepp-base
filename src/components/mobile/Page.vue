@@ -101,6 +101,10 @@ export default {
     padding: 0 rem(48px);
 
     /deep/ {
+      .guide.has-icon {
+        margin-left: rem(-36px);
+      }
+
       > .ae-button.medium {
         display: block;
         width: stretch;

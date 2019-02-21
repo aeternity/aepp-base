@@ -16,7 +16,7 @@ export default {
     followers: {},
     names: [],
     showAccountSwitcher: false,
-    stepIcon: '',
+    stepFraction: null,
     browserPath: '',
   },
 
@@ -67,8 +67,8 @@ export default {
     toggleAccountSwitcher(state) {
       state.showAccountSwitcher = !state.showAccountSwitcher;
     },
-    setStepIcon(state, icon = '') {
-      state.stepIcon = icon;
+    setStepFraction(state, stepFraction = null) {
+      state.stepFraction = stepFraction;
     },
     setBrowserPath(state, browserPath) {
       state.browserPath = browserPath;

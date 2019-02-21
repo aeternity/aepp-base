@@ -17,7 +17,14 @@ const base = {
     reject: action('reject'),
   },
   store: new Vuex.Store({
-    state: { mobile: { stepIcon: '³⁄₃' } },
+    state: {
+      mobile: {
+        stepFraction: {
+          numerator: 3,
+          denominator: 3,
+        },
+      },
+    },
     getters: {
       activeIdentity: () => account,
       getAppMetadata: () => host => ({

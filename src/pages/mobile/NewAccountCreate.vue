@@ -5,14 +5,19 @@
     class="new-account-create"
     title="New Account"
   >
-    <guide icon="⅓">
+    <guide>
+      <ae-fraction
+        slot="icon"
+        numerator="2"
+        denominator="4"
+      />
       You need the <em>recovery</em>
-               <br><em>phrase</em> in case you
-               <br>forget your <strong>password</strong>.
-               <br>
-               <br>Now go ahead, <mark>write it</mark>
-               <br><mark>down</mark> in the correct
-               <br>order.
+      <br><em>phrase</em> in case you
+      <br>forget your <strong>password</strong>.
+      <br>
+      <br>Now go ahead, <mark>write it</mark>
+      <br><mark>down</mark> in the correct
+      <br>order.
     </guide>
     <p class="mnemonic">
       {{ seed }}
@@ -39,10 +44,13 @@ import { generateMnemonic } from '@aeternity/bip39';
 import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
+import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
-  components: { MobilePage, AeButton, Guide },
+  components: {
+    MobilePage, AeButton, Guide, AeFraction,
+  },
   data: () => ({
     seed: generateMnemonic(),
     readingPaused: false,
