@@ -34,15 +34,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .apps {
   .shortcuts {
     display: flex;
 
     .app-shortcut {
-      margin-right: 95px;
+      margin-right: rem(95px);
     }
   }
 }
