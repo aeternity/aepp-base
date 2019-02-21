@@ -91,7 +91,6 @@ export default {
     }
 
     /deep/ img {
-      margin: 0 rem(9px) rem(4px) 0;
       width: rem(33px);
     }
   }
