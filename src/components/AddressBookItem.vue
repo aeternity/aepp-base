@@ -3,7 +3,7 @@
     class="address-book-item"
     @click="$emit('click')"
   >
-    <ae-identity-avatar :address="address" />
+    <AeIdentityAvatar :address="address" />
     <div class="details">
       <div class="name">
         {{ name }}

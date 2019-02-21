@@ -1,12 +1,12 @@
 <template>
-  <ae-modal-light
+  <AeModalLight
     v-if="alert"
     :title="alert.title"
     class="alert-modal"
   >
     {{ alert.text }}
 
-    <ae-button
+    <AeButton
       slot="buttons"
       size="small"
       plain
@@ -14,8 +14,8 @@
       @click="alert.resolve"
     >
       {{ alert.buttonText || 'Ok' }}
-    </ae-button>
-  </ae-modal-light>
+    </AeButton>
+  </AeModalLight>
 </template>
 
 <script>

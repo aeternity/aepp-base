@@ -1,12 +1,12 @@
 <template>
-  <component
+  <Component
     :is="to ? 'ae-link' : 'button'"
     :to="to"
     class="button-plain"
     @click="$emit('click', $event)"
   >
     <slot />
-  </component>
+  </Component>
 </template>
 
 <script>

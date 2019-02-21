@@ -1,11 +1,11 @@
 <template>
-  <mobile-page
+  <MobilePage
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
     title="Recover Account"
   >
-    <guide>
-      <ae-fraction
+    <Guide>
+      <AeFraction
         slot="icon"
         numerator="1"
         denominator="2"
@@ -15,13 +15,13 @@
       <br>The one you wrote
       <br>down during <mark>account</mark>
       <br><mark>creation</mark>.
-    </guide>
+    </Guide>
 
     <form
       :id="_uid"
       @submit.prevent="setSeed"
     >
-      <ae-input-mnemonic
+      <AeInputMnemonic
         v-model="seed"
         v-validate="'required|mnemonic'"
         autofocus
@@ -31,15 +31,15 @@
       />
     </form>
 
-    <ae-button
+    <AeButton
       slot="footer"
       :disabled="errors.any()"
       :form="_uid"
       fill="secondary"
     >
       Recover account
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

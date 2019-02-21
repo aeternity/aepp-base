@@ -3,58 +3,58 @@
     v-if="showAccountSwitcher"
     class="account-switcher"
   >
-    <transition
+    <Transition
       appear
       name="fade"
     >
-      <ae-card
+      <AeCard
         v-clickaway="toggleAccountSwitcher"
         fill="maximum"
       >
         <div class="list">
-          <list-item-account
+          <ListItemAccount
             v-for="(account, index) in identities"
             :key="account.address"
             v-bind="account"
           >
-            <ae-radio
+            <AeRadio
               slot="right"
               :checked="index === selectedIdentityIdx"
               @change="selectIdentity(index)"
             />
-          </list-item-account>
+          </ListItemAccount>
 
-          <list-item
+          <ListItem
             :to="{ name: 'accounts-new' }"
             title="New subaccount"
             @click.native="toggleAccountSwitcher"
           >
-            <ae-icon
+            <AeIcon
               slot="icon"
               fill="primary"
               face="round"
               name="plus"
             />
-          </list-item>
+          </ListItem>
 
-          <list-item
+          <ListItem
             title="Create a vault for AirGap"
             @click="toggleAccountSwitcher"
           >
-            <ae-icon
+            <AeIcon
               slot="icon"
               fill="alternative"
               face="round"
               name="plus"
             />
-          </list-item>
+          </ListItem>
         </div>
-        <balance
+        <Balance
           :balance="totalBalance"
           total
         />
-      </ae-card>
-    </transition>
+      </AeCard>
+    </Transition>
   </div>
 </template>
 

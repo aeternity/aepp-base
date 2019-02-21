@@ -3,7 +3,7 @@
     <div class="title">
       {{ title }}
     </div>
-    <ae-address
+    <AeAddress
       :address="address"
       split-by="9"
     />

@@ -1,12 +1,12 @@
 <template>
   <div :class="['ae-card', fill]">
     <slot />
-    <ae-toolbar
+    <AeToolbar
       v-if="$slots['toolbar']"
       :fill="fill"
     >
       <slot name="toolbar" />
-    </ae-toolbar>
+    </AeToolbar>
   </div>
 </template>
 

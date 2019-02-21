@@ -19,7 +19,7 @@
         :setFocus="f => focus = f"
       />
     </main>
-    <ae-toolbar v-if="footer || $slots.footer || footerRight || $slots['footer-right']">
+    <AeToolbar v-if="footer || $slots.footer || footerRight || $slots['footer-right']">
       <div>
         {{ footer }}
         <slot name="footer" />
@@ -28,7 +28,7 @@
         {{ footerRight }}
         <slot name="footer-right" />
       </div>
-    </ae-toolbar>
+    </AeToolbar>
   </div>
 </template>
 

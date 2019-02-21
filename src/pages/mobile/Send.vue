@@ -1,32 +1,32 @@
 <template>
-  <mobile-page
+  <MobilePage
     :right-button-to="{ name: 'transfer' }"
     right-button-icon-name="close"
     header-fill="primary"
     class="send"
   >
     <template slot="header">
-      <guide fill="neutral">
-        <ae-fraction
+      <Guide fill="neutral">
+        <AeFraction
           slot="icon"
           numerator="1"
           denominator="3"
         />
         <em>New Transfer</em>
         <br>from
-        <ae-identicon
+        <AeIdenticon
           :address="activeIdentity.address"
           size="s"
         />
         {{ ' ' }}
         <em>{{ activeIdentity.name }}</em>
-      </guide>
+      </Guide>
 
       <form
         :id="_uid"
         @submit.prevent="setAddress"
       >
-        <ae-input-address
+        <AeInputAddress
           v-model="accountTo"
           v-validate="'required|address'"
           autofocus
@@ -38,14 +38,14 @@
       </form>
     </template>
 
-    <ae-button
+    <AeButton
       :disabled="errors.any()"
       :form="_uid"
       fill="secondary"
       @click="setAddress"
     >
       Next
-    </ae-button>
+    </AeButton>
 
     <div
       v-if="identities.length > 1"
@@ -53,7 +53,7 @@
     >
       Or transfer to your own account
     </div>
-    <list-item-account
+    <ListItemAccount
       v-for="account in identities.filter(i => i !== activeIdentity)"
       :key="account.address"
       :to="{
@@ -63,12 +63,12 @@
       border-dark
       v-bind="account"
     >
-      <ae-icon
+      <AeIcon
         slot="right"
         name="left-more"
       />
-    </list-item-account>
-  </mobile-page>
+    </ListItemAccount>
+  </MobilePage>
 </template>
 
 <script>

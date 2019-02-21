@@ -1,8 +1,8 @@
 <template>
   <div class="network-add">
-    <guide>Connect to<br><em>another node</em></guide>
+    <Guide>Connect to<br><em>another node</em></Guide>
     <form @submit.prevent="addNetwork">
-      <ae-input
+      <AeInput
         v-model="name"
         v-validate="'required'"
         :error="errors.has('name')"
@@ -11,7 +11,7 @@
         header="Node Name"
         name="name"
       />
-      <ae-input
+      <AeInput
         v-model="url"
         v-validate="{
           required: true,
@@ -23,20 +23,20 @@
         header="Node URL"
         name="url"
       />
-      <ae-button
+      <AeButton
         :disabled="errors.any()"
         fill="secondary"
       >
         Connect
-      </ae-button>
-      <ae-button
+      </AeButton>
+      <AeButton
         :to="finallyTo"
         v-bind="!finallyTo && { type: 'button' }"
         plain
         @click="$emit('finally')"
       >
         Cancel
-      </ae-button>
+      </AeButton>
     </form>
   </div>
 </template>

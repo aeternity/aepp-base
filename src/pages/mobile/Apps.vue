@@ -1,17 +1,17 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="apps"
     fill="neutral"
   >
-    <guide><em>Browse æpps</em></guide>
+    <Guide><em>Browse æpps</em></Guide>
 
-    <url-form @input="searchTerm = $event" />
+    <UrlForm @input="searchTerm = $event" />
 
     <template v-if="bookmarkedApps.length">
-      <guide>My æpps</guide>
+      <Guide>My æpps</Guide>
 
       <div class="shortcuts">
-        <app-shortcut
+        <AppShortcut
           v-for="(app, idx) in bookmarkedAppsToShow"
           :key="`app-shortcut-aeternity-app-${idx}`"
           v-bind="app"
@@ -20,11 +20,11 @@
       </div>
     </template>
 
-    <guide>æternity æpps</guide>
+    <Guide>æternity æpps</Guide>
 
-    <ae-card fill="maximum">
+    <AeCard fill="maximum">
       <template v-for="(app, idx) in aeternityApps">
-        <list-item
+        <ListItem
           :key="`list-item-aeternity-app-${idx}`"
           :to="{ name: 'app-browser', params: { path: app.path } }"
           :title="app.name"
@@ -35,7 +35,7 @@
             :src="app.icon"
             :alt="app.name"
           >
-        </list-item>
+        </ListItem>
         <p
           :key="idx"
           class="app-description"
@@ -43,8 +43,8 @@
           {{ app.description }}
         </p>
       </template>
-    </ae-card>
-  </mobile-page>
+    </AeCard>
+  </MobilePage>
 </template>
 
 <script>

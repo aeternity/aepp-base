@@ -1,35 +1,35 @@
 <template>
-  <mobile-page
+  <MobilePage
     v-if="addressBook.length"
     class="address-book"
     title="Addresses"
   >
-    <ae-divider />
+    <AeDivider />
     <template v-for="(c, idx) in addressBook">
-      <ae-link
+      <AeLink
         :key="`${idx}-address`"
         :to="path(c.address)"
       >
-        <address-book-item
+        <AddressBookItem
           :name="c.name"
           :address="c.address"
         >
-          <ae-icon
+          <AeIcon
             slot="icon"
             name="arrow"
             rotate="-45"
           />
-        </address-book-item>
-      </ae-link>
-      <ae-divider :key="`${idx}-divider`" />
+        </AddressBookItem>
+      </AeLink>
+      <AeDivider :key="`${idx}-divider`" />
     </template>
 
-    <fixed-add-button
+    <FixedAddButton
       :to="{ name: 'address-book-new' }"
       quick-id
     />
-  </mobile-page>
-  <address-book-no-contacts v-else />
+  </MobilePage>
+  <AddressBookNoContacts v-else />
 </template>
 
 <script>

@@ -1,27 +1,27 @@
 <template>
   <header class="header">
-    <router-link
+    <RouterLink
       :to="{ name: 'apps' }"
       class="logo"
     >
       <img src="../../assets/icons/base.svg">Base web
-    </router-link>
+    </RouterLink>
 
     <div class="links">
-      <router-link
+      <RouterLink
         v-for="link in links"
         :key="link.routeName"
         :to="{ name: link.routeName }"
       >
-        <ae-icon
+        <AeIcon
           :name="link.iconName"
           :class="link.iconClass"
         />
         {{ link.name }}
-      </router-link>
+      </RouterLink>
     </div>
 
-    <button-plain
+    <ButtonPlain
       :class="{ empty: !account }"
       class="active-account"
       @click="toggleSidebar"
@@ -32,8 +32,8 @@
           {{ account ? `${prefixedAmount(account.balance)} AE` : 'With Base æpp or Ledger' }}
         </div>
       </div>
-      <ae-identicon :address="account ? account.address : ''" />
-    </button-plain>
+      <AeIdenticon :address="account ? account.address : ''" />
+    </ButtonPlain>
   </header>
 </template>
 

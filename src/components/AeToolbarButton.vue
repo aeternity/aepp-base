@@ -1,11 +1,11 @@
 <template>
-  <button-plain
+  <ButtonPlain
     class="ae-toolbar-button"
     v-bind="$attrs"
     v-on="$listeners"
   >
     <slot />
-  </button-plain>
+  </ButtonPlain>
 </template>
 
 <script>

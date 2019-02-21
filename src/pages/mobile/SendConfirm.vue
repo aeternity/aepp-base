@@ -1,6 +1,6 @@
 <template>
   <div class="send-confirm">
-    <ae-loader />
+    <AeLoader />
   </div>
 </template>
 

@@ -1,21 +1,21 @@
 <template>
-  <mobile-page
+  <MobilePage
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
   >
-    <guide>
+    <Guide>
       <em>Hello!</em>{{ ' ' }}<img :src="wavingHandEmoji">
       {{ ' ' }}<mark>Log in</mark> to
       <br>æternity with your
       <br>password
-    </guide>
+    </Guide>
 
     <form
       :id="_uid"
       @submit.prevent="unlockSavedKeystore"
     >
-      <password-purpose />
-      <ae-input-password
+      <PasswordPurpose />
+      <AeInputPassword
         v-model="password"
         v-validate="'required|min:4'"
         autofocus
@@ -30,28 +30,28 @@
           </template>
           <template v-else-if="wrongPassword">
             Try again or
-            <router-link :to="{ name: 'recover' }">
+            <RouterLink :to="{ name: 'recover' }">
               recover account
-            </router-link>
+            </RouterLink>
           </template>
           <template v-else>
-            <router-link :to="{ name: 'recover' }">
+            <RouterLink :to="{ name: 'recover' }">
               Recover account
-            </router-link>
+            </RouterLink>
           </template>
         </template>
-      </ae-input-password>
+      </AeInputPassword>
     </form>
 
-    <ae-button
+    <AeButton
       slot="footer"
       :disabled="errors.any() || wrongPassword"
       :form="_uid"
       fill="secondary"
     >
       Log in
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

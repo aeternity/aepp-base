@@ -1,48 +1,48 @@
 <template>
-  <mobile-page fill="primary">
-    <guide fill="neutral">
+  <MobilePage fill="primary">
+    <Guide fill="neutral">
       <em>Call contract method</em>
       <br>by
-      <ae-identicon
+      <AeIdenticon
         :address="activeIdentity.address"
         size="s"
       />
       {{ ' ' }}
       <em>{{ activeIdentity.name }}</em>
-    </guide>
+    </Guide>
 
-    <confirm-modal-amount :amount="amount" />
+    <ConfirmModalAmount :amount="amount" />
 
-    <confirm-modal-fee-input
+    <ConfirmModalFeeInput
       v-model="newFee"
       :min="minFee"
     />
 
-    <confirm-modal-raw-data
+    <ConfirmModalRawData
       name="Method call data"
       :data="callData"
     />
 
-    <confirm-modal-address
+    <ConfirmModalAddress
       name="Contract Address"
       :address="contractId"
     />
 
-    <ae-button-group slot="footer">
-      <ae-button
+    <AeButtonGroup slot="footer">
+      <AeButton
         fill="light"
         @click="denyHandler"
       >
         Cancel
-      </ae-button>
-      <ae-button
+      </AeButton>
+      <AeButton
         fill="secondary"
         @click="allowHandler"
       >
         Confirm
-      </ae-button>
-    </ae-button-group>
-  </mobile-page>
+      </AeButton>
+    </AeButtonGroup>
+  </MobilePage>
 </template>
 
 <script>

@@ -1,15 +1,15 @@
 <template>
-  <confirm-modal-item class="confirm-modal-field">
-    <confirm-modal-row :class="{ 'not-last': $slots.default }">
+  <ConfirmModalItem class="confirm-modal-field">
+    <ConfirmModalRow :class="{ 'not-last': $slots.default }">
       <span class="name">
         {{ name }}
       </span>
       <span class="value">
         {{ value }}
       </span>
-    </confirm-modal-row>
+    </ConfirmModalRow>
     <slot />
-  </confirm-modal-item>
+  </ConfirmModalItem>
 </template>
 
 <script>

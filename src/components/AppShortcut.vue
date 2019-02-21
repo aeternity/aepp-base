@@ -1,5 +1,5 @@
 <template>
-  <button-plain
+  <ButtonPlain
     v-bind="$attrs"
     class="app-shortcut"
   >
@@ -8,7 +8,7 @@
       :alt="name"
     >
     {{ name }}
-  </button-plain>
+  </ButtonPlain>
 </template>
 
 <script>

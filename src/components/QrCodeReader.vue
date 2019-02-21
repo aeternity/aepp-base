@@ -1,6 +1,6 @@
 <template>
   <div class="qr-code-reader">
-    <header-mobile
+    <HeaderMobile
       :title="title"
       left-button-icon-name="back"
       @left-button-click="cancelReading"

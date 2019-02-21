@@ -1,43 +1,43 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="onboarding"
     fill="neutral"
   >
-    <transition
+    <Transition
       mode="out-in"
       appear
     >
-      <router-view />
-    </transition>
+      <RouterView />
+    </Transition>
 
     <template slot="footer">
-      <ae-button
+      <AeButton
         :to="{ name: 'new-account'}"
         size="small"
         plain
       >
         Skip
-      </ae-button>
-      <transition-group
+      </AeButton>
+      <TransitionGroup
         name="step-dots"
         class="step-dots"
       >
-        <router-link
+        <RouterLink
           v-for="(name, idx) in stepRouteNames"
           :key="name === $route.name ? 'active' : idx - (currentStepIdx < idx ? 1 : 0)"
           :class="{ active: name === $route.name }"
           :to="{ name }"
         />
-      </transition-group>
-      <ae-button
+      </TransitionGroup>
+      <AeButton
         :to="{ name: isLastStep ? 'new-account' : stepRouteNames[currentStepIdx + 1] }"
         size="small"
         plain
       >
         {{ isLastStep ? 'Start' : 'Next' }}
-      </ae-button>
+      </AeButton>
     </template>
-  </mobile-page>
+  </MobilePage>
 </template>
 
 <script>

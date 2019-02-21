@@ -1,5 +1,5 @@
 <template>
-  <ae-textarea-formatted
+  <AeTextareaFormatted
     class="ae-input-mnemonic"
     header="Recovery phrase"
     rows="3"

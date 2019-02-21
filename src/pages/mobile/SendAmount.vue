@@ -1,5 +1,5 @@
 <template>
-  <mobile-page
+  <MobilePage
     :left-button-to="{ name: 'send' }"
     :right-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
@@ -7,39 +7,39 @@
     header-fill="primary"
   >
     <template slot="header">
-      <guide fill="neutral">
-        <ae-fraction
+      <Guide fill="neutral">
+        <AeFraction
           slot="icon"
           numerator="2"
           denominator="3"
         />
         <em>New Transfer</em>
         <br>from
-        <ae-identicon
+        <AeIdenticon
           :address="activeIdentity.address"
           size="s"
         />
         {{ ' ' }}
         <em>{{ activeIdentity.name }}</em>
         <br>to
-        <ae-identicon
+        <AeIdenticon
           :address="to"
           size="s"
         />
         {{ ' ' }}
         <em>
-          <ae-address
+          <AeAddress
             :address="to"
             length="short"
           />
         </em>
-      </guide>
+      </Guide>
 
       <form
         :id="_uid"
         @submit.prevent="setAmount"
       >
-        <ae-input-amount-ae
+        <AeInputAmountAe
           v-model="amount"
           v-validate="{
             required: true,
@@ -55,14 +55,14 @@
       </form>
     </template>
 
-    <ae-button
+    <AeButton
       :disabled="errors.any()"
       :form="_uid"
       fill="secondary"
     >
       Next
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

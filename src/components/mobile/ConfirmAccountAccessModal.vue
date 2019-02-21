@@ -1,38 +1,38 @@
 <template>
-  <ae-modal class="confirm-account-access-modal">
-    <guide>
+  <AeModal class="confirm-account-access-modal">
+    <Guide>
       <img
         v-if="app.icon"
         :src="app.icon"
       > {{ app.name }}
       <br>requests access to
-      <br><ae-identicon
+      <br><AeIdenticon
         :address="activeIdentity.address"
         size="s"
       /> {{ activeIdentity.name }}
-    </guide>
+    </Guide>
 
-    <confirm-modal-permission name="Accessing accounts">
+    <ConfirmModalPermission name="Accessing accounts">
       This aepp will be able to read your public key
-    </confirm-modal-permission>
+    </ConfirmModalPermission>
 
-    <confirm-modal-permission name="Preparing transactions">
+    <ConfirmModalPermission name="Preparing transactions">
       This allows this app to prepare a transaction.
       You will need to sign the transaction manually.
-    </confirm-modal-permission>
+    </ConfirmModalPermission>
 
-    <ae-button-group>
-      <ae-button
+    <AeButtonGroup>
+      <AeButton
         fill="secondary"
         @click="denyHandler"
       >
         Deny
-      </ae-button>
-      <ae-button @click="allowHandler">
+      </AeButton>
+      <AeButton @click="allowHandler">
         Allow
-      </ae-button>
-    </ae-button-group>
-  </ae-modal>
+      </AeButton>
+    </AeButtonGroup>
+  </AeModal>
 </template>
 
 <script>

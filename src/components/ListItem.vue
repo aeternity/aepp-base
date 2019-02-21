@@ -1,5 +1,5 @@
 <template>
-  <component
+  <Component
     :is="renderAs"
     :to="to"
     class="list-item"
@@ -23,7 +23,7 @@
       />
       <slot name="right" />
     </div>
-  </component>
+  </Component>
 </template>
 
 <script>

@@ -1,12 +1,12 @@
 <template>
-  <mobile-page
+  <MobilePage
     :left-button-to="{ name: 'new-account-create' }"
     left-button-icon-name="back"
     class="new-account-confirm"
     title="New Account"
   >
-    <guide>
-      <ae-fraction
+    <Guide>
+      <AeFraction
         slot="icon"
         numerator="3"
         denominator="4"
@@ -14,50 +14,50 @@
       <em>Tap the words</em> in the
       <br>correct order to recreate
       <br>your phrase.
-    </guide>
+    </Guide>
 
-    <button-mnemonic-word
+    <ButtonMnemonicWord
       v-for="(word, index) in seedPermutation"
       :key="index"
       :disabled="selectedWordIds.includes(index)"
       @click="wordClick(index)"
     >
       {{ word }}
-    </button-mnemonic-word>
+    </ButtonMnemonicWord>
 
-    <ae-input-wrapper
+    <AeInputWrapper
       :error="error"
       :header="error ? 'Oops! Not the correct order, try again' : 'Your recovery phrase'"
     >
       <template v-if="selectedWordIds.length">
-        <button-mnemonic-word
+        <ButtonMnemonicWord
           v-for="index in selectedWordIds"
           :key="index"
           icon-close
           @click="wordClick(index)"
         >
           {{ seedPermutation[index] }}
-        </button-mnemonic-word>
+        </ButtonMnemonicWord>
       </template>
-      <button-mnemonic-word
+      <ButtonMnemonicWord
         v-for="placeholderWord in ['first', 'second', 'third', '···']"
         v-else
         :key="placeholderWord"
         disabled
       >
         {{ placeholderWord }}
-      </button-mnemonic-word>
-    </ae-input-wrapper>
+      </ButtonMnemonicWord>
+    </AeInputWrapper>
 
-    <ae-button
+    <AeButton
       slot="footer"
       :disabled="selectedWordIds.length !== seedPermutation.length"
       fill="secondary"
       @click="confirmPhrase"
     >
       Confirm
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

@@ -1,16 +1,16 @@
 <template>
   <div class="apps">
-    <guide size="big">
+    <Guide size="big">
       æpps <em>browser</em> (beta)
-    </guide>
+    </Guide>
 
-    <note>
+    <Note>
       æpps running working with the æternity blockchain will be visible here.
       We will implement a full æpp browser here soon. The æpps listed below are now only links.
-    </note>
+    </Note>
 
     <div class="shortcuts">
-      <app-shortcut
+      <AppShortcut
         v-for="(app, idx) in aeternityApps"
         :key="idx"
         v-bind="app"

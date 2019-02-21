@@ -1,11 +1,11 @@
 <template>
-  <mobile-page
+  <MobilePage
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
     title="New Account"
   >
-    <guide>
-      <ae-fraction
+    <Guide>
+      <AeFraction
         slot="icon"
         numerator="1"
         denominator="4"
@@ -19,16 +19,16 @@
       <br><mark>it down</mark>.
       <br>
       <br>And hide it from all <em>evil</em>.
-    </guide>
+    </Guide>
 
-    <ae-button
+    <AeButton
       slot="footer"
       :to="{ name: 'new-account-create' }"
       fill="secondary"
     >
       Generate Recovery Phrase
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

@@ -1,39 +1,39 @@
 <template>
   <div class="receive">
-    <guide size="big">
+    <Guide size="big">
       <em>Receive</em> tokens
-    </guide>
+    </Guide>
 
-    <note>
+    <Note>
       Let others scan your QR code or share your address
-    </note>
+    </Note>
 
-    <ae-card fill="maximum">
-      <ae-qr-code
+    <AeCard fill="maximum">
+      <AeQrCode
         :class="{ inactive: !account }"
         :data="address"
         :size="260"
       />
 
-      <ae-address-panel :address="address" />
+      <AeAddressPanel :address="address" />
 
-      <ae-button
+      <AeButton
         v-copy-on-click="address"
         :disabled="!account"
         fill="secondary"
       >
         Copy address
-      </ae-button>
+      </AeButton>
 
-      <ae-button
+      <AeButton
         v-if="!account"
         plain
         class="connect-an-account"
         @click="toggleSidebar"
       >
         Connect an account first
-      </ae-button>
-    </ae-card>
+      </AeButton>
+    </AeCard>
   </div>
 </template>
 

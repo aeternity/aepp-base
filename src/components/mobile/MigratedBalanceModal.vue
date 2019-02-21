@@ -1,5 +1,5 @@
 <template>
-  <ae-modal class="migrated-balance-modal">
+  <AeModal class="migrated-balance-modal">
     <div class="balance">
       <div class="label">
         {{ migratedBalance }}
@@ -8,17 +8,17 @@
     </div>
 
     <div class="buttons">
-      <ae-button @click="$emit('close')">
+      <AeButton @click="$emit('close')">
         Ok
-      </ae-button>
-      <ae-button
+      </AeButton>
+      <AeButton
         :to="'https://token-migration.aepps.com/#/status/result/' + activeIdentity.address"
         plain
       >
         See migrations
-      </ae-button>
+      </AeButton>
     </div>
-  </ae-modal>
+  </AeModal>
 </template>
 
 <script>

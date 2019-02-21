@@ -1,11 +1,11 @@
 <template>
-  <ae-card
+  <AeCard
     :fill="fill"
     class="ae-account"
   >
     <header>
-      <ae-identicon :address="address" />
-      <ae-input-plain
+      <AeIdenticon :address="address" />
+      <AeInputPlain
         v-if="nameEditable"
         v-focus="nameEditable"
         :value="name"
@@ -24,18 +24,18 @@
     </header>
 
     <main>
-      <ae-address
+      <AeAddress
         :address="address"
         length="medium"
       />
     </main>
 
-    <balance
+    <Balance
       slot="toolbar"
       :balance="balance"
       invert
     />
-  </ae-card>
+  </AeCard>
 </template>
 
 <script>

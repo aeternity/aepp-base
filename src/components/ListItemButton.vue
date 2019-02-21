@@ -1,5 +1,5 @@
 <template>
-  <button-plain
+  <ButtonPlain
     v-bind="$attrs"
     class="list-item-button"
     v-on="$listeners"
@@ -7,7 +7,7 @@
     <div class="content">
       <slot />
     </div>
-  </button-plain>
+  </ButtonPlain>
 </template>
 
 <script>
