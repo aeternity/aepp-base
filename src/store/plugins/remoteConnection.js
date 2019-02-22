@@ -7,7 +7,7 @@ import RpcPeer from '../../lib/rpc';
 import { genRandomBuffer } from '../utils';
 
 const BACKEND_URL = 'https://signaling.aepps.com';
-const PAIR_SYNC_FIELDS = ['apps', 'rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook'];
+const PAIR_SYNC_FIELDS = ['rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook'];
 
 export default (store) => {
   const open = () => {
