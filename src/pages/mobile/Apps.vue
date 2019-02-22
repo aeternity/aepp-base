@@ -106,7 +106,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
     grid-gap: 30px 10px;
-    justify-items: center;
+    justify-items: left;
   }
 
   .app-description {
