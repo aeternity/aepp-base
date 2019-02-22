@@ -105,7 +105,7 @@ export default {
   .shortcuts {
     margin: rem(20px) rem(-10px);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     grid-gap: 30px 10px;
     justify-items: center;
   }
