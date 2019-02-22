@@ -1,15 +1,15 @@
 <template>
   <div class="settings">
-    <guide size="big">
+    <Guide size="big">
       <em>Settings</em>
-    </guide>
+    </Guide>
 
-    <ae-card fill="maximum">
-      <list-item
+    <AeCard fill="maximum">
+      <ListItem
         title="Network"
         :subtitle="networkId ? `Network ID ${networkId}` : ''"
       >
-        <ae-icon
+        <AeIcon
           slot="icon"
           fill="secondary"
           face="round"
@@ -20,30 +20,30 @@
           class="value"
         >
           {{ currentNetwork.name }}
-          <button-plain @click="networkMode = 'switch'">
-            <ae-icon
+          <ButtonPlain @click="networkMode = 'switch'">
+            <AeIcon
               ref="icon"
               name="left-more"
             />
-          </button-plain>
+          </ButtonPlain>
         </div>
-      </list-item>
-    </ae-card>
+      </ListItem>
+    </AeCard>
 
-    <ae-popover
+    <AePopover
       :anchor="networkMode ? $refs.icon : null"
       @close="closePopover"
     >
-      <network-switcher
+      <NetworkSwitcher
         v-if="networkMode === 'switch'"
         @network-add-button-click="networkMode = 'add'"
         @switch="networkMode = false"
       />
-      <network-add
+      <NetworkAdd
         v-else-if="networkMode === 'add'"
         @finally="networkMode = 'switch'"
       />
-    </ae-popover>
+    </AePopover>
   </div>
 </template>
 

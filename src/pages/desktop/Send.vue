@@ -1,17 +1,17 @@
 <template>
   <div class="send">
-    <guide size="big">
+    <Guide size="big">
       <em>Send</em> AE from<br>
-      <ae-identicon :address="activeAccount.address" />
+      <AeIdenticon :address="activeAccount.address" />
       {{ activeAccount.name }}
-    </guide>
+    </Guide>
 
-    <note>
+    <Note>
       Paste the recipient address below. Or send to subaccounts, contacts or scan QR code.
-    </note>
+    </Note>
 
     <form @submit.prevent="send">
-      <ae-input-address
+      <AeInputAddress
         v-model="accountTo"
         v-validate="'required|address'"
         :error="errors.has('accountTo')"
@@ -21,7 +21,7 @@
         header="To"
       />
 
-      <ae-input-amount-ae
+      <AeInputAmountAe
         v-model="amount"
         v-validate="{
           required: true,
@@ -34,12 +34,12 @@
         name="amount"
       />
 
-      <ae-button :disabled="errors.any()">
+      <AeButton :disabled="errors.any()">
         Transfer
-      </ae-button>
+      </AeButton>
     </form>
 
-    <transfer-notification
+    <TransferNotification
       v-if="transferNotification"
       v-bind="transferNotification"
     />

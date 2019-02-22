@@ -1,13 +1,13 @@
 <template>
-  <confirm-modal-field
+  <ConfirmModalField
     class="confirm-modal-address"
     v-bind="$attrs"
   >
-    <ae-address
+    <AeAddress
       :address="address"
       split-by="6"
     />
-  </confirm-modal-field>
+  </ConfirmModalField>
 </template>
 
 <script>

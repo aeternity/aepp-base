@@ -1,15 +1,15 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="transfer"
     header-fill="neutral"
   >
     <template slot="header">
-      <guide>
+      <Guide>
         <em>Send and receive</em>
         <br>æternity tokens
-      </guide>
+      </Guide>
 
-      <ae-account
+      <AeAccount
         v-bind="activeIdentity"
         :name-editable="accountNameEditable"
         fill="primary"
@@ -17,29 +17,29 @@
         @name-input="name => renameIdentity(name)"
         @name-blur="accountNameEditable = false"
       >
-        <ae-dropdown slot="icon">
-          <ae-icon
+        <AeDropdown slot="icon">
+          <AeIcon
             slot="button"
             fill="white"
             name="more"
           />
           <li>
-            <ae-button @click="copyAddress">
-              <ae-icon name="copy" />
+            <AeButton @click="copyAddress">
+              <AeIcon name="copy" />
               Copy Address
-            </ae-button>
+            </AeButton>
           </li>
           <li>
-            <ae-button @click="accountNameEditable = true">
-              <ae-icon name="edit" />
+            <AeButton @click="accountNameEditable = true">
+              <AeIcon name="edit" />
               Rename
-            </ae-button>
+            </AeButton>
           </li>
-        </ae-dropdown>
-      </ae-account>
+        </AeDropdown>
+      </AeAccount>
     </template>
 
-    <list-item
+    <ListItem
       :to="{ name: 'send' }"
       title="Send"
       subtitle="Transfer funds"
@@ -49,12 +49,12 @@
         slot="icon"
         :src="moneyWithWingsEmoji"
       >
-      <ae-icon
+      <AeIcon
         slot="right"
         name="left-more"
       />
-    </list-item>
-    <list-item
+    </ListItem>
+    <ListItem
       :to="{ name: 'receive' }"
       title="Receive"
       subtitle="Share your address"
@@ -64,12 +64,12 @@
         slot="icon"
         :src="manTippingHandEmoji"
       >
-      <ae-icon
+      <AeIcon
         slot="right"
         name="left-more"
       />
-    </list-item>
-    <list-item
+    </ListItem>
+    <ListItem
       title="Tokens in migration"
       subtitle="Available after next hardfork"
       border-dark
@@ -79,23 +79,23 @@
         slot="icon"
         :src="glowingStarEmoji"
       >
-      <ae-icon
+      <AeIcon
         slot="right"
         name="left-more"
       />
-    </list-item>
+    </ListItem>
 
-    <transfer-notification
+    <TransferNotification
       v-if="showTransferNotification"
       :amount="BigNumber(amount)"
       :transaction-hash="transactionHash"
     />
 
-    <migrated-balance-modal
+    <MigratedBalanceModal
       v-if="showMigratedBalanceModal"
       @close="showMigratedBalanceModal = false"
     />
-  </mobile-page>
+  </MobilePage>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <confirm-modal-field
+  <ConfirmModalField
     class="confirm-modal-amount"
     name="Amount"
     :value="`${prefixedAmount(amount)} AE`"

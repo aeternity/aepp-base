@@ -1,15 +1,15 @@
 <template>
-  <button-plain
+  <ButtonPlain
     v-bind="$attrs"
     class="button-mnemonic-word"
     v-on="$listeners"
   >
     <slot />
-    <ae-icon
+    <AeIcon
       v-if="iconClose"
       name="close"
     />
-  </button-plain>
+  </ButtonPlain>
 </template>
 
 <script>

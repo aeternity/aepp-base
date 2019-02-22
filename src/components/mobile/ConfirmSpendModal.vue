@@ -1,63 +1,63 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="confirm-spend-modal"
     fill="primary"
   >
-    <guide fill="neutral">
-      <ae-fraction
+    <Guide fill="neutral">
+      <AeFraction
         v-if="stepFraction"
         slot="icon"
         v-bind="stepFraction"
       />
       <em>Complete your transfer</em>
       <br>from
-      <ae-identicon
+      <AeIdenticon
         :address="activeIdentity.address"
         size="s"
       />
       {{ ' ' }}
       <em>{{ activeIdentity.name }}</em>
       <br>to
-      <ae-identicon
+      <AeIdenticon
         :address="recipientId"
         size="s"
       />
       {{ ' ' }}
       <em>
-        <ae-address
+        <AeAddress
           :address="recipientId"
           length="short"
         />
       </em>
-    </guide>
+    </Guide>
 
-    <confirm-modal-amount :amount="amount" />
+    <ConfirmModalAmount :amount="amount" />
 
-    <confirm-modal-fee-input
+    <ConfirmModalFeeInput
       v-model="newFee"
       :min="minFee"
     />
 
-    <confirm-modal-address
+    <ConfirmModalAddress
       name="Recipient Account"
       :address="recipientId"
     />
 
-    <ae-button-group slot="footer">
-      <ae-button
+    <AeButtonGroup slot="footer">
+      <AeButton
         fill="light"
         @click="denyHandler"
       >
         Cancel
-      </ae-button>
-      <ae-button
+      </AeButton>
+      <AeButton
         fill="secondary"
         @click="allowHandler"
       >
         Confirm
-      </ae-button>
-    </ae-button-group>
-  </mobile-page>
+      </AeButton>
+    </AeButtonGroup>
+  </MobilePage>
 </template>
 
 <script>

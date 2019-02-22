@@ -1,70 +1,70 @@
 <template>
   <div class="connect-guide">
     <template v-if="!forLedger">
-      <guide size="small">
+      <Guide size="small">
         How to connect the <em>Base æpp</em>
-      </guide>
+      </Guide>
       <div class="steps">
-        <guide size="small">
-          <ae-fraction
+        <Guide size="small">
+          <AeFraction
             slot="icon"
             numerator="1"
             denominator="4"
           />
           Open the Base æpp on your mobile device
-        </guide>
-        <guide size="small">
-          <ae-fraction
+        </Guide>
+        <Guide size="small">
+          <AeFraction
             slot="icon"
             numerator="2"
             denominator="4"
           />
-          Go to Settings <ae-icon name="settings" /> in the tabbar
-        </guide>
-        <guide size="small">
-          <ae-fraction
+          Go to Settings <AeIcon name="settings" /> in the tabbar
+        </Guide>
+        <Guide size="small">
+          <AeFraction
             slot="icon"
             numerator="3"
             denominator="4"
           />
-          Click on Remote Connections <ae-icon name="device" /> and add a new one
-        </guide>
-        <guide size="small">
-          <ae-fraction
+          Click on Remote Connections <AeIcon name="device" /> and add a new one
+        </Guide>
+        <Guide size="small">
+          <AeFraction
             slot="icon"
             numerator="4"
             denominator="4"
           />
           Scan the QR code below
-        </guide>
+        </Guide>
       </div>
-      <ae-qr-code
+      <AeQrCode
         :data="peerId"
         :size="240"
       />
     </template>
 
     <template v-else>
-      <guide size="small">
+      <Guide size="small">
         How to connect the <em>Ledger</em>
-      </guide>
+      </Guide>
       <div class="steps">
-        <guide size="small">
-          <ae-fraction
+        <Guide size="small">
+          <AeFraction
             slot="icon"
             numerator="1"
             denominator="2"
           />
           Connect the Ledger via USB and unlock on the device
-        </guide>
-        <guide size="small">
-          <ae-fraction
+        </Guide>
+        <Guide size="small">
+          <AeFraction
             slot="icon"
             numerator="2"
             denominator="2"
           />
           Open the æternity app on the Ledger
-        </guide>
+        </Guide>
       </div>
     </template>
   </div>

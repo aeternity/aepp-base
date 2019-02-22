@@ -1,47 +1,47 @@
 <template>
   <div class="account-switcher">
     <header>
-      <ae-account
+      <AeAccount
         v-bind="activeAccount"
         fill="primary"
       >
-        <button-plain
+        <ButtonPlain
           slot="icon"
           v-copy-on-click="activeAccount.address"
         >
-          <ae-icon name="copy" />
-        </button-plain>
-      </ae-account>
+          <AeIcon name="copy" />
+        </ButtonPlain>
+      </AeAccount>
     </header>
 
     <main>
-      <list-item-account
+      <ListItemAccount
         v-for="(account, index) in accounts"
         :key="account.address"
         v-bind="account"
       >
-        <ae-radio
+        <AeRadio
           slot="right"
           :checked="account === activeAccount"
           @change="selectIdentity(index)"
         />
-      </list-item-account>
+      </ListItemAccount>
 
-      <list-item
+      <ListItem
         v-if="ableToCreateAccount"
         title="Create a new account"
         @click="createAccount"
       >
-        <ae-icon
+        <AeIcon
           slot="icon"
           fill="primary"
           face="round"
           name="plus"
         />
-      </list-item>
+      </ListItem>
     </main>
 
-    <balance
+    <Balance
       :balance="totalBalance"
       total
     />

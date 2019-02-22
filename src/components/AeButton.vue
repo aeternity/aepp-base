@@ -1,12 +1,12 @@
 <template>
-  <button-plain
+  <ButtonPlain
     :class="[fill, size, { plain }]"
     v-bind="$attrs"
     class="ae-button"
     v-on="$listeners"
   >
     <slot />
-  </button-plain>
+  </ButtonPlain>
 </template>
 
 <script>

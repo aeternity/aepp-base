@@ -1,20 +1,20 @@
 <template>
   <div class="app-browser">
     <header>
-      <url-form
+      <UrlForm
         :current-url="url"
         @new-url="newUrlHandler"
       />
 
-      <button-plain @click="toggleBookmarking">
-        <ae-icon :name="bookmarked ? 'bookmark-full' : 'bookmark'" />
-      </button-plain>
-      <button-plain :to="{ name: 'apps' }">
-        <ae-icon name="home" />
-      </button-plain>
+      <ButtonPlain @click="toggleBookmarking">
+        <AeIcon :name="bookmarked ? 'bookmark-full' : 'bookmark'" />
+      </ButtonPlain>
+      <ButtonPlain :to="{ name: 'apps' }">
+        <AeIcon name="home" />
+      </ButtonPlain>
     </header>
 
-    <progress-fake v-if="loading" />
+    <ProgressFake v-if="loading" />
 
     <iframe
       ref="iframe"

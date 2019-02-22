@@ -1,36 +1,36 @@
 <template>
-  <mobile-page fill="primary">
-    <guide fill="neutral">
+  <MobilePage fill="primary">
+    <Guide fill="neutral">
       <em>Sign raw transaction</em>
       <br>by
-      <ae-identicon
+      <AeIdenticon
         :address="activeIdentity.address"
         size="s"
       />
       {{ ' ' }}
       <em>{{ activeIdentity.name }}</em>
-    </guide>
+    </Guide>
 
-    <confirm-modal-raw-data
+    <ConfirmModalRawData
       name="Data to sign"
       :data="data"
     />
 
-    <ae-button-group slot="footer">
-      <ae-button
+    <AeButtonGroup slot="footer">
+      <AeButton
         fill="light"
         @click="denyHandler"
       >
         Cancel
-      </ae-button>
-      <ae-button
+      </AeButton>
+      <AeButton
         fill="secondary"
         @click="allowHandler"
       >
         Confirm
-      </ae-button>
-    </ae-button-group>
-  </mobile-page>
+      </AeButton>
+    </AeButtonGroup>
+  </MobilePage>
 </template>
 
 <script>

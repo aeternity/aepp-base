@@ -1,18 +1,18 @@
 <template>
-  <ae-button
+  <AeButton
     :class="{ 'quick-id': quickId, mobile: $globals.IS_MOBILE_DEVICE }"
     :to="to"
     class="fixed-add-button"
     type="dramatic"
     @click="$emit('click')"
   >
-    <ae-icon
+    <AeIcon
       slot="icon"
       name="plus"
       invert
       type="exciting"
     />
-  </ae-button>
+  </AeButton>
 </template>
 
 <script>

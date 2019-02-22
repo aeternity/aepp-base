@@ -1,21 +1,21 @@
 <template>
   <div id="app">
-    <router-view
+    <RouterView
       v-show="!hidePage"
       :class="{ grayscale }"
     />
-    <component
+    <Component
       :is="component"
       v-bind="props"
     />
 
-    <ae-banner v-if="notification">
+    <AeBanner v-if="notification">
       <img
         v-if="notification.icon"
         :src="notification.icon"
       >
       {{ notification.text }}
-      <ae-button
+      <AeButton
         v-if="notification.action"
         slot="right"
         plain
@@ -25,13 +25,13 @@
         @click="notification.action.handler"
       >
         {{ notification.action.name }}
-      </ae-button>
-    </ae-banner>
+      </AeButton>
+    </AeBanner>
 
-    <account-switcher />
-    <tab-bar v-if="$route.meta.displayFooter && !hidePage" />
+    <AccountSwitcher />
+    <TabBar v-if="$route.meta.displayFooter && !hidePage" />
 
-    <alert-modal />
+    <AlertModal />
   </div>
 </template>
 

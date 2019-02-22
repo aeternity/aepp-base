@@ -1,12 +1,12 @@
 <template>
-  <confirm-modal-item class="confirm-modal-permission">
+  <ConfirmModalItem class="confirm-modal-permission">
     <div class="name">
       {{ name }}
     </div>
     <div class="description">
       <slot />
     </div>
-  </confirm-modal-item>
+  </ConfirmModalItem>
 </template>
 
 <script>

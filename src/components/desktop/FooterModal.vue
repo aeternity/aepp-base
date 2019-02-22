@@ -1,20 +1,20 @@
 <template>
   <div class="footer-modal">
-    <transition name="fade">
-      <ae-overlay
+    <Transition name="fade">
+      <AeOverlay
         v-if="$slots.default"
         @click="$emit('toggle')"
       />
-    </transition>
+    </Transition>
     <div class="modal">
-      <transition name="scroll">
+      <Transition name="scroll">
         <div
           v-if="$slots.default"
           class="content"
         >
           <slot />
         </div>
-      </transition>
+      </Transition>
     </div>
   </div>
 </template>

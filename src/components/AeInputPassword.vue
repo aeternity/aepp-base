@@ -1,5 +1,5 @@
 <template>
-  <ae-input
+  <AeInput
     class="ae-input-password"
     :type="showPassword ? 'text' : 'password'"
     :value="value"
@@ -12,15 +12,15 @@
       :slot="slot"
       :name="slot"
     />
-    <ae-toolbar-button
+    <AeToolbarButton
       v-if="!hideRevealButton"
       slot="footer-right"
       type="button"
       @click="showPassword = !showPassword"
     >
-      <ae-icon name="eye" />
-    </ae-toolbar-button>
-  </ae-input>
+      <AeIcon name="eye" />
+    </AeToolbarButton>
+  </AeInput>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
   <div class="onboarding-page send">
     <img src="../../assets/onboarding/send.svg">
-    <guide>
+    <Guide>
       <em>Send & receive AE</em>
       <br>effortlessly
       <div class="note">
@@ -9,7 +9,7 @@
         <br>subaccounts. Receive by
         <br>sharing your address.
       </div>
-    </guide>
+    </Guide>
   </div>
 </template>
 

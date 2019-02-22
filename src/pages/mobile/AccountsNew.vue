@@ -1,20 +1,20 @@
 <template>
-  <mobile-page
+  <MobilePage
     header-fill="primary"
     right-button-icon-name="close"
     @right-button-click="$router.back()"
   >
     <template slot="header">
-      <guide fill="neutral">
+      <Guide fill="neutral">
         <em>Create new subaccount</em>
         <br>and name it
-      </guide>
+      </Guide>
 
       <form
         :id="_uid"
         @submit.prevent="handleAddAddress"
       >
-        <ae-input
+        <AeInput
           v-model="newAccountName"
           v-validate="'required'"
           autofocus
@@ -28,13 +28,13 @@
       </form>
     </template>
 
-    <ae-button
+    <AeButton
       fill="secondary"
       :form="_uid"
     >
       Create
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

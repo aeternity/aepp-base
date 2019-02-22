@@ -1,7 +1,7 @@
 <template>
-  <footer-modal>
-    <waiting-for-confirmation v-if="!ledgerConnected && transactionToSignByRemote" />
-  </footer-modal>
+  <FooterModal>
+    <WaitingForConfirmation v-if="!ledgerConnected && transactionToSignByRemote" />
+  </FooterModal>
 </template>
 
 <script>

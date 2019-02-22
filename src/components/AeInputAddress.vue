@@ -1,5 +1,5 @@
 <template>
-  <ae-textarea-formatted
+  <AeTextareaFormatted
     v-remove-spaces-on-copy
     :value="value"
     placeholder="ak_ …"
@@ -11,7 +11,7 @@
     v-bind="$attrs"
     v-on="$listeners"
   >
-    <ae-identicon
+    <AeIdenticon
       v-if="!$attrs.footer && !$slots.footer && value"
       slot="footer"
       :address="value"
@@ -20,37 +20,37 @@
 
     <template slot="footer-right">
       <template v-if="!$globals.IS_MOBILE_DEVICE">
-        <ae-toolbar-button
+        <AeToolbarButton
           v-if="accounts.length"
           ref="accounts-button"
           type="button"
           @click="showAccountsDropdown = true"
         >
-          <ae-icon name="card" />
-        </ae-toolbar-button>
+          <AeIcon name="card" />
+        </AeToolbarButton>
 
-        <ae-popover
+        <AePopover
           :anchor="showAccountsDropdown ? $refs['accounts-button'] : null"
           @close="showAccountsDropdown = false"
         >
-          <list-item-account
+          <ListItemAccount
             v-for="account in accounts"
             :key="account.address"
             v-bind="account"
             @click="setAddress(account.address)"
           />
-        </ae-popover>
+        </AePopover>
       </template>
 
-      <ae-toolbar-button
+      <AeToolbarButton
         type="button"
         @click="readValueFromQrCode"
       >
-        <ae-icon name="camera" />
+        <AeIcon name="camera" />
         {{ $globals.IS_MOBILE_DEVICE ? 'Scan' : '' }}
-      </ae-toolbar-button>
+      </AeToolbarButton>
     </template>
-  </ae-textarea-formatted>
+  </AeTextareaFormatted>
 </template>
 
 <script>

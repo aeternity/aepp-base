@@ -1,34 +1,34 @@
 <template>
-  <mobile-page
+  <MobilePage
     :right-button-to="{ name: 'address-book' }"
     right-button-icon-name="back"
     class="address-book"
     title="Addresses"
   >
-    <ae-divider />
+    <AeDivider />
     <form @submit.prevent="addAddressBookItem">
-      <ae-label
+      <AeLabel
         :for="`${_uid}-name`"
         :help-text="errors.first('name')"
         help-type="dramatic"
       >
         Contact name
-      </ae-label>
-      <ae-input
+      </AeLabel>
+      <AeInput
         :id="`${_uid}-name`"
         v-model="name"
         v-validate="'required'"
         name="name"
       />
 
-      <ae-label
+      <AeLabel
         :for="`${_uid}-address`"
         :help-text="errors.first('address')"
         help-type="dramatic"
       >
         Contact address
-      </ae-label>
-      <ae-address-input
+      </AeLabel>
+      <AeAddressInput
         :id="`${_uid}-address`"
         v-model="address"
         v-validate="'required|min:51|max:53'"
@@ -37,15 +37,15 @@
       />
     </form>
 
-    <ae-button
+    <AeButton
       slot="footer"
       :disabled="errors.any()"
       type="dramatic"
       @click="addAddressBookItem"
     >
       Save contact
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

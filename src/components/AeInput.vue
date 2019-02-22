@@ -1,5 +1,5 @@
 <template>
-  <ae-input-wrapper
+  <AeInputWrapper
     class="ae-input"
     v-bind="$attrs"
   >
@@ -18,7 +18,7 @@
       @blur="setFocus(false)"
       @input="$emit('input', $event.target.value)"
     >
-  </ae-input-wrapper>
+  </AeInputWrapper>
 </template>
 
 <script>

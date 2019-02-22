@@ -1,5 +1,5 @@
 <template>
-  <ledger-modal
+  <LedgerModal
     title="Define the Transaction fee"
     class="transaction-fee"
     closable
@@ -9,7 +9,7 @@
       :id="_uid"
       @submit.prevent="handleSubmit"
     >
-      <ae-input-amount
+      <AeInputAmount
         v-model="fee"
         v-validate="{
           required: true,
@@ -26,7 +26,7 @@
         step="0.001"
       />
 
-      <ae-input-range
+      <AeInputRange
         v-model="fee"
         :min="MIN_SPEND_TX_FEE_PICO"
         :max="MAX_REASONABLE_FEE_PICO"
@@ -34,20 +34,20 @@
       />
     </form>
 
-    <ledger-modal-note fill="dark">
+    <LedgerModalNote fill="dark">
       A higher transaction fee leads to a faster
       <br>transaction time.
-    </ledger-modal-note>
+    </LedgerModalNote>
 
-    <ae-button
+    <AeButton
       slot="footer"
       size="small"
       plain
       :form="_uid"
     >
       Next
-    </ae-button>
-  </ledger-modal>
+    </AeButton>
+  </LedgerModal>
 </template>
 
 <script>

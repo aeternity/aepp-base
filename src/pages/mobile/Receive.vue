@@ -1,23 +1,23 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="receive"
     :left-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
     header-fill="neutral"
   >
     <template slot="header">
-      <guide>
+      <Guide>
         <em>Let others scan</em>
         <br>your address
-      </guide>
+      </Guide>
 
-      <ae-account-reverse
+      <AeAccountReverse
         v-bind="activeIdentity"
         fill="neutral"
       />
     </template>
 
-    <list-item
+    <ListItem
       v-copy-on-click="activeIdentity.address"
       class="copy"
       title="Copy address"
@@ -28,14 +28,14 @@
         slot="icon"
         :src="writingHandEmoji"
       >
-      <ae-icon
+      <AeIcon
         slot="right"
         fill="alternative"
         face="round"
         name="check"
       />
-    </list-item>
-  </mobile-page>
+    </ListItem>
+  </MobilePage>
 </template>
 
 <script>

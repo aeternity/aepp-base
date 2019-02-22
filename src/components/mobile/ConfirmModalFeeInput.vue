@@ -1,15 +1,15 @@
 <template>
-  <confirm-modal-field
+  <ConfirmModalField
     class="confirm-modal-fee-input"
     name="Transaction fee"
     :value="`${toPicoString(value)} PICO AE`"
   >
-    <confirm-modal-row class="turtle-rabbit">
+    <ConfirmModalRow class="turtle-rabbit">
       <img src="../../assets/icons/turtle.svg">
       <img src="../../assets/icons/rabbit.svg">
-    </confirm-modal-row>
+    </ConfirmModalRow>
 
-    <ae-input-range
+    <AeInputRange
       fill="light"
       :value="value | toPicoString"
       :min="min | toPicoString"
@@ -17,7 +17,7 @@
       step="0.001"
       @input="$emit('input', toBigNumber($event))"
     />
-  </confirm-modal-field>
+  </ConfirmModalField>
 </template>
 
 <script>

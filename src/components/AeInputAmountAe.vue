@@ -1,5 +1,5 @@
 <template>
-  <ae-input-amount
+  <AeInputAmount
     class="ae-input-amount-ae"
     header="Amount"
     header-right="AE"

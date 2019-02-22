@@ -1,16 +1,16 @@
 <template>
-  <ledger-modal
+  <LedgerModal
     title="Sign transaction on the Ledger"
     class="sign-transaction-confirm"
   >
-    <ledger-modal-nano-s />
+    <LedgerModalNanoS />
 
-    <ae-loader />
+    <AeLoader />
 
     <div class="confirm">
       Sign the transaction on the Ledger
     </div>
-  </ledger-modal>
+  </LedgerModal>
 </template>
 
 <script>

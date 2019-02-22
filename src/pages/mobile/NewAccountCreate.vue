@@ -1,12 +1,12 @@
 <template>
-  <mobile-page
+  <MobilePage
     :left-button-to="{ name: 'new-account' }"
     left-button-icon-name="back"
     class="new-account-create"
     title="New Account"
   >
-    <guide>
-      <ae-fraction
+    <Guide>
+      <AeFraction
         slot="icon"
         numerator="2"
         denominator="4"
@@ -18,25 +18,25 @@
       <br>Now go ahead, <mark>write it</mark>
       <br><mark>down</mark> in the correct
       <br>order.
-    </guide>
+    </Guide>
     <p class="mnemonic">
       {{ seed }}
     </p>
 
-    <ae-button
+    <AeButton
       slot="footer"
       fill="secondary"
       @click="createSeed"
     >
       I wrote it down
-    </ae-button>
+    </AeButton>
 
     <div
       :style="{ animationPlayState: readingPaused ? 'paused' : 'running' }"
       class="progress"
       @animationend="readingEnded = true"
     />
-  </mobile-page>
+  </MobilePage>
 </template>
 
 <script>

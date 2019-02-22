@@ -3,7 +3,7 @@
     :class="fill"
     class="mobile-page"
   >
-    <header-mobile
+    <HeaderMobile
       :fill="headerFill || fill"
       :shadow="!!headerFill && headerFill !== fill && !$slots.header"
       v-bind="$attrs"

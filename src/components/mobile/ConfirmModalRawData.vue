@@ -1,12 +1,12 @@
 <template>
-  <confirm-modal-field
+  <ConfirmModalField
     class="confirm-modal-raw-data"
     v-bind="$attrs"
   >
     <code>
       {{ dataAsString }}
     </code>
-  </confirm-modal-field>
+  </ConfirmModalField>
 </template>
 
 <script>

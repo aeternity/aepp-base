@@ -1,7 +1,7 @@
 <template>
-  <mobile-page :title="recover ? 'Recover Account' : 'New Account'">
-    <guide>
-      <ae-fraction
+  <MobilePage :title="recover ? 'Recover Account' : 'New Account'">
+    <Guide>
+      <AeFraction
         slot="icon"
         :numerator="recover ? 2 : 4"
         :denominator="recover ? 2 : 4"
@@ -17,14 +17,14 @@
         Great, that's done. Now
         <br>create <mark>your <img :src="keyEmoji"> password</mark>
       </template>
-    </guide>
+    </Guide>
 
     <form
       :id="_uid"
       @submit.prevent="createKeystore"
     >
-      <password-purpose />
-      <ae-input-password
+      <PasswordPurpose />
+      <AeInputPassword
         v-model="password"
         v-validate="'required|min:4'"
         autofocus
@@ -34,7 +34,7 @@
         name="password"
         hide-reveal-button
       />
-      <ae-input-password
+      <AeInputPassword
         v-model="passwordConfirm"
         v-validate="`required|confirmed:${password}`"
         autocomplete="new-password"
@@ -46,15 +46,15 @@
       />
     </form>
 
-    <ae-button
+    <AeButton
       slot="footer"
       :form="_uid"
       :disabled="errors.any() || working"
       fill="secondary"
     >
       Confirm
-    </ae-button>
-  </mobile-page>
+    </AeButton>
+  </MobilePage>
 </template>
 
 <script>

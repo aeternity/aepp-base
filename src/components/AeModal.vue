@@ -1,17 +1,17 @@
 <template>
-  <ae-overlay
+  <AeOverlay
     class="ae-modal"
     @click="$emit('close')"
   >
-    <transition
+    <Transition
       appear
       name="scale"
     >
       <div class="modal">
         <slot />
       </div>
-    </transition>
-  </ae-overlay>
+    </Transition>
+  </AeOverlay>
 </template>
 
 <script>

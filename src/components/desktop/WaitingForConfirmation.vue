@@ -1,22 +1,22 @@
 <template>
   <div class="waiting-for-confirmation">
     <h1>Sign the transaction in the Base æpp</h1>
-    <step>
-      <ae-app-icon
+    <Step>
+      <AeAppIcon
         :src="require('../../assets/icons/base.svg')"
         class="base"
       />
       <h2>Base</h2>
       <p>Open your Base æpp, check the transaction details and sign</p>
-    </step>
+    </Step>
     <div>
-      <ae-button
+      <AeButton
         v-if="signingCancelable"
         type="dramatic"
         @click="cancelTransaction"
       >
         Cancel Transaction
-      </ae-button>
+      </AeButton>
     </div>
   </div>
 </template>

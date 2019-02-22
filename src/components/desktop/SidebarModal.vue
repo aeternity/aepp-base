@@ -1,14 +1,14 @@
 <template>
-  <transition>
-    <ae-overlay
+  <Transition>
+    <AeOverlay
       class="sidebar-modal"
       @click="$emit('close')"
     >
       <div class="modal">
         <slot />
       </div>
-    </ae-overlay>
-  </transition>
+    </AeOverlay>
+  </Transition>
 </template>
 
 <script>

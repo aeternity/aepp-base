@@ -4,27 +4,27 @@
     :class="[fill, { shadow, empty }]"
   >
     <header :class="{ padded }">
-      <button-plain
+      <ButtonPlain
         v-if="leftButtonIconName"
         class="left"
         :to="leftButtonTo"
         @click="$emit('left-button-click', $event)"
       >
-        <ae-icon :name="leftButtonIconName" />
-      </button-plain>
+        <AeIcon :name="leftButtonIconName" />
+      </ButtonPlain>
 
       <span class="title">
         {{ title }}<slot />
       </span>
 
-      <button-plain
+      <ButtonPlain
         v-if="rightButtonIconName"
         class="right"
         :to="rightButtonTo"
         @click="$emit('right-button-click', $event)"
       >
-        <ae-icon :name="rightButtonIconName" />
-      </button-plain>
+        <AeIcon :name="rightButtonIconName" />
+      </ButtonPlain>
     </header>
   </div>
 </template>

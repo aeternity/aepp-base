@@ -1,11 +1,11 @@
 <template>
-  <transition
+  <Transition
     appear
     name="fade"
   >
     <div class="transfer-notification">
       <div class="content">
-        <ae-icon
+        <AeIcon
           fill="alternative"
           face="round"
           name="check"
@@ -19,25 +19,25 @@
       </div>
 
       <div class="footer">
-        <ae-button
+        <AeButton
           :to="`https://explorer.aepps.com/#/tx/${transactionHash}`"
           fill="dark"
           size="small"
           plain
         >
           View on explorer
-        </ae-button>
-        <ae-button
+        </AeButton>
+        <AeButton
           fill="dark"
           size="small"
           plain
           @click="copyTx"
         >
           Copy tx hash
-        </ae-button>
+        </AeButton>
       </div>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script>

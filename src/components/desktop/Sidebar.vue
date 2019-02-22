@@ -1,5 +1,5 @@
 <template>
-  <sidebar-modal
+  <SidebarModal
     v-if="showSidebar"
     class="sidebar"
     @close="toggleSidebar"
@@ -12,32 +12,32 @@
         <template v-else>
           Your connected<br>account{{ accountsCount !== 1 ? 's': '' }}
         </template>
-        <button-plain @click="toggleSidebar">
-          <ae-icon name="close" />
-        </button-plain>
+        <ButtonPlain @click="toggleSidebar">
+          <AeIcon name="close" />
+        </ButtonPlain>
       </h1>
 
       <div class="tabs">
-        <button-plain
+        <ButtonPlain
           :class="{ active: !ledgerTab }"
           @click="ledgerTab = false"
         >
           Base æpp
-        </button-plain>
-        <button-plain
+        </ButtonPlain>
+        <ButtonPlain
           :class="{ active: ledgerTab }"
           @click="ledgerTab = true"
         >
           Ledger
-        </button-plain>
+        </ButtonPlain>
       </div>
     </header>
 
-    <component
+    <Component
       :is="currentTab"
       :for-ledger="ledgerTab"
     />
-  </sidebar-modal>
+  </SidebarModal>
 </template>
 
 <script>

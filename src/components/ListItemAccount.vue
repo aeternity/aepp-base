@@ -1,12 +1,12 @@
 <template>
-  <list-item
+  <ListItem
     v-bind="$attrs"
     :title="name"
     :subtitle="prefixedAmount(balance) + ' AE'"
     subtitle-monospace
     v-on="$listeners"
   >
-    <ae-identicon
+    <AeIdenticon
       slot="icon"
       :address="address"
     />
@@ -15,7 +15,7 @@
       :slot="slot"
       :name="slot"
     />
-  </list-item>
+  </ListItem>
 </template>
 
 <script>

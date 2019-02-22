@@ -1,14 +1,14 @@
 <template>
   <div class="onboarding-page subaccounts">
     <img src="../../assets/onboarding/subaccounts.svg">
-    <guide>
+    <Guide>
       <em>Create subaccounts</em>
       <br>in seconds
       <div class="note">
         Create dedicated accounts for
         <br>spending, storage and to fuel æpps.
       </div>
-    </guide>
+    </Guide>
   </div>
 </template>
 

@@ -1,15 +1,15 @@
 <template>
-  <mobile-page
+  <MobilePage
     :left-button-to="{ name: 'settings-network' }"
     left-button-icon-name="back"
     title="Connect to another node"
     header-fill="light"
     fill="neutral"
   >
-    <ae-card fill="maximum">
-      <network-add :finally-to="{ name: 'settings-network' }" />
-    </ae-card>
-  </mobile-page>
+    <AeCard fill="maximum">
+      <NetworkAdd :finally-to="{ name: 'settings-network' }" />
+    </AeCard>
+  </MobilePage>
 </template>
 
 <script>

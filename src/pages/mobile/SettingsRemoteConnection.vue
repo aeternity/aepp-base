@@ -1,20 +1,20 @@
 <template>
-  <mobile-page
+  <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     title="Remote Connection"
     header-fill="light"
     fill="neutral"
   >
-    <ae-card fill="maximum">
-      <list-item
+    <AeCard fill="maximum">
+      <ListItem
         v-for="follower in followers"
         :key="follower.id"
         :title="follower.name"
         :subtitle="follower.connected ? 'Connected' : `Disconnected at ${follower.disconnectedAt}`"
         inactive
       >
-        <ae-button
+        <AeButton
           slot="right"
           fill="primary"
           size="small"
@@ -22,14 +22,14 @@
           @click="removeFollower(follower.id)"
         >
           revoke
-        </ae-button>
-      </list-item>
+        </AeButton>
+      </ListItem>
 
-      <list-item-button :to="{ name: 'settings-remote-connection-new' }">
+      <ListItemButton :to="{ name: 'settings-remote-connection-new' }">
         Connect device
-      </list-item-button>
-    </ae-card>
-  </mobile-page>
+      </ListItemButton>
+    </AeCard>
+  </MobilePage>
 </template>
 
 <script>

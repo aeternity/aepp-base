@@ -1,38 +1,38 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="intro"
     fill="primary"
   >
-    <guide fill="neutral">
+    <Guide fill="neutral">
       <em>Base æpp</em>
       <br>æternity blockchain
       <br>power in your hands.
-    </guide>
+    </Guide>
 
     <template slot="footer">
-      <ae-button
+      <AeButton
         :to="{ name: keystore ? 'login' : 'recover' }"
         fill="secondary"
       >
         {{ keystore ? 'Login' : 'Recover' }}
-      </ae-button>
-      <ae-button
+      </AeButton>
+      <AeButton
         :to="{ name: 'new-account' }"
         fill="light"
         plain
       >
         Create New Account
-      </ae-button>
+      </AeButton>
       <hr>
-      <ae-button
+      <AeButton
         :to="{ name: 'onboarding' }"
         fill="light"
         plain
       >
         See how it works
-      </ae-button>
+      </AeButton>
     </template>
-  </mobile-page>
+  </MobilePage>
 </template>
 
 <script>

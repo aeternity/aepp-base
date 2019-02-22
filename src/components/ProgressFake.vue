@@ -1,7 +1,7 @@
 <template>
-  <transition appear>
+  <Transition appear>
     <div class="progress-fake" />
-  </transition>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>

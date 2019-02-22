@@ -1,32 +1,32 @@
 <template>
   <div class="tab-bar">
     <div class="wrapper">
-      <button-plain :to="browserPath || { name: 'apps' }">
-        <ae-icon name="grid" />
+      <ButtonPlain :to="browserPath || { name: 'apps' }">
+        <AeIcon name="grid" />
         æpps
-      </button-plain>
+      </ButtonPlain>
 
-      <button-plain :to="{ name: 'transfer' }">
-        <ae-icon name="transfer" />
+      <ButtonPlain :to="{ name: 'transfer' }">
+        <AeIcon name="transfer" />
         Transfer
-      </button-plain>
+      </ButtonPlain>
 
-      <button-plain
+      <ButtonPlain
         :class="showAccountSwitcher ? 'router-link-active' : ''"
         @click="() => !showAccountSwitcher && toggleAccountSwitcher()"
       >
-        <ae-identity-avatar :address="activeIdentity.address" />
-      </button-plain>
+        <AeIdentityAvatar :address="activeIdentity.address" />
+      </ButtonPlain>
 
-      <button-plain :to="{ name: 'address-book' }">
-        <ae-icon name="contacts" />
+      <ButtonPlain :to="{ name: 'address-book' }">
+        <AeIcon name="contacts" />
         Contacts
-      </button-plain>
+      </ButtonPlain>
 
-      <button-plain :to="{ name: 'settings' }">
-        <ae-icon name="settings" />
+      <ButtonPlain :to="{ name: 'settings' }">
+        <AeIcon name="settings" />
         Settings
-      </button-plain>
+      </ButtonPlain>
     </div>
   </div>
 </template>

@@ -1,41 +1,41 @@
 <template>
-  <mobile-page
+  <MobilePage
     v-if="addressBook.length"
     class="address-book"
     title="Addresses"
   >
-    <ae-divider />
+    <AeDivider />
     <template v-for="(c, idx) in addressBook">
-      <address-book-item
+      <AddressBookItem
         :key="`${idx}-address`"
         :name="c.name"
         :address="c.address"
         @click="openIdx = openIdx === idx ? -1 : idx"
       >
-        <ae-icon
+        <AeIcon
           slot="icon"
           :rotate="idx === openIdx ? -90 : 90"
           name="chevron"
         />
-      </address-book-item>
+      </AddressBookItem>
       <div
         v-if="idx === openIdx"
         :key="`${idx}-actions`"
         class="actions"
       >
-        <router-link :to="{ name: 'transfer', params: { to: c.address } }">
-          <ae-app-icon :src="require('../assets/icons/aepps/transfer.svg')" />
-        </router-link>
+        <RouterLink :to="{ name: 'transfer', params: { to: c.address } }">
+          <AeAppIcon :src="require('../assets/icons/aepps/transfer.svg')" />
+        </RouterLink>
       </div>
-      <ae-divider :key="`${idx}-divider`" />
+      <AeDivider :key="`${idx}-divider`" />
     </template>
 
-    <fixed-add-button
+    <FixedAddButton
       :to="{ name: 'address-book-new' }"
       quick-id
     />
-  </mobile-page>
-  <address-book-no-contacts v-else />
+  </MobilePage>
+  <AddressBookNoContacts v-else />
 </template>
 
 <script>

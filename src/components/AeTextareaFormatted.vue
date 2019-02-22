@@ -1,5 +1,5 @@
 <template>
-  <ae-textarea
+  <AeTextarea
     :value="formatDisplayValue(value)"
     v-bind="$attrs"
     v-on="listeners"
@@ -9,7 +9,7 @@
       :slot="slot"
       :name="slot"
     />
-  </ae-textarea>
+  </AeTextarea>
 </template>
 
 <script>

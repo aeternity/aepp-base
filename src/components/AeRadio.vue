@@ -7,7 +7,7 @@
       type="radio"
       @change="$emit('change')"
     >
-    <ae-icon
+    <AeIcon
       slot="right"
       face="round"
       name="check"

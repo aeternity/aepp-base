@@ -1,72 +1,72 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="settings"
     fill="neutral"
   >
-    <guide>
+    <Guide>
       <em>Settings</em>
-    </guide>
-    <ae-card fill="maximum">
+    </Guide>
+    <AeCard fill="maximum">
       <template v-if="$globals.IS_MOBILE_DEVICE">
-        <list-item
+        <ListItem
           title="Logout"
           subtitle="And see you soon!"
           @click="logOut"
         >
-          <ae-icon
+          <AeIcon
             slot="icon"
             fill="secondary"
             face="round"
             name="share"
           />
-        </list-item>
-        <list-item
+        </ListItem>
+        <ListItem
           title="Reset Key Storage"
           subtitle="After resetting, a recovery is required"
           @click="signOut"
         >
-          <ae-icon
+          <AeIcon
             slot="icon"
             fill="primary"
             face="round"
             name="sign-out"
           />
-        </list-item>
+        </ListItem>
       </template>
-      <list-item
+      <ListItem
         :to="{ name: 'settings-network' }"
         :subtitle="networkName"
         title="Network"
       >
-        <ae-icon
+        <AeIcon
           slot="icon"
           fill="secondary"
           face="round"
           name="globe"
         />
-      </list-item>
-      <list-item
+      </ListItem>
+      <ListItem
         v-if="$globals.IS_MOBILE_DEVICE"
         :to="{ name: 'settings-remote-connection' }"
         :subtitle="
           `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
         title="Remote connections"
       >
-        <ae-icon
+        <AeIcon
           slot="icon"
           fill="alternative"
           face="round"
           name="device"
         />
-      </list-item>
-    </ae-card>
+      </ListItem>
+    </AeCard>
     <div
       slot="footer"
       class="version"
     >
       Version {{ version }}
     </div>
-  </mobile-page>
+  </MobilePage>
 </template>
 
 <script>

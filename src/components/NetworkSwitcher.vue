@@ -1,43 +1,43 @@
 <template>
   <div class="network-switcher">
-    <list-item
+    <ListItem
       v-for="network in networks"
       :key="network.url"
       :title="network.name"
       :subtitle="network.url"
     >
-      <ae-dropdown
+      <AeDropdown
         v-if="network.custom"
         slot="icon"
         direction="left"
       >
-        <ae-icon
+        <AeIcon
           slot="button"
           name="more"
         />
         <li>
-          <ae-button-3 v-copy-on-click="network.url">
-            <ae-icon name="copy" />Copy link
-          </ae-button-3>
+          <AeButton3 v-copy-on-click="network.url">
+            <AeIcon name="copy" />Copy link
+          </AeButton3>
         </li>
         <li>
-          <ae-button-3 @click="removeNetwork">
-            <ae-icon name="close" />Remove
-          </ae-button-3>
+          <AeButton3 @click="removeNetwork">
+            <AeIcon name="close" />Remove
+          </AeButton3>
         </li>
-      </ae-dropdown>
-      <ae-radio
+      </AeDropdown>
+      <AeRadio
         slot="right"
         :checked="network === currentNetwork"
         @change="setRPCUrl(network.url)"
       />
-    </list-item>
-    <list-item-button
+    </ListItem>
+    <ListItemButton
       :to="networkAddButtonTo"
       @click="$emit('network-add-button-click')"
     >
       Connect to another node
-    </list-item-button>
+    </ListItemButton>
   </div>
 </template>
 

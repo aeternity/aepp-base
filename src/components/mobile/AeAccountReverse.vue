@@ -1,14 +1,14 @@
 <template>
-  <ae-card
+  <AeCard
     :fill="fill"
     class="ae-account-reverse"
   >
     <main>
-      <ae-qr-code
+      <AeQrCode
         :size="136"
         :data="activeIdentity.address"
       />
-      <ae-address
+      <AeAddress
         :address="activeIdentity.address"
         split-by="3"
       />
@@ -19,7 +19,7 @@
         {{ activeIdentity.name }}
       </span>
     </template>
-  </ae-card>
+  </AeCard>
 </template>
 
 <script>

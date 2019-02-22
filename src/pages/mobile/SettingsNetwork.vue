@@ -1,15 +1,15 @@
 <template>
-  <mobile-page
+  <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     title="Network"
     header-fill="light"
     fill="neutral"
   >
-    <ae-card fill="maximum">
-      <network-switcher :network-add-button-to="{ name: 'settings-network-new' }" />
-    </ae-card>
-  </mobile-page>
+    <AeCard fill="maximum">
+      <NetworkSwitcher :network-add-button-to="{ name: 'settings-network-new' }" />
+    </AeCard>
+  </MobilePage>
 </template>
 
 <script>

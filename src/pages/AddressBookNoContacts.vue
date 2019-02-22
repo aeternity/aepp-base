@@ -1,17 +1,17 @@
 <template>
-  <mobile-page
+  <MobilePage
     class="address-book no-contacts"
     title="Addresses"
   >
-    <ae-divider />
+    <AeDivider />
     <div class="banner">
       No saved contacts.
     </div>
-    <fixed-add-button
+    <FixedAddButton
       :to="{ name: 'address-book-new' }"
       quick-id
     />
-  </mobile-page>
+  </MobilePage>
 </template>
 
 <script>

@@ -1,14 +1,14 @@
 <template>
   <div class="app-desktop">
     <div v-show="!hidePage">
-      <header-desktop />
+      <HeaderDesktop />
       <div class="page">
-        <router-view />
+        <RouterView />
       </div>
-      <sidebar-desktop />
-      <footer-desktop :show-back-button="$route.name !== 'apps'" />
+      <SidebarDesktop />
+      <FooterDesktop :show-back-button="$route.name !== 'apps'" />
     </div>
-    <component
+    <Component
       :is="component"
       v-bind="props"
     />

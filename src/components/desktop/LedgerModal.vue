@@ -1,5 +1,5 @@
 <template>
-  <ae-modal
+  <AeModal
     class="ledger-modal"
     @close="$emit('close')"
   >
@@ -10,12 +10,12 @@
       >
       {{ title }}
       <div>
-        <button-plain
+        <ButtonPlain
           v-if="closable"
           @click="$emit('close')"
         >
-          <ae-icon name="close" />
-        </button-plain>
+          <AeIcon name="close" />
+        </ButtonPlain>
       </div>
     </header>
 
@@ -26,7 +26,7 @@
     <footer v-if="$slots.footer">
       <slot name="footer" />
     </footer>
-  </ae-modal>
+  </AeModal>
 </template>
 
 <script>
