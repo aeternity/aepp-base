@@ -62,6 +62,7 @@ export default {
 
 <style scoped lang="scss">
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
 
 #app {
   -webkit-font-smoothing: antialiased;
@@ -79,6 +80,7 @@ export default {
     left: 0;
     right: 0;
     z-index: auto;
+    font-family: $font-sans;
 
     img {
       height: 22px;
