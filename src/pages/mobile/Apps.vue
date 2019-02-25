@@ -73,7 +73,8 @@ export default {
   }),
   computed: {
     ...mapState({
-      bookmarkedApps: ({ bookmarkedApps }, { getAppMetadata }) => bookmarkedApps
+      bookmarkedApps: ({ apps }, { getAppMetadata }) => apps
+        .filter(({ bookmarked }) => bookmarked)
         .map(app => ({ ...app, ...getAppMetadata(app.host) })),
     }),
     fuse() {
