@@ -1,31 +1,19 @@
 <template>
   <div class="network-switcher">
     <ListItem
-      v-for="network in networks"
+      v-for="(network, idx) in networks"
       :key="network.url"
       :title="network.name"
       :subtitle="network.url"
     >
-      <AeDropdown
+      <ButtonPlain
         v-if="network.custom"
         slot="icon"
-        direction="left"
+        :ref="`button-${idx}`"
+        @click="menuForNetworkIdx = idx"
       >
-        <AeIcon
-          slot="button"
-          name="more"
-        />
-        <li>
-          <AeButton3 v-copy-on-click="network.url">
-            <AeIcon name="copy" />Copy link
-          </AeButton3>
-        </li>
-        <li>
-          <AeButton3 @click="removeNetwork">
-            <AeIcon name="close" />Remove
-          </AeButton3>
-        </li>
-      </AeDropdown>
+        <AeIcon name="more" />
+      </ButtonPlain>
       <AeRadio
         slot="right"
         :checked="network === currentNetwork"
@@ -38,25 +26,42 @@
     >
       Connect to another node
     </ListItemButton>
+
+    <Menu
+      v-if="menuForNetworkIdx !== -1"
+      :anchor="$refs[`button-${menuForNetworkIdx}`][0]"
+      @close="menuForNetworkIdx = -1"
+    >
+      <MenuItem v-copy-on-click="networks[menuForNetworkIdx].url">
+        <AeIcon name="copy" />Copy link
+      </MenuItem>
+      <MenuItem @click="() => removeNetwork(menuForNetworkIdx)">
+        <AeIcon name="close" />Remove
+      </MenuItem>
+    </Menu>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { AeDropdown, AeIcon, AeButton as AeButton3 } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import copyOnClick from '../directives/copyOnClick';
 import ListItem from './ListItem.vue';
 import ListItemButton from './ListItemButton.vue';
+import ButtonPlain from './ButtonPlain.vue';
 import AeRadio from './AeRadio.vue';
+import Menu from './Menu.vue';
+import MenuItem from './MenuItem.vue';
 
 export default {
   components: {
     ListItem,
     ListItemButton,
-    AeDropdown,
+    ButtonPlain,
     AeIcon,
-    AeButton3,
     AeRadio,
+    Menu,
+    MenuItem,
   },
   directives: {
     copyOnClick,
@@ -64,6 +69,7 @@ export default {
   props: {
     networkAddButtonTo: { type: [Object, String], default: null },
   },
+  data: () => ({ menuForNetworkIdx: -1 }),
   computed: mapGetters(['networks', 'currentNetwork']),
   methods: {
     ...mapMutations(['removeNetwork']),
