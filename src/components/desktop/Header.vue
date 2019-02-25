@@ -47,7 +47,7 @@ export default {
   components: { AeIcon, AeIdenticon, ButtonPlain },
   data: () => ({
     links: [{
-      name: 'Browser',
+      name: 'æpps',
       routeName: 'apps',
       iconName: 'grid',
     }, {
