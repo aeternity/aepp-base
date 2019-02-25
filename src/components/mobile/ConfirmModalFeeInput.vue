@@ -2,7 +2,7 @@
   <ConfirmModalField
     class="confirm-modal-fee-input"
     name="Transaction fee"
-    :value="`${toPicoString(value)} PICO AE`"
+    :value="`${toMicroString(value)} MICRO AE`"
   >
     <ConfirmModalRow class="turtle-rabbit">
       <img src="../../assets/icons/turtle.svg">
@@ -11,10 +11,10 @@
 
     <AeInputRange
       fill="light"
-      :value="value | toPicoString"
-      :min="min | toPicoString"
-      :max="min.multipliedBy(10) | toPicoString"
-      step="0.001"
+      :value="value | toMicroString"
+      :min="min | toMicroString"
+      :max="min.multipliedBy(10) | toMicroString"
+      step="0.01"
       @input="$emit('input', toBigNumber($event))"
     />
   </ConfirmModalField>
@@ -25,10 +25,10 @@ import BigNumber from 'bignumber.js';
 import ConfirmModalField from './ConfirmModalField.vue';
 import ConfirmModalRow from './ConfirmModalRow.vue';
 import AeInputRange from '../AeInputRange.vue';
-import { MAGNITUDE_PICO } from '../../lib/constants';
+import { MAGNITUDE_MICRO } from '../../lib/constants';
 
-const toPicoString = value => value.shiftedBy(-MAGNITUDE_PICO).toFixed();
-const toBigNumber = value => BigNumber(value).shiftedBy(MAGNITUDE_PICO);
+const toMicroString = value => value.shiftedBy(-MAGNITUDE_MICRO).toFixed();
+const toBigNumber = value => BigNumber(value).shiftedBy(MAGNITUDE_MICRO);
 
 export default {
   components: {
@@ -36,12 +36,12 @@ export default {
     ConfirmModalField,
     ConfirmModalRow,
   },
-  filters: { toPicoString },
+  filters: { toMicroString },
   props: {
     value: { type: BigNumber, required: true },
     min: { type: BigNumber, required: true },
   },
-  methods: { toPicoString, toBigNumber },
+  methods: { toMicroString, toBigNumber },
 };
 </script>
 
