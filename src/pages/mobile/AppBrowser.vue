@@ -70,8 +70,8 @@ export default {
       return new URL(this.url).host;
     },
     ...mapState({
-      bookmarked({ bookmarkedApps }) {
-        return bookmarkedApps.some(({ host }) => host === this.host);
+      bookmarked({ apps }) {
+        return apps.some(({ host, bookmarked }) => host === this.host && bookmarked);
       },
     }),
   },
