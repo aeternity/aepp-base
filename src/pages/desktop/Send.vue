@@ -72,7 +72,7 @@ export default {
     accountTo: '',
     amount: '',
     MAGNITUDE,
-    MIN_SPEND_TX_FEE: BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE),
+    MIN_SPEND_TX_FEE,
     transferNotification: null,
   }),
   computed: {

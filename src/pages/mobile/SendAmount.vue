@@ -96,7 +96,7 @@ export default {
   data: () => ({
     amount: '',
     MAGNITUDE,
-    MIN_SPEND_TX_FEE: BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE),
+    MIN_SPEND_TX_FEE,
     BigNumber,
   }),
   computed: {

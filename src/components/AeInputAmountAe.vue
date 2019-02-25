@@ -12,9 +12,8 @@
 </template>
 
 <script>
-import BigNumber from 'bignumber.js';
 import AeInputAmount from './AeInputAmount.vue';
-import { MIN_SPEND_TX_FEE, MAGNITUDE } from '../lib/constants';
+import { MIN_SPEND_TX_FEE } from '../lib/constants';
 import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
@@ -25,7 +24,7 @@ export default {
     footerRight: { type: String, default: '' },
   },
   data: () => ({
-    minSpendTxFee: `${prefixedAmount(BigNumber(MIN_SPEND_TX_FEE).shiftedBy(-MAGNITUDE))} AE`,
+    minSpendTxFee: `${prefixedAmount(MIN_SPEND_TX_FEE)} AE`,
   }),
 };
 </script>
