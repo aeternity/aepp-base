@@ -3,8 +3,9 @@ import store from '../../store/index';
 import Intro from '../../pages/mobile/Intro.vue';
 import Onboarding from '../../pages/mobile/Onboarding.vue';
 import OnboardingWelcome from '../../pages/mobile/OnboardingWelcome.vue';
-import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import OnboardingSend from '../../pages/mobile/OnboardingSend.vue';
+import OnboardingAepps from '../../pages/mobile/OnboardingAepps.vue';
+import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
 import Apps from '../../pages/mobile/Apps.vue';
@@ -53,13 +54,17 @@ export default [{
     path: '',
     component: OnboardingWelcome,
   }, {
-    name: 'onboarding-subaccounts',
-    path: 'subaccounts',
-    component: OnboardingSubaccounts,
-  }, {
     name: 'onboarding-send',
     path: 'send',
     component: OnboardingSend,
+  }, {
+    name: 'onboarding-aepps',
+    path: 'aepps',
+    component: OnboardingAepps,
+  }, {
+    name: 'onboarding-subaccounts',
+    path: 'subaccounts',
+    component: OnboardingSubaccounts,
   }],
 }, {
   name: 'login',

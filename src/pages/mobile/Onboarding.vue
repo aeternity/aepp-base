@@ -49,8 +49,9 @@ export default {
   data: () => ({
     stepRouteNames: [
       'onboarding',
-      'onboarding-subaccounts',
       'onboarding-send',
+      'onboarding-aepps',
+      'onboarding-subaccounts',
     ],
   }),
   computed: {
