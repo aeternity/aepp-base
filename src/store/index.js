@@ -27,7 +27,7 @@ const store = new Vuex.Store({
   plugins: [
     persistState(({
       migrations, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
-      bookmarkedApps, cachedAppManifests,
+      apps, cachedAppManifests,
       mobile, desktop,
     }) => ({
       migrations,
@@ -36,7 +36,7 @@ const store = new Vuex.Store({
         selectedIdentityIdx,
         addressBook,
         customNetworks,
-        bookmarkedApps,
+        apps,
         cachedAppManifests,
         mobile: {
           keystore: mobile.keystore,
@@ -76,7 +76,7 @@ const store = new Vuex.Store({
     notification: null,
     addressBook: [],
     customNetworks: [],
-    bookmarkedApps: [],
+    apps: [],
     cachedAppManifests: {},
   },
 
@@ -97,8 +97,7 @@ const store = new Vuex.Store({
       name: rpcUrl,
       url: rpcUrl,
     },
-    getBookmarkedApp: ({ bookmarkedApps }) => appHost => bookmarkedApps
-      .find(({ host }) => host === appHost),
+    getApp: ({ apps }) => appHost => apps.find(({ host }) => host === appHost),
     getAppMetadata: ({ cachedAppManifests }) => (host) => {
       const manifest = cachedAppManifests[host];
 
@@ -177,18 +176,19 @@ const store = new Vuex.Store({
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
     },
     toggleAppBookmarking(state, host) {
-      if (store.getters.getBookmarkedApp(host)) {
-        state.bookmarkedApps = state.bookmarkedApps.filter(app => app.host !== host);
+      const app = store.getters.getApp(host);
+      if (app) {
+        Vue.set(app, 'bookmarked', !app.bookmarked);
         return;
       }
-      state.bookmarkedApps.push({ host });
+      state.apps.push({ host, bookmarked: true });
     },
     grantAccessToAccount(state, { appHost, accountAddress }) {
-      if (!store.getters.getBookmarkedApp(appHost)) {
-        store.commit('toggleAppBookmarking', appHost);
+      if (!store.getters.getApp(appHost)) {
+        state.apps.push({ host: appHost });
       }
 
-      const app = store.getters.getBookmarkedApp(appHost);
+      const app = store.getters.getApp(appHost);
       update(
         app,
         'permissions.accessToAccounts',

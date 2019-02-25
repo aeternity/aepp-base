@@ -26,7 +26,7 @@ export default store => store.watch(
             ...methods
               .map(m => [m, ({ params, origin }) => {
                 const { host } = new URL(origin);
-                const app = store.getters.getBookmarkedApp(host) || { host };
+                const app = store.getters.getApp(host) || { host };
                 return this[m](...params, { app });
               }])
               .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
