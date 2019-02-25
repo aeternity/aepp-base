@@ -20,4 +20,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./OnboardingPage.scss" scoped>
+<style lang="scss" src="./OnboardingPage.scss" scoped />
