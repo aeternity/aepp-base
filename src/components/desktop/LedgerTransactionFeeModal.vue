@@ -14,23 +14,23 @@
         v-validate="{
           required: true,
           decimal,
-          min_value: MIN_SPEND_TX_FEE_PICO,
-          max_value: MAX_REASONABLE_FEE_PICO,
+          min_value: MIN_SPEND_TX_FEE_MICRO,
+          max_value: MAX_REASONABLE_FEE_MICRO,
         }"
         :error="errors.has('fee')"
         :footer="errors.first('fee')"
         autofocus
         header="Transaction Fee"
-        header-right="Pico AE"
+        header-right="Micro AE"
         name="fee"
-        step="0.001"
+        step="0.01"
       />
 
       <AeInputRange
         v-model="fee"
-        :min="MIN_SPEND_TX_FEE_PICO"
-        :max="MAX_REASONABLE_FEE_PICO"
-        step="0.001"
+        :min="MIN_SPEND_TX_FEE_MICRO"
+        :max="MAX_REASONABLE_FEE_MICRO"
+        step="0.01"
       />
     </form>
 
@@ -58,7 +58,7 @@ import AeInputRange from '../AeInputRange.vue';
 import LedgerModalNote from './LedgerModalNote.vue';
 import AeButton from '../AeButton.vue';
 import {
-  MAGNITUDE, MIN_SPEND_TX_FEE_PICO, MAX_REASONABLE_FEE_PICO, MAGNITUDE_PICO,
+  MAGNITUDE, MIN_SPEND_TX_FEE_MICRO, MAX_REASONABLE_FEE_MICRO, MAGNITUDE_MICRO,
 } from '../../lib/constants';
 
 export default {
@@ -74,16 +74,16 @@ export default {
     reject: { type: Function, required: true },
   },
   data: () => ({
-    fee: MIN_SPEND_TX_FEE_PICO,
-    decimal: MAGNITUDE + MAGNITUDE_PICO,
-    MIN_SPEND_TX_FEE_PICO,
-    MAX_REASONABLE_FEE_PICO,
+    fee: MIN_SPEND_TX_FEE_MICRO,
+    decimal: MAGNITUDE + MAGNITUDE_MICRO,
+    MIN_SPEND_TX_FEE_MICRO,
+    MAX_REASONABLE_FEE_MICRO,
   }),
   methods: {
     async handleSubmit() {
       if (!await this.$validator.validateAll()) return;
 
-      this.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_PICO));
+      this.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_MICRO));
     },
     handleClose() {
       this.reject(new Error('Canceled by user'));
