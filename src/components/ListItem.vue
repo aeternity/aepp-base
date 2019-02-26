@@ -39,7 +39,7 @@ export default {
   computed: {
     renderAs() {
       if (this.inactive) return 'div';
-      if (this.to) return 'router-link';
+      if (this.to) return 'RouterLink';
       return 'label';
     },
   },
