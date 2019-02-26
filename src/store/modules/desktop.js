@@ -8,6 +8,7 @@ export default {
     remoteConnected: false,
     transactionToSignByRemote: null,
     ledgerConnected: false,
+    ledgerSupported: false,
     ledgerAccountNumber: 1,
     ledgerAddresses: [],
     showSidebar: false,
@@ -41,6 +42,9 @@ export default {
       if (!ledgerConnected) {
         state.ledgerAddresses = [];
       }
+    },
+    setLedgerSupported(state, ledgerSupported) {
+      state.ledgerSupported = ledgerSupported;
     },
     addLedgerAddress(state, ledgerAddress) {
       state.ledgerAddresses.push(ledgerAddress);
