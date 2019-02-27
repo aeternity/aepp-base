@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import {
-  omit, cloneDeep, isEqual, throttle,
+  zipObject, cloneDeep, isEqual, throttle,
 } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import RpcPeer from '../../lib/rpc';
@@ -26,8 +26,8 @@ export default (store) => {
     const broadcast = new RpcPeer(message => socket.emit('message-to-all', message), {
       setState(state) {
         lastReceivedState = state;
-        store.replaceState({
-          ...omit(store.state, PAIR_SYNC_FIELDS),
+        store.commit('syncState', {
+          ...zipObject(PAIR_SYNC_FIELDS),
           ...cloneDeep(state),
         });
       },
