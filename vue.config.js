@@ -5,7 +5,7 @@ const { IS_MOBILE_DEVICE, IS_PWA, npm_package_version } = process.env;
 const IS_CORDOVA = parseBool(process.env.IS_CORDOVA);
 
 module.exports = {
-  baseUrl: IS_CORDOVA ? './' : '/',
+  publicPath: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   chainWebpack: config => config.plugin('define').tap((options) => {
     const definitions = Object.assign({}, options[0]);
