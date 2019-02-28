@@ -39,8 +39,9 @@
 
           <ListItem
             v-if="$globals.UNFINISHED_FEATURES"
+            :to="{ name: 'vault-new' }"
             title="Create a vault for AirGap"
-            @click="toggleAccountSwitcher"
+            @click.native="toggleAccountSwitcher"
           >
             <AeIcon
               slot="icon"
