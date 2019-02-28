@@ -89,10 +89,10 @@
         Please switch to
         <br>Google Chrome
       </Guide>
-      <note>
+      <Note>
         Interacting with the Ledger is only
         <br>supported by Chrome for now.
-      </note>
+      </Note>
     </div>
   </div>
 </template>
