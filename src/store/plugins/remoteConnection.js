@@ -5,7 +5,6 @@ import {
 import RpcPeer from '../../lib/rpc';
 import { genRandomBuffer } from '../utils';
 
-const BACKEND_URL = 'https://signaling.aepps.com';
 const PAIR_SYNC_FIELDS = ['rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook'];
 
 export default (store) => {
@@ -18,7 +17,7 @@ export default (store) => {
     if (process.env.IS_MOBILE_DEVICE) {
       query.followers = Object.keys(store.state.mobile.followers);
     }
-    const socket = io(BACKEND_URL, { query });
+    const socket = io(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
     const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS
