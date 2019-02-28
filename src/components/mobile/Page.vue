@@ -9,7 +9,9 @@
       v-bind="$attrs"
       padded
       v-on="$listeners"
-    />
+    >
+      <slot name="title" />
+    </HeaderMobile>
 
     <header
       v-if="$slots.header"
