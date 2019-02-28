@@ -26,8 +26,6 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
 
     const svgElement = this.createSVGElement(outputWidth, outputHeight);
 
-    this.containerElement.appendChild(svgElement);
-
     for (let inputY = 0, outputY = topPadding;
       inputY < inputHeight; inputY += 1, outputY += multiple) {
       for (let inputX = 0, outputX = leftPadding;
@@ -69,5 +67,5 @@ class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
   }
 }
 
-export default (content, side) => new QRCodeFancySvgWriter(document.createElement('div'))
+export default (content, side) => new QRCodeFancySvgWriter()
   .renderResult(Encoder.encode(content, ErrorCorrectionLevel.L), side, side, 0);
