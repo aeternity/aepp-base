@@ -119,10 +119,24 @@ export default {
     }
 
     .content {
-      color: $color-primary-positive-3;
+      color: rgba(255, 255, 255, 0.66846);
 
       em {
         color: $color-neutral-maximum;
+      }
+    }
+  }
+
+  &.alternative {
+    .icon {
+      color: $color-alternative;
+    }
+
+    .content {
+      color: $color-neutral-negative-3;
+
+      em {
+        color: $color-alternative-negative-1;
       }
     }
   }
