@@ -139,6 +139,9 @@ const store = new Vuex.Store({
   },
 
   mutations: {
+    syncState(state, remoteState) {
+      Object.assign(state, remoteState);
+    },
     markMigrationAsApplied(state, migrationId) {
       Vue.set(state.migrations, migrationId, true);
     },

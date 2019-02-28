@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import {
-  omit, cloneDeep, isEqual, throttle,
+  zipObject, cloneDeep, isEqual, throttle,
 } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import RpcPeer from '../../lib/rpc';
@@ -22,30 +22,35 @@ export default (store) => {
     const socket = io(BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
-    let lastReceivedState;
+    const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS
+      .reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
+
+    let processedState = getStateForSync(store.state, store.getters);
+
     const broadcast = new RpcPeer(message => socket.emit('message-to-all', message), {
       setState(state) {
-        lastReceivedState = state;
-        store.replaceState({
-          ...omit(store.state, PAIR_SYNC_FIELDS),
+        processedState = state;
+        store.commit('syncState', {
+          ...zipObject(PAIR_SYNC_FIELDS),
           ...cloneDeep(state),
         });
       },
     });
     socket.on('message', message => broadcast.processMessage(message));
 
-    const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS
-      .reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
     const broadcastState = (state) => {
+      broadcast.notification('setState', state);
+      processedState = state;
+    };
+
+    closeCbs.push(store.watch(getStateForSync, (state) => {
       if (
-        isEqual(state, lastReceivedState) || (
+        isEqual(state, processedState) || (
           process.env.IS_MOBILE_DEVICE
           && !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return;
-      broadcast.notification('setState', state);
-      lastReceivedState = null;
-    };
-    closeCbs.push(store.watch(getStateForSync, broadcastState));
+      broadcastState(state);
+    }));
 
     if (process.env.IS_MOBILE_DEVICE) {
       const syncState = throttle(
