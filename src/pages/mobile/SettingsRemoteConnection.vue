@@ -24,11 +24,11 @@
           revoke
         </AeButton>
       </ListItem>
-
-      <ListItemButton :to="{ name: 'settings-remote-connection-new' }">
-        Connect device
-      </ListItemButton>
     </AeCard>
+    <ButtonAddFixed
+      :to="{ name: 'settings-remote-connection-new' }"
+      quick-id
+    />
   </MobilePage>
 </template>
 
@@ -37,7 +37,7 @@ import { mapState, mapMutations } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
-import ListItemButton from '../../components/ListItemButton.vue';
+import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
@@ -45,7 +45,7 @@ export default {
     MobilePage,
     AeCard,
     ListItem,
-    ListItemButton,
+    ButtonAddFixed,
     AeButton,
   },
   computed: mapState({

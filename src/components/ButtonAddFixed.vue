@@ -1,22 +1,22 @@
 <template>
   <AeButton
     :class="{ 'quick-id': quickId, mobile: $globals.IS_MOBILE_DEVICE }"
+    fill="primary"
+    class="button-add-fixed"
     :to="to"
-    class="fixed-add-button"
-    type="dramatic"
     @click="$emit('click')"
   >
     <AeIcon
-      slot="icon"
       name="plus"
-      invert
-      type="exciting"
+      face="round"
+      fill="primary"
     />
   </AeButton>
 </template>
 
 <script>
-import { AeButton, AeIcon } from '@aeternity/aepp-components';
+import { AeIcon } from '@aeternity/aepp-components-3';
+import AeButton from './AeButton.vue';
 
 export default {
   components: { AeButton, AeIcon },
@@ -29,26 +29,24 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components/dist/mixins.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 
-.fixed-add-button {
+.mobile-page .button-add-fixed.ae-button.medium {
+  width: rem(56px);
+}
+
+.button-add-fixed {
   position: fixed;
-  bottom: 30px;
+  bottom: 0px;
   right: 30px;
 
-  &:not(.mobile).quick-id {
-    bottom: 80px;
+  .ae-icon {
+    transform: scale(1.4);
+    box-shadow: 0 0;
   }
 
-  &.mobile {
-    @include phone {
-      right: 10px;
-    }
-
-    &.quick-id {
-      @media (max-width: 600px) {
-        bottom: 110px;
-      }
-    }
+  &.mobile.quick-id {
+      bottom: 70px;
   }
 }
 </style>
