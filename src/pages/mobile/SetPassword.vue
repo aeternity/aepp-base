@@ -9,9 +9,9 @@
 
       <template v-if="recover">
         You recovered your
-                      <br>account <em>successfully</em>!
-                      <br>Now <mark>choose a new <img :src="keyEmoji"></mark>
-                      <br><mark>password</mark> and confirm.
+        <br>account <em>successfully</em>!
+        <br>Now <mark>choose a new <img :src="keyEmoji"></mark>
+        <br><mark>password</mark> and confirm.
       </template>
       <template v-else>
         Great, that's done. Now
