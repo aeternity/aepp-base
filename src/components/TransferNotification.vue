@@ -28,10 +28,10 @@
           View on explorer
         </AeButton>
         <AeButton
+          v-copy-on-click="transactionHash"
           fill="dark"
           size="small"
           plain
-          @click="copyTx"
         >
           Copy tx hash
         </AeButton>
@@ -42,16 +42,17 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import copy from 'clipboard-copy';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeButton from './AeButton.vue';
 import prefixedAmount from '../filters/prefixedAmount';
+import copyOnClick from '../directives/copyOnClick';
 
 export default {
   components: {
     AeIcon,
     AeButton,
   },
+  directives: { copyOnClick },
   filters: { prefixedAmount },
   props: {
     amount: {
@@ -61,11 +62,6 @@ export default {
     transactionHash: {
       type: String,
       default: '',
-    },
-  },
-  methods: {
-    copyTx() {
-      copy(this.transactionHash);
     },
   },
 };

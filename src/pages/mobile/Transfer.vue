@@ -15,7 +15,7 @@
         :transform-origin="{ vertical: 'top', horizontal: 'right' }"
         @close="showAccountMenu = false"
       >
-        <MenuItem @click="copyAddress">
+        <MenuItem v-copy-on-click="activeIdentity.address">
           <AeIcon name="copy" />Copy Address
         </MenuItem>
         <MenuItem @click="accountNameEditable = true">
@@ -110,7 +110,7 @@ import { AeIcon } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import glowingStarEmojiPath from 'emoji-datasource-apple/img/apple/64/1f31f.png';
-import copy from 'clipboard-copy';
+import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
@@ -134,6 +134,7 @@ export default {
     TransferNotification,
     MigratedBalanceModal,
   },
+  directives: { copyOnClick },
   props: {
     amount: {
       type: String,
@@ -165,9 +166,6 @@ export default {
   methods: {
     renameIdentity(name) {
       this.$store.commit('renameIdentity', { index: this.$store.state.selectedIdentityIdx, name });
-    },
-    copyAddress() {
-      copy(this.activeIdentity.address);
     },
   },
 };
