@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { sync } from 'vuex-router-sync';
-import Clipboard from 'v-clipboard';
 import 'normalize.css';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import 'focus-visible';
@@ -14,7 +13,6 @@ import AppDesktop from './AppDesktop.vue';
 import router from './router';
 import store from './store';
 
-Vue.use(Clipboard);
 Vue.use(Router);
 Vue.use(VeeValidate);
 sync(store, router);
