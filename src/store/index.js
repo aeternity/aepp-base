@@ -3,10 +3,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
-import { update, flatMap } from 'lodash-es';
+import { update, flatMap, camelCase } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
-import networksRegistry from '../lib/networksRegistry';
+import networksRegistry, { defaultNetwork } from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
+import { fetchJson, mapKeysDeep } from './utils';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import persistState from './plugins/persistState';
@@ -69,6 +70,7 @@ const store = new Vuex.Store({
     loginTarget: '',
     selectedIdentityIdx: 0,
     balances: {},
+    transactions: {},
     addresses: [],
     rpcUrl: networksRegistry[0].url,
     sdk: null,
@@ -81,19 +83,22 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    identities: ({ balances }, { addresses }, { mobile }) => addresses.map((e, index) => ({
-      balance: balances[e] || BigNumber(0),
-      address: e,
-      name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6),
-    })),
+    identities: ({ balances, transactions }, { addresses }, { mobile }) => addresses
+      .map((e, index) => ({
+        balance: balances[e] || BigNumber(0),
+        transactions: transactions[e] || [],
+        address: e,
+        name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6),
+      })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) => identities[selectedIdentityIdx],
     totalBalance: (state, { identities }) => identities
       .reduce((sum, { balance }) => sum.plus(balance), BigNumber(0)),
     networks: ({ customNetworks }) => [
       ...networksRegistry,
-      ...customNetworks.map(network => ({ ...network, custom: true })),
+      ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
     ],
     currentNetwork: ({ rpcUrl }, { networks }) => networks.find(({ url }) => url === rpcUrl) || {
+      ...defaultNetwork,
       name: rpcUrl,
       url: rpcUrl,
     },
@@ -163,6 +168,9 @@ const store = new Vuex.Store({
     setBalance(state, { address, balance }) {
       Vue.set(state.balances, address, balance);
     },
+    setTransactions(state, { address, transactions }) {
+      Vue.set(state.transactions, address, transactions);
+    },
     setAlert(state, options) {
       state.alert = options;
     },
@@ -228,6 +236,23 @@ const store = new Vuex.Store({
         .shiftedBy(-MAGNITUDE);
       if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
+    },
+    async updateTransactions({ getters: { currentNetwork }, commit }, address) {
+      const transactions = mapKeysDeep(
+        (await fetchJson(
+          `${currentNetwork.middlewareUrl}/middleware/transactions/account/${address}`,
+        )).transactions,
+        (value, key) => camelCase(key),
+      )
+        .map(({ tx: { amount, fee, ...otherTx }, ...otherTransaction }) => ({
+          ...otherTransaction,
+          tx: {
+            ...otherTx,
+            amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
+            fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
+          },
+        }));
+      commit('setTransactions', { address, transactions });
     },
     async genSpendTxBinary({ state: { sdk } }, transaction) {
       const spendTx = await sdk.spendTx({

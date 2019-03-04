@@ -20,7 +20,7 @@
 
       <div class="footer">
         <AeButton
-          :to="`https://explorer.aepps.com/#/tx/${transactionHash}`"
+          :to="`${currentNetwork.explorerUrl}/#/tx/${transactionHash}`"
           fill="dark"
           size="small"
           plain
@@ -42,6 +42,7 @@
 
 <script>
 import BigNumber from 'bignumber.js';
+import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeButton from './AeButton.vue';
 import prefixedAmount from '../filters/prefixedAmount';
@@ -64,6 +65,7 @@ export default {
       default: '',
     },
   },
+  computed: mapGetters(['currentNetwork']),
 };
 </script>
 
