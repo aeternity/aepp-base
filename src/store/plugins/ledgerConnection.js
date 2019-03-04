@@ -6,7 +6,7 @@ export default async (store) => {
   const isSupported = await TransportU2F.isSupported();
   store.commit('setLedgerSupported', isSupported);
   if (!isSupported) return;
-  const transport = await new TransportU2F();
+  const transport = new TransportU2F();
   const ae = new Ae(transport);
   // eslint-disable-next-line no-underscore-dangle
   const isTransportLocked = () => transport._appAPIlock;
