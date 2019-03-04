@@ -1,4 +1,4 @@
-import copy from 'clipboard-copy';
+import copyToClipboard from 'copy-to-clipboard';
 
 export default (el, binding) => {
   if (!('copyOnClick' in el.dataset)) {
@@ -7,7 +7,7 @@ export default (el, binding) => {
 
       if (!value) return;
 
-      await copy(value);
+      if (!copyToClipboard(value)) return;
       el.classList.add('v-copied');
       setTimeout(
         () => el.classList.remove('v-copied'),
