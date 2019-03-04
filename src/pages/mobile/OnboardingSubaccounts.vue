@@ -3,10 +3,10 @@
     <img src="../../assets/onboarding/subaccounts.svg">
     <Guide>
       <em>Create subaccounts</em>
-      <br>in seconds
+      in&nbsp;seconds
       <div class="note">
         Create dedicated accounts for
-        <br>spending, storage and to fuel æpps.
+        spending, storage and to fuel æpps.
       </div>
     </Guide>
   </div>

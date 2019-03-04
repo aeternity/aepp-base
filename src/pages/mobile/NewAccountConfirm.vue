@@ -12,8 +12,8 @@
         denominator="4"
       />
       <em>Tap the words</em> in the
-      <br>correct order to recreate
-      <br>your phrase.
+      correct order to recreate
+      your phrase.
     </Guide>
 
     <ButtonMnemonicWord

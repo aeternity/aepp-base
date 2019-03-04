@@ -10,11 +10,11 @@
         numerator="1"
         denominator="2"
       />
-      Enter <img :src="dizzySymbolEmoji"> your <strong>recovery</strong>
-      <br><strong>phrase</strong>.
-      <br>The one you wrote
-      <br>down during <mark>account</mark>
-      <br><mark>creation</mark>.
+      Enter <img :src="dizzySymbolEmoji"> your
+      <strong>recovery phrase</strong>.
+      The one you wrote
+      down during <mark>account</mark>
+      <mark>creation</mark>.
     </Guide>
 
     <form

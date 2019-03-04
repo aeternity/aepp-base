@@ -6,8 +6,8 @@
     <Guide>
       <em>Hello!</em>{{ ' ' }}<img :src="wavingHandEmoji">
       {{ ' ' }}<mark>Log in</mark> to
-      <br>æternity with your
-      <br>password
+      æternity with your
+      password
     </Guide>
 
     <form

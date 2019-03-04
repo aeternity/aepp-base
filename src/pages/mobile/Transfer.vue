@@ -6,7 +6,7 @@
     <template slot="header">
       <Guide>
         <em>Send and receive</em>
-        <br>æternity tokens
+        æternity&nbsp;tokens
       </Guide>
 
       <Menu

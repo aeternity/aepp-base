@@ -5,11 +5,13 @@
         v-if="app.icon"
         :src="app.icon"
       > {{ app.name }}
-      <br>requests access to
-      <br><AeIdenticon
-        :address="activeIdentity.address"
-        size="s"
-      /> {{ activeIdentity.name }}
+      requests access to
+      <p>
+        <AeIdenticon
+          :address="activeIdentity.address"
+          size="s"
+        /> {{ activeIdentity.name }}
+      </p>
     </Guide>
 
     <ConfirmModalPermission name="Accessing accounts">

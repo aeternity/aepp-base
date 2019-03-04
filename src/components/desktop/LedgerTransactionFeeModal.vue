@@ -36,7 +36,7 @@
 
     <LedgerModalNote fill="dark">
       A higher transaction fee leads to a faster
-      <br>transaction time.
+      transaction time.
     </LedgerModalNote>
 
     <AeButton

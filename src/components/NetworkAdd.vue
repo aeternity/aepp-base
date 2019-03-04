@@ -1,6 +1,11 @@
 <template>
   <div class="network-add">
-    <Guide>Connect to<br><em>another node</em></Guide>
+    <Guide>
+      Connect to
+      <p>
+        <em>another node</em>
+      </p>
+    </Guide>
     <form @submit.prevent="addNetwork">
       <AeInput
         v-model="name"

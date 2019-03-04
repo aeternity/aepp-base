@@ -7,10 +7,10 @@
     <header>
       <h1>
         <template v-if="!accountsCount">
-          Connect an<br>account to start
+          Connect an account to&nbsp;start
         </template>
         <template v-else>
-          Your connected<br>account{{ accountsCount !== 1 ? 's': '' }}
+          Your connected account{{ accountsCount !== 1 ? 's': '' }}
         </template>
         <ButtonPlain @click="toggleSidebar">
           <AeIcon name="close" />

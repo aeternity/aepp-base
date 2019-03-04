@@ -5,8 +5,10 @@
   >
     <Guide fill="neutral">
       <em>Base æpp</em>
-      <br>æternity blockchain
-      <br>power in your hands.
+      <p>
+        æternity blockchain
+        power in your hands.
+      </p>
     </Guide>
 
     <template slot="footer">

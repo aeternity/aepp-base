@@ -11,13 +11,14 @@
         numerator="2"
         denominator="4"
       />
-      You need the <em>recovery</em>
-      <br><em>phrase</em> in case you
-      <br>forget your <strong>password</strong>.
-      <br>
-      <br>Now go ahead, <mark>write it</mark>
-      <br><mark>down</mark> in the correct
-      <br>order.
+      <p class="big">
+        You need the <em>recovery phrase</em> in case you
+        forget your <strong>password</strong>.
+      </p>
+      <p>
+        Now go ahead, <mark>write it down</mark>
+        in the correct order.
+      </p>
     </Guide>
     <p class="mnemonic">
       {{ seed }}

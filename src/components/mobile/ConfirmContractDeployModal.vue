@@ -2,13 +2,15 @@
   <MobilePage fill="primary">
     <Guide fill="neutral">
       <em>Create a new contract</em>
-      <br>by
-      <AeIdenticon
-        :address="activeIdentity.address"
-        size="s"
-      />
-      {{ ' ' }}
-      <em>{{ activeIdentity.name }}</em>
+      <p>
+        by
+        <AeIdenticon
+          :address="activeIdentity.address"
+          size="s"
+        />
+        {{ ' ' }}
+        <em>{{ activeIdentity.name }}</em>
+      </p>
     </Guide>
 
     <ConfirmModalAmount :amount="amount" />

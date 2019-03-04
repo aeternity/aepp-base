@@ -1,7 +1,7 @@
 <template>
   <div class="send">
     <Guide size="big">
-      <em>Send</em> AE from<br>
+      <em>Send</em> AE from
       <AeIdenticon :address="activeAccount.address" />
       {{ activeAccount.name }}
     </Guide>

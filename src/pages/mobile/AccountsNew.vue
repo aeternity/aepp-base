@@ -7,7 +7,7 @@
     <template slot="header">
       <Guide fill="neutral">
         <em>Create new subaccount</em>
-        <br>and name it
+        and name it
       </Guide>
 
       <form
