@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
 import { update, flatMap } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
-import networksRegistry from '../lib/networksRegistry';
+import networksRegistry, { defaultNetwork } from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
@@ -91,9 +91,10 @@ const store = new Vuex.Store({
       .reduce((sum, { balance }) => sum.plus(balance), BigNumber(0)),
     networks: ({ customNetworks }) => [
       ...networksRegistry,
-      ...customNetworks.map(network => ({ ...network, custom: true })),
+      ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
     ],
     currentNetwork: ({ rpcUrl }, { networks }) => networks.find(({ url }) => url === rpcUrl) || {
+      ...defaultNetwork,
       name: rpcUrl,
       url: rpcUrl,
     },
