@@ -4,7 +4,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
 import { update, flatMap, camelCase } from 'lodash-es';
-import { Crypto } from '@aeternity/aepp-sdk/es';
 import networksRegistry, { defaultNetwork } from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
 import { fetchJson, mapKeysDeep } from './utils';
@@ -253,14 +252,6 @@ const store = new Vuex.Store({
           },
         }));
       commit('setTransactions', { address, transactions });
-    },
-    async genSpendTxBinary({ state: { sdk } }, transaction) {
-      const spendTx = await sdk.spendTx({
-        ...transaction,
-        fee: transaction.fee.shiftedBy(MAGNITUDE),
-        amount: transaction.amount.shiftedBy(MAGNITUDE),
-      });
-      return Crypto.decodeBase64Check(spendTx.split('_')[1]);
     },
     async fetchAppManifest(_, host) {
       const fetchTextCors = async url => (

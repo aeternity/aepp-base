@@ -87,20 +87,12 @@ export default {
       if (!await this.$validator.validateAll()) return;
 
       const amount = BigNumber(this.amount);
-      const signedTx = await this.$store.dispatch('signTransaction', {
-        transaction: {
-          amount,
-          senderId: this.activeAccount.address,
-          recipientId: this.accountTo,
-          payload: '',
-          ttl: Number.MAX_SAFE_INTEGER,
-        },
-        appName: 'Transfer',
-      });
-      const { txHash } = await this.$store.state.sdk.api
-        .postTransaction({ tx: signedTx });
+      const { hash } = await this.$store.state.sdk.spend(
+        amount.shiftedBy(MAGNITUDE),
+        this.accountTo,
+      );
 
-      this.transferNotification = { transactionHash: txHash, amount };
+      this.transferNotification = { transactionHash: hash, amount };
       setTimeout(() => { this.transferNotification = null; }, 5000);
     },
   },
