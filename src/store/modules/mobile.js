@@ -101,23 +101,5 @@ export default {
       if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password');
       commit('setDerivedKey', passwordDerivedKey);
     },
-    signTransaction(
-      {
-        state: { accounts }, dispatch, rootState: { sdk: { nodeNetworkId } },
-      },
-      { transaction, stepIcon },
-    ) {
-      return dispatch('modals/confirmSpend', {
-        ...transaction,
-        stepIcon,
-      }).then(async (fee) => {
-        const binaryTx = await dispatch('genSpendTxBinary', { ...transaction, fee });
-        const signature = Crypto.sign(
-          Buffer.concat([Buffer.from(nodeNetworkId), binaryTx]),
-          accounts[transaction.senderId].secretKey,
-        );
-        return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
-      });
-    },
   },
 };

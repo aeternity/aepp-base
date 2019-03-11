@@ -2,7 +2,6 @@ import io from 'socket.io-client';
 import {
   zipObject, cloneDeep, isEqual, throttle,
 } from 'lodash-es';
-import BigNumber from 'bignumber.js';
 import RpcPeer from '../../lib/rpc';
 import { genRandomBuffer } from '../utils';
 
@@ -77,15 +76,8 @@ export default (store) => {
 
       const followerSignPromises = {};
       socket.on('message-from-follower', (followerId, request) => new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
-        signTransaction: (args) => {
-          const promise = store.dispatch('signTransaction', {
-            ...args,
-            transaction: {
-              ...args.transaction,
-              amount: BigNumber(args.transaction.amount),
-              fee: BigNumber(args.transaction.fee),
-            },
-          });
+        signTransaction: (...args) => {
+          const promise = store.state.sdk.signTransaction(...args);
           followerSignPromises[followerId] = promise;
           return Promise.race([
             new Promise((resolve, reject) => promise
@@ -106,7 +98,7 @@ export default (store) => {
         switch (type) {
           case 'setTransactionToSign':
             if (!payload) return;
-            leader.call('signTransaction', payload.args).then(payload.resolve, payload.reject);
+            leader.call('signTransaction', ...payload.args).then(payload.resolve, payload.reject);
             break;
           case 'cancelTransaction':
             leader.call('cancelTransaction', store.state.desktop.transactionToSignByRemote.args.id);

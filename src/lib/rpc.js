@@ -31,7 +31,7 @@ export default class RpcPeer {
       case REQUEST: {
         const response = { id: message.id };
         try {
-          response.result = await this.handlers[message.method](...message.params);
+          response.result = await Promise.resolve(this.handlers[message.method](...message.params));
           response.type = RESPONSE;
         } catch (e) {
           response.error = e.toString();
