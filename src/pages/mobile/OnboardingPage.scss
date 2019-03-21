@@ -2,7 +2,7 @@
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .onboarding-page {
-  flex-grow: 1;
+  margin: auto 0;
   text-align: center;
 
   &.v-enter-active, &.v-leave-active {
@@ -24,8 +24,9 @@
   }
 
   .guide {
-    flex-direction: column;
-    margin-left: 0;
+    display: block;
+    min-height: rem(133px);
+    margin-bottom: 0;
 
     .note {
       margin-top: rem(5px);
