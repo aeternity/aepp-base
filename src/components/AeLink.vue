@@ -11,12 +11,15 @@
     class="ae-link"
     :href="to"
     :target="isLinkOnSameHost ? '_self' : '_blank'"
+    @click="clickHandler"
   >
     <slot />
   </a>
 </template>
 
 <script>
+/* global cordova */
+
 export default {
   props: {
     to: { type: [String, Object], required: true },
@@ -28,6 +31,15 @@ export default {
     },
     useRouterLink() {
       return this.$options.components.RouterLink && this.isLinkOnSameHost;
+    },
+  },
+  methods: {
+    clickHandler(event) {
+      const { target, href } = event.target;
+      if (process.env.IS_CORDOVA && target === '_blank') {
+        cordova.InAppBrowser.open(href, '_system');
+        event.preventDefault();
+      }
     },
   },
 };
