@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-page subaccounts">
+  <div class="onboarding-page">
     <img src="../../assets/onboarding/subaccounts.svg">
     <Guide>
       <em>Create subaccounts</em>
