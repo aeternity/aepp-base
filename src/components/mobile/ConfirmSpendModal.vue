@@ -10,27 +10,25 @@
         v-bind="stepFraction"
       />
       <em>Complete your transfer</em>
-      <p>
-        from
-        <AeIdenticon
-          :address="activeIdentity.address"
-          size="s"
-        />
-        {{ ' ' }}
-        <em>{{ activeIdentity.name }}</em>
-        to
-        <AeIdenticon
+      <br>from
+      <AeIdenticon
+        :address="activeIdentity.address"
+        size="s"
+      />
+      {{ ' ' }}
+      <em>{{ activeIdentity.name }}</em>
+      <br>to
+      <AeIdenticon
+        :address="recipientId"
+        size="s"
+      />
+      {{ ' ' }}
+      <em>
+        <AeAddress
           :address="recipientId"
-          size="s"
+          length="short"
         />
-        {{ ' ' }}
-        <em>
-          <AeAddress
-            :address="recipientId"
-            length="short"
-          />
-        </em>
-      </p>
+      </em>
     </Guide>
 
     <ConfirmModalAmount :amount="amount" />

@@ -91,7 +91,7 @@
       </Guide>
       <Note>
         Interacting with the Ledger is only
-        supported by Chrome for now.
+        <br>supported by Chrome for now.
       </Note>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <img src="../../assets/onboarding/phones.svg">
     <Guide>
       <em>Base aepp</em>
-      æternity&nbsp;begins here
+      <br>æternity begins here
       <div class="note">
         Send & receive AE, explore æpps
         and manage accounts.

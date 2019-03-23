@@ -13,15 +13,13 @@
           denominator="3"
         />
         <em>New Transfer</em>
-        <p>
-          from
-          <AeIdenticon
-            :address="activeIdentity.address"
-            size="s"
-          />
-          {{ ' ' }}
-          <em>{{ activeIdentity.name }}</em>
-        </P>
+        <br>from
+        <AeIdenticon
+          :address="activeIdentity.address"
+          size="s"
+        />
+        {{ ' ' }}
+        <em>{{ activeIdentity.name }}</em>
       </Guide>
 
       <form
