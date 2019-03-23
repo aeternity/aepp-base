@@ -30,10 +30,7 @@
       <AeDivider :key="`${idx}-divider`" />
     </template>
 
-    <ButtonAddFixed
-      :to="{ name: 'address-book-new' }"
-      quick-id
-    />
+    <ButtonAddFixed :to="{ name: 'address-book-new' }" />
   </MobilePage>
   <AddressBookNoContacts v-else />
 </template>

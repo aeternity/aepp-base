@@ -25,10 +25,8 @@
         </AeButton>
       </ListItem>
     </AeCard>
-    <ButtonAddFixed
-      :to="{ name: 'settings-remote-connection-new' }"
-      quick-id
-    />
+
+    <ButtonAddFixed :to="{ name: 'settings-remote-connection-new' }" />
   </MobilePage>
 </template>
 
