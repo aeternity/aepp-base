@@ -10,15 +10,17 @@
         numerator="1"
         denominator="4"
       />
-      <p class="big">
+      <p>
         First, you will get a
         phrase for <strong>account recovery</strong>.
       </p>
-      <p class="big">
+      <p>
         So grab a piece of
         paper and a pen, <mark>write it down</mark>.
       </p>
-      And hide it from all <em>evil</em>.
+      <p>
+        And hide it from all <em>evil</em>.
+      </p>
     </Guide>
 
     <AeButton

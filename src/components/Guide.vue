@@ -129,10 +129,10 @@ export default {
 
   p {
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 
-    &.big {
-      margin-bottom: 35px;
+    & + p {
+      margin-top: rem(28px);
     }
   }
 }

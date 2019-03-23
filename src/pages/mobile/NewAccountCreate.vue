@@ -11,7 +11,7 @@
         numerator="2"
         denominator="4"
       />
-      <p class="big">
+      <p>
         You need the <em>recovery phrase</em> in case you
         forget your <strong>password</strong>.
       </p>
