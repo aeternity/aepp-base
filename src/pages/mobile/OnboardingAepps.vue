@@ -5,7 +5,7 @@
       <em>Explore æpps</em>
       <div class="note">
         Bring the power of æternity
-        <br>blockchain to your daily life.
+        blockchain to your daily life.
       </div>
     </Guide>
   </div>

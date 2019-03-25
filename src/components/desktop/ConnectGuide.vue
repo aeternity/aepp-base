@@ -87,7 +87,7 @@
       <img src="../../assets/switch-to-chrome.svg">
       <Guide>
         Please switch to
-        <br>Google Chrome
+        Google&nbsp;Chrome
       </Guide>
       <Note>
         Interacting with the Ledger is only

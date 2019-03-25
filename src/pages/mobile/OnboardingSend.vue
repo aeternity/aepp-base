@@ -3,11 +3,11 @@
     <img src="../../assets/onboarding/send.svg">
     <Guide>
       <em>Send & receive AE</em>
-      <br>effortlessly
+      effortlessly
       <div class="note">
         Transfer to contacts and
-        <br>subaccounts. Receive by
-        <br>sharing your address.
+        subaccounts. Receive by
+        sharing your address.
       </div>
     </Guide>
   </div>

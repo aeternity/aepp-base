@@ -8,7 +8,7 @@
     <template slot="header">
       <Guide>
         <em>Let others scan</em>
-        <br>your address
+        your address
       </Guide>
 
       <AeAccountReverse

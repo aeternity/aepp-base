@@ -6,7 +6,7 @@
       <br>æternity begins here
       <div class="note">
         Send & receive AE, explore æpps
-        <br>and manage accounts.
+        and manage accounts.
       </div>
     </Guide>
   </div>
