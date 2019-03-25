@@ -24,10 +24,7 @@
       <AeDivider :key="`${idx}-divider`" />
     </template>
 
-    <FixedAddButton
-      :to="{ name: 'address-book-new' }"
-      quick-id
-    />
+    <ButtonAddFixed :to="{ name: 'address-book-new' }" />
   </MobilePage>
   <AddressBookNoContacts v-else />
 </template>
@@ -36,7 +33,7 @@
 import { mapState } from 'vuex';
 import { AeIcon, AeDivider } from '@aeternity/aepp-components';
 import AddressBookNoContacts from './AddressBookNoContacts.vue';
-import FixedAddButton from '../components/FixedAddButton.vue';
+import ButtonAddFixed from '../components/ButtonAddFixed.vue';
 import AddressBookItem from '../components/AddressBookItem.vue';
 import AeLink from '../components/AeLink.vue';
 import MobilePage from '../components/mobile/Page.vue';
@@ -47,7 +44,7 @@ export default {
     AeDivider,
     AeLink,
     AddressBookNoContacts,
-    FixedAddButton,
+    ButtonAddFixed,
     AddressBookItem,
     MobilePage,
   },
