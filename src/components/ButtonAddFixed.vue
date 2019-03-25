@@ -44,6 +44,7 @@ export default {
   .ae-icon {
     font-size: rem(20px);
     vertical-align: middle;
+    letter-spacing: 0;
   }
 }
 </style>
