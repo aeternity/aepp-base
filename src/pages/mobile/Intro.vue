@@ -54,6 +54,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .intro.mobile-page {
+  padding-bottom: env(safe-area-inset-bottom);
+
   hr {
     margin: 0 rem(-16px);
     height: 2px;

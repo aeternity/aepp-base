@@ -77,6 +77,8 @@ export default {
 
   .ae-banner {
     position: fixed;
+    top: 0;
+    top: env(safe-area-inset-top);
     left: 0;
     right: 0;
     z-index: auto;

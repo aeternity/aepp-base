@@ -85,6 +85,7 @@ export default {
 
   position: fixed;
   top: 0;
+  top: env(safe-area-inset-top);
   left: rem(10px);
   right: rem(10px);
   border-radius: 0 0 rem(8px) rem(8px);

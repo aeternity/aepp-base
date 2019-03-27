@@ -105,6 +105,7 @@ export default {
 
   header {
     display: flex;
+    padding-top: env(safe-area-inset-top);
     height: rem(54px);
     line-height: rem(54px);
     box-shadow: inset 0 0 rem(8px) rgba(#1B4479, 0.1);

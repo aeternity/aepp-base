@@ -39,6 +39,7 @@ export default {
   &.mobile {
     right: rem(23px);
     bottom: rem(82px);
+    bottom: calc(#{rem(82px)} + env(safe-area-inset-bottom));
   }
 
   .ae-icon {
