@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 Vue.config.productionTip = false;
 Vue.prototype.$globals = {
   IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE,
+  IS_IOS: process.env.IS_IOS,
 };
 
 new Vue({
