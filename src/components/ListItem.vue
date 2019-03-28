@@ -61,6 +61,10 @@ export default {
     background-color: $color-neutral-positive-3;
   }
 
+  &:visited .content {
+    border: inherit;
+  }
+
   .content {
     display: flex;
     align-items: center;
