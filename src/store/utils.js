@@ -1,4 +1,4 @@
-import { mapKeys, mapValues } from 'lodash-es';
+import { isPlainObject, mapKeys, mapValues } from 'lodash-es';
 
 export const genRandomBuffer = (size) => {
   const key = new ArrayBuffer(size);
@@ -32,5 +32,6 @@ export const fetchJson = async (...args) => {
 
 export const mapKeysDeep = (object, callback) => {
   if (Array.isArray(object)) return object.map(item => mapKeysDeep(item, callback));
+  if (!isPlainObject(object)) return object;
   return mapValues(mapKeys(object, callback), item => mapKeysDeep(item, callback));
 };
