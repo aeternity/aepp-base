@@ -236,13 +236,20 @@ const store = new Vuex.Store({
       if (balances[address] && balances[address].isEqualTo(balance)) return;
       commit('setBalance', { address, balance });
     },
-    async updateTransactions({ getters: { currentNetwork }, commit }, address) {
-      const transactions = mapKeysDeep(
-        (await fetchJson(
-          `${currentNetwork.middlewareUrl}/middleware/transactions/account/${address}`,
-        )).transactions,
-        (value, key) => camelCase(key),
-      )
+    async updateTransactions({ state: { sdk }, getters: { currentNetwork }, commit }, address) {
+      const transactions = [
+        ...mapKeysDeep(
+          (await fetchJson(
+            `${currentNetwork.middlewareUrl}/middleware/transactions/account/${address}`,
+          )).transactions,
+          (value, key) => camelCase(key),
+        ),
+        ...(await sdk.api.getPendingAccountTransactionsByPubkey(address)).transactions
+          .map(transaction => ({
+            ...transaction,
+            pending: true,
+          })),
+      ]
         .map(({ tx: { amount, fee, ...otherTx }, ...otherTransaction }) => ({
           ...otherTransaction,
           tx: {
