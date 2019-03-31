@@ -11,7 +11,7 @@ cache:
     - plugins
     - /home/travis/.cache/Cypress
 install:
-  - travis_wait scripts/install.sh
+  - travis_wait 30 scripts/install.sh
 script:
   - if [[ $TRAVIS_OS_NAME != "osx" ]]; then npm test; fi
 before_deploy: scripts/before-deploy.sh
