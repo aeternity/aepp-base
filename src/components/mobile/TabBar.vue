@@ -89,6 +89,7 @@ export default {
         height: 42px;
         border: 2px solid #000;
         box-shadow: 0 0 0 2px $color-primary;
+        margin: 2px;
       }
 
       &.router-link-active {
