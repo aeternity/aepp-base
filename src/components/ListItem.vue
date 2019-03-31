@@ -61,10 +61,6 @@ export default {
     background-color: $color-neutral-positive-3;
   }
 
-  &:visited .content {
-    border: inherit;
-  }
-
   .content {
     display: flex;
     align-items: center;
@@ -99,11 +95,15 @@ export default {
     }
   }
 
-  & + .list-item .content {
-    border-top: 2px solid $color-neutral-positive-2;
+  & + .list-item {
+    &, &:visited {
+      .content {
+        border-top: 2px solid $color-neutral-positive-2;
 
-    &.border-dark {
-      border-top-color: $color-neutral-positive-1;
+        &.border-dark {
+          border-top-color: $color-neutral-positive-1;
+        }
+      }
     }
   }
 
