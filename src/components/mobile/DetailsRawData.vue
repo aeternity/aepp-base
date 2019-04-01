@@ -1,19 +1,19 @@
 <template>
-  <ConfirmModalField
-    class="confirm-modal-raw-data"
+  <DetailsField
+    class="details-raw-data"
     v-bind="$attrs"
   >
     <code>
       {{ dataAsString }}
     </code>
-  </ConfirmModalField>
+  </DetailsField>
 </template>
 
 <script>
-import ConfirmModalField from './ConfirmModalField.vue';
+import DetailsField from './DetailsField.vue';
 
 export default {
-  components: { ConfirmModalField },
+  components: { DetailsField },
   props: {
     data: { type: [String, Uint8Array], required: true },
   },
@@ -30,7 +30,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.confirm-modal-field {
+.details-field {
   code {
     @extend %face-mono-base;
     color: $color-neutral-maximum;

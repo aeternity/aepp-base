@@ -1,6 +1,6 @@
 <template>
-  <ConfirmModalField
-    class="confirm-modal-amount"
+  <DetailsField
+    class="details-amount"
     name="Amount"
     :value="`${prefixedAmount(amount)} AE`"
   />
@@ -8,11 +8,11 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import ConfirmModalField from './ConfirmModalField.vue';
+import DetailsField from './DetailsField.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
-  components: { ConfirmModalField },
+  components: { DetailsField },
   props: {
     amount: { type: BigNumber, required: true },
   },

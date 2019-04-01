@@ -1,23 +1,23 @@
 <template>
-  <ConfirmModalItem class="confirm-modal-field">
-    <ConfirmModalRow :class="{ 'not-last': $slots.default }">
+  <DetailsItem class="details-field">
+    <DetailsRow :class="{ 'not-last': $slots.default }">
       <span class="name">
         {{ name }}
       </span>
       <span class="value">
         {{ value }}
       </span>
-    </ConfirmModalRow>
+    </DetailsRow>
     <slot />
-  </ConfirmModalItem>
+  </DetailsItem>
 </template>
 
 <script>
-import ConfirmModalItem from './ConfirmModalItem.vue';
-import ConfirmModalRow from './ConfirmModalRow.vue';
+import DetailsItem from './DetailsItem.vue';
+import DetailsRow from './DetailsRow.vue';
 
 export default {
-  components: { ConfirmModalItem, ConfirmModalRow },
+  components: { DetailsItem, DetailsRow },
   props: {
     name: {
       type: String,
@@ -35,8 +35,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.confirm-modal-field {
-  .confirm-modal-row {
+.details-field {
+  .details-row {
     &.not-last {
       margin-bottom: rem(8px);
     }

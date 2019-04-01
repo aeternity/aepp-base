@@ -1,19 +1,19 @@
 <template>
-  <ConfirmModalItem class="confirm-modal-permission">
+  <DetailsItem class="details-permission">
     <div class="name">
       {{ name }}
     </div>
     <div class="description">
       <slot />
     </div>
-  </ConfirmModalItem>
+  </DetailsItem>
 </template>
 
 <script>
-import ConfirmModalItem from './ConfirmModalItem.vue';
+import DetailsItem from './DetailsItem.vue';
 
 export default {
-  components: { ConfirmModalItem },
+  components: { DetailsItem },
   props: {
     name: {
       type: String,
@@ -27,7 +27,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.confirm-modal-permission {
+.details-permission {
   @extend %face-sans-s;
 
   .name {

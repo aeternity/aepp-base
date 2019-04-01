@@ -1,18 +1,18 @@
 <template>
-  <ConfirmModalField
-    class="confirm-modal-address"
+  <DetailsField
+    class="details-address"
     v-bind="$attrs"
   >
     <AeAddress :address="address" />
-  </ConfirmModalField>
+  </DetailsField>
 </template>
 
 <script>
-import ConfirmModalField from './ConfirmModalField.vue';
+import DetailsField from './DetailsField.vue';
 import AeAddress from '../AeAddress.vue';
 
 export default {
-  components: { ConfirmModalField, AeAddress },
+  components: { DetailsField, AeAddress },
   props: {
     address: { type: String, required: true },
   },
@@ -23,7 +23,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.confirm-modal-field {
+.details-field {
   .ae-address {
     font-weight: normal;
     color: $color-neutral-maximum;
