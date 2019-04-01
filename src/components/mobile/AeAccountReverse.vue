@@ -51,9 +51,10 @@ export default {
 .ae-account-reverse {
   main {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    padding: rem(12px);
+    padding-top: rem(12px);
+    padding-bottom: rem(12px);
 
     .ae-qr-code {
       background-color: $color-neutral-maximum;
