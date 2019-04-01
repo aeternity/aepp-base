@@ -6,11 +6,11 @@
     @click="$emit('click', $event)"
   >
     <div
-      :class="{ 'border-dark': borderDark }"
+      :class="{ 'border-dark': borderDark, 'has-icon': $slots.icon }"
       class="content"
     >
       <slot name="icon" />
-      <div :class="['title', $slots.icon ? 'after-icon' : '']">
+      <div class="title">
         {{ title }}
         <small :class="{ monospace: subtitleMonospace }">
           {{ subtitle }}
@@ -68,14 +68,20 @@ export default {
     @extend %face-sans-s;
     font-weight: 500;
 
+    &.has-icon {
+      > :first-child {
+        flex-shrink: 0;
+      }
+
+      .title {
+        margin-left: rem(12px);
+      }
+    }
+
     .title {
       @extend %face-sans-s;
       font-weight: 500;
       color: $color-neutral-negative-3;
-
-      &.after-icon {
-        margin-left: rem(12px);
-      }
 
       small {
         display: block;
