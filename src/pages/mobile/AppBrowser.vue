@@ -36,6 +36,7 @@
     <iframe
       ref="iframe"
       :src="url"
+      :scrolling="$globals.IS_IOS && 'no'"
       @load="loading = false"
     />
   </div>
@@ -130,6 +131,7 @@ export default {
 
   iframe {
     flex-grow: 1;
+    width: 100vw;
     border: none;
   }
 }
