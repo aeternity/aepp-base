@@ -6,6 +6,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "serve:android": "npm run build:cordova && cordova run android",
+    "serve:ios": "npm run build:cordova && cordova run ios",
     "build": "vue-cli-service build",
     "build:cordova": "IS_CORDOVA=true npm run build",
     "build:ios": "npm run build:cordova && cordova build ios",
