@@ -69,7 +69,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
 
   /deep/ .grayscale {
     filter: grayscale(100%);
@@ -88,5 +88,12 @@ export default {
       vertical-align: text-bottom;
     }
   }
+}
+</style>
+
+<style lang="scss">
+html, body {
+  height: 1px;
+  min-height: 100%;
 }
 </style>
