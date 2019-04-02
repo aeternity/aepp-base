@@ -237,7 +237,7 @@ const store = new Vuex.Store({
       commit('setBalance', { address, balance });
     },
     async updateTransactions({ state: { sdk }, getters: { currentNetwork }, commit }, address) {
-      const transactions = [
+      const transactions = await Promise.all([
         ...mapKeysDeep(
           (await fetchJson(
             `${currentNetwork.middlewareUrl}/middleware/transactions/account/${address}`,
@@ -250,14 +250,16 @@ const store = new Vuex.Store({
             pending: true,
           })),
       ]
-        .map(({ tx: { amount, fee, ...otherTx }, ...otherTransaction }) => ({
+        .map(async ({ blockHash, tx: { amount, fee, ...otherTx }, ...otherTransaction }) => ({
           ...otherTransaction,
+          blockHash,
+          time: new Date((await sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
           tx: {
             ...otherTx,
             amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
             fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
           },
-        }));
+        })));
       commit('setTransactions', { address, transactions });
     },
     async fetchAppManifest(_, host) {
