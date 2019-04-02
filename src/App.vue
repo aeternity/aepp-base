@@ -15,17 +15,6 @@
         :src="notification.icon"
       >
       {{ notification.text }}
-      <AeButton
-        v-if="notification.action"
-        slot="right"
-        plain
-        uppercase
-        type="exciting"
-        size="small"
-        @click="notification.action.handler"
-      >
-        {{ notification.action.name }}
-      </AeButton>
     </AeBanner>
 
     <AccountSwitcher />
@@ -37,7 +26,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { AeBanner, AeButton } from '@aeternity/aepp-components';
+import { AeBanner } from '@aeternity/aepp-components';
 import AlertModal from './components/AlertModal.vue';
 import TabBar from './components/mobile/TabBar.vue';
 import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
@@ -45,7 +34,6 @@ import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
 export default {
   components: {
     AeBanner,
-    AeButton,
     AlertModal,
     TabBar,
     AccountSwitcher,
