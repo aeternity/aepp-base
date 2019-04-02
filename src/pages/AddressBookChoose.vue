@@ -1,28 +1,22 @@
 <template>
   <MobilePage
     v-if="addressBook.length"
-    class="address-book"
+    class="address-book-choose"
     title="Addresses"
   >
-    <AeDivider />
-    <template v-for="(c, idx) in addressBook">
-      <AeLink
-        :key="`${idx}-address`"
-        :to="path(c.address)"
-      >
-        <AddressBookItem
-          :name="c.name"
-          :address="c.address"
-        >
-          <AeIcon
-            slot="icon"
-            name="arrow"
-            rotate="-45"
-          />
-        </AddressBookItem>
-      </AeLink>
-      <AeDivider :key="`${idx}-divider`" />
-    </template>
+    <ListItemAccount
+      v-for="(c, idx) in addressBook"
+      :key="`${idx}-address`"
+      :name="c.name"
+      :address="c.address"
+      :subtitle="`${c.address.slice(0, 6)}···${c.address.slice(-3)}`"
+      :to="path(c.address)"
+    >
+      <AeIcon
+        slot="right"
+        name="back"
+      />
+    </ListItemAccount>
 
     <ButtonAddFixed :to="{ name: 'address-book-new' }" />
   </MobilePage>
@@ -31,21 +25,18 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeIcon, AeDivider } from '@aeternity/aepp-components';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import AddressBookNoContacts from './AddressBookNoContacts.vue';
 import ButtonAddFixed from '../components/ButtonAddFixed.vue';
-import AddressBookItem from '../components/AddressBookItem.vue';
-import AeLink from '../components/AeLink.vue';
+import ListItemAccount from '../components/ListItemAccount.vue';
 import MobilePage from '../components/mobile/Page.vue';
 
 export default {
   components: {
     AeIcon,
-    AeDivider,
-    AeLink,
+    ListItemAccount,
     AddressBookNoContacts,
     ButtonAddFixed,
-    AddressBookItem,
     MobilePage,
   },
   props: {
@@ -60,10 +51,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped src="./AddressBook.scss" />
-
 <style lang="scss" scoped>
-.address-book .ae-link {
-  text-decoration: none;
+.address-book-choose .ae-icon {
+  transform: rotate(135deg);
 }
 </style>
