@@ -49,6 +49,9 @@
     "vuex-persistedstate": "^2.4.2",
     "vuex-router-sync": "^5.0.0"
   },
+  "peerDependencies": {
+    "base-x": "3.0.4"
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^4.1.13",
     "@storybook/addon-backgrounds": "^4.1.13",
