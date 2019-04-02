@@ -26,7 +26,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { AeBanner } from '@aeternity/aepp-components';
+import { AeBanner } from '@aeternity/aepp-components-3';
 import AlertModal from './components/AlertModal.vue';
 import TabBar from './components/mobile/TabBar.vue';
 import AccountSwitcher from './components/mobile/AccountSwitcher.vue';

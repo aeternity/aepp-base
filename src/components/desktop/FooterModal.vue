@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { AeOverlay } from '@aeternity/aepp-components';
+import { AeOverlay } from '@aeternity/aepp-components-3';
 
 export default {
   components: { AeOverlay },
@@ -28,11 +28,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components/dist/variables.scss';
-
 .footer-modal {
   .ae-overlay {
-    background: rgba($black, .6);
+    background: rgba(#000, .6);
 
     &.fade-enter-active, &.fade-leave-active {
       transition: opacity .5s;
@@ -48,7 +46,7 @@ export default {
     left: 0;
     right: 0;
     border-top: 2px solid #f0f0f0;
-    background-color: $white;
+    background-color: #fff;
 
     .content {
       height: 450px;

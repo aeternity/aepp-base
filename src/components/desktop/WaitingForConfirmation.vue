@@ -12,7 +12,6 @@
     <div>
       <AeButton
         v-if="signingCancelable"
-        type="dramatic"
         @click="cancelTransaction"
       >
         Cancel Transaction
@@ -23,7 +22,8 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { AeAppIcon, AeButton } from '@aeternity/aepp-components';
+import { AeAppIcon } from '@aeternity/aepp-components-3';
+import AeButton from '../AeButton.vue';
 import Step from './Step.vue';
 
 export default {
@@ -34,8 +34,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components/dist/variables.scss';
-
 .waiting-for-confirmation {
   height: 100%;
   display: flex;

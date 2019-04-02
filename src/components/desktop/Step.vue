@@ -5,7 +5,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components/dist/variables.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .step {
   text-align: center;
@@ -16,7 +16,7 @@
       display: inline-block;
 
       &.base {
-        background-color: $maegenta;
+        background-color: $color-primary;
       }
     }
 
@@ -31,7 +31,7 @@
 
     p {
       line-height: 1.44;
-      color: $grey;
+      color: $color-neutral;
 
       &.small {
         font-size: 10px;
