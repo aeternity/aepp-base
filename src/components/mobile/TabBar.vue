@@ -15,7 +15,7 @@
         :class="showAccountSwitcher ? 'router-link-active' : ''"
         @click="() => !showAccountSwitcher && toggleAccountSwitcher()"
       >
-        <AeIdentityAvatar :address="activeIdentity.address" />
+        <AeIdenticon :address="activeIdentity.address" />
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'address-book' }">
@@ -33,12 +33,11 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import { AeIdentityAvatar } from '@aeternity/aepp-components';
-import { AeIcon } from '@aeternity/aepp-components-3';
+import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
 
 export default {
-  components: { AeIdentityAvatar, AeIcon, ButtonPlain },
+  components: { AeIdenticon, AeIcon, ButtonPlain },
   computed: {
     ...mapGetters(['activeIdentity']),
     ...mapState({
@@ -84,18 +83,19 @@ export default {
         margin-bottom: 4px;
       }
 
-      .ae-identity-avatar {
+      .ae-identicon {
         width: 42px;
         height: 42px;
         border: 2px solid #000;
         box-shadow: 0 0 0 2px $color-primary;
         margin: 2px;
+        vertical-align: middle;
       }
 
       &.router-link-active {
         color: #fff;
 
-        .ae-identity-avatar {
+        .ae-identicon {
           box-shadow: 0 0 0 2px #fff;
         }
       }
