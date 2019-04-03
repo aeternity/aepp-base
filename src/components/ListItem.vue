@@ -11,9 +11,13 @@
     >
       <slot name="icon" />
       <div class="title">
-        {{ title }}
+        <slot name="title">
+          {{ title }}
+        </slot>
         <small :class="{ monospace: subtitleMonospace }">
-          {{ subtitle }}
+          <slot name="subtitle">
+            {{ subtitle }}
+          </slot>
         </small>
       </div>
       <slot />
@@ -30,7 +34,7 @@
 export default {
   props: {
     to: { type: [Object, String], default: undefined },
-    title: { type: String, required: true },
+    title: { type: String, default: undefined },
     subtitle: { type: String, default: undefined },
     subtitleMonospace: { type: Boolean, default: false },
     inactive: { type: Boolean, default: false },
