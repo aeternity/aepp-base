@@ -20,6 +20,8 @@ import Receive from '../../pages/mobile/Receive.vue';
 import Send from '../../pages/mobile/Send.vue';
 import SendAmount from '../../pages/mobile/SendAmount.vue';
 import SendConfirm from '../../pages/mobile/SendConfirm.vue';
+import TransactionList from '../../pages/mobile/TransactionList.vue';
+import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
 import Settings from '../../pages/mobile/Settings.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
@@ -169,6 +171,24 @@ export default [{
   component: SendConfirm,
   beforeEnter: checkLoggedIn(true),
   props: true,
+}, {
+  name: 'transaction-list',
+  path: '/transfer/transactions/:direction?',
+  component: TransactionList,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
+  meta: {
+    displayFooter: true,
+  },
+}, {
+  name: 'transaction-details',
+  path: '/transfer/transactions/details/:hash',
+  component: TransactionDetails,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
+  meta: {
+    displayFooter: true,
+  },
 }, {
   name: 'settings',
   path: '/settings',

@@ -241,10 +241,11 @@ const store = new Vuex.Store({
         ...mapKeysDeep(
           (await fetchJson(
             `${currentNetwork.middlewareUrl}/middleware/transactions/account/${address}`,
-          )).transactions,
+          ).catch(() => ({ transactions: [] }))).transactions,
           (value, key) => camelCase(key),
         ),
-        ...(await sdk.api.getPendingAccountTransactionsByPubkey(address)).transactions
+        ...(await sdk.api.getPendingAccountTransactionsByPubkey(address)
+          .catch(() => ({ transactions: [] }))).transactions
           .map(transaction => ({
             ...transaction,
             pending: true,
@@ -254,6 +255,8 @@ const store = new Vuex.Store({
           ...otherTransaction,
           blockHash,
           time: new Date((await sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
+          received: address === otherTx.recipientId,
+          peerId: address === otherTx.recipientId ? otherTx.senderId : otherTx.recipientId,
           tx: {
             ...otherTx,
             amount: BigNumber(amount).shiftedBy(-MAGNITUDE),

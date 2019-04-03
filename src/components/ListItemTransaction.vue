@@ -7,12 +7,12 @@
   >
     <AeIdenticon
       slot="icon"
-      :address="received ? tx.senderId : tx.recipientId"
+      :address="peerId"
     />
 
     <AeAddress
       slot="title"
-      :address="received ? tx.senderId : tx.recipientId"
+      :address="peerId"
       length="short"
     />
 
@@ -52,15 +52,12 @@ export default {
   },
   props: {
     pending: { type: Boolean },
+    received: { type: Boolean },
     time: { type: Date, required: true },
+    peerId: { type: String, required: true },
     tx: { type: Object, required: true },
   },
-  computed: {
-    ...mapGetters(['activeIdentity']),
-    received() {
-      return this.tx.recipientId === this.activeIdentity.address;
-    },
-  },
+  computed: mapGetters(['activeIdentity']),
 };
 </script>
 
