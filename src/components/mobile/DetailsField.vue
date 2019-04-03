@@ -1,6 +1,6 @@
 <template>
   <DetailsItem class="details-field">
-    <DetailsRow :class="{ 'not-last': $slots.default }">
+    <DetailsRow :class="[{ 'not-last': $slots.default }, fill]">
       <span class="name">
         {{ name }}
       </span>
@@ -15,9 +15,11 @@
 <script>
 import DetailsItem from './DetailsItem.vue';
 import DetailsRow from './DetailsRow.vue';
+import DetailsFillMixin from './DetailsFillMixin';
 
 export default {
   components: { DetailsItem, DetailsRow },
+  mixins: [DetailsFillMixin],
   props: {
     name: {
       type: String,
@@ -44,13 +46,31 @@ export default {
     .name {
       @extend %face-sans-xs;
       font-weight: 500;
-      color: $color-primary-positive-3;
     }
 
     .value {
       @extend %face-mono-xs;
-      color: $color-neutral-maximum;
       text-transform: uppercase;
+    }
+
+    &.neutral {
+      .name {
+        color: rgba(255, 255, 255, 0.66846);
+      }
+
+      .value {
+        color: $color-neutral-maximum;
+      }
+    }
+
+    &.dark {
+      .name {
+        color: $color-neutral-negative-1;
+      }
+
+      .value {
+        color: $color-neutral-negative-3;
+      }
     }
   }
 }
