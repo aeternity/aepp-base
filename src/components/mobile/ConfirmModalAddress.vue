@@ -3,10 +3,7 @@
     class="confirm-modal-address"
     v-bind="$attrs"
   >
-    <AeAddress
-      :address="address"
-      split-by="6"
-    />
+    <AeAddress :address="address" />
   </ConfirmModalField>
 </template>
 
