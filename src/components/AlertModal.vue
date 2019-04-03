@@ -10,7 +10,6 @@
       slot="buttons"
       size="small"
       plain
-      uppercase
       @click="alert.resolve"
     >
       {{ alert.buttonText || 'Ok' }}
@@ -20,7 +19,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeButton, AeModalLight } from '@aeternity/aepp-components';
+import { AeModalLight } from '@aeternity/aepp-components-3';
+import AeButton from './AeButton.vue';
 
 export default {
   components: { AeModalLight, AeButton },
@@ -29,8 +29,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components/dist/variables.scss';
-
 .alert-modal.ae-overlay /deep/ .ae-modal-light {
   padding-left: 0;
   padding-right: 0;

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { AeOverlay } from '@aeternity/aepp-components';
+import { AeOverlay } from '@aeternity/aepp-components-3';
 
 export default {
   components: { AeOverlay },

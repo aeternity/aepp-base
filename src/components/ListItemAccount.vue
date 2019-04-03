@@ -2,7 +2,7 @@
   <ListItem
     v-bind="$attrs"
     :title="name"
-    :subtitle="prefixedAmount(balance) + ' AE'"
+    :subtitle="subtitle || balance && (prefixedAmount(balance) + ' AE')"
     subtitle-monospace
     v-on="$listeners"
   >
@@ -29,7 +29,8 @@ export default {
   props: {
     name: { type: String, required: true },
     address: { type: String, required: true },
-    balance: { type: BigNumber, required: true },
+    balance: { type: BigNumber, required: false, default: null },
+    subtitle: { type: String, required: false, default: '' },
   },
   methods: { prefixedAmount },
 };
