@@ -97,7 +97,7 @@ export default {
 
   .ae-button {
     display: block;
-    min-width: rem(250px);
+    min-width: 90%;
     margin-left: auto;
     margin-right: auto;
   }
