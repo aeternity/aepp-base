@@ -156,14 +156,17 @@ export default {
     }
   }
 
+  header + main {
+    padding-top: rem(16px);
+  }
+
   main {
     flex-grow: 1;
-    padding-top: rem(16px);
     padding-bottom: rem(32px);
 
     /deep/ {
       .ae-card:first-child {
-        margin-top: rem(16px);
+        margin-top: rem(32px);
       }
     }
   }
