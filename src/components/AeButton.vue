@@ -84,7 +84,17 @@ export default {
   }
 
   &[disabled] {
-    opacity: 0.2;
+    &.primary {
+      background-color: $color-primary-positive-3;
+    }
+
+    &.secondary {
+      background-color: $color-neutral-positive-1;
+    }
+
+    &.alternative {
+      background-color: $color-alternative-positive-3;
+    }
   }
 
   &.plain {
