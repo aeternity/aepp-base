@@ -17,6 +17,7 @@
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       @input="$emit('input', $event.target.value)"
+      @keypress="keypressHandler"
     />
   </AeInputWrapper>
 </template>
@@ -31,6 +32,14 @@ export default {
   props: {
     autofocus: { type: Boolean, default: false },
     monospace: { type: Boolean, default: false },
+    submitOnEnter: { type: Boolean, default: false },
+  },
+  methods: {
+    keypressHandler(event) {
+      if (!this.submitOnEnter || event.key !== 'Enter') return;
+      event.preventDefault();
+      if (event.target.form) event.target.form.dispatchEvent(new Event('submit'));
+    },
   },
 };
 </script>

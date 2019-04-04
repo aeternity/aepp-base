@@ -3,6 +3,7 @@
     class="ae-input-mnemonic"
     header="Recovery phrase"
     rows="3"
+    submit-on-enter
     :format-display-value="formatDisplayMnemonic"
     :format-emit-value="formatEmitMnemonic"
     v-bind="$attrs"

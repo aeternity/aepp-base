@@ -6,6 +6,7 @@
     class="ae-input-address"
     rows="3"
     monospace
+    submit-on-enter
     :format-display-value="formatDisplayAddress"
     :format-emit-value="formatEmitAddress"
     v-bind="$attrs"
