@@ -75,6 +75,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 0 rem(48px);
+    padding-bottom: env(safe-area-inset-bottom);
 
     .ae-button {
       margin-bottom: rem(23px);

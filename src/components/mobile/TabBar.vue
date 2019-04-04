@@ -58,6 +58,7 @@ export default {
   position: sticky;
   bottom: 0;
   background-color: $color-neutral-minimum;
+  padding-bottom: env(safe-area-inset-bottom);
 
   .wrapper {
     display: flex;

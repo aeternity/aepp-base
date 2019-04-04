@@ -127,6 +127,7 @@ export default {
     position: fixed;
     width: 84%;
     bottom: rem(90px);
+    bottom: calc(#{rem(90px)} + env(safe-area-inset-bottom));
     left: 8%;
     border-radius: rem(8px);
     background-color: $color-neutral-maximum;

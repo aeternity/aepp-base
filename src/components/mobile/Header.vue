@@ -75,6 +75,7 @@ export default {
 .header-mobile {
   position: sticky;
   top: 0;
+  padding-top: env(safe-area-inset-top);
 
   &.empty {
     position: static;
