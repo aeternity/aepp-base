@@ -60,6 +60,10 @@ export default {
   background-color: $color-neutral-minimum;
   padding-bottom: env(safe-area-inset-bottom);
 
+  @media (max-height: 500px) {
+    position: static;
+  }
+
   .wrapper {
     display: flex;
     align-items: center;
