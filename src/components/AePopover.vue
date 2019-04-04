@@ -45,9 +45,12 @@ export default {
     updateStyles() {
       if (!this.anchor) return;
       const anchorEl = this.anchor instanceof Vue ? this.anchor.$el : this.anchor;
+      const anchorElRect = anchorEl.getBoundingClientRect();
+      anchorElRect.x += window.scrollX;
+      anchorElRect.y += window.scrollY;
       const {
         top, right, bottom, left,
-      } = anchorEl.getBoundingClientRect();
+      } = anchorElRect;
       const anchorPoint = {
         x: {
           left,
