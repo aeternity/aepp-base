@@ -60,14 +60,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/fallback/variables.scss';
 
 .tab-bar {
-  position: sticky;
-  bottom: 0;
   background-color: $color-neutral-minimum;
   padding-bottom: env(safe-area-inset-bottom);
-
-  @media (max-height: 500px) {
-    position: static;
-  }
 
   .wrapper {
     display: flex;

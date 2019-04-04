@@ -1,4 +1,3 @@
-import { merge } from 'lodash-es';
 import { checkLoggedIn } from '../utils';
 import AddressBook from '../../pages/AddressBook.vue';
 import AddressBookNew from '../../pages/AddressBookNew.vue';
@@ -20,4 +19,4 @@ export default process.env.UNFINISHED_FEATURES ? [{
   component: AddressBookChoose,
   beforeEnter: checkLoggedIn(true),
   props: true,
-}].map(route => merge(route, { meta: { displayFooter: true } })) : [];
+}] : [];

@@ -39,6 +39,8 @@
       :scrolling="$globals.IS_IOS && 'no'"
       @load="loading = false"
     />
+
+    <tab-bar />
   </div>
 </template>
 
@@ -50,10 +52,11 @@ import ButtonPlain from '../../components/ButtonPlain.vue';
 import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
+import TabBar from '../../components/mobile/TabBar.vue';
 
 export default {
   components: {
-    UrlForm, ButtonPlain, AeIcon, Menu, MenuItem, ProgressFake,
+    UrlForm, ButtonPlain, AeIcon, Menu, MenuItem, ProgressFake, TabBar,
   },
   data() {
     return {

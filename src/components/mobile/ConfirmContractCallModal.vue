@@ -1,6 +1,7 @@
 <template>
   <MobilePage
     fill="primary"
+    hide-tab-bar
     right-button-icon-name="close"
     @right-button-click="denyHandler"
   >

@@ -117,32 +117,22 @@ export default [{
   path: '/browser',
   component: Apps,
   beforeEnter: checkLoggedIn(false),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'app-browser',
   path: '/browser/:path+',
   component: AppBrowser,
   beforeEnter: checkLoggedIn(false),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'accounts-new',
   path: '/accounts-new',
   component: AccountsNew,
   beforeEnter: checkLoggedIn(true),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'vault-new',
   path: '/vault/new',
   component: AccountsNew,
   beforeEnter: checkLoggedIn(true),
   meta: {
-    displayFooter: true,
     secure: true,
   },
 }, ...process.env.UNFINISHED_FEATURES
@@ -178,34 +168,22 @@ export default [{
   component: Transfer,
   beforeEnter: checkLoggedIn(true),
   props: true,
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'receive',
   path: '/transfer/receive',
   component: Receive,
   beforeEnter: checkLoggedIn(true),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'send',
   path: '/transfer/send',
   component: Send,
   beforeEnter: checkLoggedIn(true),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'send-to',
   path: '/transfer/send/:to',
   component: SendAmount,
   beforeEnter: checkLoggedIn(true),
   props: true,
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'send-confirm',
   path: '/transfer/send/:to/:amount',
@@ -218,50 +196,32 @@ export default [{
   component: TransactionList,
   beforeEnter: checkLoggedIn(true),
   props: true,
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'transaction-details',
   path: '/transfer/transactions/details/:hash',
   component: TransactionDetails,
   beforeEnter: checkLoggedIn(true),
   props: true,
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'settings',
   path: '/settings',
   component: Settings,
   beforeEnter: checkLoggedIn(false),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'settings-network',
   path: '/settings/network',
   component: SettingsNetwork,
   beforeEnter: checkLoggedIn(false),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'settings-network-new',
   path: '/settings/network/new',
   component: SettingsNetworkNew,
   beforeEnter: checkLoggedIn(false),
-  meta: {
-    displayFooter: true,
-  },
 }, ...process.env.UNFINISHED_FEATURES ? [{
   name: 'settings-remote-connection',
   path: '/settings/remote-connection',
   component: SettingsRemoteConnection,
   beforeEnter: checkLoggedIn(true),
-  meta: {
-    displayFooter: true,
-  },
 }, {
   name: 'settings-remote-connection-new',
   path: '/settings/remote-connection/new',

@@ -151,9 +151,5 @@ export default {
     border-top-color: $color-neutral-maximum;
     z-index: 1;
   }
-
-  .tab-bar {
-    position: static;
-  }
 }
 </style>

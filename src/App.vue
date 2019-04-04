@@ -4,10 +4,6 @@
       v-show="!hidePage"
       :class="{ grayscale: openedModals.length }"
     />
-    <TabBar
-      v-if="$route.meta.displayFooter && !hidePage"
-      :class="{ grayscale: openedModals.length }"
-    />
 
     <Component
       :is="component"
@@ -32,13 +28,11 @@
 import { mapState } from 'vuex';
 import { AeBanner } from '@aeternity/aepp-components-3';
 import AlertModal from './components/AlertModal.vue';
-import TabBar from './components/mobile/TabBar.vue';
 
 export default {
   components: {
     AeBanner,
     AlertModal,
-    TabBar,
   },
   computed: {
     ...mapState(['notification']),

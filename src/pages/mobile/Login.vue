@@ -2,6 +2,7 @@
   <MobilePage
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
+    hide-tab-bar
   >
     <Guide>
       <em>Hello!</em>{{ ' ' }}<img :src="wavingHandEmoji">
