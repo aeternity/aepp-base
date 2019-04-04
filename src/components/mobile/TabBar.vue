@@ -59,6 +59,10 @@ export default {
   bottom: 0;
   background-color: $color-neutral-minimum;
 
+  @media (max-height: 500px) {
+    position: static;
+  }
+
   .wrapper {
     display: flex;
     align-items: center;
