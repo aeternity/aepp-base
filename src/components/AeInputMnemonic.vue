@@ -3,7 +3,8 @@
     class="ae-input-mnemonic"
     header="Recovery phrase"
     rows="3"
-    :format-display-value="formatMnemonic"
+    :format-display-value="formatDisplayMnemonic"
+    :format-emit-value="formatEmitMnemonic"
     v-bind="$attrs"
     :value="value"
     v-on="$listeners"
@@ -19,10 +20,11 @@ export default {
     value: { type: String, required: true },
   },
   methods: {
-    formatMnemonic: address => address
+    formatDisplayMnemonic: mnemonic => mnemonic
       .toLowerCase()
       .replace(/\s+/g, ' ')
       .replace(/[^a-z ]/g, ''),
+    formatEmitMnemonic: mnemonic => mnemonic.trim(),
   },
 };
 </script>
