@@ -1,5 +1,9 @@
 <template>
-  <MobilePage fill="primary">
+  <MobilePage
+    fill="primary"
+    right-button-icon-name="close"
+    @right-button-click="denyHandler"
+  >
     <Guide fill="neutral">
       <em>Create a new contract</em>
       <br>by

@@ -2,6 +2,8 @@
   <MobilePage
     class="confirm-spend-modal"
     fill="primary"
+    right-button-icon-name="close"
+    @right-button-click="denyHandler"
   >
     <Guide fill="neutral">
       <AeFraction
