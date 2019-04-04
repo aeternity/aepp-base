@@ -8,7 +8,7 @@ import AddToHomeScreenPrompt from '../pages/mobile/AddToHomeScreenPrompt.vue';
 const router = new Router({
   routes:
     process.env.IS_MOBILE_DEVICE
-      ? (!process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS
+      ? (!process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS && process.env.NODE_ENV === 'production'
         && [{
           path: '/',
           component: AddToHomeScreenPrompt,
