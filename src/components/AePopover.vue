@@ -45,12 +45,26 @@ export default {
     updateStyles() {
       if (!this.anchor) return;
       const anchorEl = this.anchor instanceof Vue ? this.anchor.$el : this.anchor;
+
+      let parentEl = anchorEl.parentNode;
+      while (parentEl !== document.body) {
+        const parentElPosition = getComputedStyle(parentEl).getPropertyValue('position');
+        if (parentElPosition === 'relative') {
+          throw new Error('AePopover: Relative positioning is not supported yet');
+        }
+        if (parentElPosition !== 'static') break;
+        parentEl = parentEl.parentNode;
+      }
+      const parentElRect = parentEl === document.body
+        ? new DOMRect(-window.scrollX, -window.scrollY) : parentEl.getBoundingClientRect();
+
       const anchorElRect = anchorEl.getBoundingClientRect();
-      anchorElRect.x += window.scrollX;
-      anchorElRect.y += window.scrollY;
+      anchorElRect.x -= parentElRect.x;
+      anchorElRect.y -= parentElRect.y;
       const {
         top, right, bottom, left,
       } = anchorElRect;
+
       const anchorPoint = {
         x: {
           left,
