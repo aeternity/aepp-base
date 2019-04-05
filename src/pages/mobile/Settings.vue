@@ -44,6 +44,7 @@
         />
       </ListItem>
       <ListItem
+        v-if="$globals.UNFINISHED_FEATURES"
         :to="{ name: 'settings-remote-connection' }"
         :subtitle="
           `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"

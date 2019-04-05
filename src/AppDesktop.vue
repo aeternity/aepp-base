@@ -25,7 +25,7 @@ export default {
   components: {
     HeaderDesktop,
     SidebarDesktop,
-    FooterDesktop,
+    FooterDesktop: process.env.UNFINISHED_FEATURES ? FooterDesktop : () => {},
   },
   computed: mapGetters('modals', ['component', 'hidePage', 'props']),
 };

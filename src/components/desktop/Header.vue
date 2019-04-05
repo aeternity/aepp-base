@@ -29,7 +29,11 @@
       <div class="details">
         {{ account ? account.name : 'Connect an account' }}
         <div class="balance">
-          {{ account ? `${prefixedAmount(account.balance)} AE` : 'With Base æpp or Ledger' }}
+          {{
+            account
+              ? `${prefixedAmount(account.balance)} AE`
+              : `With ${$globals.UNFINISHED_FEATURES ? 'Base æpp or ' : ''}Ledger`
+          }}
         </div>
       </div>
       <AeIdenticon :address="account ? account.address : ''" />
@@ -59,11 +63,11 @@ export default {
       name: 'Receive',
       routeName: 'receive',
       iconName: 'receive',
-    }, {
+    }, ...process.env.UNFINISHED_FEATURES ? [{
       name: 'Contacts',
       routeName: 'address-book',
       iconName: 'contacts',
-    }, {
+    }] : [], {
       name: 'Settings',
       routeName: 'settings',
       iconName: 'settings',

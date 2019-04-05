@@ -18,7 +18,10 @@
         <AeIdenticon :address="activeIdentity.address" />
       </ButtonPlain>
 
-      <ButtonPlain :to="{ name: 'address-book' }">
+      <ButtonPlain
+        :to="{ name: 'address-book' }"
+        :disabled="!$globals.UNFINISHED_FEATURES"
+      >
         <AeIcon name="contacts" />
         Contacts
       </ButtonPlain>
@@ -81,6 +84,10 @@ export default {
       letter-spacing: 0.2px;
       color: $color-neutral-negative-1;
       text-align: center;
+
+      &:disabled {
+        color: $color-neutral-negative-3;
+      }
 
       .ae-icon {
         font-size: 20px;
