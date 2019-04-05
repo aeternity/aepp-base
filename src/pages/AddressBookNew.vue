@@ -2,7 +2,7 @@
   <MobilePage
     :left-button-to="{ name: 'address-book' }"
     left-button-icon-name="back"
-    title="Addresses"
+    title="Edit Contact"
   >
     <form
       :id="_uid"
@@ -14,7 +14,7 @@
         :error="errors.has('name')"
         :footer="errors.first('name')"
         autofocus
-        header="Contact name"
+        header="Name"
         name="name"
       />
 
@@ -23,7 +23,7 @@
         v-validate="'required|address'"
         :error="errors.has('address')"
         :footer="errors.first('address')"
-        header="Contact address"
+        header="Address"
         name="address"
       />
     </form>
@@ -33,7 +33,7 @@
       :disabled="errors.any()"
       :form="_uid"
     >
-      Save contact
+      Save
     </AeButton>
   </MobilePage>
 </template>

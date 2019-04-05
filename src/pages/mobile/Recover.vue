@@ -13,8 +13,7 @@
       Enter <img :src="dizzySymbolEmoji"> your
       <strong>recovery phrase</strong>.
       The one you wrote
-      down during <mark>account</mark>
-      <mark>creation</mark>.
+      down during <mark>account creation</mark>.
     </Guide>
 
     <form

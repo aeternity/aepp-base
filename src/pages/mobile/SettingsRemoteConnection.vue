@@ -2,7 +2,7 @@
   <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
-    title="Remote Connection"
+    title="Remote connections"
     header-fill="light"
     fill="neutral"
   >

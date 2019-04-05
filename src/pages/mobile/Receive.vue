@@ -7,8 +7,8 @@
   >
     <template slot="header">
       <Guide>
-        <em>Let others scan</em>
-        your address
+        <em>Share your address</em>
+        with sender
       </Guide>
 
       <AeAccountReverse
@@ -21,7 +21,7 @@
       v-copy-on-click="activeIdentity.address"
       class="copy"
       title="Copy address"
-      subtitle="Share it with sender"
+      subtitle="Save to clipboard"
       border-dark
     >
       <img
