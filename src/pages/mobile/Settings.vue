@@ -7,32 +7,30 @@
       <em>Settings</em>
     </Guide>
     <AeCard fill="maximum">
-      <template v-if="$globals.IS_MOBILE_DEVICE">
-        <ListItem
-          title="Logout"
-          subtitle="And see you soon!"
-          @click="logOut"
-        >
-          <AeIcon
-            slot="icon"
-            fill="secondary"
-            face="round"
-            name="share"
-          />
-        </ListItem>
-        <ListItem
-          title="Reset Key Storage"
-          subtitle="After resetting, a recovery is required"
-          @click="signOut"
-        >
-          <AeIcon
-            slot="icon"
-            fill="primary"
-            face="round"
-            name="sign-out"
-          />
-        </ListItem>
-      </template>
+      <ListItem
+        title="Logout"
+        subtitle="And see you soon!"
+        @click="logOut"
+      >
+        <AeIcon
+          slot="icon"
+          fill="secondary"
+          face="round"
+          name="share"
+        />
+      </ListItem>
+      <ListItem
+        title="Reset Key Storage"
+        subtitle="After resetting, a recovery is required"
+        @click="signOut"
+      >
+        <AeIcon
+          slot="icon"
+          fill="primary"
+          face="round"
+          name="sign-out"
+        />
+      </ListItem>
       <ListItem
         :to="{ name: 'settings-network' }"
         :subtitle="networkName"
@@ -46,7 +44,6 @@
         />
       </ListItem>
       <ListItem
-        v-if="$globals.IS_MOBILE_DEVICE"
         :to="{ name: 'settings-remote-connection' }"
         :subtitle="
           `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
