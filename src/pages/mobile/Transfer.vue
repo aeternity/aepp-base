@@ -6,7 +6,7 @@
     <template slot="header">
       <Guide>
         <em>Send and receive</em>
-        æternity&nbsp;tokens
+        Æ
       </Guide>
 
       <Menu
@@ -76,7 +76,7 @@
     </ListItem>
     <ListItem
       title="Tokens in migration"
-      subtitle="Available after next hardfork"
+      subtitle="Not shown as balance above"
       border-dark
       @click="showMigratedBalanceModal = true"
     >

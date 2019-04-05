@@ -27,7 +27,7 @@
       @close="showMenu = false"
     >
       <MenuItem @click="reload">
-        <AeIcon name="reload" />Refresh aepp
+        <AeIcon name="reload" />Refresh
       </MenuItem>
     </Menu>
 
