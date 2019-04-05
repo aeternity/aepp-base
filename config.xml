@@ -23,6 +23,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="ScrollEnabled" value="true" />
+        <preference name="UseSwiftLanguageVersion" value="5" />
     </platform>
     <preference name="SplashScreen" value="screen" />
     <feature name="SplashScreen">
