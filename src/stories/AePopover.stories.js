@@ -53,4 +53,26 @@ storiesOf('AePopover', module)
         horizontal: ['left', 'center', 'right'],
       },
     }),
+  }))
+  .add('in absolute element', () => ({
+    components: { AePopover },
+    template: `
+      <div style="position: absolute; top: 200px; left: 200px; border: 1px solid blue">
+        <button
+          ref="button"
+          style="margin: 50px"
+          @click="showPopover = !showPopover"
+        >
+          Toggle popover
+        </button>
+        <AePopover
+          :anchor="showPopover ? $refs.button : null"
+          :anchor-origin="{ vertical: 'top', horizontal: 'center' }"
+          :transform-origin="{ vertical: 'bottom', horizontal: 'center' }"
+          @close="showPopover = false"
+        >
+          Popover content
+        </AePopover>
+      </div>`,
+    data: () => ({ showPopover: false }),
   }));
