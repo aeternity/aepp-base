@@ -11,7 +11,7 @@
       <em>{{ activeIdentity.name }}</em>
     </Guide>
 
-    <ConfirmModalRawData
+    <DetailsRawData
       name="Data to sign"
       :data="data"
     />
@@ -38,7 +38,7 @@ import { mapGetters } from 'vuex';
 import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
-import ConfirmModalRawData from './ConfirmModalRawData.vue';
+import DetailsRawData from './DetailsRawData.vue';
 import AeButton from '../AeButton.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
 
@@ -47,7 +47,7 @@ export default {
     MobilePage,
     Guide,
     AeIdenticon,
-    ConfirmModalRawData,
+    DetailsRawData,
     AeButton,
     AeButtonGroup,
   },

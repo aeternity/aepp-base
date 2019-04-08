@@ -12,14 +12,14 @@
       /> {{ activeIdentity.name }}
     </Guide>
 
-    <ConfirmModalPermission name="Accessing accounts">
+    <DetailsPermission name="Accessing accounts">
       This aepp will be able to read your public key
-    </ConfirmModalPermission>
+    </DetailsPermission>
 
-    <ConfirmModalPermission name="Preparing transactions">
+    <DetailsPermission name="Preparing transactions">
       This allows this app to prepare a transaction.
       You will need to sign the transaction manually.
-    </ConfirmModalPermission>
+    </DetailsPermission>
 
     <AeButtonGroup>
       <AeButton
@@ -39,7 +39,7 @@
 import { mapGetters } from 'vuex';
 import { AeIdenticon } from '@aeternity/aepp-components-3';
 import AeModal from '../AeModal.vue';
-import ConfirmModalPermission from './ConfirmModalPermission.vue';
+import DetailsPermission from './DetailsPermission.vue';
 import Guide from '../Guide.vue';
 import AeButton from '../AeButton.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
@@ -49,7 +49,7 @@ export default {
     AeModal,
     Guide,
     AeIdenticon,
-    ConfirmModalPermission,
+    DetailsPermission,
     AeButtonGroup,
     AeButton,
   },

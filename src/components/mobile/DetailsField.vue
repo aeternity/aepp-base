@@ -1,23 +1,25 @@
 <template>
-  <ConfirmModalItem class="confirm-modal-field">
-    <ConfirmModalRow :class="{ 'not-last': $slots.default }">
+  <DetailsItem class="details-field">
+    <DetailsRow :class="[{ 'not-last': $slots.default }, fill]">
       <span class="name">
         {{ name }}
       </span>
       <span class="value">
         {{ value }}
       </span>
-    </ConfirmModalRow>
+    </DetailsRow>
     <slot />
-  </ConfirmModalItem>
+  </DetailsItem>
 </template>
 
 <script>
-import ConfirmModalItem from './ConfirmModalItem.vue';
-import ConfirmModalRow from './ConfirmModalRow.vue';
+import DetailsItem from './DetailsItem.vue';
+import DetailsRow from './DetailsRow.vue';
+import DetailsFillMixin from './DetailsFillMixin';
 
 export default {
-  components: { ConfirmModalItem, ConfirmModalRow },
+  components: { DetailsItem, DetailsRow },
+  mixins: [DetailsFillMixin],
   props: {
     name: {
       type: String,
@@ -35,8 +37,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.confirm-modal-field {
-  .confirm-modal-row {
+.details-field {
+  .details-row {
     &.not-last {
       margin-bottom: rem(8px);
     }
@@ -44,13 +46,31 @@ export default {
     .name {
       @extend %face-sans-xs;
       font-weight: 500;
-      color: $color-primary-positive-3;
     }
 
     .value {
       @extend %face-mono-xs;
-      color: $color-neutral-maximum;
       text-transform: uppercase;
+    }
+
+    &.neutral {
+      .name {
+        color: rgba(255, 255, 255, 0.66846);
+      }
+
+      .value {
+        color: $color-neutral-maximum;
+      }
+    }
+
+    &.dark {
+      .name {
+        color: $color-neutral-negative-1;
+      }
+
+      .value {
+        color: $color-neutral-negative-3;
+      }
     }
   }
 }

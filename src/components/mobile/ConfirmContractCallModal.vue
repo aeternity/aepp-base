@@ -11,19 +11,19 @@
       <em>{{ activeIdentity.name }}</em>
     </Guide>
 
-    <ConfirmModalAmount :amount="amount" />
+    <DetailsAmount :amount="amount" />
 
-    <ConfirmModalFeeInput
+    <DetailsFeeInput
       v-model="newFee"
       :min="minFee"
     />
 
-    <ConfirmModalRawData
+    <DetailsRawData
       name="Method call data"
       :data="callData"
     />
 
-    <ConfirmModalAddress
+    <DetailsAddress
       name="Contract Address"
       :address="contractId"
     />
@@ -49,27 +49,27 @@
 import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
-import ConfirmModalAddress from './ConfirmModalAddress.vue';
-import ConfirmModalAmount from './ConfirmModalAmount.vue';
-import ConfirmModalFeeInput from './ConfirmModalFeeInput.vue';
-import ConfirmModalRawData from './ConfirmModalRawData.vue';
+import DetailsAddress from './DetailsAddress.vue';
+import DetailsAmount from './DetailsAmount.vue';
+import DetailsFeeInput from './DetailsFeeInput.vue';
+import DetailsRawData from './DetailsRawData.vue';
 import AeButton from '../AeButton.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
-import ConfirmModalAmountFeeMixin from './ConfirmModalAmountFeeMixin';
+import DetailsAmountFeeMixin from './DetailsAmountFeeMixin';
 
 export default {
   components: {
     MobilePage,
     Guide,
     AeIdenticon,
-    ConfirmModalAddress,
-    ConfirmModalAmount,
-    ConfirmModalFeeInput,
-    ConfirmModalRawData,
+    DetailsAddress,
+    DetailsAmount,
+    DetailsFeeInput,
+    DetailsRawData,
     AeButton,
     AeButtonGroup,
   },
-  mixins: [ConfirmModalAmountFeeMixin],
+  mixins: [DetailsAmountFeeMixin],
   props: {
     callData: { type: String, required: true },
     contractId: { type: String, required: true },
