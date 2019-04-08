@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import Vue from 'vue';
-import Vuex from 'vuex';
+import VueRx from 'vue-rx';
 import { storiesOf } from '@storybook/vue';
 import AeInputAddress from '../components/AeInputAddress.vue';
-import { account, accounts } from './mock-data';
 
+Vue.use(VueRx);
 Vue.prototype.$globals = {
   IS_MOBILE_DEVICE: true,
 };
@@ -46,12 +46,6 @@ storiesOf('AeInputAddress', module)
     destroyed: () => {
       Vue.prototype.$globals.IS_MOBILE_DEVICE = true;
     },
-    store: new Vuex.Store({
-      getters: {
-        identities: () => accounts,
-        activeIdentity: () => account,
-      },
-    }),
     data: () => ({ value: '' }),
   }), {
     notes: {

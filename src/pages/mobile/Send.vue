@@ -14,7 +14,7 @@
         />
         <em>New Transfer</em>
         <br>from
-        <AccountInline :address="activeIdentity.address" />
+        <AccountInline :address="activeAccount.address" />
       </Guide>
 
       <form
@@ -43,13 +43,13 @@
     </AeButton>
 
     <div
-      v-if="identities.length > 1"
+      v-if="inactiveAccounts.length > 1"
       class="own-account"
     >
       Or transfer to your own account
     </div>
     <ListItemAccount
-      v-for="account in identities.filter(i => i !== activeIdentity)"
+      v-for="account in inactiveAccounts"
       :key="account.address"
       :to="{
         name: 'send-to',
@@ -76,6 +76,7 @@ import AccountInline from '../../components/AccountInline.vue';
 import AeInputAddress from '../../components/AeInputAddress.vue';
 import AeButton from '../../components/AeButton.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
+import { inactiveAccounts } from '../../observables';
 
 export default {
   components: {
@@ -91,10 +92,8 @@ export default {
   data: () => ({
     accountTo: '',
   }),
-  computed: mapGetters(['activeIdentity', 'identities']),
-  mounted() {
-    this.$store.dispatch('updateAllBalances');
-  },
+  computed: mapGetters({ activeAccount: 'activeIdentity' }),
+  subscriptions: () => ({ inactiveAccounts }),
   methods: {
     async setAddress() {
       if (!await this.$validator.validateAll()) return;

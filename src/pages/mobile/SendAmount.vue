@@ -15,7 +15,7 @@
         />
         <em>New Transfer</em>
         <br>from
-        <AccountInline :address="activeIdentity.address" />
+        <AccountInline :address="activeAccount.address" />
         <br>to
         <AccountInline :address="to" />
       </Guide>
@@ -30,7 +30,7 @@
             required: true,
             decimal: MAGNITUDE,
             min_value_exclusive: 0,
-            max_value: maxAmount.minus(MIN_SPEND_TX_FEE).toString(),
+            max_value: activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString(),
           }"
           :error="errors.has('amount')"
           :footer="errors.first('amount')"
@@ -52,7 +52,6 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapGetters, mapState } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
@@ -60,6 +59,7 @@ import AccountInline from '../../components/AccountInline.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
+import { activeAccount } from '../../observables';
 
 export default {
   components: {
@@ -82,13 +82,7 @@ export default {
     MIN_SPEND_TX_FEE,
     BigNumber,
   }),
-  computed: {
-    ...mapGetters(['activeIdentity', 'identities']),
-    ...mapState({
-      maxAmount: ({ balances }, { activeIdentity }) => (
-        activeIdentity ? balances[activeIdentity.address] : BigNumber(0)),
-    }),
-  },
+  subscriptions: () => ({ activeAccount }),
   methods: {
     async setAmount() {
       if (!await this.$validator.validateAll()) return;

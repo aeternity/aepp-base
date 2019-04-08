@@ -2,7 +2,7 @@
   <div id="app">
     <RouterView
       v-show="!hidePage"
-      :class="{ grayscale }"
+      :class="{ grayscale: showAccountSwitcher }"
     />
     <Component
       :is="component"
@@ -17,7 +17,7 @@
       {{ notification.text }}
     </AeBanner>
 
-    <AccountSwitcher />
+    <AccountSwitcher v-if="showAccountSwitcher" />
     <TabBar v-if="$route.meta.displayFooter && !hidePage" />
 
     <AlertModal />
@@ -41,7 +41,7 @@ export default {
   computed: {
     ...mapState({
       notification: ({ notification }) => notification,
-      grayscale: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
+      showAccountSwitcher: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
     }),
     ...mapGetters('modals', ['component', 'hidePage', 'props']),
   },

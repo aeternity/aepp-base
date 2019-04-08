@@ -15,7 +15,7 @@
         :transform-origin="{ vertical: 'top', horizontal: 'right' }"
         @close="showAccountMenu = false"
       >
-        <MenuItem v-copy-on-click="activeIdentity.address">
+        <MenuItem v-copy-on-click="activeAccount.address">
           <AeIcon name="copy" />Copy Address
         </MenuItem>
         <MenuItem @click="accountNameEditable = true">
@@ -24,7 +24,7 @@
       </Menu>
 
       <AeAccount
-        v-bind="activeIdentity"
+        v-bind="activeAccount"
         :name-editable="accountNameEditable"
         fill="primary"
         security-status=""
@@ -115,7 +115,6 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
@@ -130,6 +129,7 @@ import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ListItem from '../../components/ListItem.vue';
 import TransferNotification from '../../components/TransferNotification.vue';
+import { activeAccount } from '../../observables';
 
 export default {
   components: {
@@ -167,7 +167,7 @@ export default {
       showTransferNotification: !!this.transactionHash,
     };
   },
-  computed: mapGetters(['activeIdentity']),
+  subscriptions: () => ({ activeAccount }),
   mounted() {
     if (this.showTransferNotification) {
       setTimeout(() => { this.showTransferNotification = false; }, 5000);

@@ -80,6 +80,7 @@ import DetailsField from '../../components/mobile/DetailsField.vue';
 import DetailsAmountAndFee from '../../components/mobile/DetailsAmountAndFee.vue';
 import DetailsAddress from '../../components/mobile/DetailsAddress.vue';
 import AeButton from '../../components/AeButton.vue';
+import { topBlockHeight } from '../../observables';
 
 export default {
   components: {
@@ -106,11 +107,7 @@ export default {
         : `${this.topBlockHeight - this.transaction.blockHeight} Confirmations`;
     },
   },
-  subscriptions() {
-    return {
-      topBlockHeight: this.$store.state.topBlockHeightSubject,
-    };
-  },
+  subscriptions: () => ({ topBlockHeight }),
 };
 </script>
 
