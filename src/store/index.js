@@ -178,9 +178,6 @@ const store = new Vuex.Store({
     setSdk(state, sdk) {
       state.sdk = sdk;
     },
-    assignToSdk(state, object) {
-      Object.assign(state.sdk, object);
-    },
     selectIdentity(state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx;
     },
