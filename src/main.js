@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { sync } from 'vuex-router-sync';
+import VueRx from 'vue-rx';
 import 'normalize.css';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import 'focus-visible';
@@ -14,6 +15,7 @@ import router from './router';
 import store from './store';
 
 Vue.use(Router);
+Vue.use(VueRx);
 Vue.use(VeeValidate);
 sync(store, router);
 
