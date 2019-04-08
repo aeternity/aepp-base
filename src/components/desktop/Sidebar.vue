@@ -17,7 +17,10 @@
         </ButtonPlain>
       </h1>
 
-      <div class="tabs">
+      <div
+        v-if="$globals.UNFINISHED_FEATURES"
+        class="tabs"
+      >
         <ButtonPlain
           :class="{ active: !ledgerTab }"
           @click="ledgerTab = false"
@@ -53,7 +56,7 @@ export default {
     AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain,
   },
   data: () => ({
-    ledgerTab: false,
+    ledgerTab: !process.env.UNFINISHED_FEATURES,
   }),
   computed: mapState({
     showSidebar: ({ desktop }) => desktop.showSidebar,

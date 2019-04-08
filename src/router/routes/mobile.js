@@ -76,7 +76,7 @@ export default [{
       return;
     }
     if (store.getters.loggedIn) {
-      next({ name: 'apps' });
+      next({ name: 'transfer' });
       return;
     }
     next();
@@ -193,7 +193,7 @@ export default [{
   meta: {
     displayFooter: true,
   },
-}, {
+}, ...process.env.UNFINISHED_FEATURES ? [{
   name: 'settings-remote-connection',
   path: '/settings/remote-connection',
   component: SettingsRemoteConnection,
@@ -206,4 +206,4 @@ export default [{
   path: '/settings/remote-connection/new',
   component: SettingsRemoteConnectionNew,
   beforeEnter: checkLoggedIn(true),
-}];
+}] : []];

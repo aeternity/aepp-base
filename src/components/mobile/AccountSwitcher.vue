@@ -38,6 +38,7 @@
           </ListItem>
 
           <ListItem
+            v-if="$globals.UNFINISHED_FEATURES"
             title="Create a vault for AirGap"
             @click="toggleAccountSwitcher"
           >

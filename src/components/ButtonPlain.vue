@@ -1,7 +1,8 @@
 <template>
   <Component
-    :is="to ? 'AeLink' : 'button'"
+    :is="!disabled && to ? 'AeLink' : 'button'"
     :to="to"
+    :disabled="disabled"
     class="button-plain"
     @click="$emit('click', $event)"
   >
@@ -16,6 +17,7 @@ export default {
   components: { AeLink },
   props: {
     to: { type: [String, Object], default: null },
+    disabled: { type: Boolean },
   },
 };
 </script>
@@ -33,6 +35,10 @@ export default {
 
   &:focus:not([data-focus-visible-added]) {
     outline: none;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
   }
 }
 </style>

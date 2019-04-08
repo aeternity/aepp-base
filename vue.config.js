@@ -3,6 +3,7 @@ const parseBool = val => (val ? JSON.parse(val) : false);
 // eslint-disable-next-line camelcase
 const { IS_MOBILE_DEVICE, IS_PWA, npm_package_version } = process.env;
 const IS_CORDOVA = parseBool(process.env.IS_CORDOVA);
+const UNFINISHED_FEATURES = parseBool(process.env.UNFINISHED_FEATURES);
 
 module.exports = {
   publicPath: IS_CORDOVA ? './' : '/',
@@ -16,6 +17,7 @@ module.exports = {
     delete definitions['process.env'];
 
     definitions['process.env.IS_CORDOVA'] = IS_CORDOVA;
+    definitions['process.env.UNFINISHED_FEATURES'] = UNFINISHED_FEATURES;
 
     if (IS_CORDOVA || IS_MOBILE_DEVICE) {
       definitions['process.env.IS_MOBILE_DEVICE'] = IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
