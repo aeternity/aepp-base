@@ -1,7 +1,7 @@
 <template>
   <div
     class="header-mobile"
-    :class="[fill, { shadow, empty }]"
+    :class="[fill, { shadow: shadow || (!empty && scrolled), empty }]"
   >
     <header :class="{ padded }">
       <ButtonPlain
@@ -56,6 +56,7 @@ export default {
     shadow: { type: Boolean, default: false },
     padded: { type: Boolean, default: false },
   },
+  data: () => ({ scrolled: false }),
   computed: {
     empty() {
       return !(this.title
@@ -63,6 +64,12 @@ export default {
         || this.leftButtonIconName
         || this.rightButtonIconName);
     },
+  },
+  mounted() {
+    const scrollHandler = () => { this.scrolled = window.scrollY > 0; };
+    scrollHandler();
+    window.addEventListener('scroll', scrollHandler);
+    this.$once('hook:destroyed', () => window.removeEventListener('scroll', scrollHandler));
   },
 };
 </script>
@@ -76,6 +83,7 @@ export default {
   position: sticky;
   top: 0;
   padding-top: env(safe-area-inset-top);
+  transition: box-shadow .5s;
 
   &.empty {
     position: static;
