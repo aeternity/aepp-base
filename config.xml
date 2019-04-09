@@ -1,11 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.aeternity.cordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>aeternity</name>
-    <description>
-        æternity Blockchain
-    </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+<widget id="com.aeternity.base" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Base æpp</name>
+    <author href="https://aeternity.com">
+        aeternity developers
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -38,7 +35,6 @@
         <variable name="ANDROID_PATHPREFIX" value="/" />
     </plugin>
     <plugin name="cordova-plugin-qrscanner" spec="^3.0.1" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-wkwebview-engine" spec="github:mwchambers/cordova-plugin-wkwebview-engine#da67d6bb6ce8597c38fc69e66b84566e34efea8d" />
     <engine name="browser" spec="^5.0.3" />
     <engine name="android" spec="^7.1.4" />
