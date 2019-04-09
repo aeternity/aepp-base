@@ -8,7 +8,7 @@
     </div>
 
     <div class="buttons">
-      <AeButton @click="$emit('close')">
+      <AeButton @click="resolve">
         Ok
       </AeButton>
       <AeButton
@@ -32,6 +32,9 @@ export default {
   components: {
     AeModal,
     AeButton,
+  },
+  props: {
+    resolve: { type: Function, required: true },
   },
   data() {
     return {
