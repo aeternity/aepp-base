@@ -19,7 +19,6 @@ RUN mkdir app
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm config set unsafe-perm true # https://github.com/npm/npm/issues/17346
 RUN npm install && npx cordova telemetry off
 
 # As cordova changes global modules when adding a platform, we have to build the apk already during the docker build process
