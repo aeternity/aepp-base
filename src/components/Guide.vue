@@ -22,6 +22,7 @@ export default {
       type: String,
       validator: value => [
         'primary',
+        'alternative',
         'neutral',
       ].includes(value),
       default: 'primary',

@@ -15,6 +15,11 @@ import NewAccountCreate from '../../pages/mobile/NewAccountCreate.vue';
 import NewAccountConfirm from '../../pages/mobile/NewAccountConfirm.vue';
 import SetPassword from '../../pages/mobile/SetPassword.vue';
 import AccountsNew from '../../pages/mobile/AccountsNew.vue';
+import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
+import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
+import VaultSetupAnotherDeviceGuide from '../../pages/mobile/VaultSetupAnotherDeviceGuide.vue';
+import VaultSetupSameDevice from '../../pages/mobile/VaultSetupSameDevice.vue';
+import VaultSetupCompleted from '../../pages/mobile/VaultSetupCompleted.vue';
 import Transfer from '../../pages/mobile/Transfer.vue';
 import Receive from '../../pages/mobile/Receive.vue';
 import Send from '../../pages/mobile/Send.vue';
@@ -132,6 +137,42 @@ export default [{
     displayFooter: true,
   },
 }, {
+  name: 'vault-new',
+  path: '/vault/new',
+  component: AccountsNew,
+  beforeEnter: checkLoggedIn(true),
+  meta: {
+    displayFooter: true,
+    secure: true,
+  },
+}, ...process.env.UNFINISHED_FEATURES
+  ? [{
+    name: 'vault-setup-method',
+    path: '/vault/choose',
+    component: VaultSetupMethod,
+    beforeEnter: checkLoggedIn(true),
+  }, {
+    name: 'vault-setup-another-device',
+    path: '/vault/another-device',
+    component: VaultSetupAnotherDevice,
+    beforeEnter: checkLoggedIn(true),
+  }, {
+    name: 'vault-setup-another-device-guide',
+    path: '/vault/another-device/guide',
+    component: VaultSetupAnotherDeviceGuide,
+    beforeEnter: checkLoggedIn(true),
+  }, {
+    name: 'vault-setup-same-device',
+    path: '/vault/this-device',
+    component: VaultSetupSameDevice,
+    beforeEnter: checkLoggedIn(true),
+  }, {
+    name: 'vault-setup-completed',
+    path: '/vault/sync-completed',
+    component: VaultSetupCompleted,
+    beforeEnter: checkLoggedIn(true),
+  }]
+  : [], {
   name: 'transfer',
   path: '/transfer',
   component: Transfer,
