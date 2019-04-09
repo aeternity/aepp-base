@@ -51,7 +51,7 @@
       :class="{ 'pending': transaction.pending }"
       class="details-pending"
       name="Status"
-      :value="transaction.pending ? 'Pending' : 'Mined'"
+      :value="status"
       fill="dark"
     />
 
@@ -122,6 +122,16 @@ export default {
     transaction() {
       return this.activeIdentity.transactions.find(t => t.hash === this.hash);
     },
+    status() {
+      return this.transaction.pending
+        ? 'Pending'
+        : `${this.topBlockHeight - this.transaction.blockHeight} Confirmations`;
+    },
+  },
+  subscriptions() {
+    return {
+      topBlockHeight: this.$store.state.topBlockHeightSubject,
+    };
   },
 };
 </script>

@@ -4,6 +4,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
 import { update, flatMap, camelCase } from 'lodash-es';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { multicast, refCount } from 'rxjs/operators';
 import networksRegistry, { defaultNetwork } from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
 import { fetchJson, mapKeysDeep } from './utils';
@@ -69,6 +71,24 @@ const store = new Vuex.Store({
     loginTarget: '',
     selectedIdentityIdx: 0,
     balances: {},
+    topBlockHeightSubject: new Observable((subscriber) => {
+      let unsubscribed = false;
+      const f = async () => {
+        if (unsubscribed) return;
+        try {
+          subscriber.next((await store.state.sdk.topBlock()).height);
+        } catch (e) {
+          subscriber.next(0);
+        }
+        setTimeout(f, 30000);
+      };
+      f();
+
+      return () => { unsubscribed = true; };
+    }).pipe(
+      multicast(new BehaviorSubject(0)),
+      refCount(),
+    ),
     transactions: {},
     addresses: [],
     rpcUrl: networksRegistry[0].url,
