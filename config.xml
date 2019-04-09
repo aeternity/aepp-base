@@ -38,6 +38,7 @@
         <variable name="ANDROID_PATHPREFIX" value="/" />
     </plugin>
     <plugin name="cordova-plugin-qrscanner" spec="^3.0.1" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-wkwebview-engine" spec="github:mwchambers/cordova-plugin-wkwebview-engine#da67d6bb6ce8597c38fc69e66b84566e34efea8d" />
     <engine name="android" spec="^8.0.0" />
     <engine name="ios" spec="^5.0.0" />
