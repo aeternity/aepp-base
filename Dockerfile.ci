@@ -1,4 +1,4 @@
-FROM tamasbarta/docker-android-sdk:27.0.3
+FROM tamasbarta/docker-android-sdk:28.0.3
 
 ENV NODEJS_VERSION=10.15.1 \
     PATH=$PATH:/opt/node/bin
