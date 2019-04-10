@@ -162,6 +162,7 @@ export default {
       glowingStarEmoji: glowingStarEmojiPath,
       showAccountMenu: false,
       accountNameEditable: false,
+      migratedBalanceModalPromise: null,
       BigNumber,
       showTransferNotification: !!this.transactionHash,
     };
@@ -177,8 +178,14 @@ export default {
       this.$store.commit('renameIdentity', { index: this.$store.state.selectedIdentityIdx, name });
     },
     showMigratedBalanceModal() {
-      this.$store.dispatch('modals/migratedBalance');
+      this.migratedBalanceModalPromise = this.$store.dispatch('modals/migratedBalance');
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.migratedBalanceModalPromise) {
+      this.migratedBalanceModalPromise.cancel();
+    }
+    next();
   },
 };
 </script>

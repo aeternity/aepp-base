@@ -1,21 +1,21 @@
 <template>
   <Transition>
-    <AeOverlay
+    <Overlay
       class="sidebar-modal"
       @click="$emit('close')"
     >
       <div class="modal">
         <slot />
       </div>
-    </AeOverlay>
+    </Overlay>
   </Transition>
 </template>
 
 <script>
-import { AeOverlay } from '@aeternity/aepp-components-3';
+import Overlay from '../Overlay.vue';
 
 export default {
-  components: { AeOverlay },
+  components: { Overlay },
 };
 </script>
 
@@ -23,8 +23,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.sidebar-modal.ae-overlay {
-  background: rgba($color-neutral-minimum, .7);
+.sidebar-modal.overlay {
   $width: rem(390px);
 
   .modal {
