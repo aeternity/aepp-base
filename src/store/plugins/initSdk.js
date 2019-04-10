@@ -164,7 +164,11 @@ export default (store) => {
             },
             methods,
           },
-        )({ url: currentNetwork.url, internalUrl: currentNetwork.url });
+        )({
+          url: currentNetwork.url,
+          internalUrl: currentNetwork.url,
+          compilerUrl: 'https://compiler.aepps.com',
+        });
       } catch (error) {
         if (error.message === 'Network Error') {
           store.dispatch('setNotification', {
