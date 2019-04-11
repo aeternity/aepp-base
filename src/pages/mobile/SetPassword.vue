@@ -59,7 +59,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import keyEmojiPath from 'emoji-datasource-apple/img/apple/64/1f511.png';
+import keyEmoji from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
@@ -80,7 +80,7 @@ export default {
       passwordConfirm: '',
       recover: false,
       working: false,
-      keyEmoji: keyEmojiPath,
+      keyEmoji,
     };
   },
   computed: mapState(['keystore']),

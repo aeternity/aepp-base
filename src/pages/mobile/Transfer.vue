@@ -117,10 +117,10 @@
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
-import moneyWithWingsEmojiPath from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
-import manTippingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
-import mantelpieceClockEmojiPath from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
-import glowingStarEmojiPath from 'emoji-datasource-apple/img/apple/64/1f31f.png';
+import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
+import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
+import mantelpieceClockEmoji from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
+import glowingStarEmoji from 'emoji-datasource-apple/img/apple/64/1f31f.png';
 import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -156,10 +156,10 @@ export default {
   },
   data() {
     return {
-      moneyWithWingsEmoji: moneyWithWingsEmojiPath,
-      manTippingHandEmoji: manTippingHandEmojiPath,
-      mantelpieceClockEmoji: mantelpieceClockEmojiPath,
-      glowingStarEmoji: glowingStarEmojiPath,
+      moneyWithWingsEmoji,
+      manTippingHandEmoji,
+      mantelpieceClockEmoji,
+      glowingStarEmoji,
       showAccountMenu: false,
       accountNameEditable: false,
       migratedBalanceModalPromise: null,

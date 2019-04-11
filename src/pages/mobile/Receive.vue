@@ -41,7 +41,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
-import writingHandEmojiPath from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
+import writingHandEmoji from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
 import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -59,7 +59,7 @@ export default {
   directives: { copyOnClick },
   data() {
     return {
-      writingHandEmoji: writingHandEmojiPath,
+      writingHandEmoji,
     };
   },
   computed: mapGetters(['activeIdentity']),
