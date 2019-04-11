@@ -1,5 +1,6 @@
 import { registerModal } from './store/plugins/modals';
 import QrCodeReader from './components/QrCodeReader.vue';
+import MigratedBalanceModal from './components/mobile/MigratedBalanceModal.vue';
 import ConfirmAccountAccessModal from './components/mobile/ConfirmAccountAccessModal.vue';
 import ConfirmContractCallModal from './components/mobile/ConfirmContractCallModal.vue';
 import ConfirmContractDeployModal from './components/mobile/ConfirmContractDeployModal.vue';
@@ -12,6 +13,7 @@ import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFee
 registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
 
 if (process.env.IS_MOBILE_DEVICE) {
+  registerModal({ name: 'migratedBalance', component: MigratedBalanceModal });
   registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal });
   registerModal({ name: 'confirmContractCall', component: ConfirmContractCallModal, hidePage: true });
   registerModal({ name: 'confirmContractDeploy', component: ConfirmContractDeployModal, hidePage: true });

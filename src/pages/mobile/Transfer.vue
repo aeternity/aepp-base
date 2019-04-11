@@ -93,7 +93,7 @@
       title="Tokens in migration"
       subtitle="Not shown as balance above"
       border-dark
-      @click="showMigratedBalanceModal = true"
+      @click="showMigratedBalanceModal"
     >
       <img
         slot="icon"
@@ -109,11 +109,6 @@
       v-if="showTransferNotification"
       :amount="BigNumber(amount)"
       :transaction-hash="transactionHash"
-    />
-
-    <MigratedBalanceModal
-      v-if="showMigratedBalanceModal"
-      @close="showMigratedBalanceModal = false"
     />
   </MobilePage>
 </template>
@@ -135,7 +130,6 @@ import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ListItem from '../../components/ListItem.vue';
 import TransferNotification from '../../components/TransferNotification.vue';
-import MigratedBalanceModal from '../../components/mobile/MigratedBalanceModal.vue';
 
 export default {
   components: {
@@ -148,7 +142,6 @@ export default {
     AeIcon,
     ListItem,
     TransferNotification,
-    MigratedBalanceModal,
   },
   directives: { copyOnClick },
   props: {
@@ -169,7 +162,7 @@ export default {
       glowingStarEmoji: glowingStarEmojiPath,
       showAccountMenu: false,
       accountNameEditable: false,
-      showMigratedBalanceModal: false,
+      migratedBalanceModalPromise: null,
       BigNumber,
       showTransferNotification: !!this.transactionHash,
     };
@@ -184,6 +177,15 @@ export default {
     renameIdentity(name) {
       this.$store.commit('renameIdentity', { index: this.$store.state.selectedIdentityIdx, name });
     },
+    showMigratedBalanceModal() {
+      this.migratedBalanceModalPromise = this.$store.dispatch('modals/migratedBalance');
+    },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.migratedBalanceModalPromise) {
+      this.migratedBalanceModalPromise.cancel();
+    }
+    next();
   },
 };
 </script>
