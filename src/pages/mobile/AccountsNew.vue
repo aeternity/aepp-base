@@ -24,6 +24,7 @@
           name="newAccountName"
           header="Name"
           placeholder="Name"
+          maxlength="16"
         />
       </form>
     </template>
