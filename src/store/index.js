@@ -22,7 +22,13 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
-      state => state,
+      ({ mobile: { names, ...otherMobile } = {}, ...otherState }) => ({
+        ...otherState,
+        mobile: {
+          ...otherMobile,
+          accountNames: names,
+        },
+      }),
       ({
         migrations, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
         apps, cachedAppManifests,
@@ -39,10 +45,10 @@ const store = new Vuex.Store({
           mobile: {
             keystore: mobile.keystore,
             accountCount: mobile.accountCount,
+            names: mobile.accountNames,
             followers: Object.entries(mobile.followers)
               .reduce((p, [k, { id, name, disconnectedAt }]) => (
                 { ...p, [k]: { id, name, disconnectedAt } }), {}),
-            names: mobile.names,
           },
         } : {
           desktop: {

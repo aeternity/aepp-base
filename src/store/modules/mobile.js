@@ -12,9 +12,9 @@ export default {
     keystore: null,
     derivedKey: null,
     accountCount: 0,
+    accountNames: [],
     accounts: {},
     followers: {},
-    names: [],
     showAccountSwitcher: false,
     stepFraction: null,
     browserPath: '',
@@ -33,15 +33,15 @@ export default {
       state.derivedKey = derivedKey;
     },
     resetAccountCount(state) {
-      state.names = ['Main Account'];
+      state.accountNames = ['Main Account'];
       state.accountCount = 1;
     },
     createIdentity(state, name) {
-      state.names.push(name);
+      state.accountNames.push(name);
       state.accountCount += 1;
     },
     renameIdentity(state, { index, name }) {
-      Vue.set(state.names, index, name);
+      Vue.set(state.accountNames, index, name);
     },
     setAccounts(state, accounts) {
       state.accounts = accounts

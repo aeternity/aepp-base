@@ -30,7 +30,7 @@ export default {
       .map((e, index) => ({
         transactions: transactions[e] || [],
         address: e,
-        name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6),
+        name: process.env.IS_MOBILE_DEVICE ? mobile.accountNames[index] : e.substr(0, 6),
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) => identities[selectedIdentityIdx],
     networks: ({ customNetworks }) => [
