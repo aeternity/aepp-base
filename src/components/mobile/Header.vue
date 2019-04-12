@@ -60,7 +60,7 @@ export default {
   computed: {
     empty() {
       return !(this.title
-        || this.$slots.title
+        || this.$slots.default
         || this.leftButtonIconName
         || this.rightButtonIconName);
     },
