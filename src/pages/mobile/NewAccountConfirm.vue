@@ -62,7 +62,6 @@
 
 <script>
 import { shuffle } from 'lodash-es';
-import fingersCrossedEmoji from 'emoji-datasource-apple/img/apple/64/1f91e.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
@@ -86,7 +85,6 @@ export default {
     return {
       seedPermutation: shuffle(this.seed.split(' ')),
       selectedWordIds: [],
-      fingersCrossedEmoji,
       error: false,
     };
   },
