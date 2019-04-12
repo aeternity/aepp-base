@@ -1,4 +1,6 @@
-import { isPlainObject, mapKeys, mapValues } from 'lodash-es';
+import {
+  isPlainObject, mapKeys, mapValues, cloneDeep,
+} from 'lodash-es';
 
 export const genRandomBuffer = (size) => {
   const key = new ArrayBuffer(size);
@@ -34,4 +36,18 @@ export const mapKeysDeep = (object, callback) => {
   if (Array.isArray(object)) return object.map(item => mapKeysDeep(item, callback));
   if (!isPlainObject(object)) return object;
   return mapValues(mapKeys(object, callback), item => mapKeysDeep(item, callback));
+};
+
+export const makeResetable = ({ state = {}, mutations = {}, ...otherModule }) => {
+  const initialState = cloneDeep(state);
+  return ({
+    ...otherModule,
+    state,
+    mutations: {
+      ...mutations,
+      reset(currentState) {
+        Object.assign(currentState, cloneDeep(initialState));
+      },
+    },
+  });
 };

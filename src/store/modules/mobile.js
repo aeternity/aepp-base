@@ -47,10 +47,6 @@ export default {
       state.accounts = accounts
         .reduce((p, n) => ({ ...p, [Crypto.aeEncodeKey(n.publicKey)]: n }), {});
     },
-    signOut(state) {
-      state.keystore = null;
-      state.derivedKey = null;
-    },
     addFollower(state, follower) {
       Vue.set(state.followers, follower.id, follower);
     },

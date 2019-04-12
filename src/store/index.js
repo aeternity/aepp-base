@@ -2,6 +2,7 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { makeResetable } from './utils';
 import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
@@ -59,9 +60,11 @@ const store = new Vuex.Store({
       ? [decryptAccounts, notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
   ],
 
-  modules: process.env.IS_MOBILE_DEVICE ? { mobile: mobileModule } : { desktop: desktopModule },
+  modules: process.env.IS_MOBILE_DEVICE
+    ? { mobile: makeResetable(mobileModule) }
+    : { desktop: makeResetable(desktopModule) },
 
-  ...rootModule,
+  ...makeResetable(rootModule),
 });
 
 export default store;
