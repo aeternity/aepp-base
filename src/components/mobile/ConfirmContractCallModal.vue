@@ -1,5 +1,9 @@
 <template>
-  <MobilePage fill="primary">
+  <MobilePage
+    fill="primary"
+    right-button-icon-name="close"
+    @right-button-click="denyHandler"
+  >
     <Guide fill="neutral">
       <em>Call contract method</em>
       <br>by

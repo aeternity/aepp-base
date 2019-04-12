@@ -87,6 +87,10 @@ export default {
 
   &.empty {
     position: static;
+
+    header {
+      height: rem(24px);
+    }
   }
 
   &.primary {
