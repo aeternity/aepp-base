@@ -72,7 +72,6 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
 
 .transfer-notification {
   &.fade-enter-active, &.fade-leave-active {

@@ -10,8 +10,8 @@
       <template v-if="recover">
         You recovered your
         account <em>successfully</em>!
-        Now <mark>choose a new <img :src="keyEmoji"></mark>
-        <mark>password</mark> and confirm.
+        Now <mark>choose a new <img :src="keyEmoji"> password</mark>
+        and confirm.
       </template>
       <template v-else>
         Great, that's done. Now
@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import keyEmoji from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -83,7 +82,6 @@ export default {
       keyEmoji,
     };
   },
-  computed: mapState(['keystore']),
   methods: {
     async createKeystore() {
       if (!await this.$validator.validateAll()) return;

@@ -22,7 +22,7 @@ export default {
 
   getters: {
     addresses: ({ accounts }) => Object.keys(accounts),
-    loggedIn: ({ keystore, derivedKey }) => !!(keystore && derivedKey),
+    loggedIn: ({ accounts }) => !!Object.keys(accounts).length,
   },
 
   mutations: {

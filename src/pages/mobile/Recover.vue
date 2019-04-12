@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import dizzySymbolEmoji from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -61,7 +60,6 @@ export default {
       error: false,
     };
   },
-  computed: mapState(['keystore']),
   methods: {
     async setSeed() {
       if (!await this.$validator.validateAll()) return;

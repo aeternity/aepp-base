@@ -24,6 +24,7 @@
           name="newAccountName"
           header="Name"
           placeholder="Name"
+          maxlength="16"
         />
       </form>
     </template>
@@ -66,6 +67,13 @@ export default {
         return;
       }
       this.$store.commit('createIdentity', this.newAccountName);
+      await new Promise((resolve) => {
+        const unsubscribe = this.$store.subscribe(({ type }) => {
+          if (type !== 'setAccounts') return;
+          unsubscribe();
+          resolve();
+        });
+      });
       this.$store.commit('selectIdentity', this.$store.state.mobile.accountCount - 1);
       this.$router.back();
     },
