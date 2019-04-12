@@ -12,7 +12,7 @@
 
     <form
       :id="_uid"
-      @submit.prevent="unlockSavedKeystore"
+      @submit.prevent="unlockHdWallet"
     >
       <PasswordPurpose />
       <AeInputPassword
@@ -74,11 +74,11 @@ export default {
     };
   },
   methods: {
-    async unlockSavedKeystore() {
+    async unlockHdWallet() {
       if (!await this.$validator.validateAll()) return;
 
       try {
-        await this.$store.dispatch('unlockKeystore', this.password);
+        await this.$store.dispatch('unlockHdWallet', this.password);
       } catch (e) {
         this.wrongPassword = true;
       }

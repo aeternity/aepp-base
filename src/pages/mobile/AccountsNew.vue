@@ -66,15 +66,7 @@ export default {
         this.$router.push({ name: 'vault-setup-method' });
         return;
       }
-      this.$store.commit('createIdentity', this.newAccountName);
-      await new Promise((resolve) => {
-        const unsubscribe = this.$store.subscribe(({ type }) => {
-          if (type !== 'setAccounts') return;
-          unsubscribe();
-          resolve();
-        });
-      });
-      this.$store.commit('selectIdentity', this.$store.state.mobile.accountCount - 1);
+      await this.$store.dispatch('createAccount', this.newAccountName);
       this.$router.back();
     },
   },

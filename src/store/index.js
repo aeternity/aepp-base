@@ -10,7 +10,6 @@ import persistState from './plugins/persistState';
 import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection';
-import decryptAccounts from './plugins/decryptAccounts';
 import initSdk from './plugins/initSdk';
 import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
@@ -22,10 +21,11 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
-      ({ mobile: { names, ...otherMobile } = {}, ...otherState }) => ({
+      ({ mobile: { keystore, names, ...otherMobile } = {}, ...otherState }) => ({
         ...otherState,
         mobile: {
           ...otherMobile,
+          encryptedHdWallet: keystore,
           accountNames: names,
         },
       }),
@@ -43,7 +43,7 @@ const store = new Vuex.Store({
           apps,
           cachedAppManifests,
           mobile: {
-            keystore: mobile.keystore,
+            keystore: mobile.encryptedHdWallet,
             accountCount: mobile.accountCount,
             names: mobile.accountNames,
             followers: Object.entries(mobile.followers)
@@ -63,7 +63,7 @@ const store = new Vuex.Store({
     modals,
     registerServiceWorker,
     ...process.env.IS_MOBILE_DEVICE
-      ? [decryptAccounts, notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
+      ? [notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
   ],
 
   modules: process.env.IS_MOBILE_DEVICE

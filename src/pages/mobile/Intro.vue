@@ -11,10 +11,10 @@
 
     <template slot="footer">
       <AeButton
-        :to="{ name: keystore ? 'login' : 'recover' }"
+        :to="{ name: encryptedHdWallet ? 'login' : 'recover' }"
         fill="secondary"
       >
-        {{ keystore ? 'Login' : 'Recover' }}
+        {{ encryptedHdWallet ? 'Login' : 'Recover' }}
       </AeButton>
       <AeButton
         :to="{ name: 'new-account' }"
@@ -44,7 +44,7 @@ import AeButton from '../../components/AeButton.vue';
 export default {
   components: { MobilePage, AeButton, Guide },
   computed: mapState({
-    keystore: state => state.mobile.keystore,
+    encryptedHdWallet: state => state.mobile.encryptedHdWallet,
   }),
 };
 </script>

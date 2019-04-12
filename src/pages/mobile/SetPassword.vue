@@ -21,7 +21,7 @@
 
     <form
       :id="_uid"
-      @submit.prevent="createKeystore"
+      @submit.prevent="createHdWallet"
     >
       <PasswordPurpose />
       <AeInputPassword
@@ -83,12 +83,12 @@ export default {
     };
   },
   methods: {
-    async createKeystore() {
+    async createHdWallet() {
       if (!await this.$validator.validateAll()) return;
 
       this.working = true;
       try {
-        await this.$store.dispatch('createKeystore', {
+        await this.$store.dispatch('createHdWallet', {
           password: this.password,
           seed: this.seed,
         });

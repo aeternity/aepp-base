@@ -10,7 +10,7 @@
       <ListItem
         title="Logout"
         subtitle="And see you soon!"
-        @click="logOut"
+        @click="logout"
       >
         <AeIcon
           slot="icon"
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../../components/AeCard.vue';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -96,9 +96,7 @@ export default {
       this.$store.commit('reset');
       setTimeout(() => this.$store.commit('setLoginTarget'));
     },
-    logOut() {
-      this.$store.commit('setDerivedKey');
-    },
+    ...mapMutations(['logout']),
   },
 };
 </script>
