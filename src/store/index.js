@@ -24,34 +24,37 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
-    persistState(({
-      migrations, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
-      apps, cachedAppManifests,
-      mobile, desktop,
-    }) => ({
-      migrations,
-      ...process.env.IS_MOBILE_DEVICE ? {
-        rpcUrl,
-        selectedIdentityIdx,
-        addressBook,
-        customNetworks,
-        apps,
-        cachedAppManifests,
-        mobile: {
-          keystore: mobile.keystore,
-          accountCount: mobile.accountCount,
-          followers: Object.entries(mobile.followers)
-            .reduce((p, [k, { id, name, disconnectedAt }]) => (
-              { ...p, [k]: { id, name, disconnectedAt } }), {}),
-          names: mobile.names,
+    persistState(
+      state => state,
+      ({
+        migrations, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
+        apps, cachedAppManifests,
+        mobile, desktop,
+      }) => ({
+        migrations,
+        ...process.env.IS_MOBILE_DEVICE ? {
+          rpcUrl,
+          selectedIdentityIdx,
+          addressBook,
+          customNetworks,
+          apps,
+          cachedAppManifests,
+          mobile: {
+            keystore: mobile.keystore,
+            accountCount: mobile.accountCount,
+            followers: Object.entries(mobile.followers)
+              .reduce((p, [k, { id, name, disconnectedAt }]) => (
+                { ...p, [k]: { id, name, disconnectedAt } }), {}),
+            names: mobile.names,
+          },
+        } : {
+          desktop: {
+            peerId: desktop.peerId,
+            ledgerAccountNumber: desktop.ledgerAccountNumber,
+          },
         },
-      } : {
-        desktop: {
-          peerId: desktop.peerId,
-          ledgerAccountNumber: desktop.ledgerAccountNumber,
-        },
-      },
-    })),
+      }),
+    ),
     initSdk,
     remoteConnection,
     modals,
