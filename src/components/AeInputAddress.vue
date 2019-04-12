@@ -125,9 +125,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-
 .ae-input-address {
   .ae-identicon {
     vertical-align: -.55em;

@@ -20,8 +20,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
 .ae-fraction {
   font-weight: 500;
   font-size: .9em;
