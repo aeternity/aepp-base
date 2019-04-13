@@ -47,7 +47,7 @@ describe('Migration 0: Fix AES-CTR counter issue', () => {
     });
     cy
       .viewport('iphone-5')
-      .visit('/#/login')
+      .visit('/login')
       .get('input[type=password]').type('1234')
       .get('button')
       .contains('Log in')
