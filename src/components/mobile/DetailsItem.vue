@@ -9,7 +9,7 @@
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .details-item {
-  padding: rem(22px) 0;
+  padding: rem(16px) 0;
   border-top: rem(2px) solid rgba($color-neutral-negative-1, .2);
 }
 </style>

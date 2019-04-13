@@ -30,11 +30,9 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.details-field {
-  code {
-    @extend %face-mono-base;
-    color: $color-neutral-maximum;
-    word-break: break-word;
-  }
+.details-field code {
+  @extend %face-mono-base;
+  color: var(--color-primary, $color-neutral-maximum);
+  word-break: break-word;
 }
 </style>

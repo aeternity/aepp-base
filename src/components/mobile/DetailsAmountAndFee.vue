@@ -1,6 +1,6 @@
 <template>
   <DetailsItem class="details-amount-and-fee">
-    <DetailsRow class="transfer-amount">
+    <DetailsRow>
       <span class="name">
         Amount
       </span>
@@ -23,7 +23,7 @@
         Total
       </span>
       <span class="value">
-        {{ amount.plus(fee) | prefixedAmount }} AE
+        {{ amount.plus(fee) | prefixedAmount }}<small> AE</small>
       </span>
     </DetailsRow>
   </DetailsItem>
@@ -49,34 +49,37 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.details-amount-and-fee {
-  .details-row {
-    .name {
-      @extend %face-sans-xs;
-      font-weight: 500;
-      color: $color-neutral-negative-1;
-    }
+.details-amount-and-fee .details-row {
+  color: var(--color-secondary, rgba($color-neutral-maximum, 0.66846));
+  font-weight: 500;
 
-    .value {
-      @extend %face-mono-xs;
-      color: $color-neutral-negative-1;
-      text-transform: uppercase;
-    }
+  & + .details-row {
+    margin-top: rem(8px);
   }
 
-  .transfer-amount {
-    margin-bottom: rem(8px);
+  .name {
+    @extend %face-sans-xs;
   }
 
-  .transfer-total {
+  .value {
+    @extend %face-mono-xs;
+    text-transform: uppercase;
+  }
+
+  &.transfer-total {
+    align-items: baseline;
     margin-top: rem(20px);
-
-    .name, .value {
-      color: $color-neutral-negative-3;
-    }
+    color: var(--color-primary, $color-neutral-maximum);
 
     .value {
       font-size: rem(23px);
+      line-height: rem(23px);
+      font-weight: normal;
+
+      small {
+        font-size: rem(13px);
+        font-weight: 500;
+      }
     }
   }
 }

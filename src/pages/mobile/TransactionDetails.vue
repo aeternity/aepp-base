@@ -41,43 +41,36 @@
     </template>
 
     <DetailsField
-      class="details-date"
       name="Date"
       :value="transaction.time.toLocaleString()"
-      fill="dark"
     />
 
     <DetailsField
-      :class="{ 'pending': transaction.pending }"
-      class="details-pending"
+      :class="{ pending: transaction.pending }"
+      class="status"
       name="Status"
       :value="status"
-      fill="dark"
     />
 
     <DetailsAmountAndFee
       name="Transaction Fee"
       :amount="transaction.tx.amount"
       :fee="transaction.tx.fee"
-      fill="dark"
     />
 
     <DetailsAddress
       name="From"
       :address="transaction.tx.senderId"
-      fill="dark"
     />
 
     <DetailsAddress
       name="To"
       :address="transaction.tx.recipientId"
-      fill="dark"
     />
 
     <DetailsAddress
       name="Tx hash"
       :address="transaction.hash"
-      fill="dark"
     />
 
     <AeButton
@@ -158,25 +151,25 @@ export default {
     }
   }
 
-  .details-pending /deep/ {
-    .details-row .value {
-      @extend %face-uppercase-xs;
-      font-weight: bold;
-      color: $color-alternative;
+  .details-item {
+    &:first-child {
+      border-top: none;
     }
 
-    &.pending .details-row .value {
-      color: $color-error;
-    }
-  }
+    &.status {
+      --color-primary: #{$color-alternative};
 
-  .details-date {
-    border-top: none;
+      &.pending {
+        --color-primary: #{$color-primary};
+      }
 
-    /deep/ .details-row .value {
-      @extend %face-uppercase-base;
-      font-weight: 500;
+      /deep/ .value {
+        text-transform: uppercase;
+      }
     }
+
+    --color-primary: #{$color-neutral-negative-3};
+    --color-secondary: #{$color-neutral-negative-1};
   }
 }
 </style>

@@ -3,6 +3,7 @@
     class="details-fee-input"
     name="Transaction fee"
     :value="`${toMicroString(value)} MICRO AE`"
+    value-monospace
   >
     <DetailsRow class="turtle-rabbit">
       <img src="../../assets/icons/turtle.svg">

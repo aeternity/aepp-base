@@ -3,6 +3,7 @@
     class="details-amount"
     name="Amount"
     :value="`${prefixedAmount(amount)} AE`"
+    value-monospace
   />
 </template>
 
