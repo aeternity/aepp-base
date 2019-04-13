@@ -14,29 +14,9 @@
           invert
         />
         <br>from
-        <AeIdenticon
-          :address="transaction.tx.senderId"
-          size="s"
-        />
-        {{ ' ' }}
-        <em v-if="!transaction.received">{{ activeIdentity.name }}</em>
-        <AeAddress
-          v-else
-          :address="transaction.tx.senderId"
-          length="short"
-        />
+        <AccountInline :address="transaction.tx.senderId" />
         <br>to
-        <AeIdenticon
-          :address="transaction.tx.recipientId"
-          size="s"
-        />
-        {{ ' ' }}
-        <em v-if="transaction.received">{{ activeIdentity.name }}</em>
-        <AeAddress
-          v-else
-          :address="transaction.tx.recipientId"
-          length="short"
-        />
+        <AccountInline :address="transaction.tx.recipientId" />
       </Guide>
     </template>
 
@@ -92,11 +72,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import Balance from '../../components/Balance.vue';
-import AeAddress from '../../components/AeAddress.vue';
+import AccountInline from '../../components/AccountInline.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
 import DetailsAmountAndFee from '../../components/mobile/DetailsAmountAndFee.vue';
 import DetailsAddress from '../../components/mobile/DetailsAddress.vue';
@@ -105,10 +84,9 @@ import AeButton from '../../components/AeButton.vue';
 export default {
   components: {
     MobilePage,
-    AeIdenticon,
-    Balance,
-    AeAddress,
     Guide,
+    Balance,
+    AccountInline,
     DetailsField,
     DetailsAmountAndFee,
     DetailsAddress,
@@ -146,15 +124,9 @@ export default {
     padding-top: 0;
   }
 
-  .guide {
-    .balance {
-      &, &:after {
-        font-size: rem(23px);
-      }
-    }
-
-    .ae-address {
-      color: $color-neutral-maximum;
+  .guide .balance {
+    &, &:after {
+      font-size: rem(23px);
     }
   }
 

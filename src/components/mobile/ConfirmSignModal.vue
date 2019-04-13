@@ -7,12 +7,7 @@
     <Guide fill="neutral">
       <em>Sign raw transaction</em>
       <br>by
-      <AeIdenticon
-        :address="activeIdentity.address"
-        size="s"
-      />
-      {{ ' ' }}
-      <em>{{ activeIdentity.name }}</em>
+      <AccountInline :address="activeIdentity.address" />
     </Guide>
 
     <DetailsRawData
@@ -39,9 +34,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
+import AccountInline from '../AccountInline.vue';
 import DetailsRawData from './DetailsRawData.vue';
 import AeButton from '../AeButton.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
@@ -50,7 +45,7 @@ export default {
   components: {
     MobilePage,
     Guide,
-    AeIdenticon,
+    AccountInline,
     DetailsRawData,
     AeButton,
     AeButtonGroup,

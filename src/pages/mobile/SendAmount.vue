@@ -15,24 +15,9 @@
         />
         <em>New Transfer</em>
         <br>from
-        <AeIdenticon
-          :address="activeIdentity.address"
-          size="s"
-        />
-        {{ ' ' }}
-        <em>{{ activeIdentity.name }}</em>
+        <AccountInline :address="activeIdentity.address" />
         <br>to
-        <AeIdenticon
-          :address="to"
-          size="s"
-        />
-        {{ ' ' }}
-        <em>
-          <AeAddress
-            :address="to"
-            length="short"
-          />
-        </em>
+        <AccountInline :address="to" />
       </Guide>
 
       <form
@@ -68,13 +53,12 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters, mapState } from 'vuex';
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
+import AccountInline from '../../components/AccountInline.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
-import AeAddress from '../../components/AeAddress.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
 
 export default {
@@ -82,10 +66,9 @@ export default {
     MobilePage,
     Guide,
     AeFraction,
-    AeIdenticon,
+    AccountInline,
     AeInputAmountAe,
     AeButton,
-    AeAddress,
   },
   props: {
     to: {
