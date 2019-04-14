@@ -8,8 +8,8 @@ import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/sc
 import { MAGNITUDE } from '../../lib/constants';
 
 export default store => store.watch(
-  (state, { currentNetwork }) => currentNetwork.url,
-  async (url) => {
+  (state, { currentNetwork }) => currentNetwork,
+  async (currentNetwork) => {
     const methods = {
       async address(options) {
         if (options) {
@@ -136,30 +136,42 @@ export default store => store.watch(
       });
     }
 
-    const sdk = await Ae.compose(
-      ChainNode, Transaction, Contract, Rpc, {
-        init(options, { stamp }) {
-          const rpcMethods = [
-            ...stamp.compose.deepConfiguration.Ae.methods,
-            ...stamp.compose.deepConfiguration.Contract.methods,
-          ];
-          this.rpcMethods = {
-            ...rpcMethods
-              .map(m => [m, ({ params, origin }) => {
-                const { host } = new URL(origin);
-                const app = store.getters.getApp(host) || { host };
-                return this[m](...params, { app });
-              }])
-              .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
-            ...this.rpcMethods,
-          };
+    let sdk = null;
+    try {
+      sdk = await Ae.compose(
+        ChainNode, Transaction, Contract, Rpc, {
+          init(options, { stamp }) {
+            const rpcMethods = [
+              ...stamp.compose.deepConfiguration.Ae.methods,
+              ...stamp.compose.deepConfiguration.Contract.methods,
+            ];
+            this.rpcMethods = {
+              ...rpcMethods
+                .map(m => [m, ({ params, origin }) => {
+                  const { host } = new URL(origin);
+                  const app = store.getters.getApp(host) || { host };
+                  return this[m](...params, { app });
+                }])
+                .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
+              ...this.rpcMethods,
+            };
+          },
+          methods,
         },
-        methods,
-      },
-    )({ url, internalUrl: url });
-
-    if (store.state.sdk) store.state.sdk.destroyInstance();
-    store.commit('setSdk', sdk);
+      )({ url: currentNetwork.url, internalUrl: currentNetwork.url });
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        store.dispatch('setNotification', {
+          text: `Can't connect to '${currentNetwork.name}' network`,
+          autoClose: true,
+        });
+        return;
+      }
+      throw error;
+    } finally {
+      if (store.state.sdk) store.state.sdk.destroyInstance();
+      store.commit('setSdk', sdk);
+    }
   },
   { immediate: true },
 );
