@@ -7,10 +7,7 @@
           :src="app.icon"
         > {{ app.name }}
         <br>requests access to
-        <br><AeIdenticon
-          :address="activeIdentity.address"
-          size="s"
-        /> {{ activeIdentity.name }}
+        <br><AccountInline :address="activeIdentity.address" />
       </Guide>
 
       <DetailsPermission name="Accessing accounts">
@@ -39,10 +36,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import Modal from './Modal.vue';
 import DetailsPermission from './DetailsPermission.vue';
 import Guide from '../Guide.vue';
+import AccountInline from '../AccountInline.vue';
 import AeButton from '../AeButton.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
 
@@ -50,7 +47,7 @@ export default {
   components: {
     Modal,
     Guide,
-    AeIdenticon,
+    AccountInline,
     DetailsPermission,
     AeButtonGroup,
     AeButton,

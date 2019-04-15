@@ -122,7 +122,8 @@ export default {
     .content {
       color: rgba(255, 255, 255, 0.66846);
 
-      em {
+      em,
+      .account-inline {
         color: $color-neutral-maximum;
       }
     }

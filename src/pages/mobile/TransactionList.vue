@@ -9,13 +9,7 @@
       slot="title"
       class="header"
     >
-      <div>
-        <AeIdenticon
-          :address="activeIdentity.address"
-          size="s"
-        />
-        {{ activeIdentity.name }}
-      </div>
+      <AccountInline :address="activeIdentity.address" />
       <Balance
         :balance="activeIdentity.balance"
         invert
@@ -60,8 +54,8 @@
 <script>
 import { groupBy } from 'lodash-es';
 import { mapGetters } from 'vuex';
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
+import AccountInline from '../../components/AccountInline.vue';
 import Balance from '../../components/Balance.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import AeLoader from '../../components/AeLoader.vue';
@@ -70,7 +64,7 @@ import ListItemTransaction from '../../components/ListItemTransaction.vue';
 export default {
   components: {
     MobilePage,
-    AeIdenticon,
+    AccountInline,
     Balance,
     ButtonPlain,
     AeLoader,
@@ -128,10 +122,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .ae-identicon {
-      vertical-align: middle;
-    }
 
     .balance {
       @media (max-width: 370px) {

@@ -2,8 +2,7 @@
   <div class="send">
     <Guide size="big">
       <em>Send</em> AE from<br>
-      <AeIdenticon :address="activeAccount.address" />
-      {{ activeAccount.name }}
+      <AccountInline :address="activeAccount.address" />
     </Guide>
 
     <Note>
@@ -49,8 +48,8 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapState, mapGetters } from 'vuex';
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
+import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
 import AeInputAddress from '../../components/AeInputAddress.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
@@ -61,7 +60,7 @@ import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
 export default {
   components: {
     Guide,
-    AeIdenticon,
+    AccountInline,
     Note,
     AeInputAddress,
     AeInputAmountAe,

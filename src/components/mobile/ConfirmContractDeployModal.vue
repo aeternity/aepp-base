@@ -7,12 +7,7 @@
     <Guide fill="neutral">
       <em>Create a new contract</em>
       <br>by
-      <AeIdenticon
-        :address="activeIdentity.address"
-        size="s"
-      />
-      {{ ' ' }}
-      <em>{{ activeIdentity.name }}</em>
+      <AccountInline :address="activeIdentity.address" />
     </Guide>
 
     <DetailsAmount :amount="amount" />
@@ -50,9 +45,9 @@
 </template>
 
 <script>
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
+import AccountInline from '../AccountInline.vue';
 import DetailsAmount from './DetailsAmount.vue';
 import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsRawData from './DetailsRawData.vue';
@@ -64,7 +59,7 @@ export default {
   components: {
     MobilePage,
     Guide,
-    AeIdenticon,
+    AccountInline,
     DetailsAmount,
     DetailsFeeInput,
     DetailsRawData,

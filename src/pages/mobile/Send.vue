@@ -14,12 +14,7 @@
         />
         <em>New Transfer</em>
         <br>from
-        <AeIdenticon
-          :address="activeIdentity.address"
-          size="s"
-        />
-        {{ ' ' }}
-        <em>{{ activeIdentity.name }}</em>
+        <AccountInline :address="activeIdentity.address" />
       </Guide>
 
       <form
@@ -73,10 +68,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
+import AccountInline from '../../components/AccountInline.vue';
 import AeInputAddress from '../../components/AeInputAddress.vue';
 import AeButton from '../../components/AeButton.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
@@ -86,7 +82,7 @@ export default {
     MobilePage,
     Guide,
     AeFraction,
-    AeIdenticon,
+    AccountInline,
     AeInputAddress,
     AeButton,
     ListItemAccount,
