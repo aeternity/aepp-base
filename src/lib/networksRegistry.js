@@ -18,11 +18,11 @@ export const defaultNetwork = genNetwork('Roma-net', {
   explorerUrl: getExplorerUrl(),
 });
 
-export default [
+export default Object.freeze([
   defaultNetwork,
   genNetwork('Testnet'),
   ...process.env.NODE_ENV === 'production' ? [] : [
     genNetwork('Unstable'),
     genNetwork('Edgenet', pick(defaultNetwork, ['middlewareUrl'])),
   ],
-];
+].map(Object.freeze));
