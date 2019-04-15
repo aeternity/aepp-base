@@ -5,6 +5,7 @@ import VueRx from 'vue-rx';
 import 'normalize.css';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import 'focus-visible';
+import './lib/setGlobalPolyfills';
 import './lib/initEnv';
 import './lib/switchWebmanifest';
 import './register-modals';
