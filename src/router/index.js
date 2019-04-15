@@ -15,6 +15,12 @@ const router = new Router({
         }])
         || [...mobileRoutes, ...commonRoutes]
       : [...desktopRoutes, ...commonRoutes],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { x: 0, y: 0 };
+  },
 });
 
 store.watch(
