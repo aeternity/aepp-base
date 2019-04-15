@@ -10,6 +10,7 @@
         autofocus
         header="Node Name"
         name="name"
+        maxlength="16"
       />
       <AeInput
         v-model="url"
