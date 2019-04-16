@@ -20,7 +20,7 @@
       </div>
     </template>
 
-    <Guide>æternity æpps</Guide>
+    <Guide>Featured æpps</Guide>
 
     <AeCard fill="maximum">
       <template v-for="(app, idx) in aeternityApps">
