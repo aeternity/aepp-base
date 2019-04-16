@@ -57,12 +57,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
+import { inactiveAccounts } from '../observables';
 
 export default {
   directives: {
@@ -80,18 +80,7 @@ export default {
   data: () => ({
     showAccountsDropdown: false,
   }),
-  computed: {
-    ...mapState({
-      accounts: (state, { identities, activeIdentity }) => identities
-        .filter(i => i !== activeIdentity),
-    }),
-  },
-  watch: {
-    showAccountsDropdown(value) {
-      if (!value) return;
-      this.$store.dispatch('updateAllBalances');
-    },
-  },
+  subscriptions: () => ({ accounts: inactiveAccounts }),
   methods: {
     formatDisplayAddress(address) {
       if (['', 'a', 'ak'].includes(address)) return address;

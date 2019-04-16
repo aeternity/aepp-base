@@ -9,9 +9,9 @@
       slot="title"
       class="header"
     >
-      <AccountInline :address="activeIdentity.address" />
+      <AccountInline :address="activeAccount.address" />
       <Balance
-        :balance="activeIdentity.balance"
+        :balance="activeAccount.balance"
         invert
       />
     </div>
@@ -28,7 +28,7 @@
       </ButtonPlain>
     </div>
 
-    <AeLoader v-if="waitingTransactions && !activeIdentity.transactions.length" />
+    <AeLoader v-if="waitingTransactions && !activeAccount.transactions.length" />
 
     <template
       v-for="(transactions, date) in spendTransactionsGroupedByDay"
@@ -53,13 +53,13 @@
 
 <script>
 import { groupBy } from 'lodash-es';
-import { mapGetters } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Balance from '../../components/Balance.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import ListItemTransaction from '../../components/ListItemTransaction.vue';
+import { activeAccount } from '../../observables';
 
 export default {
   components: {
@@ -80,10 +80,10 @@ export default {
   data: () => ({
     waitingTransactions: true,
   }),
+  subscriptions: () => ({ activeAccount }),
   computed: {
-    ...mapGetters(['activeIdentity']),
     spendTransactionsGroupedByDay() {
-      const account = this.activeIdentity;
+      const account = this.activeAccount;
       return groupBy(
         [...account.transactions]
           .filter(t => t.tx.type === 'SpendTx')
@@ -100,15 +100,12 @@ export default {
       );
     },
   },
-  watch: {
-    'activeIdentity.address': {
-      async handler(address) {
-        this.waitingTransactions = true;
-        await this.$store.dispatch('updateTransactions', address);
-        this.waitingTransactions = false;
-      },
-      immediate: true,
-    },
+  created() {
+    this.$watch('activeAccount.address', async (address) => {
+      this.waitingTransactions = true;
+      await this.$store.dispatch('updateTransactions', address);
+      this.waitingTransactions = false;
+    }, { immediate: true });
   },
 };
 </script>

@@ -4,15 +4,12 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import BigNumber from 'bignumber.js';
 import { update, flatMap, camelCase } from 'lodash-es';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { multicast, refCount } from 'rxjs/operators';
 import networksRegistry, { defaultNetwork } from '../lib/networksRegistry';
 import { MAGNITUDE } from '../lib/constants';
 import { fetchJson, mapKeysDeep } from './utils';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import persistState from './plugins/persistState';
-import pollBalance from './plugins/pollBalance';
 import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection';
@@ -55,7 +52,6 @@ const store = new Vuex.Store({
         },
       },
     })),
-    pollBalance,
     initSdk,
     remoteConnection,
     modals,
@@ -70,25 +66,6 @@ const store = new Vuex.Store({
     migrations: {},
     loginTarget: '',
     selectedIdentityIdx: 0,
-    balances: {},
-    topBlockHeightSubject: new Observable((subscriber) => {
-      let unsubscribed = false;
-      const f = async () => {
-        if (unsubscribed) return;
-        try {
-          subscriber.next((await store.state.sdk.topBlock()).height);
-        } catch (e) {
-          subscriber.next(0);
-        }
-        setTimeout(f, 30000);
-      };
-      f();
-
-      return () => { unsubscribed = true; };
-    }).pipe(
-      multicast(new BehaviorSubject(0)),
-      refCount(),
-    ),
     transactions: {},
     addresses: [],
     rpcUrl: networksRegistry[0].url,
@@ -102,16 +79,13 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    identities: ({ balances, transactions }, { addresses }, { mobile }) => addresses
+    identities: ({ transactions }, { addresses }, { mobile }) => addresses
       .map((e, index) => ({
-        balance: balances[e] || BigNumber(0),
         transactions: transactions[e] || [],
         address: e,
         name: process.env.IS_MOBILE_DEVICE ? mobile.names[index] : e.substr(0, 6),
       })),
     activeIdentity: ({ selectedIdentityIdx }, { identities }) => identities[selectedIdentityIdx],
-    totalBalance: (state, { identities }) => identities
-      .reduce((sum, { balance }) => sum.plus(balance), BigNumber(0)),
     networks: ({ customNetworks }) => [
       ...networksRegistry,
       ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
@@ -181,9 +155,6 @@ const store = new Vuex.Store({
     selectIdentity(state, selectedIdentityIdx) {
       state.selectedIdentityIdx = selectedIdentityIdx;
     },
-    setBalance(state, { address, balance }) {
-      Vue.set(state.balances, address, balance);
-    },
     setTransactions(state, { address, transactions }) {
       Vue.set(state.transactions, address, transactions);
     },
@@ -243,15 +214,6 @@ const store = new Vuex.Store({
     setNotification({ commit }, options) {
       commit('setNotification', options);
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000);
-    },
-    updateAllBalances({ getters: { addresses }, dispatch }) {
-      addresses.forEach(address => dispatch('updateBalance', address));
-    },
-    async updateBalance({ state: { sdk, balances }, commit }, address) {
-      const balance = BigNumber(await sdk.balance(address).catch(() => 0))
-        .shiftedBy(-MAGNITUDE);
-      if (balances[address] && balances[address].isEqualTo(balance)) return;
-      commit('setBalance', { address, balance });
     },
     async updateTransactions({ state: { sdk }, getters: { currentNetwork }, commit }, address) {
       const transactions = await Promise.all([

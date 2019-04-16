@@ -26,7 +26,7 @@
           required: true,
           decimal: MAGNITUDE,
           min_value_exclusive: 0,
-          max_value: maxAmount.minus(MIN_SPEND_TX_FEE).toString(),
+          max_value: activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString(),
         }"
         :error="errors.has('amount')"
         :footer="errors.first('amount')"
@@ -47,7 +47,6 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapState, mapGetters } from 'vuex';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
@@ -56,6 +55,7 @@ import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
 import TransferNotification from '../../components/TransferNotification.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
+import { activeAccount } from '../../observables';
 
 export default {
   components: {
@@ -74,13 +74,7 @@ export default {
     MIN_SPEND_TX_FEE,
     transferNotification: null,
   }),
-  computed: {
-    ...mapGetters({ activeAccount: 'activeIdentity' }),
-    ...mapState({
-      maxAmount: ({ balances }, { activeIdentity }) => (
-        activeIdentity ? balances[activeIdentity.address] : BigNumber(0)),
-    }),
-  },
+  subscriptions: () => ({ activeAccount }),
   methods: {
     async send() {
       if (!await this.$validator.validateAll()) return;

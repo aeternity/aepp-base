@@ -59,6 +59,7 @@ import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 import copyOnClick from '../../directives/copyOnClick';
+import { accounts, activeAccount, totalBalance } from '../../observables';
 
 export default {
   components: {
@@ -70,15 +71,8 @@ export default {
   props: {
     forLedger: { type: Boolean, default: false },
   },
-  computed: mapGetters({
-    accounts: 'identities',
-    activeAccount: 'activeIdentity',
-    totalBalance: 'totalBalance',
-    ableToCreateAccount: 'ableToCreateAccount',
-  }),
-  mounted() {
-    this.$store.dispatch('updateAllBalances');
-  },
+  computed: mapGetters(['ableToCreateAccount']),
+  subscriptions: () => ({ accounts, activeAccount, totalBalance }),
   methods: {
     prefixedAmount,
     ...mapMutations(['selectIdentity', 'createAccount']),

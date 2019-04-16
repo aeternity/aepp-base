@@ -2,6 +2,7 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import AeInputAddress from '../AeInputAddress.vue';
 
+jest.mock('../../observables.js');
 Vue.prototype.$globals = {
   IS_MOBILE_DEVICE: true,
 };

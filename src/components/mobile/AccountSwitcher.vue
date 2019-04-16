@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="showAccountSwitcher"
-    class="account-switcher"
-  >
+  <div class="account-switcher">
     <Transition
       appear
       name="fade"
@@ -13,7 +10,7 @@
       >
         <div class="list">
           <ListItemAccount
-            v-for="(account, index) in identities"
+            v-for="(account, index) in accounts"
             :key="account.address"
             v-bind="account"
           >
@@ -61,7 +58,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import { directive as clickaway } from 'vue-clickaway';
 import ListItem from '../ListItem.vue';
@@ -69,6 +66,7 @@ import ListItemAccount from '../ListItemAccount.vue';
 import AeCard from '../AeCard.vue';
 import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
+import { accounts, totalBalance } from '../../observables';
 
 export default {
   directives: {
@@ -82,22 +80,8 @@ export default {
     AeRadio,
     Balance,
   },
-  computed: {
-    ...mapGetters(['activeIdentity', 'identities', 'totalBalance']),
-    ...mapState({
-      selectedIdentityIdx: ({ selectedIdentityIdx }) => selectedIdentityIdx,
-      showAccountSwitcher: ({ mobile }) => mobile.showAccountSwitcher,
-    }),
-  },
-  watch: {
-    showAccountSwitcher(value) {
-      if (!value) return;
-      this.$store.dispatch('updateAllBalances');
-    },
-  },
-  mounted() {
-    this.$store.dispatch('updateAllBalances');
-  },
+  computed: mapState(['selectedIdentityIdx']),
+  subscriptions: () => ({ accounts, totalBalance }),
   methods: mapMutations(['selectIdentity', 'toggleAccountSwitcher']),
 };
 </script>
