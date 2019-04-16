@@ -13,6 +13,7 @@
       <div
         v-if="title || $slots.subtitle || subtitle"
         class="title"
+        :class="{ 'has-content-after': $slots.default || $slots.right }"
       >
         <slot name="title">
           {{ title }}
@@ -86,8 +87,18 @@ export default {
 
     .title {
       @extend %face-sans-s;
+      white-space: nowrap;
       font-weight: 500;
       color: $color-neutral-negative-3;
+
+      &.has-content-after {
+        margin-right: rem(4px);
+      }
+
+      &, small {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       small {
         display: block;
