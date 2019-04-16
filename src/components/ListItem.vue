@@ -10,6 +10,7 @@
       class="content"
     >
       <slot name="icon" />
+
       <div
         v-if="title || $slots.subtitle || subtitle"
         class="title"
@@ -24,7 +25,9 @@
           </slot>
         </small>
       </div>
+
       <slot />
+
       <div
         v-if="$slots.right"
         class="space"
