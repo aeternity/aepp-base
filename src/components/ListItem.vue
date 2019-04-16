@@ -10,7 +10,10 @@
       class="content"
     >
       <slot name="icon" />
-      <div class="title">
+      <div
+        v-if="title || $slots.subtitle || subtitle"
+        class="title"
+      >
         <slot name="title">
           {{ title }}
         </slot>
