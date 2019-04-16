@@ -77,6 +77,11 @@ export default {
       margin-right: 4px;
       vertical-align: text-bottom;
     }
+
+    /deep/ main {
+      overflow: hidden;
+      overflow-wrap: break-word;
+    }
   }
 }
 </style>
