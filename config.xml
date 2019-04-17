@@ -19,6 +19,7 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <icon src="public/favicons/apple-touch-icon.png" />
         <preference name="UseSwiftLanguageVersion" value="5" />
     </platform>
     <preference name="SplashScreen" value="screen" />
