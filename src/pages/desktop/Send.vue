@@ -47,6 +47,7 @@
 
 <script>
 import BigNumber from 'bignumber.js';
+import { pick } from 'lodash-es';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
@@ -55,7 +56,6 @@ import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
 import TransferNotification from '../../components/TransferNotification.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
-import { activeAccount } from '../../observables';
 
 export default {
   components: {
@@ -74,7 +74,9 @@ export default {
     MIN_SPEND_TX_FEE,
     transferNotification: null,
   }),
-  subscriptions: () => ({ activeAccount }),
+  subscriptions() {
+    return pick(this.$store.state.observables, ['activeAccount']);
+  },
   methods: {
     async send() {
       if (!await this.$validator.validateAll()) return;

@@ -6,7 +6,6 @@ import router from '..';
 import { mockStore } from '../../store'; // eslint-disable-line import/named
 
 jest.mock('../../lib/initEnv.js');
-jest.mock('../../observables.js');
 jest.mock('../../store');
 const localVue = createLocalVue();
 localVue.use(Router);

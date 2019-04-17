@@ -62,7 +62,6 @@ import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
-import { inactiveAccounts } from '../observables';
 
 export default {
   directives: {
@@ -80,7 +79,9 @@ export default {
   data: () => ({
     showAccountsDropdown: false,
   }),
-  subscriptions: () => ({ accounts: inactiveAccounts }),
+  subscriptions() {
+    return { accounts: this.$store.state.observables.inactiveAccounts };
+  },
   methods: {
     formatDisplayAddress(address) {
       if (['', 'a', 'ak'].includes(address)) return address;

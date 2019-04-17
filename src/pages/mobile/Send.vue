@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import { pick } from 'lodash-es';
 import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -76,7 +77,6 @@ import AccountInline from '../../components/AccountInline.vue';
 import AeInputAddress from '../../components/AeInputAddress.vue';
 import AeButton from '../../components/AeButton.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
-import { inactiveAccounts } from '../../observables';
 
 export default {
   components: {
@@ -93,7 +93,9 @@ export default {
     accountTo: '',
   }),
   computed: mapGetters({ activeAccount: 'activeIdentity' }),
-  subscriptions: () => ({ inactiveAccounts }),
+  subscriptions() {
+    return pick(this.$store.state.observables, ['inactiveAccounts']);
+  },
   methods: {
     async setAddress() {
       if (!await this.$validator.validateAll()) return;
