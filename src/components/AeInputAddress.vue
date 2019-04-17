@@ -80,7 +80,9 @@ export default {
     showAccountsDropdown: false,
   }),
   subscriptions() {
-    return { accounts: this.$store.state.observables.inactiveAccounts };
+    return !process.env.IS_MOBILE_DEVICE && {
+      accounts: this.$store.state.observables.inactiveAccounts,
+    };
   },
   methods: {
     formatDisplayAddress(address) {
