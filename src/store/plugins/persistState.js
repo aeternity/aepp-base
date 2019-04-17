@@ -17,12 +17,12 @@ const getState = () => JSON.parse(
     : value),
 );
 
-export default reducer => (store) => {
-  const savedState = runMigrations(getState(), store);
+export default (reducerLoad, reducerSave) => (store) => {
+  const savedState = getState();
+  const reducedState = savedState ? reducerLoad(savedState) : savedState;
+  const migratedState = runMigrations(reducedState, store);
 
-  if (savedState) {
-    store.replaceState(merge({}, store.state, savedState));
-  }
+  store.replaceState(merge({}, store.state, migratedState));
 
-  store.subscribe((mutation, state) => setState(reducer(state)));
+  store.subscribe((mutation, state) => setState(reducerSave(state)));
 };

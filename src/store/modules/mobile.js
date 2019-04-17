@@ -1,20 +1,21 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { times } from 'lodash-es';
 import { mnemonicToSeed } from '@aeternity/bip39';
-import { generateHDWallet } from '@aeternity/hd-wallet/src';
 import AES from '../../lib/aes';
-import { genRandomBuffer, derivePasswordKey } from '../utils';
+import {
+  genRandomBuffer, derivePasswordKey, generateHdWallet, getHdWalletAccount,
+} from '../utils';
 
 export default {
   state: {
-    keystore: null,
-    derivedKey: null,
-    accountCount: 0,
+    encryptedHdWallet: null,
+    hdWallet: null,
+    accountCount: 1,
+    accountNames: ['Main Account'],
     accounts: {},
     followers: {},
-    names: [],
     showAccountSwitcher: false,
     stepFraction: null,
     browserPath: '',
@@ -26,30 +27,28 @@ export default {
   },
 
   mutations: {
-    setKeystore(state, keystore) {
-      state.keystore = keystore;
+    setEncryptedHdWallet(state, encryptedHdWallet) {
+      state.encryptedHdWallet = encryptedHdWallet;
     },
-    setDerivedKey(state, derivedKey) {
-      state.derivedKey = derivedKey;
-    },
-    resetAccountCount(state) {
-      state.names = ['Main Account'];
-      state.accountCount = 1;
-    },
-    createIdentity(state, name) {
-      state.names.push(name);
-      state.accountCount += 1;
+    setHdWallet(state, hdWallet) {
+      state.hdWallet = hdWallet;
+      state.accounts = times(state.accountCount, idx => getHdWalletAccount(state.hdWallet, idx))
+        .reduce((p, { address, ...account }) => ({ ...p, [address]: account }), {});
     },
     renameIdentity(state, { index, name }) {
-      Vue.set(state.names, index, name);
+      Vue.set(state.accountNames, index, name);
     },
-    setAccounts(state, accounts) {
-      state.accounts = accounts
-        .reduce((p, n) => ({ ...p, [Crypto.aeEncodeKey(n.publicKey)]: n }), {});
+    addAccount(state, {
+      address, name, active, ...account
+    }) {
+      Vue.set(state.accounts, address, account);
+      state.accountCount += 1;
+      if (active) this.state.selectedIdentityIdx = state.accountCount - 1;
+      state.accountNames.push(name);
     },
-    signOut(state) {
-      state.keystore = null;
-      state.derivedKey = null;
+    logout(state) {
+      state.hdWallet = {};
+      state.accounts = {};
     },
     addFollower(state, follower) {
       Vue.set(state.followers, follower.id, follower);
@@ -76,30 +75,42 @@ export default {
   },
 
   actions: {
-    async createKeystore({ commit }, { password, seed }) {
+    async discoverAccounts({ state, rootState, commit }) {
+      let account;
+      do {
+        if (account) commit('addAccount', { ...account, name: `Account #${state.accountCount}` });
+        account = getHdWalletAccount(state.hdWallet, state.accountCount);
+      } while (await rootState.sdk.api // eslint-disable-line no-await-in-loop
+        .getAccountByPubkey(account.address).then(() => true, () => false));
+    },
+    async createHdWallet({ commit, dispatch }, { password, seed }) {
       const salt = genRandomBuffer(16);
       const passwordDerivedKey = await derivePasswordKey(password, salt);
       const aes = new AES(passwordDerivedKey);
-      const hdWallet = generateHDWallet(mnemonicToSeed(seed));
-      const encryptedHdWallet = {
+      const hdWallet = generateHdWallet(mnemonicToSeed(seed));
+      commit('setEncryptedHdWallet', {
         privateKey: await aes.encrypt(hdWallet.privateKey),
         chainCode: await aes.encrypt(hdWallet.chainCode),
         mac: await aes.encrypt(new Uint8Array(2)),
         salt,
-      };
-      commit('resetAccountCount');
-      commit('selectIdentity', 0);
-      commit('setKeystore', encryptedHdWallet);
-      commit('setDerivedKey', passwordDerivedKey);
+      });
+      commit('setHdWallet', hdWallet);
+      dispatch('discoverAccounts');
     },
-    async unlockKeystore({ commit, state: { keystore } }, password) {
-      const passwordDerivedKey = await derivePasswordKey(password, keystore.salt);
+    async unlockHdWallet({ state: { encryptedHdWallet }, commit, dispatch }, password) {
+      const passwordDerivedKey = await derivePasswordKey(password, encryptedHdWallet.salt);
       const aes = new AES(passwordDerivedKey);
-      await aes.decrypt(keystore.privateKey);
-      await aes.decrypt(keystore.chainCode);
-      const mac = new Uint8Array(await aes.decrypt(keystore.mac));
+      const hdWallet = {
+        privateKey: await aes.decrypt(encryptedHdWallet.privateKey),
+        chainCode: await aes.decrypt(encryptedHdWallet.chainCode),
+      };
+      const mac = new Uint8Array(await aes.decrypt(encryptedHdWallet.mac));
       if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password');
-      commit('setDerivedKey', passwordDerivedKey);
+      commit('setHdWallet', hdWallet);
+      dispatch('discoverAccounts');
+    },
+    async createAccount({ state: { hdWallet, accountCount }, commit }, name) {
+      commit('addAccount', { ...getHdWalletAccount(hdWallet, accountCount), name, active: true });
     },
   },
 };

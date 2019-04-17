@@ -13,7 +13,7 @@ export default (store) => {
   store.watch(
     (state, { currentNetwork }) => currentNetwork,
     async (currentNetwork) => {
-      if (isEqual(currentNetwork, lastNetwork)) return;
+      if (isEqual(currentNetwork, lastNetwork) && store.state.sdk) return;
       lastNetwork = currentNetwork;
 
       const methods = {
