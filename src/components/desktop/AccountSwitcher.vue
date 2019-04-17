@@ -22,7 +22,7 @@
       >
         <AeRadio
           slot="right"
-          :checked="account === activeAccount"
+          :checked="account.address === activeAccount.address"
           @change="selectIdentity(index)"
         />
       </ListItemAccount>
