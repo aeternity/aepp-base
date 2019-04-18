@@ -22,7 +22,7 @@
       >
         <AeRadio
           slot="right"
-          :checked="account === activeAccount"
+          :checked="account.address === activeAccount.address"
           @change="selectIdentity(index)"
         />
       </ListItemAccount>
@@ -50,6 +50,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+import { pick } from 'lodash-es';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeAccount from '../AeAccount.vue';
 import ButtonPlain from '../ButtonPlain.vue';
@@ -59,7 +60,6 @@ import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 import copyOnClick from '../../directives/copyOnClick';
-import { accounts, activeAccount, totalBalance } from '../../observables';
 
 export default {
   components: {
@@ -72,7 +72,9 @@ export default {
     forLedger: { type: Boolean, default: false },
   },
   computed: mapGetters(['ableToCreateAccount']),
-  subscriptions: () => ({ accounts, activeAccount, totalBalance }),
+  subscriptions() {
+    return pick(this.$store.state.observables, ['accounts', 'activeAccount', 'totalBalance']);
+  },
   methods: {
     prefixedAmount,
     ...mapMutations(['selectIdentity', 'createAccount']),

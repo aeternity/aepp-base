@@ -52,14 +52,13 @@
 </template>
 
 <script>
-import { groupBy } from 'lodash-es';
+import { groupBy, pick } from 'lodash-es';
 import MobilePage from '../../components/mobile/Page.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Balance from '../../components/Balance.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import ListItemTransaction from '../../components/ListItemTransaction.vue';
-import { activeAccount } from '../../observables';
 
 export default {
   components: {
@@ -80,7 +79,9 @@ export default {
   data: () => ({
     waitingTransactions: true,
   }),
-  subscriptions: () => ({ activeAccount }),
+  subscriptions() {
+    return pick(this.$store.state.observables, ['activeAccount']);
+  },
   computed: {
     spendTransactionsGroupedByDay() {
       const account = this.activeAccount;

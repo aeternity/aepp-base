@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
@@ -73,7 +73,9 @@ export default {
       iconName: 'settings',
     }],
   }),
-  computed: mapGetters({ account: 'activeIdentity' }),
+  subscriptions() {
+    return { account: this.$store.state.observables.activeAccount };
+  },
   methods: {
     prefixedAmount,
     ...mapMutations(['toggleSidebar']),

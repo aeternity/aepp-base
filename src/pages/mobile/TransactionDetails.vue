@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { pick } from 'lodash-es';
 import { mapGetters } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -80,7 +81,6 @@ import DetailsField from '../../components/mobile/DetailsField.vue';
 import DetailsAmountAndFee from '../../components/mobile/DetailsAmountAndFee.vue';
 import DetailsAddress from '../../components/mobile/DetailsAddress.vue';
 import AeButton from '../../components/AeButton.vue';
-import { topBlockHeight } from '../../observables';
 
 export default {
   components: {
@@ -107,7 +107,9 @@ export default {
         : `${this.topBlockHeight - this.transaction.blockHeight} Confirmations`;
     },
   },
-  subscriptions: () => ({ topBlockHeight }),
+  subscriptions() {
+    return pick(this.$store.state.observables, ['topBlockHeight']);
+  },
 };
 </script>
 

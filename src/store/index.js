@@ -2,6 +2,7 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VueRx from 'vue-rx';
 import { makeResetable } from './utils';
 import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
@@ -14,8 +15,10 @@ import initSdk from './plugins/initSdk';
 import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
 import browserPathTracker from './plugins/browserPathTracker';
+import observables from './plugins/observables';
 
 Vue.use(Vuex);
+Vue.use(VueRx);
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
@@ -62,6 +65,7 @@ const store = new Vuex.Store({
     remoteConnection,
     modals,
     registerServiceWorker,
+    observables,
     ...process.env.IS_MOBILE_DEVICE
       ? [notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
   ],

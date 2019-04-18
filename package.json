@@ -95,7 +95,6 @@
     "./src/lib/initEnv.js",
     "./src/lib/switchWebmanifest.js",
     "./src/register-modals.js",
-    "./src/init.js",
     "*.css",
     "*.scss",
     "*.vue"

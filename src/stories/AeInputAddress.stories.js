@@ -1,13 +1,24 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import Vue from 'vue';
+import Vuex from 'vuex';
 import VueRx from 'vue-rx';
+import { Observable } from 'rxjs';
 import { storiesOf } from '@storybook/vue';
 import AeInputAddress from '../components/AeInputAddress.vue';
+import { accounts } from './mock-data';
 
+Vue.use(Vuex);
 Vue.use(VueRx);
 Vue.prototype.$globals = {
   IS_MOBILE_DEVICE: true,
 };
+const store = new Vuex.Store({
+  state: {
+    observables: {
+      inactiveAccounts: new Observable(subscriber => subscriber.next(accounts)),
+    },
+  },
+});
 
 storiesOf('AeInputAddress', module)
   .add('default', () => ({
@@ -21,11 +32,13 @@ storiesOf('AeInputAddress', module)
         />
         Value: {{ value }}
       </div>`,
+    store,
     data: () => ({ value: '' }),
   }))
   .add('mobile', () => ({
     components: { AeInputAddress },
     template: '<ae-input-address header="Recipient" />',
+    store,
   }), {
     notes: {
       markdown: `
@@ -46,6 +59,7 @@ storiesOf('AeInputAddress', module)
     destroyed: () => {
       Vue.prototype.$globals.IS_MOBILE_DEVICE = true;
     },
+    store,
     data: () => ({ value: '' }),
   }), {
     notes: {
