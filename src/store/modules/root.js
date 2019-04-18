@@ -167,7 +167,7 @@ export default {
         ...mapKeysDeep(
           (await fetchJson(
             `${currentNetwork.middlewareUrl}/middleware/transactions/account/${address}`,
-          ).catch(() => ({ transactions: [] }))).transactions,
+          ).catch(() => [])),
           (value, key) => camelCase(key),
         ),
         ...(await sdk.api.getPendingAccountTransactionsByPubkey(address)
@@ -177,10 +177,9 @@ export default {
             pending: true,
           })),
       ]
-        .map(async ({ blockHash, tx: { amount, fee, ...otherTx }, ...otherTransaction }) => ({
+        .map(async ({ time, tx: { amount, fee, ...otherTx }, ...otherTransaction }) => ({
           ...otherTransaction,
-          blockHash,
-          time: new Date((await sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
+          time: new Date(time),
           received: address === otherTx.recipientId,
           peerId: address === otherTx.recipientId ? otherTx.senderId : otherTx.recipientId,
           tx: {
