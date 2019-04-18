@@ -76,10 +76,16 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .confirm-account-access {
   max-width: rem(250px);
   padding: rem(32px);
+
+  .details-permission {
+    --color-primary: #{$color-neutral-negative-3};
+    --color-secondary: #{$color-neutral};
+  }
 
   .ae-button-group {
     margin-left: rem(-16px);

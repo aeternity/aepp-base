@@ -1,10 +1,13 @@
 <template>
   <DetailsItem class="details-field">
-    <DetailsRow :class="[{ 'not-last': $slots.default }, fill]">
+    <DetailsRow :class="{ 'not-last': $slots.default }">
       <span class="name">
         {{ name }}
       </span>
-      <span class="value">
+      <span
+        class="value"
+        :class="{ monospace: valueMonospace }"
+      >
         {{ value }}
       </span>
     </DetailsRow>
@@ -15,11 +18,9 @@
 <script>
 import DetailsItem from './DetailsItem.vue';
 import DetailsRow from './DetailsRow.vue';
-import DetailsFillMixin from './DetailsFillMixin';
 
 export default {
   components: { DetailsItem, DetailsRow },
-  mixins: [DetailsFillMixin],
   props: {
     name: {
       type: String,
@@ -29,6 +30,7 @@ export default {
       type: String,
       default: '',
     },
+    valueMonospace: { type: Boolean },
   },
 };
 </script>
@@ -37,40 +39,24 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.details-field {
-  .details-row {
-    &.not-last {
-      margin-bottom: rem(8px);
-    }
+.details-field .details-row {
+  @extend %face-sans-xs;
 
-    .name {
-      @extend %face-sans-xs;
-      font-weight: 500;
-    }
+  &.not-last {
+    margin-bottom: rem(8px);
+  }
 
-    .value {
+  .name {
+    font-weight: 500;
+    color: var(--color-secondary, rgba($color-neutral-maximum, 0.66846));
+  }
+
+  .value {
+    font-weight: 600;
+    color: var(--color-primary, $color-neutral-maximum);
+
+    &.monospace {
       @extend %face-mono-xs;
-      text-transform: uppercase;
-    }
-
-    &.neutral {
-      .name {
-        color: rgba(255, 255, 255, 0.66846);
-      }
-
-      .value {
-        color: $color-neutral-maximum;
-      }
-    }
-
-    &.dark {
-      .name {
-        color: $color-neutral-negative-1;
-      }
-
-      .value {
-        color: $color-neutral-negative-3;
-      }
     }
   }
 }

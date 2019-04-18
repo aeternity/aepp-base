@@ -32,11 +32,11 @@ export default {
 
   .name {
     font-weight: 500;
-    color: $color-neutral-negative-3;
+    color: var(--color-primary, $color-neutral-maximum);
   }
 
   .description {
-    color: $color-neutral;
+    color: var(--color-secondary, rgba($color-neutral-maximum, 0.66846));
   }
 }
 </style>
