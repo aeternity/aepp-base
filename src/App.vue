@@ -2,7 +2,7 @@
   <div id="app">
     <RouterView
       v-show="!hidePage"
-      :class="{ grayscale: showAccountSwitcher }"
+      :class="{ grayscale: showAccountSwitcher || component }"
     />
     <Component
       :is="component"

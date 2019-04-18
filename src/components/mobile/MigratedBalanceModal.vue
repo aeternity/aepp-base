@@ -1,24 +1,22 @@
 <template>
-  <Modal>
-    <div class="migrated-balance">
-      <div class="balance">
-        <div class="label">
-          {{ migratedBalance }}
-        </div>
-        are in migration now. They will be available after the next hardfork.
+  <Modal class="migrated-balance">
+    <div class="balance">
+      <div class="label">
+        {{ migratedBalance }}
       </div>
+      are in migration now. They will be available after the next hardfork.
+    </div>
 
-      <div class="buttons">
-        <AeButton @click="resolve">
-          Ok
-        </AeButton>
-        <AeButton
-          :to="'https://token-migration.aepps.com/#/status/result/' + activeIdentity.address"
-          plain
-        >
-          See migrations
-        </AeButton>
-      </div>
+    <div class="buttons">
+      <AeButton @click="resolve">
+        Ok
+      </AeButton>
+      <AeButton
+        :to="'https://token-migration.aepps.com/#/status/result/' + activeIdentity.address"
+        plain
+      >
+        See migrations
+      </AeButton>
     </div>
   </Modal>
 </template>
@@ -58,10 +56,12 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.overlay .migrated-balance {
-  max-width: rem(275px);
-  padding: rem(50px) rem(30px) rem(10px) rem(30px);
-  background-color: $color-neutral-positive-3;
+.migrated-balance {
+  /deep/ .modal-plain {
+    max-width: rem(275px);
+    padding: rem(50px) rem(30px) rem(10px) rem(30px);
+    background-color: $color-neutral-positive-3;
+  }
 
   .balance {
     @extend %face-sans-s;
