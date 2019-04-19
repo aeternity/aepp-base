@@ -45,4 +45,10 @@ export default (store) => {
       },
     }), {}),
   });
+
+  store.watch(
+    ({ route }) => route,
+    () => store.state.modals.opened
+      .forEach(({ props: { reject } }) => reject(new Error('User navigated outside'))),
+  );
 };
