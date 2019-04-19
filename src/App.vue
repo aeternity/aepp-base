@@ -2,15 +2,17 @@
   <div id="app">
     <RouterView
       v-show="!hidePage"
-      :class="{ grayscale: component }"
+      :class="{ grayscale: openedModals.length }"
     />
     <TabBar
       v-if="$route.meta.displayFooter && !hidePage"
-      :class="{ grayscale: component }"
+      :class="{ grayscale: openedModals.length }"
     />
 
     <Component
       :is="component"
+      v-for="{ component, key, props } in openedModals"
+      :key="key"
       v-bind="props"
     />
 
@@ -27,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import { AeBanner } from '@aeternity/aepp-components-3';
 import AlertModal from './components/AlertModal.vue';
 import TabBar from './components/mobile/TabBar.vue';
@@ -40,7 +42,10 @@ export default {
   },
   computed: {
     ...mapState(['notification']),
-    ...mapGetters('modals', ['component', 'hidePage', 'props']),
+    ...mapState('modals', {
+      openedModals: (state, { opened }) => opened,
+      hidePage: (state, { opened }) => opened.some(({ hidePage }) => hidePage),
+    }),
   },
 };
 </script>
