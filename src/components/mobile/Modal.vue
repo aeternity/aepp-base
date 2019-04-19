@@ -6,6 +6,8 @@
     <ModalPlain>
       <slot />
     </ModalPlain>
+
+    <slot name="footer" />
   </Overlay>
 </template>
 

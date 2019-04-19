@@ -29,6 +29,8 @@
         Allow
       </AeButton>
     </AeButtonGroup>
+
+    <TabBar slot="footer" />
   </Modal>
 </template>
 
@@ -40,6 +42,7 @@ import Guide from '../Guide.vue';
 import AccountInline from '../AccountInline.vue';
 import AeButton from '../AeButton.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
+import TabBar from './TabBar.vue';
 
 export default {
   components: {
@@ -49,6 +52,7 @@ export default {
     DetailsPermission,
     AeButtonGroup,
     AeButton,
+    TabBar,
   },
   props: {
     appHost: { type: String, required: true },
@@ -91,6 +95,13 @@ export default {
     margin-left: rem(-16px);
     margin-top: rem(16px);
     margin-right: rem(-16px);
+  }
+
+  .tab-bar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 }
 </style>
