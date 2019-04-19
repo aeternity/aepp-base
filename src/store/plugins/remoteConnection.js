@@ -107,7 +107,7 @@ export default (store) => {
         .forEach(followerId => socket.emit('add-follower', followerId));
     } else {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true));
-      socket.on('removed-from-group', () => store.commit('setRemoteConnected', false));
+      socket.on('removed-from-group', () => store.commit('reset'));
 
       const leader = new RpcPeer(message => socket.emit('message-to-leader', message));
       socket.on('message-from-leader', message => leader.processMessage(message));
