@@ -2,8 +2,13 @@
   <div id="app">
     <RouterView
       v-show="!hidePage"
-      :class="{ grayscale: showAccountSwitcher || component }"
+      :class="{ grayscale: component }"
     />
+    <TabBar
+      v-if="$route.meta.displayFooter && !hidePage"
+      :class="{ grayscale: component }"
+    />
+
     <Component
       :is="component"
       v-bind="props"
@@ -17,9 +22,6 @@
       {{ notification.text }}
     </AeBanner>
 
-    <AccountSwitcher v-if="showAccountSwitcher" />
-    <TabBar v-if="$route.meta.displayFooter && !hidePage" />
-
     <AlertModal />
   </div>
 </template>
@@ -29,20 +31,15 @@ import { mapState, mapGetters } from 'vuex';
 import { AeBanner } from '@aeternity/aepp-components-3';
 import AlertModal from './components/AlertModal.vue';
 import TabBar from './components/mobile/TabBar.vue';
-import AccountSwitcher from './components/mobile/AccountSwitcher.vue';
 
 export default {
   components: {
     AeBanner,
     AlertModal,
     TabBar,
-    AccountSwitcher,
   },
   computed: {
-    ...mapState({
-      notification: ({ notification }) => notification,
-      showAccountSwitcher: ({ mobile: { showAccountSwitcher } }) => showAccountSwitcher,
-    }),
+    ...mapState(['notification']),
     ...mapGetters('modals', ['component', 'hidePage', 'props']),
   },
 };
