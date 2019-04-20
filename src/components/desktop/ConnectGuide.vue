@@ -113,7 +113,7 @@ export default {
     forLedger: { type: Boolean, default: false },
   },
   computed: mapState({
-    peerId: ({ desktop }) => desktop.peerId,
+    peerId: ({ peerId }) => peerId,
     ledgerSupported: ({ desktop }) => desktop.ledgerSupported,
   }),
 };

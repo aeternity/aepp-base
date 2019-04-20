@@ -3,22 +3,30 @@ import {
   zipObject, cloneDeep, isEqual, throttle,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
-import { genRandomBuffer } from '../utils';
 
-const BACKEND_URL = 'https://signaling.aepps.com';
 const PAIR_SYNC_FIELDS = ['rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook'];
 
 export default (store) => {
-  const open = () => {
-    const query = {
-      key: process.env.IS_MOBILE_DEVICE
-        ? Buffer.from(genRandomBuffer(15)).toString('base64')
-        : store.state.desktop.peerId,
-    };
-    if (process.env.IS_MOBILE_DEVICE) {
-      query.followers = Object.keys(store.state.mobile.followers);
+  const getPushApiSubscription = async () => {
+    const { serviceWorkerRegistration } = store.state;
+    try {
+      const subscription = await serviceWorkerRegistration.pushManager.getSubscription()
+        || await serviceWorkerRegistration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: Buffer.from(process.env.VUE_APP_VAPID_PUBLIC_KEY, 'base64'),
+        });
+      return JSON.stringify(subscription);
+    } catch (e) {
+      return 'not-available';
     }
-    const socket = io(BACKEND_URL, { query });
+  };
+
+  const open = async () => {
+    const query = { key: store.state.peerId };
+    if (process.env.IS_MOBILE_DEVICE) {
+      query.pushApiSubscription = await getPushApiSubscription();
+    }
+    const socket = io(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
     const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS
@@ -88,9 +96,18 @@ export default (store) => {
         cancelTransaction: () => followerSignPromises[followerId].cancel(),
       })
         .processMessage(request));
+
+      const followers = await new Promise(resolve => socket.emit('get-all-followers', resolve));
+      Object.entries(followers)
+        .filter(([, v]) => v.connected === true)
+        .forEach(([followerId]) => store.commit('followerConnected', followerId));
+
+      Object.keys(store.state.mobile.followers)
+        .filter(v => !followers[v])
+        .forEach(followerId => socket.emit('add-follower', followerId));
     } else {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true));
-      socket.on('removed-from-group', () => store.commit('setRemoteConnected', false));
+      socket.on('removed-from-group', () => store.commit('reset'));
 
       const leader = new RpcPeer(message => socket.emit('message-to-leader', message));
       socket.on('message-from-leader', message => leader.processMessage(message));
@@ -116,8 +133,8 @@ export default (store) => {
     process.env.IS_MOBILE_DEVICE
       ? ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length
       : ({ desktop: { ledgerConnected } }) => !ledgerConnected,
-    (isConnectionNecessary) => {
-      if (isConnectionNecessary && !closeCb) closeCb = open();
+    async (isConnectionNecessary) => {
+      if (isConnectionNecessary && !closeCb) closeCb = await open();
       if (!isConnectionNecessary && closeCb) {
         closeCb();
         closeCb = undefined;

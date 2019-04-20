@@ -35,6 +35,10 @@ module.exports = {
     return [definitions];
   }),
   pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'src/service-worker.js',
+    },
     name: 'Base æpp',
     manifestPath: 'default.webmanifest',
     iconPaths: {

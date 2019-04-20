@@ -1,10 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
-import { genRandomBuffer } from '../utils';
-
 export default {
   state: {
-    peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     remoteConnected: false,
     transactionToSignByRemote: null,
     ledgerConnected: false,
@@ -17,7 +14,8 @@ export default {
   getters: {
     addresses: ({ ledgerConnected, ledgerAddresses }, getters, { addresses }) => (
       ledgerConnected ? ledgerAddresses : addresses),
-    loggedIn: ({ ledgerConnected, remoteConnected }) => ledgerConnected || remoteConnected,
+    loggedIn: ({ ledgerConnected }, getters, { addresses }) => (
+      ledgerConnected || addresses.length > 0),
     ableToCreateAccount: ({ ledgerConnected }) => ledgerConnected,
     signingCancelable: ({ ledgerConnected }) => !ledgerConnected,
   },
@@ -35,7 +33,9 @@ export default {
     setTransactionToSign(state, transaction) {
       state.transactionToSignByRemote = transaction;
     },
-    cancelTransaction() {},
+    cancelTransaction({ transactionToSignByRemote }) {
+      transactionToSignByRemote.reject(new Error('Payment rejected by user'));
+    },
     setLedgerConnected(state, ledgerConnected) {
       state.showSidebar = false;
       state.ledgerConnected = ledgerConnected;
