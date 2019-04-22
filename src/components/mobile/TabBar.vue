@@ -13,7 +13,7 @@
 
       <ButtonPlain
         :class="showAccountSwitcher ? 'router-link-active' : ''"
-        @click="() => !showAccountSwitcher && accountSwitcher()"
+        @click="() => !showAccountSwitcher && accountSwitcher().catch(() => {})"
       >
         <AeIdenticon :address="activeIdentity.address" />
       </ButtonPlain>
