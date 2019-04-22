@@ -11,4 +11,7 @@ Object.assign(process.env, {
   ...process.env.IS_IOS === undefined && {
     IS_IOS: /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
   },
+  ...process.env.RUNNING_IN_FRAME === undefined && {
+    RUNNING_IN_FRAME: window.parent !== window,
+  },
 });
