@@ -1,5 +1,8 @@
 <template>
-  <MobilePage :title="recover ? 'Recover Account' : 'New Account'">
+  <MobilePage
+    :title="recover ? 'Recover Account' : 'New Account'"
+    hide-tab-bar
+  >
     <Guide>
       <AeFraction
         slot="icon"

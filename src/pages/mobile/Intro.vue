@@ -2,6 +2,7 @@
   <MobilePage
     class="intro"
     fill="primary"
+    hide-tab-bar
   >
     <Guide fill="neutral">
       <em>Base æpp</em>

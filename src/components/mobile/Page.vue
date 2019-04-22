@@ -28,19 +28,21 @@
       </div>
     </main>
 
-    <footer v-if="$slots.footer">
+    <footer v-if="$slots.footer || !hideTabBar">
       <div class="wrapper">
         <slot name="footer" />
       </div>
+      <tab-bar v-if="!hideTabBar" />
     </footer>
   </div>
 </template>
 
 <script>
 import HeaderMobile from './Header.vue';
+import TabBar from './TabBar.vue';
 
 export default {
-  components: { HeaderMobile },
+  components: { HeaderMobile, TabBar },
   props: {
     headerFill: {
       type: String,
@@ -63,6 +65,7 @@ export default {
       ].includes(value),
       default: 'light',
     },
+    hideTabBar: { type: Boolean },
   },
 };
 </script>
@@ -173,9 +176,25 @@ export default {
     }
   }
 
-  footer /deep/ .ae-button:not(.medium) {
-    margin-bottom: rem(23px);
-    margin-top: rem(23px);
+  footer {
+    position: sticky;
+    bottom: 0;
+
+    @media (max-height: 500px) {
+      position: static;
+    }
+
+    .wrapper /deep/ > {
+      .ae-button:not(.plain),
+      .ae-button-group {
+        box-shadow: 0 0 16px $color-shadow-alpha-15;
+      }
+
+      .ae-button:not(.medium) {
+        margin-bottom: rem(23px);
+        margin-top: rem(23px);
+      }
+    }
   }
 }
 </style>

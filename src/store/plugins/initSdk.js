@@ -26,14 +26,9 @@ export default (store) => {
                 'modals/confirmAccountAccess',
                 { appHost: app.host },
               );
-              const { route: initialRoute } = store.state;
               const unsubscribe = store.watch(
-                ({ route }, { activeIdentity: { address } }) => ({ route, address }),
-                ({ route, address }) => {
-                  if (accessToAccounts.includes(address) || route !== initialRoute) {
-                    promise.cancel();
-                  }
-                },
+                (state, { activeIdentity: { address } }) => address,
+                address => accessToAccounts.includes(address) && promise.cancel(),
               );
 
               try {
@@ -41,9 +36,7 @@ export default (store) => {
                   promise,
                   new Promise((resolve, reject) => promise.finally(() => {
                     if (!promise.isCancelled()) return;
-                    if (initialRoute !== store.state.route) {
-                      reject(new Error('User navigated outside'));
-                    } else if (accessToAccounts.includes(store.getters.activeIdentity.address)) {
+                    if (accessToAccounts.includes(store.getters.activeIdentity.address)) {
                       resolve();
                     } else reject(new Error('Unexpected state'));
                   })),

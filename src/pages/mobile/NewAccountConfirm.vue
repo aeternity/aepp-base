@@ -4,6 +4,7 @@
     left-button-icon-name="back"
     class="new-account-confirm"
     title="New Account"
+    hide-tab-bar
   >
     <Guide>
       <AeFraction

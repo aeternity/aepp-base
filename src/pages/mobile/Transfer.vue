@@ -93,7 +93,7 @@
       title="Tokens in migration"
       subtitle="Not shown as balance above"
       border-dark
-      @click="showMigratedBalanceModal"
+      @click="migratedBalance"
     >
       <img
         slot="icon"
@@ -116,6 +116,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
+import { mapActions } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
@@ -162,7 +163,6 @@ export default {
       glowingStarEmoji,
       showAccountMenu: false,
       accountNameEditable: false,
-      migratedBalanceModalPromise: null,
       BigNumber,
       showTransferNotification: !!this.transactionHash,
     };
@@ -179,15 +179,7 @@ export default {
     renameIdentity(name) {
       this.$store.commit('renameIdentity', { index: this.$store.state.selectedIdentityIdx, name });
     },
-    showMigratedBalanceModal() {
-      this.migratedBalanceModalPromise = this.$store.dispatch('modals/migratedBalance');
-    },
-  },
-  beforeRouteLeave(to, from, next) {
-    if (this.migratedBalanceModalPromise) {
-      this.migratedBalanceModalPromise.cancel();
-    }
-    next();
+    ...mapActions('modals', ['migratedBalance']),
   },
 };
 </script>

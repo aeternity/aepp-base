@@ -1,5 +1,4 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import { upperFirst } from 'lodash-es';
 import Promise from 'bluebird';
 
 Promise.config({
@@ -7,46 +6,49 @@ Promise.config({
 });
 
 const modals = {};
+let modalCounter = 0;
 
 export const registerModal = ({ name, component, hidePage = false }) => {
   if (modals[name]) throw new Error(`Modal with name "${name}" already registered`);
   modals[name] = { component, hidePage };
 };
 
-const getPushName = name => `push${upperFirst(name)}ModalProps`;
-const getRemoveByIdx = name => `removeByIdx${upperFirst(name)}ModalProps`;
-
 export default (store) => {
   store.registerModule('modals', {
     namespaced: true,
-    state: Object.keys(modals).reduce((p, name) => ({ ...p, [name]: [] }), {}),
-    mutations: Object.keys(modals).reduce((p, name) => ({
-      ...p,
-      [getPushName(name)](state, props) {
-        state[name].push(props);
+    state: { opened: [] },
+    mutations: {
+      open(state, modal) {
+        state.opened.push(modal);
       },
-      [getRemoveByIdx(name)](state, idx) {
-        state[name].splice(idx, 1);
+      closeByKey(state, key) {
+        const idx = state.opened.findIndex(modal => modal.key === key);
+        state.opened.splice(idx, 1);
       },
-    }), {}),
+    },
     getters: {
-      name: (state) => {
-        const modal = Object.entries(state).find(([, props]) => props.length);
-        return modal && modal[0];
-      },
-      component: (state, { name }) => name && modals[name].component,
-      hidePage: (state, { name }) => name && modals[name].hidePage,
-      props: (state, { name }) => name && state[name][0],
+      opened: ({ opened }) => opened.map(({ name, key, props }) => ({
+        ...modals[name],
+        key,
+        props,
+      })),
     },
     actions: Object.keys(modals).reduce((p, name) => ({
       ...p,
-      [name]({ state, commit }, props) {
-        let propsIdx;
-        return new Promise((resolve, reject) => {
-          commit(getPushName(name), { ...props, resolve, reject });
-          propsIdx = state[name].length - 1;
-        }).finally(() => commit(getRemoveByIdx(name), propsIdx));
+      [name]({ commit }, props) {
+        const key = modalCounter;
+        modalCounter += 1;
+        return new Promise(
+          (resolve, reject) => commit('open', { name, key, props: { ...props, resolve, reject } }),
+        )
+          .finally(() => commit('closeByKey', key));
       },
     }), {}),
   });
+
+  store.watch(
+    ({ route }) => route,
+    () => store.state.modals.opened
+      .forEach(({ props: { reject } }) => reject(new Error('User navigated outside'))),
+  );
 };

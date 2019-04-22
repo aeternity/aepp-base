@@ -3,6 +3,7 @@
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
     title="Recover Account"
+    hide-tab-bar
   >
     <Guide>
       <AeFraction

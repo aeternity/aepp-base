@@ -13,7 +13,7 @@
 
       <ButtonPlain
         :class="showAccountSwitcher ? 'router-link-active' : ''"
-        @click="() => !showAccountSwitcher && toggleAccountSwitcher()"
+        @click="() => !showAccountSwitcher && accountSwitcher().catch(() => {})"
       >
         <AeIdenticon :address="activeIdentity.address" />
       </ButtonPlain>
@@ -35,20 +35,22 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
 
 export default {
   components: { AeIdenticon, AeIcon, ButtonPlain },
+  props: {
+    showAccountSwitcher: { type: Boolean },
+  },
   computed: {
     ...mapGetters(['activeIdentity']),
     ...mapState({
-      showAccountSwitcher: ({ mobile }) => mobile.showAccountSwitcher,
       browserPath: ({ mobile }) => mobile.browserPath,
     }),
   },
-  methods: mapMutations(['toggleAccountSwitcher']),
+  methods: mapActions('modals', ['accountSwitcher']),
 };
 </script>
 
@@ -58,14 +60,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/fallback/variables.scss';
 
 .tab-bar {
-  position: sticky;
-  bottom: 0;
   background-color: $color-neutral-minimum;
   padding-bottom: env(safe-area-inset-bottom);
-
-  @media (max-height: 500px) {
-    position: static;
-  }
 
   .wrapper {
     display: flex;
