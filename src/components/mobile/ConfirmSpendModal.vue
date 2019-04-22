@@ -26,6 +26,12 @@
       :min="minFee"
     />
 
+    <DetailsRawData
+      v-if="payload"
+      name="Payload"
+      :data="payload"
+    />
+
     <DetailsAddress
       name="Recipient Account"
       :address="recipientId"
@@ -53,6 +59,7 @@ import { mapState } from 'vuex';
 import MobilePage from './Page.vue';
 import DetailsAmount from './DetailsAmount.vue';
 import DetailsFeeInput from './DetailsFeeInput.vue';
+import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
@@ -71,10 +78,12 @@ export default {
     AeButtonGroup,
     DetailsAmount,
     DetailsFeeInput,
+    DetailsRawData,
     DetailsAddress,
   },
   mixins: [DetailsAmountFeeMixin],
   props: {
+    payload: { type: String, required: true },
     recipientId: { type: String, required: true },
   },
   computed: mapState({
