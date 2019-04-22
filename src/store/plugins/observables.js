@@ -1,4 +1,6 @@
-import { BehaviorSubject, combineLatest, timer } from 'rxjs';
+import {
+  BehaviorSubject, combineLatest, timer, of,
+} from 'rxjs';
 import {
   multicast, refCount, pluck, switchMap, map, filter,
 } from 'rxjs/operators';
@@ -53,8 +55,9 @@ export default (store) => {
     )
       .pipe(
         pluck('newValue'),
-        filter(acc => acc),
-        switchMap(acc => getBalance(acc.address).pipe(map(balance => ({ ...acc, balance })))),
+        switchMap(acc => (acc
+          ? getBalance(acc.address).pipe(map(balance => ({ ...acc, balance })))
+          : of(acc))),
       ),
     accounts,
     inactiveAccounts: getAccounts(
