@@ -52,7 +52,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
 .ledger-modal {
-  /deep/ .modal {
+  /deep/ .modal-plain {
     display: flex;
     flex-direction: column;
     width: rem(560px);
