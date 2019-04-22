@@ -27,6 +27,10 @@ export default async (store) => {
     const closeCbs = [];
 
     const addAddress = async (idx, create = false) => {
+      if (process.env.RUNNING_IN_FRAME) {
+        store.commit('addLedgerAddress', await ae.getAddress(idx));
+        return;
+      }
       const conformModalPromise = store.dispatch('modals/confirmLedgerAddress', {
         address: await ae.getAddress(idx),
         create,
