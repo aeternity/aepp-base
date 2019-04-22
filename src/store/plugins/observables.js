@@ -2,12 +2,12 @@ import {
   BehaviorSubject, combineLatest, timer, of,
 } from 'rxjs';
 import {
-  multicast, refCount, pluck, switchMap, map,
+  multicast, pluck, switchMap, map,
 } from 'rxjs/operators';
+import { refCountDelay } from 'rxjs-etc/operators';
 import { memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../lib/constants';
-
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -27,7 +27,7 @@ export default (store) => {
       switchMap(async s => BigNumber(s ? await s.balance(address).catch(() => 0) : 0)
         .shiftedBy(-MAGNITUDE)),
       multicast(new BehaviorSubject(BigNumber(0))),
-      refCount(),
+      refCountDelay(1000),
     ));
 
   const getAccounts = accountsGetter => watchAsObservable(accountsGetter, { immediate: true })
@@ -45,7 +45,7 @@ export default (store) => {
         switchMap(s => timer(0, 30000).pipe(map(() => s))),
         switchMap(async s => (s ? (await s.topBlock()).height : 0)),
         multicast(new BehaviorSubject(0)),
-        refCount(),
+        refCountDelay(1000),
       ),
     getBalance,
     activeAccount: watchAsObservable(
