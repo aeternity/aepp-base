@@ -1,11 +1,13 @@
-import { BehaviorSubject, combineLatest, timer } from 'rxjs';
 import {
-  multicast, refCount, pluck, switchMap, map, filter,
+  BehaviorSubject, combineLatest, timer, of,
+} from 'rxjs';
+import {
+  multicast, pluck, switchMap, map,
 } from 'rxjs/operators';
+import { refCountDelay } from 'rxjs-etc/operators';
 import { memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../lib/constants';
-
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -17,16 +19,15 @@ export default (store) => {
   const sdk = watchAsObservable(({ sdk: s }) => s, { immediate: true })
     .pipe(
       pluck('newValue'),
-      filter(s => s),
     );
 
   const getBalance = memoize(address => sdk
     .pipe(
       switchMap(s => timer(0, 3000).pipe(map(() => s))),
-      switchMap(async s => BigNumber(await s.balance(address).catch(() => 0))
+      switchMap(async s => BigNumber(s ? await s.balance(address).catch(() => 0) : 0)
         .shiftedBy(-MAGNITUDE)),
       multicast(new BehaviorSubject(BigNumber(0))),
-      refCount(),
+      refCountDelay(1000),
     ));
 
   const getAccounts = accountsGetter => watchAsObservable(accountsGetter, { immediate: true })
@@ -42,9 +43,9 @@ export default (store) => {
     topBlockHeight: sdk
       .pipe(
         switchMap(s => timer(0, 30000).pipe(map(() => s))),
-        switchMap(async s => (await s.topBlock()).height),
+        switchMap(async s => (s ? (await s.topBlock()).height : 0)),
         multicast(new BehaviorSubject(0)),
-        refCount(),
+        refCountDelay(1000),
       ),
     getBalance,
     activeAccount: watchAsObservable(
@@ -53,8 +54,9 @@ export default (store) => {
     )
       .pipe(
         pluck('newValue'),
-        filter(acc => acc),
-        switchMap(acc => getBalance(acc.address).pipe(map(balance => ({ ...acc, balance })))),
+        switchMap(acc => (acc
+          ? getBalance(acc.address).pipe(map(balance => ({ ...acc, balance })))
+          : of(acc))),
       ),
     accounts,
     inactiveAccounts: getAccounts(
