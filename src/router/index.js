@@ -33,7 +33,7 @@ store.watch(
       }
     } else {
       store.commit('setLoginTarget', router.currentRoute.fullPath);
-      router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'transfer' });
+      router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'apps' });
     }
   },
 );
