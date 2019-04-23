@@ -15,6 +15,7 @@
     <allow-navigation href="*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="SplashMaintainAspectRatio" value="true" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
