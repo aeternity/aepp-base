@@ -16,6 +16,7 @@ import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
 import browserPathTracker from './plugins/browserPathTracker';
 import observables from './plugins/observables';
+import reverseIframe from './plugins/reverseIframe';
 
 Vue.use(Vuex);
 Vue.use(VueRx);
@@ -67,6 +68,7 @@ const store = new Vuex.Store({
     modals,
     registerServiceWorker,
     observables,
+    reverseIframe,
     ...process.env.IS_MOBILE_DEVICE
       ? [notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
   ],

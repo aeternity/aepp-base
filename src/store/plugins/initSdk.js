@@ -124,8 +124,10 @@ export default (store) => {
               res = TxBuilder.buildTx(
                 {
                   ...txObject,
-                  fee: (await store.dispatch('modals/getLedgerTransactionFee'))
-                    .shiftedBy(MAGNITUDE),
+                  ...!process.env.RUNNING_IN_FRAME && {
+                    fee: (await store.dispatch('modals/getLedgerTransactionFee'))
+                      .shiftedBy(MAGNITUDE),
+                  },
                 },
                 OBJECT_ID_TX_TYPE[txObject.tag],
               ).tx;
