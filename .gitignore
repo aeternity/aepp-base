@@ -6,6 +6,7 @@ node_modules
 /www
 /platforms
 /plugins
+/resources/*/
 
 # local env files
 .env.local
