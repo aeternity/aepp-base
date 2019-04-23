@@ -1,5 +1,6 @@
 <template>
   <MobilePage
+    v-if="transaction"
     :header-fill="transaction.received ? 'alternative' : 'primary'"
     class="transaction-details"
     title="Transaction details"
@@ -99,6 +100,9 @@ export default {
         ? 'Pending'
         : `${this.topBlockHeight - this.transaction.blockHeight} Confirmations`;
     },
+  },
+  async mounted() {
+    await this.$store.dispatch('fetchTransaction', this.hash);
   },
   subscriptions() {
     return pick(this.$store.state.observables, ['topBlockHeight']);

@@ -20,12 +20,12 @@
 
       <div class="footer">
         <AeButton
-          :to="`${currentNetwork.explorerUrl}/#/tx/${transactionHash}`"
+          :to="{ name: 'transaction-details', params: { hash: transactionHash } }"
           fill="dark"
           size="small"
           plain
         >
-          View on explorer
+          View in history
         </AeButton>
         <AeButton
           v-copy-on-click="transactionHash"
