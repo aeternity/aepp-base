@@ -12,7 +12,7 @@ export default {
   state: {
     migrations: {},
     loginTarget: '',
-    selectedIdentityIdx: 0,
+    selectedAccountIdx: 0,
     transactions: {},
     addresses: [],
     rpcUrl: networksRegistry[0].url,
@@ -34,7 +34,7 @@ export default {
         address: e,
         name: process.env.IS_MOBILE_DEVICE ? mobile.accountNames[index] : e.substr(0, 6),
       })),
-    activeIdentity: ({ selectedIdentityIdx }, { identities }) => identities[selectedIdentityIdx],
+    activeIdentity: ({ selectedAccountIdx }, { identities }) => identities[selectedAccountIdx],
     networks: ({ customNetworks }) => [
       ...networksRegistry,
       ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
@@ -101,8 +101,8 @@ export default {
     setSdk(state, sdk) {
       state.sdk = sdk;
     },
-    selectIdentity(state, selectedIdentityIdx) {
-      state.selectedIdentityIdx = selectedIdentityIdx;
+    selectIdentity(state, selectedAccountIdx) {
+      state.selectedAccountIdx = selectedAccountIdx;
     },
     setTransactions(state, { address, transactions }) {
       Vue.set(state.transactions, address, transactions);

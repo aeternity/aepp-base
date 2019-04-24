@@ -177,7 +177,7 @@ export default {
   },
   methods: {
     renameIdentity(name) {
-      this.$store.commit('renameIdentity', { index: this.$store.state.selectedIdentityIdx, name });
+      this.$store.commit('renameIdentity', { index: this.$store.state.selectedAccountIdx, name });
     },
     ...mapActions('modals', ['migratedBalance']),
   },

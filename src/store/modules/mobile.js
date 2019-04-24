@@ -43,7 +43,7 @@ export default {
     }) {
       Vue.set(state.accounts, address, account);
       state.accountCount += 1;
-      if (active) this.state.selectedIdentityIdx = state.accountCount - 1;
+      if (active) this.state.selectedAccountIdx = state.accountCount - 1;
       state.accountNames.push(name);
     },
     logout(state) {

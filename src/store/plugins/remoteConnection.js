@@ -4,7 +4,7 @@ import {
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
 
-const PAIR_SYNC_FIELDS = ['rpcUrl', 'addresses', 'selectedIdentityIdx', 'addressBook'];
+const PAIR_SYNC_FIELDS = ['rpcUrl', 'addresses', 'selectedAccountIdx', 'addressBook'];
 
 export default (store) => {
   const getPushApiSubscription = async () => {

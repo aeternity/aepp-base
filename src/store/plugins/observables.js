@@ -60,9 +60,9 @@ export default (store) => {
       ),
     accounts,
     inactiveAccounts: getAccounts(
-      ({ selectedIdentityIdx }, { identities }) => [
-        ...identities.slice(0, selectedIdentityIdx),
-        ...identities.slice(selectedIdentityIdx + 1),
+      ({ selectedAccountIdx }, { identities }) => [
+        ...identities.slice(0, selectedAccountIdx),
+        ...identities.slice(selectedAccountIdx + 1),
       ],
     ),
     totalBalance: accounts.pipe(
