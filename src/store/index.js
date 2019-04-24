@@ -26,11 +26,13 @@ const store = new Vuex.Store({
   plugins: [
     persistState(
       ({
+        rpcUrl,
         selectedIdentityIdx,
         mobile: { keystore, names, ...otherMobile } = {},
         ...otherState
       }) => ({
         ...otherState,
+        sdkUrl: rpcUrl,
         selectedAccountIdx: selectedIdentityIdx,
         mobile: {
           ...otherMobile,
@@ -39,13 +41,13 @@ const store = new Vuex.Store({
         },
       }),
       ({
-        migrations, rpcUrl, selectedAccountIdx, addressBook, customNetworks,
+        migrations, sdkUrl, selectedAccountIdx, addressBook, customNetworks,
         apps, cachedAppManifests, peerId, addresses,
         mobile, desktop,
       }) => ({
         migrations,
         peerId,
-        rpcUrl,
+        rpcUrl: sdkUrl,
         selectedIdentityIdx: selectedAccountIdx,
         addressBook,
         customNetworks,

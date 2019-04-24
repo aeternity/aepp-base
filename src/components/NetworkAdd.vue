@@ -73,7 +73,7 @@ export default {
         name: this.name,
         url,
       });
-      this.$store.commit('setRPCUrl', url);
+      this.$store.commit('setSdkUrl', url);
       if (this.finallyTo) this.$router.push(this.finallyTo);
       this.$emit('finally');
     },

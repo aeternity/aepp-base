@@ -15,7 +15,7 @@ export default {
     selectedAccountIdx: 0,
     transactions: {},
     addresses: [],
-    rpcUrl: networksRegistry[0].url,
+    sdkUrl: networksRegistry[0].url,
     sdk: null,
     alert: null,
     notification: null,
@@ -39,10 +39,10 @@ export default {
       ...networksRegistry,
       ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
     ],
-    currentNetwork: ({ rpcUrl }, { networks }) => networks.find(({ url }) => url === rpcUrl) || {
+    currentNetwork: ({ sdkUrl }, { networks }) => networks.find(({ url }) => url === sdkUrl) || {
       ...defaultNetwork,
-      name: rpcUrl,
-      url: rpcUrl,
+      name: sdkUrl,
+      url: sdkUrl,
     },
     getApp: ({ apps }) => appHost => apps.find(({ host }) => host === appHost),
     getAppMetadata: ({ cachedAppManifests }) => (host) => {
@@ -95,8 +95,8 @@ export default {
     setLoginTarget(state, loginTarget) {
       state.loginTarget = loginTarget;
     },
-    setRPCUrl(state, rpcUrl) {
-      state.rpcUrl = rpcUrl;
+    setSdkUrl(state, sdkUrl) {
+      state.sdkUrl = sdkUrl;
     },
     setSdk(state, sdk) {
       state.sdk = sdk;
