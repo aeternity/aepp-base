@@ -41,14 +41,19 @@ export const mapKeysDeep = (object, callback) => {
 };
 
 export const makeResetable = ({ state = {}, mutations = {}, ...otherModule }) => {
-  const initialState = cloneDeep(state);
+  const getInitialState = typeof state === 'function'
+    ? state
+    : (() => {
+      const initialState = cloneDeep(state);
+      return () => cloneDeep(initialState);
+    })();
   return ({
     ...otherModule,
     state,
     mutations: {
       ...mutations,
       reset(currentState) {
-        Object.assign(currentState, cloneDeep(initialState));
+        Object.assign(currentState, getInitialState());
       },
     },
   });

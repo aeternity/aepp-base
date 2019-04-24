@@ -81,6 +81,14 @@ export default (store) => {
 
       socket.on('follower-connected', followerId => store.commit('followerConnected', followerId));
       socket.on('follower-disconnected', followerId => store.commit('followerDisconnected', followerId));
+      socket.on('follower-removed', (followerId) => {
+        const { name } = store.state.mobile.followers[followerId];
+        store.dispatch('setNotification', {
+          text: `'${name}' has removed itself`,
+          autoClose: true,
+        });
+        store.commit('followerRemoved', followerId);
+      });
 
       const followerSignPromises = {};
       socket.on('message-from-follower', (followerId, request) => new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
@@ -120,6 +128,9 @@ export default (store) => {
           case 'cancelTransaction':
             leader.call('cancelTransaction', store.state.desktop.transactionToSignByRemote.args.id);
             break;
+          case 'reset':
+            socket.emit('leave-group');
+            break;
           default:
         }
       }));
@@ -141,5 +152,14 @@ export default (store) => {
       }
     },
     { immediate: true },
+  );
+
+  store.watch(
+    ({ peerId }) => peerId,
+    async () => {
+      if (!closeCb) return;
+      closeCb();
+      closeCb = await open();
+    },
   );
 };
