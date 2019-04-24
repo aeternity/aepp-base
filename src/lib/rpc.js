@@ -1,5 +1,8 @@
+import Promise from 'bluebird';
+
 const NOTIFICATION = 'notification';
 const REQUEST = 'request';
+const REQUEST_CANCEL = 'request-cancel';
 const RESPONSE = 'response';
 const ERROR = 'error';
 
@@ -8,9 +11,19 @@ export default class RpcPeer {
     Object.assign(this, { send, handlers });
     this.id = 0;
     this.pendingRequests = {};
+    this.responsePromises = {};
   }
 
   processMessage(message) {
+    if (message.type === REQUEST_CANCEL) {
+      const promise = this.responsePromises[message.id];
+      if (!promise) {
+        this.send({ id: message.id, error: 'Can\'t cancel request: it\'s not found' });
+        return undefined;
+      }
+      promise.cancel();
+      return Promise.resolve();
+    }
     return [NOTIFICATION, REQUEST].includes(message.type)
       ? this.processRequestMessage(message)
       : this.processResponseMessage(message);
@@ -31,12 +44,15 @@ export default class RpcPeer {
       case REQUEST: {
         const response = { id: message.id };
         try {
-          response.result = await Promise.resolve(this.handlers[message.method](...message.params));
+          const promise = Promise.resolve(this.handlers[message.method](...message.params));
+          this.responsePromises[message.id] = promise;
+          response.result = await promise;
           response.type = RESPONSE;
         } catch (e) {
           response.error = e.toString();
           response.type = ERROR;
         }
+        delete this.responsePromises[message.id];
         this.send(response);
         break;
       }
@@ -68,8 +84,12 @@ export default class RpcPeer {
     this.send({
       id, type: REQUEST, method, params,
     });
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject, onCancel) => {
       this.pendingRequests[id] = { resolve, reject };
+      onCancel(() => {
+        this.send({ id, type: REQUEST_CANCEL });
+        delete this.pendingRequests[id];
+      });
     });
   }
 
