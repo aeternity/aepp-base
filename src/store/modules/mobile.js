@@ -35,8 +35,8 @@ export default {
       state.accounts = times(state.accountCount, idx => getHdWalletAccount(state.hdWallet, idx))
         .reduce((p, { address, ...account }) => ({ ...p, [address]: account }), {});
     },
-    renameIdentity(state, { index, name }) {
-      Vue.set(state.accountNames, index, name);
+    setCurrentAccountName({ accountNames }, name) {
+      Vue.set(accountNames, this.state.selectedAccountIdx, name);
     },
     addAccount(state, {
       address, name, active, ...account
