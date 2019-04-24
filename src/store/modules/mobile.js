@@ -16,7 +16,6 @@ export default {
     accountNames: ['Main Account'],
     accounts: {},
     followers: {},
-    showAccountSwitcher: false,
     stepFraction: null,
     browserPath: '',
   },
@@ -62,9 +61,6 @@ export default {
     followerDisconnected(state, followerId) {
       Vue.delete(state.followers[followerId], 'connected');
       Vue.set(state.followers[followerId], 'disconnectedAt', Date.now());
-    },
-    toggleAccountSwitcher(state) {
-      state.showAccountSwitcher = !state.showAccountSwitcher;
     },
     setStepFraction(state, stepFraction = null) {
       state.stepFraction = stepFraction;
