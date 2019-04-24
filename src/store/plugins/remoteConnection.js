@@ -91,19 +91,20 @@ export default (store) => {
       });
 
       const followerSignPromises = {};
-      socket.on('message-from-follower', (followerId, request) => new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
-        signTransaction: (...args) => {
-          const promise = store.state.sdk.signTransaction(...args);
-          followerSignPromises[followerId] = promise;
-          return Promise.race([
-            new Promise((resolve, reject) => promise
-              .finally(() => promise.isCancelled() && reject(new Error('Canceled')))),
-            followerSignPromises[followerId],
-          ]);
+      socket.on('message-from-follower', (followerId, request) => new RpcPeer(
+        response => socket.emit('message-to-follower', followerId, response), {
+          signTransaction: (...args) => {
+            const promise = store.state.sdk.signTransaction(...args);
+            followerSignPromises[followerId] = promise;
+            return Promise.race([
+              new Promise((resolve, reject) => promise
+                .finally(() => promise.isCancelled() && reject(new Error('Canceled')))),
+              followerSignPromises[followerId],
+            ]);
+          },
+          cancelTransaction: () => followerSignPromises[followerId].cancel(),
         },
-        cancelTransaction: () => followerSignPromises[followerId].cancel(),
-      })
-        .processMessage(request));
+      ).processMessage(request));
 
       const followers = await new Promise(resolve => socket.emit('get-all-followers', resolve));
       Object.entries(followers)
