@@ -22,6 +22,7 @@
         <preference name="UseSwiftLanguageVersion" value="5" />
     </platform>
     <preference name="SplashScreen" value="screen" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <feature name="SplashScreen">
         <param name="onload" value="true" />
     </feature>
