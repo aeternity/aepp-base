@@ -6,7 +6,7 @@
         :src="app.icon"
       > {{ app.name }}
       <br>requests access to
-      <br><AccountInline :address="activeIdentity.address" />
+      <br><AccountInline :address="activeAccount.address" />
     </Guide>
 
     <DetailsPermission name="Accessing accounts">
@@ -60,7 +60,7 @@ export default {
     reject: { type: Function, required: true },
   },
   computed: {
-    ...mapGetters(['activeIdentity']),
+    ...mapGetters(['activeAccount']),
     app() {
       return this.$store.getters.getAppMetadata(this.appHost);
     },

@@ -12,7 +12,7 @@
         Ok
       </AeButton>
       <AeButton
-        :to="'https://token-migration.aepps.com/#/status/result/' + activeIdentity.address"
+        :to="'https://token-migration.aepps.com/#/status/result/' + activeAccount.address"
         plain
       >
         See migrations
@@ -41,9 +41,9 @@ export default {
       migratedBalance: '',
     };
   },
-  computed: mapGetters(['activeIdentity']),
+  computed: mapGetters(['activeAccount']),
   async mounted() {
-    const response = await fetch(process.env.VUE_APP_MIGRATION_STATUS_URL.replace('ADDRESS', this.activeIdentity.address));
+    const response = await fetch(process.env.VUE_APP_MIGRATION_STATUS_URL.replace('ADDRESS', this.activeAccount.address));
     const json = await response.json();
     this.migratedBalance = json
       .filter(i => i.deliveryPeriod > process.env.VUE_APP_MIGRATION_PHASE)

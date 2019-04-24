@@ -8,7 +8,7 @@
     <Guide fill="neutral">
       <em>Create a new contract</em>
       <br>by
-      <AccountInline :address="activeIdentity.address" />
+      <AccountInline :address="activeAccount.address" />
     </Guide>
 
     <DetailsAmount :amount="amount" />

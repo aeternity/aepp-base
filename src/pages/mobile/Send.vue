@@ -92,7 +92,7 @@ export default {
   data: () => ({
     accountTo: '',
   }),
-  computed: mapGetters({ activeAccount: 'activeIdentity' }),
+  computed: mapGetters(['activeAccount']),
   subscriptions() {
     return pick(this.$store.state.observables, ['inactiveAccounts']);
   },

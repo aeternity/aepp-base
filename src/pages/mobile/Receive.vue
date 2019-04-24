@@ -12,13 +12,13 @@
       </Guide>
 
       <AeAccountReverse
-        v-bind="activeIdentity"
+        v-bind="activeAccount"
         fill="neutral"
       />
     </template>
 
     <ListItem
-      v-copy-on-click="activeIdentity.address"
+      v-copy-on-click="activeAccount.address"
       class="copy"
       title="Copy address"
       subtitle="Save to clipboard"
@@ -62,7 +62,7 @@ export default {
       writingHandEmoji,
     };
   },
-  computed: mapGetters(['activeIdentity']),
+  computed: mapGetters(['activeAccount']),
 };
 </script>
 

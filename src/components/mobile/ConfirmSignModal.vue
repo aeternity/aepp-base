@@ -8,7 +8,7 @@
     <Guide fill="neutral">
       <em>Sign raw transaction</em>
       <br>by
-      <AccountInline :address="activeIdentity.address" />
+      <AccountInline :address="activeAccount.address" />
     </Guide>
 
     <DetailsRawData
@@ -56,7 +56,7 @@ export default {
     reject: { type: Function, required: true },
     data: { type: [String, Uint8Array], required: true },
   },
-  computed: mapGetters(['activeIdentity']),
+  computed: mapGetters(['activeAccount']),
   methods: {
     denyHandler() {
       this.reject(new Error('Rejected by user'));

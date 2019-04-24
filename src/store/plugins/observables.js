@@ -49,7 +49,7 @@ export default (store) => {
       ),
     getBalance,
     activeAccount: watchAsObservable(
-      (state, { activeIdentity }) => activeIdentity,
+      (state, { activeAccount }) => activeAccount,
       { immediate: true },
     )
       .pipe(

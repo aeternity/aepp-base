@@ -23,7 +23,7 @@ storiesOf('AeModal', module)
     methods: { action: action('close') },
     store: new Vuex.Store({
       getters: {
-        activeIdentity: () => account,
+        activeAccount: () => account,
       },
     }),
   }))

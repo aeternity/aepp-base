@@ -8,7 +8,7 @@
     <Guide fill="neutral">
       <em>Call contract method</em>
       <br>by
-      <AccountInline :address="activeIdentity.address" />
+      <AccountInline :address="activeAccount.address" />
     </Guide>
 
     <DetailsAmount :amount="amount" />

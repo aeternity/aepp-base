@@ -14,7 +14,7 @@
       />
       <em>Complete your transfer</em>
       <br>from
-      <AccountInline :address="activeIdentity.address" />
+      <AccountInline :address="activeAccount.address" />
       <br>to
       <AccountInline :address="recipientId" />
     </Guide>

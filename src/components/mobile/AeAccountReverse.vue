@@ -6,17 +6,17 @@
     <main>
       <AeQrCode
         :size="136"
-        :data="activeIdentity.address"
+        :data="activeAccount.address"
       />
       <AeAddress
-        :address="activeIdentity.address"
+        :address="activeAccount.address"
         split-by="3"
       />
     </main>
 
     <template slot="toolbar">
       <span class="balance-title">
-        {{ activeIdentity.name }}
+        {{ activeAccount.name }}
       </span>
     </template>
   </AeCard>
@@ -40,7 +40,7 @@ export default {
       required: true,
     },
   },
-  computed: mapGetters(['activeIdentity']),
+  computed: mapGetters(['activeAccount']),
 };
 </script>
 

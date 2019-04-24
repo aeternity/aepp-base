@@ -34,7 +34,7 @@ export default {
         address: e,
         name: process.env.IS_MOBILE_DEVICE ? mobile.accountNames[index] : e.substr(0, 6),
       })),
-    activeIdentity: ({ selectedAccountIdx }, { accounts }) => accounts[selectedAccountIdx],
+    activeAccount: ({ selectedAccountIdx }, { accounts }) => accounts[selectedAccountIdx],
     networks: ({ customNetworks }) => [
       ...networksRegistry,
       ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
