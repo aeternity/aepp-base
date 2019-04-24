@@ -63,7 +63,7 @@ export default async (store) => {
             conformModalPromise = store.dispatch('modals/confirmLedgerSignTransaction');
             const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));
             const signature = Buffer.from(await sign(
-              store.state.desktop.ledgerAddresses.indexOf(store.getters.activeIdentity.address),
+              store.state.desktop.ledgerAddresses.indexOf(store.getters.activeAccount.address),
               binaryTx,
               store.state.sdk.nodeNetworkId,
             ), 'hex');

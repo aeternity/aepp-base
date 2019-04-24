@@ -17,7 +17,7 @@
       <AeRadio
         slot="right"
         :checked="network === currentNetwork"
-        @change="setRPCUrl(network.url)"
+        @change="setSdkUrl(network.url)"
       />
     </ListItem>
     <ListItemButton
@@ -73,8 +73,8 @@ export default {
   computed: mapGetters(['networks', 'currentNetwork']),
   methods: {
     ...mapMutations(['removeNetwork']),
-    setRPCUrl(rpcUrl) {
-      this.$store.commit('setRPCUrl', rpcUrl);
+    setSdkUrl(sdkUrl) {
+      this.$store.commit('setSdkUrl', sdkUrl);
       this.$emit('switch');
     },
   },

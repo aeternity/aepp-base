@@ -25,8 +25,15 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
-      ({ mobile: { keystore, names, ...otherMobile } = {}, ...otherState }) => ({
+      ({
+        rpcUrl,
+        selectedIdentityIdx,
+        mobile: { keystore, names, ...otherMobile } = {},
+        ...otherState
+      }) => ({
         ...otherState,
+        sdkUrl: rpcUrl,
+        selectedAccountIdx: selectedIdentityIdx,
         mobile: {
           ...otherMobile,
           encryptedHdWallet: keystore,
@@ -34,14 +41,14 @@ const store = new Vuex.Store({
         },
       }),
       ({
-        migrations, rpcUrl, selectedIdentityIdx, addressBook, customNetworks,
+        migrations, sdkUrl, selectedAccountIdx, addressBook, customNetworks,
         apps, cachedAppManifests, peerId, addresses,
         mobile, desktop,
       }) => ({
         migrations,
         peerId,
-        rpcUrl,
-        selectedIdentityIdx,
+        rpcUrl: sdkUrl,
+        selectedIdentityIdx: selectedAccountIdx,
         addressBook,
         customNetworks,
         addresses,

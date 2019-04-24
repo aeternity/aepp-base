@@ -16,7 +16,6 @@ export default {
     accountNames: ['Main Account'],
     accounts: {},
     followers: {},
-    showAccountSwitcher: false,
     stepFraction: null,
     browserPath: '',
   },
@@ -35,15 +34,15 @@ export default {
       state.accounts = times(state.accountCount, idx => getHdWalletAccount(state.hdWallet, idx))
         .reduce((p, { address, ...account }) => ({ ...p, [address]: account }), {});
     },
-    renameIdentity(state, { index, name }) {
-      Vue.set(state.accountNames, index, name);
+    setCurrentAccountName({ accountNames }, name) {
+      Vue.set(accountNames, this.state.selectedAccountIdx, name);
     },
     addAccount(state, {
       address, name, active, ...account
     }) {
       Vue.set(state.accounts, address, account);
       state.accountCount += 1;
-      if (active) this.state.selectedIdentityIdx = state.accountCount - 1;
+      if (active) this.state.selectedAccountIdx = state.accountCount - 1;
       state.accountNames.push(name);
     },
     logout(state) {
@@ -62,9 +61,6 @@ export default {
     followerDisconnected(state, followerId) {
       Vue.delete(state.followers[followerId], 'connected');
       Vue.set(state.followers[followerId], 'disconnectedAt', Date.now());
-    },
-    toggleAccountSwitcher(state) {
-      state.showAccountSwitcher = !state.showAccountSwitcher;
     },
     setStepFraction(state, stepFraction = null) {
       state.stepFraction = stepFraction;

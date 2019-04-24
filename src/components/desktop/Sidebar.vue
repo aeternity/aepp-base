@@ -60,7 +60,7 @@ export default {
   }),
   computed: mapState({
     showSidebar: ({ desktop }) => desktop.showSidebar,
-    accountsCount: (state, { identities }) => identities.length,
+    accountsCount: (state, { accounts }) => accounts.length,
     currentTab({ desktop: { remoteConnected, ledgerConnected } }) {
       return (ledgerConnected && this.ledgerTab)
       || (remoteConnected && !this.ledgerTab)

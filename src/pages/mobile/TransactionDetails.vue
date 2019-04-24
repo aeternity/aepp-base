@@ -91,9 +91,9 @@ export default {
     hash: { type: String, required: true },
   },
   computed: {
-    ...mapGetters(['activeIdentity', 'currentNetwork']),
+    ...mapGetters(['activeAccount', 'currentNetwork']),
     transaction() {
-      return this.activeIdentity.transactions.find(t => t.hash === this.hash);
+      return this.activeAccount.transactions.find(t => t.hash === this.hash);
     },
     status() {
       return this.transaction.pending

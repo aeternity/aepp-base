@@ -26,7 +26,7 @@ const base = {
       },
     },
     getters: {
-      activeIdentity: () => account,
+      activeAccount: () => account,
       getAppMetadata: () => host => ({
         name: `App on ${host}`,
         icon: appIcon,

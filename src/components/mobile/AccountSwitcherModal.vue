@@ -15,8 +15,8 @@
         >
           <AeRadio
             slot="right"
-            :checked="index === selectedIdentityIdx"
-            @change="selectIdentity(index)"
+            :checked="index === selectedAccountIdx"
+            @change="setSelectedAccountIdx(index)"
           />
         </ListItemAccount>
 
@@ -87,11 +87,11 @@ export default {
   props: {
     resolve: { type: Function, required: true },
   },
-  computed: mapState(['selectedIdentityIdx']),
+  computed: mapState(['selectedAccountIdx']),
   subscriptions() {
     return pick(this.$store.state.observables, ['accounts', 'totalBalance']);
   },
-  methods: mapMutations(['selectIdentity']),
+  methods: mapMutations(['setSelectedAccountIdx']),
 };
 </script>
 

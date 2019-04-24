@@ -21,13 +21,13 @@ export default (store) => {
           if (options) {
             const { app } = options;
             const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
-            if (!accessToAccounts.includes(store.getters.activeIdentity.address)) {
+            if (!accessToAccounts.includes(store.getters.activeAccount.address)) {
               const promise = store.dispatch(
                 'modals/confirmAccountAccess',
                 { appHost: app.host },
               );
               const unsubscribe = store.watch(
-                (state, { activeIdentity: { address } }) => address,
+                (state, { activeAccount: { address } }) => address,
                 address => accessToAccounts.includes(address) && promise.cancel(),
               );
 
@@ -36,7 +36,7 @@ export default (store) => {
                   promise,
                   new Promise((resolve, reject) => promise.finally(() => {
                     if (!promise.isCancelled()) return;
-                    if (accessToAccounts.includes(store.getters.activeIdentity.address)) {
+                    if (accessToAccounts.includes(store.getters.activeAccount.address)) {
                       resolve();
                     } else reject(new Error('Unexpected state'));
                   })),
@@ -45,20 +45,20 @@ export default (store) => {
                 unsubscribe();
               }
 
-              const { address: accountAddress } = store.getters.activeIdentity;
+              const { address: accountAddress } = store.getters.activeAccount;
               if (!accessToAccounts.includes(accountAddress)) {
                 store.commit('grantAccessToAccount', { appHost: app.host, accountAddress });
               }
             }
           }
-          return store.getters.activeIdentity.address;
+          return store.getters.activeAccount.address;
         },
       };
 
       if (process.env.IS_MOBILE_DEVICE) {
         const sign = data => Crypto.sign(
           data,
-          store.state.mobile.accounts[store.getters.activeIdentity.address].secretKey,
+          store.state.mobile.accounts[store.getters.activeAccount.address].secretKey,
         );
         const confirmRawDataSigning = async (data) => {
           await store.dispatch('modals/confirmSign', { data });

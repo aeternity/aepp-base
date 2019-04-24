@@ -57,7 +57,7 @@ export default {
     peerId: { type: String, required: true },
     tx: { type: Object, required: true },
   },
-  computed: mapGetters(['activeIdentity']),
+  computed: mapGetters(['activeAccount']),
 };
 </script>
 

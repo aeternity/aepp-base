@@ -23,7 +23,7 @@
         <AeRadio
           slot="right"
           :checked="account.address === activeAccount.address"
-          @change="selectIdentity(index)"
+          @change="setSelectedAccountIdx(index)"
         />
       </ListItemAccount>
 
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     prefixedAmount,
-    ...mapMutations(['selectIdentity', 'createAccount']),
+    ...mapMutations(['setSelectedAccountIdx', 'createAccount']),
   },
 };
 </script>

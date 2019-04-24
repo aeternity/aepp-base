@@ -15,7 +15,7 @@
         :class="showAccountSwitcher ? 'router-link-active' : ''"
         @click="() => !showAccountSwitcher && accountSwitcher().catch(() => {})"
       >
-        <AeIdenticon :address="activeIdentity.address" />
+        <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
 
       <ButtonPlain
@@ -45,7 +45,7 @@ export default {
     showAccountSwitcher: { type: Boolean },
   },
   computed: {
-    ...mapGetters(['activeIdentity']),
+    ...mapGetters(['activeAccount']),
     ...mapState({
       browserPath: ({ mobile }) => mobile.browserPath,
     }),

@@ -28,7 +28,7 @@
         :name-editable="accountNameEditable"
         fill="primary"
         security-status=""
-        @name-input="name => renameIdentity(name)"
+        @name-input="setCurrentAccountName"
         @name-blur="accountNameEditable = false"
       >
         <ButtonPlain
@@ -116,7 +116,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
-import { mapActions } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
@@ -176,9 +176,7 @@ export default {
     }
   },
   methods: {
-    renameIdentity(name) {
-      this.$store.commit('renameIdentity', { index: this.$store.state.selectedIdentityIdx, name });
-    },
+    ...mapMutations(['setCurrentAccountName']),
     ...mapActions('modals', ['migratedBalance']),
   },
 };

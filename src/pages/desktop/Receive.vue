@@ -55,7 +55,7 @@ export default {
     copyOnClick,
   },
   computed: {
-    ...mapGetters({ account: 'activeIdentity' }),
+    ...mapGetters({ account: 'activeAccount' }),
     address() {
       return this.account ? this.account.address : `ak_${'·'.repeat(50)}`;
     },
