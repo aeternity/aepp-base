@@ -101,7 +101,7 @@ export default {
     setSdk(state, sdk) {
       state.sdk = sdk;
     },
-    selectIdentity(state, selectedAccountIdx) {
+    setSelectedAccountIdx(state, selectedAccountIdx) {
       state.selectedAccountIdx = selectedAccountIdx;
     },
     setTransactions(state, { address, transactions }) {

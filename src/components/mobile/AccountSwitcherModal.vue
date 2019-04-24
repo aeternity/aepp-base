@@ -16,7 +16,7 @@
           <AeRadio
             slot="right"
             :checked="index === selectedAccountIdx"
-            @change="selectIdentity(index)"
+            @change="setSelectedAccountIdx(index)"
           />
         </ListItemAccount>
 
@@ -91,7 +91,7 @@ export default {
   subscriptions() {
     return pick(this.$store.state.observables, ['accounts', 'totalBalance']);
   },
-  methods: mapMutations(['selectIdentity']),
+  methods: mapMutations(['setSelectedAccountIdx']),
 };
 </script>
 
