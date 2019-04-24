@@ -24,7 +24,7 @@ export default {
   computed: {
     name() {
       return (
-        [...this.$store.getters.identities, ...this.$store.state.addressBook]
+        [...this.$store.getters.accounts, ...this.$store.state.addressBook]
           .find(({ address }) => address === this.address) || { name: '' }
       ).name;
     },

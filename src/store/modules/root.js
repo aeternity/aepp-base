@@ -28,13 +28,13 @@ export default {
   },
 
   getters: {
-    identities: ({ transactions }, { addresses }, { mobile }) => addresses
+    accounts: ({ transactions }, { addresses }, { mobile }) => addresses
       .map((e, index) => ({
         transactions: transactions[e] || [],
         address: e,
         name: process.env.IS_MOBILE_DEVICE ? mobile.accountNames[index] : e.substr(0, 6),
       })),
-    activeIdentity: ({ selectedAccountIdx }, { identities }) => identities[selectedAccountIdx],
+    activeIdentity: ({ selectedAccountIdx }, { accounts }) => accounts[selectedAccountIdx],
     networks: ({ customNetworks }) => [
       ...networksRegistry,
       ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
