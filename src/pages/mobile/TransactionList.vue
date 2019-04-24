@@ -102,9 +102,9 @@ export default {
     },
   },
   created() {
-    this.$watch('activeAccount.address', async (address) => {
+    this.$watch('activeAccount.address', async () => {
       this.waitingTransactions = true;
-      await this.$store.dispatch('updateTransactions', address);
+      await this.$store.dispatch('updateTransactions');
       this.waitingTransactions = false;
     }, { immediate: true });
   },

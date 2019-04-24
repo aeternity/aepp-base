@@ -2,7 +2,9 @@
 
 import Vue from 'vue';
 import BigNumber from 'bignumber.js';
-import { update, flatMap, camelCase } from 'lodash-es';
+import {
+  update, flatMap, camelCase, unionBy,
+} from 'lodash-es';
 import store from '../index';
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { MAGNITUDE } from '../../lib/constants';
@@ -105,7 +107,7 @@ export default {
       state.selectedIdentityIdx = selectedIdentityIdx;
     },
     setTransactions(state, { address, transactions }) {
-      Vue.set(state.transactions, address, transactions);
+      Vue.set(state.transactions, address, unionBy(state.transactions[address] || [], transactions, 'hash'));
     },
     setAlert(state, options) {
       state.alert = options;
@@ -167,7 +169,25 @@ export default {
       commit('setNotification', options);
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000);
     },
-    async updateTransactions({ state: { sdk }, getters: { currentNetwork }, commit }, address) {
+    normalizeTransaction: async ({ state: { sdk }, getters: { activeIdentity } }, {
+      blockHash, time, tx: { amount, fee, ...otherTx }, ...otherTransaction
+    }) => ({
+      ...otherTransaction,
+      time: new Date(time || (await sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
+      received: activeIdentity.address === otherTx.recipientId,
+      peerId: activeIdentity.address === otherTx.recipientId
+        ? otherTx.senderId
+        : otherTx.recipientId,
+      tx: {
+        ...otherTx,
+        amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
+        fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
+      },
+    }),
+    async updateTransactions({
+      state: { sdk }, getters: { activeIdentity, currentNetwork }, commit, dispatch,
+    }) {
+      const { address } = activeIdentity;
       const transactions = await Promise.all([
         ...mapKeysDeep(
           (await fetchJson(
@@ -182,18 +202,17 @@ export default {
             pending: true,
           })),
       ]
-        .map(async ({ time, tx: { amount, fee, ...otherTx }, ...otherTransaction }) => ({
-          ...otherTransaction,
-          time: new Date(time),
-          received: address === otherTx.recipientId,
-          peerId: address === otherTx.recipientId ? otherTx.senderId : otherTx.recipientId,
-          tx: {
-            ...otherTx,
-            amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
-            fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
-          },
-        })));
+        .map(transaction => dispatch('normalizeTransaction', transaction)));
       commit('setTransactions', { address, transactions });
+    },
+    async fetchTransaction({
+      state: { sdk }, getters: { activeIdentity }, commit, dispatch,
+    }, hash) {
+      if (activeIdentity.transactions.find(t => t.hash === hash)) return;
+      const { address } = activeIdentity;
+      const transaction = await dispatch('normalizeTransaction',
+        await sdk.api.getTransactionByHash(hash));
+      commit('setTransactions', { address, transactions: [transaction] });
     },
     async fetchAppManifest(_, host) {
       const fetchTextCors = async url => (
