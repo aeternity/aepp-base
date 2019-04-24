@@ -169,13 +169,13 @@ export default {
       commit('setNotification', options);
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000);
     },
-    normalizeTransaction: async ({ state: { sdk }, getters: { activeIdentity } }, {
+    normalizeTransaction: async ({ state: { sdk }, getters: { activeAccount } }, {
       blockHash, time, tx: { amount, fee, ...otherTx }, ...otherTransaction
     }) => ({
       ...otherTransaction,
       time: new Date(time || (await sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
-      received: activeIdentity.address === otherTx.recipientId,
-      peerId: activeIdentity.address === otherTx.recipientId
+      received: activeAccount.address === otherTx.recipientId,
+      peerId: activeAccount.address === otherTx.recipientId
         ? otherTx.senderId
         : otherTx.recipientId,
       tx: {
@@ -185,9 +185,9 @@ export default {
       },
     }),
     async updateTransactions({
-      state: { sdk }, getters: { activeIdentity, currentNetwork }, commit, dispatch,
+      state: { sdk }, getters: { activeAccount, currentNetwork }, commit, dispatch,
     }) {
-      const { address } = activeIdentity;
+      const { address } = activeAccount;
       const transactions = await Promise.all([
         ...mapKeysDeep(
           (await fetchJson(
@@ -206,10 +206,10 @@ export default {
       commit('setTransactions', { address, transactions });
     },
     async fetchTransaction({
-      state: { sdk }, getters: { activeIdentity }, commit, dispatch,
+      state: { sdk }, getters: { activeAccount }, commit, dispatch,
     }, hash) {
-      if (activeIdentity.transactions.find(t => t.hash === hash)) return;
-      const { address } = activeIdentity;
+      if (activeAccount.transactions.find(t => t.hash === hash)) return;
+      const { address } = activeAccount;
       const transaction = await dispatch('normalizeTransaction',
         await sdk.api.getTransactionByHash(hash));
       commit('setTransactions', { address, transactions: [transaction] });
