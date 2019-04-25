@@ -20,12 +20,14 @@
 
       <div class="footer">
         <AeButton
-          :to="{ name: 'transaction-details', params: { hash: transactionHash } }"
+          :to="$globals.IS_MOBILE_DEVICE
+            ? { name: 'transaction-details', params: { hash: transactionHash } }
+            : `${currentNetwork.explorerUrl}/#/tx/${transactionHash}`"
           fill="dark"
           size="small"
           plain
         >
-          View in history
+          View {{ $globals.IS_MOBILE_DEVICE ? 'in history' : 'on explorer' }}
         </AeButton>
         <AeButton
           v-copy-on-click="transactionHash"
