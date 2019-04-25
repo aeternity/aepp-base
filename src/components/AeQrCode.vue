@@ -22,13 +22,8 @@ export default {
       default: 170,
     },
   },
-  watch: {
-    data() {
-      this.renderQrCode();
-    },
-  },
   mounted() {
-    this.renderQrCode();
+    this.$watch(({ data, size }) => [data, size], () => this.renderQrCode(), { immediate: true });
   },
   methods: {
     renderQrCode() {
