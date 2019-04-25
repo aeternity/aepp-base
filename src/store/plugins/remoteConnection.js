@@ -32,7 +32,7 @@ export default (store) => {
     const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS
       .reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
 
-    let processedState = getStateForSync(store.state, store.getters);
+    let processedState = cloneDeep(getStateForSync(store.state, store.getters));
 
     const broadcast = new RpcPeer(message => socket.emit('message-to-all', message), {
       setState(state) {
@@ -47,7 +47,7 @@ export default (store) => {
 
     const broadcastState = (state) => {
       broadcast.notification('setState', state);
-      processedState = state;
+      processedState = cloneDeep(state);
     };
 
     closeCbs.push(store.watch(getStateForSync, (state) => {
