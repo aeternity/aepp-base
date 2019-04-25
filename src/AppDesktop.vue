@@ -6,7 +6,6 @@
         <RouterView />
       </div>
       <SidebarDesktop />
-      <FooterDesktop :show-back-button="$route.name !== 'apps'" />
     </div>
 
     <Component
@@ -22,13 +21,11 @@
 import { mapState } from 'vuex';
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
-import FooterDesktop from './components/desktop/FooterDesktop.vue';
 
 export default {
   components: {
     HeaderDesktop,
     SidebarDesktop,
-    FooterDesktop: process.env.UNFINISHED_FEATURES ? FooterDesktop : () => {},
   },
   computed: mapState('modals', {
     openedModals: (state, { opened }) => opened,
