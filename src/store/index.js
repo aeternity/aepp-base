@@ -13,6 +13,7 @@ import persistState from './plugins/persistState';
 import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
 import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection';
+import desktopGuide from './plugins/desktopGuide';
 import initSdk from './plugins/initSdk';
 import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
@@ -40,6 +41,7 @@ const store = new Vuex.Store({
         apps, cachedAppManifests, peerId,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet } = {} } = {},
         mobile: { followers } = {},
+        desktop: { showGuideOnStartup } = {},
       }) => ({
         migrations,
         peerId,
@@ -63,7 +65,7 @@ const store = new Vuex.Store({
           activeIdx,
           hdWallet: { encryptedWallet },
         },
-        ...process.env.IS_MOBILE_DEVICE && {
+        ...process.env.IS_MOBILE_DEVICE ? {
           apps,
           cachedAppManifests,
           mobile: {
@@ -71,6 +73,8 @@ const store = new Vuex.Store({
               .reduce((p, [k, { id, name, disconnectedAt }]) => (
                 { ...p, [k]: { id, name, disconnectedAt } }), {}),
           },
+        } : {
+          desktop: { showGuideOnStartup },
         },
       }),
     ),
@@ -82,7 +86,7 @@ const store = new Vuex.Store({
     reverseIframe,
     ...process.env.IS_MOBILE_DEVICE
       ? [notificationOnRemoteConnection, browserPathTracker]
-      : [ledgerConnection, syncLedgerAccounts],
+      : [ledgerConnection, syncLedgerAccounts, desktopGuide],
   ],
 
   modules: {
