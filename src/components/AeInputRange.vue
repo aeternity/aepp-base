@@ -33,6 +33,7 @@ export default {
   -webkit-appearance: none;
   width: 100%;
   cursor: pointer;
+  background: transparent;
 
   $colors: (
     primary: (
@@ -41,7 +42,7 @@ export default {
       thumb-color: $color-primary,
     ),
     light: (
-      track-color: $color-primary-positive-1,
+      track-color: rgba(#fff, 0.66846),
       progress-color: $color-neutral-maximum,
       thumb-color: $color-neutral-maximum,
     ),
