@@ -115,7 +115,7 @@ export default (store) => {
       const leader = new RpcPeer(message => socket.emit('message-to-leader', message));
       socket.on('message-from-leader', message => leader.processMessage(message));
 
-      closeCbs.push(store.subscribe(({ type }) => {
+      closeCbs.push(store.subscribeAction(({ type }) => {
         if (type !== 'reset') return;
         socket.emit('leave-group');
       }));

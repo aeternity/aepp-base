@@ -93,7 +93,7 @@ export default {
   }),
   methods: {
     signOut() {
-      this.$store.commit('reset');
+      this.$store.dispatch('reset');
       setTimeout(() => this.$store.commit('setLoginTarget'));
     },
     ...mapMutations(['logout']),

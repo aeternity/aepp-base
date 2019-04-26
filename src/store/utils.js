@@ -40,7 +40,9 @@ export const mapKeysDeep = (object, callback) => {
   return mapValues(mapKeys(object, callback), item => mapKeysDeep(item, callback));
 };
 
-export const makeResetable = ({ state = {}, mutations = {}, ...otherModule }) => {
+export const makeResetable = ({
+  modules, state = {}, mutations = {}, actions = {}, ...otherModule
+}) => {
   const getInitialState = typeof state === 'function'
     ? state
     : (() => {
@@ -49,11 +51,24 @@ export const makeResetable = ({ state = {}, mutations = {}, ...otherModule }) =>
     })();
   return ({
     ...otherModule,
+    ...modules && {
+      modules: Object.entries(modules)
+        .reduce((acc, [name, module]) => ({ ...acc, [name]: makeResetable(module) }), {}),
+    },
     state,
     mutations: {
       ...mutations,
       reset(currentState) {
         Object.assign(currentState, getInitialState());
+      },
+    },
+    actions: {
+      ...actions,
+      reset: {
+        root: true,
+        handler({ commit }) {
+          commit('reset');
+        },
       },
     },
   });
