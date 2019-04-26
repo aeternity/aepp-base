@@ -32,8 +32,9 @@ store.watch(
         store.commit('setLoginTarget');
       }
     } else {
-      store.commit('setLoginTarget', router.currentRoute.fullPath);
-      router.push({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'apps' });
+      const { fullPath } = router.currentRoute;
+      router.replace({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'apps' });
+      router.replace(fullPath);
     }
   },
 );

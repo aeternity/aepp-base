@@ -11,7 +11,7 @@ import { MAGNITUDE } from '../../lib/constants';
 import { fetchJson, mapKeysDeep, genRandomBuffer } from '../utils';
 
 export default {
-  state: {
+  state: () => ({
     migrations: {},
     loginTarget: '',
     selectedAccountIdx: 0,
@@ -27,7 +27,7 @@ export default {
     apps: [],
     cachedAppManifests: {},
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
-  },
+  }),
 
   getters: {
     accounts: ({ transactions }, { addresses }, { mobile }) => addresses

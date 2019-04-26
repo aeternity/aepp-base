@@ -62,6 +62,9 @@ export default {
       Vue.delete(state.followers[followerId], 'connected');
       Vue.set(state.followers[followerId], 'disconnectedAt', Date.now());
     },
+    followerRemoved(state, followerId) {
+      Vue.delete(state.followers, followerId);
+    },
     setStepFraction(state, stepFraction = null) {
       state.stepFraction = stepFraction;
     },
