@@ -11,10 +11,7 @@
         with sender
       </Guide>
 
-      <AeAccountReverse
-        v-bind="activeAccount"
-        fill="neutral"
-      />
+      <AeAccountReverse v-bind="activeAccount" />
     </template>
 
     <ListItem
