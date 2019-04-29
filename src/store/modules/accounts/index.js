@@ -7,14 +7,11 @@ import { fetchJson, mapKeysDeep } from '../../utils';
 import hdWallet from './hdWallet';
 import ledger from './ledger';
 
-const accountToModuleName = ({ source: { type } }) => ({
-  'hd-wallet': 'hdWallet',
-  ledger: 'ledger',
-}[type] || (() => { throw new Error(`Unknown account type: ${type}`); })());
+const modules = { hdWallet, ledger };
 
 export default {
   namespaced: true,
-  modules: { hdWallet, ledger },
+  modules,
 
   state: {
     list: [],
@@ -24,6 +21,13 @@ export default {
   getters: {
     active: ({ list, activeIdx }) => list[activeIdx],
     getByType: ({ list }) => type => list.filter(({ source }) => source.type === type),
+    getModule: () => ({ source: { type } }) => {
+      const [name, module] = Object.entries(modules)
+        .find(([, { account }]) => account.type === type)
+        || (() => { throw new Error(`Unknown account type: ${type}`); })();
+      return { ...module, name };
+    },
+    getColor: (stage, { getModule }) => account => getModule(account).account.color,
   },
 
   mutations: {
@@ -100,12 +104,12 @@ export default {
       commit('setTransactions', [transaction]);
     },
 
-    sign({ getters: { active }, dispatch }, data) {
-      return dispatch(`${accountToModuleName(active)}/sign`, data);
+    sign({ getters: { active, getModule }, dispatch }, data) {
+      return dispatch(`${getModule(active).name}/sign`, data);
     },
 
-    signTransaction({ getters: { active }, dispatch }, txBase64) {
-      return dispatch(`${accountToModuleName(active)}/signTransaction`, txBase64);
+    signTransaction({ getters: { active, getModule }, dispatch }, txBase64) {
+      return dispatch(`${getModule(active).name}/signTransaction`, txBase64);
     },
   },
 };

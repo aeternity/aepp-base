@@ -22,7 +22,7 @@ export default {
         '',
         'primary',
         'secondary',
-        'neutral',
+        'dark',
         'alternative',
         'maximum',
       ].includes(value),
@@ -54,7 +54,7 @@ export default {
     color: $color-secondary-negative-3;
   }
 
-  &.neutral {
+  &.dark {
     background: $color-neutral-negative-3;
     color: $color-white;
   }

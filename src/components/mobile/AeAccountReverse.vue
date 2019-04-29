@@ -1,6 +1,6 @@
 <template>
   <AeCard
-    fill="neutral"
+    fill="dark"
     class="ae-account-reverse"
   >
     <main>

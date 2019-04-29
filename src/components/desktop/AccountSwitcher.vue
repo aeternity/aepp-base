@@ -1,10 +1,7 @@
 <template>
   <div class="account-switcher">
     <header>
-      <AeAccount
-        v-bind="activeAccount"
-        fill="primary"
-      >
+      <AeAccount v-bind="activeAccount">
         <ButtonPlain
           slot="icon"
           v-copy-on-click="activeAccount.address"

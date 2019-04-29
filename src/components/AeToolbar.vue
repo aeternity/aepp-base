@@ -16,7 +16,7 @@ export default {
         '',
         'primary',
         'secondary',
-        'neutral',
+        'dark',
         'alternative',
       ].includes(value),
       default: '',
@@ -48,7 +48,7 @@ export default {
     background: $color-secondary-negative-2;
   }
 
-  &.neutral {
+  &.dark {
     background: $color-neutral-minimum;
   }
 

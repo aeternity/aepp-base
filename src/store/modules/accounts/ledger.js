@@ -20,6 +20,11 @@ const signOnMobile = async ({ dispatch }) => {
 export default {
   namespaced: true,
 
+  account: {
+    type: 'ledger',
+    color: 'dark',
+  },
+
   getters: process.env.IS_MOBILE_DEVICE ? {} : {
     nextIdx: (state, getters, rootState, rootGetters) => Math.max(
       ...rootGetters['accounts/getByType']('ledger').map(({ source: { idx } }) => idx),
