@@ -19,6 +19,7 @@ import registerServiceWorker from './plugins/registerServiceWorker';
 import browserPathTracker from './plugins/browserPathTracker';
 import observables from './plugins/observables';
 import reverseIframe from './plugins/reverseIframe';
+import syncLedgerAccounts from './plugins/syncLedgerAccounts';
 
 Vue.use(Vuex);
 Vue.use(VueRx);
@@ -74,7 +75,8 @@ const store = new Vuex.Store({
     observables,
     reverseIframe,
     ...process.env.IS_MOBILE_DEVICE
-      ? [notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
+      ? [notificationOnRemoteConnection, browserPathTracker]
+      : [ledgerConnection, syncLedgerAccounts],
   ],
 
   modules: {
