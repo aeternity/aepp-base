@@ -1,4 +1,4 @@
-describe('Migration: Fix AES-CTR counter issue', () => {
+describe('Migration 0: Fix AES-CTR counter issue', () => {
   it('applicable', () => {
     window.localStorage.vuex = JSON.stringify({
       mobile: {
