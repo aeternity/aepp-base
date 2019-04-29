@@ -33,6 +33,7 @@ export default {
   -webkit-appearance: none;
   width: 100%;
   cursor: pointer;
+  background: transparent;
 
   $colors: (
     primary: (
@@ -41,7 +42,7 @@ export default {
       thumb-color: $color-primary,
     ),
     light: (
-      track-color: $color-primary-positive-1,
+      track-color: rgba(#fff, 0.66846),
       progress-color: $color-neutral-maximum,
       thumb-color: $color-neutral-maximum,
     ),
@@ -78,6 +79,7 @@ export default {
           width: rem(15px);
           border-radius: rem(48px);
           background: map-get($colors, thumb-color);
+          box-shadow: 0 0 rem(8px) $color-shadow-alpha-15;
           cursor: pointer;
         }
       }
@@ -91,6 +93,7 @@ export default {
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     margin-top: rem(-6px);
+    border: none;
   }
 
   &::-moz-range-thumb {
