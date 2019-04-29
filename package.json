@@ -94,6 +94,7 @@
     "./src/lib/initEnv.js",
     "./src/lib/storeErrorHandler.js",
     "./src/lib/switchWebmanifest.js",
+    "./src/store/index.js",
     "./src/register-modals.js",
     "*.css",
     "*.scss",
