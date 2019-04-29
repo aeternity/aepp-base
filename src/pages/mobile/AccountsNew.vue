@@ -1,12 +1,12 @@
 <template>
   <MobilePage
-    :header-fill="secure ? 'alternative' : 'primary'"
+    :header-fill="accountModule.account.color"
     right-button-icon-name="close"
     @right-button-click="$router.back()"
   >
     <template slot="header">
       <Guide fill="neutral">
-        <em>Create new {{ secure ? 'Vault' : 'subaccount' }}</em>
+        <em>Create new {{ accountName }}</em>
         <br>choose a name
       </Guide>
 
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import AeInput from '../../components/AeInput.vue';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -55,18 +56,20 @@ export default {
     newAccountName: '',
   }),
   computed: {
-    secure() {
-      return this.$route.meta.secure;
+    ...mapState('accounts', {
+      accountModule(state, { getModule }) {
+        return getModule({ source: { type: this.$route.meta.accountType } });
+      },
+    }),
+    accountName() {
+      if (this.$route.meta.accountType === 'air-gap') return 'Vault';
+      return 'subaccount';
     },
   },
   methods: {
     async handleAddAddress() {
       if (!await this.$validator.validateAll()) return;
-      if (this.secure) {
-        this.$router.push({ name: 'vault-setup-method' });
-        return;
-      }
-      await this.$store.dispatch('accounts/hdWallet/create', this.newAccountName);
+      await this.$store.dispatch(`accounts/${this.accountModule.name}/create`, this.newAccountName);
       this.$router.back();
     },
   },

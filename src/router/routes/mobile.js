@@ -127,13 +127,16 @@ export default [{
   path: '/accounts-new',
   component: AccountsNew,
   beforeEnter: checkLoggedIn(true),
+  meta: {
+    accountType: 'hd-wallet',
+  },
 }, {
   name: 'vault-new',
   path: '/vault/new',
   component: AccountsNew,
   beforeEnter: checkLoggedIn(true),
   meta: {
-    secure: true,
+    accountType: 'air-gap',
   },
 }, ...process.env.UNFINISHED_FEATURES
   ? [{
