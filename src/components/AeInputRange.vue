@@ -92,6 +92,7 @@ export default {
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     margin-top: rem(-6px);
+    border: none;
   }
 
   &::-moz-range-thumb {
