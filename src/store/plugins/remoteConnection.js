@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import {
-  zipObject, cloneDeep, isEqual, throttle,
+  zipObject, cloneDeep, isEqual, throttle, memoize,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
 
@@ -90,20 +90,15 @@ export default (store) => {
         store.commit('followerRemoved', followerId);
       });
 
-      const followerSignPromises = {};
-      socket.on('message-from-follower', (followerId, request) => new RpcPeer(response => socket.emit('message-to-follower', followerId, response), {
-        signTransaction: (...args) => {
-          const promise = store.state.sdk.signTransaction(...args);
-          followerSignPromises[followerId] = promise;
-          return Promise.race([
-            new Promise((resolve, reject) => promise
-              .finally(() => promise.isCancelled() && reject(new Error('Canceled')))),
-            followerSignPromises[followerId],
-          ]);
+      const getRpcPeer = memoize(followerId => new RpcPeer(
+        response => socket.emit('message-to-follower', followerId, response), {
+          signTransaction: (...args) => store.state.sdk.signTransaction(...args),
         },
-        cancelTransaction: () => followerSignPromises[followerId].cancel(),
-      })
-        .processMessage(request));
+      ));
+      socket.on(
+        'message-from-follower',
+        (followerId, request) => getRpcPeer(followerId).processMessage(request),
+      );
 
       const followers = await new Promise(resolve => socket.emit('get-all-followers', resolve));
       Object.entries(followers)
@@ -119,21 +114,22 @@ export default (store) => {
 
       const leader = new RpcPeer(message => socket.emit('message-to-leader', message));
       socket.on('message-from-leader', message => leader.processMessage(message));
-      closeCbs.push(store.subscribe(({ type, payload }) => {
-        switch (type) {
-          case 'setTransactionToSign':
-            if (!payload) return;
-            leader.call('signTransaction', ...payload.args).then(payload.resolve, payload.reject);
-            break;
-          case 'cancelTransaction':
-            leader.call('cancelTransaction', store.state.desktop.transactionToSignByRemote.args.id);
-            break;
-          case 'reset':
-            socket.emit('leave-group');
-            break;
-          default:
-        }
+
+      closeCbs.push(store.subscribe(({ type }) => {
+        if (type !== 'reset') return;
+        socket.emit('leave-group');
       }));
+
+      store.registerModule('remoteConnection', {
+        namespaced: true,
+        actions: {
+          call(_, { name, args }) {
+            return leader.call(name, ...args);
+          },
+        },
+      });
+
+      closeCbs.push(() => store.unregisterModule('remoteConnection'));
     }
 
     return () => closeCbs.forEach(f => f());

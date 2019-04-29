@@ -1,6 +1,8 @@
 import { noop } from 'lodash-es';
+import Promise from 'bluebird';
 import RPC from '../rpc';
 
+Promise.config({ cancellation: true });
 const testMethodName = 'test-method-name';
 const testArgs = ['test', 'args'];
 
@@ -35,6 +37,10 @@ describe('calls', () => {
     method: testMethodName,
     params: testArgs,
   };
+  const testRequestCancel = {
+    type: 'request-cancel',
+    id: 1,
+  };
   const testResult = 'test-result';
   const testResponse = {
     type: 'response',
@@ -54,6 +60,18 @@ describe('calls', () => {
       const client = new RPC(messageHandler);
       client.call(testMethodName, ...testArgs);
       expect(messageHandler).toHaveBeenCalledWith(testRequest);
+    });
+
+    it('cancels request', (done) => {
+      const messageHandler = jest.fn((data) => {
+        expect(data).toEqual(
+          messageHandler.mock.calls.length === 1 ? testRequest : testRequestCancel,
+        );
+        if (messageHandler.mock.calls.length === 2) done();
+      });
+      const client = new RPC(messageHandler);
+      const promise = client.call(testMethodName, ...testArgs);
+      promise.cancel();
     });
 
     it('receives response', () => {
@@ -94,6 +112,16 @@ describe('calls', () => {
       expect(requestHandler).toHaveBeenCalledWith(...testArgs);
     });
 
+    it('cancels request', () => {
+      const requestPromise = new Promise(noop);
+      const server = new RPC(noop, {
+        [testMethodName]: () => requestPromise,
+      });
+      server.processMessage(testRequest);
+      server.processMessage(testRequestCancel);
+      expect(requestPromise.isCancelled()).toBe(true);
+    });
+
     it('sends response', async () => {
       const messageHandler = jest.fn();
       const server = new RPC(messageHandler, {
@@ -121,6 +149,16 @@ describe('calls', () => {
       expect(messageHandler).toHaveBeenCalledWith({
         id: 1,
         error: 'Method not found',
+      });
+    });
+
+    it('sends error if cancelling not existing request', () => {
+      const messageHandler = jest.fn();
+      const server = new RPC(messageHandler);
+      server.processMessage(testRequestCancel);
+      expect(messageHandler).toHaveBeenCalledWith({
+        id: testRequestCancel.id,
+        error: 'Can\'t cancel request: it\'s not found',
       });
     });
   });

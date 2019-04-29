@@ -131,8 +131,15 @@ export default (store) => {
                 },
                 OBJECT_ID_TX_TYPE[txObject.tag],
               ).tx;
+              return store.dispatch('signTransaction', [res]);
             }
-            return store.dispatch('signTransaction', [res]);
+            const signPromise = store.dispatch(
+              'remoteConnection/call',
+              { name: 'signTransaction', args: [res] },
+            );
+            const cancelSignPromise = store.dispatch('modals/cancelSign')
+              .then(() => signPromise.cancel());
+            return signPromise.finally(() => cancelSignPromise.cancel());
           },
         });
       }

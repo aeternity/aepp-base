@@ -10,6 +10,7 @@ import ConfirmSpendModal from './components/mobile/ConfirmSpendModal.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
+import CancelSignModal from './components/desktop/CancelSignModal.vue';
 
 registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
 
@@ -25,4 +26,5 @@ if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'confirmLedgerAddress', component: LedgerAddressConfirmModal });
   registerModal({ name: 'getLedgerTransactionFee', component: LedgerTransactionFeeModal });
   registerModal({ name: 'confirmLedgerSignTransaction', component: LedgerSignTransactionConfirmModal });
+  registerModal({ name: 'cancelSign', component: CancelSignModal });
 }
