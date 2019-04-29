@@ -79,6 +79,7 @@ export default {
           width: rem(15px);
           border-radius: rem(48px);
           background: map-get($colors, thumb-color);
+          box-shadow: 0 0 rem(8px) $color-shadow-alpha-15;
           cursor: pointer;
         }
       }
