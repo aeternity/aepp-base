@@ -60,7 +60,7 @@ export default {
     reject: { type: Function, required: true },
   },
   computed: {
-    ...mapGetters(['activeAccount']),
+    ...mapGetters({ activeAccount: 'accounts/active' }),
     app() {
       return this.$store.getters.getAppMetadata(this.appHost);
     },

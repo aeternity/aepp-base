@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../../components/AeCard.vue';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -96,7 +96,7 @@ export default {
       this.$store.dispatch('reset');
       setTimeout(() => this.$store.commit('setLoginTarget'));
     },
-    ...mapMutations(['logout']),
+    ...mapActions(['logout']),
   },
 };
 </script>

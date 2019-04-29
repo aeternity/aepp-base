@@ -45,7 +45,7 @@ export default {
     showAccountSwitcher: { type: Boolean },
   },
   computed: {
-    ...mapGetters(['activeAccount']),
+    ...mapGetters({ activeAccount: 'accounts/active' }),
     ...mapState({
       browserPath: ({ mobile }) => mobile.browserPath,
     }),

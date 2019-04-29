@@ -38,7 +38,7 @@ export default {
         params: { transactionHash: hash, amount: this.amount },
       });
     } catch (e) {
-      if (e.message === 'Rejected by user') {
+      if (['Rejected by user', 'Not implemented yet'].includes(e.message)) {
         this.$router.push({ name: 'transfer' });
         return;
       }

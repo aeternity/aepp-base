@@ -1,5 +1,6 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
+import { pick } from 'lodash-es';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
@@ -7,6 +8,7 @@ import { makeResetable } from './utils';
 import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
+import accountsModule from './modules/accounts';
 import persistState from './plugins/persistState';
 import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
@@ -25,47 +27,42 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
+      state => state,
       ({
-        rpcUrl,
-        selectedIdentityIdx,
-        mobile: { keystore, names, ...otherMobile } = {},
-        ...otherState
-      }) => ({
-        ...otherState,
-        sdkUrl: rpcUrl,
-        selectedAccountIdx: selectedIdentityIdx,
-        mobile: {
-          ...otherMobile,
-          encryptedHdWallet: keystore,
-          accountNames: names,
-        },
-      }),
-      ({
-        migrations, sdkUrl, selectedAccountIdx, addressBook, customNetworks,
-        apps, cachedAppManifests, peerId, addresses,
-        mobile, desktop,
+        migrations, sdkUrl, addressBook, customNetworks,
+        apps, cachedAppManifests, peerId,
+        accounts: { list, activeIdx, hdWallet: { encryptedWallet } = {} } = {},
+        mobile: { followers } = {},
       }) => ({
         migrations,
         peerId,
-        rpcUrl: sdkUrl,
-        selectedIdentityIdx: selectedAccountIdx,
+        sdkUrl,
         addressBook,
         customNetworks,
-        addresses,
-        ...process.env.IS_MOBILE_DEVICE ? {
+        accounts: {
+          list: list.map(({ name, address, source }) => {
+            switch (source.type) {
+              case 'hd-wallet':
+                return {
+                  name,
+                  address,
+                  transactions: [],
+                  source: pick(source, ['type', 'idx']),
+                };
+              default:
+                return { name, address, source };
+            }
+          }),
+          activeIdx,
+          hdWallet: { encryptedWallet },
+        },
+        ...process.env.IS_MOBILE_DEVICE && {
           apps,
           cachedAppManifests,
           mobile: {
-            keystore: mobile.encryptedHdWallet,
-            accountCount: mobile.accountCount,
-            names: mobile.accountNames,
-            followers: Object.entries(mobile.followers)
+            followers: Object.entries(followers)
               .reduce((p, [k, { id, name, disconnectedAt }]) => (
                 { ...p, [k]: { id, name, disconnectedAt } }), {}),
-          },
-        } : {
-          desktop: {
-            ledgerAccountNumber: desktop.ledgerAccountNumber,
           },
         },
       }),
@@ -80,9 +77,12 @@ const store = new Vuex.Store({
       ? [notificationOnRemoteConnection, browserPathTracker] : [ledgerConnection],
   ],
 
-  modules: process.env.IS_MOBILE_DEVICE
-    ? { mobile: makeResetable(mobileModule) }
-    : { desktop: makeResetable(desktopModule) },
+  modules: {
+    ...process.env.IS_MOBILE_DEVICE
+      ? { mobile: makeResetable(mobileModule) }
+      : { desktop: makeResetable(desktopModule) },
+    accounts: makeResetable(accountsModule),
+  },
 
   ...makeResetable(rootModule),
 });

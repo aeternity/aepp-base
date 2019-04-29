@@ -91,7 +91,7 @@ export default {
 
       this.working = true;
       try {
-        await this.$store.dispatch('createHdWallet', {
+        await this.$store.dispatch('accounts/hdWallet/createWallet', {
           password: this.password,
           seed: this.seed,
         });

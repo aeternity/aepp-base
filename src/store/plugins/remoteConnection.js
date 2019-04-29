@@ -1,10 +1,31 @@
 import io from 'socket.io-client';
 import {
-  zipObject, cloneDeep, isEqual, throttle, memoize,
+  pick, cloneDeep, isEqual, throttle, memoize,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
 
-const PAIR_SYNC_FIELDS = ['sdkUrl', 'addresses', 'selectedAccountIdx', 'addressBook', 'customNetworks'];
+const getStateForSync = ({
+  sdkUrl, accounts: { list, activeIdx }, addressBook, customNetworks,
+}) => ({
+  sdkUrl,
+  accounts: {
+    list: list.map(({ name, address, source }) => {
+      switch (source.type) {
+        case 'hd-wallet':
+          return {
+            name,
+            address,
+            source: pick(source, ['type', 'idx']),
+          };
+        default:
+          return { name, address, source };
+      }
+    }),
+    activeIdx,
+  },
+  addressBook,
+  customNetworks,
+});
 
 export default (store) => {
   const getPushApiSubscription = async () => {
@@ -29,18 +50,12 @@ export default (store) => {
     const socket = io(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
-    const getStateForSync = (state, getters) => PAIR_SYNC_FIELDS
-      .reduce((p, n) => ({ ...p, [n]: getters[n] || state[n] }), {});
-
-    let processedState = cloneDeep(getStateForSync(store.state, store.getters));
+    let processedState = cloneDeep(getStateForSync(store.state));
 
     const broadcast = new RpcPeer(message => socket.emit('message-to-all', message), {
       setState(state) {
         processedState = state;
-        store.commit('syncState', {
-          ...zipObject(PAIR_SYNC_FIELDS),
-          ...cloneDeep(state),
-        });
+        store.commit('syncState', cloneDeep(state));
       },
     });
     socket.on('message', message => broadcast.processMessage(message));
@@ -61,7 +76,7 @@ export default (store) => {
 
     if (process.env.IS_MOBILE_DEVICE) {
       const syncState = throttle(
-        () => broadcastState(getStateForSync(store.state, store.getters)), 500,
+        () => broadcastState(getStateForSync(store.state)), 500,
       );
 
       closeCbs.push(store.subscribe(({ type, payload }) => {
@@ -92,6 +107,8 @@ export default (store) => {
 
       const getRpcPeer = memoize(followerId => new RpcPeer(
         response => socket.emit('message-to-follower', followerId, response), {
+          createAccount: name => store.dispatch('accounts/hdWallet/create', name),
+          sign: (...args) => store.state.sdk.sign(...args),
           signTransaction: (...args) => store.state.sdk.signTransaction(...args),
         },
       ));
@@ -139,7 +156,7 @@ export default (store) => {
   store.watch(
     process.env.IS_MOBILE_DEVICE
       ? ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length
-      : ({ desktop: { ledgerConnected } }) => !ledgerConnected,
+      : () => true,
     async (isConnectionNecessary) => {
       if (isConnectionNecessary && !closeCb) closeCb = await open();
       if (!isConnectionNecessary && closeCb) {

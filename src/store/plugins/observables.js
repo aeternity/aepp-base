@@ -37,7 +37,7 @@ export default (store) => {
         .pipe(map(balances => balances.map((balance, idx) => ({ ...acs[idx], balance }))))),
     );
 
-  const accountsObservable = getAccounts((state, { accounts }) => accounts);
+  const accountsObservable = getAccounts(({ accounts: { list } }) => list);
 
   store.state.observables = { // eslint-disable-line no-param-reassign
     topBlockHeight: sdk
@@ -49,7 +49,7 @@ export default (store) => {
       ),
     getBalance,
     activeAccount: watchAsObservable(
-      (state, { activeAccount }) => activeAccount,
+      (state, getters) => getters['accounts/active'],
       { immediate: true },
     )
       .pipe(
@@ -60,9 +60,9 @@ export default (store) => {
       ),
     accounts: accountsObservable,
     inactiveAccounts: getAccounts(
-      ({ selectedAccountIdx }, { accounts }) => [
-        ...accounts.slice(0, selectedAccountIdx),
-        ...accounts.slice(selectedAccountIdx + 1),
+      ({ accounts: { list, activeIdx } }) => [
+        ...list.slice(0, activeIdx),
+        ...list.slice(activeIdx + 1),
       ],
     ),
     totalBalance: accountsObservable.pipe(

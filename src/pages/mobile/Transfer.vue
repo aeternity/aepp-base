@@ -28,7 +28,7 @@
         :name-editable="accountNameEditable"
         fill="primary"
         security-status=""
-        @name-input="setCurrentAccountName"
+        @name-input="setName"
         @name-blur="accountNameEditable = false"
       >
         <ButtonPlain
@@ -176,7 +176,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setCurrentAccountName']),
+    ...mapMutations('accounts', ['setName']),
     ...mapActions('modals', ['migratedBalance']),
   },
 };

@@ -56,7 +56,7 @@ export default {
     reject: { type: Function, required: true },
     data: { type: [String, Uint8Array], required: true },
   },
-  computed: mapGetters(['activeAccount']),
+  computed: mapGetters({ activeAccount: 'accounts/active' }),
   methods: {
     denyHandler() {
       this.reject(new Error('Rejected by user'));

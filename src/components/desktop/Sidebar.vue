@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { uniq } from 'lodash-es';
 import { mapState, mapMutations } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import SidebarModal from './SidebarModal.vue';
@@ -58,15 +59,18 @@ export default {
   data: () => ({
     ledgerTab: !process.env.UNFINISHED_FEATURES,
   }),
-  computed: mapState({
-    showSidebar: ({ desktop }) => desktop.showSidebar,
-    accountsCount: (state, { accounts }) => accounts.length,
-    currentTab({ desktop: { remoteConnected, ledgerConnected } }) {
-      return (ledgerConnected && this.ledgerTab)
-      || (remoteConnected && !this.ledgerTab)
+  computed: {
+    ...mapState({
+      showSidebar: ({ desktop }) => desktop.showSidebar,
+      accountsCount: ({ accounts: { list } }) => list.length,
+      accountTypes: ({ accounts: { list } }) => uniq(list.map(({ source: { type } }) => type)),
+    }),
+    currentTab() {
+      return (this.accountTypes.includes('ledger') && this.ledgerTab)
+      || (this.accountTypes.some(type => type !== 'ledger') && !this.ledgerTab)
         ? 'account-switcher' : 'connect-guide';
     },
-  }),
+  },
   methods: mapMutations(['toggleSidebar']),
 };
 </script>

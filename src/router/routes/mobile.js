@@ -47,7 +47,7 @@ export default [{
   path: '/',
   component: Intro,
   beforeEnter(to, from, next) {
-    if (!from.name && store.state.mobile.encryptedHdWallet) {
+    if (!from.name && store.state.accounts.hdWallet.encryptedWallet) {
       next({ name: 'login' });
       return;
     }
@@ -78,7 +78,7 @@ export default [{
   path: '/login',
   component: Login,
   beforeEnter(to, from, next) {
-    if (!store.state.mobile.encryptedHdWallet) {
+    if (!store.state.accounts.hdWallet.encryptedWallet) {
       next({ name: 'new-account' });
       return;
     }

@@ -79,7 +79,7 @@ export default {
       if (!await this.$validator.validateAll()) return;
 
       try {
-        await this.$store.dispatch('unlockHdWallet', this.password);
+        await this.$store.dispatch('accounts/hdWallet/unlockWallet', this.password);
       } catch (e) {
         this.wrongPassword = true;
       }

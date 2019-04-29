@@ -12,7 +12,7 @@ export default {
   data() {
     return { newFee: this.fee };
   },
-  computed: mapGetters(['activeAccount']),
+  computed: mapGetters({ activeAccount: 'accounts/active' }),
   methods: {
     denyHandler() {
       this.reject(new Error('Rejected by user'));
