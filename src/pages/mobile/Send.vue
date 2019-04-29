@@ -2,7 +2,7 @@
   <MobilePage
     :right-button-to="{ name: 'transfer' }"
     right-button-icon-name="close"
-    header-fill="primary"
+    :header-fill="activeColor"
     class="send"
   >
     <template slot="header">
@@ -92,7 +92,7 @@ export default {
   data: () => ({
     accountTo: '',
   }),
-  computed: mapGetters({ activeAccount: 'accounts/active' }),
+  computed: mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
   subscriptions() {
     return pick(this.$store.state.observables, ['inactiveAccounts']);
   },

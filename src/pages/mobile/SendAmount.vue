@@ -4,7 +4,7 @@
     :right-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
     right-button-icon-name="close"
-    header-fill="primary"
+    :header-fill="activeColor"
   >
     <template slot="header">
       <Guide fill="neutral">
@@ -52,6 +52,7 @@
 
 <script>
 import { pick } from 'lodash-es';
+import { mapGetters } from 'vuex';
 import BigNumber from 'bignumber.js';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -82,6 +83,7 @@ export default {
     MIN_SPEND_TX_FEE,
     BigNumber,
   }),
+  computed: mapGetters('accounts', ['activeColor']),
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },

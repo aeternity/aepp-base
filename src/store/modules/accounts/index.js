@@ -20,6 +20,7 @@ export default {
 
   getters: {
     active: ({ list, activeIdx }) => list[activeIdx],
+    activeColor: (state, { getColor, active }) => getColor(active),
     getByType: ({ list }) => type => list.filter(({ source }) => source.type === type),
     getModule: () => ({ source: { type } }) => {
       const [name, module] = Object.entries(modules)
