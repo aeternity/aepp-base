@@ -8,7 +8,7 @@ import AeButton from '../components/AeButton.vue';
 import MigratedBalanceModal from '../components/mobile/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
 import LedgerAddressConfirmModal from '../components/desktop/LedgerAddressConfirmModal.vue';
-import LedgerSignTransactionConfirmModal from '../components/desktop/LedgerSignTransactionConfirmModal.vue';
+import LedgerSignTransactionModal from '../components/desktop/LedgerSignTransactionModal.vue';
 import LedgerTransactionFeeModal from '../components/desktop/LedgerTransactionFeeModal.vue';
 import { account } from './mock-data';
 
@@ -52,9 +52,9 @@ storiesOf('AeModal', module)
     template: '<ledger-address-confirm-modal :address="address" />',
     data: () => ({ address: account.address }),
   }))
-  .add('LedgerSignTransactionConfirmModal', () => ({
-    components: { LedgerSignTransactionConfirmModal },
-    template: '<ledger-sign-transaction-confirm-modal />',
+  .add('LedgerSignTransactionModal', () => ({
+    components: { LedgerSignTransactionModal },
+    template: '<ledger-sign-transaction-modal />',
   }))
   .add('LedgerTransactionFeeModal', () => ({
     components: { LedgerTransactionFeeModal },

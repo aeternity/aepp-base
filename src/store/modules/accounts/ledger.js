@@ -73,7 +73,7 @@ export default {
       let conformModalPromise;
       try {
         conformModalPromise = !process.env.RUNNING_IN_FRAME
-          && dispatch('modals/open', { name: 'confirmLedgerSignTransaction' }, { root: true });
+          && dispatch('modals/open', { name: 'ledgerSignTransaction' }, { root: true });
         const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));
         const signature = Buffer.from(await ledgerAppApi.signTransaction(
           rootGetters['accounts/active'].source.idx,
