@@ -40,7 +40,7 @@
     "rxjs": "^6.4.0",
     "rxjs-etc": "^9.4.1",
     "socket.io-client": "^2.2.0",
-    "vee-validate": "^2.1.7",
+    "vee-validate": "^2.2.5",
     "vue": "^2.6.7",
     "vue-clickaway": "^2.2.2",
     "vue-focus": "^2.1.0",
