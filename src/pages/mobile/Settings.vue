@@ -40,6 +40,21 @@
           name="left-more"
         />
       </ListItem>
+      <ListItem
+        :to="{ name: 'settings-aepp-account-access' }"
+        :subtitle="`${appsLength} aepp${appsLength > 1? 's' : ''} have account access`"
+        title="Aepp account access"
+      >
+        <AeIcon
+          slot="icon"
+          face="round"
+          name="grid"
+        />
+        <AeIcon
+          slot="right"
+          name="left-more"
+        />
+      </ListItem>
     </AeCard>
     <h2>Account</h2>
     <AeCard>
@@ -78,6 +93,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import { get } from 'lodash-es';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../../components/AeCard.vue';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -96,6 +112,7 @@ export default {
     version: process.env.npm_package_version,
   }),
   computed: mapState({
+    appsLength: ({ apps }) => apps.filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length,
     networkName: (state, { currentNetwork }) => currentNetwork.name,
     remoteConnectionsCount: ({ mobile }) => Object.entries(mobile.followers)
       .filter(([, f]) => f.connected).length,
@@ -122,6 +139,10 @@ export default {
 
     .ae-icon-device {
       background-color: #515ec8;
+    }
+
+    .ae-icon-grid {
+      background-color: #f8963d;
     }
 
     .ae-icon-left-more {
