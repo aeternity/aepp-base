@@ -35,7 +35,7 @@
       <MenuItem v-copy-on-click="networks[menuForNetworkIdx].url">
         <AeIcon name="copy" />Copy link
       </MenuItem>
-      <MenuItem @click="() => removeNetwork(menuForNetworkIdx)">
+      <MenuItem @click="removeNetwork">
         <AeIcon name="close" />Remove
       </MenuItem>
     </Menu>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import copyOnClick from '../directives/copyOnClick';
 import ListItem from './ListItem.vue';
@@ -72,10 +72,16 @@ export default {
   data: () => ({ menuForNetworkIdx: -1 }),
   computed: mapGetters(['networks', 'currentNetwork']),
   methods: {
-    ...mapMutations(['removeNetwork']),
     setSdkUrl(sdkUrl) {
       this.$store.commit('setSdkUrl', sdkUrl);
       this.$emit('switch');
+    },
+    removeNetwork() {
+      if (this.networks[this.menuForNetworkIdx] === this.currentNetwork) {
+        this.$store.commit('setSdkUrl', this.networks[0].url);
+      }
+      this.$store.commit('removeNetwork', this.menuForNetworkIdx);
+      this.menuForNetworkIdx = -1;
     },
   },
 };
