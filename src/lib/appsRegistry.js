@@ -4,6 +4,11 @@ import tokenMigrationIcon from '../assets/icons/aepps/token-migration.jpg';
 export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
 
 export const aeternityApps = [{
+  name: 'æternity Voting',
+  description: '',
+  path: 'aeternity.com/aepp-hybrid-voting',
+  icon: blockchainExplorerIcon,
+}, {
   name: 'Blockchain Explorer',
   description: 'Verify interactions in real-time. Search the æternity network by address, block or transaction.',
   path: 'explorer.aepps.com',

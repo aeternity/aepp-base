@@ -26,7 +26,7 @@
       <template v-for="(app, idx) in aeternityApps">
         <ListItem
           :key="`list-item-aeternity-app-${idx}`"
-          :to="{ name: 'app-browser', params: { path: app.path } }"
+          :to="`/browser/${app.path}`"
           :title="app.name"
           :subtitle="app.path"
         >
