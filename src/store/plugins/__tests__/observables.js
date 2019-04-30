@@ -13,10 +13,10 @@ it('observables inactiveAccounts: emits value even if only one account', () => {
       sdk: {
         balance: () => '0',
       },
-      selectedAccountIdx: 0,
-    },
-    getters: {
-      accounts: () => [{}],
+      accounts: {
+        list: [{}],
+        activeIdx: 0,
+      },
     },
   });
   const handler = jest.fn();
