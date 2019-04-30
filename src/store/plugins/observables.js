@@ -33,8 +33,10 @@ export default (store) => {
   const getAccounts = accountsGetter => watchAsObservable(accountsGetter, { immediate: true })
     .pipe(
       pluck('newValue'),
-      switchMap(acs => combineLatest(acs.map(({ address }) => getBalance(address)))
-        .pipe(map(balances => balances.map((balance, idx) => ({ ...acs[idx], balance }))))),
+      switchMap(acs => (acs.length
+        ? combineLatest(acs.map(({ address }) => getBalance(address)))
+          .pipe(map(balances => balances.map((balance, idx) => ({ ...acs[idx], balance }))))
+        : of([]))),
     );
 
   const accountsObservable = getAccounts((state, { accounts }) => accounts);
