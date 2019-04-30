@@ -41,7 +41,7 @@ export default {
       migratedBalance: '',
     };
   },
-  computed: mapGetters(['activeAccount']),
+  computed: mapGetters({ activeAccount: 'accounts/active' }),
   async mounted() {
     const response = await fetch(process.env.VUE_APP_MIGRATION_STATUS_URL.replace('ADDRESS', this.activeAccount.address));
     const json = await response.json();

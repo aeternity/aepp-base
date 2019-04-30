@@ -63,7 +63,7 @@
 
 <script>
 import { defer } from 'lodash-es';
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
 import AeCard from '../../components/AeCard.vue';
@@ -97,7 +97,7 @@ export default {
     closePopover() {
       defer(() => { this.networkMode = false; });
     },
-    ...mapMutations(['reset']),
+    ...mapActions(['reset']),
   },
 };
 </script>

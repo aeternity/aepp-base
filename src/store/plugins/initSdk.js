@@ -1,11 +1,8 @@
-import BigNumber from 'bignumber.js';
 import { get, isEqual } from 'lodash-es';
 import {
-  Ae, ChainNode, Transaction, Contract, Crypto, TxBuilder,
+  Ae, ChainNode, Transaction, Contract,
 } from '@aeternity/aepp-sdk/es';
 import Rpc from '@aeternity/aepp-sdk/es/rpc/server';
-import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
-import { MAGNITUDE } from '../../lib/constants';
 
 export default (store) => {
   let lastNetwork;
@@ -21,13 +18,13 @@ export default (store) => {
           if (options && !process.env.RUNNING_IN_FRAME) {
             const { app } = options;
             const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
-            if (!accessToAccounts.includes(store.getters.activeAccount.address)) {
+            if (!accessToAccounts.includes(store.getters['accounts/active'].address)) {
               const promise = store.dispatch(
                 'modals/confirmAccountAccess',
                 { appHost: app.host },
               );
               const unsubscribe = store.watch(
-                (state, { activeAccount: { address } }) => address,
+                (state, getters) => getters['accounts/active'].address,
                 address => accessToAccounts.includes(address) && promise.cancel(),
               );
 
@@ -36,7 +33,7 @@ export default (store) => {
                   promise,
                   new Promise((resolve, reject) => promise.finally(() => {
                     if (!promise.isCancelled()) return;
-                    if (accessToAccounts.includes(store.getters.activeAccount.address)) {
+                    if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
                       resolve();
                     } else reject(new Error('Unexpected state'));
                   })),
@@ -45,104 +42,17 @@ export default (store) => {
                 unsubscribe();
               }
 
-              const { address: accountAddress } = store.getters.activeAccount;
+              const { address: accountAddress } = store.getters['accounts/active'];
               if (!accessToAccounts.includes(accountAddress)) {
                 store.commit('grantAccessToAccount', { appHost: app.host, accountAddress });
               }
             }
           }
-          return store.getters.activeAccount.address;
+          return store.getters['accounts/active'].address;
         },
+        sign: data => store.dispatch('accounts/sign', data),
+        signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
       };
-
-      if (process.env.IS_MOBILE_DEVICE) {
-        const sign = data => Crypto.sign(
-          data,
-          store.state.mobile.accounts[store.getters.activeAccount.address].secretKey,
-        );
-        const confirmRawDataSigning = async (data) => {
-          await store.dispatch('modals/confirmSign', { data });
-          return data;
-        };
-        const confirmTxSigning = async (txBinary) => {
-          let txObject;
-          try {
-            txObject = TxBuilder.unpackTx(txBinary, true).tx;
-          } catch (e) {
-            return confirmRawDataSigning(txBinary);
-          }
-
-          const confirmActionName = {
-            [TX_TYPE.spend]: 'modals/confirmSpend',
-            [TX_TYPE.contractCreate]: 'modals/confirmContractDeploy',
-            [TX_TYPE.contractCall]: 'modals/confirmContractCall',
-          }[OBJECT_ID_TX_TYPE[txObject.tag]];
-          if (!confirmActionName) return confirmRawDataSigning(txBinary);
-
-          const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
-          const confirmProps = {
-            ...txObject,
-            amount: format(txObject.amount),
-            fee: format(txObject.fee),
-            minFee: format(TxBuilder.calculateFee(
-              0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
-            )),
-          };
-
-          return TxBuilder.buildTx(
-            {
-              ...txObject,
-              fee: (await store.dispatch(confirmActionName, confirmProps))
-                .shiftedBy(MAGNITUDE),
-            },
-            OBJECT_ID_TX_TYPE[txObject.tag],
-          ).rlpEncoded;
-        };
-
-        Object.assign(methods, {
-          async sign(data) {
-            await confirmRawDataSigning(data);
-            return sign(data);
-          },
-          async signTransaction(txBase64) {
-            const encodedTx = await confirmTxSigning(
-              Crypto.decodeBase64Check(Crypto.assertedType(txBase64, 'tx')),
-            );
-            const signature = sign(Buffer.concat([Buffer.from(this.nodeNetworkId), encodedTx]));
-            return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, TX_TYPE.signed).tx;
-          },
-        });
-      } else {
-        Object.assign(methods, {
-          sign: () => {
-            throw new Error('Not implemented yet');
-          },
-          async signTransaction(txBase64) {
-            let res = txBase64;
-            if (store.state.desktop.ledgerConnected) {
-              const txObject = TxBuilder.unpackTx(txBase64).tx;
-              res = TxBuilder.buildTx(
-                {
-                  ...txObject,
-                  ...!process.env.RUNNING_IN_FRAME && {
-                    fee: (await store.dispatch('modals/getLedgerTransactionFee'))
-                      .shiftedBy(MAGNITUDE),
-                  },
-                },
-                OBJECT_ID_TX_TYPE[txObject.tag],
-              ).tx;
-              return store.dispatch('signTransaction', [res]);
-            }
-            const signPromise = store.dispatch(
-              'remoteConnection/call',
-              { name: 'signTransaction', args: [res] },
-            );
-            const cancelSignPromise = store.dispatch('modals/cancelSign')
-              .then(() => signPromise.cancel());
-            return signPromise.finally(() => cancelSignPromise.cancel());
-          },
-        });
-      }
 
       let sdk = null;
       try {

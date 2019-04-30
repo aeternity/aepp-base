@@ -19,8 +19,7 @@ const getState = () => JSON.parse(
 
 export default (reducerLoad, reducerSave) => (store) => {
   const savedState = getState();
-  const reducedState = savedState ? reducerLoad(savedState) : savedState;
-  const migratedState = runMigrations(reducedState, store);
+  const migratedState = reducerLoad(runMigrations(savedState, store));
 
   store.replaceState(merge({}, store.state, migratedState));
 

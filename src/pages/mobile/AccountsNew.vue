@@ -66,7 +66,7 @@ export default {
         this.$router.push({ name: 'vault-setup-method' });
         return;
       }
-      await this.$store.dispatch('createAccount', this.newAccountName);
+      await this.$store.dispatch('accounts/hdWallet/create', this.newAccountName);
       this.$router.back();
     },
   },

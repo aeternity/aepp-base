@@ -45,7 +45,7 @@ import AeButton from '../../components/AeButton.vue';
 export default {
   components: { MobilePage, AeButton, Guide },
   computed: mapState({
-    encryptedHdWallet: state => state.mobile.encryptedHdWallet,
+    encryptedHdWallet: state => state.accounts.hdWallet.encryptedWallet,
   }),
 };
 </script>

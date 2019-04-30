@@ -91,7 +91,7 @@ export default {
     hash: { type: String, required: true },
   },
   computed: {
-    ...mapGetters(['activeAccount', 'currentNetwork']),
+    ...mapGetters({ activeAccount: 'accounts/active', currentNetwork: 'currentNetwork' }),
     transaction() {
       return this.activeAccount.transactions.find(t => t.hash === this.hash);
     },
@@ -102,7 +102,7 @@ export default {
     },
   },
   async mounted() {
-    await this.$store.dispatch('fetchTransaction', this.hash);
+    await this.$store.dispatch('accounts/fetchTransaction', this.hash);
   },
   subscriptions() {
     return pick(this.$store.state.observables, ['topBlockHeight']);

@@ -62,7 +62,7 @@ export default {
       writingHandEmoji,
     };
   },
-  computed: mapGetters(['activeAccount']),
+  computed: mapGetters({ activeAccount: 'accounts/active' }),
 };
 </script>
 

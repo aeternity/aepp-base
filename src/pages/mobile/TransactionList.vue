@@ -104,7 +104,7 @@ export default {
   created() {
     this.$watch('activeAccount.address', async () => {
       this.waitingTransactions = true;
-      await this.$store.dispatch('updateTransactions');
+      await this.$store.dispatch('accounts/updateTransactions');
       this.waitingTransactions = false;
     }, { immediate: true });
   },

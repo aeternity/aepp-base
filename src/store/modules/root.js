@@ -1,22 +1,15 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import BigNumber from 'bignumber.js';
-import {
-  update, flatMap, camelCase, unionBy,
-} from 'lodash-es';
+import { update, flatMap, merge } from 'lodash-es';
 import store from '../index';
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
-import { MAGNITUDE } from '../../lib/constants';
-import { fetchJson, mapKeysDeep, genRandomBuffer } from '../utils';
+import { genRandomBuffer } from '../utils';
 
 export default {
   state: () => ({
     migrations: {},
     loginTarget: '',
-    selectedAccountIdx: 0,
-    transactions: {},
-    addresses: [],
     sdkUrl: networksRegistry[0].url,
     sdk: null,
     alert: null,
@@ -30,13 +23,6 @@ export default {
   }),
 
   getters: {
-    accounts: ({ transactions }, { addresses }, { mobile }) => addresses
-      .map((e, index) => ({
-        transactions: transactions[e] || [],
-        address: e,
-        name: process.env.IS_MOBILE_DEVICE ? mobile.accountNames[index] : e.substr(0, 6),
-      })),
-    activeAccount: ({ selectedAccountIdx }, { accounts }) => accounts[selectedAccountIdx],
     networks: ({ customNetworks }) => [
       ...networksRegistry,
       ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
@@ -89,7 +75,8 @@ export default {
 
   mutations: {
     syncState(state, remoteState) {
-      Object.assign(state, remoteState);
+      Object.entries(merge({}, state, remoteState))
+        .forEach(([name, value]) => Vue.set(state, name, value));
     },
     markMigrationAsApplied(state, migrationId) {
       Vue.set(state.migrations, migrationId, true);
@@ -102,12 +89,6 @@ export default {
     },
     setSdk(state, sdk) {
       state.sdk = sdk;
-    },
-    setSelectedAccountIdx(state, selectedAccountIdx) {
-      state.selectedAccountIdx = selectedAccountIdx;
-    },
-    setTransactions(state, { address, transactions }) {
-      Vue.set(state.transactions, address, unionBy(state.transactions[address] || [], transactions, 'hash'));
     },
     setAlert(state, options) {
       state.alert = options;
@@ -168,51 +149,6 @@ export default {
     setNotification({ commit }, options) {
       commit('setNotification', options);
       if (options.autoClose) setTimeout(() => commit('setNotification'), 3000);
-    },
-    normalizeTransaction: async ({ state: { sdk }, getters: { activeAccount } }, {
-      blockHash, time, tx: { amount, fee, ...otherTx }, ...otherTransaction
-    }) => ({
-      ...otherTransaction,
-      time: new Date(time || (await sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
-      received: activeAccount.address === otherTx.recipientId,
-      peerId: activeAccount.address === otherTx.recipientId
-        ? otherTx.senderId
-        : otherTx.recipientId,
-      tx: {
-        ...otherTx,
-        amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
-        fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
-      },
-    }),
-    async updateTransactions({
-      state: { sdk }, getters: { activeAccount, currentNetwork }, commit, dispatch,
-    }) {
-      const { address } = activeAccount;
-      const transactions = await Promise.all([
-        ...mapKeysDeep(
-          (await fetchJson(
-            `${currentNetwork.middlewareUrl}/middleware/transactions/account/${address}`,
-          ).catch(() => [])),
-          (value, key) => camelCase(key),
-        ),
-        ...(await sdk.api.getPendingAccountTransactionsByPubkey(address)
-          .catch(() => ({ transactions: [] }))).transactions
-          .map(transaction => ({
-            ...transaction,
-            pending: true,
-          })),
-      ]
-        .map(transaction => dispatch('normalizeTransaction', transaction)));
-      commit('setTransactions', { address, transactions });
-    },
-    async fetchTransaction({
-      state: { sdk }, getters: { activeAccount }, commit, dispatch,
-    }, hash) {
-      if (activeAccount.transactions.find(t => t.hash === hash)) return;
-      const { address } = activeAccount;
-      const transaction = await dispatch('normalizeTransaction',
-        await sdk.api.getTransactionByHash(hash));
-      commit('setTransactions', { address, transactions: [transaction] });
     },
     async fetchAppManifest(_, host) {
       const fetchTextCors = async url => (

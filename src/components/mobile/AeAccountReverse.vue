@@ -40,7 +40,7 @@ export default {
       required: true,
     },
   },
-  computed: mapGetters(['activeAccount']),
+  computed: mapGetters({ activeAccount: 'accounts/active' }),
 };
 </script>
 
