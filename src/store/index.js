@@ -28,7 +28,13 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
-      state => state,
+      ({ accounts: { list = [], ...otherAccounts } = {}, ...otherState }) => ({
+        ...otherState,
+        accounts: {
+          ...otherAccounts,
+          list: list.map(account => ({ ...account, transactions: [] })),
+        },
+      }),
       ({
         migrations, sdkUrl, addressBook, customNetworks,
         apps, cachedAppManifests, peerId,
