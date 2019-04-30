@@ -1,6 +1,7 @@
 <template>
   <MobilePage
     class="vault-setup-same-device"
+    hide-tab-bar
     left-button-icon-name="back"
     right-button-icon-name="close"
     :left-button-to="{ name: 'vault-setup-method' }"
