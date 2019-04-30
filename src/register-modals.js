@@ -7,6 +7,7 @@ import ConfirmContractCallModal from './components/mobile/ConfirmContractCallMod
 import ConfirmContractDeployModal from './components/mobile/ConfirmContractDeployModal.vue';
 import ConfirmSignModal from './components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendModal from './components/mobile/ConfirmSpendModal.vue';
+import VaultSignModal from './components/mobile/VaultSignModal.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
@@ -22,6 +23,7 @@ if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'confirmContractDeploy', component: ConfirmContractDeployModal, hidePage: true });
   registerModal({ name: 'confirmSign', component: ConfirmSignModal, hidePage: true });
   registerModal({ name: 'confirmSpend', component: ConfirmSpendModal, hidePage: true });
+  registerModal({ name: 'vaultSign', component: VaultSignModal, hidePage: true });
 } else {
   registerModal({ name: 'confirmLedgerAddress', component: LedgerAddressConfirmModal });
   registerModal({ name: 'getLedgerTransactionFee', component: LedgerTransactionFeeModal });
