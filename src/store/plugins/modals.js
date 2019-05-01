@@ -27,11 +27,9 @@ export default (store) => {
       },
     },
     getters: {
-      opened: ({ opened }) => opened.map(({ name, key, props }) => ({
-        ...modals[name],
-        key,
-        props,
-      })),
+      opened: ({ opened }) => opened
+        .map(({ name, ...other }) => ({ ...modals[name], ...other }))
+        .reduceRight((acc, modal) => (acc.length && acc[0].hidePage ? acc : [modal, ...acc]), []),
     },
     actions: Object.keys(modals).reduce((p, name) => ({
       ...p,
