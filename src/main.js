@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { sync } from 'vuex-router-sync';
 import 'normalize.css';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import 'focus-visible';
+import sync from './lib/vuexRouterSync';
 import './lib/setGlobalPolyfills';
 import './lib/initEnv';
 import './lib/switchWebmanifest';

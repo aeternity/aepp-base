@@ -54,6 +54,7 @@ export default {
   },
   data: () => ({
     newAccountName: '',
+    redirected: false,
   }),
   computed: {
     ...mapState('accounts', {
@@ -70,8 +71,12 @@ export default {
     async handleAddAddress() {
       if (!await this.$validator.validateAll()) return;
       await this.$store.dispatch(`accounts/${this.accountModule.name}/create`, this.newAccountName);
-      this.$router.back();
+      if (!this.redirected) this.$router.back();
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    this.redirected = true;
+    next();
   },
 };
 </script>
