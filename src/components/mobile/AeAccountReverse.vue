@@ -1,6 +1,6 @@
 <template>
   <AeCard
-    :fill="fill"
+    fill="dark"
     class="ae-account-reverse"
   >
     <main>
@@ -33,12 +33,6 @@ export default {
     AeCard,
     AeQrCode,
     AeAddress,
-  },
-  props: {
-    fill: {
-      type: String,
-      required: true,
-    },
   },
   computed: mapGetters({ activeAccount: 'accounts/active' }),
 };

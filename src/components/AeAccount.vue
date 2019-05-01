@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { focus } from 'vue-focus';
 import { AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
@@ -72,15 +73,18 @@ export default {
       type: BigNumber,
       required: true,
     },
-    fill: {
-      type: String,
-      required: true,
-    },
     nameEditable: {
       type: Boolean,
       default: false,
     },
+    source: {
+      type: Object,
+      required: true,
+    },
   },
+  computed: mapState('accounts', {
+    fill(state, { getColor }) { return getColor(this); },
+  }),
 };
 </script>
 

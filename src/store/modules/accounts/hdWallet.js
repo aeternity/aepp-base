@@ -15,6 +15,12 @@ import { getDesktopRemoveSignAction } from './utils';
 
 export default {
   namespaced: true,
+
+  account: {
+    type: 'hd-wallet',
+    color: 'primary',
+  },
+
   state: process.env.IS_MOBILE_DEVICE ? {
     encryptedWallet: null,
     wallet: null,

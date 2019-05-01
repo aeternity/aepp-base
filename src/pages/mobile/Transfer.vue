@@ -26,7 +26,6 @@
       <AeAccount
         v-bind="activeAccount"
         :name-editable="accountNameEditable"
-        fill="primary"
         security-status=""
         @name-input="setName"
         @name-blur="accountNameEditable = false"
