@@ -34,6 +34,15 @@ import SettingsRemoteConnection from '../../pages/mobile/SettingsRemoteConnectio
 
 const SettingsRemoteConnectionNew = () => import('../../pages/mobile/SettingsRemoteConnectionNew.vue');
 
+const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
+  handlers.reduce((nextRoute, handler) => {
+    if (nextRoute) return nextRoute;
+    let res;
+    handler(to, from, (r) => { res = r; });
+    return res;
+  }, undefined),
+);
+
 const checkSeedPassed = (to, from, next) => {
   if (!to.params.seed) {
     next({ name: 'intro' });
@@ -41,6 +50,16 @@ const checkSeedPassed = (to, from, next) => {
   }
   next();
 };
+
+const checkAccountName = (to, from, next) => {
+  if (!store.state.accounts.airGap.newAccountName) {
+    next({ name: 'vault-new' });
+    return;
+  }
+  next();
+};
+
+const vaultBeforeEnter = mergeEnterHandlers(checkLoggedIn(true), checkAccountName);
 
 export default [{
   name: 'intro',
@@ -143,27 +162,27 @@ export default [{
     name: 'vault-setup-method',
     path: '/vault/choose',
     component: VaultSetupMethod,
-    beforeEnter: checkLoggedIn(true),
+    beforeEnter: vaultBeforeEnter,
   }, {
     name: 'vault-setup-another-device',
     path: '/vault/another-device',
     component: VaultSetupAnotherDevice,
-    beforeEnter: checkLoggedIn(true),
+    beforeEnter: vaultBeforeEnter,
   }, {
     name: 'vault-setup-another-device-guide',
     path: '/vault/another-device/guide',
     component: VaultSetupAnotherDeviceGuide,
-    beforeEnter: checkLoggedIn(true),
+    beforeEnter: vaultBeforeEnter,
   }, {
     name: 'vault-setup-same-device',
     path: '/vault/this-device',
     component: VaultSetupSameDevice,
-    beforeEnter: checkLoggedIn(true),
+    beforeEnter: vaultBeforeEnter,
   }, {
     name: 'vault-setup-completed',
     path: '/vault/sync-completed',
     component: VaultSetupCompleted,
-    beforeEnter: checkLoggedIn(true),
+    beforeEnter: vaultBeforeEnter,
   }]
   : [], {
   name: 'transfer',

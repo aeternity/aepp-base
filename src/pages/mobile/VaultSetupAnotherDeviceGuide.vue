@@ -1,6 +1,7 @@
 <template>
   <MobilePage
     class="vault-setup-another-device-guide"
+    hide-tab-bar
     left-button-icon-name="back"
     :left-button-to="{ name: 'vault-setup-another-device' }"
   >
@@ -80,7 +81,7 @@ export default {
   },
   methods: {
     async readValueFromQrCode() {
-      await this.$store.dispatch('modals/readQrCode', { title: 'Link Vault' });
+      await this.$store.dispatch('accounts/airGap/createByQrCode', this.$route.params.accountName);
       this.$router.push({ name: 'vault-setup-completed' });
     },
   },

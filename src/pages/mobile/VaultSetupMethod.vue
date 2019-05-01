@@ -1,6 +1,7 @@
 <template>
   <MobilePage
     class="vault-setup-method"
+    hide-tab-bar
     right-button-icon-name="close"
     :right-button-to="{ name: 'apps' }"
   >

@@ -4,10 +4,11 @@ import { camelCase, unionBy } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import { fetchJson, mapKeysDeep } from '../../utils';
+import airGap from './airGap';
 import hdWallet from './hdWallet';
 import ledger from './ledger';
 
-const modules = { hdWallet, ledger };
+const modules = { airGap, hdWallet, ledger };
 
 export default {
   namespaced: true,

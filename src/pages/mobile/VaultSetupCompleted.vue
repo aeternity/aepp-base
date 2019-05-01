@@ -1,5 +1,8 @@
 <template>
-  <MobilePage class="vault-setup-completed">
+  <MobilePage
+    class="vault-setup-completed"
+    hide-tab-bar
+  >
     <template slot="title">
       AirGap Setup
       <AeFraction
