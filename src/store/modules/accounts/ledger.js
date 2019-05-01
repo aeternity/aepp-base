@@ -7,7 +7,8 @@ import { OBJECT_ID_TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
 import { MAGNITUDE } from '../../../lib/constants';
 
 const signOnMobile = async ({ dispatch }) => {
-  await dispatch('modals/alert', {
+  await dispatch('modals/open', {
+    name: 'alert',
     text: `
       Signing on mobile using Ledger is not supported now.
       Please use desktop version of Base æpp to sign this transaction.
@@ -37,7 +38,8 @@ export default {
     signTransaction: signOnMobile,
   } : {
     async create({ getters: { nextIdx, ledgerAppApi }, commit, dispatch }) {
-      const conformModalPromise = dispatch('modals/confirmLedgerAddress', {
+      const conformModalPromise = dispatch('modals/open', {
+        name: 'confirmLedgerAddress',
         address: await ledgerAppApi.getAddress(nextIdx),
         create: true,
       }, { root: true });
@@ -61,7 +63,7 @@ export default {
         {
           ...txObject,
           ...!process.env.RUNNING_IN_FRAME && {
-            fee: (await dispatch('modals/getLedgerTransactionFee', undefined, { root: true }))
+            fee: (await dispatch('modals/open', { name: 'getLedgerTransactionFee' }, { root: true }))
               .shiftedBy(MAGNITUDE),
           },
         },
@@ -70,7 +72,7 @@ export default {
 
       let conformModalPromise;
       try {
-        conformModalPromise = dispatch('modals/confirmLedgerSignTransaction', undefined, { root: true });
+        conformModalPromise = dispatch('modals/open', { name: 'confirmLedgerSignTransaction' }, { root: true });
         const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));
         const signature = Buffer.from(await ledgerAppApi.signTransaction(
           rootGetters['accounts/active'].source.idx,

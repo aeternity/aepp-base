@@ -112,7 +112,7 @@ export default {
       this.showAccountsDropdown = false;
     },
     async readValueFromQrCode() {
-      this.setAddress(await this.$store.dispatch('modals/readQrCode', { title: 'Scan AE Address' }));
+      this.setAddress(await this.$store.dispatch('modals/open', { name: 'readQrCode', title: 'Scan AE Address' }));
     },
   },
 };

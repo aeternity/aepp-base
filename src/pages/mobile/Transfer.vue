@@ -92,7 +92,7 @@
       title="Tokens in migration"
       subtitle="Not shown as balance above"
       border-dark
-      @click="migratedBalance"
+      @click="open({ name: 'migratedBalance' })"
     >
       <img
         slot="icon"
@@ -150,7 +150,7 @@ export default {
   },
   methods: {
     ...mapMutations('accounts', ['setName']),
-    ...mapActions('modals', ['migratedBalance']),
+    ...mapActions('modals', ['open']),
   },
 };
 </script>

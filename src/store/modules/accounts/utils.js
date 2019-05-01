@@ -5,7 +5,7 @@ export const getDesktopRemoveSignAction = methodName => ({ dispatch }, payload) 
     { name: methodName, args: [payload] },
     { root: true },
   );
-  const cancelSignPromise = dispatch('modals/cancelSign', undefined, { root: true })
+  const cancelSignPromise = dispatch('modals/open', { name: 'cancelSign' }, { root: true })
     .then(() => signPromise.cancel());
   return signPromise.finally(() => cancelSignPromise.cancel());
 };

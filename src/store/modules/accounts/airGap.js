@@ -31,7 +31,9 @@ export default {
 
   actions: process.env.IS_MOBILE_DEVICE ? {
     async readQrCode({ dispatch }, payload) {
-      const response = new URL(await dispatch('modals/readQrCode', payload, { root: true }));
+      const response = new URL(
+        await dispatch('modals/open', { ...payload, name: 'readQrCode' }, { root: true }),
+      );
       return response.searchParams.get('d');
     },
 
@@ -74,7 +76,7 @@ export default {
       const requestUrl = new URL('airgap-vault://');
       requestUrl.searchParams.set('d', Crypto.encodeBase58Check(Crypto.encode(requestRlp)));
 
-      await dispatch('modals/vaultSign', { url: requestUrl.toString() }, { root: true });
+      await dispatch('modals/open', { name: 'vaultSign', url: requestUrl.toString() }, { root: true });
       const encodedSignedTx = await dispatch('readQrCode', { title: 'Scan Signed Transaction' });
       const decodedSignedTx = Crypto.decode(Crypto.decodeBase58Check(encodedSignedTx));
 

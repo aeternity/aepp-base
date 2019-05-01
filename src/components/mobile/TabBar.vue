@@ -15,7 +15,7 @@
 
       <ButtonPlain
         :class="showAccountSwitcher ? 'router-link-active' : ''"
-        @click="() => !showAccountSwitcher && accountSwitcher().catch(() => {})"
+        @click="accountSwitcher"
       >
         <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
 import AeIdenticon from '../AeIdenticon.vue';
@@ -59,7 +59,12 @@ export default {
       browserPath: ({ mobile }) => mobile.browserPath,
     }),
   },
-  methods: mapActions('modals', ['accountSwitcher']),
+  methods: {
+    accountSwitcher() {
+      if (this.showAccountSwitcher) return;
+      this.$store.dispatch('modals/open', { name: 'accountSwitcher' }).catch(() => {});
+    },
+  },
 };
 </script>
 

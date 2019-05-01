@@ -32,7 +32,11 @@ export default {
       this.$store.commit('setStepFraction');
 
       this.$router.push({ name: 'transfer' });
-      this.$store.dispatch('modals/notificationSpend', { transactionHash: hash, amount });
+      this.$store.dispatch('modals/open', {
+        name: 'notificationSpend',
+        transactionHash: hash,
+        amount,
+      });
     } catch (e) {
       if (['Rejected by user', 'Not implemented yet', 'Cancelled by user'].includes(e.message)) {
         this.$router.push({ name: 'transfer' });

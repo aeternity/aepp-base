@@ -37,9 +37,9 @@ export default (store) => {
       hidePage: (state, { opened }) => opened.some(({ hidePage }) => hidePage),
       grayscalePage: (state, { opened }) => opened.some(({ grayscalePage }) => grayscalePage),
     },
-    actions: Object.keys(modals).reduce((p, name) => ({
-      ...p,
-      [name]({ commit }, props) {
+    actions: {
+      open({ commit }, { name, ...props }) {
+        if (!modals[name]) return Promise.reject(new Error(`Modal with name "${name}" not registered`));
         const key = modalCounter;
         modalCounter += 1;
         return new Promise(
@@ -47,7 +47,7 @@ export default (store) => {
         )
           .finally(() => commit('closeByKey', key));
       },
-    }), {}),
+    },
   });
 
   store.watch(

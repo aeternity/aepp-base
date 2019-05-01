@@ -116,7 +116,7 @@ export default {
     },
 
     async confirmRawDataSigning({ dispatch }, data) {
-      await dispatch('modals/confirmSign', { data }, { root: true });
+      await dispatch('modals/open', { name: 'confirmSign', data }, { root: true });
       return data;
     },
 
@@ -128,12 +128,12 @@ export default {
         return dispatch('confirmRawDataSigning', txBinary);
       }
 
-      const confirmActionName = {
-        [TX_TYPE.spend]: 'modals/confirmSpend',
-        [TX_TYPE.contractCreate]: 'modals/confirmContractDeploy',
-        [TX_TYPE.contractCall]: 'modals/confirmContractCall',
+      const modalName = {
+        [TX_TYPE.spend]: 'confirmSpend',
+        [TX_TYPE.contractCreate]: 'confirmContractDeploy',
+        [TX_TYPE.contractCall]: 'confirmContractCall',
       }[OBJECT_ID_TX_TYPE[txObject.tag]];
-      if (!confirmActionName) return dispatch('confirmRawDataSigning', txBinary);
+      if (!modalName) return dispatch('confirmRawDataSigning', txBinary);
 
       const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
       const confirmProps = {
@@ -143,12 +143,13 @@ export default {
         minFee: format(TxBuilder.calculateFee(
           0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
         )),
+        name: modalName,
       };
 
       return TxBuilder.buildTx(
         {
           ...txObject,
-          fee: (await dispatch(confirmActionName, confirmProps, { root: true }))
+          fee: (await dispatch('modals/open', confirmProps, { root: true }))
             .shiftedBy(MAGNITUDE),
         },
         OBJECT_ID_TX_TYPE[txObject.tag],
