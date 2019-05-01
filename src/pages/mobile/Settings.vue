@@ -8,6 +8,42 @@
     </Guide>
     <AeCard fill="maximum">
       <ListItem
+        :to="{ name: 'settings-network' }"
+        :subtitle="networkName"
+        title="Network"
+      >
+        <AeIcon
+          slot="icon"
+          fill="secondary"
+          face="round"
+          name="globe"
+        />
+        <AeIcon
+          slot="right"
+          name="left-more"
+        />
+      </ListItem>
+      <ListItem
+        :to="{ name: 'settings-remote-connection' }"
+        :subtitle="
+          `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
+        title="Remote connections"
+      >
+        <AeIcon
+          slot="icon"
+          fill="alternative"
+          face="round"
+          name="device"
+        />
+        <AeIcon
+          slot="right"
+          name="left-more"
+        />
+      </ListItem>
+    </AeCard>
+    <h2>Account</h2>
+    <AeCard>
+      <ListItem
         title="Logout"
         subtitle="And see you soon!"
         @click="logout"
@@ -31,34 +67,8 @@
           name="sign-out"
         />
       </ListItem>
-      <ListItem
-        :to="{ name: 'settings-network' }"
-        :subtitle="networkName"
-        title="Network"
-      >
-        <AeIcon
-          slot="icon"
-          fill="secondary"
-          face="round"
-          name="globe"
-        />
-      </ListItem>
-      <ListItem
-        :to="{ name: 'settings-remote-connection' }"
-        :subtitle="
-          `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
-        title="Remote connections"
-      >
-        <AeIcon
-          slot="icon"
-          fill="alternative"
-          face="round"
-          name="device"
-        />
-      </ListItem>
     </AeCard>
     <div
-      slot="footer"
       class="version"
     >
       Version {{ version }}
@@ -109,6 +119,20 @@ export default {
     .ae-icon-share {
       transform: rotate(90deg);
     }
+
+    .ae-icon-device {
+      background-color: #515ec8;
+    }
+
+    .ae-icon-left-more {
+      font-size: rem(20px);
+    }
+  }
+
+  h2 {
+    @extend %face-sans-s;
+    margin-top: rem(30px);
+    font-weight: 500;
   }
 
   .version {
