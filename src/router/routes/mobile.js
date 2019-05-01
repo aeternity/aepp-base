@@ -32,6 +32,7 @@ import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
 import SettingsRemoteConnection from '../../pages/mobile/SettingsRemoteConnection.vue';
 import SettingsAeppAccountAccess from '../../pages/mobile/SettingsAeppAccountAccess.vue';
+import SettingsAeppAccessControl from '../../pages/mobile/SettingsAeppAccessControl.vue';
 
 const SettingsRemoteConnectionNew = () => import('../../pages/mobile/SettingsRemoteConnectionNew.vue');
 
@@ -254,4 +255,10 @@ export default [{
   path: '/settings/aepp-account-access',
   component: SettingsAeppAccountAccess,
   beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-aepp-access-control',
+  path: '/settings/aepp-account-access/:appHost',
+  component: SettingsAeppAccessControl,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
 }];

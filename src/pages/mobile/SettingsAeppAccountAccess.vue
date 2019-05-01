@@ -12,6 +12,7 @@
       <ListItem
         v-for="app in apps"
         :key="app.name"
+        :to="{ name: 'settings-aepp-access-control', params: { appHost: app.host } }"
         :subtitle="`can access ${app.permissions.accessToAccounts.length}
           account${app.permissions.accessToAccounts.length === 1 ? '' : 's'}`"
         :title="app.name"
