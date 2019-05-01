@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     async readValueFromQrCode() {
-      await this.$store.dispatch('accounts/airGap/createByQrCode', this.$route.params.accountName);
+      await this.$store.dispatch('accounts/airGap/createByQrCode');
       this.$router.push({ name: 'vault-setup-completed' });
     },
   },
