@@ -44,7 +44,7 @@ export default (store) => {
 
               const { address: accountAddress } = store.getters['accounts/active'];
               if (!accessToAccounts.includes(accountAddress)) {
-                store.commit('grantAccessToAccount', { appHost: app.host, accountAddress });
+                store.commit('toggleAccessToAccount', { appHost: app.host, accountAddress });
               }
             }
           }

@@ -1,7 +1,9 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import { update, flatMap, merge } from 'lodash-es';
+import {
+  update, flatMap, merge, remove,
+} from 'lodash-es';
 import store from '../index';
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
@@ -113,7 +115,7 @@ export default {
       }
       state.apps.push({ host, bookmarked: true });
     },
-    grantAccessToAccount(state, { appHost, accountAddress }) {
+    toggleAccessToAccount(state, { appHost, accountAddress }) {
       if (!store.getters.getApp(appHost)) {
         state.apps.push({ host: appHost });
       }
@@ -123,7 +125,11 @@ export default {
         app,
         'permissions.accessToAccounts',
         (arr = []) => {
-          arr.push(accountAddress);
+          if (arr.includes(accountAddress)) {
+            remove(arr, address => address === accountAddress);
+          } else {
+            arr.push(accountAddress);
+          }
           return arr;
         },
       );
