@@ -34,6 +34,7 @@
       >
     </ListItemChoose>
     <ListItemChoose
+      v-if="$globals.UNFINISHED_FEATURES"
       title="Normal"
       subtitle="Install AirGap on this device"
       :checked="!maximumSecure"

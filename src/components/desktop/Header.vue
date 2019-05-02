@@ -32,7 +32,7 @@
           {{
             account
               ? `${prefixedAmount(account.balance)} AE`
-              : `With ${$globals.UNFINISHED_FEATURES ? 'Base æpp or ' : ''}Ledger`
+              : 'With Base æpp or Ledger'
           }}
         </div>
       </div>

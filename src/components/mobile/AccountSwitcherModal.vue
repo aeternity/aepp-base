@@ -33,7 +33,6 @@
         </ListItem>
 
         <ListItem
-          v-if="$globals.UNFINISHED_FEATURES"
           :to="{ name: 'vault-new' }"
           title="Create a vault for AirGap"
         >
