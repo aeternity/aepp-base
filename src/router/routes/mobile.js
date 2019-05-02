@@ -157,34 +157,33 @@ export default [{
   meta: {
     accountType: 'air-gap',
   },
+}, {
+  name: 'vault-setup-method',
+  path: '/vault/choose',
+  component: VaultSetupMethod,
+  beforeEnter: vaultBeforeEnter,
+}, {
+  name: 'vault-setup-another-device',
+  path: '/vault/another-device',
+  component: VaultSetupAnotherDevice,
+  beforeEnter: vaultBeforeEnter,
+}, {
+  name: 'vault-setup-another-device-guide',
+  path: '/vault/another-device/guide',
+  component: VaultSetupAnotherDeviceGuide,
+  beforeEnter: vaultBeforeEnter,
+}, {
+  name: 'vault-setup-completed',
+  path: '/vault/sync-completed',
+  component: VaultSetupCompleted,
+  beforeEnter: vaultBeforeEnter,
 }, ...process.env.UNFINISHED_FEATURES
   ? [{
-    name: 'vault-setup-method',
-    path: '/vault/choose',
-    component: VaultSetupMethod,
-    beforeEnter: vaultBeforeEnter,
-  }, {
-    name: 'vault-setup-another-device',
-    path: '/vault/another-device',
-    component: VaultSetupAnotherDevice,
-    beforeEnter: vaultBeforeEnter,
-  }, {
-    name: 'vault-setup-another-device-guide',
-    path: '/vault/another-device/guide',
-    component: VaultSetupAnotherDeviceGuide,
-    beforeEnter: vaultBeforeEnter,
-  }, {
     name: 'vault-setup-same-device',
     path: '/vault/this-device',
     component: VaultSetupSameDevice,
     beforeEnter: vaultBeforeEnter,
-  }, {
-    name: 'vault-setup-completed',
-    path: '/vault/sync-completed',
-    component: VaultSetupCompleted,
-    beforeEnter: vaultBeforeEnter,
-  }]
-  : [], {
+  }] : [], {
   name: 'transfer',
   path: '/transfer',
   component: Transfer,
@@ -239,7 +238,7 @@ export default [{
   path: '/settings/network/new',
   component: SettingsNetworkNew,
   beforeEnter: checkLoggedIn(false),
-}, ...process.env.UNFINISHED_FEATURES ? [{
+}, {
   name: 'settings-remote-connection',
   path: '/settings/remote-connection',
   component: SettingsRemoteConnection,
@@ -249,4 +248,4 @@ export default [{
   path: '/settings/remote-connection/new',
   component: SettingsRemoteConnectionNew,
   beforeEnter: checkLoggedIn(true),
-}] : []];
+}];

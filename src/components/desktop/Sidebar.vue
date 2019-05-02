@@ -17,10 +17,7 @@
         </ButtonPlain>
       </h1>
 
-      <div
-        v-if="$globals.UNFINISHED_FEATURES"
-        class="tabs"
-      >
+      <div class="tabs">
         <ButtonPlain
           :class="{ active: !ledgerTab }"
           @click="ledgerTab = false"
@@ -57,7 +54,7 @@ export default {
     AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain,
   },
   data: () => ({
-    ledgerTab: !process.env.UNFINISHED_FEATURES,
+    ledgerTab: false,
   }),
   computed: {
     ...mapState({
