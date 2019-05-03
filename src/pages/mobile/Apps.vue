@@ -3,24 +3,7 @@
     class="apps"
     fill="neutral"
   >
-    <Guide><em>Browse æpps</em></Guide>
-
-    <UrlForm @input="searchTerm = $event" />
-
-    <template v-if="bookmarkedApps.length">
-      <Guide>My æpps</Guide>
-
-      <div class="shortcuts">
-        <AppShortcut
-          v-for="(app, idx) in bookmarkedAppsToShow"
-          :key="`app-shortcut-aeternity-app-${idx}`"
-          v-bind="app"
-          :to="{ name: 'app-browser', params: { path: app.host } }"
-        />
-      </div>
-    </template>
-
-    <Guide>Featured æpps</Guide>
+    <Guide><em>Featured æpps</em></Guide>
 
     <AeCard fill="maximum">
       <template v-for="(app, idx) in aeternityApps">
@@ -44,6 +27,23 @@
         </p>
       </template>
     </AeCard>
+
+    <Guide>Browse æpps</Guide>
+
+    <UrlForm @input="searchTerm = $event" />
+
+    <template v-if="bookmarkedApps.length">
+      <Guide>My æpps</Guide>
+
+      <div class="shortcuts">
+        <AppShortcut
+          v-for="(app, idx) in bookmarkedAppsToShow"
+          :key="`app-shortcut-aeternity-app-${idx}`"
+          v-bind="app"
+          :to="{ name: 'app-browser', params: { path: app.host } }"
+        />
+      </div>
+    </template>
   </MobilePage>
 </template>
 
@@ -108,6 +108,10 @@ export default {
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     grid-gap: 30px 10px;
     justify-items: center;
+  }
+
+  .ae-card {
+    margin-bottom: rem(24px);
   }
 
   .app-description {
