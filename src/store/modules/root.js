@@ -1,9 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import {
-  update, flatMap, merge, remove,
-} from 'lodash-es';
+import { update, flatMap, merge } from 'lodash-es';
 import store from '../index';
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
@@ -124,14 +122,9 @@ export default {
       update(
         app,
         'permissions.accessToAccounts',
-        (arr = []) => {
-          if (arr.includes(accountAddress)) {
-            remove(arr, address => address === accountAddress);
-          } else {
-            arr.push(accountAddress);
-          }
-          return arr;
-        },
+        (arr = []) => (arr.includes(accountAddress)
+          ? arr.filter(address => address !== accountAddress)
+          : [...arr, accountAddress]),
       );
     },
     setCachedAppManifest({ cachedAppManifests }, { host, manifest }) {
