@@ -8,6 +8,7 @@
     fill="neutral"
   >
     <p>Manage which æpps can access your (sub)accounts</p>
+
     <AeCard fill="maximum">
       <ListItem
         v-for="app in apps"
@@ -62,18 +63,9 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.settings-app-list {
-  p {
-    @extend %face-sans-s;
-    margin-top: rem(30px);
-    color: $color-neutral;
-  }
-
-  img {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    color: inherit;
-  }
+.settings-app-list p {
+  margin-top: rem(30px);
+  @extend %face-sans-s;
+  color: $color-neutral;
 }
 </style>
