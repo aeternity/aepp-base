@@ -1,0 +1,23 @@
+<template>
+  <div class="onboarding-page">
+    <img src="../../assets/onboarding/subaccounts.svg">
+    <Guide>
+      <em>Create subaccounts</em>
+      in&nbsp;seconds
+      <div class="note">
+        Create dedicated accounts for
+        spending, storage and to fuel æpps.
+      </div>
+    </Guide>
+  </div>
+</template>
+
+<script>
+import Guide from '../../components/Guide.vue';
+
+export default {
+  components: { Guide },
+};
+</script>
+
+<style lang="scss" src="./OnboardingPage.scss" scoped />

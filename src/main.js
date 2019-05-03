@@ -1,57 +1,37 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import Router from 'vue-router'
-import VueClipboard from 'vue-clipboard2'
-import VeeValidate, { Validator } from 'vee-validate'
-import { focus } from 'vue-focus'
-import App from './App.vue'
-import getRouter from './router/index'
-import store from './store'
+import Vue from 'vue';
+import Router from 'vue-router';
+import 'normalize.css';
+import '@aeternity/aepp-components-3/dist/aepp.components.css';
+import 'focus-visible';
+import sync from './lib/vuexRouterSync';
+import './lib/setGlobalPolyfills';
+import './lib/initEnv';
+import './lib/switchWebmanifest';
+import './register-modals';
+import VeeValidate from './lib/veeValidatePlugin';
+import App from './App.vue';
+import AppDesktop from './AppDesktop.vue';
+import router from './router';
+import store from './store';
 
-Validator.extend('min_value_exclusive', (value, [min]) => Number(value) > min)
-Validator.extend('url_http', (value) => {
-  try {
-    const url = new URL((/^\w+:\//.test(value) ? '' : `http://`) + value)
-    return ['http:', 'https:'].includes(url.protocol)
-  } catch (e) {
-    return false
-  }
-})
+Vue.use(Router);
+Vue.use(VeeValidate);
 
-Vue.use(Router)
-Vue.use(VueClipboard)
-Vue.use(VeeValidate, {
-  dictionary: {
-    en: {
-      messages: {
-        required: 'This field is required',
-        min: (field, [length]) => `This field must be at least ${length} characters`,
-        min_value: (field, [min]) => `This field must be ${min} or more`,
-        min_value_exclusive: (field, [min]) => `This field must be more than ${min}`,
-        max_value: (field, [max]) => `This field must be ${max} or less`,
-        not_in: () => 'This field must be a valid value',
-        decimal: () => 'This field must be numeric and may contain decimal points',
-        url_http: () => 'This field is not a valid HTTP(S) URL'
-      }
-    }
-  }
-})
-Vue.directive('focus', focus)
+Vue.config.productionTip = false;
+Vue.prototype.$globals = {
+  IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE,
+  IS_IOS: process.env.IS_IOS,
+  UNFINISHED_FEATURES: process.env.UNFINISHED_FEATURES,
+};
 
-console.log('use setRPCUrl(\'http://rpc-endpoint:8545\') to set the identity manager RPC endpoint')
-window.setRPCUrl = function (rpcURL = 'https://kovan.infura.io') {
-  store.commit('setRPCUrl', rpcURL)
+sync(store, router);
+
+if (process.env.NODE_ENV === 'development') {
+  window.store = store;
 }
 
-Vue.config.productionTip = false
-
-/* eslint-disable no-new */
-const IdentityApp = Vue.extend({
-  render: h => h(App),
-  components: { App },
+new Vue({
   store,
-  router: getRouter(store)
-})
-const vm = new IdentityApp()
-vm.$mount('#app')
+  router,
+  render: h => h(process.env.IS_MOBILE_DEVICE ? App : AppDesktop),
+}).$mount('#app');

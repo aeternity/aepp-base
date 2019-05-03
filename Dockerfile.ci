@@ -1,0 +1,29 @@
+FROM tamasbarta/docker-android-sdk:28.0.3
+
+ENV NODEJS_VERSION=10.15.3 \
+    PATH=$PATH:/opt/node/bin
+
+RUN apt-get update && \
+    apt-get install -y python \
+                       build-essential \
+                       libfontconfig \
+                       curl \
+                       gradle \
+                       imagemagick &&\
+    curl -sL https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.gz | tar xz --strip-components=1 &&\
+    rm -rf /var/lib/apt/lists/*
+
+ENV GRADLE_OPTS=${GRADLE_OPTS}\ -Dorg.gradle.daemon=false
+
+RUN mkdir app
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install && npx cordova telemetry off
+
+# As cordova changes global modules when adding a platform, we have to build the apk already during the docker build process
+COPY . .
+RUN npm run build:cordova
+RUN npx cordova prepare android
+RUN npm run gen:cordova-resources
+RUN npx cordova build android -- --gradleArg=--no-daemon

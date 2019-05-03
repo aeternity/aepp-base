@@ -1,148 +1,51 @@
-import Router from 'vue-router'
+import Router from 'vue-router';
+import store from '../store';
+import mobileRoutes from './routes/mobile';
+import desktopRoutes from './routes/desktop';
+import commonRoutes from './routes/common';
+import AddToHomeScreenPrompt from '../pages/mobile/AddToHomeScreenPrompt.vue';
 
-import Intro from '@/pages/Intro.vue'
-import Onboarding from '@/pages/Onboarding/Onboarding.vue'
-import Login from '@/pages/Login.vue'
-import Recover from '@/pages/Recover.vue'
-import NewAccount from '@/pages/NewAccount.vue'
-import SetPassword from '@/pages/SetPassword.vue'
-import Apps from '@/pages/Apps/Apps.vue'
-import AppBrowser from '@/pages/AppBrowser/AppBrowser.vue'
-import Transfer from '@/pages/Transfer/Transfer.vue'
-import Network from '@/pages/Network.vue'
-import AddApp from '@/pages/AddApp/AddApp.vue'
-import AddressBook from '@/pages/AddressBook.vue'
-import AddressBookNew from '@/pages/AddressBookNew.vue'
-import AddressBookChoose from '@/pages/AddressBookChoose.vue'
-
-export default (store) => {
-  let loginTarget
-
-  const checkLoggedIn = (to, from, next) => {
-    const name = !store.state.keystore && 'intro' ||
-      !store.state.derivedKey && 'login'
-    if (name) {
-      loginTarget = to.fullPath
-      next({ name })
-      return
+const router = new Router({
+  routes:
+    process.env.IS_MOBILE_DEVICE
+      ? (!process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS && process.env.NODE_ENV === 'production'
+        && [{
+          path: '/',
+          component: AddToHomeScreenPrompt,
+        }])
+        || [...mobileRoutes, ...commonRoutes]
+      : [...desktopRoutes, ...commonRoutes],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
     }
-    next()
-  }
+    return { x: 0, y: 0 };
+  },
+});
 
-  const router = new Router({
-    routes: [
-      {
-        name: 'intro',
-        path: '/',
-        component: Intro,
-        beforeEnter (to, from, next) {
-          if (!from.name && store.state.keystore) return next({ name: 'login' })
-          next()
-        }
-      },
-      {
-        name: 'onboarding',
-        path: '/onboarding',
-        component: Onboarding
-      },
-      {
-        name: 'login',
-        path: '/login',
-        component: Login,
-        beforeEnter (to, from, next) {
-          if (!store.state.keystore) return next({ name: 'new-account' })
-          if (store.state.derivedKey) return next({ name: 'apps' })
-          next()
-        }
-      },
-      {
-        name: 'recover',
-        path: '/recover',
-        component: Recover
-      },
-      {
-        name: 'new-account',
-        path: '/new-account',
-        component: NewAccount
-      },
-      {
-        name: 'set-password',
-        path: '/set-password',
-        component: SetPassword,
-        beforeEnter (to, from, next) {
-          if (!store.state.seed) return next({ name: 'intro' })
-          next()
-        }
-      },
-      {
-        name: 'apps',
-        path: '/apps',
-        component: Apps,
-        beforeEnter: checkLoggedIn
-      },
-      {
-        name: 'transfer',
-        path: '/transfer/:to?/:currency?',
-        component: Transfer,
-        beforeEnter: checkLoggedIn
-      },
-      {
-        name: 'network',
-        path: '/network',
-        component: Network,
-        beforeEnter: checkLoggedIn
-      },
-      {
-        name: 'add-app',
-        path: '/add-app',
-        component: AddApp,
-        beforeEnter: checkLoggedIn
-      },
-      {
-        name: 'address-book',
-        path: '/address-book',
-        component: AddressBook,
-        beforeEnter: checkLoggedIn
-      },
-      {
-        name: 'address-book-new',
-        path: '/address-book/new',
-        component: AddressBookNew,
-        beforeEnter: checkLoggedIn
-      },
-      {
-        name: 'address-book-choose',
-        path: '/address-book/choose/:redirectPathTemplate',
-        component: AddressBookChoose,
-        beforeEnter: checkLoggedIn,
-        props: true
-      },
-      {
-        name: 'app-browser',
-        path: '/:name/:path*',
-        component: AppBrowser,
-        beforeEnter: checkLoggedIn
+store.watch(
+  (state, { loggedIn }) => loggedIn,
+  (loggedIn) => {
+    if (loggedIn) {
+      if (process.env.IS_MOBILE_DEVICE || store.state.loginTarget) {
+        router.push(store.state.loginTarget || { name: 'transfer' });
+        store.commit('setLoginTarget');
       }
-    ]
-  })
-
-  store.subscribe(function (mutation, state) {
-    switch (mutation.type) {
-      case 'setDerivedKey':
-        if (state.keystore) {
-          if (state.derivedKey) {
-            router.push(loginTarget || { name: 'apps' })
-            loginTarget = undefined
-          } else {
-            router.push({ name: 'login' })
-          }
-        }
-        break
-      case 'setSeed':
-        if (state.seed) router.push({ name: 'set-password' })
-        break
+    } else {
+      const { fullPath } = router.currentRoute;
+      router.replace({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'apps' });
+      router.replace(fullPath);
     }
-  })
+  },
+);
 
-  return router
-}
+store.subscribe((mutation, state) => {
+  switch (mutation.type) {
+    case 'toggleSidebar':
+      if (!state.desktop.showSidebar) store.commit('setLoginTarget');
+      break;
+    default:
+  }
+});
+
+export default router;

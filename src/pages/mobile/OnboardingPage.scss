@@ -1,0 +1,45 @@
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.onboarding-page {
+  margin: auto 0;
+  text-align: center;
+
+  &.v-enter-active, &.v-leave-active {
+    transition-duration: .25s;
+
+    img {
+      transition: opacity .25s ease-out;
+    }
+  }
+
+  &.v-leave-active img {
+    transition-timing-function: ease-in;
+  }
+
+  &.v-enter, &.v-leave-to {
+    img {
+      opacity: 0;
+    }
+  }
+
+  .guide {
+    display: block;
+    min-height: rem(133px);
+    margin-bottom: 0;
+    margin-left: rem(20px);
+    margin-right: rem(20px);
+
+    .note {
+      margin-top: rem(5px);
+      @extend %face-sans-base;
+      font-weight: 500;
+      color: $color-neutral-negative-2;
+    }
+  }
+
+  img {
+    margin-bottom: rem(30px);
+    height: 300px;
+  }
+}
