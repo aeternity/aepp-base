@@ -12,7 +12,7 @@
     <AeCard fill="maximum">
       <ListItem
         v-for="app in apps"
-        :key="app.name"
+        :key="app.host"
         :to="{ name: 'settings-app-details', params: { appHost: app.host } }"
         :subtitle="`can access ${app.permissions.accessToAccounts.length}
           account${app.permissions.accessToAccounts.length === 1 ? '' : 's'}`"
