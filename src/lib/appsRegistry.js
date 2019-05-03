@@ -6,8 +6,8 @@ export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
 
 const showVotingApp = inRange(
   Date.now(),
-  (new Date('2019-05-07T00:00:00+0200')).getTime(),
-  (new Date('2019-05-15T00:00:00+0200')).getTime(),
+  (new Date('2019-05-06T22:00:00.000Z')).getTime(),
+  (new Date('2019-05-14T22:00:00.000Z')).getTime(),
 );
 
 export const aeternityApps = [...showVotingApp ? [{
