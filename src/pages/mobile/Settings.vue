@@ -31,7 +31,6 @@
       >
         <AeIcon
           slot="icon"
-          fill="alternative"
           face="round"
           name="device"
         />
