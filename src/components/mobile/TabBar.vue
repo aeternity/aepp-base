@@ -1,5 +1,7 @@
 <template>
   <div class="tab-bar">
+    <ConnectionStatus />
+
     <div class="wrapper">
       <ButtonPlain :to="browserPath || { name: 'apps' }">
         <AeIcon name="grid" />
@@ -38,9 +40,15 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
+import ConnectionStatus from './ConnectionStatus.vue';
 
 export default {
-  components: { AeIdenticon, AeIcon, ButtonPlain },
+  components: {
+    AeIdenticon,
+    AeIcon,
+    ButtonPlain,
+    ConnectionStatus,
+  },
   props: {
     showAccountSwitcher: { type: Boolean },
   },
