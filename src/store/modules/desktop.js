@@ -5,6 +5,7 @@ export default {
     remoteConnected: false,
     ledgerSupported: false,
     showSidebar: false,
+    showGuideOnStartup: true,
   },
 
   getters: {
@@ -21,6 +22,9 @@ export default {
     },
     toggleSidebar(state) {
       state.showSidebar = !state.showSidebar;
+    },
+    markGuideAsRead(state) {
+      state.showGuideOnStartup = false;
     },
   },
 };
