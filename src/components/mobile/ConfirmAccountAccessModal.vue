@@ -74,6 +74,8 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
 .confirm-account-access-modal {
+  padding-bottom: rem(70px + 28px + 20px);
+
   /deep/ .modal-plain {
     max-width: rem(250px);
     padding: rem(32px);
