@@ -9,14 +9,7 @@
       <br><AccountInline :address="activeAccount.address" />
     </Guide>
 
-    <DetailsPermission name="Accessing accounts">
-      This aepp will be able to read your public key
-    </DetailsPermission>
-
-    <DetailsPermission name="Preparing transactions">
-      This allows this app to prepare a transaction.
-      You will need to sign the transaction manually.
-    </DetailsPermission>
+    <DetailsAccountAccessPermission :app-name="app.name" />
 
     <AeButtonGroup>
       <AeButton
@@ -37,7 +30,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import Modal from './Modal.vue';
-import DetailsPermission from './DetailsPermission.vue';
+import DetailsAccountAccessPermission from './DetailsAccountAccessPermission.vue';
 import Guide from '../Guide.vue';
 import AccountInline from '../AccountInline.vue';
 import AeButton from '../AeButton.vue';
@@ -49,7 +42,7 @@ export default {
     Modal,
     Guide,
     AccountInline,
-    DetailsPermission,
+    DetailsAccountAccessPermission,
     AeButtonGroup,
     AeButton,
     TabBar,
@@ -86,7 +79,7 @@ export default {
     padding: rem(32px);
   }
 
-  .details-permission {
+  .details-account-access-permission {
     --color-primary: #{$color-neutral-negative-3};
     --color-secondary: #{$color-neutral};
   }

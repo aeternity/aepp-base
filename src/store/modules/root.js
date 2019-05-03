@@ -113,7 +113,7 @@ export default {
       }
       state.apps.push({ host, bookmarked: true });
     },
-    grantAccessToAccount(state, { appHost, accountAddress }) {
+    toggleAccessToAccount(state, { appHost, accountAddress }) {
       if (!store.getters.getApp(appHost)) {
         state.apps.push({ host: appHost });
       }
@@ -122,10 +122,9 @@ export default {
       update(
         app,
         'permissions.accessToAccounts',
-        (arr = []) => {
-          arr.push(accountAddress);
-          return arr;
-        },
+        (arr = []) => (arr.includes(accountAddress)
+          ? arr.filter(address => address !== accountAddress)
+          : [...arr, accountAddress]),
       );
     },
     setCachedAppManifest({ cachedAppManifests }, { host, manifest }) {

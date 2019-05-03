@@ -31,6 +31,8 @@ import Settings from '../../pages/mobile/Settings.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
 import SettingsRemoteConnection from '../../pages/mobile/SettingsRemoteConnection.vue';
+import SettingsAppList from '../../pages/mobile/SettingsAppList.vue';
+import SettingsAppDetails from '../../pages/mobile/SettingsAppDetails.vue';
 
 const SettingsRemoteConnectionNew = () => import('../../pages/mobile/SettingsRemoteConnectionNew.vue');
 
@@ -248,4 +250,15 @@ export default [{
   path: '/settings/remote-connection/new',
   component: SettingsRemoteConnectionNew,
   beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-app-list',
+  path: '/settings/apps',
+  component: SettingsAppList,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-app-details',
+  path: '/settings/apps/:appHost',
+  component: SettingsAppDetails,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
 }];

@@ -4,7 +4,7 @@
       :name="name"
       :value="value"
       :checked="checked"
-      type="radio"
+      :type="checkbox? 'checkbox' : 'radio'"
       @change="$emit('change')"
     >
     <AeIcon
@@ -24,6 +24,7 @@ export default {
     name: { type: String, default: '' },
     value: { type: [String, Number, Boolean], default: '' },
     checked: { type: Boolean, default: false },
+    checkbox: { type: Boolean, default: false },
   },
 };
 </script>
