@@ -53,7 +53,7 @@ export default {
   }),
   computed: mapState({
     apps: ({ apps }, { getAppMetadata }) => apps
-      .filter((app => get(app, 'permissions.accessToAccounts.length', 0)))
+      .filter(app => get(app, 'permissions.accessToAccounts.length', 0))
       .map(app => ({ ...app, ...getAppMetadata(app.host) })),
   }),
 };
