@@ -7,14 +7,7 @@
     header-fill="light"
     fill="neutral"
   >
-    <DetailsPermission name="Address">
-      This aepp asks for access your public address.
-    </DetailsPermission>
-
-    <DetailsPermission name="Transactions">
-      Drone Project involves an auction.
-      The æpp will prepare a transaction, you are in charge of confirming it.
-    </DetailsPermission>
+    <DetailsAccountAccessPermission :app-name="app.name" />
 
     <AeCard fill="maximum">
       <ListItemAccount
@@ -38,7 +31,7 @@
 import { mapState, mapMutations } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
-import DetailsPermission from '../../components/mobile/DetailsPermission.vue';
+import DetailsAccountAccessPermission from '../../components/mobile/DetailsAccountAccessPermission.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import AeRadio from '../../components/AeRadio.vue';
 
@@ -46,7 +39,7 @@ export default {
   components: {
     MobilePage,
     AeCard,
-    DetailsPermission,
+    DetailsAccountAccessPermission,
     ListItemAccount,
     AeRadio,
   },
@@ -66,8 +59,12 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.settings-app-details .details-permission {
+.settings-app-details .details-account-access-permission {
   --color-primary: #{$color-neutral-negative-3};
   --color-secondary: #{$color-neutral};
+
+  /deep/ .details-permission:first-child {
+    border-top: none;
+  }
 }
 </style>
