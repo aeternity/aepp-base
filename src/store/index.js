@@ -28,7 +28,7 @@ const store = new Vuex.Store({
         migrations, sdkUrl, addressBook, customNetworks,
         apps, cachedAppManifests, peerId,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet } = {} } = {},
-        mobile: { followers } = {},
+        mobile: { securityCourses, followers } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
         migrations,
@@ -56,6 +56,7 @@ const store = new Vuex.Store({
           apps,
           cachedAppManifests,
           mobile: {
+            securityCourses,
             followers: Object.entries(followers)
               .reduce((p, [k, { id, name, disconnectedAt }]) => (
                 { ...p, [k]: { id, name, disconnectedAt } }), {}),

@@ -2,7 +2,7 @@
   <ListItem
     v-bind="$attrs"
     class="list-item-choose"
-    :class="{ checked }"
+    :class="{ checked, showmark }"
     v-on="$listeners"
   >
     <slot
@@ -20,6 +20,7 @@ export default {
   components: { ListItem },
   props: {
     checked: { type: Boolean },
+    showmark: { type: Boolean, default: true },
   },
 };
 </script>
@@ -41,23 +42,25 @@ export default {
     box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.15);
     filter: none;
 
-    &::before {
-      content: '';
-      position: absolute;
-      right: 0;
-      border-width: rem(32px) 0 0 rem(32px);
-      border-style: solid;
-      border-color: $color-alternative transparent;
-    }
+    &.showmark {
+      &::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        border-width: rem(32px) 0 0 rem(32px);
+        border-style: solid;
+        border-color: $color-alternative transparent;
+      }
 
-    &::after {
-      content: '✓';
-      position: absolute;
-      top: 0;
-      right: rem(3px);
-      @extend %face-sans-s;
-      font-weight: 500;
-      color: $color-neutral-maximum;
+      &::after {
+        content: '✓';
+        position: absolute;
+        top: 0;
+        right: rem(3px);
+        @extend %face-sans-s;
+        font-weight: 500;
+        color: $color-neutral-maximum;
+      }
     }
   }
 

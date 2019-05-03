@@ -7,6 +7,7 @@ export default {
     followers: {},
     stepFraction: null,
     browserPath: '',
+    securityCourses: {},
   },
 
   getters: {
@@ -35,6 +36,9 @@ export default {
     },
     setBrowserPath(state, browserPath) {
       state.browserPath = browserPath;
+    },
+    addCourse(state, courseName) {
+      Vue.set(state.securityCourses, courseName, true);
     },
   },
 };
