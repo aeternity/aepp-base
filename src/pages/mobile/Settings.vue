@@ -57,7 +57,7 @@
       </ListItem>
     </AeCard>
     <h2>Account</h2>
-    <AeCard>
+    <AeCard fill="maximum">
       <ListItem
         title="Logout"
         subtitle="And see you soon!"
