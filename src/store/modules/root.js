@@ -20,6 +20,7 @@ export default {
     apps: [],
     cachedAppManifests: {},
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
+    onLine: true,
   }),
 
   getters: {
@@ -132,6 +133,9 @@ export default {
     },
     setServiceWorkerRegistration(state, serviceWorkerRegistration) {
       state.serviceWorkerRegistration = serviceWorkerRegistration;
+    },
+    setOnLine(state, onLine) {
+      state.onLine = onLine;
     },
   },
 

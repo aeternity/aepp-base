@@ -12,12 +12,6 @@ export default (store) => {
           autoClose: true,
         });
       },
-      offline() {
-        store.dispatch('setNotification', {
-          text: 'You are currently offline',
-          autoClose: true,
-        });
-      },
     });
   }
 };

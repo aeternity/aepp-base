@@ -81,15 +81,6 @@ export default (store) => {
           internalUrl: currentNetwork.url,
           compilerUrl: 'https://compiler.aepps.com',
         });
-      } catch (error) {
-        if (error.message === 'Network Error') {
-          store.dispatch('setNotification', {
-            text: `Can't connect to '${currentNetwork.name}' network`,
-            autoClose: true,
-          });
-          return;
-        }
-        throw error;
       } finally {
         if (store.state.sdk) store.state.sdk.destroyInstance();
         store.commit('setSdk', sdk);
