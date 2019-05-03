@@ -1,6 +1,6 @@
 <template>
   <MobilePage
-    class="settings-aepp-account-access"
+    class="settings-app-list"
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     title="Aepp account access"
@@ -12,7 +12,7 @@
       <ListItem
         v-for="app in apps"
         :key="app.name"
-        :to="{ name: 'settings-aepp-access-control', params: { appHost: app.host } }"
+        :to="{ name: 'settings-app-details', params: { appHost: app.host } }"
         :subtitle="`can access ${app.permissions.accessToAccounts.length}
           account${app.permissions.accessToAccounts.length === 1 ? '' : 's'}`"
         :title="app.name"
@@ -62,7 +62,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.settings-aepp-account-access {
+.settings-app-list {
   p {
     @extend %face-sans-s;
     margin-top: rem(30px);

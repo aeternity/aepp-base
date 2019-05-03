@@ -1,7 +1,7 @@
 <template>
   <MobilePage
-    class="settings-aepp-access-control"
-    :left-button-to="{ name: 'settings-aepp-account-access' }"
+    class="settings-app-details"
+    :left-button-to="{ name: 'settings-app-list' }"
     left-button-icon-name="back"
     :title="app.name"
     header-fill="light"
@@ -66,10 +66,8 @@ export default {
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-.settings-aepp-access-control {
-  .details-permission {
-    --color-primary: #{$color-neutral-negative-3};
-    --color-secondary: #{$color-neutral};
-  }
+.settings-app-details .details-permission {
+  --color-primary: #{$color-neutral-negative-3};
+  --color-secondary: #{$color-neutral};
 }
 </style>

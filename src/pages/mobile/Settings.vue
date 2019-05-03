@@ -40,7 +40,7 @@
         />
       </ListItem>
       <ListItem
-        :to="{ name: 'settings-aepp-account-access' }"
+        :to="{ name: 'settings-app-list' }"
         :subtitle="`${appsLength} aepp${appsLength > 1? 's' : ''} have account access`"
         title="Aepp account access"
       >
