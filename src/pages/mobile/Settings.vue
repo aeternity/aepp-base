@@ -55,6 +55,7 @@
         />
       </ListItem>
     </AeCard>
+
     <h2>Account</h2>
     <AeCard fill="maximum">
       <ListItem
@@ -82,9 +83,8 @@
         />
       </ListItem>
     </AeCard>
-    <div
-      class="version"
-    >
+
+    <div class="version">
       Version {{ version }}
     </div>
   </MobilePage>
