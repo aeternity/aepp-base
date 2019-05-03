@@ -25,8 +25,7 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-remote-connection' }"
-        :subtitle="
-          `${remoteConnectionsCount} device${remoteConnectionsCount === 1 ? '' : 's'} connected`"
+        :subtitle="remoteConnectionsSubtitle"
         title="Remote connections"
       >
         <AeIcon
@@ -41,7 +40,7 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-app-list' }"
-        :subtitle="`${appsLength} aepp${appsLength > 1? 's' : ''} have account access`"
+        :subtitle="appsAccountAccessSubtitle"
         title="Aepp account access"
       >
         <AeIcon
@@ -111,10 +110,15 @@ export default {
     version: process.env.npm_package_version,
   }),
   computed: mapState({
-    appsLength: ({ apps }) => apps.filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length,
     networkName: (state, { currentNetwork }) => currentNetwork.name,
-    remoteConnectionsCount: ({ mobile }) => Object.entries(mobile.followers)
-      .filter(([, f]) => f.connected).length,
+    remoteConnectionsSubtitle: ({ mobile }) => {
+      const c = Object.entries(mobile.followers).filter(([, f]) => f.connected).length;
+      return `${c} device${c === 1 ? '' : 's'} connected`;
+    },
+    appsAccountAccessSubtitle: ({ apps }) => {
+      const c = apps.filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length;
+      return `${c} aepp${c === 1 ? '' : 's'} have account access`;
+    },
   }),
   methods: {
     signOut() {
