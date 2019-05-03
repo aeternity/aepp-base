@@ -14,13 +14,12 @@
         v-for="app in apps"
         :key="app.host"
         :to="{ name: 'settings-app-details', params: { appHost: app.host } }"
-        :subtitle="`can access ${app.permissions.accessToAccounts.length}
-          account${app.permissions.accessToAccounts.length === 1 ? '' : 's'}`"
         :title="app.name"
+        :subtitle="app.subtitle"
       >
         <img
           slot="icon"
-          :src="app.icon || DEFAULT_ICON"
+          :src="app.icon"
           :alt="app.name"
         >
         <AeIcon
@@ -48,13 +47,18 @@ export default {
     ListItem,
     AeIcon,
   },
-  data: () => ({
-    DEFAULT_ICON,
-  }),
   computed: mapState({
     apps: ({ apps }, { getAppMetadata }) => apps
       .filter(app => get(app, 'permissions.accessToAccounts.length', 0))
-      .map(app => ({ ...app, ...getAppMetadata(app.host) })),
+      .map((app) => {
+        const c = app.permissions.accessToAccounts.length;
+        return {
+          icon: DEFAULT_ICON,
+          ...app,
+          ...getAppMetadata(app.host),
+          subtitle: `can access ${c} account${c === 1 ? '' : 's'}`,
+        };
+      }),
   }),
 };
 </script>
