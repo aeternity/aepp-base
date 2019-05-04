@@ -1,4 +1,3 @@
-import { merge } from 'lodash-es';
 import runMigrations from '../migrations';
 
 const KEY = 'vuex';
@@ -35,14 +34,12 @@ export const resetState = () => {
 };
 
 export default (reducerLoad, reducerSave) => (store) => {
-  const savedState = getState();
-  const migratedState = reducerLoad(runMigrations(savedState, store));
   let resetting = false;
+  let lastEmitedState = reducerLoad(runMigrations(getState(), store));
+  store.commit('syncState', lastEmitedState);
 
-  store.replaceState(merge({}, store.state, migratedState));
-
-  store.subscribe((mutation, state) => {
-    if (resetting) return;
+  store.subscribe(({ type, payload }, state) => {
+    if (resetting || (type === 'syncState' && payload === lastEmitedState)) return;
     setState(reducerSave(state));
   });
 
@@ -53,5 +50,10 @@ export default (reducerLoad, reducerSave) => (store) => {
         resetState();
       },
     },
+  });
+
+  window.addEventListener('storage', () => {
+    lastEmitedState = reducerLoad(getState());
+    store.commit('syncState', lastEmitedState);
   });
 };
