@@ -12,6 +12,7 @@ import App from './App.vue';
 import AppDesktop from './AppDesktop.vue';
 import router from './router';
 import store from './store';
+import uiPlugin from './store/plugins/ui';
 
 Vue.use(Router);
 Vue.use(VeeValidate);
@@ -23,6 +24,7 @@ Vue.prototype.$globals = {
 };
 
 sync(store, router);
+uiPlugin(store);
 
 new Vue({
   store,
