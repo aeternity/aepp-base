@@ -5,6 +5,7 @@ export const getDesktopRemoveSignAction = methodName => ({ dispatch }, payload) 
     { name: methodName, args: [payload] },
     { root: true },
   );
+  if (process.env.RUNNING_IN_FRAME) return signPromise;
   const cancelSignPromise = dispatch('modals/open', { name: 'cancelSign' }, { root: true })
     .then(() => signPromise.cancel());
   return signPromise.finally(() => cancelSignPromise.cancel());
