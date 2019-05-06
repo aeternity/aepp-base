@@ -2,9 +2,9 @@
   <div
     v-if="message"
     class="connection-status"
-    :class="className"
+    :class="message.className"
   >
-    {{ message }}
+    {{ message.text }}
   </div>
 </template>
 
@@ -14,18 +14,12 @@ import { mapState } from 'vuex';
 export default {
   computed: mapState({
     message: ({ onLine, sdk }) => {
-      if (!onLine) return 'You are offline... Please check your connection.';
-      if (!sdk) return 'We are unable to connect to the chosen node.';
+      if (!onLine) return { text: 'You are offline... Please check your connection.' };
+      if (!sdk) return { text: 'We are unable to connect to the chosen node.' };
       if (process.env.NODE_ENV === 'production' && sdk.nodeNetworkId !== 'ae_mainnet') {
-        return 'You are connected to a testnet.';
+        return { text: 'You are connected to a testnet.', className: 'test-net' };
       }
-      return '';
-    },
-    className: ({ sdk }) => {
-      if (process.env.NODE_ENV === 'production' && sdk && sdk.nodeNetworkId !== 'ae_mainnet') {
-        return 'test-net';
-      }
-      return '';
+      return null;
     },
   }),
 };
