@@ -3,7 +3,8 @@ import tokenMigrationIcon from '../assets/icons/aepps/token-migration.jpg';
 
 export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
 
-const showVotingApp = (new Date('2019-05-06T22:00:00.000Z')).getTime() <= Date.now();
+const showVotingApp = new Date('2019-05-06T22:00:00.000Z').getTime() <= Date.now()
+  || process.env.VUE_APP_SHOW_VOTING_APP;
 
 export const aeternityApps = [...showVotingApp ? [{
   name: 'æternity Voting',
