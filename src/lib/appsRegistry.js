@@ -1,14 +1,9 @@
-import { inRange } from 'lodash-es';
 import blockchainExplorerIcon from '../assets/icons/aepps/blockchain-explorer.svg';
 import tokenMigrationIcon from '../assets/icons/aepps/token-migration.jpg';
 
 export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
 
-const showVotingApp = inRange(
-  Date.now(),
-  (new Date('2019-05-06T22:00:00.000Z')).getTime(),
-  (new Date('2019-05-14T22:00:00.000Z')).getTime(),
-);
+const showVotingApp = (new Date('2019-05-06T22:00:00.000Z')).getTime() <= Date.now();
 
 export const aeternityApps = [...showVotingApp ? [{
   name: 'æternity Voting',
