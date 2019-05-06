@@ -8,6 +8,7 @@
     @right-button-click="$router.back()"
   >
     <SecurityCourse
+      name="settings-security-courses-intro"
       title="Intro & Disclaimer"
       subtitle="Security Course 1"
     />
