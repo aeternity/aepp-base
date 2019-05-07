@@ -57,7 +57,8 @@
 </template>
 
 <script>
-import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
+import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
+import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import AePopover from './AePopover.vue';
@@ -65,7 +66,7 @@ import ListItemAccount from './ListItemAccount.vue';
 
 export default {
   directives: {
-    removeSpacesOnCopy: directives.removeSpacesOnCopy,
+    removeSpacesOnCopy,
   },
   components: {
     AeIdenticon, AeIcon, AeTextareaFormatted, AeToolbarButton, AePopover, ListItemAccount,
