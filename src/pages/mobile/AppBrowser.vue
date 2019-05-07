@@ -68,7 +68,11 @@ export default {
   computed: {
     url() {
       const path = this.$route.fullPath.replace('/browser/', '');
-      return `http${window.location.protocol === 'https:' ? 's' : ''}://${path}`;
+      const url = new URL(/^\w+:/.test(path) ? path : `http://${path}`);
+      if (!['https:', 'http:'].includes(url.protocol)) url.protocol = 'http:';
+      if (window.location.protocol === 'https:') url.protocol = 'https:';
+      if (url.toString() !== path) this.$router.replace(`/browser/${url}`);
+      return url.toString();
     },
     host() {
       return new URL(this.url).host;

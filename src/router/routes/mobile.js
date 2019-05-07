@@ -140,7 +140,7 @@ export default [{
   beforeEnter: checkLoggedIn(false),
 }, {
   name: 'app-browser',
-  path: '/browser/:path+',
+  path: '/browser/*',
   component: AppBrowser,
   beforeEnter: checkLoggedIn(false),
 }, {
