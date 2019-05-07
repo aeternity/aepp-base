@@ -48,6 +48,13 @@
         :to="{ name: 'transaction-details', params: { hash: transaction.hash } }"
       />
     </template>
+
+    <div
+      v-if="!waitingTransactions && !Object.keys(spendTransactionsGroupedByDay).length"
+      class="no-transactions"
+    >
+      There are no transaction associated with this account.
+    </div>
   </MobilePage>
 </template>
 
@@ -169,6 +176,14 @@ export default {
     vertical-align: middle;
     color: $color-neutral-negative-1;
     background-color: $color-neutral-positive-3;
+  }
+
+  .no-transactions {
+    margin-top: rem(10px);
+    @extend %face-sans-base;
+    text-align: center;
+    font-weight: 500;
+    color: $color-neutral-negative-3;
   }
 }
 </style>

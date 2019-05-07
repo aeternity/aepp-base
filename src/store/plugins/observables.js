@@ -52,7 +52,7 @@ export default (store) => {
     getBalance,
     activeAccount: watchAsObservable(
       (state, getters) => getters['accounts/active'],
-      { immediate: true },
+      { immediate: true, deep: true },
     )
       .pipe(
         pluck('newValue'),
