@@ -7,7 +7,7 @@ describe('UrlForm', () => {
     routerPath: '/browser/example.com',
   }, {
     typedAddress: 'https://example.com/test',
-    routerPath: '/browser/example.com/test',
+    routerPath: '/browser/https://example.com/test',
   }].forEach(({ typedAddress, routerPath }) => it(
     `passes address "${typedAddress}" to router properly`,
     () => {
