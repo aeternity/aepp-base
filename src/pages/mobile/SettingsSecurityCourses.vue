@@ -13,6 +13,7 @@
       subtitle="Security Course 1"
     />
     <SecurityCourse
+      name="settings-security-courses-bank"
       title="You are the bank"
       subtitle="Security Course 2"
     />

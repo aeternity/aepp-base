@@ -41,6 +41,7 @@
     </p>
     <AeButton
       fill="alternative"
+      :to="{ name: 'settings-security-courses-bank' }"
     >
       Go to course 2
     </AeButton>

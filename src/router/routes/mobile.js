@@ -37,6 +37,7 @@ import SettingsMnemonicConfirmed from '../../pages/mobile/SettingsMnemonicConfir
 import SettingsMnemonicDeleted from '../../pages/mobile/SettingsMnemonicDeleted.vue';
 import SettingsSecurityCourses from '../../pages/mobile/SettingsSecurityCourses.vue';
 import SettingsSecurityCoursesIntro from '../../pages/mobile/SettingsSecurityCoursesIntro.vue';
+import SettingsSecurityCoursesBank from '../../pages/mobile/SettingsSecurityCoursesBank.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -284,5 +285,10 @@ export default [{
   name: 'settings-security-courses-intro',
   path: '/settings/security-courses/intro',
   component: SettingsSecurityCoursesIntro,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-courses-bank',
+  path: '/settings/security-courses/bank',
+  component: SettingsSecurityCoursesBank,
   beforeEnter: checkLoggedIn(true),
 }];
