@@ -2,7 +2,7 @@
 set -e
 
 if [[ $TRAVIS_OS_NAME != "osx" ]]; then
-  VUE_APP_SHOW_VOTING_APP=true npm run build
+  npm run build
 else
   npm run build:cordova
   npm run gen:cordova-resources
