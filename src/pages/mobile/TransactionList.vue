@@ -28,7 +28,15 @@
       </ButtonPlain>
     </div>
 
-    <AeLoader v-if="waitingTransactions && !activeAccount.transactions.length" />
+    <template v-if="!activeAccount.transactions.length">
+      <AeLoader v-if="waitingTransactions" />
+      <div
+        v-else
+        class="no-transactions"
+      >
+        There are no transaction associated with this account.
+      </div>
+    </template>
 
     <template
       v-for="(transactions, date) in spendTransactionsGroupedByDay"
@@ -155,6 +163,14 @@ export default {
   .ae-loader {
     display: block;
     margin: rem(60px) auto;
+  }
+
+  .no-transactions {
+    margin-top: rem(10px);
+    @extend %face-sans-base;
+    text-align: center;
+    font-weight: 500;
+    color: $color-neutral-negative-3;
   }
 
   .date {
