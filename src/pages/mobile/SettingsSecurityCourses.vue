@@ -18,6 +18,7 @@
       subtitle="Security Course 2"
     />
     <SecurityCourse
+      name="settings-security-courses-privacy"
       title="Your privacy"
       subtitle="Security Course 3"
     />

@@ -55,6 +55,7 @@
       </li>
     </ul>
     <AeButton
+      :to="{ name: 'settings-security-courses-privacy' }"
       fill="alternative"
     >
       Go to course 3
