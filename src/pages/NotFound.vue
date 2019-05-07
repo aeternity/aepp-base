@@ -25,5 +25,6 @@ export default {
 
 .not-found {
   @extend %face-sans-l;
+  text-align: center;
 }
 </style>
