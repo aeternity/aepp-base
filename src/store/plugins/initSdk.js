@@ -8,8 +8,8 @@ export default (store) => {
   let lastNetwork;
 
   store.watch(
-    (state, { currentNetwork }) => currentNetwork,
-    async (currentNetwork) => {
+    ({ onLine }, { currentNetwork }) => [currentNetwork, onLine],
+    async ([currentNetwork]) => {
       if (isEqual(currentNetwork, lastNetwork) && store.state.sdk) return;
       lastNetwork = currentNetwork;
 
