@@ -23,6 +23,7 @@
       subtitle="Security Course 3"
     />
     <SecurityCourse
+      name="settings-security-courses-layers"
       title="Security layers"
       subtitle="Security Course 4"
     />

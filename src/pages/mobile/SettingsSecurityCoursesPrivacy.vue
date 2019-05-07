@@ -39,6 +39,7 @@
       </li>
     </ul>
     <AeButton
+      :to="{ name: 'settings-security-courses-layers' }"
       fill="alternative"
     >
       Go to course 4

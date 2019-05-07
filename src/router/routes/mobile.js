@@ -39,6 +39,7 @@ import SettingsSecurityCourses from '../../pages/mobile/SettingsSecurityCourses.
 import SettingsSecurityCoursesIntro from '../../pages/mobile/SettingsSecurityCoursesIntro.vue';
 import SettingsSecurityCoursesBank from '../../pages/mobile/SettingsSecurityCoursesBank.vue';
 import SettingsSecurityCoursesPrivacy from '../../pages/mobile/SettingsSecurityCoursesPrivacy.vue';
+import SettingsSecurityCoursesLayers from '../../pages/mobile/SettingsSecurityCoursesLayers.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -296,5 +297,10 @@ export default [{
   name: 'settings-security-courses-privacy',
   path: '/settings/security-courses/privacy',
   component: SettingsSecurityCoursesPrivacy,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-courses-layers',
+  path: '/settings/security-courses/layers',
+  component: SettingsSecurityCoursesLayers,
   beforeEnter: checkLoggedIn(true),
 }];
