@@ -12,22 +12,18 @@
       v-bind="props"
     />
 
-    <AeBanner v-if="notification">
-      <img
-        v-if="notification.icon"
-        :src="notification.icon"
-      >
+    <Notification v-if="notification">
       {{ notification.text }}
-    </AeBanner>
+    </Notification>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { AeBanner } from '@aeternity/aepp-components-3';
+import Notification from './components/Notification.vue';
 
 export default {
-  components: { AeBanner },
+  components: { Notification },
   computed: {
     ...mapState(['notification']),
     ...mapState('modals', {
@@ -51,27 +47,6 @@ export default {
 
   /deep/ .grayscale {
     filter: grayscale(100%);
-  }
-
-  .ae-banner {
-    position: fixed;
-    top: 0;
-    top: env(safe-area-inset-top);
-    left: 0;
-    right: 0;
-    z-index: auto;
-    font-family: $font-sans;
-
-    img {
-      height: 22px;
-      margin-right: 4px;
-      vertical-align: text-bottom;
-    }
-
-    /deep/ main {
-      overflow: hidden;
-      overflow-wrap: break-word;
-    }
   }
 }
 </style>

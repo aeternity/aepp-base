@@ -104,8 +104,8 @@
       />
     </ListItem>
 
-    <TransferNotification
-      v-if="showTransferNotification"
+    <NotificationSpend
+      v-if="showNotificationSpend"
       :amount="BigNumber(amount)"
       :transaction-hash="transactionHash"
     />
@@ -129,7 +129,7 @@ import ButtonPlain from '../../components/ButtonPlain.vue';
 import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ListItem from '../../components/ListItem.vue';
-import TransferNotification from '../../components/TransferNotification.vue';
+import NotificationSpend from '../../components/NotificationSpend.vue';
 
 export default {
   components: {
@@ -141,7 +141,7 @@ export default {
     MenuItem,
     AeIcon,
     ListItem,
-    TransferNotification,
+    NotificationSpend,
   },
   directives: { copyOnClick },
   props: {
@@ -163,15 +163,15 @@ export default {
       showAccountMenu: false,
       accountNameEditable: false,
       BigNumber,
-      showTransferNotification: !!this.transactionHash,
+      showNotificationSpend: !!this.transactionHash,
     };
   },
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
   mounted() {
-    if (this.showTransferNotification) {
-      setTimeout(() => { this.showTransferNotification = false; }, 5000);
+    if (this.showNotificationSpend) {
+      setTimeout(() => { this.showNotificationSpend = false; }, 5000);
     }
   },
   methods: {
