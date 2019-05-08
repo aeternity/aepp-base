@@ -63,9 +63,11 @@ export default {
         this.$router.push({ name: 'new-account-confirm', params: { seed: this.seed } });
       } else {
         this.readingPaused = true;
-        await this.$store.dispatch('alert', {
-          title: 'That was too fast',
-          text: 'Please make sure to write it down on paper, and don\'t loose it!',
+        await this.$store.dispatch('modals/alert', {
+          text: `
+            That was too fast!
+            Please make sure to write it down on paper, and don't loose it
+          `,
         });
         this.readingPaused = false;
       }
