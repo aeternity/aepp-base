@@ -7,7 +7,7 @@ import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
 export default {
-  state: () => ({
+  state: {
     migrations: {},
     loginTarget: '',
     sdkUrl: networksRegistry[0].url,
@@ -21,7 +21,7 @@ export default {
     cachedAppManifests: {},
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     onLine: true,
-  }),
+  },
 
   getters: {
     networks: ({ customNetworks }) => [

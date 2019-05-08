@@ -1,6 +1,4 @@
-import {
-  isPlainObject, mapKeys, mapValues, cloneDeep,
-} from 'lodash-es';
+import { isPlainObject, mapKeys, mapValues } from 'lodash-es';
 import { derivePathFromKey, getKeyPair } from '@aeternity/hd-wallet/src/hd-key';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 
@@ -38,40 +36,6 @@ export const mapKeysDeep = (object, callback) => {
   if (Array.isArray(object)) return object.map(item => mapKeysDeep(item, callback));
   if (!isPlainObject(object)) return object;
   return mapValues(mapKeys(object, callback), item => mapKeysDeep(item, callback));
-};
-
-export const makeResetable = ({
-  modules, state = {}, mutations = {}, actions = {}, ...otherModule
-}) => {
-  const getInitialState = typeof state === 'function'
-    ? state
-    : (() => {
-      const initialState = cloneDeep(state);
-      return () => cloneDeep(initialState);
-    })();
-  return ({
-    ...otherModule,
-    ...modules && {
-      modules: Object.entries(modules)
-        .reduce((acc, [name, module]) => ({ ...acc, [name]: makeResetable(module) }), {}),
-    },
-    state,
-    mutations: {
-      ...mutations,
-      reset(currentState) {
-        Object.assign(currentState, getInitialState());
-      },
-    },
-    actions: {
-      ...actions,
-      reset: {
-        root: true,
-        handler({ commit }) {
-          commit('reset');
-        },
-      },
-    },
-  });
 };
 
 export { generateHDWallet as generateHdWallet } from '@aeternity/hd-wallet/src';
