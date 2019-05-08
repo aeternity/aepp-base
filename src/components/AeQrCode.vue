@@ -1,11 +1,5 @@
 <template>
-  <div
-    :style="{
-      width: `${size}px`,
-      height: `${size}px`,
-    }"
-    class="ae-qr-code"
-  />
+  <div class="ae-qr-code" />
 </template>
 
 <script>
@@ -17,10 +11,6 @@ export default {
       type: String,
       required: true,
     },
-    size: {
-      type: Number,
-      default: 170,
-    },
   },
   mounted() {
     this.$watch(({ data, size }) => [data, size], () => this.renderQrCode(), { immediate: true });
@@ -28,8 +18,24 @@ export default {
   methods: {
     renderQrCode() {
       if (this.$el.firstChild) this.$el.removeChild(this.$el.firstChild);
-      this.$el.appendChild(renderQrCodeSvg(this.data, this.size));
+      const svgNode = renderQrCodeSvg(this.data, 400);
+      svgNode.removeAttribute('width');
+      svgNode.removeAttribute('height');
+      svgNode.setAttribute('viewBox', '0 0 400 400');
+      this.$el.appendChild(svgNode);
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+
+.ae-qr-code {
+  padding: rem(5px);
+
+  /deep/ svg {
+    display: block;
+  }
+}
+</style>

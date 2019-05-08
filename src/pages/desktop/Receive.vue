@@ -12,7 +12,6 @@
       <AeQrCode
         :class="{ inactive: !account }"
         :data="address"
-        :size="260"
       />
 
       <AeAddressPanel :address="address" />
@@ -79,6 +78,7 @@ export default {
     }
 
     .ae-qr-code {
+      width: rem(260px);
       margin-bottom: rem(50px);
 
       &.inactive {

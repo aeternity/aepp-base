@@ -7,22 +7,21 @@ storiesOf('AeQrCode', module)
     components: { AeQrCode },
     template: `
       <div>
-        <AeQrCode
-          :data="data"
-          :size="size"
-        />
+        <div :style="'border: 1px solid red; width: ' + width + 'px'">
+          <AeQrCode :data="data" />
+        </div>
         Data: {{ data }}<br>
-        Size: {{ size }}<br>
+        Wrapper width: {{ width }}<br>
         <input
           type="text"
           v-model="data"
         /><br>
         <input
           type="range"
-          v-model="size"
+          v-model="width"
           min="0"
           max="512"
         />
       </div>`,
-    data: () => ({ data: 'test', size: 128 }),
+    data: () => ({ data: 'test', width: 128 }),
   }));

@@ -64,16 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
-.receive {
-  .ae-account-reverse.ae-card {
-    margin-left: rem(-36px);
-    margin-right: rem(-36px);
-  }
-
-  .list-item.copy:not(.v-copied) .ae-icon {
-    display: none;
-  }
+.receive .list-item.copy:not(.v-copied) .ae-icon {
+  display: none;
 }
 </style>
