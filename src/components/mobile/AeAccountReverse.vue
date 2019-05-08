@@ -14,11 +14,12 @@
       />
     </main>
 
-    <template slot="toolbar">
-      <span class="balance-title">
-        {{ activeAccount.name }}
-      </span>
-    </template>
+    <span
+      slot="toolbar"
+      class="balance-title"
+    >
+      {{ activeAccount.name }}
+    </span>
   </AeCard>
 </template>
 
