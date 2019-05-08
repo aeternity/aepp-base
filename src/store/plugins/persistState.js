@@ -20,8 +20,22 @@ const getState = () => JSON.parse(
 export default (reducerLoad, reducerSave) => (store) => {
   const savedState = getState();
   const migratedState = reducerLoad(runMigrations(savedState, store));
+  let resetting = false;
 
   store.replaceState(merge({}, store.state, migratedState));
 
-  store.subscribe((mutation, state) => setState(reducerSave(state)));
+  store.subscribe((mutation, state) => {
+    if (resetting) return;
+    setState(reducerSave(state));
+  });
+
+  store.registerModule('persistState', {
+    actions: {
+      reset() {
+        resetting = true;
+        localStorage.removeItem(KEY);
+        window.location = '/';
+      },
+    },
+  });
 };

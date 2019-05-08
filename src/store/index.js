@@ -4,7 +4,6 @@ import { pick } from 'lodash-es';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
-import { makeResetable } from './utils';
 import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
@@ -93,12 +92,12 @@ const store = new Vuex.Store({
 
   modules: {
     ...process.env.IS_MOBILE_DEVICE
-      ? { mobile: makeResetable(mobileModule) }
-      : { desktop: makeResetable(desktopModule) },
-    accounts: makeResetable(accountsModule),
+      ? { mobile: mobileModule }
+      : { desktop: desktopModule },
+    accounts: accountsModule,
   },
 
-  ...makeResetable(rootModule),
+  ...rootModule,
 });
 
 export default store;
