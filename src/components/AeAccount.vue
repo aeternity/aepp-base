@@ -45,9 +45,10 @@
 <script>
 import { mapState } from 'vuex';
 import { focus } from 'vue-focus';
-import { AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
+import { AeInputPlain } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
+import AeIdenticon from './AeIdenticon.vue';
 import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 

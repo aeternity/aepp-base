@@ -57,9 +57,10 @@
 </template>
 
 <script>
-import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
+import AeIdenticon from './AeIdenticon.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
@@ -118,9 +119,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ae-input-address {
-  .ae-identicon {
-    vertical-align: -.55em;
-  }
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+
+.ae-input-address .ae-identicon {
+  height: rem(20px);
+  vertical-align: -.4em;
 }
 </style>

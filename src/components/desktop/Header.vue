@@ -43,8 +43,9 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import { AeIcon, AeIdenticon } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
+import AeIdenticon from '../AeIdenticon.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
