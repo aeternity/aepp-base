@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import runMigrations, { registerMigration } from '../runner';
 
+Vue.config.productionTip = false;
+Vue.config.devtools = false;
 Vue.use(Vuex);
 
 registerMigration({
