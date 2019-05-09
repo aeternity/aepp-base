@@ -1,4 +1,5 @@
 import { registerModal } from './store/plugins/modals';
+import AlertModal from './components/AlertModal.vue';
 import QrCodeReader from './components/QrCodeReader.vue';
 import AccountSwitcherModal from './components/mobile/AccountSwitcherModal.vue';
 import MigratedBalanceModal from './components/mobile/MigratedBalanceModal.vue';
@@ -12,8 +13,8 @@ import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirm
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
 import CancelSignModal from './components/desktop/CancelSignModal.vue';
-import GuideModal from './components/desktop/GuideModal.vue';
 
+registerModal({ name: 'alert', component: AlertModal });
 registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
 
 if (process.env.IS_MOBILE_DEVICE) {
@@ -30,5 +31,4 @@ if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'getLedgerTransactionFee', component: LedgerTransactionFeeModal });
   registerModal({ name: 'confirmLedgerSignTransaction', component: LedgerSignTransactionConfirmModal });
   registerModal({ name: 'cancelSign', component: CancelSignModal });
-  registerModal({ name: 'guide', component: GuideModal });
 }

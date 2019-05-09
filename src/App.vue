@@ -19,21 +19,15 @@
       >
       {{ notification.text }}
     </AeBanner>
-
-    <AlertModal />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { AeBanner } from '@aeternity/aepp-components-3';
-import AlertModal from './components/AlertModal.vue';
 
 export default {
-  components: {
-    AeBanner,
-    AlertModal,
-  },
+  components: { AeBanner },
   computed: {
     ...mapState(['notification']),
     ...mapState('modals', {

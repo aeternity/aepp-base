@@ -1,51 +1,44 @@
 <template>
-  <AeModalLight
-    v-if="alert"
-    :title="alert.title"
-    class="alert-modal"
-  >
-    {{ alert.text }}
+  <Modal class="alert-modal">
+    {{ text }}
 
-    <AeButton
-      slot="buttons"
-      size="small"
-      plain
-      @click="alert.resolve"
-    >
-      {{ alert.buttonText || 'Ok' }}
+    <AeButton @click="resolve">
+      {{ buttonText }}
     </AeButton>
-  </AeModalLight>
+  </Modal>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { AeModalLight } from '@aeternity/aepp-components-3';
+import Modal from './mobile/Modal.vue';
 import AeButton from './AeButton.vue';
 
 export default {
-  components: { AeModalLight, AeButton },
-  computed: mapState(['alert']),
+  components: { Modal, AeButton },
+  props: {
+    text: { type: String, required: true },
+    buttonText: { type: String, default: 'Ok' },
+    resolve: { type: Function, required: true },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.alert-modal.ae-overlay /deep/ .ae-modal-light {
-  padding-left: 0;
-  padding-right: 0;
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
-  main, .buttons {
-    padding-left: 20px;
-    padding-right: 20px;
+.alert-modal {
+  @extend %face-sans-base;
+
+  /deep/ .modal-plain {
+    max-width: rem(375px);
+    padding: rem(30px);
   }
 
-  main {
-    margin-bottom: 20px;
-  }
-
-  .buttons {
-    padding-top: 20px;
-    margin-top: 0;
-    border-top: 2px solid #f0f0f0;
+  .ae-button {
+    display: block;
+    margin: rem(20px) auto 0 auto;
+    padding: 0 rem(20px);
+    min-width: rem(150px);
   }
 }
 </style>

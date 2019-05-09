@@ -7,8 +7,7 @@ import { OBJECT_ID_TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
 import { MAGNITUDE } from '../../../lib/constants';
 
 const signOnMobile = async ({ dispatch }) => {
-  await dispatch('alert', {
-    title: 'Can\'t sign on this device',
+  await dispatch('modals/alert', {
     text: `
       Signing on mobile using Ledger is not supported now.
       Please use desktop version of Base æpp to sign this transaction.
