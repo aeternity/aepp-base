@@ -13,7 +13,7 @@ export default {
     },
   },
   mounted() {
-    this.$watch(({ data, size }) => [data, size], () => this.renderQrCode(), { immediate: true });
+    this.$watch(({ data }) => data, () => this.renderQrCode(), { immediate: true });
   },
   methods: {
     renderQrCode() {
