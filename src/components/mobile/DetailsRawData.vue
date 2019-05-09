@@ -33,6 +33,6 @@ export default {
 .details-field code {
   @extend %face-mono-base;
   color: var(--color-primary, $color-neutral-maximum);
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 </style>
