@@ -86,7 +86,7 @@ export default {
       this.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_MICRO));
     },
     handleClose() {
-      this.reject(new Error('Canceled by user'));
+      this.reject(new Error('Cancelled by user'));
     },
   },
 };
