@@ -66,7 +66,7 @@ export default {
         await this.$store.dispatch('modals/alert', {
           text: `
             That was too fast!
-            Please make sure to write it down on paper, and don't loose it
+            Please make sure you write down the recovery phrase on paper... and keep it in a safe place.
           `,
         });
         this.readingPaused = false;
