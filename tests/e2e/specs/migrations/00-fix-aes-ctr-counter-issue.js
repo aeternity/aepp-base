@@ -6,6 +6,14 @@ describe('Migration 0: Fix AES-CTR counter issue', () => {
         2: true,
       },
       accounts: {
+        list: [{
+          address: 'ak_2swhLkgBPeeADxVTAVCJnZLY5NZtCFiM93JxsEaMuC59euuFRQ',
+          name: 'Main Account',
+          source: {
+            idx: 0,
+            type: 'hd-wallet',
+          },
+        }],
         hdWallet: {
           encryptedWallet: {
             privateKey: {
