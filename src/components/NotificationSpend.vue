@@ -1,5 +1,8 @@
 <template>
-  <Notification class="notification-spend">
+  <Notification
+    v-bind="$attrs"
+    class="notification-spend"
+  >
     <ListItem
       title="Transfer completed"
       :subtitle="`You've sent ${ prefixedAmount(amount) } AE`"

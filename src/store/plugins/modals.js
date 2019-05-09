@@ -8,9 +8,13 @@ Promise.config({
 const modals = {};
 let modalCounter = 0;
 
-export const registerModal = ({ name, component, hidePage = false }) => {
+export const registerModal = ({
+  name, component, hidePage = false, allowRedirect = false, dontGrayscalePage = false,
+}) => {
   if (modals[name]) throw new Error(`Modal with name "${name}" already registered`);
-  modals[name] = { component, hidePage };
+  modals[name] = {
+    component, hidePage, allowRedirect, grayscalePage: !dontGrayscalePage,
+  };
 };
 
 export default (store) => {
@@ -30,6 +34,8 @@ export default (store) => {
       opened: ({ opened }) => opened
         .map(({ name, ...other }) => ({ ...modals[name], ...other }))
         .reduceRight((acc, modal) => (acc.length && acc[0].hidePage ? acc : [modal, ...acc]), []),
+      hidePage: (state, { opened }) => opened.some(({ hidePage }) => hidePage),
+      grayscalePage: (state, { opened }) => opened.some(({ grayscalePage }) => grayscalePage),
     },
     actions: Object.keys(modals).reduce((p, name) => ({
       ...p,
@@ -47,6 +53,7 @@ export default (store) => {
   store.watch(
     ({ route }) => route,
     () => store.state.modals.opened
+      .filter(({ name }) => !modals[name].allowRedirect)
       .forEach(({ props: { reject } }) => reject(new Error('User navigated outside'))),
   );
 };

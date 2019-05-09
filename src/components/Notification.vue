@@ -5,7 +5,7 @@
   >
     <div class="notification">
       <div class="content">
-        <slot />
+        <slot>{{ text }}</slot>
       </div>
 
       <footer v-if="$slots.footer">
@@ -14,6 +14,18 @@
     </div>
   </Transition>
 </template>
+
+<script>
+export default {
+  props: {
+    resolve: { type: Function, required: true },
+    text: { type: String, default: '' },
+  },
+  mounted() {
+    setInterval(() => this.resolve(), 5000);
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';

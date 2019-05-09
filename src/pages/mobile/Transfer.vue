@@ -103,17 +103,10 @@
         name="left-more"
       />
     </ListItem>
-
-    <NotificationSpend
-      v-if="showNotificationSpend"
-      :amount="BigNumber(amount)"
-      :transaction-hash="transactionHash"
-    />
   </MobilePage>
 </template>
 
 <script>
-import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
 import { mapMutations, mapActions } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
@@ -129,7 +122,6 @@ import ButtonPlain from '../../components/ButtonPlain.vue';
 import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ListItem from '../../components/ListItem.vue';
-import NotificationSpend from '../../components/NotificationSpend.vue';
 
 export default {
   components: {
@@ -141,19 +133,8 @@ export default {
     MenuItem,
     AeIcon,
     ListItem,
-    NotificationSpend,
   },
   directives: { copyOnClick },
-  props: {
-    amount: {
-      type: String,
-      default: '',
-    },
-    transactionHash: {
-      type: String,
-      default: '',
-    },
-  },
   data() {
     return {
       moneyWithWingsEmoji,
@@ -162,17 +143,10 @@ export default {
       glowingStarEmoji,
       showAccountMenu: false,
       accountNameEditable: false,
-      BigNumber,
-      showNotificationSpend: !!this.transactionHash,
     };
   },
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
-  },
-  mounted() {
-    if (this.showNotificationSpend) {
-      setTimeout(() => { this.showNotificationSpend = false; }, 5000);
-    }
   },
   methods: {
     ...mapMutations('accounts', ['setName']),

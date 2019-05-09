@@ -190,7 +190,6 @@ export default [{
   path: '/transfer',
   component: Transfer,
   beforeEnter: checkLoggedIn(true),
-  props: true,
 }, {
   name: 'receive',
   path: '/transfer/receive',

@@ -2,35 +2,23 @@
   <div id="app">
     <RouterView
       v-show="!hidePage"
-      :class="{ grayscale: openedModals.length }"
+      :class="{ grayscale: grayscalePage }"
     />
 
     <Component
       :is="component"
-      v-for="{ component, key, props } in openedModals"
+      v-for="{ component, key, props } in opened"
       :key="key"
       v-bind="props"
     />
-
-    <Notification v-if="notification">
-      {{ notification.text }}
-    </Notification>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import Notification from './components/Notification.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  components: { Notification },
-  computed: {
-    ...mapState(['notification']),
-    ...mapState('modals', {
-      openedModals: (state, { opened }) => opened,
-      hidePage: (state, { opened }) => opened.some(({ hidePage }) => hidePage),
-    }),
-  },
+  computed: mapGetters('modals', ['opened', 'hidePage', 'grayscalePage']),
 };
 </script>
 
