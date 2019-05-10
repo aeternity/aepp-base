@@ -15,10 +15,7 @@
       <em>Scan with AirGap Vault app</em> to sign the transaction
     </Guide>
 
-    <AeQrCode
-      :data="url"
-      :size="220"
-    />
+    <AeQrCode :data="url" />
 
     <AeButton
       slot="footer"
