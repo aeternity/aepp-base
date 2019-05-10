@@ -1,5 +1,8 @@
+import { prepare } from '../../utils';
+
 describe('Migration 0: Fix AES-CTR counter issue', () => {
   it('applicable', () => {
+    prepare();
     window.localStorage.vuex = JSON.stringify({
       migrations: {
         1: true,
