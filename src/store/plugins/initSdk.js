@@ -68,7 +68,7 @@ export default (store) => {
                   .map(m => [m, ({ params, origin }) => {
                     const { host } = new URL(origin);
                     const app = store.getters.getApp(host) || { host };
-                    return this[m](...params, { app });
+                    return Promise.resolve(this[m](...params, { app }));
                   }])
                   .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
                 ...this.rpcMethods,
