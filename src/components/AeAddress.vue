@@ -1,12 +1,12 @@
 <script>
 import { times, chunk } from 'lodash-es';
-import { directives } from '@aeternity/aepp-components-3';
 import copyOnClick from '../directives/copyOnClick';
+import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 
 export default {
   directives: {
     copyOnClick,
-    removeSpacesOnCopy: directives.removeSpacesOnCopy,
+    removeSpacesOnCopy,
   },
   props: {
     address: {

@@ -38,8 +38,9 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import { AeIdenticon, AeIcon } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
+import AeIdenticon from '../AeIdenticon.vue';
 import ConnectionStatus from './ConnectionStatus.vue';
 
 export default {

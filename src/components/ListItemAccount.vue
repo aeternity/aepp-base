@@ -20,8 +20,8 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import ListItem from './ListItem.vue';
+import AeIdenticon from './AeIdenticon.vue';
 import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
