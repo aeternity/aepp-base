@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-if [[ $TRAVIS_OS_NAME != "osx" ]]; then
-  npm run build -- --report
-else
+if [[ $TRAVIS_OS_NAME == "osx" ]]; then
   npm run build:cordova
   npm run gen:cordova-resources
   npx cordova build ios
