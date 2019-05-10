@@ -2,39 +2,23 @@
   <div id="app">
     <RouterView
       v-show="!hidePage"
-      :class="{ grayscale: openedModals.length }"
+      :class="{ grayscale: grayscalePage }"
     />
 
     <Component
       :is="component"
-      v-for="{ component, key, props } in openedModals"
+      v-for="{ component, key, props } in opened"
       :key="key"
       v-bind="props"
     />
-
-    <AeBanner v-if="notification">
-      <img
-        v-if="notification.icon"
-        :src="notification.icon"
-      >
-      {{ notification.text }}
-    </AeBanner>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { AeBanner } from '@aeternity/aepp-components-3';
+import { mapGetters } from 'vuex';
 
 export default {
-  components: { AeBanner },
-  computed: {
-    ...mapState(['notification']),
-    ...mapState('modals', {
-      openedModals: (state, { opened }) => opened,
-      hidePage: (state, { opened }) => opened.some(({ hidePage }) => hidePage),
-    }),
-  },
+  computed: mapGetters('modals', ['opened', 'hidePage', 'grayscalePage']),
 };
 </script>
 
@@ -51,27 +35,6 @@ export default {
 
   /deep/ .grayscale {
     filter: grayscale(100%);
-  }
-
-  .ae-banner {
-    position: fixed;
-    top: 0;
-    top: env(safe-area-inset-top);
-    left: 0;
-    right: 0;
-    z-index: auto;
-    font-family: $font-sans;
-
-    img {
-      height: 22px;
-      margin-right: 4px;
-      vertical-align: text-bottom;
-    }
-
-    /deep/ main {
-      overflow: hidden;
-      overflow-wrap: break-word;
-    }
   }
 }
 </style>

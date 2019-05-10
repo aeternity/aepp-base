@@ -12,7 +12,6 @@ export default {
     loginTarget: '',
     sdkUrl: networksRegistry[0].url,
     sdk: null,
-    notification: null,
     serviceWorkerRegistration: null,
     addressBook: [],
     customNetworks: [],
@@ -90,9 +89,6 @@ export default {
     setSdk(state, sdk) {
       state.sdk = sdk;
     },
-    setNotification(state, options) {
-      state.notification = options;
-    },
     addAddressBookItem(state, item) {
       state.addressBook.push(item);
     },
@@ -136,10 +132,6 @@ export default {
   },
 
   actions: {
-    setNotification({ commit }, options) {
-      commit('setNotification', options);
-      if (options.autoClose) setTimeout(() => commit('setNotification'), 3000);
-    },
     async fetchAppManifest(_, host) {
       const fetchTextCors = async url => (
         await fetch(`https://cors-anywhere.herokuapp.com/${url}`)).text();
