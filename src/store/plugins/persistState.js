@@ -17,6 +17,11 @@ const getState = () => JSON.parse(
     : value),
 );
 
+export const resetState = () => {
+  localStorage.removeItem(KEY);
+  window.location = '/';
+};
+
 export default (reducerLoad, reducerSave) => (store) => {
   const savedState = getState();
   const migratedState = reducerLoad(runMigrations(savedState, store));
@@ -33,8 +38,7 @@ export default (reducerLoad, reducerSave) => (store) => {
     actions: {
       reset() {
         resetting = true;
-        localStorage.removeItem(KEY);
-        window.location = '/';
+        resetState();
       },
     },
   });

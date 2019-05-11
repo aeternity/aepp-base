@@ -4,6 +4,7 @@ import { pick } from 'lodash-es';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
+import '../lib/storeErrorHandler';
 import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
