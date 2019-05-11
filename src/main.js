@@ -4,6 +4,7 @@ import 'normalize.css';
 import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import 'focus-visible';
 import sync from './lib/vuexRouterSync';
+import './styles/fullscreen-message.scss';
 import './lib/setGlobalPolyfills';
 import './lib/initEnv';
 import './lib/switchWebmanifest';

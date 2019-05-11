@@ -27,8 +27,6 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
 
 #app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -43,5 +41,10 @@ export default {
 html, body {
   height: 1px;
   min-height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>
