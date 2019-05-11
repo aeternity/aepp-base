@@ -1,10 +1,6 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Promise from 'bluebird';
 
-Promise.config({
-  cancellation: true,
-});
-
 const modals = {};
 let modalCounter = 0;
 
