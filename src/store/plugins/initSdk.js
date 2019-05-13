@@ -15,7 +15,7 @@ export default (store) => {
 
       const methods = {
         async address(options) {
-          if (options && !process.env.RUNNING_IN_FRAME) {
+          if (options) {
             const { app } = options;
             const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
             if (!accessToAccounts.includes(store.getters['accounts/active'].address)) {

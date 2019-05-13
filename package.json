@@ -96,6 +96,7 @@
     "./src/lib/switchWebmanifest.js",
     "./src/store/index.js",
     "./src/register-modals.js",
+    "./src/ui-common.js",
     "*.css",
     "*.scss",
     "*.vue"
