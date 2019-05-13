@@ -1,5 +1,8 @@
+import { prepare } from '../../utils';
+
 describe('Migration 2: Build accounts array', () => {
   it('applicable', () => {
+    prepare();
     const stateBeforeMigration = {
       migrations: {
         0: true,
