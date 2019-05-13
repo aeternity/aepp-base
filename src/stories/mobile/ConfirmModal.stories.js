@@ -8,7 +8,7 @@ import ConfirmContractDeployModal from '../../components/mobile/ConfirmContractD
 import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendModal from '../../components/mobile/ConfirmSpendModal.vue';
 import {
-  account, accounts, contractAddress, callData, code, amount, fee, minFee, appIcon,
+  account, accounts, contractAddress, callData, code, amount, fee, minFee, getAppMetadata,
 } from '../mock-data';
 
 const base = {
@@ -31,10 +31,7 @@ const base = {
     },
     getters: {
       'accounts/active': () => account,
-      getAppMetadata: () => host => ({
-        name: `App on ${host}`,
-        icon: appIcon,
-      }),
+      getAppMetadata,
     },
   }),
 };

@@ -2,8 +2,7 @@ import { times } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { MAGNITUDE } from '../lib/constants';
-
-export { default as appIcon } from '../assets/icons/aepps/blockchain-explorer.svg';
+import appIcon from '../assets/icons/aepps/blockchain-explorer.svg';
 
 export const address = 'ak_2swhLkgBPeeADxVTAVCJnZLY5NZtCFiM93JxsEaMuC59euuFRQ';
 export const contractAddress = 'ct_2ZkyFFLRwooiSEzZg9BVh43mKZJbxoUHNkEVhT336pM5vVfNQ1';
@@ -32,3 +31,8 @@ export const lorem = [
   'Curabitur lobortis nulla ex, vel ultrices nisi tempus at. Aliquam erat volutpat. Phasellus congue pretium orci, quis aliquet tellus imperdiet ac. Phasellus et augue tristique, auctor nisi id, porta ante. Nullam sodales velit et arcu pharetra cursus. Donec nec velit a quam varius porttitor. Vivamus accumsan eros vel nunc rhoncus, at sollicitudin velit rhoncus. Ut non ex rutrum, efficitur lectus ut, aliquam justo. Vivamus porttitor arcu metus, vitae feugiat sem cursus a.',
   'Nunc eu orci massa. Suspendisse potenti. Cras feugiat lobortis orci ut tincidunt. Sed suscipit lorem in facilisis gravida. Donec dapibus vel odio at congue. In porttitor nibh nec consectetur mattis. Integer nisl risus, egestas ut rhoncus vitae, dapibus ac turpis.',
 ];
+
+export const getAppMetadata = () => host => ({
+  name: `App on ${host}`,
+  icon: appIcon,
+});
