@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import { update, flatMap, merge } from 'lodash-es';
+import { update, flatMap, mergeWith } from 'lodash-es';
 import store from '../index';
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
@@ -74,7 +74,14 @@ export default {
 
   mutations: {
     syncState(state, remoteState) {
-      Object.entries(merge({}, state, remoteState))
+      Object.entries(
+        mergeWith(
+          {},
+          state,
+          remoteState,
+          (objValue, srcValue) => (Array.isArray(srcValue) ? srcValue : undefined),
+        ),
+      )
         .forEach(([name, value]) => Vue.set(state, name, value));
     },
     markMigrationAsApplied(state, migrationId) {
