@@ -1,9 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
+import Vuex from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
-import { lorem } from '../mock-data';
+import { account, lorem } from '../mock-data';
 
 const rootStyles = `
   display: flex;
@@ -12,6 +13,16 @@ const rootStyles = `
 `;
 
 const base = {
+  store: new Vuex.Store({
+    state: {
+      mobile: {
+        browserPath: '',
+      },
+    },
+    getters: {
+      'accounts/active': () => account,
+    },
+  }),
   components: { MobilePage },
   template: `
     <div style="${rootStyles}">
@@ -33,7 +44,7 @@ const base = {
 
         <template slot="footer">
           <strong>Footer</strong>
-          {{ lorem }}
+          {{ lorem.slice(0, 200) }}
         </template>
       </mobile-page>
     </div>
