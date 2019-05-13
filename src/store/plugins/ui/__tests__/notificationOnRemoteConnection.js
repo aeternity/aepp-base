@@ -25,7 +25,8 @@ const testMutation = {
 };
 
 it('emits notification', () => expect(getDispatch(false, testMutation))
-  .toHaveBeenCalledWith('modals/notification', {
+  .toHaveBeenCalledWith('modals/open', {
+    name: 'notification',
     text: `You successfully connected ${testFollower.name}`,
   }));
 

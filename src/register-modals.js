@@ -1,4 +1,4 @@
-import { registerModal } from './store/plugins/modals';
+import { registerModal } from './store/plugins/ui/modals';
 import AlertModal from './components/AlertModal.vue';
 import QrCodeReader from './components/QrCodeReader.vue';
 import Notification from './components/Notification.vue';

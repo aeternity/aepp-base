@@ -98,7 +98,10 @@ export default (store) => {
       socket.on('follower-disconnected', followerId => store.commit('followerDisconnected', followerId));
       socket.on('follower-removed', (followerId) => {
         const { name } = store.state.mobile.followers[followerId];
-        store.dispatch('modals/notification', { text: `'${name}' has removed itself` });
+        store.dispatch('modals/open', {
+          name: 'notification',
+          text: `'${name}' has removed itself`,
+        });
         store.commit('followerRemoved', followerId);
       });
 

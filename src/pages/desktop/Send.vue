@@ -78,7 +78,11 @@ export default {
         amount.shiftedBy(MAGNITUDE),
         this.accountTo,
       );
-      this.$store.dispatch('modals/notificationSpend', { transactionHash: hash, amount });
+      this.$store.dispatch('modals/open', {
+        name: 'notificationSpend',
+        transactionHash: hash,
+        amount,
+      });
     },
   },
 };

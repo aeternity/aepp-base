@@ -20,8 +20,8 @@ export default (store) => {
             const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
             if (!accessToAccounts.includes(store.getters['accounts/active'].address)) {
               const promise = store.dispatch(
-                'modals/confirmAccountAccess',
-                { appHost: app.host },
+                'modals/open',
+                { name: 'confirmAccountAccess', appHost: app.host },
               );
               const unsubscribe = store.watch(
                 (state, getters) => getters['accounts/active'].address,

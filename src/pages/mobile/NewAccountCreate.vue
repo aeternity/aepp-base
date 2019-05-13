@@ -63,7 +63,8 @@ export default {
         this.$router.push({ name: 'new-account-confirm', params: { seed: this.seed } });
       } else {
         this.readingPaused = true;
-        await this.$store.dispatch('modals/alert', {
+        await this.$store.dispatch('modals/open', {
+          name: 'alert',
           text: `
             That was too fast!
             Please make sure you write down the recovery phrase on paper... and keep it in a safe place.

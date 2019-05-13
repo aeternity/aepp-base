@@ -7,7 +7,8 @@ export default (store) => {
         store.commit('setServiceWorkerRegistration', registration);
       },
       updated() {
-        store.dispatch('modals/notification', {
+        store.dispatch('modals/open', {
+          name: 'notification',
           text: 'New version is available, please restart the Base æpp',
         });
       },
