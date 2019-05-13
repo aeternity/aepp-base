@@ -91,6 +91,7 @@
   "sideEffects": [
     "./src/lib/setGlobalPolyfills.js",
     "./src/lib/initEnv.js",
+    "./src/lib/storeErrorHandler.js",
     "./src/lib/switchWebmanifest.js",
     "./src/register-modals.js",
     "*.css",
