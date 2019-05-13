@@ -98,7 +98,7 @@
 import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../Guide.vue';
-import AeQrCode from '../AeQrCode.vue';
+import { AeQrCode } from '../async';
 import AeFraction from '../AeFraction.vue';
 import Note from '../Note.vue';
 

@@ -32,7 +32,7 @@ import { mapState } from 'vuex';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
-import AeQrCode from '../AeQrCode.vue';
+import { AeQrCode } from '../async';
 import AeButton from '../AeButton.vue';
 
 export default {
