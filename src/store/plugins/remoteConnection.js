@@ -5,7 +5,7 @@ import {
 import RpcPeer from '../../lib/rpc';
 
 const getStateForSync = ({
-  sdkUrl, accounts: { list, activeIdx }, addressBook, customNetworks,
+  sdkUrl, accounts: { list, activeIdx }, addressBook, apps, customNetworks,
 }) => ({
   sdkUrl,
   accounts: {
@@ -24,6 +24,7 @@ const getStateForSync = ({
     activeIdx,
   },
   addressBook,
+  apps,
   customNetworks,
 });
 
@@ -72,7 +73,7 @@ export default (store) => {
           && !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return;
       broadcastState(state);
-    }));
+    }, { deep: true }));
 
     if (process.env.IS_MOBILE_DEVICE) {
       const syncState = throttle(
