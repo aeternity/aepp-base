@@ -19,11 +19,11 @@ Vue.use(VeeValidate);
 storiesOf('AeModal', module)
   .add('MigratedBalanceModal', () => ({
     components: { MigratedBalanceModal },
-    template: '<migrated-balance-modal @close="action" />',
-    methods: { action: action('close') },
+    template: '<migrated-balance-modal :resolve="resolve" />',
+    methods: { resolve: action('resolve') },
     store: new Vuex.Store({
       getters: {
-        activeAccount: () => account,
+        'accounts/active': () => account,
       },
     }),
   }))

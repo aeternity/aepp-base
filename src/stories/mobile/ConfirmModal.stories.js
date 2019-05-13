@@ -24,9 +24,13 @@ const base = {
           denominator: 3,
         },
       },
+      accounts: {
+        list: [account],
+      },
+      addressBook: [],
     },
     getters: {
-      activeAccount: () => account,
+      'accounts/active': () => account,
       getAppMetadata: () => host => ({
         name: `App on ${host}`,
         icon: appIcon,
@@ -99,8 +103,10 @@ storiesOf('mobile ConfirmModal', module)
         :amount="amount"
         :fee="fee"
         :minFee="minFee"
+        :payload="payload"
       />`,
     data: () => ({
       recipientId: accounts[0].address,
+      payload: 'Example payload',
     }),
   }));
