@@ -71,7 +71,6 @@ export default {
       const url = new URL(/^\w+:\D+/.test(path) ? path : `http://${path}`);
       if (!['https:', 'http:'].includes(url.protocol)) url.protocol = 'http:';
       if (window.location.protocol === 'https:') url.protocol = 'https:';
-      if (url.toString() !== path) this.$router.replace(`/browser/${url}`);
       return url.toString();
     },
     host() {
