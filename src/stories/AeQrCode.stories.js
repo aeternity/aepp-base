@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
-import AeQrCode from '../components/AeQrCode.vue';
+import { AeQrCode } from '../components/async';
 
 storiesOf('AeQrCode', module)
   .add('default', () => ({

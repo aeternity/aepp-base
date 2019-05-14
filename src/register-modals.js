@@ -1,6 +1,6 @@
 import { registerModal } from './store/plugins/ui/modals';
 import AlertModal from './components/AlertModal.vue';
-import QrCodeReader from './components/QrCodeReader.vue';
+import { QrCodeReader } from './components/async';
 import Notification from './components/Notification.vue';
 import NotificationSpend from './components/NotificationSpend.vue';
 import AccountSwitcherModal from './components/mobile/AccountSwitcherModal.vue';

@@ -8,7 +8,6 @@ import OnboardingAepps from '../../pages/mobile/OnboardingAepps.vue';
 import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
-import Apps from '../../pages/mobile/Apps.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
 import NewAccount from '../../pages/mobile/NewAccount.vue';
 import NewAccountCreate from '../../pages/mobile/NewAccountCreate.vue';
@@ -31,10 +30,11 @@ import Settings from '../../pages/mobile/Settings.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
 import SettingsRemoteConnection from '../../pages/mobile/SettingsRemoteConnection.vue';
+import SettingsRemoteConnectionNew from '../../pages/mobile/SettingsRemoteConnectionNew.vue';
 import SettingsAppList from '../../pages/mobile/SettingsAppList.vue';
 import SettingsAppDetails from '../../pages/mobile/SettingsAppDetails.vue';
 
-const SettingsRemoteConnectionNew = () => import('../../pages/mobile/SettingsRemoteConnectionNew.vue');
+const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
 const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
   handlers.reduce((nextRoute, handler) => {

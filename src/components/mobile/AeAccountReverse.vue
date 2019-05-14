@@ -23,7 +23,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import AeCard from '../AeCard.vue';
-import AeQrCode from '../AeQrCode.vue';
+import { AeQrCode } from '../async';
 import AeAddress from '../AeAddress.vue';
 
 export default {
