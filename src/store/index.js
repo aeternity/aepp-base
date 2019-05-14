@@ -72,17 +72,21 @@ const store = new Vuex.Store({
         },
       }),
     ),
-    initSdk,
-    remoteConnection,
-    registerServiceWorker,
-    reverseIframe,
-    ...process.env.IS_MOBILE_DEVICE ? [] : [syncLedgerAccounts],
+    ...process.env.RUNNING_IN_POPUP ? [] : [
+      initSdk,
+      remoteConnection,
+      registerServiceWorker,
+      reverseIframe,
+      ...process.env.IS_MOBILE_DEVICE ? [] : [syncLedgerAccounts],
+    ],
   ],
 
   modules: {
-    ...process.env.IS_MOBILE_DEVICE
-      ? { mobile: mobileModule }
-      : { desktop: desktopModule },
+    ...process.env.RUNNING_IN_POPUP ? {} : {
+      ...process.env.IS_MOBILE_DEVICE
+        ? { mobile: mobileModule }
+        : { desktop: desktopModule },
+    },
     accounts: accountsModule,
   },
 
