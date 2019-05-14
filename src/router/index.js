@@ -6,6 +6,7 @@ import commonRoutes from './routes/common';
 import AddToHomeScreenPrompt from '../pages/mobile/AddToHomeScreenPrompt.vue';
 
 const router = new Router({
+  mode: process.env.IS_CORDOVA ? 'hash' : 'history',
   routes:
     process.env.IS_MOBILE_DEVICE
       ? (!process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS && process.env.NODE_ENV === 'production'
