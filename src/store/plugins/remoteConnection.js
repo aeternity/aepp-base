@@ -1,8 +1,9 @@
-import io from 'socket.io-client';
 import {
   pick, cloneDeep, isEqual, throttle, memoize,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
+
+const io = async () => (await import(/* webpackChunkName: "socket-io" */ 'socket.io-client')).default;
 
 const getStateForSync = ({
   sdkUrl, accounts: { list, activeIdx }, addressBook, apps, customNetworks,
@@ -48,7 +49,7 @@ export default (store) => {
     if (process.env.IS_MOBILE_DEVICE) {
       query.pushApiSubscription = await getPushApiSubscription();
     }
-    const socket = io(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
+    const socket = (await io())(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
     let processedState = cloneDeep(getStateForSync(store.state));
