@@ -13,20 +13,19 @@ describe('AppBrowser', () => [{
 }, {
   inputUrl: 'ftp://example.com',
   outputUrl: 'http://example.com/',
+}, {
+  inputUrl: 'localhost:8080',
+  outputUrl: 'http://localhost:8080/',
 }].forEach(({ inputUrl, outputUrl }) => it(
   `replaces "${inputUrl}" path with "${outputUrl}"`,
   () => {
-    const replace = jest.fn();
     const wrapper = shallowMount(AppBrowser, {
       mocks: {
-        $router: { replace },
         $route: { fullPath: `/browser/${inputUrl}` },
         $store: { state: { apps: [] } },
         $globals: { IS_IOS: false },
       },
     });
     expect(wrapper.vm.url).toBe(outputUrl);
-    if (inputUrl !== outputUrl) expect(replace).toHaveBeenCalledWith(`/browser/${outputUrl}`);
-    else expect(replace).toHaveBeenCalledTimes(0);
   },
 )));
