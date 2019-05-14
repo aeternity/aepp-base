@@ -37,6 +37,7 @@
       ref="iframe"
       :src="url"
       :scrolling="$globals.IS_IOS && 'no'"
+      importance="high"
       @load="loading = false"
     />
 
