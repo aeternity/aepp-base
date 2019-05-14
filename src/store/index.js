@@ -4,24 +4,17 @@ import { pick } from 'lodash-es';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
-import { makeResetable } from './utils';
+import '../lib/storeErrorHandler';
 import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import accountsModule from './modules/accounts';
 import persistState from './plugins/persistState';
-import ledgerConnection from './plugins/ledgerConnection';
 import remoteConnection from './plugins/remoteConnection';
-import notificationOnRemoteConnection from './plugins/notificationOnRemoteConnection';
-import desktopGuide from './plugins/desktopGuide';
 import initSdk from './plugins/initSdk';
-import modals from './plugins/modals';
 import registerServiceWorker from './plugins/registerServiceWorker';
-import browserPathTracker from './plugins/browserPathTracker';
-import observables from './plugins/observables';
 import reverseIframe from './plugins/reverseIframe';
 import syncLedgerAccounts from './plugins/syncLedgerAccounts';
-import connectionStatusTracker from './plugins/connectionStatusTracker';
 
 Vue.use(Vuex);
 Vue.use(VueRx);
@@ -79,26 +72,25 @@ const store = new Vuex.Store({
         },
       }),
     ),
-    initSdk,
-    remoteConnection,
-    modals,
-    registerServiceWorker,
-    observables,
-    reverseIframe,
-    connectionStatusTracker,
-    ...process.env.IS_MOBILE_DEVICE
-      ? [notificationOnRemoteConnection, browserPathTracker]
-      : [ledgerConnection, syncLedgerAccounts, desktopGuide],
+    ...process.env.RUNNING_IN_POPUP ? [] : [
+      initSdk,
+      remoteConnection,
+      registerServiceWorker,
+      reverseIframe,
+      ...process.env.IS_MOBILE_DEVICE ? [] : [syncLedgerAccounts],
+    ],
   ],
 
   modules: {
-    ...process.env.IS_MOBILE_DEVICE
-      ? { mobile: makeResetable(mobileModule) }
-      : { desktop: makeResetable(desktopModule) },
-    accounts: makeResetable(accountsModule),
+    ...process.env.RUNNING_IN_POPUP ? {} : {
+      ...process.env.IS_MOBILE_DEVICE
+        ? { mobile: mobileModule }
+        : { desktop: desktopModule },
+    },
+    accounts: accountsModule,
   },
 
-  ...makeResetable(rootModule),
+  ...rootModule,
 });
 
 export default store;

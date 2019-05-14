@@ -92,7 +92,7 @@
       title="Tokens in migration"
       subtitle="Not shown as balance above"
       border-dark
-      @click="migratedBalance"
+      @click="open({ name: 'migratedBalance' })"
     >
       <img
         slot="icon"
@@ -103,17 +103,10 @@
         name="left-more"
       />
     </ListItem>
-
-    <TransferNotification
-      v-if="showTransferNotification"
-      :amount="BigNumber(amount)"
-      :transaction-hash="transactionHash"
-    />
   </MobilePage>
 </template>
 
 <script>
-import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
 import { mapMutations, mapActions } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
@@ -129,7 +122,6 @@ import ButtonPlain from '../../components/ButtonPlain.vue';
 import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ListItem from '../../components/ListItem.vue';
-import TransferNotification from '../../components/TransferNotification.vue';
 
 export default {
   components: {
@@ -141,19 +133,8 @@ export default {
     MenuItem,
     AeIcon,
     ListItem,
-    TransferNotification,
   },
   directives: { copyOnClick },
-  props: {
-    amount: {
-      type: String,
-      default: '',
-    },
-    transactionHash: {
-      type: String,
-      default: '',
-    },
-  },
   data() {
     return {
       moneyWithWingsEmoji,
@@ -162,21 +143,14 @@ export default {
       glowingStarEmoji,
       showAccountMenu: false,
       accountNameEditable: false,
-      BigNumber,
-      showTransferNotification: !!this.transactionHash,
     };
   },
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
-  mounted() {
-    if (this.showTransferNotification) {
-      setTimeout(() => { this.showTransferNotification = false; }, 5000);
-    }
-  },
   methods: {
     ...mapMutations('accounts', ['setName']),
-    ...mapActions('modals', ['migratedBalance']),
+    ...mapActions('modals', ['open']),
   },
 };
 </script>

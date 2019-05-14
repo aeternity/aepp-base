@@ -72,7 +72,7 @@
       <ListItem
         title="Reset Key Storage"
         subtitle="After resetting, a recovery is required"
-        @click="signOut"
+        @click="reset"
       >
         <AeIcon
           slot="icon"
@@ -120,13 +120,7 @@ export default {
       return `${c} aepp${c === 1 ? '' : 's'} have account access`;
     },
   }),
-  methods: {
-    signOut() {
-      this.$store.dispatch('reset');
-      setTimeout(() => this.$store.commit('setLoginTarget'));
-    },
-    ...mapActions(['logout']),
-  },
+  methods: mapActions(['logout', 'reset']),
 };
 </script>
 

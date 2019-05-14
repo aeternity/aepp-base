@@ -40,7 +40,7 @@
           v-for="(app, idx) in bookmarkedAppsToShow"
           :key="`app-shortcut-aeternity-app-${idx}`"
           v-bind="app"
-          :to="{ name: 'app-browser', params: { path: app.host } }"
+          :to="`/browser/${app.host}`"
         />
       </div>
     </template>

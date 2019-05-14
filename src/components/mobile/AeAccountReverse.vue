@@ -4,28 +4,26 @@
     class="ae-account-reverse"
   >
     <main>
-      <AeQrCode
-        :size="136"
-        :data="activeAccount.address"
-      />
+      <AeQrCode :data="activeAccount.address" />
       <AeAddress
         :address="activeAccount.address"
         split-by="3"
       />
     </main>
 
-    <template slot="toolbar">
-      <span class="balance-title">
-        {{ activeAccount.name }}
-      </span>
-    </template>
+    <span
+      slot="toolbar"
+      class="balance-title"
+    >
+      {{ activeAccount.name }}
+    </span>
   </AeCard>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import AeCard from '../AeCard.vue';
-import AeQrCode from '../AeQrCode.vue';
+import { AeQrCode } from '../async';
 import AeAddress from '../AeAddress.vue';
 
 export default {
@@ -45,13 +43,21 @@ export default {
 .ae-account-reverse {
   main {
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-    padding-top: rem(12px);
-    padding-bottom: rem(12px);
+    padding: rem(12px);
 
     .ae-qr-code {
+      flex-grow: 1;
       background-color: $color-neutral-maximum;
+      margin-right: rem(12px);
+    }
+
+    @media (max-width: 320px) {
+      .ae-address {
+        font-size: rem(15px);
+        line-height: rem(20px);
+        letter-spacing: normal;
+      }
     }
   }
 

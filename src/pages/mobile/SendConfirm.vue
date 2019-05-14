@@ -27,15 +27,15 @@ export default {
         numerator: 3,
         denominator: 3,
       });
-      const { hash } = await this.$store.state.sdk.spend(
-        BigNumber(this.amount).shiftedBy(MAGNITUDE),
-        this.to,
-      );
+      const amount = BigNumber(this.amount);
+      const { hash } = await this.$store.state.sdk.spend(amount.shiftedBy(MAGNITUDE), this.to);
       this.$store.commit('setStepFraction');
 
-      this.$router.push({
-        name: 'transfer',
-        params: { transactionHash: hash, amount: this.amount },
+      this.$router.push({ name: 'transfer' });
+      this.$store.dispatch('modals/open', {
+        name: 'notificationSpend',
+        transactionHash: hash,
+        amount,
       });
     } catch (e) {
       if (['Rejected by user', 'Not implemented yet', 'Cancelled by user'].includes(e.message)) {

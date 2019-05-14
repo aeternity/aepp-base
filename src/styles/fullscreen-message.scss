@@ -1,0 +1,15 @@
+@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+
+body {
+  &, > noscript {
+    > p.fullscreen-message {
+      margin: 0 auto;
+      padding-top: 30vh;
+      padding-left: rem(20px);
+      padding-right: rem(20px);
+      max-width: rem(400px);
+      @extend %face-sans-l;
+      text-align: center;
+    }
+  }
+}

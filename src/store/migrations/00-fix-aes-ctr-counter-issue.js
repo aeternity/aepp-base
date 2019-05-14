@@ -31,7 +31,6 @@ export default {
         commit('accounts/hdWallet/setEncryptedWallet', reEncryptedHdWallet);
         commit('accounts/hdWallet/setWallet', { privateKey, chainCode });
 
-        commit('setNotification'); // hide "You've entered a wrong password" notification
         unsubscribe();
         resolve();
       });

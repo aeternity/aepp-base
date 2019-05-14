@@ -8,20 +8,20 @@ export default (store) => {
   let lastNetwork;
 
   store.watch(
-    (state, { currentNetwork }) => currentNetwork,
-    async (currentNetwork) => {
+    ({ onLine }, { currentNetwork }) => [currentNetwork, onLine],
+    async ([currentNetwork]) => {
       if (isEqual(currentNetwork, lastNetwork) && store.state.sdk) return;
       lastNetwork = currentNetwork;
 
       const methods = {
         async address(options) {
-          if (options && !process.env.RUNNING_IN_FRAME) {
+          if (options) {
             const { app } = options;
             const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
             if (!accessToAccounts.includes(store.getters['accounts/active'].address)) {
               const promise = store.dispatch(
-                'modals/confirmAccountAccess',
-                { appHost: app.host },
+                'modals/open',
+                { name: 'confirmAccountAccess', appHost: app.host },
               );
               const unsubscribe = store.watch(
                 (state, getters) => getters['accounts/active'].address,
@@ -68,7 +68,7 @@ export default (store) => {
                   .map(m => [m, ({ params, origin }) => {
                     const { host } = new URL(origin);
                     const app = store.getters.getApp(host) || { host };
-                    return this[m](...params, { app });
+                    return Promise.resolve(this[m](...params, { app }));
                   }])
                   .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
                 ...this.rpcMethods,

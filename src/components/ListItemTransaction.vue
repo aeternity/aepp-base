@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { AeIdenticon } from '@aeternity/aepp-components-3';
 import { mapGetters } from 'vuex';
 import ListItem from './ListItem.vue';
+import AeIdenticon from './AeIdenticon.vue';
 import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 

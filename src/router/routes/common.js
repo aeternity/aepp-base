@@ -2,8 +2,9 @@ import { checkLoggedIn } from '../utils';
 import AddressBook from '../../pages/AddressBook.vue';
 import AddressBookNew from '../../pages/AddressBookNew.vue';
 import AddressBookChoose from '../../pages/AddressBookChoose.vue';
+import NotFound from '../../pages/NotFound.vue';
 
-export default process.env.UNFINISHED_FEATURES ? [{
+export default [...process.env.UNFINISHED_FEATURES ? [{
   name: 'address-book',
   path: '/addresses',
   component: AddressBook,
@@ -19,4 +20,8 @@ export default process.env.UNFINISHED_FEATURES ? [{
   component: AddressBookChoose,
   beforeEnter: checkLoggedIn(true),
   props: true,
-}] : [];
+}] : [], {
+  name: 'not-found',
+  path: '*',
+  component: NotFound,
+}];

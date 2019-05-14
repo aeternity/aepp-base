@@ -24,10 +24,11 @@ const testMutation = {
   type: 'followerConnected', payload: testFollower.id,
 };
 
-it('emits notification', () => expect(getDispatch(false, testMutation)).toHaveBeenCalledWith('setNotification', {
-  text: `You successfully connected ${testFollower.name}`,
-  autoClose: true,
-}));
+it('emits notification', () => expect(getDispatch(false, testMutation))
+  .toHaveBeenCalledWith('modals/open', {
+    name: 'notification',
+    text: `You successfully connected ${testFollower.name}`,
+  }));
 
 it('does not emits notification if follower was connected before', () => expect(getDispatch(true, testMutation)).toHaveBeenCalledTimes(0));
 

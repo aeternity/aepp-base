@@ -1,7 +1,11 @@
+import Vue from 'vue';
 import '../__mocks__/crypto-api';
 import store from '../index';
 import manifestMozillaDocs from './manifestMozillaDocs.json';
 import manifestTwitter from './manifestTwitter.json';
+
+Vue.config.productionTip = false;
+Vue.config.devtools = false;
 
 describe('store', () => {
   [{

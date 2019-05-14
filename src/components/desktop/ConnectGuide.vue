@@ -44,10 +44,7 @@
         />
         Scan the QR code below with Base æpp
       </Guide>
-      <AeQrCode
-        :data="peerId"
-        :size="240"
-      />
+      <AeQrCode :data="peerId" />
     </template>
 
     <template v-else-if="ledgerSupported">
@@ -101,7 +98,7 @@
 import { mapState } from 'vuex';
 import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../Guide.vue';
-import AeQrCode from '../AeQrCode.vue';
+import { AeQrCode } from '../async';
 import AeFraction from '../AeFraction.vue';
 import Note from '../Note.vue';
 
@@ -144,6 +141,7 @@ export default {
   }
 
   .ae-qr-code {
+    width: rem(240px);
     margin: rem(40px) auto;
   }
 

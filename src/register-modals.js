@@ -1,5 +1,8 @@
-import { registerModal } from './store/plugins/modals';
-import QrCodeReader from './components/QrCodeReader.vue';
+import { registerModal } from './store/plugins/ui/modals';
+import AlertModal from './components/AlertModal.vue';
+import { QrCodeReader } from './components/async';
+import Notification from './components/Notification.vue';
+import NotificationSpend from './components/NotificationSpend.vue';
 import AccountSwitcherModal from './components/mobile/AccountSwitcherModal.vue';
 import MigratedBalanceModal from './components/mobile/MigratedBalanceModal.vue';
 import ConfirmAccountAccessModal from './components/mobile/ConfirmAccountAccessModal.vue';
@@ -12,9 +15,12 @@ import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirm
 import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
 import CancelSignModal from './components/desktop/CancelSignModal.vue';
-import GuideModal from './components/desktop/GuideModal.vue';
 
+registerModal({ name: 'alert', component: AlertModal });
 registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
+const notificationOptions = { allowRedirect: true, dontGrayscalePage: true };
+registerModal({ name: 'notification', component: Notification, ...notificationOptions });
+registerModal({ name: 'notificationSpend', component: NotificationSpend, ...notificationOptions });
 
 if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'accountSwitcher', component: AccountSwitcherModal });
@@ -30,5 +36,4 @@ if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'getLedgerTransactionFee', component: LedgerTransactionFeeModal });
   registerModal({ name: 'confirmLedgerSignTransaction', component: LedgerSignTransactionConfirmModal });
   registerModal({ name: 'cancelSign', component: CancelSignModal });
-  registerModal({ name: 'guide', component: GuideModal });
 }

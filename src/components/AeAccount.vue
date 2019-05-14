@@ -13,7 +13,7 @@
           v-focus="nameEditable"
           :value="name"
           placeholder="Account name"
-          fill="white"
+          fill="light"
           maxlength="16"
           @input="$emit('name-input', $event)"
           @blur.native="$emit('name-blur')"
@@ -45,19 +45,20 @@
 <script>
 import { mapState } from 'vuex';
 import { focus } from 'vue-focus';
-import { AeIdenticon, AeInputPlain } from '@aeternity/aepp-components-3';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
+import AeIdenticon from './AeIdenticon.vue';
+import AeInputPlain from './AeInputPlain.vue';
 import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 
 export default {
   directives: { focus },
   components: {
-    AeAddress,
-    AeIdenticon,
     AeCard,
+    AeIdenticon,
     AeInputPlain,
+    AeAddress,
     Balance,
   },
   props: {

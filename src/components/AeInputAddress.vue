@@ -57,15 +57,17 @@
 </template>
 
 <script>
-import { AeIdenticon, AeIcon, directives } from '@aeternity/aepp-components-3';
+import { AeIcon } from '@aeternity/aepp-components-3';
+import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
+import AeIdenticon from './AeIdenticon.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
 
 export default {
   directives: {
-    removeSpacesOnCopy: directives.removeSpacesOnCopy,
+    removeSpacesOnCopy,
   },
   components: {
     AeIdenticon, AeIcon, AeTextareaFormatted, AeToolbarButton, AePopover, ListItemAccount,
@@ -110,16 +112,17 @@ export default {
       this.showAccountsDropdown = false;
     },
     async readValueFromQrCode() {
-      this.setAddress(await this.$store.dispatch('modals/readQrCode', { title: 'Scan AE Address' }));
+      this.setAddress(await this.$store.dispatch('modals/open', { name: 'readQrCode', title: 'Scan AE Address' }));
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.ae-input-address {
-  .ae-identicon {
-    vertical-align: -.55em;
-  }
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+
+.ae-input-address .ae-identicon {
+  height: rem(20px);
+  vertical-align: -.4em;
 }
 </style>

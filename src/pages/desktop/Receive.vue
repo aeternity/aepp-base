@@ -12,7 +12,6 @@
       <AeQrCode
         :class="{ inactive: !account }"
         :data="address"
-        :size="260"
       />
 
       <AeAddressPanel :address="address" />
@@ -44,7 +43,7 @@ import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
 import AeButton from '../../components/AeButton.vue';
 import AeCard from '../../components/AeCard.vue';
-import AeQrCode from '../../components/AeQrCode.vue';
+import { AeQrCode } from '../../components/async';
 import AeAddressPanel from '../../components/desktop/AeAddressPanel.vue';
 
 export default {
@@ -79,6 +78,7 @@ export default {
     }
 
     .ae-qr-code {
+      width: rem(260px);
       margin-bottom: rem(50px);
 
       &.inactive {

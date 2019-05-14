@@ -16,15 +16,27 @@
   </head>
   <body>
     <noscript>
-      <strong>
-        We're sorry but the Base æpp doesn't work properly without JavaScript enabled.
+      <p class="fullscreen-message">
+        Base æpp doesn't work without JavaScript enabled.
         Please enable it to continue.
-      </strong>
+      </p>
     </noscript>
 
     <div id="app"></div>
     <!-- built files will be auto injected -->
 
+    <script type="text/javascript">
+      window.onerror = function errorHandler() {
+        if (document.getElementById('app').innerHTML) {
+          window.onerror = null;
+          return;
+        }
+
+        document.body.innerHTML = '<p class="fullscreen-message">'
+          + 'Base app has failed to run in this browser.'
+          + '</p>';
+      }
+    </script>
     <% if (process.env.IS_CORDOVA) { %>
     <script type="text/javascript" src="cordova.js"></script>
     <% } %>

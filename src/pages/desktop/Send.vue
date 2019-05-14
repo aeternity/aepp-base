@@ -37,11 +37,6 @@
         Transfer
       </AeButton>
     </form>
-
-    <TransferNotification
-      v-if="transferNotification"
-      v-bind="transferNotification"
-    />
   </div>
 </template>
 
@@ -54,7 +49,6 @@ import Note from '../../components/Note.vue';
 import AeInputAddress from '../../components/AeInputAddress.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
-import TransferNotification from '../../components/TransferNotification.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
 
 export default {
@@ -65,14 +59,12 @@ export default {
     AeInputAddress,
     AeInputAmountAe,
     AeButton,
-    TransferNotification,
   },
   data: () => ({
     accountTo: '',
     amount: '',
     MAGNITUDE,
     MIN_SPEND_TX_FEE,
-    transferNotification: null,
   }),
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
@@ -86,9 +78,11 @@ export default {
         amount.shiftedBy(MAGNITUDE),
         this.accountTo,
       );
-
-      this.transferNotification = { transactionHash: hash, amount };
-      setTimeout(() => { this.transferNotification = null; }, 5000);
+      this.$store.dispatch('modals/open', {
+        name: 'notificationSpend',
+        transactionHash: hash,
+        amount,
+      });
     },
   },
 };

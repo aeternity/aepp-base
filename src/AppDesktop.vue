@@ -10,7 +10,7 @@
 
     <Component
       :is="component"
-      v-for="{ component, key, props } in openedModals"
+      v-for="{ component, key, props } in opened"
       :key="key"
       v-bind="props"
     />
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
 
@@ -27,10 +27,7 @@ export default {
     HeaderDesktop,
     SidebarDesktop,
   },
-  computed: mapState('modals', {
-    openedModals: (state, { opened }) => opened,
-    hidePage: (state, { opened }) => opened.some(({ hidePage }) => hidePage),
-  }),
+  computed: mapGetters('modals', ['opened', 'hidePage']),
 };
 </script>
 

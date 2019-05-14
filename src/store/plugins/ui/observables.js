@@ -7,7 +7,7 @@ import {
 import { refCountDelay } from 'rxjs-etc/operators';
 import { memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { MAGNITUDE } from '../../lib/constants';
+import { MAGNITUDE } from '../../../lib/constants';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -52,7 +52,7 @@ export default (store) => {
     getBalance,
     activeAccount: watchAsObservable(
       (state, getters) => getters['accounts/active'],
-      { immediate: true },
+      { immediate: true, deep: true },
     )
       .pipe(
         pluck('newValue'),

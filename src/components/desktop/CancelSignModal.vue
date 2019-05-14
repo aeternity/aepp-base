@@ -3,10 +3,7 @@
     <div class="modal">
       <h1>Sign the transaction in the Base æpp</h1>
       <Step>
-        <AeAppIcon
-          :src="require('../../assets/icons/base.svg')"
-          class="base"
-        />
+        <img :src="baseAppIcon">
         <h2>Base</h2>
         <p>Open your Base æpp, check the transaction details and sign</p>
       </Step>
@@ -20,22 +17,24 @@
 </template>
 
 <script>
-import { AeAppIcon } from '@aeternity/aepp-components-3';
+import baseAppIcon from '../../assets/icons/base.svg';
 import AeButton from '../AeButton.vue';
 import Step from './Step.vue';
 import FooterModal from './FooterModal.vue';
 
 export default {
-  components: {
-    FooterModal, Step, AeAppIcon, AeButton,
-  },
+  components: { FooterModal, Step, AeButton },
   props: {
     resolve: { type: Function, required: true },
   },
+  data: () => ({ baseAppIcon }),
 };
 </script>
 
 <style scoped lang="scss">
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+
 .cancel-sign-modal .modal {
   height: 100%;
   display: flex;
@@ -52,6 +51,14 @@ export default {
   .step {
     flex-shrink: 0;
     max-width: 250px;
+
+    img {
+      width: rem(55px);
+      height: rem(55px);
+      border-radius: rem(18px);
+      padding: rem(10px);
+      background-color: $color-primary;
+    }
   }
 
   .ae-button {

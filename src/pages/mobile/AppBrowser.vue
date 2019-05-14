@@ -37,6 +37,8 @@
       ref="iframe"
       :src="url"
       :scrolling="$globals.IS_IOS && 'no'"
+      importance="high"
+      sandbox="allow-scripts allow-same-origin"
       @load="loading = false"
     />
 
@@ -54,6 +56,13 @@ import MenuItem from '../../components/MenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
 import TabBar from '../../components/mobile/TabBar.vue';
 
+const ALLOWED_PROTOCOLS = [
+  'https:',
+  ...window.location.protocol === 'https:' ? [] : ['http:'],
+];
+const DEFAULT_PROTOCOL = window.location.protocol === 'https:'
+  || process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
+
 export default {
   components: {
     UrlForm, ButtonPlain, AeIcon, Menu, MenuItem, ProgressFake, TabBar,
@@ -68,7 +77,9 @@ export default {
   computed: {
     url() {
       const path = this.$route.fullPath.replace('/browser/', '');
-      return `http${window.location.protocol === 'https:' ? 's' : ''}://${path}`;
+      const url = new URL(/^\w+:\D+/.test(path) ? path : `${DEFAULT_PROTOCOL}//${path}`);
+      if (!ALLOWED_PROTOCOLS.includes(url.protocol)) url.protocol = DEFAULT_PROTOCOL;
+      return url.toString();
     },
     host() {
       return new URL(this.url).host;

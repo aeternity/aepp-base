@@ -1,5 +1,8 @@
+import { prepare } from '../../utils';
+
 describe('Migration 2: Build accounts array', () => {
   it('applicable', () => {
+    prepare();
     const stateBeforeMigration = {
       migrations: {
         0: true,
@@ -66,7 +69,7 @@ describe('Migration 2: Build accounts array', () => {
     window.localStorage.vuex = JSON.stringify(stateBeforeMigration);
     cy
       .viewport('iphone-5')
-      .visit('/#/login')
+      .visit('/login')
       .get('input[type=password]').type('1234')
       .get('button')
       .contains('Log in')

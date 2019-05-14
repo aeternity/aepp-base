@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { AeIdenticon } from '@aeternity/aepp-components-3';
+import AeIdenticon from './AeIdenticon.vue';
 import AeAddress from './AeAddress.vue';
 
 export default {

@@ -1,11 +1,12 @@
-import io from 'socket.io-client';
 import {
   pick, cloneDeep, isEqual, throttle, memoize,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
 
+const io = async () => (await import(/* webpackChunkName: "socket-io" */ 'socket.io-client')).default;
+
 const getStateForSync = ({
-  sdkUrl, accounts: { list, activeIdx }, addressBook, customNetworks,
+  sdkUrl, accounts: { list, activeIdx }, addressBook, apps, customNetworks,
 }) => ({
   sdkUrl,
   accounts: {
@@ -24,6 +25,7 @@ const getStateForSync = ({
     activeIdx,
   },
   addressBook,
+  apps,
   customNetworks,
 });
 
@@ -47,7 +49,7 @@ export default (store) => {
     if (process.env.IS_MOBILE_DEVICE) {
       query.pushApiSubscription = await getPushApiSubscription();
     }
-    const socket = io(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
+    const socket = (await io())(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
     let processedState = cloneDeep(getStateForSync(store.state));
@@ -72,7 +74,7 @@ export default (store) => {
           && !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return;
       broadcastState(state);
-    }));
+    }, { deep: true }));
 
     if (process.env.IS_MOBILE_DEVICE) {
       const syncState = throttle(
@@ -98,9 +100,9 @@ export default (store) => {
       socket.on('follower-disconnected', followerId => store.commit('followerDisconnected', followerId));
       socket.on('follower-removed', (followerId) => {
         const { name } = store.state.mobile.followers[followerId];
-        store.dispatch('setNotification', {
+        store.dispatch('modals/open', {
+          name: 'notification',
           text: `'${name}' has removed itself`,
-          autoClose: true,
         });
         store.commit('followerRemoved', followerId);
       });
@@ -127,7 +129,7 @@ export default (store) => {
         .forEach(followerId => socket.emit('add-follower', followerId));
     } else {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true));
-      socket.on('removed-from-group', () => store.commit('reset'));
+      socket.on('removed-from-group', () => store.dispatch('reset'));
 
       const leader = new RpcPeer(message => socket.emit('message-to-leader', message));
       socket.on('message-from-leader', message => leader.processMessage(message));

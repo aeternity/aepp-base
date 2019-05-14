@@ -25,10 +25,7 @@
       store or scan this QR code.
     </Guide>
 
-    <AeQrCode
-      :size="241"
-      data="https://airgap.it/"
-    />
+    <AeQrCode data="https://airgap.it/" />
 
     <AeButton
       slot="footer"
@@ -44,7 +41,7 @@
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
-import AeQrCode from '../../components/AeQrCode.vue';
+import { AeQrCode } from '../../components/async';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
@@ -58,13 +55,7 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
 @import './VaultSetup.scss';
 
-.vault-setup-another-device {
-  .guide {
-    margin-bottom: rem(41px);
-  }
-
-  .ae-qr-code {
-    margin: 0 auto;
-  }
+.vault-setup-another-device .guide {
+  margin-bottom: rem(41px);
 }
 </style>

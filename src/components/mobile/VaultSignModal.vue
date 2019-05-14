@@ -15,10 +15,7 @@
       <em>Scan with AirGap Vault app</em> to sign the transaction
     </Guide>
 
-    <AeQrCode
-      :data="url"
-      :size="220"
-    />
+    <AeQrCode :data="url" />
 
     <AeButton
       slot="footer"
@@ -35,7 +32,7 @@ import { mapState } from 'vuex';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
-import AeQrCode from '../AeQrCode.vue';
+import { AeQrCode } from '../async';
 import AeButton from '../AeButton.vue';
 
 export default {
@@ -56,7 +53,7 @@ export default {
   }),
   methods: {
     closeHandler() {
-      this.reject(new Error('Canceled by user'));
+      this.reject(new Error('Cancelled by user'));
     },
   },
 };

@@ -8,7 +8,7 @@ import ConfirmContractDeployModal from '../../components/mobile/ConfirmContractD
 import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendModal from '../../components/mobile/ConfirmSpendModal.vue';
 import {
-  account, accounts, contractAddress, callData, code, amount, fee, minFee, appIcon,
+  account, accounts, contractAddress, callData, code, amount, fee, minFee, getAppMetadata,
 } from '../mock-data';
 
 const base = {
@@ -24,13 +24,14 @@ const base = {
           denominator: 3,
         },
       },
+      accounts: {
+        list: [account],
+      },
+      addressBook: [],
     },
     getters: {
-      activeAccount: () => account,
-      getAppMetadata: () => host => ({
-        name: `App on ${host}`,
-        icon: appIcon,
-      }),
+      'accounts/active': () => account,
+      getAppMetadata,
     },
   }),
 };
@@ -99,8 +100,10 @@ storiesOf('mobile ConfirmModal', module)
         :amount="amount"
         :fee="fee"
         :minFee="minFee"
+        :payload="payload"
       />`,
     data: () => ({
       recipientId: accounts[0].address,
+      payload: 'Example payload',
     }),
   }));

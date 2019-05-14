@@ -1,19 +1,17 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import { update, flatMap, merge } from 'lodash-es';
+import { update, flatMap, mergeWith } from 'lodash-es';
 import store from '../index';
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
 export default {
-  state: () => ({
+  state: {
     migrations: {},
     loginTarget: '',
     sdkUrl: networksRegistry[0].url,
     sdk: null,
-    alert: null,
-    notification: null,
     serviceWorkerRegistration: null,
     addressBook: [],
     customNetworks: [],
@@ -21,7 +19,7 @@ export default {
     cachedAppManifests: {},
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     onLine: true,
-  }),
+  },
 
   getters: {
     networks: ({ customNetworks }) => [
@@ -76,7 +74,14 @@ export default {
 
   mutations: {
     syncState(state, remoteState) {
-      Object.entries(merge({}, state, remoteState))
+      Object.entries(
+        mergeWith(
+          {},
+          state,
+          remoteState,
+          (objValue, srcValue) => (Array.isArray(srcValue) ? srcValue : undefined),
+        ),
+      )
         .forEach(([name, value]) => Vue.set(state, name, value));
     },
     markMigrationAsApplied(state, migrationId) {
@@ -90,12 +95,6 @@ export default {
     },
     setSdk(state, sdk) {
       state.sdk = sdk;
-    },
-    setAlert(state, options) {
-      state.alert = options;
-    },
-    setNotification(state, options) {
-      state.notification = options;
     },
     addAddressBookItem(state, item) {
       state.addressBook.push(item);
@@ -140,19 +139,6 @@ export default {
   },
 
   actions: {
-    alert({ commit }, options) {
-      return new Promise(resolve => commit('setAlert', {
-        ...options,
-        resolve: () => {
-          commit('setAlert');
-          resolve();
-        },
-      }));
-    },
-    setNotification({ commit }, options) {
-      commit('setNotification', options);
-      if (options.autoClose) setTimeout(() => commit('setNotification'), 3000);
-    },
     async fetchAppManifest(_, host) {
       const fetchTextCors = async url => (
         await fetch(`https://cors-anywhere.herokuapp.com/${url}`)).text();
