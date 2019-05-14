@@ -54,6 +54,13 @@ import MenuItem from '../../components/MenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
 import TabBar from '../../components/mobile/TabBar.vue';
 
+const ALLOWED_PROTOCOLS = [
+  'https:',
+  ...window.location.protocol === 'https:' ? [] : ['http:'],
+];
+const DEFAULT_PROTOCOL = window.location.protocol === 'https:'
+  || process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
+
 export default {
   components: {
     UrlForm, ButtonPlain, AeIcon, Menu, MenuItem, ProgressFake, TabBar,
@@ -68,9 +75,8 @@ export default {
   computed: {
     url() {
       const path = this.$route.fullPath.replace('/browser/', '');
-      const url = new URL(/^\w+:\D+/.test(path) ? path : `http://${path}`);
-      if (!['https:', 'http:'].includes(url.protocol)) url.protocol = 'http:';
-      if (window.location.protocol === 'https:') url.protocol = 'https:';
+      const url = new URL(/^\w+:\D+/.test(path) ? path : `${DEFAULT_PROTOCOL}//${path}`);
+      if (!ALLOWED_PROTOCOLS.includes(url.protocol)) url.protocol = DEFAULT_PROTOCOL;
       return url.toString();
     },
     host() {
