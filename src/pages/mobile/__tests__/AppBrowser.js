@@ -13,6 +13,9 @@ describe('AppBrowser', () => [{
 }, {
   inputUrl: 'ftp://example.com',
   outputUrl: 'http://example.com/',
+}, {
+  inputUrl: 'localhost:8080',
+  outputUrl: 'http://localhost:8080/',
 }].forEach(({ inputUrl, outputUrl }) => it(
   `replaces "${inputUrl}" path with "${outputUrl}"`,
   () => {
