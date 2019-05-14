@@ -38,6 +38,7 @@
       :src="url"
       :scrolling="$globals.IS_IOS && 'no'"
       importance="high"
+      sandbox="allow-scripts allow-same-origin"
       @load="loading = false"
     />
 
