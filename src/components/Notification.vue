@@ -22,7 +22,7 @@ export default {
     text: { type: String, default: '' },
   },
   mounted() {
-    setInterval(() => this.resolve(), 5000);
+    setTimeout(() => this.resolve(), 5000);
   },
 };
 </script>
