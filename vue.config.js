@@ -51,5 +51,5 @@ module.exports = {
     themeColor: '#f7296e',
     msTileColor: '#f7296e',
   },
-  transpileDependencies: ['@aeternity/aepp-sdk', '@aeternity/hd-wallet', '@download/blockies'],
+  transpileDependencies: ['@aeternity/aepp-sdk/es', '@aeternity/hd-wallet', '@download/blockies'],
 };
