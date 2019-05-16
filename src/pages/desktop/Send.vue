@@ -104,11 +104,5 @@ export default {
     margin-left: auto;
     margin-right: auto;
   }
-
-  .transfer-notification {
-    left: auto;
-    right: auto;
-    width: rem(520px);
-  }
 }
 </style>

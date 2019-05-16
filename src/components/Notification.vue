@@ -36,6 +36,9 @@ export default {
   top: 0;
   left: rem(10px);
   right: rem(10px);
+  max-width: rem(520px);
+  margin-left: auto;
+  margin-right: auto;
   padding-top: env(safe-area-inset-top);
   border-radius: 0 0 rem(8px) rem(8px);
   background-color: $color-neutral-maximum;
