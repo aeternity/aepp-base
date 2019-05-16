@@ -52,11 +52,15 @@ export default {
 
   .content {
     overflow-wrap: break-word;
-    padding: rem(6px) rem(16px);
+    padding: rem(20px) rem(16px);
 
     /deep/ .list-item {
       padding-left: 0;
       padding-right: 0;
+
+      .content {
+        height: rem(40px);
+      }
     }
   }
 
