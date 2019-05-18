@@ -1,6 +1,10 @@
 .DS_Store
 node_modules
 /dist
+/public/favicons/android-chrome-192x192.png
+/public/favicons/android-chrome-512x512.png
+/public/favicons/apple-touch-icon.png
+/resources/icon.png
 
 # Cordova files
 /www
