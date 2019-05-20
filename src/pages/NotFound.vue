@@ -4,15 +4,25 @@
     class="not-found"
     :hide-tab-bar="!loggedIn"
   >
-    Page not found
+    It looks like the page you are looking for was not found.
+
+    <AeButton
+      v-if="!loggedIn && $globals.IS_MOBILE_DEVICE"
+      slot="footer"
+      :to="{ name: 'intro' }"
+    >
+      Go home
+    </AeButton>
   </component>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import MobilePage from '../components/mobile/Page.vue';
+import AeButton from '../components/AeButton.vue';
 
 export default {
+  components: { AeButton },
   data: () => ({
     wrapper: process.env.IS_MOBILE_DEVICE ? MobilePage : 'div',
   }),
