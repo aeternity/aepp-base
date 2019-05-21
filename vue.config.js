@@ -38,6 +38,7 @@ module.exports = {
     .use('file-loader')
     .loader('svg-url-loader')
     .options({
+      noquotes: true,
       limit: 4096,
       name: 'img/[name].[hash:8].[ext]',
     })
