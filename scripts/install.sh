@@ -3,8 +3,12 @@ set -e
 
 npm ci
 
-if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-  HOMEBREW_NO_AUTO_UPDATE=1 brew install imagemagick
+if [[ $ANDROID_HOME != "" || $TRAVIS_OS_NAME == "osx" ]]; then
   mkdir www
-  npx cordova prepare ios
+
+  if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+    npx cordova prepare ios
+  else
+    npx cordova prepare android
+  fi
 fi

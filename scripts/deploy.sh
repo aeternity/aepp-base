@@ -24,8 +24,10 @@ case $TRAVIS_BRANCH in
     ;;
 esac
 
-if [[ $TRAVIS_OS_NAME != "osx" ]]; then
-  rsync -r --delete-after -v $TRAVIS_BUILD_DIR/dist/* deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH
-else
+if [[ $TRAVIS_OS_NAME == "osx" ]]; then
   rsync -r --delete-after -v $TRAVIS_BUILD_DIR/aeternity.app.tar.gz deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH
+elif [[ $ANDROID_HOME != "" ]]; then
+  rsync -r --delete-after -v $TRAVIS_BUILD_DIR/aeternity.apk deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH/aeternity.apk
+else
+  rsync -r --delete-after -v $TRAVIS_BUILD_DIR/dist/* deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH
 fi

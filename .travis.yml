@@ -1,20 +1,34 @@
-language: node_js
-os:
-  - linux
-  - osx
-osx_image: xcode10.2
-node_js:
-  - '10'
+matrix:
+  include:
+    - language: node_js
+      node_js: '10'
+      script: scripts/test.sh
+
+    - language: android
+      android:
+        components:
+          - build-tools-28.0.3
+          - android-28
+      before_install:
+        - yes | sdkmanager "platforms;android-28"
+        - nvm install 10
+      script: scripts/build-cordova.sh
+
+    - language: objective-c
+      os: osx
+      osx_image: xcode10.2
+      before_install: nvm install 10
+      script: scripts/build-cordova.sh
+
 cache:
   directories:
     - node_modules
     - platforms
     - plugins
     - /home/travis/.cache/Cypress
-install:
-  - travis_wait 30 scripts/install.sh
-script: scripts/script.sh
-before_deploy: scripts/before-deploy.sh
+
+install: travis_wait 30 scripts/install.sh
+
 deploy:
   - provider: script
     skip_cleanup: true
@@ -23,7 +37,9 @@ deploy:
       all_branches: true
   - provider: releases
     api_key: $GITHUB_TOKEN
-    file: aeternity.app.tar.gz
+    file:
+      - aeternity.apk
+      - aeternity.app.tar.gz
     skip_cleanup: true
     on:
       condition: $TRAVIS_OS_NAME = osx
