@@ -26,6 +26,7 @@
         <access origin="*" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <allow-navigation href="*" />
         <preference name="UseSwiftLanguageVersion" value="5" />
         <preference name="DisallowOverscroll" value="true" />
     </platform>
