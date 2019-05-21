@@ -33,7 +33,19 @@ module.exports = {
     }
 
     return [definitions];
-  }),
+  }).end()
+    .module.rule('svg')
+    .use('file-loader')
+    .loader('svg-url-loader')
+    .options({
+      noquotes: true,
+      limit: 4096,
+      name: 'img/[name].[hash:8].[ext]',
+    })
+    .end()
+    .use('svgo-loader')
+    .loader('svgo-loader')
+    .end(),
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
