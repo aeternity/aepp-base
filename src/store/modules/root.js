@@ -74,14 +74,14 @@ export default {
 
   mutations: {
     syncState(state, remoteState) {
-      Object.entries(
-        mergeWith(
-          {},
-          state,
-          remoteState,
-          (objValue, srcValue) => (Array.isArray(srcValue) ? srcValue : undefined),
-        ),
-      )
+      const customizer = (objValue, srcValue) => {
+        if (!Array.isArray(srcValue)) return undefined;
+        if (!Array.isArray(objValue)) return srcValue;
+        return srcValue.map((el, idx) => (
+          el && typeof el === 'object' ? mergeWith({}, objValue[idx], el, customizer) : el
+        ));
+      };
+      Object.entries(mergeWith({}, state, remoteState, customizer))
         .forEach(([name, value]) => Vue.set(state, name, value));
     },
     markMigrationAsApplied(state, migrationId) {
