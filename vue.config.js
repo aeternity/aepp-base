@@ -33,7 +33,19 @@ module.exports = {
     }
 
     return [definitions];
-  }),
+  }).end()
+    .module.rule('svg')
+    .use('file-loader')
+    .loader('svg-url-loader')
+    .options({
+      noquotes: true,
+      limit: 4096,
+      name: 'img/[name].[hash:8].[ext]',
+    })
+    .end()
+    .use('svgo-loader')
+    .loader('svgo-loader')
+    .end(),
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
@@ -51,5 +63,5 @@ module.exports = {
     themeColor: '#f7296e',
     msTileColor: '#f7296e',
   },
-  transpileDependencies: ['@aeternity/aepp-sdk', '@aeternity/hd-wallet', '@download/blockies'],
+  transpileDependencies: ['@aeternity/aepp-sdk/es', '@aeternity/hd-wallet', '@download/blockies'],
 };

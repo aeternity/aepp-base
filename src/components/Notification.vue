@@ -22,7 +22,7 @@ export default {
     text: { type: String, default: '' },
   },
   mounted() {
-    setInterval(() => this.resolve(), 5000);
+    setTimeout(() => this.resolve(), 5000);
   },
 };
 </script>
@@ -36,6 +36,9 @@ export default {
   top: 0;
   left: rem(10px);
   right: rem(10px);
+  max-width: rem(520px);
+  margin-left: auto;
+  margin-right: auto;
   padding-top: env(safe-area-inset-top);
   border-radius: 0 0 rem(8px) rem(8px);
   background-color: $color-neutral-maximum;
@@ -52,11 +55,15 @@ export default {
 
   .content {
     overflow-wrap: break-word;
-    padding: rem(6px) rem(16px);
+    padding: rem(20px) rem(16px);
 
     /deep/ .list-item {
       padding-left: 0;
       padding-right: 0;
+
+      .content {
+        height: rem(40px);
+      }
     }
   }
 

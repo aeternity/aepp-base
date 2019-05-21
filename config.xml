@@ -1,28 +1,32 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.aeternity.base" version="0.8.2" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.aeternity.base" version="0.8.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Base æpp</name>
     <author href="https://aeternity.com">
         aeternity developers
     </author>
     <content src="index.html" />
-    <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <allow-navigation href="*" />
     <platform name="android">
+        <access origin="*.aepps.com" />
+        <access origin="aeternity.com" />
+        <access origin="api.backendless.com" />
+        <access origin="cors-anywhere.herokuapp.com" />
         <allow-intent href="market:*" />
         <preference name="SplashMaintainAspectRatio" value="true" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-          <application android:usesCleartextTraffic="true" />
+            <application android:usesCleartextTraffic="true" />
         </edit-config>
     </platform>
     <platform name="ios">
+        <access origin="*" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <allow-navigation href="*" />
         <preference name="UseSwiftLanguageVersion" value="5" />
         <preference name="DisallowOverscroll" value="true" />
     </platform>
