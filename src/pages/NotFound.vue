@@ -1,5 +1,5 @@
 <template>
-  <component
+  <Component
     :is="wrapper"
     class="not-found"
     :hide-tab-bar="!loggedIn"
@@ -13,7 +13,7 @@
     >
       Go home
     </AeButton>
-  </component>
+  </Component>
 </template>
 
 <script>
