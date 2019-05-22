@@ -115,6 +115,7 @@ export default {
 
   &.neutral {
     background-color: $color-neutral-positive-2;
+    color: $color-neutral-negative-3;
   }
 
   &.light {
