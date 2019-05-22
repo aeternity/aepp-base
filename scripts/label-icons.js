@@ -47,7 +47,8 @@ const sharp = require('sharp'); // eslint-disable-line import/no-extraneous-depe
       <text x="100" y="55">${secondLine}</text>
       <text x="100" dy="85">${[platform, nodeEnv].filter(a => a).join(', ')}</text>
     </svg>`);
-  await Promise.all(appIcons.map(async ({ path, side, platform }) => {
+
+  const iconCreators = appIcons.map(({ path, side, platform }) => async () => {
     const result = sharp(sourceIcon).resize(side);
     if (showLabel) {
       result.composite([{
@@ -56,7 +57,11 @@ const sharp = require('sharp'); // eslint-disable-line import/no-extraneous-depe
       }]);
     }
     await result.toFile(path);
-  }));
+  });
+
+  if (process.platform === 'win32') {
+    await iconCreators.reduce((promise, creator) => promise.then(creator), Promise.resolve());
+  } else await Promise.all(iconCreators.map(creator => creator()));
 })().catch((error) => {
   console.error(error);
   process.exit(1);
