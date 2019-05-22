@@ -6,7 +6,7 @@ const sharp = require('sharp'); // eslint-disable-line import/no-extraneous-depe
 
   if (!['build', 'serve'].includes(npmEvent)) return;
 
-  const branch = (TRAVIS_BRANCH || execSync('git rev-parse --abbrev-ref HEAD').toString())
+  const branch = (TRAVIS_BRANCH || execSync('git rev-parse --abbrev-ref HEAD').toString().trim())
     .replace('feature/', '');
   const showLabel = branch !== 'master';
   console.log(`Generating ${showLabel ? 'labeled ' : ''}icons`);
