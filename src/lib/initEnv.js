@@ -15,6 +15,6 @@ Object.assign(process.env, {
     RUNNING_IN_FRAME: window.parent !== window,
   },
   ...process.env.RUNNING_IN_POPUP === undefined && {
-    RUNNING_IN_POPUP: !!window.opener,
+    RUNNING_IN_POPUP: !!window.opener && window.name === 'popup',
   },
 });
