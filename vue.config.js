@@ -1,3 +1,5 @@
+require('./scripts/label-icons');
+
 const parseBool = val => (val ? JSON.parse(val) : false);
 
 // eslint-disable-next-line camelcase

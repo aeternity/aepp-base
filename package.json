@@ -79,6 +79,7 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^7.0.3",
     "serve": "^11.0.0",
+    "sharp": "^0.22.1",
     "svg-url-loader": "^2.3.2",
     "svgo": "^1.2.2",
     "svgo-loader": "^2.2.0",
