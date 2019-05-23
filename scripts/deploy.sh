@@ -36,5 +36,5 @@ else
     tar -czvf aeternity.tar.gz dist
   fi
 
-  rsync $RSYNC_OPTIONS dist $UPLOAD_PATH
+  rsync $RSYNC_OPTIONS dist/* $UPLOAD_PATH
 fi
