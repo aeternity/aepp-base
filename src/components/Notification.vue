@@ -39,8 +39,9 @@ export default {
   max-width: rem(520px);
   margin-left: auto;
   margin-right: auto;
-  padding-top: env(safe-area-inset-top);
-  border-radius: 0 0 rem(8px) rem(8px);
+  margin-top: rem(10px);
+  margin-top: calc(#{rem(10px)} + env(safe-area-inset-top));
+  border-radius: rem(8px);
   background-color: $color-neutral-maximum;
   box-shadow: 0 0 rem(100px) rem(30px) rgba(146, 156, 166, 0.4);
   @extend %face-sans-base;
