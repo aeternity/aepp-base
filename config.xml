@@ -29,6 +29,11 @@
         <allow-navigation href="*" />
         <preference name="UseSwiftLanguageVersion" value="5" />
         <preference name="DisallowOverscroll" value="true" />
+        <edit-config file="*-Info.plist" mode="merge" target="LSApplicationQueriesSchemes">
+            <array>
+                <string>airgap-vault</string>
+            </array>
+        </edit-config>
     </platform>
     <preference name="SplashScreen" value="screen" />
     <preference name="ShowSplashScreenSpinner" value="false" />
@@ -47,6 +52,11 @@
     <plugin name="cordova-plugin-qrscanner" spec="^3.0.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-wkwebview-engine" spec="github:mwchambers/cordova-plugin-wkwebview-engine#da67d6bb6ce8597c38fc69e66b84566e34efea8d" />
+    <plugin name="cordova-plugin-customurlscheme" spec="^4.4.0">
+        <variable name="URL_SCHEME" value="aepp-base" />
+    </plugin>
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
+    <plugin name="com.lampa.startapp" spec="^6.1.6" />
     <engine name="android" spec="^8.0.0" />
     <engine name="ios" spec="^5.0.0" />
 </widget>
