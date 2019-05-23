@@ -60,7 +60,7 @@ export default {
     margin-bottom: rem(15px);
   }
 
-  .icon {
+  > .icon {
     flex-shrink: 0;
     width: rem(30px);
     padding-left: rem(6px);
@@ -110,7 +110,7 @@ export default {
   }
 
   &.primary {
-    .icon {
+    > .icon {
       color: $color-primary;
     }
 
@@ -124,7 +124,7 @@ export default {
   }
 
   &.neutral {
-    .icon {
+    > .icon {
       color: $color-neutral-maximum;
     }
 
@@ -139,7 +139,7 @@ export default {
   }
 
   &.alternative {
-    .icon {
+    > .icon {
       color: $color-alternative;
     }
 
