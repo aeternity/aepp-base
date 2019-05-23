@@ -1,7 +1,5 @@
 /* eslint import/extensions: "off" */
 
-import './icon.scss';
-
 export { default as Active } from '../assets/icons/inline/active.svg?icon-component';
 export { default as AddContact } from '../assets/icons/inline/add-contact.svg?icon-component';
 export { default as Back } from '../assets/icons/inline/back.svg?icon-component';
