@@ -2,6 +2,7 @@
   <div class="qr-code-reader">
     <HeaderMobile
       :title="title"
+      fill="light"
       left-button-icon-name="back"
       @left-button-click="cancelReading"
     />
@@ -109,8 +110,6 @@ export default {
   min-height: 100vh;
 
   .header-mobile {
-    background: #fff;
-
     .button-plain .ae-icon {
       font-size: rem(22px);
     }
