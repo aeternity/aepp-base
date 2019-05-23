@@ -109,12 +109,6 @@ export default {
   flex-grow: 1;
   min-height: 100vh;
 
-  .header-mobile {
-    .button-plain .ae-icon {
-      font-size: rem(22px);
-    }
-  }
-
   .permission-denied {
     text-align: center;
     line-height: 1.56;

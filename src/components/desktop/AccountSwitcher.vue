@@ -6,7 +6,7 @@
           slot="icon"
           v-copy-on-click="activeAccount.address"
         >
-          <AeIcon name="copy" />
+          <Copy />
         </ButtonPlain>
       </AeAccount>
     </header>
@@ -28,12 +28,9 @@
         title="Create a new account"
         @click="createAccount"
       >
-        <AeIcon
-          slot="icon"
-          fill="primary"
-          face="round"
-          name="plus"
-        />
+        <ListItemCircle slot="icon">
+          <Plus />
+        </ListItemCircle>
       </ListItem>
     </main>
 
@@ -46,10 +43,11 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import AeAccount from '../AeAccount.vue';
 import ButtonPlain from '../ButtonPlain.vue';
+import { Copy, Plus } from '../icons';
 import ListItem from '../ListItem.vue';
+import ListItemCircle from '../ListItemCircle.vue';
 import ListItemAccount from '../ListItemAccount.vue';
 import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
@@ -58,7 +56,7 @@ import copyOnClick from '../../directives/copyOnClick';
 
 export default {
   components: {
-    AeAccount, ButtonPlain, AeIcon, ListItem, ListItemAccount, AeRadio, Balance,
+    AeAccount, ButtonPlain, Copy, ListItem, ListItemCircle, Plus, ListItemAccount, AeRadio, Balance,
   },
   directives: {
     copyOnClick,
@@ -113,11 +111,6 @@ export default {
 
     .ae-account {
       margin-bottom: rem(-90px);
-
-      .ae-icon {
-        color: #fff;
-        font-size: 18px;
-      }
     }
   }
 

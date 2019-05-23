@@ -13,7 +13,7 @@
           Your connected<br>account{{ accountsCount !== 1 ? 's': '' }}
         </template>
         <ButtonPlain @click="toggleSidebar">
-          <AeIcon name="close" />
+          <Close />
         </ButtonPlain>
       </h1>
 
@@ -43,15 +43,15 @@
 <script>
 import { uniq } from 'lodash-es';
 import { mapState, mapMutations } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import SidebarModal from './SidebarModal.vue';
 import ConnectGuide from './ConnectGuide.vue';
 import AccountSwitcher from './AccountSwitcher.vue';
 import ButtonPlain from '../ButtonPlain.vue';
+import { Close } from '../icons';
 
 export default {
   components: {
-    AeIcon, SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain,
+    SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain, Close,
   },
   data: () => ({
     ledgerTab: false,
@@ -94,9 +94,9 @@ export default {
       @extend %face-sans-l;
       font-weight: 500;
 
-      .ae-icon {
+      .icon {
+        display: block;
         margin-top: rem(5px);
-        font-size: rem(20px);
       }
     }
 

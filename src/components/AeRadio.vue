@@ -7,19 +7,17 @@
       :type="checkbox? 'checkbox' : 'radio'"
       @change="$emit('change')"
     >
-    <AeIcon
-      slot="right"
-      face="round"
-      name="check"
-    />
+    <span slot="right">
+      <Check />
+    </span>
   </label>
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
+import { Check } from './icons';
 
 export default {
-  components: { AeIcon },
+  components: { Check },
   props: {
     name: { type: String, default: '' },
     value: { type: [String, Number, Boolean], default: '' },
@@ -37,22 +35,29 @@ export default {
   input {
     display: none;
 
-    &:checked + .ae-icon {
-      width: rem(24px);
-      height: rem(24px);
+    &:checked + span {
       background-color: $color-primary;
       border: none;
     }
   }
 
-  .ae-icon {
-    width: rem(20px);
-    height: rem(20px);
-    font-size: rem(14px);
+  > span {
+    box-sizing: border-box;
+    display: inline-block;
+    width: rem(24px);
+    height: rem(24px);
+    line-height: rem(24px);
     background-color: $color-neutral-maximum;
     border: 2px solid $color-neutral-positive-1;
+    border-radius: 50%;
     box-shadow: 0 0 rem(4px) $color-shadow-alpha-15;
     transition: background-color 300ms;
+    text-align: center;
+
+    .icon {
+      height: rem(14px);
+      color: #fff;
+    }
   }
 }
 </style>

@@ -98,6 +98,7 @@ export default {
     display: flex;
     align-items: center;
     margin: rem(12px) rem(16px);
+    color: $color-neutral-maximum;
 
     .slot-icon {
       margin-left: auto;
@@ -105,7 +106,6 @@ export default {
 
     span {
       @extend %face-sans-base;
-      color: $color-neutral-maximum;
     }
 
     .ae-identicon {

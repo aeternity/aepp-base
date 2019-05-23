@@ -11,10 +11,7 @@
       :subtitle="`${c.address.slice(0, 6)}···${c.address.slice(-3)}`"
       :to="{ name: 'send-to', params: { to: c.address } }"
     >
-      <AeIcon
-        slot="right"
-        name="transfer"
-      />
+      <Transfer slot="right" />
     </ListItemAccount>
 
     <ButtonAddFixed :to="{ name: 'address-book-new' }" />
@@ -24,16 +21,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import AddressBookNoContacts from './AddressBookNoContacts.vue';
 import ButtonAddFixed from '../components/ButtonAddFixed.vue';
 import ListItemAccount from '../components/ListItemAccount.vue';
+import { Transfer } from '../components/icons';
 import MobilePage from '../components/mobile/Page.vue';
 
 export default {
   components: {
-    AeIcon,
     ListItemAccount,
+    Transfer,
     AddressBookNoContacts,
     ButtonAddFixed,
     MobilePage,

@@ -24,24 +24,19 @@
           :to="{ name: 'accounts-new' }"
           title="New subaccount"
         >
-          <AeIcon
-            slot="icon"
-            fill="primary"
-            face="round"
-            name="plus"
-          />
+          <ListItemCircle slot="icon">
+            <Plus />
+          </ListItemCircle>
         </ListItem>
 
         <ListItem
           :to="{ name: 'vault-new' }"
           title="Create a vault for AirGap"
+          class="vault-new"
         >
-          <AeIcon
-            slot="icon"
-            fill="alternative"
-            face="round"
-            name="plus"
-          />
+          <ListItemCircle slot="icon">
+            <Plus />
+          </ListItemCircle>
         </ListItem>
 
         <Balance
@@ -63,10 +58,11 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { pick } from 'lodash-es';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import Overlay from '../Overlay.vue';
 import ListItem from '../ListItem.vue';
 import ListItemAccount from '../ListItemAccount.vue';
+import ListItemCircle from '../ListItemCircle.vue';
+import { Plus } from '../icons';
 import AeCard from '../AeCard.vue';
 import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
@@ -75,9 +71,10 @@ import TabBar from './TabBar.vue';
 export default {
   components: {
     Overlay,
-    AeIcon,
     ListItem,
     ListItemAccount,
+    ListItemCircle,
+    Plus,
     AeCard,
     AeRadio,
     Balance,
@@ -128,6 +125,10 @@ export default {
     @include abovePhone {
       width: 100%;
       align-self: center;
+    }
+
+    .list-item.vault-new .list-item-circle {
+      background-color: $color-alternative;
     }
 
     .balance {

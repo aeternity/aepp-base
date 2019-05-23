@@ -16,10 +16,10 @@
         @close="showAccountMenu = false"
       >
         <MenuItem v-copy-on-click="activeAccount.address">
-          <AeIcon name="copy" />Copy Address
+          <Copy />Copy Address
         </MenuItem>
         <MenuItem @click="accountNameEditable = true">
-          <AeIcon name="edit" />Rename
+          <Edit />Rename
         </MenuItem>
       </Menu>
 
@@ -35,10 +35,7 @@
           ref="accountButton"
           @click="showAccountMenu = true"
         >
-          <AeIcon
-            fill="white"
-            name="more"
-          />
+          <More />
         </ButtonPlain>
       </AeAccount>
     </template>
@@ -53,10 +50,7 @@
         slot="icon"
         :src="moneyWithWingsEmoji"
       >
-      <AeIcon
-        slot="right"
-        name="left-more"
-      />
+      <LeftMore slot="right" />
     </ListItem>
     <ListItem
       :to="{ name: 'receive' }"
@@ -68,10 +62,7 @@
         slot="icon"
         :src="manTippingHandEmoji"
       >
-      <AeIcon
-        slot="right"
-        name="left-more"
-      />
+      <LeftMore slot="right" />
     </ListItem>
     <ListItem
       :to="{ name: 'transaction-list' }"
@@ -83,10 +74,7 @@
         slot="icon"
         :src="mantelpieceClockEmoji"
       >
-      <AeIcon
-        slot="right"
-        name="left-more"
-      />
+      <LeftMore slot="right" />
     </ListItem>
     <ListItem
       title="Tokens in migration"
@@ -98,10 +86,7 @@
         slot="icon"
         :src="glowingStarEmoji"
       >
-      <AeIcon
-        slot="right"
-        name="left-more"
-      />
+      <LeftMore slot="right" />
     </ListItem>
   </MobilePage>
 </template>
@@ -109,7 +94,6 @@
 <script>
 import { pick } from 'lodash-es';
 import { mapMutations, mapActions } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import mantelpieceClockEmoji from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
@@ -119,6 +103,9 @@ import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
+import {
+  Copy, Edit, More, LeftMore,
+} from '../../components/icons';
 import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -129,10 +116,13 @@ export default {
     Guide,
     AeAccount,
     ButtonPlain,
+    More,
     Menu,
     MenuItem,
-    AeIcon,
+    Copy,
+    Edit,
     ListItem,
+    LeftMore,
   },
   directives: { copyOnClick },
   data() {
@@ -154,13 +144,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
-.transfer {
-  .list-item .ae-icon {
-    font-size: rem(20px);
-  }
-}
-</style>

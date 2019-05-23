@@ -58,10 +58,7 @@
       border-dark
       v-bind="account"
     >
-      <AeIcon
-        slot="right"
-        name="left-more"
-      />
+      <LeftMore slot="right" />
     </ListItemAccount>
   </MobilePage>
 </template>
@@ -69,7 +66,6 @@
 <script>
 import { pick } from 'lodash-es';
 import { mapGetters } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
@@ -77,6 +73,7 @@ import AccountInline from '../../components/AccountInline.vue';
 import AeInputAddress from '../../components/AeInputAddress.vue';
 import AeButton from '../../components/AeButton.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
+import { LeftMore } from '../../components/icons';
 
 export default {
   components: {
@@ -87,7 +84,7 @@ export default {
     AeInputAddress,
     AeButton,
     ListItemAccount,
-    AeIcon,
+    LeftMore,
   },
   data: () => ({
     accountTo: '',
@@ -109,18 +106,12 @@ export default {
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 
-.send {
-  .own-account {
-    margin-top: rem(20px);
-    padding-bottom: rem(20px);
-    border-bottom: 2px solid $color-neutral-positive-1;
-    @extend %face-sans-s;
-    font-weight: 500;
-    color: $color-neutral-negative-1;
-  }
-
-  .list-item .ae-icon {
-    font-size: rem(20px);
-  }
+.send .own-account {
+  margin-top: rem(20px);
+  padding-bottom: rem(20px);
+  border-bottom: 2px solid $color-neutral-positive-1;
+  @extend %face-sans-s;
+  font-weight: 500;
+  color: $color-neutral-negative-1;
 }
 </style>
