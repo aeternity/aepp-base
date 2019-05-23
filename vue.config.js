@@ -41,6 +41,10 @@ module.exports = {
     .uses.clear().end()
     .oneOf('icon-component')
     .resourceQuery(/icon-component/)
+    .use('babel-loader')
+    .loader('babel-loader')
+    .options({ configFile: false, presets: ['@babel/preset-env'] })
+    .end()
     .use('vue-svg-loader')
     .loader('vue-svg-loader')
     .options({
