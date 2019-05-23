@@ -98,6 +98,15 @@ export default {
     strong {
       color: $color-alternative;
     }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+
+      & + p {
+        margin-top: rem(28px);
+      }
+    }
   }
 
   &.primary {
@@ -140,15 +149,6 @@ export default {
       em {
         color: $color-alternative-negative-1;
       }
-    }
-  }
-
-  p {
-    margin-top: 0;
-    margin-bottom: 0;
-
-    & + p {
-      margin-top: rem(28px);
     }
   }
 }
