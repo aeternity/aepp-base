@@ -45,14 +45,6 @@ const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
   }, undefined),
 );
 
-const checkMnemonicPassed = (to, from, next) => {
-  if (!to.params.mnemonic) {
-    next({ name: 'intro' });
-    return;
-  }
-  next();
-};
-
 const checkAccountName = (to, from, next) => {
   if (!store.state.accounts.airGap.newAccountName) {
     next({ name: 'vault-new' });
@@ -100,7 +92,7 @@ export default [{
   component: Login,
   beforeEnter(to, from, next) {
     if (!store.state.accounts.hdWallet.encryptedWallet) {
-      next({ name: 'new-account' });
+      next({ name: 'set-password' });
       return;
     }
     if (store.getters.loggedIn) {

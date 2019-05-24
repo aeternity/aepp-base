@@ -39,8 +39,8 @@ describe('router/index.js', () => {
       );
 
       it(
-        'pushes NEW_ACCOUNT path if current route is LOGIN and no encryptedWallet is present',
-        createRedirectTest({}, 'login', 'new-account'),
+        'pushes SET_PASSWORD path if current route is LOGIN and no encryptedWallet is present',
+        createRedirectTest({}, 'login', 'set-password'),
       );
 
       it(
@@ -49,8 +49,8 @@ describe('router/index.js', () => {
       );
 
       it(
-        'does NOT redirect if current route is NEW_ACCOUNT and encryptedWallet is present but not wallet',
-        createNoRedirectTest({ encryptedWallet: true, wallet: false }, 'new-account'),
+        'does NOT redirect if current route is SET_PASSWORD and encryptedWallet is present but not wallet',
+        createNoRedirectTest({ encryptedWallet: true, wallet: false }, 'set-password'),
       );
 
       it(
@@ -59,8 +59,8 @@ describe('router/index.js', () => {
       );
 
       it(
-        'does NOT redirect if current route is NEW_ACCOUNT and encryptedWallet is present and wallet',
-        createNoRedirectTest({ encryptedWallet: true, wallet: true }, 'new-account'),
+        'does NOT redirect if current route is SET_PASSWORD and encryptedWallet is present and wallet',
+        createNoRedirectTest({ encryptedWallet: true, wallet: true }, 'set-password'),
       );
 
       it(
@@ -69,8 +69,8 @@ describe('router/index.js', () => {
       );
 
       it(
-        'does not interfere when current route is NEW_ACCOUNT and no encryptedWallet is present',
-        createNoRedirectTest({}, 'new-account'),
+        'does not interfere when current route is SET_PASSWORD and no encryptedWallet is present',
+        createNoRedirectTest({}, 'set-password'),
       );
 
       it(
