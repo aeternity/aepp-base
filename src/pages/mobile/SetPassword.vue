@@ -74,7 +74,7 @@ export default {
     MobilePage, PasswordPurpose, AeInputPassword, AeButton, Guide, AeFraction,
   },
   props: {
-    seed: { type: String, required: true },
+    mnemonic: { type: String, required: true },
   },
   data() {
     return {
@@ -93,7 +93,7 @@ export default {
       try {
         await this.$store.dispatch('accounts/hdWallet/createWallet', {
           password: this.password,
-          seed: this.seed,
+          mnemonic: this.mnemonic,
         });
       } finally {
         this.working = false;

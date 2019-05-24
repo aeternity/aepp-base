@@ -18,7 +18,7 @@
     </Guide>
 
     <ButtonMnemonicWord
-      v-for="(word, index) in seedPermutation"
+      v-for="(word, index) in mnemonicPermutation"
       :key="index"
       :disabled="selectedWordIds.includes(index)"
       @click="wordClick(index)"
@@ -37,7 +37,7 @@
           icon-close
           @click="wordClick(index)"
         >
-          {{ seedPermutation[index] }}
+          {{ mnemonicPermutation[index] }}
         </ButtonMnemonicWord>
       </template>
       <ButtonMnemonicWord
@@ -52,7 +52,7 @@
 
     <AeButton
       slot="footer"
-      :disabled="selectedWordIds.length !== seedPermutation.length"
+      :disabled="selectedWordIds.length !== mnemonicPermutation.length"
       fill="secondary"
       @click="confirmPhrase"
     >
@@ -80,18 +80,18 @@ export default {
     ButtonMnemonicWord,
   },
   props: {
-    seed: { type: String, required: true },
+    mnemonic: { type: String, required: true },
   },
   data() {
     return {
-      seedPermutation: shuffle(this.seed.split(' ')),
+      mnemonicPermutation: shuffle(this.mnemonic.split(' ')),
       selectedWordIds: [],
       error: false,
     };
   },
   computed: {
-    selectedSeed() {
-      return this.selectedWordIds.map(idx => this.seedPermutation[idx]).join(' ');
+    selectedMnemonic() {
+      return this.selectedWordIds.map(idx => this.mnemonicPermutation[idx]).join(' ');
     },
   },
   methods: {
@@ -105,9 +105,9 @@ export default {
       }
     },
     confirmPhrase() {
-      this.error = this.selectedSeed !== this.seed;
+      this.error = this.selectedMnemonic !== this.mnemonic;
       if (!this.error) {
-        this.$router.push({ name: 'set-password', params: { seed: this.seed } });
+        this.$router.push({ name: 'set-password', params: { mnemonic: this.mnemonic } });
       }
     },
   },

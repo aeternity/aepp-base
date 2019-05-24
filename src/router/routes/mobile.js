@@ -45,8 +45,8 @@ const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
   }, undefined),
 );
 
-const checkSeedPassed = (to, from, next) => {
-  if (!to.params.seed) {
+const checkMnemonicPassed = (to, from, next) => {
+  if (!to.params.mnemonic) {
     next({ name: 'intro' });
     return;
   }
@@ -125,13 +125,13 @@ export default [{
   name: 'new-account-confirm',
   path: '/new-account/confirm',
   component: NewAccountConfirm,
-  beforeEnter: checkSeedPassed,
+  beforeEnter: checkMnemonicPassed,
   props: true,
 }, {
   name: 'set-password',
   path: '/set-password',
   component: SetPassword,
-  beforeEnter: checkSeedPassed,
+  beforeEnter: checkMnemonicPassed,
   props: true,
 }, {
   name: 'apps',

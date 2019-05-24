@@ -22,13 +22,13 @@
       </p>
     </Guide>
     <p class="mnemonic">
-      {{ seed }}
+      {{ mnemonic }}
     </p>
 
     <AeButton
       slot="footer"
       fill="secondary"
-      @click="createSeed"
+      @click="createMnemonic"
     >
       I wrote it down
     </AeButton>
@@ -53,14 +53,14 @@ export default {
     MobilePage, AeButton, Guide, AeFraction,
   },
   data: () => ({
-    seed: generateMnemonic(),
+    mnemonic: generateMnemonic(),
     readingPaused: false,
     readingEnded: false,
   }),
   methods: {
-    async createSeed() {
+    async createMnemonic() {
       if (this.readingEnded) {
-        this.$router.push({ name: 'new-account-confirm', params: { seed: this.seed } });
+        this.$router.push({ name: 'new-account-confirm', params: { mnemonic: this.mnemonic } });
       } else {
         this.readingPaused = true;
         await this.$store.dispatch('modals/open', {

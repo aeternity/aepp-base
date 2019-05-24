@@ -76,11 +76,11 @@ export default {
         .getAccountByPubkey(account.address).then(() => true, () => false));
     },
 
-    async createWallet({ commit, dispatch }, { password, seed }) {
+    async createWallet({ commit, dispatch }, { password, mnemonic }) {
       const salt = genRandomBuffer(16);
       const passwordDerivedKey = await derivePasswordKey(password, salt);
       const aes = new AES(passwordDerivedKey);
-      const wallet = generateHdWallet(mnemonicToSeed(seed));
+      const wallet = generateHdWallet(mnemonicToSeed(mnemonic));
       commit('setEncryptedWallet', {
         privateKey: await aes.encrypt(wallet.privateKey),
         chainCode: await aes.encrypt(wallet.chainCode),
