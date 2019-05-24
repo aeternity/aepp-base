@@ -40,6 +40,17 @@
         </ListItemCircle>
         <LeftMore slot="right" />
       </ListItem>
+      <ListItem
+        :to="{ name: mnemonic ? 'settings-mnemonic' : 'settings-mnemonic-deleted' }"
+        subtitle="Secure your funds"
+        title="Backup Recovery Phrase"
+        class="mnemonic"
+      >
+        <ListItemCircle slot="icon">
+          <Key />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
     </AeCard>
 
     <h2>Account</h2>
@@ -80,7 +91,7 @@ import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import {
-  Globe, LeftMore, Device, Grid, Share, SignOut,
+  Globe, LeftMore, Device, Grid, Key, Share, SignOut,
 } from '../../components/icons';
 
 export default {
@@ -94,6 +105,7 @@ export default {
     LeftMore,
     Device,
     Grid,
+    Key,
     Share,
     SignOut,
   },
@@ -110,6 +122,7 @@ export default {
       const c = apps.filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length;
       return `${c} aepp${c === 1 ? '' : 's'} have account access`;
     },
+    mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
   }),
   methods: mapActions(['logout', 'reset']),
 };
@@ -131,6 +144,10 @@ export default {
 
     &.app-list .list-item-circle {
       background-color: #f8963d;
+    }
+
+    &.mnemonic .list-item-circle {
+      background-color: $color-alternative;
     }
 
     &.logout .list-item-circle {
