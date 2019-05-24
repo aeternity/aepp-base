@@ -2,7 +2,7 @@
 
 import { pick } from 'lodash-es';
 import Vue from 'vue';
-import { mnemonicToSeed } from '@aeternity/bip39';
+import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
 import { Crypto, TxBuilder } from '@aeternity/aepp-sdk/es';
 import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
 import BigNumber from 'bignumber.js';
@@ -23,6 +23,8 @@ export default {
 
   state: process.env.IS_MOBILE_DEVICE ? {
     encryptedWallet: null,
+    passwordDerivedKey: null,
+    mnemonic: '',
     wallet: null,
   } : {},
 
@@ -38,6 +40,14 @@ export default {
       state.encryptedWallet = encryptedWallet;
     },
 
+    setPasswordDerivedKey(state, passwordDerivedKey) {
+      state.passwordDerivedKey = passwordDerivedKey;
+    },
+
+    setMnemonic(state, mnemonic) {
+      state.mnemonic = mnemonic;
+    },
+
     setWallet(state, wallet) {
       state.wallet = wallet;
       this.getters['accounts/getByType']('hd-wallet')
@@ -49,6 +59,8 @@ export default {
     },
 
     logout(state) {
+      state.passwordDerivedKey = null;
+      state.mnemonic = '';
       state.wallet = null;
       this.getters['accounts/getByType']('hd-wallet')
         .forEach((account) => {
@@ -80,14 +92,15 @@ export default {
       const salt = genRandomBuffer(16);
       const passwordDerivedKey = await derivePasswordKey(password, salt);
       const aes = new AES(passwordDerivedKey);
-      const wallet = generateHdWallet(mnemonicToSeed(mnemonic));
+      commit('setPasswordDerivedKey', passwordDerivedKey);
+      const newMnemonic = mnemonic || generateMnemonic();
+      commit('setMnemonic', newMnemonic);
       commit('setEncryptedWallet', {
-        privateKey: await aes.encrypt(wallet.privateKey),
-        chainCode: await aes.encrypt(wallet.chainCode),
+        mnemonic: await aes.encrypt(Buffer.from(newMnemonic)),
         mac: await aes.encrypt(new Uint8Array(2)),
         salt,
       });
-      commit('setWallet', wallet);
+      commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
       dispatch('create', 'Main Account');
       dispatch('discover');
     },
@@ -95,14 +108,34 @@ export default {
     async unlockWallet({ state: { encryptedWallet }, commit, dispatch }, password) {
       const passwordDerivedKey = await derivePasswordKey(password, encryptedWallet.salt);
       const aes = new AES(passwordDerivedKey);
-      const wallet = {
-        privateKey: await aes.decrypt(encryptedWallet.privateKey),
-        chainCode: await aes.decrypt(encryptedWallet.chainCode),
-      };
+      let mnemonic;
+      let wallet;
+      if (encryptedWallet.mnemonic) {
+        mnemonic = Buffer.from(await aes.decrypt(encryptedWallet.mnemonic)).toString();
+        wallet = generateHdWallet(mnemonicToSeed(mnemonic));
+      } else {
+        wallet = {
+          privateKey: await aes.decrypt(encryptedWallet.privateKey),
+          chainCode: await aes.decrypt(encryptedWallet.chainCode),
+        };
+      }
       const mac = new Uint8Array(await aes.decrypt(encryptedWallet.mac));
       if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password');
+      if (mnemonic) commit('setMnemonic', mnemonic);
+      commit('setPasswordDerivedKey', passwordDerivedKey);
       commit('setWallet', wallet);
       dispatch('discover');
+    },
+
+    async deleteMnemonic({ state: { passwordDerivedKey, encryptedWallet, wallet }, commit }) {
+      const newAes = new AES(passwordDerivedKey);
+      commit('setEncryptedWallet', {
+        privateKey: await newAes.encrypt(wallet.privateKey),
+        chainCode: await newAes.encrypt(wallet.chainCode),
+        mac: await newAes.encrypt(new Uint8Array(2)),
+        salt: encryptedWallet.salt,
+      });
+      commit('setMnemonic', '');
     },
 
     async create({ state: { wallet }, getters: { nextIdx }, commit }, name) {
