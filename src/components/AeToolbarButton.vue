@@ -30,8 +30,8 @@ export default {
   text-transform: uppercase;
   color: $color-neutral-negative-1;
 
-  /deep/ .ae-icon {
-    font-size: rem(14px);
+  /deep/ .icon {
+    height: rem(14px);
     vertical-align: -.2em;
   }
 }

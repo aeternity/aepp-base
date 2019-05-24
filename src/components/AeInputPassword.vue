@@ -18,18 +18,18 @@
       type="button"
       @click="showPassword = !showPassword"
     >
-      <AeIcon name="eye" />
+      <Eye />
     </AeToolbarButton>
   </AeInput>
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
 import AeInput from './AeInput.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
+import { Eye } from './icons';
 
 export default {
-  components: { AeInput, AeToolbarButton, AeIcon },
+  components: { AeInput, AeToolbarButton, Eye },
   props: {
     value: { type: String, default: '' },
     header: { type: String, default: 'Password' },

@@ -25,25 +25,23 @@
         slot="icon"
         :src="writingHandEmoji"
       >
-      <AeIcon
-        slot="right"
-        fill="alternative"
-        face="round"
-        name="check"
-      />
+      <ListItemCircle slot="right">
+        <Check />
+      </ListItemCircle>
     </ListItem>
   </MobilePage>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import writingHandEmoji from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
 import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccountReverse from '../../components/mobile/AeAccountReverse.vue';
 import ListItem from '../../components/ListItem.vue';
+import ListItemCircle from '../../components/ListItemCircle.vue';
+import { Check } from '../../components/icons';
 
 export default {
   components: {
@@ -51,7 +49,8 @@ export default {
     Guide,
     AeAccountReverse,
     ListItem,
-    AeIcon,
+    ListItemCircle,
+    Check,
   },
   directives: { copyOnClick },
   data() {
@@ -64,7 +63,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.receive .list-item.copy:not(.v-copied) .ae-icon {
-  display: none;
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.receive .list-item.copy {
+  &:not(.v-copied) .list-item-circle {
+    display: none;
+  }
+
+  .list-item-circle {
+    background-color: $color-alternative;
+  }
 }
 </style>

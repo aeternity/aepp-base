@@ -7,12 +7,9 @@
       title="Transfer completed"
       :subtitle="`You've sent ${ prefixedAmount(amount) } AE`"
     >
-      <AeIcon
-        slot="icon"
-        fill="alternative"
-        face="round"
-        name="check"
-      />
+      <ListItemCircle slot="icon">
+        <Check />
+      </ListItemCircle>
     </ListItem>
 
     <template slot="footer">
@@ -41,9 +38,10 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import Notification from './Notification.vue';
 import ListItem from './ListItem.vue';
+import ListItemCircle from './ListItemCircle.vue';
+import { Check } from './icons';
 import AeButton from './AeButton.vue';
 import prefixedAmount from '../filters/prefixedAmount';
 import copyOnClick from '../directives/copyOnClick';
@@ -52,7 +50,8 @@ export default {
   components: {
     Notification,
     ListItem,
-    AeIcon,
+    ListItemCircle,
+    Check,
     AeButton,
   },
   directives: { copyOnClick },
@@ -64,3 +63,11 @@ export default {
   methods: { prefixedAmount },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+
+.notification-spend .list-item-circle {
+  background-color: $color-alternative;
+}
+</style>

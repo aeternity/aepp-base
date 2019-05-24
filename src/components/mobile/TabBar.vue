@@ -4,12 +4,12 @@
 
     <div class="wrapper">
       <ButtonPlain :to="browserPath || { name: 'apps' }">
-        <AeIcon name="grid" />
+        <Grid />
         æpps
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'transfer' }">
-        <AeIcon name="transfer" />
+        <Transfer />
         Transfer
       </ButtonPlain>
 
@@ -24,12 +24,12 @@
         :to="{ name: 'address-book' }"
         :disabled="!$globals.UNFINISHED_FEATURES"
       >
-        <AeIcon name="contacts" />
+        <Contacts />
         Contacts
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'settings' }">
-        <AeIcon name="settings" />
+        <Settings />
         Settings
       </ButtonPlain>
     </div>
@@ -38,16 +38,21 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
+import {
+  Grid, Transfer, Contacts, Settings,
+} from '../icons';
 import AeIdenticon from '../AeIdenticon.vue';
 import ConnectionStatus from './ConnectionStatus.vue';
 
 export default {
   components: {
     AeIdenticon,
-    AeIcon,
     ButtonPlain,
+    Grid,
+    Transfer,
+    Contacts,
+    Settings,
     ConnectionStatus,
   },
   props: {
@@ -99,10 +104,9 @@ export default {
         color: $color-neutral-negative-3;
       }
 
-      .ae-icon {
-        font-size: 20px;
+      .icon {
         display: block;
-        margin-bottom: 4px;
+        margin: 0 auto 4px auto;
       }
 
       .ae-identicon {

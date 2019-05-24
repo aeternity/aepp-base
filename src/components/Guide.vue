@@ -36,7 +36,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
 @import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
 
@@ -60,7 +60,7 @@ export default {
     margin-bottom: rem(15px);
   }
 
-  .icon {
+  > .icon {
     flex-shrink: 0;
     width: rem(30px);
     padding-left: rem(6px);
@@ -98,10 +98,19 @@ export default {
     strong {
       color: $color-alternative;
     }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+
+      & + p {
+        margin-top: rem(28px);
+      }
+    }
   }
 
   &.primary {
-    .icon {
+    > .icon {
       color: $color-primary;
     }
 
@@ -115,7 +124,7 @@ export default {
   }
 
   &.neutral {
-    .icon {
+    > .icon {
       color: $color-neutral-maximum;
     }
 
@@ -130,7 +139,7 @@ export default {
   }
 
   &.alternative {
-    .icon {
+    > .icon {
       color: $color-alternative;
     }
 
@@ -140,15 +149,6 @@ export default {
       em {
         color: $color-alternative-negative-1;
       }
-    }
-  }
-
-  p {
-    margin-top: 0;
-    margin-bottom: 0;
-
-    & + p {
-      margin-top: rem(28px);
     }
   }
 }

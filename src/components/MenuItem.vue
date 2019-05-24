@@ -33,8 +33,8 @@ export default {
     background-color: $color-neutral-positive-3;
   }
 
-  /deep/ .ae-icon {
-    vertical-align: middle;
+  /deep/ .icon {
+    height: rem(15px);
 
     &:first-child {
       margin-right: rem(9px);
