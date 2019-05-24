@@ -53,6 +53,7 @@ export default {
     box-shadow: 0 0 rem(4px) $color-shadow-alpha-15;
     transition: background-color 300ms;
     text-align: center;
+    font-size: 0;
 
     .icon {
       height: rem(14px);
