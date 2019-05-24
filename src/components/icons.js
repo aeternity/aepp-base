@@ -33,6 +33,7 @@ export { default as LeftMore } from '../assets/icons/inline/left-more.svg?icon-c
 export { default as LinkAlternative } from '../assets/icons/inline/link-alternative.svg?icon-component';
 export { default as Link } from '../assets/icons/inline/link.svg?icon-component';
 export { default as List } from '../assets/icons/inline/list.svg?icon-component';
+export { default as LockOpen } from '../assets/icons/inline/lock-open.svg?icon-component';
 export { default as More } from '../assets/icons/inline/more.svg?icon-component';
 export { default as Paste } from '../assets/icons/inline/paste.svg?icon-component';
 export { default as Plus } from '../assets/icons/inline/plus.svg?icon-component';
