@@ -1,0 +1,54 @@
+//------------------------------
+// *****************************
+// Globals
+// *****************************
+//------------------------------
+
+:root {
+  --silver: #dcdcdc;
+  --smoke: #f5f5f5;
+  --dark: #3c3c3c;
+  --anthracite: #1e1e1e;
+  --white: #ffffff;
+  --apricot: #ff96a0;
+  --grey: #989898;
+  --aubergine: #320a3c;
+  --black: #000000;
+  --maegenta: #f03c6e;
+  --plum: #c69cd0;
+}
+
+/// Local variables
+@import "variables";
+@import "fonts";
+@import "mixins";
+
+/// SASS version of normalize.scss
+/// @website https://github.com/JohnAlbin/normalize-scss
+/// @docs https://github.com/JohnAlbin/normalize-scss#how-to-use-it
+@import "~normalize.css/normalize.css";
+
+body,
+button,
+input,
+textarea {
+  font-family: 'Roboto', sans-serif;
+  color: $anthracite;
+}
+
+* {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+input[type=text] {
+  appearance: none;
+}
+
+textarea {
+  resize: vertical;
+}

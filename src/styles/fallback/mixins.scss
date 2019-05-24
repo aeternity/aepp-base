@@ -1,0 +1,39 @@
+//------------------------------
+// *****************************
+// Fallback mixins
+// *****************************
+//------------------------------
+
+@import 'variables';
+
+@mixin phone {
+  @media (max-width: $screen-phone - 1px) {
+    @content;
+  }
+}
+
+@mixin abovePhone {
+  @media (min-width: $screen-phone) {
+    @content;
+  }
+}
+
+@mixin belowDesktop {
+  @media (max-width: $container-width - 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $container-width) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include abovePhone {
+    @include belowDesktop {
+      @content;
+    }
+  }
+}

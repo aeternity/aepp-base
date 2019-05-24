@@ -3,7 +3,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import VeeValidate from '../lib/veeValidatePlugin';
 import AeButton from '../components/AeButton.vue';
 import MigratedBalanceModal from '../components/mobile/MigratedBalanceModal.vue';

@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../styles/variables/colors.scss';
 
 .notification-spend .list-item-circle {
   background-color: $color-alternative;

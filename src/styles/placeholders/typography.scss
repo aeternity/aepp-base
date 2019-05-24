@@ -1,0 +1,84 @@
+//------------------------------
+// *****************************
+// Typography Placeholders
+// *****************************
+//------------------------------
+
+@import "../globals/functions";
+@import "../variables/typography";
+
+/// Typography Sans
+%face-sans-l {
+  font-family: $font-sans;
+  font-size: rem(23px);
+  letter-spacing: em(-0.32px);
+  line-height: rem(28px);
+}
+
+%face-sans-base {
+  font-family: $font-sans;
+  font-size: rem(17px);
+  line-height: rem(24px);
+}
+
+%face-sans-s {
+  font-family: $font-sans;
+  font-size: rem(15px);
+  line-height: rem(20px);
+}
+
+%face-sans-xs {
+  font-family: $font-sans;
+  font-size: rem(13px);
+  letter-spacing: em(0.32px);
+  line-height: rem(16px);
+}
+
+%face-mono-xl {
+  font-family: $font-mono;
+  font-size: rem(52px);
+  letter-spacing: em(-0.8px);
+  line-height: rem(48px);
+}
+
+%face-mono-base {
+  font-family: $font-mono;
+  font-size: rem(17px);
+  line-height: rem(24px);
+}
+
+%face-mono-s {
+  font-family: $font-mono;
+  font-size: rem(15px);
+  line-height: rem(20px);
+}
+
+%face-mono-xs {
+  font-family: $font-mono;
+  font-size: rem(13px);
+  letter-spacing: em(0.32px);
+  line-height: rem(16px);
+}
+
+%face-tracked-base {
+  font-family: $font-mono;
+  font-size: rem(17px);
+  letter-spacing: em(1.76px);
+  line-height: rem(24px);
+}
+
+%face-uppercase-base {
+  font-family: $font-sans;
+  font-size: rem(13px);
+  letter-spacing: em(1.6px);
+  line-height: rem(16px);
+  text-transform: uppercase;
+}
+
+%face-uppercase-xs {
+  font-family: $font-sans;
+  font-size: rem(11px);
+  letter-spacing: em(1.6px);
+  line-height: rem(12px);
+  text-transform: uppercase;
+}

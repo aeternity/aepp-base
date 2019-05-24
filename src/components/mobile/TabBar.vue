@@ -74,9 +74,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/fallback/variables.scss';
+@import '../../styles/variables/typography.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/fallback/variables.scss';
 
 .tab-bar {
   background-color: $color-neutral-minimum;

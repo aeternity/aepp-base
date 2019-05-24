@@ -1,0 +1,32 @@
+//------------------------------
+// *****************************
+// Variables
+// *****************************
+//------------------------------
+
+$silver: #dcdcdc;
+$smoke: #f5f5f5;
+$dark: #383838;
+$darker: #1e1e1e;
+$darkest: #000000;
+$anthracite: #1e1e1e;
+$white: #ffffff;
+$apricot: #ff96a0;
+$grey: #989898;
+$aubergine: #311b58;
+$black: #000000;
+$maegenta: #f03c6e;
+$plum: #c69cd0;
+
+$type-color-map: (
+  'boring': $silver,
+  'normal': $grey,
+  'exciting': $aubergine,
+  'dramatic': $maegenta,
+  'dark': $dark,
+  'darker': $darker,
+  'darkest': $darkest
+);
+
+$container-width: 880px;
+$screen-phone: 480px;

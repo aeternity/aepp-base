@@ -23,8 +23,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/typography.scss';
+@import './styles/variables/colors.scss';
+@import './styles/variables/typography.scss';
 
 #app {
   display: flex;

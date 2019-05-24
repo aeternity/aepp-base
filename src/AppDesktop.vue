@@ -42,7 +42,7 @@ export default {
 </style>
 
 <style lang="scss">
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import './styles/variables/colors.scss';
 
 body {
   background: $color-neutral-positive-2;

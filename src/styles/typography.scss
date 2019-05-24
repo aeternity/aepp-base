@@ -1,0 +1,12 @@
+//------------------------------
+// *****************************
+// Typography
+// *****************************
+//------------------------------
+
+@import "variables/animations";
+@import "variables/typography";
+
+p {
+  font-size: $base-font-size;
+}

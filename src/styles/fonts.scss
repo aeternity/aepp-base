@@ -1,0 +1,34 @@
+//------------------------------
+// *****************************
+// Fonts
+//
+// Inter UI font-face
+// @website: https://rsms.me/inter/
+//
+// IBM Plex Mono
+// @website: https://github.com/IBM/plex
+// *****************************
+//------------------------------
+
+@import "globals/mixins";
+@import "variables/paths";
+
+// Normal
+@include font-face("Inter UI", $path-fonts + "interui/inter-ui-regular", 400, normal, U+00-FF);
+@include font-face("Inter UI", $path-fonts + "interui/inter-ui-medium", 500, normal, U+00-FF);
+@include font-face("Inter UI", $path-fonts + "interui/inter-ui-bold", 700, normal, U+00-FF);
+
+// Italic
+@include font-face("Inter UI", $path-fonts + "interui/inter-ui-mediumitalic", 500, italic, U+00-FF);
+@include font-face("Inter UI", $path-fonts + "interui/inter-ui-bolditalic", 700, italic, U+00-FF);
+
+// Regular
+@include font-face("IBM Plex Mono", $path-fonts + "ibmplex/ibmplexmono-light", 300, normal, U+00-FF);
+@include font-face("IBM Plex Mono", $path-fonts + "ibmplex/ibmplexmono-regular", 400, normal, U+00-FF);
+@include font-face("IBM Plex Mono", $path-fonts + "ibmplex/ibmplexmono-text", 400, normal, U+00-FF);
+@include font-face("IBM Plex Mono", $path-fonts + "ibmplex/ibmplexmono-medium", 500, normal, U+00-FF);
+
+// Italic
+@include font-face("IBM Plex Mono", $path-fonts + "ibmplex/ibmplexmono-lightitalic", 300, italic, U+00-FF);
+@include font-face("IBM Plex Mono", $path-fonts + "ibmplex/ibmplexmono-textitalic", 400, italic, U+00-FF);
+@include font-face("IBM Plex Mono", $path-fonts + "ibmplex/ibmplexmono-mediumitalic", 500, italic, U+00-FF);

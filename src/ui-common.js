@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import 'normalize.css';
-import '@aeternity/aepp-components-3/dist/aepp.components.css';
 import 'focus-visible';
 import './styles/fullscreen-message.scss';
 import './components/icon.scss';
