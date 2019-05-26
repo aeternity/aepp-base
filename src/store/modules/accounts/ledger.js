@@ -38,19 +38,19 @@ export default {
     signTransaction: signOnMobile,
   } : {
     async create({ getters: { nextIdx, ledgerAppApi }, commit, dispatch }) {
-      const conformModalPromise = dispatch('modals/open', {
+      const modalPromise = dispatch('modals/open', {
         name: 'confirmLedgerAddress',
         address: await ledgerAppApi.getAddress(nextIdx),
         create: true,
       }, { root: true });
-      let address;
-      do {
-        // eslint-disable-next-line no-await-in-loop
-        address = await ledgerAppApi.getAddress(nextIdx, true).catch(() => {});
-      } while (!address && !nextIdx);
-      conformModalPromise.cancel();
-      if (!address) return;
-      commit('accounts/add', { address, type: 'ledger', idx: nextIdx }, { root: true });
+      try {
+        const address = await ledgerAppApi.getAddress(nextIdx, true);
+        commit('accounts/add', { address, type: 'ledger', idx: nextIdx }, { root: true });
+      } catch (error) {
+        dispatch('modals/open', { name: 'ledgerAddressNotConfirmed' }, { root: true });
+      } finally {
+        modalPromise.cancel();
+      }
     },
 
     sign: () => Promise.reject(new Error('Not implemented yet')),
