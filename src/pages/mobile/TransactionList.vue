@@ -93,7 +93,6 @@ export default {
     spendTransactionsGroupedByDay() {
       return groupBy(
         this.transactions.list
-          .filter(t => t.tx.type === 'SpendTx')
           .filter(t => (
             (this.direction === 'incoming' && t.received)
             || (this.direction === 'outgoing' && !t.received)

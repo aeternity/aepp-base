@@ -14,10 +14,14 @@
           :balance="transaction.tx.amount"
           invert
         />
-        <br>from
-        <AccountInline :address="transaction.tx.senderId" />
-        <br>to
-        <AccountInline :address="transaction.tx.recipientId" />
+        <template v-if="transaction.tx.senderId">
+          <br>from
+          <AccountInline :address="transaction.tx.senderId" />
+        </template>
+        <template v-if="transaction.tx.recipientId">
+          <br>to
+          <AccountInline :address="transaction.tx.recipientId" />
+        </template>
       </Guide>
     </template>
 
@@ -40,13 +44,21 @@
     />
 
     <DetailsAddress
+      v-if="transaction.tx.senderId"
       name="From"
       :address="transaction.tx.senderId"
     />
 
     <DetailsAddress
+      v-if="transaction.tx.recipientId"
       name="To"
       :address="transaction.tx.recipientId"
+    />
+
+    <DetailsAddress
+      v-if="transaction.tx.ownerId"
+      name="Owner"
+      :address="transaction.tx.ownerId"
     />
 
     <DetailsAddress
