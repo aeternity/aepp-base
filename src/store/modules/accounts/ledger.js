@@ -53,11 +53,23 @@ export default {
       }
     },
 
+    async ensureCurrentAccountAvailable({ getters: { ledgerAppApi }, rootGetters, dispatch }) {
+      const account = rootGetters['accounts/active'];
+      if (account.address !== await ledgerAppApi.getAddress(account.source.idx)) {
+        if (!process.env.RUNNING_IN_FRAME) {
+          dispatch('modals/open', { name: 'ledgerAccountNotFound' }, { root: true });
+        }
+        throw new Error('Account not found');
+      }
+    },
+
     sign: () => Promise.reject(new Error('Not implemented yet')),
 
     async signTransaction({
       getters: { ledgerAppApi }, rootGetters, dispatch, rootState: { sdk },
     }, txBase64) {
+      await dispatch('ensureCurrentAccountAvailable');
+
       const txObject = TxBuilder.unpackTx(txBase64).tx;
       const stringTx = TxBuilder.buildTx(
         {
