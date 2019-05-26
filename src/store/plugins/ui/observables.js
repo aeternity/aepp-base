@@ -16,15 +16,15 @@ export default (store) => {
     options,
   );
 
-  const sdk = watchAsObservable(({ sdk: s }) => s, { immediate: true })
+  const sdk$ = watchAsObservable(({ sdk }) => sdk, { immediate: true })
     .pipe(
       pluck('newValue'),
     );
 
-  const getBalance = memoize(address => sdk
+  const getBalance = memoize(address => sdk$
     .pipe(
-      switchMap(s => timer(0, 3000).pipe(map(() => s))),
-      switchMap(async s => BigNumber(s ? await s.balance(address).catch(() => 0) : 0)
+      switchMap(sdk => timer(0, 3000).pipe(map(() => sdk))),
+      switchMap(async sdk => BigNumber(sdk ? await sdk.balance(address).catch(() => 0) : 0)
         .shiftedBy(-MAGNITUDE)),
       multicast(new BehaviorSubject(BigNumber(0))),
       refCountDelay(1000),
@@ -39,13 +39,13 @@ export default (store) => {
         : of([]))),
     );
 
-  const accountsObservable = getAccounts(({ accounts: { list } }) => list);
+  const accounts$ = getAccounts(({ accounts: { list } }) => list);
 
   store.state.observables = { // eslint-disable-line no-param-reassign
-    topBlockHeight: sdk
+    topBlockHeight: sdk$
       .pipe(
-        switchMap(s => timer(0, 30000).pipe(map(() => s))),
-        switchMap(async s => (s ? (await s.topBlock()).height : 0)),
+        switchMap(sdk => timer(0, 30000).pipe(map(() => sdk))),
+        switchMap(async sdk => (sdk ? (await sdk.topBlock()).height : 0)),
         multicast(new BehaviorSubject(0)),
         refCountDelay(1000),
       ),
@@ -60,14 +60,14 @@ export default (store) => {
           ? getBalance(acc.address).pipe(map(balance => ({ ...acc, balance })))
           : of(acc))),
       ),
-    accounts: accountsObservable,
+    accounts: accounts$,
     inactiveAccounts: getAccounts(
       ({ accounts: { list, activeIdx } }) => [
         ...list.slice(0, activeIdx),
         ...list.slice(activeIdx + 1),
       ],
     ),
-    totalBalance: accountsObservable.pipe(
+    totalBalance: accounts$.pipe(
       map(acs => acs.reduce((prev, { balance }) => prev.plus(balance), BigNumber(0))),
     ),
   };
