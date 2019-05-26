@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import { pick } from 'lodash-es';
 import { mapGetters } from 'vuex';
+import { pluck } from 'rxjs/operators';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import Balance from '../../components/Balance.vue';
@@ -92,20 +92,18 @@ export default {
   },
   computed: {
     ...mapGetters({ activeAccount: 'accounts/active', currentNetwork: 'currentNetwork' }),
-    transaction() {
-      return this.activeAccount.transactions.find(t => t.hash === this.hash);
-    },
     status() {
       return this.transaction.pending
         ? 'Pending'
-        : `${this.topBlockHeight - this.transaction.blockHeight} Confirmations`;
+        : `${this.transaction.confirmationCount} Confirmations`;
     },
   },
-  async mounted() {
-    await this.$store.dispatch('accounts/fetchTransaction', this.hash);
-  },
   subscriptions() {
-    return pick(this.$store.state.observables, ['topBlockHeight']);
+    return {
+      transaction: this.$store.state.observables.getTransaction(
+        this.$watchAsObservable(({ hash }) => hash, { immediate: true }).pipe(pluck('newValue')),
+      ),
+    };
   },
 };
 </script>

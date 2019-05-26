@@ -41,15 +41,68 @@ export default (store) => {
 
   const accounts$ = getAccounts(({ accounts: { list } }) => list);
 
+  const normalizeTransaction = async ({
+    blockHash, time, tx: { amount, fee, ...otherTx }, ...otherTransaction
+  }) => ({
+    ...otherTransaction,
+    blockHash,
+    time: new Date(time || (await store.state.sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
+    tx: {
+      ...otherTx,
+      amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
+      fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
+    },
+  });
+
+  const setTransactionFieldsRelatedToAddress = ({ tx, ...otherTransaction }, currentAddress) => ({
+    ...otherTransaction,
+    received: currentAddress === tx.recipientId,
+    peerId: currentAddress === tx.recipientId
+      ? tx.senderId
+      : tx.recipientId,
+    tx,
+  });
+
+  const topBlockHeight$ = sdk$
+    .pipe(
+      switchMap(sdk => timer(0, 30000).pipe(map(() => sdk))),
+      switchMap(async sdk => (sdk ? (await sdk.topBlock()).height : 0)),
+      multicast(new BehaviorSubject(0)),
+      refCountDelay(1000),
+    );
+
+  const activeAccountAddress$ = watchAsObservable(
+    (state, getters) => getters['accounts/active'].address, { immediate: true },
+  )
+    .pipe(pluck('newValue'));
+
+  let transactions = {};
+
+  sdk$.subscribe(() => { transactions = {}; });
+
+  const registerTx = (tx) => { transactions[tx.hash] = tx; };
+
+  const getTransaction = transactionHash$ => combineLatest([
+    activeAccountAddress$, topBlockHeight$, transactionHash$, sdk$,
+  ])
+    .pipe(
+      switchMap(async ([address, height, hash, sdk]) => {
+        const tx = transactions[hash]
+          || await normalizeTransaction(
+            await sdk.api.getTransactionByHash(hash),
+          );
+        registerTx(tx);
+        return ({
+          ...setTransactionFieldsRelatedToAddress(tx, address),
+          confirmationCount: height - tx.blockHeight,
+        });
+      }),
+    );
+
   store.state.observables = { // eslint-disable-line no-param-reassign
-    topBlockHeight: sdk$
-      .pipe(
-        switchMap(sdk => timer(0, 30000).pipe(map(() => sdk))),
-        switchMap(async sdk => (sdk ? (await sdk.topBlock()).height : 0)),
-        multicast(new BehaviorSubject(0)),
-        refCountDelay(1000),
-      ),
+    topBlockHeight: topBlockHeight$,
     getBalance,
+    getTransaction,
     activeAccount: watchAsObservable(
       (state, getters) => getters['accounts/active'],
       { immediate: true, deep: true },
