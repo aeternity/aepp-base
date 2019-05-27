@@ -18,7 +18,7 @@
         {{ encryptedHdWallet ? 'Login' : 'Recover' }}
       </AeButton>
       <AeButton
-        :to="{ name: 'new-account' }"
+        :to="{ name: 'set-password' }"
         fill="light"
         plain
       >

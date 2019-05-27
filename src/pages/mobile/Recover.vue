@@ -19,15 +19,15 @@
 
     <form
       :id="_uid"
-      @submit.prevent="setSeed"
+      @submit.prevent="setMnemonic"
     >
       <AeInputMnemonic
-        v-model="seed"
+        v-model="mnemonic"
         v-validate="'required|mnemonic'"
         autofocus
-        :error="errors.has('seed')"
-        :footer="errors.first('seed')"
-        name="seed"
+        :error="errors.has('mnemonic')"
+        :footer="errors.first('mnemonic')"
+        name="mnemonic"
       />
     </form>
 
@@ -57,15 +57,15 @@ export default {
   data() {
     return {
       dizzySymbolEmoji,
-      seed: '',
+      mnemonic: '',
       error: false,
     };
   },
   methods: {
-    async setSeed() {
+    async setMnemonic() {
       if (!await this.$validator.validateAll()) return;
 
-      this.$router.push({ name: 'set-password', params: { seed: this.seed } });
+      this.$router.push({ name: 'set-password', params: { mnemonic: this.mnemonic } });
     },
   },
 };

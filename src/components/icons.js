@@ -28,6 +28,7 @@ export { default as Headline } from '../assets/icons/inline/headline.svg?icon-co
 export { default as Home } from '../assets/icons/inline/home.svg?icon-component';
 export { default as Info } from '../assets/icons/inline/info.svg?icon-component';
 export { default as Italic } from '../assets/icons/inline/italic.svg?icon-component';
+export { default as Key } from '../assets/icons/inline/key.svg?icon-component';
 export { default as LeftMore } from '../assets/icons/inline/left-more.svg?icon-component';
 export { default as LinkAlternative } from '../assets/icons/inline/link-alternative.svg?icon-component';
 export { default as Link } from '../assets/icons/inline/link.svg?icon-component';

@@ -5,9 +5,10 @@
   >
     <Guide>
       <AeFraction
+        v-if="recover"
         slot="icon"
-        :numerator="recover ? 2 : 4"
-        :denominator="recover ? 2 : 4"
+        :numerator="2"
+        :denominator="2"
       />
 
       <template v-if="recover">
@@ -17,8 +18,7 @@
         and confirm.
       </template>
       <template v-else>
-        Great, that's done. Now
-        create <mark>your <img :src="keyEmoji"> password</mark>
+        <mark>Choose a <img :src="keyEmoji"> password</mark> and confirm.
       </template>
     </Guide>
 
@@ -74,7 +74,7 @@ export default {
     MobilePage, PasswordPurpose, AeInputPassword, AeButton, Guide, AeFraction,
   },
   props: {
-    seed: { type: String, required: true },
+    mnemonic: { type: String, default: '' },
   },
   data() {
     return {
@@ -93,7 +93,7 @@ export default {
       try {
         await this.$store.dispatch('accounts/hdWallet/createWallet', {
           password: this.password,
-          seed: this.seed,
+          mnemonic: this.mnemonic,
         });
       } finally {
         this.working = false;
