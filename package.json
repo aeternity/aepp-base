@@ -20,7 +20,6 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@aeternity/aepp-components-3": "3.0.0-alpha.9",
     "@aeternity/aepp-sdk": "^3.4.0",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",

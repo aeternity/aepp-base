@@ -20,8 +20,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/globals/functions.scss';
+@import '../../styles/variables/colors.scss';
 
 .sidebar-modal.overlay {
   $width: rem(390px);

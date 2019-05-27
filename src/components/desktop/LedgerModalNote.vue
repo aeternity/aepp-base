@@ -23,8 +23,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
 
 .ledger-modal-note {
   @extend %face-sans-s;

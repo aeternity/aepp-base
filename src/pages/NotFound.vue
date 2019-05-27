@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '../styles/placeholders/typography.scss';
 
 .not-found {
   @extend %face-sans-l;

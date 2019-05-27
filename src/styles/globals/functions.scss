@@ -1,0 +1,9 @@
+@import "../variables/typography";
+
+@function em($px) {
+  @return #{$px / $base-font-size}em;
+}
+
+@function rem($px) {
+  @return #{$px / $base-font-size}rem;
+}

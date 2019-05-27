@@ -5,7 +5,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/variables/colors.scss';
 
 .step {
   text-align: center;

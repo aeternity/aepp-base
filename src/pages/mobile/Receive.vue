@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/variables/colors.scss';
 
 .receive .list-item.copy {
   &:not(.v-copied) .list-item-circle {
