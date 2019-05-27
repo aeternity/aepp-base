@@ -1,9 +1,11 @@
 <template>
   <MobilePage
-    :left-button-to="{ name: 'new-account' }"
+    :left-button-to="{ name: 'settings-mnemonic' }"
     left-button-icon-name="back"
-    class="new-account-create"
-    title="New Account"
+    :right-button-to="{ name: 'settings' }"
+    right-button-icon-name="close"
+    class="settings-mnemonic-show"
+    title="Backup Recovery Phrase"
     hide-tab-bar
   >
     <Guide>
@@ -13,12 +15,14 @@
         denominator="4"
       />
       <p>
-        You need the <em>recovery phrase</em> in case you
-        forget your <strong>password</strong>.
+        <em>Carefully keep this phrase <img :src="keyEmoji"> safe!</em>
       </p>
       <p>
-        Now go ahead, <mark>write it down</mark>
-        in the correct order.
+        Write these 12 words
+        down and keep them
+        <strong>in a safe place</strong>. You need
+        them to <mark>recover</mark> your
+        account in the future.
       </p>
     </Guide>
     <p class="mnemonic">
@@ -28,9 +32,10 @@
     <AeButton
       slot="footer"
       fill="secondary"
-      @click="createMnemonic"
+      :to="readingEnded ? { name: 'settings-mnemonic-confirm' } : undefined"
+      @click="nextClickHandler"
     >
-      I wrote it down
+      Next
     </AeButton>
 
     <div
@@ -42,7 +47,8 @@
 </template>
 
 <script>
-import { generateMnemonic } from '@aeternity/bip39';
+import keyEmoji from 'emoji-datasource-apple/img/apple/64/1f511.png';
+import { mapState } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
@@ -53,25 +59,23 @@ export default {
     MobilePage, AeButton, Guide, AeFraction,
   },
   data: () => ({
-    mnemonic: generateMnemonic(),
     readingPaused: false,
     readingEnded: false,
+    keyEmoji,
   }),
+  computed: mapState('accounts/hdWallet', ['mnemonic']),
   methods: {
-    async createMnemonic() {
-      if (this.readingEnded) {
-        this.$router.push({ name: 'new-account-confirm', params: { mnemonic: this.mnemonic } });
-      } else {
-        this.readingPaused = true;
-        await this.$store.dispatch('modals/open', {
-          name: 'alert',
-          text: `
-            That was too fast!
-            Please make sure you write down the recovery phrase on paper... and keep it in a safe place.
-          `,
-        });
-        this.readingPaused = false;
-      }
+    async nextClickHandler() {
+      if (this.readingEnded) return;
+      this.readingPaused = true;
+      await this.$store.dispatch('modals/open', {
+        name: 'alert',
+        text: `
+          That was too fast!
+          Please make sure you write down the recovery phrase on paper... and keep it in a safe place.
+        `,
+      });
+      this.readingPaused = false;
     },
   },
 };
@@ -81,7 +85,7 @@ export default {
 @import '../../styles/placeholders/typography.scss';
 @import '../../styles/variables/colors.scss';
 
-.new-account-create {
+.settings-mnemonic-show {
   .mnemonic {
     @extend %face-mono-s;
     line-height: 1.67;

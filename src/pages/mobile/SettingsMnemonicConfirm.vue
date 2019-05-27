@@ -1,9 +1,11 @@
 <template>
   <MobilePage
-    :left-button-to="{ name: 'new-account-create' }"
+    :left-button-to="{ name: 'settings-mnemonic-show' }"
     left-button-icon-name="back"
-    class="new-account-confirm"
-    title="New Account"
+    :right-button-to="{ name: 'settings' }"
+    right-button-icon-name="close"
+    class="settings-mnemonic-confirm"
+    title="Backup Recovery Phrase"
     hide-tab-bar
   >
     <Guide>
@@ -12,9 +14,14 @@
         numerator="3"
         denominator="4"
       />
-      <em>Tap the words</em> in the
-      correct order to recreate
-      your phrase.
+      <p>
+        <em>Confirm <img :src="crossedFingersEmoji"> your phrase</em>
+      </p>
+      <p>
+        Tap the words below
+        to compose your phrase,
+        <mark>note</mark> correct order!
+      </p>
     </Guide>
 
     <ButtonMnemonicWord
@@ -62,34 +69,35 @@
 </template>
 
 <script>
+import crossedFingersEmoji from 'emoji-datasource-apple/img/apple/64/1f91e.png';
+import { mapState } from 'vuex';
 import { shuffle } from 'lodash-es';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
-import AeButton from '../../components/AeButton.vue';
 import ButtonMnemonicWord from '../../components/mobile/ButtonMnemonicWord.vue';
 import AeInputWrapper from '../../components/AeInputWrapper.vue';
+import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
     MobilePage,
-    AeButton,
     Guide,
     AeFraction,
-    AeInputWrapper,
     ButtonMnemonicWord,
+    AeInputWrapper,
+    AeButton,
   },
-  props: {
-    mnemonic: { type: String, required: true },
-  },
-  data() {
-    return {
-      mnemonicPermutation: shuffle(this.mnemonic.split(' ')),
-      selectedWordIds: [],
-      error: false,
-    };
-  },
+  data: () => ({
+    selectedWordIds: [],
+    error: false,
+    crossedFingersEmoji,
+  }),
   computed: {
+    ...mapState('accounts/hdWallet', ['mnemonic']),
+    mnemonicPermutation() {
+      return shuffle(this.mnemonic.split(' '));
+    },
     selectedMnemonic() {
       return this.selectedWordIds.map(idx => this.mnemonicPermutation[idx]).join(' ');
     },
@@ -106,9 +114,7 @@ export default {
     },
     confirmPhrase() {
       this.error = this.selectedMnemonic !== this.mnemonic;
-      if (!this.error) {
-        this.$router.push({ name: 'set-password', params: { mnemonic: this.mnemonic } });
-      }
+      if (!this.error) this.$router.push({ name: 'settings-mnemonic-confirmed' });
     },
   },
 };
@@ -117,7 +123,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/globals/functions.scss';
 
-.new-account-confirm .ae-input-wrapper {
+.settings-mnemonic-confirm .ae-input-wrapper {
   margin-top: rem(32px);
   background: transparent;
 }
