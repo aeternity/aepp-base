@@ -182,8 +182,10 @@ export default (store) => {
                   fetchPendingTransactions(address),
                 ]);
                 transactionRangeForAddress[address] = {
-                  begin: txs[0].hash,
-                  end: txs[txs.length - 1].hash,
+                  ...txs.length && {
+                    begin: txs[0].hash,
+                    end: txs[txs.length - 1].hash,
+                  },
                   ended: txs.length !== limit,
                 };
                 next();
@@ -193,14 +195,18 @@ export default (store) => {
             case 'poll': // eslint-disable-line no-fallthrough
               await Promise.all([
                 fetchMdwTransactions(address, 1, 1).then(async ([tx]) => {
+                  if (!tx) return;
+                  const range = transactionRangeForAddress[address];
                   const begin = tx.hash;
+                  let end = tx.hash;
                   let t = tx;
                   let p = 1;
-                  while (t.hash !== transactionRangeForAddress[address].begin) {
+                  while (t && t.hash !== range.begin) {
                     // eslint-disable-next-line no-await-in-loop
                     [t] = await fetchMdwTransactions(address, 1, p += 1);
+                    if (t) end = t.hash;
                   }
-                  transactionRangeForAddress[address].begin = begin;
+                  Object.assign(range, { begin, end: range.end || end });
                 }),
                 fetchPendingTransactions(address),
               ]);
