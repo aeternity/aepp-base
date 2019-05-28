@@ -46,12 +46,14 @@
 
     <AeLoader v-if="transactions.status === 'loading'" />
     <div
-      v-if="transactions.status === 'ended'"
+      v-if="['ended', 'error'].includes(transactions.status)"
       class="no-transactions"
     >
-      {{ transactions.list.length
-        ? 'All transactions are loaded.'
-        : 'There are no transaction associated with this account.' }}
+      {{ transactions.status === 'error'
+        ? 'An error occurred during transactions loading.'
+        : transactions.list.length
+          ? 'All transactions are loaded.'
+          : 'There are no transaction associated with this account.' }}
     </div>
   </MobilePage>
 </template>

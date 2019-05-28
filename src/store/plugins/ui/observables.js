@@ -2,7 +2,7 @@ import {
   Observable, BehaviorSubject, combineLatest, timer, of, concat,
 } from 'rxjs';
 import {
-  multicast, pluck, switchMap, map, filter, pairwise, startWith,
+  multicast, pluck, switchMap, map, filter, pairwise, startWith, catchError,
 } from 'rxjs/operators';
 import { refCountDelay } from 'rxjs-etc/operators';
 import { camelCase, memoize } from 'lodash-es';
@@ -165,80 +165,85 @@ export default (store) => {
         switchMap(({ address, mode }) => timer(0, 30000)
           .pipe(map(idx => ({ address, mode: idx ? 'poll' : mode })))),
         switchMap(({ address, mode }) => new Observable(async (subscriber) => {
-          const next = (status = '') => {
-            lastValue = {
-              list: getTransactionsByAddress(address),
-              status: (transactionRangeForAddress[address] || {}).ended ? 'ended' : status,
+          try {
+            const next = (status = '') => {
+              lastValue = {
+                list: getTransactionsByAddress(address),
+                status: (transactionRangeForAddress[address] || {}).ended ? 'ended' : status,
+              };
+              subscriber.next(lastValue);
             };
-            subscriber.next(lastValue);
-          };
 
-          switch (mode) {
-            case 'initial': {
-              if (!transactionRangeForAddress[address]) {
-                next('loading');
-                const [txs] = await Promise.all([
-                  fetchMdwTransactions(address, limit, 1),
+            switch (mode) {
+              case 'initial': {
+                if (!transactionRangeForAddress[address]) {
+                  next('loading');
+                  const [txs] = await Promise.all([
+                    fetchMdwTransactions(address, limit, 1),
+                    fetchPendingTransactions(address),
+                  ]);
+                  transactionRangeForAddress[address] = {
+                    ...txs.length && {
+                      begin: txs[0].hash,
+                      end: txs[txs.length - 1].hash,
+                    },
+                    ended: txs.length !== limit,
+                  };
+                  next();
+                  break;
+                }
+              }
+              case 'poll': // eslint-disable-line no-fallthrough
+                await Promise.all([
+                  fetchMdwTransactions(address, 1, 1).then(async ([tx]) => {
+                    if (!tx) return;
+                    const range = transactionRangeForAddress[address];
+                    const begin = tx.hash;
+                    let end = tx.hash;
+                    let t = tx;
+                    let p = 1;
+                    while (t && t.hash !== range.begin) {
+                      // eslint-disable-next-line no-await-in-loop
+                      [t] = await fetchMdwTransactions(address, 1, p += 1);
+                      if (t) end = t.hash;
+                    }
+                    Object.assign(range, { begin, end: range.end || end });
+                  }),
                   fetchPendingTransactions(address),
                 ]);
-                transactionRangeForAddress[address] = {
-                  ...txs.length && {
-                    begin: txs[0].hash,
-                    end: txs[txs.length - 1].hash,
-                  },
+                next();
+                break;
+              case 'loadMore': {
+                if (transactionRangeForAddress[address].ended) break;
+                next('loading');
+                const loadedCount = 1 + lastValue.list
+                  .findIndex(({ hash }) => transactionRangeForAddress[address].end === hash);
+                const txs = await fetchMdwTransactions(
+                  address,
+                  limit,
+                  Math.floor(loadedCount / limit) + 1,
+                );
+                Object.assign(transactionRangeForAddress[address], {
+                  end: txs[txs.length - 1].hash,
                   ended: txs.length !== limit,
-                };
+                });
                 next();
                 break;
               }
+              default:
+                throw new Error(`Invalid mode: ${mode}`);
             }
-            case 'poll': // eslint-disable-line no-fallthrough
-              await Promise.all([
-                fetchMdwTransactions(address, 1, 1).then(async ([tx]) => {
-                  if (!tx) return;
-                  const range = transactionRangeForAddress[address];
-                  const begin = tx.hash;
-                  let end = tx.hash;
-                  let t = tx;
-                  let p = 1;
-                  while (t && t.hash !== range.begin) {
-                    // eslint-disable-next-line no-await-in-loop
-                    [t] = await fetchMdwTransactions(address, 1, p += 1);
-                    if (t) end = t.hash;
-                  }
-                  Object.assign(range, { begin, end: range.end || end });
-                }),
-                fetchPendingTransactions(address),
-              ]);
-              next();
-              break;
-            case 'loadMore': {
-              if (transactionRangeForAddress[address].ended) break;
-              next('loading');
-              const loadedCount = 1 + lastValue.list
-                .findIndex(({ hash }) => transactionRangeForAddress[address].end === hash);
-              const txs = await fetchMdwTransactions(
-                address,
-                limit,
-                Math.floor(loadedCount / limit) + 1,
-              );
-              Object.assign(transactionRangeForAddress[address], {
-                end: txs[txs.length - 1].hash,
-                ended: txs.length !== limit,
-              });
-              next();
-              break;
-            }
-            default:
-              throw new Error(`Invalid mode: ${mode}`);
-          }
 
-          subscriber.complete();
+            subscriber.complete();
+          } catch (error) {
+            subscriber.error(error);
+          }
         })),
         startWith({
           list: getTransactionsByAddress(store.getters['accounts/active'].address),
           status: '',
         }),
+        catchError(() => of({ list: [], status: 'error' })),
       );
   };
 
