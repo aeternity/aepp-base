@@ -109,8 +109,8 @@ export default {
   },
   mounted() {
     const checkLoadMore = () => {
-      const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-      if (scrollHeight - scrollTop === clientHeight) {
+      const { scrollHeight, clientHeight } = document.documentElement;
+      if (scrollHeight - window.scrollY === clientHeight) {
         this.loadMore$.next(null);
       }
     };
