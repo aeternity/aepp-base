@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '../styles/globals/functions.scss';
 
 .ae-popover {
   position: absolute;

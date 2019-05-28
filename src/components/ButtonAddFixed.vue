@@ -6,16 +6,16 @@
     :to="to"
     @click="$emit('click')"
   >
-    <AeIcon name="plus" />
+    <Plus />
   </AeButton>
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
 import AeButton from './AeButton.vue';
+import { Plus } from './icons';
 
 export default {
-  components: { AeButton, AeIcon },
+  components: { AeButton, Plus },
   props: {
     to: { type: [Object, String], default: undefined },
   },
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '../styles/globals/functions.scss';
 
 .mobile-page .wrapper > .button-add-fixed.ae-button.medium {
   width: rem(56px);
@@ -40,12 +40,6 @@ export default {
     right: rem(23px);
     bottom: rem(82px);
     bottom: calc(#{rem(82px)} + env(safe-area-inset-bottom));
-  }
-
-  .ae-icon {
-    font-size: rem(20px);
-    vertical-align: middle;
-    letter-spacing: 0;
   }
 }
 </style>

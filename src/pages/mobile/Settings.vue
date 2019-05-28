@@ -11,47 +11,45 @@
         :to="{ name: 'settings-network' }"
         :subtitle="networkName"
         title="Network"
+        class="network"
       >
-        <AeIcon
-          slot="icon"
-          fill="secondary"
-          face="round"
-          name="globe"
-        />
-        <AeIcon
-          slot="right"
-          name="left-more"
-        />
+        <ListItemCircle slot="icon">
+          <Globe />
+        </ListItemCircle>
+        <LeftMore slot="right" />
       </ListItem>
       <ListItem
         :to="{ name: 'settings-remote-connection' }"
         :subtitle="remoteConnectionsSubtitle"
         title="Remote connections"
+        class="remote-connection"
       >
-        <AeIcon
-          slot="icon"
-          face="round"
-          name="device"
-        />
-        <AeIcon
-          slot="right"
-          name="left-more"
-        />
+        <ListItemCircle slot="icon">
+          <Device />
+        </ListItemCircle>
+        <LeftMore slot="right" />
       </ListItem>
       <ListItem
         :to="{ name: 'settings-app-list' }"
         :subtitle="appsAccountAccessSubtitle"
         title="Aepp account access"
+        class="app-list"
       >
-        <AeIcon
-          slot="icon"
-          face="round"
-          name="grid"
-        />
-        <AeIcon
-          slot="right"
-          name="left-more"
-        />
+        <ListItemCircle slot="icon">
+          <Grid />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
+      <ListItem
+        :to="{ name: mnemonic ? 'settings-mnemonic' : 'settings-mnemonic-deleted' }"
+        subtitle="Secure your funds"
+        title="Backup Recovery Phrase"
+        class="mnemonic"
+      >
+        <ListItemCircle slot="icon">
+          <Key />
+        </ListItemCircle>
+        <LeftMore slot="right" />
       </ListItem>
     </AeCard>
 
@@ -60,26 +58,21 @@
       <ListItem
         title="Logout"
         subtitle="And see you soon!"
+        class="logout"
         @click="logout"
       >
-        <AeIcon
-          slot="icon"
-          fill="secondary"
-          face="round"
-          name="share"
-        />
+        <ListItemCircle slot="icon">
+          <Share />
+        </ListItemCircle>
       </ListItem>
       <ListItem
         title="Reset Key Storage"
         subtitle="After resetting, a recovery is required"
         @click="reset"
       >
-        <AeIcon
-          slot="icon"
-          fill="primary"
-          face="round"
-          name="sign-out"
-        />
+        <ListItemCircle slot="icon">
+          <SignOut />
+        </ListItemCircle>
       </ListItem>
     </AeCard>
 
@@ -92,19 +85,29 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { get } from 'lodash-es';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import AeCard from '../../components/AeCard.vue';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
+import ListItemCircle from '../../components/ListItemCircle.vue';
+import {
+  Globe, LeftMore, Device, Grid, Key, Share, SignOut,
+} from '../../components/icons';
 
 export default {
   components: {
-    AeIcon,
     MobilePage,
     Guide,
     AeCard,
     ListItem,
+    ListItemCircle,
+    Globe,
+    LeftMore,
+    Device,
+    Grid,
+    Key,
+    Share,
+    SignOut,
   },
   data: () => ({
     version: process.env.npm_package_version,
@@ -119,31 +122,37 @@ export default {
       const c = apps.filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length;
       return `${c} aepp${c === 1 ? '' : 's'} have account access`;
     },
+    mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
   }),
   methods: mapActions(['logout', 'reset']),
 };
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
 
 .settings {
-  .ae-card {
-    .ae-icon-share {
-      transform: rotate(90deg);
+  .list-item {
+    &.network .list-item-circle {
+      background-color: $color-secondary;
     }
 
-    .ae-icon-device {
+    &.remote-connection .list-item-circle {
       background-color: #515ec8;
     }
 
-    .ae-icon-grid {
+    &.app-list .list-item-circle {
       background-color: #f8963d;
     }
 
-    .ae-icon-left-more {
-      font-size: rem(20px);
+    &.mnemonic .list-item-circle {
+      background-color: $color-alternative;
+    }
+
+    &.logout .list-item-circle {
+      transform: rotate(90deg);
+      background-color: $color-secondary;
     }
   }
 

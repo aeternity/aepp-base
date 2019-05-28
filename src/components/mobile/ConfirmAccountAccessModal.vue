@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '../../styles/globals/functions.scss';
 
 .confirm-account-access-modal {
   padding-bottom: rem(70px + 28px + 20px);

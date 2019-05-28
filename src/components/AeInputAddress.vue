@@ -27,7 +27,7 @@
           type="button"
           @click="showAccountsDropdown = true"
         >
-          <AeIcon name="card" />
+          <Card />
         </AeToolbarButton>
 
         <AePopover
@@ -49,7 +49,7 @@
         type="button"
         @click="readValueFromQrCode"
       >
-        <AeIcon name="camera" />
+        <Camera />
         {{ $globals.IS_MOBILE_DEVICE ? 'Scan' : '' }}
       </AeToolbarButton>
     </template>
@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeIdenticon from './AeIdenticon.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
+import { Card, Camera } from './icons';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
 
@@ -70,7 +70,7 @@ export default {
     removeSpacesOnCopy,
   },
   components: {
-    AeIdenticon, AeIcon, AeTextareaFormatted, AeToolbarButton, AePopover, ListItemAccount,
+    AeIdenticon, AeTextareaFormatted, AeToolbarButton, Card, Camera, AePopover, ListItemAccount,
   },
   props: {
     value: {
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '../styles/globals/functions.scss';
 
 .ae-input-address .ae-identicon {
   height: rem(20px);

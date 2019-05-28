@@ -24,10 +24,17 @@ case $TRAVIS_BRANCH in
     ;;
 esac
 
+UPLOAD_PATH=deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH
+RSYNC_OPTIONS="-r --delete-after -v"
+
 if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-  rsync -r --delete-after -v $TRAVIS_BUILD_DIR/aeternity.app.tar.gz deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH
+  rsync $RSYNC_OPTIONS aeternity.app.tar.gz $UPLOAD_PATH
 elif [[ $ANDROID_HOME != "" ]]; then
-  rsync -r --delete-after -v $TRAVIS_BUILD_DIR/aeternity.apk deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH/aeternity.apk
+  rsync $RSYNC_OPTIONS aeternity.apk $UPLOAD_PATH
 else
-  rsync -r --delete-after -v $TRAVIS_BUILD_DIR/dist/* deploy@139.59.142.164:/var/www/html/$UPLOAD_PATH
+  if [[ $TRAVIS_TAG != "" ]]; then
+    tar -czvf aeternity.tar.gz dist
+  fi
+
+  rsync $RSYNC_OPTIONS dist/* $UPLOAD_PATH
 fi

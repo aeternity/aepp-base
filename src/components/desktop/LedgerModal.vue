@@ -14,7 +14,7 @@
           v-if="closable"
           @click="$emit('close')"
         >
-          <AeIcon name="close" />
+          <Close />
         </ButtonPlain>
       </div>
     </header>
@@ -30,15 +30,15 @@
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
 import AeModal from '../AeModal.vue';
 import ButtonPlain from '../ButtonPlain.vue';
+import { Close } from '../icons';
 
 export default {
   components: {
     AeModal,
     ButtonPlain,
-    AeIcon,
+    Close,
   },
   props: {
     title: { type: String, required: true },
@@ -48,8 +48,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
 
 .ledger-modal {
   /deep/ .modal-plain {
@@ -75,8 +75,8 @@ export default {
       height: rem(24px);
     }
 
-    .button-plain .ae-icon {
-      font-size: rem(22px);
+    .button-plain .icon {
+      height: rem(22px);
     }
   }
 

@@ -10,7 +10,7 @@
         :to="leftButtonTo"
         @click="$emit('left-button-click', $event)"
       >
-        <AeIcon :name="leftButtonIconName" />
+        <Component :is="leftButtonIconName" />
       </ButtonPlain>
 
       <span class="title">
@@ -23,18 +23,18 @@
         :to="rightButtonTo"
         @click="$emit('right-button-click', $event)"
       >
-        <AeIcon :name="rightButtonIconName" />
+        <Component :is="rightButtonIconName" />
       </ButtonPlain>
     </header>
   </div>
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
+import { Back, Close } from '../icons';
 
 export default {
-  components: { ButtonPlain, AeIcon },
+  components: { ButtonPlain, Back, Close },
   props: {
     leftButtonIconName: { type: String, default: null },
     leftButtonTo: { type: [String, Object], default: null },
@@ -75,9 +75,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/fallback/variables.scss';
+@import '../../styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/fallback/variables.scss';
 
 .header-mobile {
   position: sticky;
@@ -115,6 +115,7 @@ export default {
 
   &.neutral {
     background-color: $color-neutral-positive-2;
+    color: $color-neutral-negative-3;
   }
 
   &.light {
@@ -140,11 +141,6 @@ export default {
 
     .button-plain {
       color: inherit;
-
-      .ae-icon {
-        font-size: rem(20px);
-        vertical-align: middle;
-      }
     }
 
     $button-width: rem(48px);

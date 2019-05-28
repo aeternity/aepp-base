@@ -5,16 +5,18 @@
     subtitle-monospace
     v-on="$listeners"
   >
-    <AeIdenticon
-      slot="icon"
-      :address="peerId"
-    />
+    <template v-if="peerId">
+      <AeIdenticon
+        slot="icon"
+        :address="peerId"
+      />
 
-    <AeAddress
-      slot="title"
-      :address="peerId"
-      length="short"
-    />
+      <AeAddress
+        slot="title"
+        :address="peerId"
+        length="short"
+      />
+    </template>
 
     <template slot="subtitle">
       <span
@@ -54,7 +56,7 @@ export default {
     pending: { type: Boolean },
     received: { type: Boolean },
     time: { type: Date, required: true },
-    peerId: { type: String, required: true },
+    peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
   },
   computed: mapGetters({ activeAccount: 'accounts/active' }),
@@ -62,8 +64,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../styles/placeholders/typography.scss';
+@import '../styles/variables/colors.scss';
 
 .list-item-transaction {
   .ae-address {

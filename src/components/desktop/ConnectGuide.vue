@@ -26,7 +26,7 @@
           numerator="3"
           denominator="5"
         />
-        Go to Settings <AeIcon name="settings" />
+        Go to Settings <span class="icon-wrapper settings"><Settings /></span>
       </Guide>
       <Guide size="small">
         <AeFraction
@@ -34,7 +34,8 @@
           numerator="4"
           denominator="5"
         />
-        Tap on Remote Connections <AeIcon name="device" /> and tap the ‘+’
+        Tap on Remote Connections <span class="icon-wrapper device"><Device /></span>
+        and tap the ‘+’
       </Guide>
       <Guide size="small">
         <AeFraction
@@ -96,15 +97,15 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../Guide.vue';
 import { AeQrCode } from '../async';
 import AeFraction from '../AeFraction.vue';
+import { Settings, Device } from '../icons';
 import Note from '../Note.vue';
 
 export default {
   components: {
-    AeIcon, Guide, AeQrCode, AeFraction, Note,
+    Guide, AeQrCode, AeFraction, Settings, Device, Note,
   },
   props: {
     forLedger: { type: Boolean, default: false },
@@ -117,26 +118,33 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
 
 .connect-guide {
   margin: rem(60px) rem(40px);
 
-  .guide .ae-icon {
+  .guide .icon-wrapper {
+    display: inline-block;
     width: rem(23px);
     height: rem(23px);
+    line-height: rem(23px);
     border-radius: rem(5px);
-    font-size: rem(15px);
+    font-size: 0;
+    text-align: center;
     vertical-align: middle;
     color: $color-neutral-positive-2;
 
-    &-settings {
+    &.settings {
       background-color: $color-neutral-minimum;
     }
 
-    &-device {
+    &.device {
       background-color: $color-alternative;
+    }
+
+    .icon {
+      height: rem(15px);
     }
   }
 

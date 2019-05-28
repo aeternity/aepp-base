@@ -2,6 +2,7 @@
   <div class="qr-code-reader">
     <HeaderMobile
       :title="title"
+      fill="light"
       left-button-icon-name="back"
       @left-button-click="cancelReading"
     />
@@ -100,21 +101,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '../styles/globals/functions.scss';
 
 .qr-code-reader {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   min-height: 100vh;
-
-  .header-mobile {
-    background: #fff;
-
-    .button-plain .ae-icon {
-      font-size: rem(22px);
-    }
-  }
 
   .permission-denied {
     text-align: center;

@@ -12,10 +12,7 @@
       :subtitle="`${c.address.slice(0, 6)}···${c.address.slice(-3)}`"
       :to="path(c.address)"
     >
-      <AeIcon
-        slot="right"
-        name="back"
-      />
+      <Back slot="right" />
     </ListItemAccount>
 
     <ButtonAddFixed :to="{ name: 'address-book-new' }" />
@@ -25,16 +22,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import AddressBookNoContacts from './AddressBookNoContacts.vue';
 import ButtonAddFixed from '../components/ButtonAddFixed.vue';
 import ListItemAccount from '../components/ListItemAccount.vue';
+import { Back } from '../components/icons';
 import MobilePage from '../components/mobile/Page.vue';
 
 export default {
   components: {
-    AeIcon,
     ListItemAccount,
+    Back,
     AddressBookNoContacts,
     ButtonAddFixed,
     MobilePage,
@@ -52,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.address-book-choose .ae-icon {
+.address-book-choose .icon.back {
   transform: rotate(135deg);
 }
 </style>

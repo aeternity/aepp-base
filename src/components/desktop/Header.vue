@@ -13,8 +13,8 @@
         :key="link.routeName"
         :to="{ name: link.routeName }"
       >
-        <AeIcon
-          :name="link.iconName"
+        <Component
+          :is="link.icon"
           :class="link.iconClass"
         />
         {{ link.name }}
@@ -43,35 +43,37 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
+import {
+  Grid, Receive, Contacts, Settings,
+} from '../icons';
 import ButtonPlain from '../ButtonPlain.vue';
 import AeIdenticon from '../AeIdenticon.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
-  components: { AeIcon, AeIdenticon, ButtonPlain },
+  components: { AeIdenticon, ButtonPlain },
   data: () => ({
     links: [{
       name: 'æpps',
       routeName: 'apps',
-      iconName: 'grid',
+      icon: Grid,
     }, {
       name: 'Send',
       routeName: 'send',
-      iconName: 'receive',
+      icon: Receive,
       iconClass: 'send',
     }, {
       name: 'Receive',
       routeName: 'receive',
-      iconName: 'receive',
+      icon: Receive,
     }, ...process.env.UNFINISHED_FEATURES ? [{
       name: 'Contacts',
       routeName: 'address-book',
-      iconName: 'contacts',
+      icon: Contacts,
     }] : [], {
       name: 'Settings',
       routeName: 'settings',
-      iconName: 'settings',
+      icon: Settings,
     }],
   }),
   subscriptions() {
@@ -85,8 +87,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
 
 .header {
   display: flex;
@@ -137,13 +139,8 @@ export default {
       height: rem(80px);
       line-height: rem(80px);
 
-      .ae-icon {
-        font-size: rem(20px);
-        vertical-align: middle;
-
-        &.send {
-          transform: rotate(180deg);
-        }
+      .icon.send {
+        transform: rotate(180deg);
       }
 
       &.router-link-exact-active {

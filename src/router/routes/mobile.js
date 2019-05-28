@@ -9,9 +9,6 @@ import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue'
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
-import NewAccount from '../../pages/mobile/NewAccount.vue';
-import NewAccountCreate from '../../pages/mobile/NewAccountCreate.vue';
-import NewAccountConfirm from '../../pages/mobile/NewAccountConfirm.vue';
 import SetPassword from '../../pages/mobile/SetPassword.vue';
 import AccountsNew from '../../pages/mobile/AccountsNew.vue';
 import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
@@ -33,6 +30,11 @@ import SettingsRemoteConnection from '../../pages/mobile/SettingsRemoteConnectio
 import SettingsRemoteConnectionNew from '../../pages/mobile/SettingsRemoteConnectionNew.vue';
 import SettingsAppList from '../../pages/mobile/SettingsAppList.vue';
 import SettingsAppDetails from '../../pages/mobile/SettingsAppDetails.vue';
+import SettingsMnemonic from '../../pages/mobile/SettingsMnemonic.vue';
+import SettingsMnemonicShow from '../../pages/mobile/SettingsMnemonicShow.vue';
+import SettingsMnemonicConfirm from '../../pages/mobile/SettingsMnemonicConfirm.vue';
+import SettingsMnemonicConfirmed from '../../pages/mobile/SettingsMnemonicConfirmed.vue';
+import SettingsMnemonicDeleted from '../../pages/mobile/SettingsMnemonicDeleted.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -45,14 +47,6 @@ const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
   }, undefined),
 );
 
-const checkSeedPassed = (to, from, next) => {
-  if (!to.params.seed) {
-    next({ name: 'intro' });
-    return;
-  }
-  next();
-};
-
 const checkAccountName = (to, from, next) => {
   if (!store.state.accounts.airGap.newAccountName) {
     next({ name: 'vault-new' });
@@ -61,7 +55,16 @@ const checkAccountName = (to, from, next) => {
   next();
 };
 
+const checkStoreMnemonic = (to, from, next) => {
+  if (!store.state.accounts.hdWallet.mnemonic) {
+    next({ name: 'settings-mnemonic-deleted' });
+    return;
+  }
+  next();
+};
+
 const vaultBeforeEnter = mergeEnterHandlers(checkLoggedIn(true), checkAccountName);
+const settingsMnemonicBeforeEnter = mergeEnterHandlers(checkLoggedIn(true), checkStoreMnemonic);
 
 export default [{
   name: 'intro',
@@ -100,7 +103,7 @@ export default [{
   component: Login,
   beforeEnter(to, from, next) {
     if (!store.state.accounts.hdWallet.encryptedWallet) {
-      next({ name: 'new-account' });
+      next({ name: 'set-password' });
       return;
     }
     if (store.getters.loggedIn) {
@@ -114,24 +117,9 @@ export default [{
   path: '/recover',
   component: Recover,
 }, {
-  name: 'new-account',
-  path: '/new-account',
-  component: NewAccount,
-}, {
-  name: 'new-account-create',
-  path: '/new-account/create',
-  component: NewAccountCreate,
-}, {
-  name: 'new-account-confirm',
-  path: '/new-account/confirm',
-  component: NewAccountConfirm,
-  beforeEnter: checkSeedPassed,
-  props: true,
-}, {
   name: 'set-password',
   path: '/set-password',
   component: SetPassword,
-  beforeEnter: checkSeedPassed,
   props: true,
 }, {
   name: 'apps',
@@ -260,4 +248,29 @@ export default [{
   component: SettingsAppDetails,
   beforeEnter: checkLoggedIn(true),
   props: true,
+}, {
+  name: 'settings-mnemonic',
+  path: '/settings/mnemonic',
+  component: SettingsMnemonic,
+  beforeEnter: settingsMnemonicBeforeEnter,
+}, {
+  name: 'settings-mnemonic-show',
+  path: '/settings/mnemonic/show',
+  component: SettingsMnemonicShow,
+  beforeEnter: settingsMnemonicBeforeEnter,
+}, {
+  name: 'settings-mnemonic-confirm',
+  path: '/settings/mnemonic/confirm',
+  component: SettingsMnemonicConfirm,
+  beforeEnter: settingsMnemonicBeforeEnter,
+}, {
+  name: 'settings-mnemonic-confirmed',
+  path: '/settings/mnemonic/confirmed',
+  component: SettingsMnemonicConfirmed,
+  beforeEnter: settingsMnemonicBeforeEnter,
+}, {
+  name: 'settings-mnemonic-deleted',
+  path: '/settings/mnemonic/deleted',
+  component: SettingsMnemonicDeleted,
+  beforeEnter: checkLoggedIn(true),
 }];

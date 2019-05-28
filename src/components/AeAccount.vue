@@ -90,14 +90,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../styles/placeholders/typography.scss';
+@import '../styles/variables/colors.scss';
 
 .ae-account.ae-card {
   header {
     display: flex;
     align-items: center;
     margin: rem(12px) rem(16px);
+    color: $color-neutral-maximum;
 
     .slot-icon {
       margin-left: auto;
@@ -105,7 +106,6 @@ export default {
 
     span {
       @extend %face-sans-base;
-      color: $color-neutral-maximum;
     }
 
     .ae-identicon {

@@ -31,6 +31,7 @@ export default {
   text-decoration: none;
   text-align: center;
   font: inherit;
+  color: inherit;
   cursor: pointer;
 
   &:focus:not([data-focus-visible-added]) {

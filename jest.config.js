@@ -24,6 +24,7 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^.*\\.svg\\?icon-component$': '<rootDir>/config/jest/EmptySvg.vue',
   },
   snapshotSerializers: [
     'jest-serializer-vue',

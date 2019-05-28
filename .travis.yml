@@ -38,9 +38,9 @@ deploy:
   - provider: releases
     api_key: $GITHUB_TOKEN
     file:
+      - aeternity.tar.gz
       - aeternity.apk
       - aeternity.app.tar.gz
     skip_cleanup: true
     on:
-      condition: $TRAVIS_OS_NAME = osx
       tags: true

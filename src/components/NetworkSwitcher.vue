@@ -12,7 +12,7 @@
         :ref="`button-${idx}`"
         @click="menuForNetworkIdx = idx"
       >
-        <AeIcon name="more" />
+        <More />
       </ButtonPlain>
       <AeRadio
         slot="right"
@@ -33,10 +33,10 @@
       @close="menuForNetworkIdx = -1"
     >
       <MenuItem v-copy-on-click="networks[menuForNetworkIdx].url">
-        <AeIcon name="copy" />Copy link
+        <Copy />Copy link
       </MenuItem>
       <MenuItem @click="removeNetwork">
-        <AeIcon name="close" />Remove
+        <Close />Remove
       </MenuItem>
     </Menu>
   </div>
@@ -44,11 +44,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import copyOnClick from '../directives/copyOnClick';
 import ListItem from './ListItem.vue';
 import ListItemButton from './ListItemButton.vue';
 import ButtonPlain from './ButtonPlain.vue';
+import { More, Copy, Close } from './icons';
 import AeRadio from './AeRadio.vue';
 import Menu from './Menu.vue';
 import MenuItem from './MenuItem.vue';
@@ -58,10 +58,12 @@ export default {
     ListItem,
     ListItemButton,
     ButtonPlain,
-    AeIcon,
+    More,
     AeRadio,
     Menu,
     MenuItem,
+    Copy,
+    Close,
   },
   directives: {
     copyOnClick,
@@ -86,13 +88,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-
-.network-switcher {
-  .ae-icon-more {
-    font-size: rem(24px);
-  }
-}
-</style>

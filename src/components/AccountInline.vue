@@ -1,6 +1,6 @@
 <template>
   <span class="account-inline">
-    <AeIdenticon :address="address" />
+    <AeIdenticon :address="address" />{{ ' ' }}
     <template v-if="name">
       {{ name }}
     </template>

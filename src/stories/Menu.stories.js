@@ -1,12 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import Menu from '../components/Menu.vue';
 import MenuItem from '../components/MenuItem.vue';
+import { Copy, Edit } from '../components/icons';
 
 storiesOf('Menu', module)
   .add('transfer', () => ({
-    components: { Menu, MenuItem, AeIcon },
+    components: {
+      Menu, MenuItem, Copy, Edit,
+    },
     template: `
       <div>
         <button
@@ -24,10 +26,10 @@ storiesOf('Menu', module)
           @close="showMenu = false"
         >
           <MenuItem>
-            <AeIcon name="copy" />Copy Address
+            <Copy />Copy Address
           </MenuItem>
           <MenuItem>
-            <AeIcon name="edit" />Rename
+            <Edit />Rename
           </MenuItem>
         </Menu>
       </div>`,

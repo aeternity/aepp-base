@@ -9,34 +9,26 @@
         title="Reset All Data"
         @click="reset"
       >
-        <AeIcon
-          slot="icon"
-          fill="primary"
-          face="round"
-          name="sign-out"
-        />
+        <ListItemCircle slot="icon">
+          <SignOut />
+        </ListItemCircle>
       </ListItem>
 
       <ListItem
         title="Network"
+        class="network"
         :subtitle="networkId ? `Network ID ${networkId}` : ''"
       >
-        <AeIcon
-          slot="icon"
-          fill="secondary"
-          face="round"
-          name="globe"
-        />
+        <ListItemCircle slot="icon">
+          <Globe />
+        </ListItemCircle>
         <div
           slot="right"
           class="value"
         >
           {{ currentNetwork.name }}
           <ButtonPlain @click="networkMode = 'switch'">
-            <AeIcon
-              ref="icon"
-              name="left-more"
-            />
+            <LeftMore ref="icon" />
           </ButtonPlain>
         </div>
       </ListItem>
@@ -64,23 +56,27 @@
 <script>
 import { defer } from 'lodash-es';
 import { mapState, mapGetters, mapActions } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import Guide from '../../components/Guide.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
+import ListItemCircle from '../../components/ListItemCircle.vue';
+import { SignOut, Globe, LeftMore } from '../../components/icons';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
 
 export default {
   components: {
-    AeIcon,
     AePopover,
     AeCard,
     Guide,
     ListItem,
+    ListItemCircle,
+    SignOut,
+    Globe,
     ButtonPlain,
+    LeftMore,
     NetworkSwitcher,
     NetworkAdd,
   },
@@ -103,14 +99,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
 
 .settings {
   .ae-card {
     margin: 0 rem(-15px);
 
     .list-item {
+      &.network .list-item-circle {
+        background-color: $color-secondary;
+      }
+
       .value {
         @extend %face-sans-xs;
         color: $color-neutral-negative-1;
@@ -118,10 +118,8 @@ export default {
         .button-plain {
           margin-left: rem(10px);
 
-          .ae-icon {
-            vertical-align: middle;
+          .icon {
             transform: rotate(90deg);
-            font-size: rem(20px);
             color: #000;
           }
         }

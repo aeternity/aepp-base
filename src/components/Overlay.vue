@@ -18,8 +18,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '../styles/variables/colors.scss';
+@import '../styles/globals/functions.scss';
 
 .overlay {
   position: fixed;

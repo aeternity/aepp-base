@@ -22,10 +22,7 @@
           :src="app.icon"
           :alt="app.name"
         >
-        <AeIcon
-          slot="right"
-          name="left-more"
-        />
+        <LeftMore slot="right" />
       </ListItem>
     </AeCard>
   </MobilePage>
@@ -34,10 +31,10 @@
 <script>
 import { mapState } from 'vuex';
 import { get } from 'lodash-es';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
+import { LeftMore } from '../../components/icons';
 import { DEFAULT_ICON } from '../../lib/appsRegistry';
 
 export default {
@@ -45,7 +42,7 @@ export default {
     MobilePage,
     AeCard,
     ListItem,
-    AeIcon,
+    LeftMore,
   },
   computed: mapState({
     apps: ({ apps }, { getAppMetadata }) => apps
@@ -64,8 +61,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
 
 .settings-app-list p {
   margin-top: rem(30px);

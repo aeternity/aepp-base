@@ -9,7 +9,7 @@
 
     <footer>
       <AeButton
-        :to="{ name: 'new-account'}"
+        :to="{ name: 'set-password'}"
         size="small"
         plain
       >
@@ -27,7 +27,7 @@
         />
       </TransitionGroup>
       <AeButton
-        :to="{ name: isLastStep ? 'new-account' : stepRouteNames[currentStepIdx + 1] }"
+        :to="{ name: isLastStep ? 'set-password' : stepRouteNames[currentStepIdx + 1] }"
         size="small"
         plain
       >
@@ -62,8 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/globals/functions.scss';
 
 .onboarding {
   flex-grow: 1;

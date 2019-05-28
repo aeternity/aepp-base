@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/variables/colors.scss';
 
 .settings-app-details .details-account-access-permission {
   --color-primary: #{$color-neutral-negative-3};

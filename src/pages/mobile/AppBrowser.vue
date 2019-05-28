@@ -7,16 +7,16 @@
       />
 
       <ButtonPlain @click="toggleBookmarking">
-        <AeIcon :name="bookmarked ? 'bookmark-full' : 'bookmark'" />
+        <Component :is="bookmarked ? 'BookmarkFull' : 'Bookmark'" />
       </ButtonPlain>
       <ButtonPlain :to="{ name: 'apps' }">
-        <AeIcon name="home" />
+        <Home />
       </ButtonPlain>
       <ButtonPlain
         ref="menuButton"
         @click="showMenu = true"
       >
-        <AeIcon name="more" />
+        <More />
       </ButtonPlain>
     </header>
 
@@ -27,7 +27,7 @@
       @close="showMenu = false"
     >
       <MenuItem @click="reload">
-        <AeIcon name="reload" />Refresh
+        <Reload />Refresh
       </MenuItem>
     </Menu>
 
@@ -48,9 +48,11 @@
 
 <script>
 import { mapState } from 'vuex';
-import { AeIcon } from '@aeternity/aepp-components-3';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
+import {
+  Bookmark, BookmarkFull, Home, More, Reload,
+} from '../../components/icons';
 import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
@@ -65,7 +67,17 @@ const DEFAULT_PROTOCOL = window.location.protocol === 'https:'
 
 export default {
   components: {
-    UrlForm, ButtonPlain, AeIcon, Menu, MenuItem, ProgressFake, TabBar,
+    UrlForm,
+    ButtonPlain,
+    Bookmark,
+    BookmarkFull,
+    Home,
+    More,
+    Reload,
+    Menu,
+    MenuItem,
+    ProgressFake,
+    TabBar,
   },
   data() {
     return {
@@ -109,8 +121,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
 
 .app-browser {
   flex-grow: 1;
@@ -131,11 +143,6 @@ export default {
     .button-plain {
       padding: 0 rem(14px);
       color: $color-neutral-negative-3;
-
-      .ae-icon {
-        font-size: rem(20px);
-        vertical-align: middle;
-      }
     }
   }
 

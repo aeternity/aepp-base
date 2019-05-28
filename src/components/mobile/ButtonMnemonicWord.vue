@@ -5,19 +5,16 @@
     v-on="$listeners"
   >
     <slot />
-    <AeIcon
-      v-if="iconClose"
-      name="close"
-    />
+    <Close v-if="iconClose" />
   </ButtonPlain>
 </template>
 
 <script>
-import { AeIcon } from '@aeternity/aepp-components-3';
 import ButtonPlain from '../ButtonPlain.vue';
+import { Close } from '../icons';
 
 export default {
-  components: { AeIcon, ButtonPlain },
+  components: { ButtonPlain, Close },
   props: {
     iconClose: { type: Boolean, default: false },
   },
@@ -25,8 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/placeholders/typography.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
 
 .button-mnemonic-word {
   padding: rem(2px) rem(7px) rem(6px) rem(7px);
@@ -46,9 +43,8 @@ export default {
     color: $color-neutral-positive-1;
   }
 
-  .ae-icon {
-    vertical-align: middle;
-    font-size: rem(12px);
+  .icon {
+    height: rem(12px);
   }
 }
 </style>

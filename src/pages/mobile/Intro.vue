@@ -18,7 +18,7 @@
         {{ encryptedHdWallet ? 'Login' : 'Recover' }}
       </AeButton>
       <AeButton
-        :to="{ name: 'new-account' }"
+        :to="{ name: 'set-password' }"
         fill="light"
         plain
       >
@@ -51,8 +51,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@aeternity/aepp-components-3/src/styles/globals/functions.scss';
-@import '~@aeternity/aepp-components-3/src/styles/variables/colors.scss';
+@import '../../styles/globals/functions.scss';
+@import '../../styles/variables/colors.scss';
 
 .intro.mobile-page {
   padding-bottom: env(safe-area-inset-bottom);
