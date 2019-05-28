@@ -78,7 +78,8 @@ export default {
       vertical-align: middle;
     }
 
-    .ae-address.short {
+    .ae-address.short,
+    .account-inline /deep/ .ae-address.short {
       font-size: inherit;
     }
 
