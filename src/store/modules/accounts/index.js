@@ -29,7 +29,7 @@ export default {
         || (() => { throw new Error(`Unknown account type: ${type}`); })();
       return { ...module, name };
     },
-    getColor: (stage, { getModule }) => account => getModule(account).account.color,
+    getColor: (state, { getModule }) => account => getModule(account).account.color,
   },
 
   mutations: {
