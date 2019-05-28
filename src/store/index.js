@@ -23,13 +23,7 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
-      ({ accounts: { list = [], ...otherAccounts } = {}, ...otherState }) => ({
-        ...otherState,
-        accounts: {
-          ...otherAccounts,
-          list: list.map(account => ({ ...account, transactions: [] })),
-        },
-      }),
+      state => state,
       ({
         migrations, sdkUrl, addressBook, customNetworks,
         apps, cachedAppManifests, peerId,
@@ -49,7 +43,6 @@ const store = new Vuex.Store({
                 return {
                   name,
                   address,
-                  transactions: [],
                   source: pick(source, ['type', 'idx']),
                 };
               default:
