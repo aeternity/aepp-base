@@ -14,10 +14,14 @@
           :balance="transaction.tx.amount"
           invert
         />
-        <br>from
-        <AccountInline :address="transaction.tx.senderId" />
-        <br>to
-        <AccountInline :address="transaction.tx.recipientId" />
+        <template v-if="transaction.tx.senderId">
+          <br>from
+          <AccountInline :address="transaction.tx.senderId" />
+        </template>
+        <template v-if="transaction.tx.recipientId">
+          <br>to
+          <AccountInline :address="transaction.tx.recipientId" />
+        </template>
       </Guide>
     </template>
 
@@ -40,13 +44,21 @@
     />
 
     <DetailsAddress
+      v-if="transaction.tx.senderId"
       name="From"
       :address="transaction.tx.senderId"
     />
 
     <DetailsAddress
+      v-if="transaction.tx.recipientId"
       name="To"
       :address="transaction.tx.recipientId"
+    />
+
+    <DetailsAddress
+      v-if="transaction.tx.ownerId"
+      name="Owner"
+      :address="transaction.tx.ownerId"
     />
 
     <DetailsAddress
@@ -65,8 +77,8 @@
 </template>
 
 <script>
-import { pick } from 'lodash-es';
 import { mapGetters } from 'vuex';
+import { pluck } from 'rxjs/operators';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import Balance from '../../components/Balance.vue';
@@ -92,20 +104,18 @@ export default {
   },
   computed: {
     ...mapGetters({ activeAccount: 'accounts/active', currentNetwork: 'currentNetwork' }),
-    transaction() {
-      return this.activeAccount.transactions.find(t => t.hash === this.hash);
-    },
     status() {
       return this.transaction.pending
         ? 'Pending'
-        : `${this.topBlockHeight - this.transaction.blockHeight} Confirmations`;
+        : `${this.transaction.confirmationCount} Confirmations`;
     },
   },
-  async mounted() {
-    await this.$store.dispatch('accounts/fetchTransaction', this.hash);
-  },
   subscriptions() {
-    return pick(this.$store.state.observables, ['topBlockHeight']);
+    return {
+      transaction: this.$store.state.observables.getTransaction(
+        this.$watchAsObservable(({ hash }) => hash, { immediate: true }).pipe(pluck('newValue')),
+      ),
+    };
   },
 };
 </script>

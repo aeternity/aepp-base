@@ -28,20 +28,7 @@
       </ButtonPlain>
     </div>
 
-    <template v-if="!activeAccount.transactions.length">
-      <AeLoader v-if="waitingTransactions" />
-      <div
-        v-else
-        class="no-transactions"
-      >
-        There are no transaction associated with this account.
-      </div>
-    </template>
-
-    <template
-      v-for="(transactions, date) in spendTransactionsGroupedByDay"
-      v-else
-    >
+    <template v-for="(transactions, date) in spendTransactionsGroupedByDay">
       <div
         :key="date"
         class="date"
@@ -56,11 +43,24 @@
         :to="{ name: 'transaction-details', params: { hash: transaction.hash } }"
       />
     </template>
+
+    <AeLoader v-if="transactions.status === 'loading'" />
+    <div
+      v-if="['ended', 'error'].includes(transactions.status)"
+      class="no-transactions"
+    >
+      {{ transactions.status === 'error'
+        ? 'An error occurred during transactions loading.'
+        : transactions.list.length
+          ? 'All transactions are loaded.'
+          : 'There are no transaction associated with this account.' }}
+    </div>
   </MobilePage>
 </template>
 
 <script>
-import { groupBy, pick } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { groupBy } from 'lodash-es';
 import MobilePage from '../../components/mobile/Page.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Balance from '../../components/Balance.vue';
@@ -84,24 +84,22 @@ export default {
       default: '',
     },
   },
-  data: () => ({
-    waitingTransactions: true,
-  }),
   subscriptions() {
-    return pick(this.$store.state.observables, ['activeAccount']);
+    this.loadMore$ = new Subject();
+    return {
+      activeAccount: this.$store.state.observables.activeAccount,
+      transactions: this.$store.state.observables.getTransactionList(this.loadMore$),
+    };
   },
   computed: {
     spendTransactionsGroupedByDay() {
-      const account = this.activeAccount;
       return groupBy(
-        [...account.transactions]
-          .filter(t => t.tx.type === 'SpendTx')
+        this.transactions.list
           .filter(t => (
             (this.direction === 'incoming' && t.received)
             || (this.direction === 'outgoing' && !t.received)
             || this.direction === ''
-          ))
-          .sort((t1, t2) => t2.time - t1.time),
+          )),
         (tx) => {
           const dateString = tx.time.toDateString();
           return dateString === new Date().toDateString() ? 'Today' : dateString;
@@ -109,12 +107,16 @@ export default {
       );
     },
   },
-  created() {
-    this.$watch('activeAccount.address', async () => {
-      this.waitingTransactions = true;
-      await this.$store.dispatch('accounts/updateTransactions');
-      this.waitingTransactions = false;
-    }, { immediate: true });
+  mounted() {
+    const checkLoadMore = () => {
+      const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+      if (scrollHeight - scrollTop === clientHeight) {
+        this.loadMore$.next(null);
+      }
+    };
+    window.addEventListener('scroll', checkLoadMore);
+    this.$once('hook:destroyed', () => window.removeEventListener('scroll', checkLoadMore));
+    this.$watch(({ transactions }) => transactions, checkLoadMore);
   },
 };
 </script>
