@@ -1,13 +1,14 @@
 import {
-  BehaviorSubject, combineLatest, timer, of,
+  Observable, BehaviorSubject, combineLatest, timer, of, concat,
 } from 'rxjs';
 import {
-  multicast, pluck, switchMap, map,
+  multicast, pluck, switchMap, map, filter, pairwise, startWith,
 } from 'rxjs/operators';
 import { refCountDelay } from 'rxjs-etc/operators';
-import { memoize } from 'lodash-es';
+import { camelCase, memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
+import { fetchJson, mapKeysDeep } from '../../utils';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -77,8 +78,12 @@ export default (store) => {
     .pipe(pluck('newValue'));
 
   let transactions = {};
+  let transactionRangeForAddress = {};
 
-  sdk$.subscribe(() => { transactions = {}; });
+  sdk$.subscribe(() => {
+    transactions = {};
+    transactionRangeForAddress = {};
+  });
 
   const registerTx = (tx) => { transactions[tx.hash] = tx; };
 
@@ -99,10 +104,143 @@ export default (store) => {
       }),
     );
 
+  const fetchMdwTransactions = async (address, limit, page) => {
+    const mdwUrl = new URL(
+      `/middleware/transactions/account/${address}`,
+      store.getters.currentNetwork.middlewareUrl,
+    );
+    mdwUrl.searchParams.set('limit', limit.toString());
+    mdwUrl.searchParams.set('page', page.toString());
+    const txs = await Promise.all(
+      mapKeysDeep(
+        await fetchJson(mdwUrl).catch(() => []),
+        (value, key) => camelCase(key),
+      ).map(normalizeTransaction),
+    );
+    txs.forEach(registerTx);
+    return txs;
+  };
+
+  const fetchPendingTransactions = async (address) => {
+    const txs = await Promise.all((
+      await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
+        .then(r => r.transactions, () => [])
+    )
+      .map(transaction => ({ ...transaction, pending: true }))
+      .map(normalizeTransaction));
+    txs.forEach(registerTx);
+    return txs;
+  };
+
+  const getTransactionsByAddress = (address) => {
+    if (!transactionRangeForAddress[address]) return [];
+    const txs = Object.values(transactions)
+      .filter(({ tx }) => [tx.senderId, tx.accountId, tx.recipientId, tx.ownerId].includes(address))
+      .sort((a, b) => b.time - a.time);
+    const { begin, end } = transactionRangeForAddress[address];
+    const beginIdx = txs.findIndex(({ hash }) => hash === begin);
+    const endIdx = txs.findIndex(({ hash }) => hash === end);
+    return txs
+      .slice(beginIdx, endIdx - beginIdx + 1)
+      .map(tx => setTransactionFieldsRelatedToAddress(tx, address));
+  };
+
+  const getTransactionList = (loadMore$) => {
+    const limit = 15;
+    let lastValue;
+    return concat(
+      of([]),
+      combineLatest([
+        concat(of('initial'), loadMore$.pipe(map(() => 'loadMore'))),
+        activeAccountAddress$,
+        sdk$,
+      ]),
+    )
+      .pipe(
+        pairwise(),
+        map(([[, oldAddress, oldSdk], [mode, address, _sdk]]) => ({
+          address, mode: oldAddress === address && oldSdk === _sdk ? mode : 'initial',
+        })),
+        filter(({ mode }) => mode === 'initial' || lastValue.status === ''),
+        switchMap(({ address, mode }) => timer(0, 30000)
+          .pipe(map(idx => ({ address, mode: idx ? 'poll' : mode })))),
+        switchMap(({ address, mode }) => new Observable(async (subscriber) => {
+          const next = (status = '') => {
+            lastValue = {
+              list: getTransactionsByAddress(address),
+              status: (transactionRangeForAddress[address] || {}).ended ? 'ended' : status,
+            };
+            subscriber.next(lastValue);
+          };
+
+          switch (mode) {
+            case 'initial': {
+              if (!transactionRangeForAddress[address]) {
+                next('loading');
+                const [txs] = await Promise.all([
+                  fetchMdwTransactions(address, limit, 1),
+                  fetchPendingTransactions(address),
+                ]);
+                transactionRangeForAddress[address] = {
+                  begin: txs[0].hash,
+                  end: txs[txs.length - 1].hash,
+                  ended: txs.length !== limit,
+                };
+                next();
+                break;
+              }
+            }
+            case 'poll': // eslint-disable-line no-fallthrough
+              await Promise.all([
+                fetchMdwTransactions(address, 1, 1).then(async ([tx]) => {
+                  const begin = tx.hash;
+                  let t = tx;
+                  let p = 1;
+                  while (t.hash !== transactionRangeForAddress[address].begin) {
+                    // eslint-disable-next-line no-await-in-loop
+                    [t] = await fetchMdwTransactions(address, 1, p += 1);
+                  }
+                  transactionRangeForAddress[address].begin = begin;
+                }),
+                fetchPendingTransactions(address),
+              ]);
+              next();
+              break;
+            case 'loadMore': {
+              if (transactionRangeForAddress[address].ended) break;
+              next('loading');
+              const loadedCount = 1 + lastValue.list
+                .findIndex(({ hash }) => transactionRangeForAddress[address].end === hash);
+              const txs = await fetchMdwTransactions(
+                address,
+                limit,
+                Math.floor(loadedCount / limit) + 1,
+              );
+              Object.assign(transactionRangeForAddress[address], {
+                end: txs[txs.length - 1].hash,
+                ended: txs.length !== limit,
+              });
+              next();
+              break;
+            }
+            default:
+              throw new Error(`Invalid mode: ${mode}`);
+          }
+
+          subscriber.complete();
+        })),
+        startWith({
+          list: getTransactionsByAddress(store.getters['accounts/active'].address),
+          status: '',
+        }),
+      );
+  };
+
   store.state.observables = { // eslint-disable-line no-param-reassign
     topBlockHeight: topBlockHeight$,
     getBalance,
     getTransaction,
+    getTransactionList,
     activeAccount: watchAsObservable(
       (state, getters) => getters['accounts/active'],
       { immediate: true, deep: true },
