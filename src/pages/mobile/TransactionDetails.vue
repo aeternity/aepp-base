@@ -38,9 +38,15 @@
     />
 
     <DetailsAmountAndFee
+      v-if="!transaction.received"
       name="Transaction Fee"
       :amount="transaction.tx.amount"
       :fee="transaction.tx.fee"
+    />
+
+    <DetailsAmountReceived
+      v-else
+      :amount="transaction.tx.amount"
     />
 
     <DetailsAddress
@@ -85,6 +91,7 @@ import Balance from '../../components/Balance.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
 import DetailsAmountAndFee from '../../components/mobile/DetailsAmountAndFee.vue';
+import DetailsAmountReceived from '../../components/mobile/DetailsAmountReceived.vue';
 import DetailsAddress from '../../components/mobile/DetailsAddress.vue';
 import AeButton from '../../components/AeButton.vue';
 
@@ -96,6 +103,7 @@ export default {
     AccountInline,
     DetailsField,
     DetailsAmountAndFee,
+    DetailsAmountReceived,
     DetailsAddress,
     AeButton,
   },
