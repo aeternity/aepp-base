@@ -25,8 +25,8 @@
       Comes from AirGap (integrated with Base æpp) or a hardware crypto wallet.
     </p>
     <AeButton
-      :to="{ name: 'vault-setup-method' }"
       fill="alternative"
+      @click="nextClickHandler('vault-setup-method')"
     >
       Setup airgap
     </AeButton>
@@ -37,8 +37,8 @@
       Buy a Ledger wallet
     </AeButton>
     <AeButton
-      :to="{ name: 'settings-security-courses' }"
       plain
+      @click="nextClickHandler('settings-security-courses')"
     >
       To course overview
     </AeButton>
@@ -55,6 +55,12 @@ export default {
     MobilePage,
     Guide,
     AeButton,
+  },
+  methods: {
+    nextClickHandler(name) {
+      this.$store.commit('addCourse', 'settings-security-courses-layers');
+      this.$router.push({ name });
+    },
   },
 };
 </script>

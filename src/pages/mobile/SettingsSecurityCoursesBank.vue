@@ -55,14 +55,14 @@
       </li>
     </ul>
     <AeButton
-      :to="{ name: 'settings-security-courses-privacy' }"
       fill="alternative"
+      @click="nextClickHandler('settings-security-courses-privacy')"
     >
       Go to course 3
     </AeButton>
     <AeButton
-      :to="{ name: 'settings-security-courses' }"
       plain
+      @click="nextClickHandler('settings-security-courses')"
     >
       To course overview
     </AeButton>
@@ -79,6 +79,12 @@ export default {
     MobilePage,
     Guide,
     AeButton,
+  },
+  methods: {
+    nextClickHandler(name) {
+      this.$store.commit('addCourse', 'settings-security-courses-bank');
+      this.$router.push({ name });
+    },
   },
 };
 </script>
