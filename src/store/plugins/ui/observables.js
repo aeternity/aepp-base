@@ -158,8 +158,8 @@ export default (store) => {
     )
       .pipe(
         pairwise(),
-        map(([[, oldAddress, oldSdk], [mode, address, _sdk]]) => ({
-          address, mode: oldAddress === address && oldSdk === _sdk ? mode : 'initial',
+        map(([[, oldAddress, oldSdk], [mode, address, sdk]]) => ({
+          address, mode: oldAddress === address && oldSdk === sdk ? mode : 'initial',
         })),
         filter(({ mode }) => mode === 'initial' || (lastValue && lastValue.status === '')),
         switchMap(({ address, mode }) => timer(0, 30000)
