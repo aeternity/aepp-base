@@ -5,7 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
 import '../lib/storeErrorHandler';
-import rootModule from './modules/root';
+import rootModule from './modules/root'; // eslint-disable-line import/no-cycle
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import accountsModule from './modules/accounts';

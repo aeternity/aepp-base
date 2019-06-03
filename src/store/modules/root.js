@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import { update, flatMap, mergeWith } from 'lodash-es';
-import store from '../index';
+import store from '../index'; // eslint-disable-line import/no-cycle
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
