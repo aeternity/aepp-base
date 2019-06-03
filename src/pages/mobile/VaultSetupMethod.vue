@@ -25,6 +25,7 @@
     <ListItemChoose
       title="Maximum (recommended)"
       subtitle="Install AirGap on another device"
+      :active="maximumSecure"
       :checked="maximumSecure"
       @click="maximumSecure = true"
     >
@@ -37,6 +38,7 @@
       v-if="$globals.UNFINISHED_FEATURES"
       title="Normal"
       subtitle="Install AirGap on this device"
+      :active="!maximumSecure"
       :checked="!maximumSecure"
       @click="maximumSecure = false"
     >

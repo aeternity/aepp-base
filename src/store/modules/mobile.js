@@ -7,7 +7,7 @@ export default {
     followers: {},
     stepFraction: null,
     browserPath: '',
-    securityCourses: {},
+    readSecurityCourses: [],
   },
 
   getters: {
@@ -37,8 +37,9 @@ export default {
     setBrowserPath(state, browserPath) {
       state.browserPath = browserPath;
     },
-    addCourse(state, courseName) {
-      Vue.set(state.securityCourses, courseName, true);
+    markSecurityCourseAsRead(state, courseName) {
+      if (state.readSecurityCourses.includes(courseName)) return;
+      state.readSecurityCourses.push(courseName);
     },
   },
 };

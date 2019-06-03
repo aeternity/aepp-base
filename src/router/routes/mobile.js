@@ -35,11 +35,11 @@ import SettingsMnemonicShow from '../../pages/mobile/SettingsMnemonicShow.vue';
 import SettingsMnemonicConfirm from '../../pages/mobile/SettingsMnemonicConfirm.vue';
 import SettingsMnemonicConfirmed from '../../pages/mobile/SettingsMnemonicConfirmed.vue';
 import SettingsMnemonicDeleted from '../../pages/mobile/SettingsMnemonicDeleted.vue';
-import SettingsSecurityCourses from '../../pages/mobile/SettingsSecurityCourses.vue';
-import SettingsSecurityCoursesIntro from '../../pages/mobile/SettingsSecurityCoursesIntro.vue';
-import SettingsSecurityCoursesBank from '../../pages/mobile/SettingsSecurityCoursesBank.vue';
-import SettingsSecurityCoursesPrivacy from '../../pages/mobile/SettingsSecurityCoursesPrivacy.vue';
-import SettingsSecurityCoursesLayers from '../../pages/mobile/SettingsSecurityCoursesLayers.vue';
+import SettingsSecurityCourseList from '../../pages/mobile/SettingsSecurityCourseList.vue';
+import SettingsSecurityCourseIntro from '../../pages/mobile/SettingsSecurityCourseIntro.vue';
+import SettingsSecurityCourseBank from '../../pages/mobile/SettingsSecurityCourseBank.vue';
+import SettingsSecurityCoursePrivacy from '../../pages/mobile/SettingsSecurityCoursePrivacy.vue';
+import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCourseLayers.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -279,28 +279,28 @@ export default [{
   component: SettingsMnemonicDeleted,
   beforeEnter: checkLoggedIn(true),
 }, {
-  name: 'settings-security-courses',
+  name: 'settings-security-course-list',
   path: '/settings/security-courses',
-  component: SettingsSecurityCourses,
+  component: SettingsSecurityCourseList,
   beforeEnter: checkLoggedIn(true),
 }, {
-  name: 'settings-security-courses-intro',
+  name: 'settings-security-course-intro',
   path: '/settings/security-courses/intro',
-  component: SettingsSecurityCoursesIntro,
+  component: SettingsSecurityCourseIntro,
   beforeEnter: checkLoggedIn(true),
 }, {
-  name: 'settings-security-courses-bank',
+  name: 'settings-security-course-bank',
   path: '/settings/security-courses/bank',
-  component: SettingsSecurityCoursesBank,
+  component: SettingsSecurityCourseBank,
   beforeEnter: checkLoggedIn(true),
 }, {
-  name: 'settings-security-courses-privacy',
+  name: 'settings-security-course-privacy',
   path: '/settings/security-courses/privacy',
-  component: SettingsSecurityCoursesPrivacy,
+  component: SettingsSecurityCoursePrivacy,
   beforeEnter: checkLoggedIn(true),
 }, {
-  name: 'settings-security-courses-layers',
+  name: 'settings-security-course-layers',
   path: '/settings/security-courses/layers',
-  component: SettingsSecurityCoursesLayers,
+  component: SettingsSecurityCourseLayers,
   beforeEnter: checkLoggedIn(true),
 }];

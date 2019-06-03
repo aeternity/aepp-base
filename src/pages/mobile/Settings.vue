@@ -52,7 +52,7 @@
         <LeftMore slot="right" />
       </ListItem>
       <ListItem
-        :to="{ name: 'settings-security-courses' }"
+        :to="{ name: 'settings-security-course-list' }"
         subtitle="Disclaimer and information"
         title="AE Security Courses"
         class="courses"
