@@ -1,11 +1,15 @@
 import { get, isEqual } from 'lodash-es';
-import {
-  Ae, ChainNode, Transaction, Contract,
-} from '@aeternity/aepp-sdk/es';
-import Rpc from '@aeternity/aepp-sdk/es/rpc/server';
 
 export default (store) => {
   const updateSdk = async (url) => {
+    const [Ae, ChainNode, Transaction, Contract, Rpc] = (await Promise.all([
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/tx/tx'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/contract'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/rpc/server'),
+    ])).map(module => module.default);
+
     const methods = {
       async address(options) {
         if (options) {
