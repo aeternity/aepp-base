@@ -112,10 +112,8 @@ export default (store) => {
     mdwUrl.searchParams.set('limit', limit.toString());
     mdwUrl.searchParams.set('page', page.toString());
     const txs = await Promise.all(
-      mapKeysDeep(
-        await fetchJson(mdwUrl).catch(() => []),
-        (value, key) => camelCase(key),
-      ).map(normalizeTransaction),
+      mapKeysDeep(await fetchJson(mdwUrl), (value, key) => camelCase(key))
+        .map(normalizeTransaction),
     );
     txs.forEach(registerTx);
     return txs;
