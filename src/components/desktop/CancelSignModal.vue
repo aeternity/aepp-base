@@ -1,68 +1,59 @@
 <template>
-  <FooterModal class="cancel-sign-modal">
-    <div class="modal">
-      <h1>Sign the transaction in the Base æpp</h1>
-      <Step>
-        <img :src="baseAppIcon">
-        <h2>Base</h2>
-        <p>Open your Base æpp, check the transaction details and sign</p>
-      </Step>
-      <div>
-        <AeButton @click="resolve">
-          Cancel Transaction
-        </AeButton>
+  <AeModal class="cancel-sign-modal">
+    <Guide size="big">
+      Sign the transaction in the <em> Base æpp </em>
+      <div class="note">
+        Open your Base æpp, check the transaction details and sign
       </div>
-    </div>
-  </FooterModal>
+    </Guide>
+    <img src="../../assets/base-aepp-confirm.svg">
+    <AeButton @click="resolve">
+      Cancel Transaction
+    </AeButton>
+  </AeModal>
 </template>
 
 <script>
-import baseAppIcon from '../../assets/icons/base.svg';
+import AeModal from '../AeModal.vue';
 import AeButton from '../AeButton.vue';
-import Step from './Step.vue';
-import FooterModal from './FooterModal.vue';
+import Guide from '../Guide.vue';
 
 export default {
-  components: { FooterModal, Step, AeButton },
+  components: {
+    AeModal,
+    AeButton,
+    Guide,
+  },
   props: {
     resolve: { type: Function, required: true },
   },
-  data: () => ({ baseAppIcon }),
 };
 </script>
 
-<style scoped lang="scss">
-@import '../../styles/variables/colors.scss';
-@import '../../styles/globals/functions.scss';
+<style lang="scss" scoped>
+@import '../../styles/placeholders/typography.scss';
 
-.cancel-sign-modal .modal {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: hidden;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
+.cancel-sign-modal {
+  /deep/ .modal-plain {
+    text-align: center;
+    padding: rem(50px) rem(70px) rem(70px) rem(70px);
 
-  h1 {
-    font-size: 24px;
-  }
-
-  .step {
-    flex-shrink: 0;
-    max-width: 250px;
+    .note {
+      @extend %face-sans-base;
+      font-weight: normal;
+      margin-top: rem(5px);
+    }
 
     img {
-      width: rem(55px);
-      height: rem(55px);
-      border-radius: rem(18px);
-      padding: rem(10px);
-      background-color: $color-primary;
+      height: rem(270px);
     }
-  }
 
-  .ae-button {
-    margin-bottom: 60px;
+    .ae-button {
+      display: block;
+      margin-top: rem(53px);
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 }
 </style>
