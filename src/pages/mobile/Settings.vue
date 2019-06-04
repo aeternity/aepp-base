@@ -64,24 +64,20 @@
       </ListItem>
     </AeCard>
 
-    <h2 v-if="syncedWallets.length">
-      Synced Wallets
-    </h2>
-    <AeCard fill="maximum">
-      <ListItemAccount
-        v-for="[account, idx] in syncedWallets"
-        :key="account.address"
-        v-bind="account"
-        :to="`/settings/wallet/${idx}`"
-      >
-        <AeAddress
-          slot="subtitle"
+    <template v-if="removableAccounts.length">
+      <h2>Synced Wallets</h2>
+      <AeCard fill="maximum">
+        <ListItemAccount
+          v-for="account in removableAccounts"
+          :key="account.idx"
           v-bind="account"
-          length="short"
-        />
-        <LeftMore slot="right" />
-      </ListItemAccount>
-    </AeCard>
+          subtitle="address"
+          :to="{ name: 'settings-account-remove', params: { idx: account.idx } }"
+        >
+          <LeftMore slot="right" />
+        </ListItemAccount>
+      </AeCard>
+    </template>
 
     <h2>Account</h2>
     <AeCard fill="maximum">
@@ -121,7 +117,6 @@ import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
-import AeAddress from '../../components/AeAddress.vue';
 import {
   Globe, LeftMore, Device, Grid, Key, Share, SignOut, LockOpen,
 } from '../../components/icons';
@@ -134,7 +129,6 @@ export default {
     ListItem,
     ListItemCircle,
     ListItemAccount,
-    AeAddress,
     Globe,
     LeftMore,
     Device,
@@ -158,7 +152,9 @@ export default {
       return `${c} aepp${c === 1 ? '' : 's'} have account access`;
     },
     mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
-    syncedWallets: ({ accounts: { list } }) => list.reduce((s, a, i) => (a.source.type !== 'hd-wallet' ? [[a, i], ...s] : s), []),
+    removableAccounts: ({ accounts: { list } }) => list
+      .map((account, idx) => ({ ...account, idx }))
+      .filter(({ source: { type } }) => type !== 'hd-wallet'),
   }),
   methods: mapActions(['logout', 'reset']),
 };
@@ -196,10 +192,6 @@ export default {
     @extend %face-sans-s;
     margin-top: rem(30px);
     font-weight: 500;
-  }
-
-  .ae-address {
-    @extend %face-sans-xs;
   }
 
   .version {
