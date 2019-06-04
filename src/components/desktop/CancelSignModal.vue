@@ -1,11 +1,11 @@
 <template>
   <AeModal class="cancel-sign-modal">
     <Guide size="big">
-      Sign the transaction in the <em> Base æpp </em>
-      <div class="note">
-        Open your Base æpp, check the transaction details and sign
-      </div>
+      Sign the transaction in the <em>Base æpp</em>
     </Guide>
+    <div class="note">
+      Open your Base æpp, check the transaction details and sign
+    </div>
     <img src="../../assets/base-aepp-confirm.svg">
     <AeButton @click="resolve">
       Cancel Transaction
@@ -15,15 +15,11 @@
 
 <script>
 import AeModal from '../AeModal.vue';
-import AeButton from '../AeButton.vue';
 import Guide from '../Guide.vue';
+import AeButton from '../AeButton.vue';
 
 export default {
-  components: {
-    AeModal,
-    AeButton,
-    Guide,
-  },
+  components: { AeModal, Guide, AeButton },
   props: {
     resolve: { type: Function, required: true },
   },
@@ -32,28 +28,28 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/placeholders/typography.scss';
+@import '../../styles/variables/colors.scss';
 
 .cancel-sign-modal {
+  text-align: center;
+
   /deep/ .modal-plain {
-    text-align: center;
     padding: rem(50px) rem(70px) rem(70px) rem(70px);
+  }
 
-    .note {
-      @extend %face-sans-base;
-      font-weight: normal;
-      margin-top: rem(5px);
-    }
+  .guide {
+    margin-bottom: rem(5px);
+  }
 
-    img {
-      height: rem(270px);
-    }
+  .note {
+    @extend %face-sans-base;
+    color: $color-neutral-negative-3;
+  }
 
-    .ae-button {
-      display: block;
-      margin-top: rem(53px);
-      margin-left: auto;
-      margin-right: auto;
-    }
+  img {
+    display: block;
+    height: rem(300px);
+    margin: rem(40px) auto;
   }
 }
 </style>
