@@ -12,6 +12,7 @@
     </main>
 
     <span
+      v-if="!hideToolbar"
       slot="toolbar"
       class="balance-title"
     >
@@ -31,6 +32,9 @@ export default {
     AeCard,
     AeQrCode,
     AeAddress,
+  },
+  props: {
+    hideToolbar: { type: Boolean, default: false },
   },
   computed: mapGetters({ activeAccount: 'accounts/active' }),
 };

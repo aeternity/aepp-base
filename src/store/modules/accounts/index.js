@@ -45,6 +45,10 @@ export default {
       });
       if (active) state.activeIdx = state.list.length - 1;
     },
+    remove(state, idx) {
+      state.list.splice(idx, 1);
+      if (state.activeIdx === state.list.length) state.activeIdx -= 1;
+    },
   },
 
   actions: {
