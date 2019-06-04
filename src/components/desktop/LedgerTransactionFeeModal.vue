@@ -96,13 +96,6 @@ export default {
 @import '../../styles/placeholders/typography.scss';
 
 .transaction-fee {
-  .ledger-image {
-    background: #333745;
-    width: rem(220px);
-    height: rem(50px);
-    margin: rem(60px) auto;
-  }
-
   .ae-input-amount {
     margin: rem(60px) auto;
     width: rem(311px);
