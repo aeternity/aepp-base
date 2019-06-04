@@ -14,7 +14,7 @@
         v-for="account in accounts"
         :key="account.address"
         v-bind="account"
-        :subtitle="account.address"
+        subtitle="address"
       >
         <AeRadio
           slot="right"
