@@ -2,7 +2,7 @@
   <ListItem
     v-bind="$attrs"
     class="list-item-choose"
-    :class="{ checked }"
+    :class="{ active, checked }"
     v-on="$listeners"
   >
     <slot
@@ -19,7 +19,8 @@ import ListItem from './ListItem.vue';
 export default {
   components: { ListItem },
   props: {
-    checked: { type: Boolean },
+    active: Boolean,
+    checked: Boolean,
   },
 };
 </script>
@@ -36,11 +37,13 @@ export default {
   background-color: $color-neutral-positive-3;
   filter: grayscale(100%);
 
-  &.checked {
+  &.active {
     background-color: $color-neutral-maximum;
     box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.15);
     filter: none;
+  }
 
+  &.checked {
     &::before {
       content: '';
       position: absolute;

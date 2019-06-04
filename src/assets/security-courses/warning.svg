@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 218 247" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="BaseApp-0.6.x" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="v0.6.x-00.52-Disclaimer">
+            <g id="Group-2">
+                <g id="Group" transform="translate(113.000000, 68.000000) rotate(20.000000) translate(-113.000000, -68.000000) translate(-20.000000, -66.000000)">
+                    <path d="M141.604155,9.294114 L290.292765,260.452842 C291.699522,262.829078 290.913604,265.895799 288.537368,267.302556 C287.766165,267.759116 286.886424,268 285.99021,268 L-19.9921221,268 C-22.7535458,268 -24.9921221,265.761424 -24.9921221,263 C-24.9921221,262.103785 -24.7512378,261.224044 -24.2946777,260.452842 L124.393933,9.294114 C127.207446,4.54164227 133.340889,2.96980589 138.09336,5.78331917 C139.540155,6.63983716 140.747637,7.8473188 141.604155,9.294114 Z" id="Rectangle" fill="#10BDAE"></path>
+                    <rect id="Rectangle-Copy" fill="#14CCB7" x="123.808219" y="97" width="18.3835616" height="82" rx="4"></rect>
+                    <rect id="Rectangle-Copy" fill="#14CCB7" x="123.808219" y="199" width="18.3835616" height="20" rx="4"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

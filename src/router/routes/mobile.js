@@ -35,6 +35,11 @@ import SettingsMnemonicShow from '../../pages/mobile/SettingsMnemonicShow.vue';
 import SettingsMnemonicConfirm from '../../pages/mobile/SettingsMnemonicConfirm.vue';
 import SettingsMnemonicConfirmed from '../../pages/mobile/SettingsMnemonicConfirmed.vue';
 import SettingsMnemonicDeleted from '../../pages/mobile/SettingsMnemonicDeleted.vue';
+import SettingsSecurityCourseList from '../../pages/mobile/SettingsSecurityCourseList.vue';
+import SettingsSecurityCourseIntro from '../../pages/mobile/SettingsSecurityCourseIntro.vue';
+import SettingsSecurityCourseBank from '../../pages/mobile/SettingsSecurityCourseBank.vue';
+import SettingsSecurityCoursePrivacy from '../../pages/mobile/SettingsSecurityCoursePrivacy.vue';
+import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCourseLayers.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -272,5 +277,30 @@ export default [{
   name: 'settings-mnemonic-deleted',
   path: '/settings/mnemonic/deleted',
   component: SettingsMnemonicDeleted,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-list',
+  path: '/settings/security-courses',
+  component: SettingsSecurityCourseList,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-intro',
+  path: '/settings/security-courses/intro',
+  component: SettingsSecurityCourseIntro,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-bank',
+  path: '/settings/security-courses/bank',
+  component: SettingsSecurityCourseBank,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-privacy',
+  path: '/settings/security-courses/privacy',
+  component: SettingsSecurityCoursePrivacy,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-layers',
+  path: '/settings/security-courses/layers',
+  component: SettingsSecurityCourseLayers,
   beforeEnter: checkLoggedIn(true),
 }];

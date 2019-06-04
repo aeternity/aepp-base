@@ -51,6 +51,17 @@
         </ListItemCircle>
         <LeftMore slot="right" />
       </ListItem>
+      <ListItem
+        :to="{ name: 'settings-security-course-list' }"
+        subtitle="Disclaimer and information"
+        title="AE Security Courses"
+        class="courses"
+      >
+        <ListItemCircle slot="icon">
+          <LockOpen />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
     </AeCard>
 
     <h2>Account</h2>
@@ -91,7 +102,7 @@ import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import {
-  Globe, LeftMore, Device, Grid, Key, Share, SignOut,
+  Globe, LeftMore, Device, Grid, Key, Share, SignOut, LockOpen,
 } from '../../components/icons';
 
 export default {
@@ -108,6 +119,7 @@ export default {
     Key,
     Share,
     SignOut,
+    LockOpen,
   },
   data: () => ({
     version: process.env.npm_package_version,
@@ -146,7 +158,7 @@ export default {
       background-color: #f8963d;
     }
 
-    &.mnemonic .list-item-circle {
+    &.mnemonic .list-item-circle, &.courses .list-item-circle {
       background-color: $color-alternative;
     }
 
