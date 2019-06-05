@@ -84,8 +84,6 @@ export default {
 
       h2 {
         margin-top: rem(16px);
-        font-weight: 500;
-        color: $color-alternative;
 
         &.important {
           color: $color-primary;
