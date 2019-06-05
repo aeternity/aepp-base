@@ -26,20 +26,17 @@
 
     <form
       :id="_uid"
-      @submit.prevent="parseSyncCode"
+      @submit.prevent="createAccount"
     >
       <AeTextarea
-        v-model="syncCode"
-        v-validate="'required|sync_code'"
+        v-model="responseUrl"
+        v-validate="'required|air_gap_response_url'"
         header="AirGap Sync Code"
         rows="3"
         submit-on-enter
         autofocus
-        :error="errors.has('syncCode')"
-        :footer="errors.first('syncCode')"
-        name="syncCode"
-        v-bind="$attrs"
-        v-on="$listeners"
+        :error="errors.has('responseUrl')"
+        :footer="errors.first('responseUrl')"
       />
     </form>
 
@@ -56,26 +53,21 @@
 
 <script>
 import MobilePage from '../../components/mobile/Page.vue';
-import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
+import Guide from '../../components/Guide.vue';
 import AeTextarea from '../../components/AeTextarea.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, AeButton, Guide, AeFraction, AeTextarea,
+    MobilePage, AeFraction, Guide, AeTextarea, AeButton,
   },
-  data() {
-    return {
-      syncCode: '',
-      error: false,
-    };
-  },
+  data: () => ({ responseUrl: '' }),
   methods: {
-    async parseSyncCode() {
+    async createAccount() {
       if (!await this.$validator.validateAll()) return;
 
-      this.$store.dispatch('accounts/airGap/createBySyncCode', { syncCode: this.syncCode });
+      this.$store.dispatch('accounts/airGap/createByResponseUrl', { responseUrl: this.responseUrl });
       this.$router.push({ name: 'vault-setup-completed' });
     },
   },

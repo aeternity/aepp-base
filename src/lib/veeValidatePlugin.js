@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { validateMnemonic } from '@aeternity/bip39';
 import { toUrl } from './utils';
-import { parseSyncCode } from './vaultSyncCodeParser';
+import { getPublicKeyByResponseUrl } from './airGap';
 
 Validator.extend('confirmed', confirmed);
 Validator.extend('decimal', decimal);
@@ -27,9 +27,9 @@ Validator.extend('url_http', (value) => {
     return false;
   }
 });
-Validator.extend('sync_code', (value) => {
+Validator.extend('air_gap_response_url', (value) => {
   try {
-    parseSyncCode(value);
+    getPublicKeyByResponseUrl(value);
     return true;
   } catch (e) {
     return false;
@@ -50,7 +50,7 @@ Validator.localize('en', {
     min_value_exclusive: (field, [arg]) => `This field must be more than ${arg}`,
     mnemonic: () => 'Invalid recovery phrase',
     url_http: () => 'This field is not a valid HTTP(S) URL',
-    sync_code: () => 'This is not a valid sync code.',
+    air_gap_response_url: () => 'This is not a valid sync code.',
   },
 });
 
