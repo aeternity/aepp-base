@@ -5,7 +5,7 @@
       Certainly when you are handling more than lunch money.
     </p>
 
-    <h2>Base æpp is built for small transactions </h2>
+    <h2>The Base æpp is built for small transactions </h2>
     <p>
       It is safe but not meant for high volume transactions or storage.
     </p>

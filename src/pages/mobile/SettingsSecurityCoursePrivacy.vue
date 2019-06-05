@@ -3,7 +3,7 @@
     <h2>æternity values privacy</h2>
 
     <p>
-      Base æpp will never ask, receive, transmit or store your:
+      Base æpp will not ask, receive, transmit or store your:
     </p>
 
     <ul>
