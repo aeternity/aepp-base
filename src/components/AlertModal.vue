@@ -2,22 +2,39 @@
   <Modal class="alert-modal">
     {{ text }}
 
-    <AeButton @click="resolve">
-      {{ buttonText }}
-    </AeButton>
+    <AeButtonGroup>
+      <AeButton
+        v-if="confirm"
+        fill="secondary"
+        @click="cancelHandler"
+      >
+        Cancel
+      </AeButton>
+      <AeButton @click="resolve">
+        {{ primaryButtonText }}
+      </AeButton>
+    </AeButtonGroup>
   </Modal>
 </template>
 
 <script>
 import Modal from './mobile/Modal.vue';
 import AeButton from './AeButton.vue';
+import AeButtonGroup from './AeButtonGroup.vue';
 
 export default {
-  components: { Modal, AeButton },
+  components: { Modal, AeButtonGroup, AeButton },
   props: {
     text: { type: String, required: true },
-    buttonText: { type: String, default: 'Ok' },
+    primaryButtonText: { type: String, default: 'OK' },
     resolve: { type: Function, required: true },
+    reject: { type: Function, required: true },
+    confirm: Boolean,
+  },
+  methods: {
+    cancelHandler() {
+      this.reject(new Error('Cancelled by user'));
+    },
   },
 };
 </script>
@@ -33,11 +50,14 @@ export default {
     padding: rem(30px);
   }
 
-  .ae-button {
-    display: block;
+  .ae-button-group {
     margin: rem(20px) auto 0 auto;
-    padding: 0 rem(20px);
-    min-width: rem(150px);
+    min-width: rem(210px);
+
+    .ae-button {
+      flex-basis: 0;
+      padding: 0 rem(20px);
+    }
   }
 }
 </style>

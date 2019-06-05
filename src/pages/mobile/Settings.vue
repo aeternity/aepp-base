@@ -91,15 +91,7 @@
           <Share />
         </ListItemCircle>
       </ListItem>
-      <ListItem
-        title="Reset Key Storage"
-        subtitle="After resetting, a recovery is required"
-        @click="reset"
-      >
-        <ListItemCircle slot="icon">
-          <SignOut />
-        </ListItemCircle>
-      </ListItem>
+      <ListItemSettingsReset />
     </AeCard>
 
     <div class="version">
@@ -117,8 +109,9 @@ import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
+import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import {
-  Globe, LeftMore, Device, Grid, Key, Share, SignOut, LockOpen,
+  Globe, LeftMore, Device, Grid, Key, Share, LockOpen,
 } from '../../components/icons';
 
 export default {
@@ -129,13 +122,13 @@ export default {
     ListItem,
     ListItemCircle,
     ListItemAccount,
+    ListItemSettingsReset,
     Globe,
     LeftMore,
     Device,
     Grid,
     Key,
     Share,
-    SignOut,
     LockOpen,
   },
   data: () => ({
@@ -156,7 +149,7 @@ export default {
       .map((account, idx) => ({ ...account, idx }))
       .filter(({ source: { type } }) => type !== 'hd-wallet'),
   }),
-  methods: mapActions(['logout', 'reset']),
+  methods: mapActions(['logout']),
 };
 </script>
 
