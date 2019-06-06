@@ -103,6 +103,7 @@ export default {
       commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
       dispatch('create', 'Main Account');
       dispatch('discover');
+      dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
     },
 
     async unlockWallet({ state: { encryptedWallet }, commit, dispatch }, password) {

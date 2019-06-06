@@ -13,15 +13,15 @@
     <slot />
 
     <AeButton
-      v-if="course.toNext"
+      v-if="course.nextRouteName"
       fill="alternative"
-      :to="course.toNext"
+      :to="{ name: course.nextRouteName, params: $route.params }"
     >
       Go to course {{ course.idx + 1 }}
     </AeButton>
     <AeButton
       plain
-      :to="{ name: 'settings-security-course-list' }"
+      :to="{ name: 'settings-security-course-list', params: $route.params }"
     >
       To course overview
     </AeButton>
@@ -48,7 +48,7 @@ export default {
       return {
         ...courses[idx - 1],
         idx,
-        toNext: idx === courses.length ? null : { name: courses[idx].routeName },
+        nextRouteName: idx === courses.length ? null : courses[idx].routeName,
       };
     },
   },

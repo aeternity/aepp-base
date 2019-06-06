@@ -4,6 +4,7 @@ import { QrCodeReader } from './components/async';
 import Notification from './components/Notification.vue';
 import NotificationSpend from './components/NotificationSpend.vue';
 import AccountSwitcherModal from './components/mobile/AccountSwitcherModal.vue';
+import SecurityCourseModal from './components/mobile/SecurityCourseModal.vue';
 import MigratedBalanceModal from './components/mobile/MigratedBalanceModal.vue';
 import ConfirmAccountAccessModal from './components/mobile/ConfirmAccountAccessModal.vue';
 import ConfirmContractCallModal from './components/mobile/ConfirmContractCallModal.vue';
@@ -28,6 +29,7 @@ registerModal({ name: 'notificationSpend', component: NotificationSpend, ...noti
 
 if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'accountSwitcher', component: AccountSwitcherModal });
+  registerModal({ name: 'proposeToOpenSecurityCourses', component: SecurityCourseModal, allowRedirect: true });
   registerModal({ name: 'migratedBalance', component: MigratedBalanceModal });
   registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal });
   registerModal({ name: 'confirmContractCall', component: ConfirmContractCallModal, hidePage: true });
