@@ -40,6 +40,7 @@ import SettingsSecurityCourseIntro from '../../pages/mobile/SettingsSecurityCour
 import SettingsSecurityCourseBank from '../../pages/mobile/SettingsSecurityCourseBank.vue';
 import SettingsSecurityCoursePrivacy from '../../pages/mobile/SettingsSecurityCoursePrivacy.vue';
 import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCourseLayers.vue';
+import SettingsAccountRemove from '../../pages/mobile/SettingsAccountRemove.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -303,4 +304,10 @@ export default [{
   path: '/settings/security-courses/layers',
   component: SettingsSecurityCourseLayers,
   beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-account-remove',
+  path: '/settings/wallet/:idx',
+  component: SettingsAccountRemove,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
 }];

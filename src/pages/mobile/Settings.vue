@@ -64,6 +64,21 @@
       </ListItem>
     </AeCard>
 
+    <template v-if="removableAccounts.length">
+      <h2>Synced Wallets</h2>
+      <AeCard fill="maximum">
+        <ListItemAccount
+          v-for="account in removableAccounts"
+          :key="account.idx"
+          v-bind="account"
+          subtitle="address"
+          :to="{ name: 'settings-account-remove', params: { idx: account.idx } }"
+        >
+          <LeftMore slot="right" />
+        </ListItemAccount>
+      </AeCard>
+    </template>
+
     <h2>Account</h2>
     <AeCard fill="maximum">
       <ListItem
@@ -101,6 +116,7 @@ import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
+import ListItemAccount from '../../components/ListItemAccount.vue';
 import {
   Globe, LeftMore, Device, Grid, Key, Share, SignOut, LockOpen,
 } from '../../components/icons';
@@ -112,6 +128,7 @@ export default {
     AeCard,
     ListItem,
     ListItemCircle,
+    ListItemAccount,
     Globe,
     LeftMore,
     Device,
@@ -135,6 +152,9 @@ export default {
       return `${c} aepp${c === 1 ? '' : 's'} have account access`;
     },
     mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
+    removableAccounts: ({ accounts: { list } }) => list
+      .map((account, idx) => ({ ...account, idx }))
+      .filter(({ source: { type } }) => type !== 'hd-wallet'),
   }),
   methods: mapActions(['logout', 'reset']),
 };
