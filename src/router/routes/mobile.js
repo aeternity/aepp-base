@@ -15,6 +15,7 @@ import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
 import VaultSetupAnotherDeviceGuide from '../../pages/mobile/VaultSetupAnotherDeviceGuide.vue';
 import VaultSetupSameDevice from '../../pages/mobile/VaultSetupSameDevice.vue';
+import VaultSetupSameDeviceSync from '../../pages/mobile/VaultSetupSameDeviceSync.vue';
 import VaultSetupCompleted from '../../pages/mobile/VaultSetupCompleted.vue';
 import Transfer from '../../pages/mobile/Transfer.vue';
 import Receive from '../../pages/mobile/Receive.vue';
@@ -173,11 +174,16 @@ export default [{
   path: '/vault/sync-completed',
   component: VaultSetupCompleted,
   beforeEnter: vaultBeforeEnter,
-}, ...process.env.UNFINISHED_FEATURES
+}, ...process.env.IS_CORDOVA
   ? [{
     name: 'vault-setup-same-device',
-    path: '/vault/this-device',
+    path: '/vault/same-device',
     component: VaultSetupSameDevice,
+    beforeEnter: vaultBeforeEnter,
+  }, {
+    name: 'vault-setup-same-device-sync',
+    path: '/vault/same-device/sync',
+    component: VaultSetupSameDeviceSync,
     beforeEnter: vaultBeforeEnter,
   }] : [], {
   name: 'transfer',

@@ -2,14 +2,12 @@
 
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { getDesktopRemoveSignAction } from './utils';
+import {
+  getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
+} from '../../../lib/airGap';
 
-const AIR_GAP_VERSION = '1';
-const AIR_GAP_TYPE = '0';
-const AIR_GAP_PROTOCOL = 'ae';
-const AIR_GAP_CALLBACK = 'airgap-wallet://?d=';
-const AIR_GAP_PAYLOAD_IDX = 3;
-const AIR_GAP_PUBLIC_KEY_IDX = 0;
-const AIR_GAP_SIGNED_TRANSACTION_IDX = 0;
+const TRANSPORT_QR_CODE = 'qr-code';
+const TRANSPORT_DEEP_LINK = 'deep-link';
 
 export default {
   namespaced: true,
@@ -30,26 +28,28 @@ export default {
   },
 
   actions: process.env.IS_MOBILE_DEVICE ? {
-    async readQrCode({ dispatch }, payload) {
-      const response = new URL(
-        await dispatch('modals/open', { ...payload, name: 'readQrCode' }, { root: true }),
-      );
-      return response.searchParams.get('d');
-    },
-
-    async createByQrCode({ state: { newAccountName }, commit, dispatch }) {
-      const encodedAccount = await dispatch('readQrCode', { title: 'Link Vault' });
-      const decodedAccount = Crypto.decode(Crypto.decodeBase58Check(encodedAccount));
-      const publicKey = decodedAccount[AIR_GAP_PAYLOAD_IDX][AIR_GAP_PUBLIC_KEY_IDX].toString();
-      const address = Crypto.aeEncodeKey(publicKey).toString();
+    createByResponseUrl({ state: { newAccountName }, commit }, {
+      responseUrl, transport = TRANSPORT_DEEP_LINK,
+    }) {
+      const publicKey = getPublicKeyByResponseUrl(responseUrl);
+      const address = Crypto.aeEncodeKey(publicKey);
       commit('accounts/add', {
         address,
         name: newAccountName,
         active: true,
         type: 'air-gap',
-        transport: 'qr-code',
+        transport,
         publicKey,
       }, { root: true });
+    },
+
+    async createByQrCode({ dispatch }) {
+      const responseUrl = await dispatch(
+        'modals/open',
+        { title: 'Link Vault', name: 'readQrCode' },
+        { root: true },
+      );
+      dispatch('createByResponseUrl', { responseUrl, transport: TRANSPORT_QR_CODE });
     },
 
     create({ commit, dispatch }, name) {
@@ -59,28 +59,44 @@ export default {
 
     sign: () => Promise.reject(new Error('Not implemented yet')),
 
+    async signTransactionByDeepLink(store, requestUrl) {
+      window.startApp.set(
+        process.env.IS_IOS
+          ? requestUrl
+          : {
+            action: 'ACTION_VIEW',
+            uri: requestUrl,
+            flags: ['FLAG_ACTIVITY_NEW_TASK'],
+          },
+      ).start();
+
+      return new Promise((resolve) => {
+        window.handleOpenURL = url => resolve(url);
+      });
+    },
+
+    async signTransactionByQrCode({ dispatch }, url) {
+      await dispatch('modals/open', { name: 'vaultSign', url }, { root: true });
+      return dispatch(
+        'modals/open',
+        { title: 'Scan Signed Transaction', name: 'readQrCode' },
+        { root: true },
+      );
+    },
+
     async signTransaction({ rootState: { sdk }, rootGetters, dispatch }, transaction) {
-      const requestRlp = [
-        AIR_GAP_VERSION,
-        AIR_GAP_TYPE,
-        AIR_GAP_PROTOCOL, [
-          [
-            sdk.nodeNetworkId,
-            transaction,
-          ],
-          rootGetters['accounts/active'].source.publicKey,
-          AIR_GAP_CALLBACK,
-        ],
-      ];
+      const requestUrl = generateSignRequestUrl(
+        sdk.nodeNetworkId,
+        transaction,
+        rootGetters['accounts/active'].source.publicKey,
+      );
 
-      const requestUrl = new URL('airgap-vault://');
-      requestUrl.searchParams.set('d', Crypto.encodeBase58Check(Crypto.encode(requestRlp)));
-
-      await dispatch('modals/open', { name: 'vaultSign', url: requestUrl.toString() }, { root: true });
-      const encodedSignedTx = await dispatch('readQrCode', { title: 'Scan Signed Transaction' });
-      const decodedSignedTx = Crypto.decode(Crypto.decodeBase58Check(encodedSignedTx));
-
-      return decodedSignedTx[AIR_GAP_PAYLOAD_IDX][AIR_GAP_SIGNED_TRANSACTION_IDX].toString();
+      return getSignedTransactionByResponseUrl(await dispatch(
+        rootGetters['accounts/active'].source.transport === TRANSPORT_DEEP_LINK
+          ? 'signTransactionByDeepLink'
+          : 'signTransactionByQrCode',
+        requestUrl,
+      ));
     },
   } : {
     sign: getDesktopRemoveSignAction('sign'),

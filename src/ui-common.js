@@ -9,4 +9,5 @@ Vue.prototype.$globals = {
   IS_MOBILE_DEVICE: process.env.IS_MOBILE_DEVICE,
   IS_IOS: process.env.IS_IOS,
   UNFINISHED_FEATURES: process.env.UNFINISHED_FEATURES,
+  IS_CORDOVA: process.env.IS_CORDOVA,
 };

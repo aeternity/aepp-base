@@ -20,17 +20,17 @@
         numerator="2"
         denominator="3"
       />
-      <em>Install AirGap on this smartphone</em>
-      <br>Installing AirGap on this device makes your Vault pretty safe.
-      For maximum security, install AirGap Vault on another device.
+      <em>Install or open AirGap on this smartphone</em>
+      <br>Open the AirGap Vault app, open the account you would like to sync,
+      tap on the three dots in the top right corner, and select Copy Sync Code.
     </Guide>
 
     <template slot="footer">
       <AeButton
         fill="alternative"
-        :to="{ name: 'vault-setup-completed' }"
+        :to="{ name: 'vault-setup-same-device-sync' }"
       >
-        Sync with AirGap Vault
+        Next
       </AeButton>
       <AeButton
         to="https://itunes.apple.com/us/app/airgap-vault-secure-secrets/id1417126841?l=de&ls=1&mt=8"
