@@ -70,12 +70,16 @@ export default {
     return {
       writingHandEmoji,
       envelopeEmoji,
-      sharingSupported: navigator.share,
+      sharingSupported: navigator.share || process.env.IS_CORDOVA,
     };
   },
   computed: mapGetters({ activeAccount: 'accounts/active' }),
   methods: {
     share() {
+      if (process.env.IS_CORDOVA) {
+        window.plugins.socialsharing.share(this.activeAccount.address);
+        return;
+      }
       navigator.share({
         title: 'My address',
         text: this.activeAccount.address,
