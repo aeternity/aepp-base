@@ -43,6 +43,7 @@ import SettingsSecurityCourseBank from '../../pages/mobile/SettingsSecurityCours
 import SettingsSecurityCoursePrivacy from '../../pages/mobile/SettingsSecurityCoursePrivacy.vue';
 import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCourseLayers.vue';
 import SettingsAccountRemove from '../../pages/mobile/SettingsAccountRemove.vue';
+import SettingsPassword from '../../pages/mobile/SettingsPassword.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -323,4 +324,9 @@ export default [{
   component: SettingsAccountRemove,
   beforeEnter: ensureLoggedIn,
   props: true,
+}, {
+  name: 'settings-password',
+  path: '/settings/password',
+  component: SettingsPassword,
+  beforeEnter: ensureLoggedIn,
 }];
