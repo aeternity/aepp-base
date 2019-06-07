@@ -3,7 +3,7 @@
     <ConnectionStatus />
 
     <div class="wrapper">
-      <ButtonPlain :to="browserPath || { name: 'apps' }">
+      <ButtonPlain :to="browserPath || { name: 'app-intro' }">
         <Grid />
         æpps
       </ButtonPlain>
