@@ -29,12 +29,25 @@
         <Check />
       </ListItemCircle>
     </ListItem>
+    <ListItem
+      v-if="sharingSupported"
+      title="Share address"
+      subtitle="With others"
+      border-dark
+      @click="share"
+    >
+      <img
+        slot="icon"
+        :src="envelopeEmoji"
+      >
+    </ListItem>
   </MobilePage>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import writingHandEmoji from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
+import envelopeEmoji from 'emoji-datasource-apple/img/apple/64/2709-fe0f.png';
 import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -56,9 +69,19 @@ export default {
   data() {
     return {
       writingHandEmoji,
+      envelopeEmoji,
+      sharingSupported: navigator.share,
     };
   },
   computed: mapGetters({ activeAccount: 'accounts/active' }),
+  methods: {
+    share() {
+      navigator.share({
+        title: 'My address',
+        text: this.activeAccount.address,
+      });
+    },
+  },
 };
 </script>
 
