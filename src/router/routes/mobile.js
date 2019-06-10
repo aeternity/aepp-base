@@ -8,6 +8,7 @@ import OnboardingAepps from '../../pages/mobile/OnboardingAepps.vue';
 import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
+import AppIntro from '../../pages/mobile/AppIntro.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
 import SetPassword from '../../pages/mobile/SetPassword.vue';
 import AccountsNew from '../../pages/mobile/AccountsNew.vue';
@@ -128,6 +129,11 @@ export default [{
   path: '/set-password',
   component: SetPassword,
   props: true,
+}, {
+  name: 'app-intro',
+  path: '/browser/intro',
+  component: AppIntro,
+  beforeEnter: checkLoggedIn(false),
 }, {
   name: 'apps',
   path: '/browser',

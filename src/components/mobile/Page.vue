@@ -62,6 +62,7 @@ export default {
         'primary',
         'alternative',
         'neutral',
+        'dark',
         'light',
       ].includes(value),
       default: 'light',
