@@ -46,7 +46,7 @@
       v-if="inactiveAccounts.length"
       class="own-account"
     >
-      Or transfer to your own account
+      Or send to subaccount
     </div>
     <ListItemAccount
       v-for="account in inactiveAccounts"
