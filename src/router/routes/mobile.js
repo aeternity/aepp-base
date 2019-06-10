@@ -296,6 +296,7 @@ export default [{
   path: '/settings/security-courses',
   component: SettingsSecurityCourseList,
   beforeEnter: checkLoggedIn(true),
+  props: true,
 }, {
   name: 'settings-security-course-intro',
   path: '/settings/security-courses/intro',

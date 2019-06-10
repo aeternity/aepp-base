@@ -7,7 +7,7 @@
 
     <ul class="long-items">
       <li>
-        Be robust and <strong>store</strong> your password and
+        Be smart and <strong>store</strong> your password and
         recovery passphrase <strong>offline safely</strong>.
       </li>
       <li>
