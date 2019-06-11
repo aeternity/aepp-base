@@ -180,7 +180,7 @@ export default [{
   path: '/vault/sync-completed',
   component: VaultSetupCompleted,
   beforeEnter: vaultBeforeEnter,
-}, ...process.env.IS_CORDOVA
+}, ...process.env.IS_CORDOVA && process.env.UNFINISHED_FEATURES
   ? [{
     name: 'vault-setup-same-device',
     path: '/vault/same-device',
