@@ -18,7 +18,8 @@
       v-if="!cameraAllowed"
       class="permission-denied"
     >
-      We don't have access to the camera to scan a QR code.
+      Please enable access to your camera for the mobile browser
+      that you are using to open the Base æpp Wallet.
     </div>
   </div>
 </template>
@@ -66,7 +67,13 @@ export default {
       return;
     }
 
-    this.cameraAllowed = true;
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      mediaStream.getTracks().forEach(track => track.stop());
+      this.cameraAllowed = true;
+    } catch (e) {
+      this.cameraAllowed = false;
+    }
   },
   beforeDestroy() {
     this.stopReading();
