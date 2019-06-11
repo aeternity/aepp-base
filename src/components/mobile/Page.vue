@@ -69,6 +69,17 @@ export default {
     },
     hideTabBar: { type: Boolean },
   },
+  mounted() {
+    if (process.env.IS_CORDOVA) {
+      this.$watch(() => this.headerFill || this.fill, (fill) => {
+        if (['primary', 'alternative', 'dark'].includes(fill)) {
+          window.StatusBar.styleLightContent();
+        } else {
+          window.StatusBar.styleDefault();
+        }
+      }, { immediate: true });
+    }
+  },
 };
 </script>
 

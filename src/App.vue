@@ -19,6 +19,12 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: mapGetters('modals', ['opened', 'hidePage', 'grayscalePage']),
+  mounted() {
+    if (process.env.IS_CORDOVA && !process.env.IS_IOS) {
+      window.StatusBar.overlaysWebView(true);
+      window.StatusBar.styleDefault();
+    }
+  },
 };
 </script>
 
