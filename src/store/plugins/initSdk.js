@@ -82,8 +82,8 @@ export default (store) => {
   let latestSdkPromise;
 
   store.watch(
-    ({ onLine }, { currentNetwork }) => [currentNetwork, onLine],
-    async ([currentNetwork]) => {
+    ({ onLine }, { currentNetwork }) => ({ ...currentNetwork, onLine }),
+    async (currentNetwork) => {
       if (isEqual(currentNetwork, lastNetwork)) return;
       lastNetwork = currentNetwork;
       const sdkPromise = createSdk(currentNetwork.url);
