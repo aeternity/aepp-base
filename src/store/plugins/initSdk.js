@@ -90,7 +90,7 @@ export default (store) => {
   store.watch(
     ({ onLine }, { currentNetwork }) => [currentNetwork, onLine],
     ([currentNetwork]) => {
-      if (isEqual(currentNetwork, lastNetwork) && store.state.sdk) return;
+      if (isEqual(currentNetwork, lastNetwork)) return;
       lastNetwork = currentNetwork;
       if (updateSdkPromise) updateSdkPromise.cancel();
       updateSdkPromise = updateSdk(currentNetwork.url);
