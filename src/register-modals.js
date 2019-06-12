@@ -1,9 +1,11 @@
+import { merge } from 'lodash-es';
 import { registerModal } from './store/plugins/ui/modals';
 import AlertModal from './components/AlertModal.vue';
 import { QrCodeReader } from './components/async';
 import Notification from './components/Notification.vue';
 import NotificationSpend from './components/NotificationSpend.vue';
 import AccountSwitcherModal from './components/mobile/AccountSwitcherModal.vue';
+import SecurityCourseModal from './components/mobile/SecurityCourseModal.vue';
 import MigratedBalanceModal from './components/mobile/MigratedBalanceModal.vue';
 import ConfirmAccountAccessModal from './components/mobile/ConfirmAccountAccessModal.vue';
 import ConfirmContractCallModal from './components/mobile/ConfirmContractCallModal.vue';
@@ -11,12 +13,23 @@ import ConfirmContractDeployModal from './components/mobile/ConfirmContractDeplo
 import ConfirmSignModal from './components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendModal from './components/mobile/ConfirmSpendModal.vue';
 import VaultSignModal from './components/mobile/VaultSignModal.vue';
+import LedgerAccountNotFoundModal from './components/desktop/LedgerAccountNotFoundModal.vue';
 import LedgerAddressConfirmModal from './components/desktop/LedgerAddressConfirmModal.vue';
-import LedgerSignTransactionConfirmModal from './components/desktop/LedgerSignTransactionConfirmModal.vue';
+import LedgerAddressNotConfirmedModal from './components/desktop/LedgerAddressNotConfirmedModal.vue';
+import LedgerRequestModal from './components/desktop/LedgerRequestModal.vue';
+import LedgerRequestRetryModal from './components/desktop/LedgerRequestRetryModal.vue';
+import LedgerSignTransactionModal from './components/desktop/LedgerSignTransactionModal.vue';
 import LedgerTransactionFeeModal from './components/desktop/LedgerTransactionFeeModal.vue';
 import CancelSignModal from './components/desktop/CancelSignModal.vue';
 
 registerModal({ name: 'alert', component: AlertModal });
+registerModal({
+  name: 'confirm',
+  component: {
+    functional: true,
+    render: (h, context) => h(AlertModal, merge({}, context, { props: { confirm: true } })),
+  },
+});
 registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
 const notificationOptions = { allowRedirect: true, dontGrayscalePage: true };
 registerModal({ name: 'notification', component: Notification, ...notificationOptions });
@@ -24,6 +37,7 @@ registerModal({ name: 'notificationSpend', component: NotificationSpend, ...noti
 
 if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'accountSwitcher', component: AccountSwitcherModal });
+  registerModal({ name: 'proposeToOpenSecurityCourses', component: SecurityCourseModal, allowRedirect: true });
   registerModal({ name: 'migratedBalance', component: MigratedBalanceModal });
   registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal });
   registerModal({ name: 'confirmContractCall', component: ConfirmContractCallModal, hidePage: true });
@@ -32,8 +46,12 @@ if (process.env.IS_MOBILE_DEVICE) {
   registerModal({ name: 'confirmSpend', component: ConfirmSpendModal, hidePage: true });
   registerModal({ name: 'vaultSign', component: VaultSignModal, hidePage: true });
 } else {
+  registerModal({ name: 'ledgerAccountNotFound', component: LedgerAccountNotFoundModal });
   registerModal({ name: 'confirmLedgerAddress', component: LedgerAddressConfirmModal });
+  registerModal({ name: 'ledgerAddressNotConfirmed', component: LedgerAddressNotConfirmedModal });
+  registerModal({ name: 'ledgerRequest', component: LedgerRequestModal });
+  registerModal({ name: 'retryLedgerRequest', component: LedgerRequestRetryModal });
   registerModal({ name: 'getLedgerTransactionFee', component: LedgerTransactionFeeModal });
-  registerModal({ name: 'confirmLedgerSignTransaction', component: LedgerSignTransactionConfirmModal });
+  registerModal({ name: 'ledgerSignTransaction', component: LedgerSignTransactionModal });
   registerModal({ name: 'cancelSign', component: CancelSignModal });
 }

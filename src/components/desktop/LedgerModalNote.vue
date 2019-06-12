@@ -27,6 +27,8 @@ export default {
 @import '../../styles/placeholders/typography.scss';
 
 .ledger-modal-note {
+  margin-left: rem(70px);
+  margin-right: rem(70px);
   @extend %face-sans-s;
   text-align: center;
 

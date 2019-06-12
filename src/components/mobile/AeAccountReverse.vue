@@ -4,24 +4,24 @@
     class="ae-account-reverse"
   >
     <main>
-      <AeQrCode :data="activeAccount.address" />
+      <AeQrCode :data="address" />
       <AeAddress
-        :address="activeAccount.address"
+        :address="address"
         split-by="3"
       />
     </main>
 
     <span
+      v-if="name"
       slot="toolbar"
       class="balance-title"
     >
-      {{ activeAccount.name }}
+      {{ name }}
     </span>
   </AeCard>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import AeCard from '../AeCard.vue';
 import { AeQrCode } from '../async';
 import AeAddress from '../AeAddress.vue';
@@ -32,7 +32,10 @@ export default {
     AeQrCode,
     AeAddress,
   },
-  computed: mapGetters({ activeAccount: 'accounts/active' }),
+  props: {
+    address: { type: String, required: true },
+    name: { type: String, default: '' },
+  },
 };
 </script>
 

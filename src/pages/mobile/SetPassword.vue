@@ -1,6 +1,10 @@
 <template>
   <MobilePage
     :title="recover ? 'Recover Account' : 'New Account'"
+    :left-button-to="{ name: 'recover' }"
+    :left-button-icon-name="recover ? 'back' : null"
+    :right-button-to="{ name: 'intro' }"
+    right-button-icon-name="close"
     hide-tab-bar
   >
     <Guide>

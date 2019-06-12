@@ -8,7 +8,7 @@
       :key="`${idx}-address`"
       :name="c.name"
       :address="c.address"
-      :subtitle="`${c.address.slice(0, 6)}···${c.address.slice(-3)}`"
+      subtitle="address"
       :to="{ name: 'send-to', params: { to: c.address } }"
     >
       <Transfer slot="right" />

@@ -1,7 +1,7 @@
 <template>
   <LedgerModal
     title="Sign transaction on the Ledger"
-    class="sign-transaction-confirm"
+    class="ledger-sign-transaction"
   >
     <LedgerModalNanoS />
 
@@ -31,7 +31,7 @@ export default {
 @import '../../styles/variables/colors.scss';
 @import '../../styles/placeholders/typography.scss';
 
-.sign-transaction-confirm {
+.ledger-sign-transaction {
   .ae-loader {
     display: block;
     margin: rem(60px) auto;

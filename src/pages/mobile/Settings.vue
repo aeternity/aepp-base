@@ -41,6 +41,17 @@
         <LeftMore slot="right" />
       </ListItem>
       <ListItem
+        :to="{ name: 'settings-security-course-list' }"
+        subtitle="Disclaimer and information"
+        title="AE Security Courses"
+        class="courses"
+      >
+        <ListItemCircle slot="icon">
+          <LockOpen />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
+      <ListItem
         :to="{ name: mnemonic ? 'settings-mnemonic' : 'settings-mnemonic-deleted' }"
         subtitle="Secure your funds"
         title="Backup Recovery Phrase"
@@ -52,6 +63,21 @@
         <LeftMore slot="right" />
       </ListItem>
     </AeCard>
+
+    <template v-if="removableAccounts.length">
+      <h2>Synced Wallets</h2>
+      <AeCard fill="maximum">
+        <ListItemAccount
+          v-for="account in removableAccounts"
+          :key="account.idx"
+          v-bind="account"
+          subtitle="address"
+          :to="{ name: 'settings-account-remove', params: { idx: account.idx } }"
+        >
+          <LeftMore slot="right" />
+        </ListItemAccount>
+      </AeCard>
+    </template>
 
     <h2>Account</h2>
     <AeCard fill="maximum">
@@ -65,15 +91,7 @@
           <Share />
         </ListItemCircle>
       </ListItem>
-      <ListItem
-        title="Reset Key Storage"
-        subtitle="After resetting, a recovery is required"
-        @click="reset"
-      >
-        <ListItemCircle slot="icon">
-          <SignOut />
-        </ListItemCircle>
-      </ListItem>
+      <ListItemSettingsReset />
     </AeCard>
 
     <div class="version">
@@ -90,8 +108,10 @@ import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
+import ListItemAccount from '../../components/ListItemAccount.vue';
+import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import {
-  Globe, LeftMore, Device, Grid, Key, Share, SignOut,
+  Globe, LeftMore, Device, Grid, Key, Share, LockOpen,
 } from '../../components/icons';
 
 export default {
@@ -101,13 +121,15 @@ export default {
     AeCard,
     ListItem,
     ListItemCircle,
+    ListItemAccount,
+    ListItemSettingsReset,
     Globe,
     LeftMore,
     Device,
     Grid,
     Key,
     Share,
-    SignOut,
+    LockOpen,
   },
   data: () => ({
     version: process.env.npm_package_version,
@@ -123,8 +145,11 @@ export default {
       return `${c} aepp${c === 1 ? '' : 's'} have account access`;
     },
     mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
+    removableAccounts: ({ accounts: { list } }) => list
+      .map((account, idx) => ({ ...account, idx }))
+      .filter(({ source: { type } }) => type !== 'hd-wallet'),
   }),
-  methods: mapActions(['logout', 'reset']),
+  methods: mapActions(['logout']),
 };
 </script>
 
@@ -134,8 +159,10 @@ export default {
 
 .settings {
   .list-item {
-    &.network .list-item-circle {
-      background-color: $color-secondary;
+    &.network, &.mnemonic {
+      .list-item-circle {
+        background-color: $color-secondary;
+      }
     }
 
     &.remote-connection .list-item-circle {
@@ -146,7 +173,7 @@ export default {
       background-color: #f8963d;
     }
 
-    &.mnemonic .list-item-circle {
+    &.courses .list-item-circle {
       background-color: $color-alternative;
     }
 

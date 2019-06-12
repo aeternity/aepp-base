@@ -8,6 +8,7 @@ import OnboardingAepps from '../../pages/mobile/OnboardingAepps.vue';
 import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
+import AppIntro from '../../pages/mobile/AppIntro.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
 import SetPassword from '../../pages/mobile/SetPassword.vue';
 import AccountsNew from '../../pages/mobile/AccountsNew.vue';
@@ -15,6 +16,7 @@ import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
 import VaultSetupAnotherDeviceGuide from '../../pages/mobile/VaultSetupAnotherDeviceGuide.vue';
 import VaultSetupSameDevice from '../../pages/mobile/VaultSetupSameDevice.vue';
+import VaultSetupSameDeviceSync from '../../pages/mobile/VaultSetupSameDeviceSync.vue';
 import VaultSetupCompleted from '../../pages/mobile/VaultSetupCompleted.vue';
 import Transfer from '../../pages/mobile/Transfer.vue';
 import Receive from '../../pages/mobile/Receive.vue';
@@ -35,6 +37,12 @@ import SettingsMnemonicShow from '../../pages/mobile/SettingsMnemonicShow.vue';
 import SettingsMnemonicConfirm from '../../pages/mobile/SettingsMnemonicConfirm.vue';
 import SettingsMnemonicConfirmed from '../../pages/mobile/SettingsMnemonicConfirmed.vue';
 import SettingsMnemonicDeleted from '../../pages/mobile/SettingsMnemonicDeleted.vue';
+import SettingsSecurityCourseList from '../../pages/mobile/SettingsSecurityCourseList.vue';
+import SettingsSecurityCourseIntro from '../../pages/mobile/SettingsSecurityCourseIntro.vue';
+import SettingsSecurityCourseBank from '../../pages/mobile/SettingsSecurityCourseBank.vue';
+import SettingsSecurityCoursePrivacy from '../../pages/mobile/SettingsSecurityCoursePrivacy.vue';
+import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCourseLayers.vue';
+import SettingsAccountRemove from '../../pages/mobile/SettingsAccountRemove.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -122,6 +130,11 @@ export default [{
   component: SetPassword,
   props: true,
 }, {
+  name: 'app-intro',
+  path: '/browser/intro',
+  component: AppIntro,
+  beforeEnter: checkLoggedIn(false),
+}, {
   name: 'apps',
   path: '/browser',
   component: Apps,
@@ -167,11 +180,16 @@ export default [{
   path: '/vault/sync-completed',
   component: VaultSetupCompleted,
   beforeEnter: vaultBeforeEnter,
-}, ...process.env.UNFINISHED_FEATURES
+}, ...process.env.IS_CORDOVA && process.env.UNFINISHED_FEATURES
   ? [{
     name: 'vault-setup-same-device',
-    path: '/vault/this-device',
+    path: '/vault/same-device',
     component: VaultSetupSameDevice,
+    beforeEnter: vaultBeforeEnter,
+  }, {
+    name: 'vault-setup-same-device-sync',
+    path: '/vault/same-device/sync',
+    component: VaultSetupSameDeviceSync,
     beforeEnter: vaultBeforeEnter,
   }] : [], {
   name: 'transfer',
@@ -273,4 +291,36 @@ export default [{
   path: '/settings/mnemonic/deleted',
   component: SettingsMnemonicDeleted,
   beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-list',
+  path: '/settings/security-courses',
+  component: SettingsSecurityCourseList,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
+}, {
+  name: 'settings-security-course-intro',
+  path: '/settings/security-courses/intro',
+  component: SettingsSecurityCourseIntro,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-bank',
+  path: '/settings/security-courses/bank',
+  component: SettingsSecurityCourseBank,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-privacy',
+  path: '/settings/security-courses/privacy',
+  component: SettingsSecurityCoursePrivacy,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-security-course-layers',
+  path: '/settings/security-courses/layers',
+  component: SettingsSecurityCourseLayers,
+  beforeEnter: checkLoggedIn(true),
+}, {
+  name: 'settings-account-remove',
+  path: '/settings/wallet/:idx',
+  component: SettingsAccountRemove,
+  beforeEnter: checkLoggedIn(true),
+  props: true,
 }];

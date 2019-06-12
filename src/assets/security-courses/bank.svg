@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 241 234" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="BaseApp-0.6.x" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="v0.6.x-00.53-Disclaimer" transform="translate(-134.000000, -19.000000)">
+            <g id="Group-2">
+                <g id="Group" transform="translate(281.848351, 155.848351) rotate(-20.000000) translate(-281.848351, -155.848351) translate(136.848351, 10.848351)">
+                    <path d="M150.968726,2.58236397 L287.152032,108.168435 C289.334361,109.860445 289.731843,113.001218 288.039833,115.183548 C287.09277,116.405054 285.634017,117.119891 284.088376,117.119891 L5.59445198,117.119891 C2.83302823,117.119891 0.594451982,114.881315 0.594451982,112.119891 C0.594451982,110.57425 1.30928905,109.115497 2.53079594,108.168435 L138.714102,2.58236397 C142.320488,-0.213750954 147.36234,-0.213750954 150.968726,2.58236397 Z M144.306425,87.0480947 C155.075978,87.0480947 163.806425,78.3176473 163.806425,67.5480947 C163.806425,56.7785421 155.075978,48.0480947 144.306425,48.0480947 C133.536872,48.0480947 124.806425,56.7785421 124.806425,67.5480947 C124.806425,78.3176473 133.536872,87.0480947 144.306425,87.0480947 Z" id="Combined-Shape" fill="#10BDAE"></path>
+                    <rect id="Rectangle" fill="#10BDAE" x="17.7570416" y="257.633629" width="253" height="32" rx="4"></rect>
+                    <g id="Group-3" transform="translate(28.079284, 128.488066)">
+                        <rect id="Rectangle" fill="#02BDAA" x="0" y="0" width="21.7941176" height="117" rx="4"></rect>
+                        <rect id="Rectangle" fill="#10BDAE" x="42.4411765" y="0" width="21.7941176" height="117" rx="4"></rect>
+                        <rect id="Rectangle-Copy" fill="#10BDAE" x="84.8823529" y="0" width="21.7941176" height="117" rx="4"></rect>
+                        <rect id="Rectangle-Copy-2" fill="#10BDAE" x="127.323529" y="0" width="21.7941176" height="117" rx="4"></rect>
+                        <rect id="Rectangle-Copy-2" fill="#10BDAE" x="169.764706" y="0" width="21.7941176" height="117" rx="4"></rect>
+                        <rect id="Rectangle-Copy-3" fill="#10BDAE" x="212.205882" y="0" width="21.7941176" height="117" rx="4"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

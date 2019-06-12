@@ -2,7 +2,7 @@
   <ListItem
     v-bind="$attrs"
     :title="name"
-    :subtitle="subtitle || balance && (prefixedAmount(balance) + ' AE')"
+    :subtitle="subtitleContent"
     subtitle-monospace
     v-on="$listeners"
   >
@@ -29,9 +29,20 @@ export default {
   props: {
     name: { type: String, required: true },
     address: { type: String, required: true },
-    balance: { type: BigNumber, required: false, default: null },
-    subtitle: { type: String, required: false, default: '' },
+    balance: { type: BigNumber, default: null },
+    subtitle: { type: String, default: 'balance' },
   },
-  methods: { prefixedAmount },
+  computed: {
+    subtitleContent() {
+      switch (this.subtitle) {
+        case 'balance':
+          return this.balance ? `${prefixedAmount(this.balance)} AE` : '';
+        case 'address':
+          return `${this.address.slice(0, 6)}···${this.address.slice(-3)}`;
+        default:
+          return this.subtitle;
+      }
+    },
+  },
 };
 </script>

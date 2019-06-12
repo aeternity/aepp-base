@@ -1,7 +1,7 @@
 import { pick } from 'lodash-es';
 
 const getUrl = networkName => `https://sdk-${networkName}.aepps.com`;
-const getMiddlewareUrl = networkName => `https://${networkName}.mdw.aepps.com`;
+const getMiddlewareUrl = (networkName = '') => `https://${networkName}${networkName ? '.' : ''}mdw.aepps.com`;
 const getExplorerUrl = (networkName = '') => `https://${networkName}${networkName ? '.' : ''}explorer.aepps.com`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
@@ -12,9 +12,9 @@ const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) =>
   ...options,
 });
 
-export const defaultNetwork = genNetwork('Roma-net', {
+export const defaultNetwork = genNetwork('Fortuna-net', {
   pathName: 'mainnet',
-  middlewareUrl: getMiddlewareUrl('roma-net'),
+  middlewareUrl: getMiddlewareUrl(),
   explorerUrl: getExplorerUrl(),
 });
 

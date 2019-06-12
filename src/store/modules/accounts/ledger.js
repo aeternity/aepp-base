@@ -37,27 +37,61 @@ export default {
     sign: signOnMobile,
     signTransaction: signOnMobile,
   } : {
+    async request({ getters: { ledgerAppApi }, dispatch }, { name, args }) {
+      if (process.env.RUNNING_IN_FRAME) return ledgerAppApi[name](...args);
+      const modalName = { signTransaction: 'ledgerSignTransaction' }[name] || 'ledgerRequest';
+      let result;
+      let error;
+      do {
+        if (error) {
+          // eslint-disable-next-line no-await-in-loop
+          await dispatch('modals/open', { name: 'retryLedgerRequest' }, { root: true });
+        }
+        const modalPromise = dispatch('modals/open', { name: modalName }, { root: true });
+        try {
+          result = await ledgerAppApi[name](...args); // eslint-disable-line no-await-in-loop
+          error = false;
+        } catch (err) {
+          error = true;
+        } finally {
+          modalPromise.cancel();
+        }
+      } while (error);
+      return result;
+    },
+
     async create({ getters: { nextIdx, ledgerAppApi }, commit, dispatch }) {
-      const conformModalPromise = dispatch('modals/open', {
+      const modalPromise = dispatch('modals/open', {
         name: 'confirmLedgerAddress',
-        address: await ledgerAppApi.getAddress(nextIdx),
+        address: await dispatch('request', { name: 'getAddress', args: [nextIdx] }),
         create: true,
       }, { root: true });
-      let address;
-      do {
-        // eslint-disable-next-line no-await-in-loop
-        address = await ledgerAppApi.getAddress(nextIdx, true).catch(() => {});
-      } while (!address && !nextIdx);
-      conformModalPromise.cancel();
-      if (!address) return;
-      commit('accounts/add', { address, type: 'ledger', idx: nextIdx }, { root: true });
+      try {
+        const address = await ledgerAppApi.getAddress(nextIdx, true);
+        commit('accounts/add', { address, type: 'ledger', idx: nextIdx }, { root: true });
+      } catch (error) {
+        dispatch('modals/open', { name: 'ledgerAddressNotConfirmed' }, { root: true });
+      } finally {
+        modalPromise.cancel();
+      }
+    },
+
+    async ensureCurrentAccountAvailable({ rootGetters, dispatch }) {
+      const account = rootGetters['accounts/active'];
+      const address = await dispatch('request', { name: 'getAddress', args: [account.source.idx] });
+      if (account.address !== address) {
+        if (!process.env.RUNNING_IN_FRAME) {
+          dispatch('modals/open', { name: 'ledgerAccountNotFound' }, { root: true });
+        }
+        throw new Error('Account not found');
+      }
     },
 
     sign: () => Promise.reject(new Error('Not implemented yet')),
 
-    async signTransaction({
-      getters: { ledgerAppApi }, rootGetters, dispatch, rootState: { sdk },
-    }, txBase64) {
+    async signTransaction({ rootGetters, dispatch, rootState: { sdk } }, txBase64) {
+      await dispatch('ensureCurrentAccountAvailable');
+
       const txObject = TxBuilder.unpackTx(txBase64).tx;
       const stringTx = TxBuilder.buildTx(
         {
@@ -70,20 +104,16 @@ export default {
         OBJECT_ID_TX_TYPE[txObject.tag],
       ).tx;
 
-      let conformModalPromise;
-      try {
-        conformModalPromise = !process.env.RUNNING_IN_FRAME
-          && dispatch('modals/open', { name: 'confirmLedgerSignTransaction' }, { root: true });
-        const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));
-        const signature = Buffer.from(await ledgerAppApi.signTransaction(
+      const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));
+      const signature = Buffer.from(await dispatch('request', {
+        name: 'signTransaction',
+        args: [
           rootGetters['accounts/active'].source.idx,
           binaryTx,
           sdk.nodeNetworkId,
-        ), 'hex');
-        return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
-      } finally {
-        if (conformModalPromise) conformModalPromise.cancel();
-      }
+        ],
+      }), 'hex');
+      return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));
     },
   },
 };

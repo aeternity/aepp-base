@@ -5,14 +5,7 @@
     </Guide>
 
     <AeCard fill="maximum">
-      <ListItem
-        title="Reset All Data"
-        @click="reset"
-      >
-        <ListItemCircle slot="icon">
-          <SignOut />
-        </ListItemCircle>
-      </ListItem>
+      <ListItemSettingsReset />
 
       <ListItem
         title="Network"
@@ -55,13 +48,14 @@
 
 <script>
 import { defer } from 'lodash-es';
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import Guide from '../../components/Guide.vue';
 import AeCard from '../../components/AeCard.vue';
 import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
-import { SignOut, Globe, LeftMore } from '../../components/icons';
+import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
+import { Globe, LeftMore } from '../../components/icons';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
@@ -73,7 +67,7 @@ export default {
     Guide,
     ListItem,
     ListItemCircle,
-    SignOut,
+    ListItemSettingsReset,
     Globe,
     ButtonPlain,
     LeftMore,
@@ -93,7 +87,6 @@ export default {
     closePopover() {
       defer(() => { this.networkMode = false; });
     },
-    ...mapActions(['reset']),
   },
 };
 </script>

@@ -5,7 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
 import '../lib/storeErrorHandler';
-import rootModule from './modules/root';
+import rootModule from './modules/root'; // eslint-disable-line import/no-cycle
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import accountsModule from './modules/accounts';
@@ -23,18 +23,12 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
-      ({ accounts: { list = [], ...otherAccounts } = {}, ...otherState }) => ({
-        ...otherState,
-        accounts: {
-          ...otherAccounts,
-          list: list.map(account => ({ ...account, transactions: [] })),
-        },
-      }),
+      state => state,
       ({
         migrations, sdkUrl, addressBook, customNetworks,
         apps, cachedAppManifests, peerId,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet } = {} } = {},
-        mobile: { followers } = {},
+        mobile: { readSecurityCourses, followers } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
         migrations,
@@ -49,7 +43,6 @@ const store = new Vuex.Store({
                 return {
                   name,
                   address,
-                  transactions: [],
                   source: pick(source, ['type', 'idx']),
                 };
               default:
@@ -63,6 +56,7 @@ const store = new Vuex.Store({
           apps,
           cachedAppManifests,
           mobile: {
+            readSecurityCourses,
             followers: Object.entries(followers)
               .reduce((p, [k, { id, name, disconnectedAt }]) => (
                 { ...p, [k]: { id, name, disconnectedAt } }), {}),

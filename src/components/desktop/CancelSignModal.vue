@@ -1,68 +1,55 @@
 <template>
-  <FooterModal class="cancel-sign-modal">
-    <div class="modal">
-      <h1>Sign the transaction in the Base æpp</h1>
-      <Step>
-        <img :src="baseAppIcon">
-        <h2>Base</h2>
-        <p>Open your Base æpp, check the transaction details and sign</p>
-      </Step>
-      <div>
-        <AeButton @click="resolve">
-          Cancel Transaction
-        </AeButton>
-      </div>
+  <AeModal class="cancel-sign-modal">
+    <Guide size="big">
+      Sign the transaction in the <em>Base æpp</em>
+    </Guide>
+    <div class="note">
+      Open your Base æpp, check the transaction details and sign
     </div>
-  </FooterModal>
+    <img src="../../assets/base-aepp-confirm.svg">
+    <AeButton @click="resolve">
+      Cancel Transaction
+    </AeButton>
+  </AeModal>
 </template>
 
 <script>
-import baseAppIcon from '../../assets/icons/base.svg';
+import AeModal from '../AeModal.vue';
+import Guide from '../Guide.vue';
 import AeButton from '../AeButton.vue';
-import Step from './Step.vue';
-import FooterModal from './FooterModal.vue';
 
 export default {
-  components: { FooterModal, Step, AeButton },
+  components: { AeModal, Guide, AeButton },
   props: {
     resolve: { type: Function, required: true },
   },
-  data: () => ({ baseAppIcon }),
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@import '../../styles/placeholders/typography.scss';
 @import '../../styles/variables/colors.scss';
-@import '../../styles/globals/functions.scss';
 
-.cancel-sign-modal .modal {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: hidden;
+.cancel-sign-modal {
   text-align: center;
-  align-items: center;
-  justify-content: space-between;
 
-  h1 {
-    font-size: 24px;
+  /deep/ .modal-plain {
+    padding: rem(50px) rem(70px) rem(70px) rem(70px);
   }
 
-  .step {
-    flex-shrink: 0;
-    max-width: 250px;
-
-    img {
-      width: rem(55px);
-      height: rem(55px);
-      border-radius: rem(18px);
-      padding: rem(10px);
-      background-color: $color-primary;
-    }
+  .guide {
+    margin-bottom: rem(5px);
   }
 
-  .ae-button {
-    margin-bottom: 60px;
+  .note {
+    @extend %face-sans-base;
+    color: $color-neutral-negative-3;
+  }
+
+  img {
+    display: block;
+    height: rem(300px);
+    margin: rem(40px) auto;
   }
 }
 </style>

@@ -7,6 +7,7 @@ export default {
     followers: {},
     stepFraction: null,
     browserPath: '',
+    readSecurityCourses: [],
   },
 
   getters: {
@@ -35,6 +36,10 @@ export default {
     },
     setBrowserPath(state, browserPath) {
       state.browserPath = browserPath;
+    },
+    markSecurityCourseAsRead(state, courseName) {
+      if (state.readSecurityCourses.includes(courseName)) return;
+      state.readSecurityCourses.push(courseName);
     },
   },
 };
