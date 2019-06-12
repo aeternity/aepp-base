@@ -41,17 +41,6 @@
         <LeftMore slot="right" />
       </ListItem>
       <ListItem
-        :to="{ name: mnemonic ? 'settings-mnemonic' : 'settings-mnemonic-deleted' }"
-        subtitle="Secure your funds"
-        title="Backup Recovery Phrase"
-        class="mnemonic"
-      >
-        <ListItemCircle slot="icon">
-          <Key />
-        </ListItemCircle>
-        <LeftMore slot="right" />
-      </ListItem>
-      <ListItem
         :to="{ name: 'settings-security-course-list' }"
         subtitle="Disclaimer and information"
         title="AE Security Courses"
@@ -59,6 +48,17 @@
       >
         <ListItemCircle slot="icon">
           <LockOpen />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
+      <ListItem
+        :to="{ name: mnemonic ? 'settings-mnemonic' : 'settings-mnemonic-deleted' }"
+        subtitle="Secure your funds"
+        title="Backup Recovery Phrase"
+        class="mnemonic"
+      >
+        <ListItemCircle slot="icon">
+          <Key />
         </ListItemCircle>
         <LeftMore slot="right" />
       </ListItem>
@@ -159,8 +159,10 @@ export default {
 
 .settings {
   .list-item {
-    &.network .list-item-circle {
-      background-color: $color-secondary;
+    &.network, &.mnemonic {
+      .list-item-circle {
+        background-color: $color-secondary;
+      }
     }
 
     &.remote-connection .list-item-circle {
@@ -171,7 +173,7 @@ export default {
       background-color: #f8963d;
     }
 
-    &.mnemonic .list-item-circle, &.courses .list-item-circle {
+    &.courses .list-item-circle {
       background-color: $color-alternative;
     }
 
