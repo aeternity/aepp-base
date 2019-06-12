@@ -3,7 +3,7 @@
     class="ae-input-amount-ae"
     header="Amount"
     header-right="AE"
-    :footer="footer || 'Minimum transaction fee'"
+    :footer="footer || 'Minimum tx fee'"
     :footer-right="footerRight || (footer ? '' : minSpendTxFee)"
     :value="value"
     v-bind="$attrs"
