@@ -9,14 +9,11 @@ import AppDesktop from './AppDesktop.vue';
 import router from './router';
 import store from './store';
 import uiPlugin from './store/plugins/ui';
-import setupAnalytics from './setupAnalytics';
 
 Vue.use(Router);
 Vue.use(VeeValidate);
 
-if (process.env.UNFINISHED_FEATURES) {
-  setupAnalytics();
-}
+import(/* webpackChunkName: "analytics" */ './setupAnalytics').then(module => module.default());
 
 sync(store, router);
 uiPlugin(store);
