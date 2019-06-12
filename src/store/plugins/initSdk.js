@@ -1,7 +1,7 @@
 import { get, isEqual } from 'lodash-es';
 
 export default (store) => {
-  const updateSdk = async (url) => {
+  const createSdk = async (url) => {
     const [Ae, ChainNode, Transaction, Contract, Rpc] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
@@ -51,49 +51,52 @@ export default (store) => {
       signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
     };
 
-    let sdk = null;
-    try {
-      sdk = await Ae.compose(
-        ChainNode, Transaction, Contract, Rpc, {
-          init(options, { stamp }) {
-            const rpcMethods = [
-              ...stamp.compose.deepConfiguration.Ae.methods,
-              ...stamp.compose.deepConfiguration.Contract.methods,
-            ];
-            this.rpcMethods = {
-              ...rpcMethods
-                .map(m => [m, ({ params, origin }) => {
-                  const { host } = new URL(origin);
-                  const app = store.getters.getApp(host) || { host };
-                  return Promise.resolve(this[m](...params, { app }));
-                }])
-                .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
-              ...this.rpcMethods,
-            };
-          },
-          methods,
+    return Ae.compose(
+      ChainNode, Transaction, Contract, Rpc, {
+        init(options, { stamp }) {
+          const rpcMethods = [
+            ...stamp.compose.deepConfiguration.Ae.methods,
+            ...stamp.compose.deepConfiguration.Contract.methods,
+          ];
+          this.rpcMethods = {
+            ...rpcMethods
+              .map(m => [m, ({ params, origin }) => {
+                const { host } = new URL(origin);
+                const app = store.getters.getApp(host) || { host };
+                return Promise.resolve(this[m](...params, { app }));
+              }])
+              .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
+            ...this.rpcMethods,
+          };
         },
-      )({
-        url,
-        internalUrl: url,
-        compilerUrl: 'https://compiler.aepps.com',
-      });
-    } finally {
-      if (store.state.sdk) store.state.sdk.destroyInstance();
-      store.commit('setSdk', sdk);
-    }
+        methods,
+      },
+    )({
+      url,
+      internalUrl: url,
+      compilerUrl: 'https://compiler.aepps.com',
+    });
   };
 
   let lastNetwork;
-  let updateSdkPromise;
+  let latestSdkPromise;
 
   store.watch(
     ({ onLine }, { currentNetwork }) => [currentNetwork, onLine],
-    ([currentNetwork]) => {
+    async ([currentNetwork]) => {
       if (isEqual(currentNetwork, lastNetwork)) return;
       lastNetwork = currentNetwork;
-      if (updateSdkPromise) updateSdkPromise.cancel();
-      updateSdkPromise = updateSdk(currentNetwork.url);
+      const sdkPromise = createSdk(currentNetwork.url);
+      latestSdkPromise = sdkPromise;
+      let sdk = null;
+      try {
+        sdk = await sdkPromise;
+      } finally {
+        if (sdkPromise === latestSdkPromise) {
+          if (store.state.sdk) store.state.sdk.destroyInstance();
+          store.commit('setSdk', sdk);
+        } else sdk.destroyInstance();
+      }
     },
     { immediate: true },
   );
