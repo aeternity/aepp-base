@@ -100,6 +100,9 @@ export default {
             fee: (await dispatch('modals/open', { name: 'getLedgerTransactionFee' }, { root: true }))
               .shiftedBy(MAGNITUDE),
           },
+          payload: txObject.payload && Crypto.decodeBase64Check(
+            Crypto.assertedType(txObject.payload, 'ba'),
+          ).toString(),
         },
         OBJECT_ID_TX_TYPE[txObject.tag],
       ).tx;
