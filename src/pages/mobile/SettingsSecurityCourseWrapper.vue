@@ -4,6 +4,7 @@
     class="settings-security-course-details"
     hide-tab-bar
     :class="name"
+    header-fill="alternative"
   >
     <template slot="header">
       <h1>{{ course.title }}</h1>
