@@ -18,6 +18,7 @@
         <access origin="cors-anywhere.herokuapp.com" />
         <allow-intent href="market:*" />
         <preference name="SplashMaintainAspectRatio" value="true" />
+        <preference name="HeaderColor" value="#f7296e" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" />
         </edit-config>
@@ -53,6 +54,7 @@
     <plugin name="com.lampa.startapp" spec="^6.1.6" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.5" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <engine name="android" spec="^8.0.0" />
     <engine name="ios" spec="^5.0.0" />
 </widget>
