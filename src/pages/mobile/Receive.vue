@@ -40,6 +40,12 @@
         slot="icon"
         :src="envelopeEmoji"
       >
+      <ListItemCircle
+        v-if="sharedChecked"
+        slot="right"
+      >
+        <Check />
+      </ListItemCircle>
     </ListItem>
   </MobilePage>
 </template>
@@ -71,19 +77,23 @@ export default {
       writingHandEmoji,
       envelopeEmoji,
       sharingSupported: navigator.share || process.env.IS_CORDOVA,
+      sharedChecked: false,
     };
   },
   computed: mapGetters({ activeAccount: 'accounts/active' }),
   methods: {
-    share() {
-      if (process.env.IS_CORDOVA) {
-        window.plugins.socialsharing.share(this.activeAccount.address);
-        return;
-      }
-      navigator.share({
-        title: 'My address',
-        text: this.activeAccount.address,
-      });
+    async share() {
+      await (process.env.IS_CORDOVA
+        ? new Promise(resolve => window.plugins.socialsharing.shareWithOptions(
+          { message: this.activeAccount.address },
+          ({ app }) => app && resolve(),
+        )) : navigator.share({
+          title: 'My address',
+          text: this.activeAccount.address,
+        }));
+
+      this.sharedChecked = true;
+      setTimeout(() => { this.sharedChecked = false; }, 500);
     },
   },
 };
@@ -92,8 +102,8 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/variables/colors.scss';
 
-.receive .list-item.copy {
-  &:not(.v-copied) .list-item-circle {
+.receive .list-item {
+  &.copy:not(.v-copied) .list-item-circle {
     display: none;
   }
 
