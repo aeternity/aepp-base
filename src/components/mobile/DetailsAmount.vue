@@ -1,7 +1,7 @@
 <template>
   <DetailsField
     class="details-amount"
-    name="Amount"
+    :name="name"
     :value="`${prefixedAmount(amount)} AE`"
     value-monospace
   />
@@ -15,6 +15,7 @@ import prefixedAmount from '../../filters/prefixedAmount';
 export default {
   components: { DetailsField },
   props: {
+    name: { type: String, default: 'Amount' },
     amount: { type: BigNumber, required: true },
   },
   methods: { prefixedAmount },

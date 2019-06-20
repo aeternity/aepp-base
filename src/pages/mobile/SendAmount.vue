@@ -40,6 +40,11 @@
       </form>
     </template>
 
+    <DetailsAmount
+      name="Balance"
+      :amount="activeAccount.balance"
+    />
+
     <AeButton
       :disabled="errors.any()"
       :form="_uid"
@@ -59,6 +64,7 @@ import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
+import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
 
@@ -69,6 +75,7 @@ export default {
     AeFraction,
     AccountInline,
     AeInputAmountAe,
+    DetailsAmount,
     AeButton,
   },
   props: {
@@ -95,3 +102,17 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../../styles/variables/colors.scss';
+
+.mobile-page .details-item {
+  --color-primary: #{$color-neutral-negative-1};
+  --color-secondary: #{$color-neutral-negative-1};
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+</style>
