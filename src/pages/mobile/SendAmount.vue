@@ -30,8 +30,9 @@
             required: true,
             decimal: MAGNITUDE,
             min_value_exclusive: 0,
-            max_value: activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString(),
+            max_value: max,
           }"
+          :max="max"
           :error="errors.has('amount')"
           :footer="errors.first('amount')"
           autofocus
@@ -39,6 +40,11 @@
         />
       </form>
     </template>
+
+    <DetailsAmount
+      name="Minimum transaction fee"
+      :amount="MIN_SPEND_TX_FEE"
+    />
 
     <DetailsAmount
       name="Balance"
@@ -90,7 +96,12 @@ export default {
     MIN_SPEND_TX_FEE,
     BigNumber,
   }),
-  computed: mapGetters('accounts', ['activeColor']),
+  computed: {
+    ...mapGetters('accounts', ['activeColor']),
+    max() {
+      return this.activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString();
+    },
+  },
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
