@@ -26,6 +26,7 @@
     </template>
 
     <DetailsField
+      v-if="!transaction.pending"
       name="Date"
       :value="transaction.time.toLocaleString()"
     />

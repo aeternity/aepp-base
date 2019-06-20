@@ -47,7 +47,11 @@ export default (store) => {
   }) => ({
     ...otherTransaction,
     blockHash,
-    time: new Date(time || (await store.state.sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
+    ...blockHash !== 'none' && {
+      time: new Date(
+        time || (await store.state.sdk.api.getMicroBlockHeaderByHash(blockHash)).time,
+      ),
+    },
     tx: {
       ...otherTx,
       amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
@@ -133,14 +137,18 @@ export default (store) => {
   const getTransactionsByAddress = (address) => {
     if (!transactionRangeForAddress[address]) return [];
     const txs = Object.values(transactions)
-      .filter(({ tx }) => [tx.senderId, tx.accountId, tx.recipientId, tx.ownerId].includes(address))
+      .filter(({ tx }) => [tx.senderId, tx.accountId, tx.recipientId, tx.ownerId]
+        .includes(address));
+    const minedTxs = txs
+      .filter(({ pending }) => !pending)
       .sort((a, b) => b.time - a.time);
     const { begin, end } = transactionRangeForAddress[address];
-    const beginIdx = txs.findIndex(({ hash }) => hash === begin);
-    const endIdx = txs.findIndex(({ hash }) => hash === end);
-    return txs
-      .slice(beginIdx, endIdx - beginIdx + 1)
-      .map(tx => setTransactionFieldsRelatedToAddress(tx, address));
+    const beginIdx = minedTxs.findIndex(({ hash }) => hash === begin);
+    const endIdx = minedTxs.findIndex(({ hash }) => hash === end);
+    return [
+      ...txs.filter(({ pending }) => pending),
+      ...minedTxs.slice(beginIdx, endIdx - beginIdx + 1),
+    ].map(tx => setTransactionFieldsRelatedToAddress(tx, address));
   };
 
   const getTransactionList = (loadMore$) => {

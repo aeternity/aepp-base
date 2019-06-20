@@ -55,7 +55,7 @@ export default {
   props: {
     pending: { type: Boolean },
     received: { type: Boolean },
-    time: { type: Date, required: true },
+    time: { type: Date, default: null },
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
   },
