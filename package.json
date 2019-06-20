@@ -20,7 +20,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@aeternity/aepp-sdk": "^4.0.0",
+    "@aeternity/aepp-sdk": "^4.0.1",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
     "@aeternity/ledger-app-api": "0.1.0",
