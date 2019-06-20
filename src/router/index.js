@@ -1,21 +1,9 @@
 import Router from 'vue-router';
 import store from '../store';
-import mobileRoutes from './routes/mobile';
-import desktopRoutes from './routes/desktop';
-import commonRoutes from './routes/common';
 import AddToHomeScreenPrompt from '../pages/mobile/AddToHomeScreenPrompt.vue';
 
 const router = new Router({
   mode: process.env.IS_CORDOVA ? 'hash' : 'history',
-  routes:
-    process.env.IS_MOBILE_DEVICE
-      ? (!process.env.IS_CORDOVA && !process.env.IS_PWA && !process.env.IS_IOS && process.env.NODE_ENV === 'production'
-        && [{
-          path: '/',
-          component: AddToHomeScreenPrompt,
-        }])
-        || [...mobileRoutes, ...commonRoutes]
-      : [...desktopRoutes, ...commonRoutes],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition;
@@ -23,6 +11,28 @@ const router = new Router({
     return { x: 0, y: 0 };
   },
 });
+
+if (
+  process.env.IS_MOBILE_DEVICE && !process.env.IS_CORDOVA
+  && !process.env.IS_PWA && !process.env.IS_IOS
+  && process.env.NODE_ENV === 'production'
+) {
+  router.addRoutes([{
+    path: '/',
+    component: AddToHomeScreenPrompt,
+  }]);
+} else {
+  (async () => router.addRoutes(
+    (await Promise.all([
+      process.env.IS_MOBILE_DEVICE
+        ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
+        : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),
+      import('./routes/common'),
+    ]))
+      .map(module => module.default)
+      .reduce((p, n) => p.concat(n)),
+  ))();
+}
 
 store.watch(
   (state, { loggedIn }) => loggedIn,
