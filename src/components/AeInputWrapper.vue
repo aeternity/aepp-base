@@ -94,6 +94,15 @@ export default {
     }
   }
 
+  &.error:not(.focus) {
+    background-color: $color-primary-positive-3;
+
+    .ae-toolbar {
+      background-color: $color-primary-positive-1;
+      color: $color-white;
+    }
+  }
+
   $states: (
     error: $color-error,
     focus: $color-focus,
