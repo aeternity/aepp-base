@@ -101,7 +101,7 @@ export default {
             || this.direction === ''
           )),
         (tx) => {
-          const dateString = tx.time.toDateString();
+          const dateString = tx.pending ? 'Pending transactions' : tx.time.toDateString();
           return dateString === new Date().toDateString() ? 'Today' : dateString;
         },
       );
