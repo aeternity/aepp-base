@@ -76,6 +76,14 @@
         />
         Confirm your Ledger address
       </Guide>
+      <ListItem
+        title="Create a first account"
+        @click="create"
+      >
+        <ListItemCircle slot="icon">
+          <Plus />
+        </ListItemCircle>
+      </ListItem>
     </template>
 
     <div
@@ -96,16 +104,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import Guide from '../Guide.vue';
 import { AeQrCode } from '../async';
 import AeFraction from '../AeFraction.vue';
-import { Settings, Device } from '../icons';
+import ListItem from '../ListItem.vue';
+import ListItemCircle from '../ListItemCircle.vue';
+import { Settings, Device, Plus } from '../icons';
 import Note from '../Note.vue';
 
 export default {
   components: {
-    Guide, AeQrCode, AeFraction, Settings, Device, Note,
+    Guide,
+    AeQrCode,
+    AeFraction,
+    Settings,
+    Device,
+    Note,
+    Plus,
+    ListItem,
+    ListItemCircle,
   },
   props: {
     forLedger: { type: Boolean, default: false },
@@ -114,6 +132,7 @@ export default {
     peerId: ({ peerId }) => peerId,
     ledgerSupported: ({ desktop }) => desktop.ledgerSupported,
   }),
+  methods: mapActions('accounts/ledger', ['create']),
 };
 </script>
 
