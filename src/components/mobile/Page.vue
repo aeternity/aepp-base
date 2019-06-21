@@ -86,7 +86,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/fallback/mixins.scss';
 @import '../../styles/variables/colors.scss';
-@import '../../styles/globals/functions.scss';
+@import '../../styles/placeholders/typography.scss';
 
 .mobile-page {
   flex-grow: 1;
@@ -161,6 +161,23 @@ export default {
       > .list-item {
         margin-left: rem(-16px);
         margin-right: rem(-16px);
+      }
+
+      > {
+        h2, p {
+          @extend %face-sans-s;
+        }
+
+        h2 {
+          margin-top: rem(30px);
+          font-weight: 500;
+          color: $color-neutral-negative-3;
+        }
+
+        p {
+          margin-top: rem(15px);
+          color: $color-neutral;
+        }
       }
     }
   }

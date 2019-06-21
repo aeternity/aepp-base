@@ -20,9 +20,9 @@
         <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
 
-      <ButtonPlain disabled>
+      <ButtonPlain :to="{ name: 'name-list' }">
         <Contacts />
-        <div>Contacts</div>
+        <div>Names</div>
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'settings' }">

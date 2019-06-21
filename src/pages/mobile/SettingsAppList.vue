@@ -1,6 +1,5 @@
 <template>
   <MobilePage
-    class="settings-app-list"
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     title="Aepp account access"
@@ -59,14 +58,3 @@ export default {
   }),
 };
 </script>
-
-<style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
-
-.settings-app-list p {
-  margin-top: rem(30px);
-  @extend %face-sans-s;
-  color: $color-neutral;
-}
-</style>

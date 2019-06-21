@@ -204,12 +204,6 @@ export default {
     }
   }
 
-  h2 {
-    @extend %face-sans-s;
-    margin-top: rem(30px);
-    font-weight: 500;
-  }
-
   .version {
     margin: rem(24px) 0;
     @extend %face-sans-s;
