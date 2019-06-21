@@ -1,5 +1,6 @@
 import { merge } from 'lodash-es';
 import { registerModal } from '../../store/plugins/ui/modals';
+import { notificationOptions } from './utils';
 import AlertModal from '../../components/AlertModal.vue';
 import { QrCodeReader } from '../../components/async';
 import Notification from '../../components/Notification.vue';
@@ -15,7 +16,6 @@ export default async () => {
     },
   });
   registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
-  const notificationOptions = { allowRedirect: true, dontGrayscalePage: true };
   registerModal({ name: 'notification', component: Notification, ...notificationOptions });
   registerModal({ name: 'notificationSpend', component: NotificationSpend, ...notificationOptions });
 

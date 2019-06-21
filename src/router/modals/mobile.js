@@ -1,4 +1,5 @@
 import { registerModal } from '../../store/plugins/ui/modals';
+import { notificationOptions } from './utils';
 import AccountSwitcherModal from '../../components/mobile/AccountSwitcherModal.vue';
 import SecurityCourseModal from '../../components/mobile/SecurityCourseModal.vue';
 import MigratedBalanceModal from '../../components/mobile/MigratedBalanceModal.vue';
@@ -8,6 +9,7 @@ import ConfirmContractDeployModal from '../../components/mobile/ConfirmContractD
 import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendModal from '../../components/mobile/ConfirmSpendModal.vue';
 import VaultSignModal from '../../components/mobile/VaultSignModal.vue';
+import NotificationMnemonicBackup from '../../components/mobile/NotificationMnemonicBackup.vue';
 
 export default () => {
   registerModal({ name: 'accountSwitcher', component: AccountSwitcherModal });
@@ -19,4 +21,5 @@ export default () => {
   registerModal({ name: 'confirmSign', component: ConfirmSignModal, hidePage: true });
   registerModal({ name: 'confirmSpend', component: ConfirmSpendModal, hidePage: true });
   registerModal({ name: 'vaultSign', component: VaultSignModal, hidePage: true });
+  registerModal({ name: 'notificationMnemonicBackup', component: NotificationMnemonicBackup, ...notificationOptions });
 };
