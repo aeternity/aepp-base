@@ -25,6 +25,7 @@ export default {
     encryptedWallet: null,
     passwordDerivedKey: null,
     mnemonic: '',
+    mnemonicBackedUp: false,
     wallet: null,
   } : {},
 
@@ -46,6 +47,10 @@ export default {
 
     setMnemonic(state, mnemonic) {
       state.mnemonic = mnemonic;
+    },
+
+    markMnemonicAsBackedUp(state) {
+      state.mnemonicBackedUp = true;
     },
 
     setWallet(state, wallet) {
@@ -93,6 +98,7 @@ export default {
       const passwordDerivedKey = await derivePasswordKey(password, salt);
       const aes = new AES(passwordDerivedKey);
       commit('setPasswordDerivedKey', passwordDerivedKey);
+      if (mnemonic) commit('markMnemonicAsBackedUp');
       const newMnemonic = mnemonic || generateMnemonic();
       commit('setMnemonic', newMnemonic);
       commit('setEncryptedWallet', {

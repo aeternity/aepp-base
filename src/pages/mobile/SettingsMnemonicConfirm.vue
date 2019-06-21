@@ -114,7 +114,9 @@ export default {
     },
     confirmPhrase() {
       this.error = this.selectedMnemonic !== this.mnemonic;
-      if (!this.error) this.$router.push({ name: 'settings-mnemonic-confirmed' });
+      if (this.error) return;
+      this.$store.commit('accounts/hdWallet/markMnemonicAsBackedUp');
+      this.$router.push({ name: 'settings-mnemonic-confirmed' });
     },
   },
 };

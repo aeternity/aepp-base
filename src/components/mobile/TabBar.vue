@@ -5,12 +5,12 @@
     <div class="wrapper">
       <ButtonPlain :to="browserPath || { name: 'app-intro' }">
         <Grid />
-        æpps
+        <div>æpps</div>
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'transfer' }">
         <Transfer />
-        Transfer
+        <div>Transfer</div>
       </ButtonPlain>
 
       <ButtonPlain
@@ -25,12 +25,12 @@
         :disabled="!$globals.UNFINISHED_FEATURES"
       >
         <Contacts />
-        Contacts
+        <div>Contacts</div>
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'settings' }">
-        <Settings />
-        Settings
+        <MnemonicBackupWarning><Settings /></MnemonicBackupWarning>
+        <div>Settings</div>
       </ButtonPlain>
     </div>
   </div>
@@ -44,6 +44,7 @@ import {
 } from '../icons';
 import AeIdenticon from '../AeIdenticon.vue';
 import ConnectionStatus from './ConnectionStatus.vue';
+import MnemonicBackupWarning from './MnemonicBackupWarning.vue';
 
 export default {
   components: {
@@ -54,6 +55,7 @@ export default {
     Contacts,
     Settings,
     ConnectionStatus,
+    MnemonicBackupWarning,
   },
   props: {
     showAccountSwitcher: { type: Boolean },
@@ -104,9 +106,8 @@ export default {
         color: $color-neutral-negative-3;
       }
 
-      .icon {
-        display: block;
-        margin: 0 auto 4px auto;
+      div {
+        margin-top: 4px;
       }
 
       .ae-identicon {
