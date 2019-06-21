@@ -135,11 +135,11 @@ export default {
     },
 
     async deleteMnemonic({ state: { passwordDerivedKey, encryptedWallet, wallet }, commit }) {
-      const newAes = new AES(passwordDerivedKey);
+      const aes = new AES(passwordDerivedKey);
       commit('setEncryptedWallet', {
-        privateKey: await newAes.encrypt(wallet.privateKey),
-        chainCode: await newAes.encrypt(wallet.chainCode),
-        mac: await newAes.encrypt(new Uint8Array(2)),
+        privateKey: await aes.encrypt(wallet.privateKey),
+        chainCode: await aes.encrypt(wallet.chainCode),
+        mac: await aes.encrypt(new Uint8Array(2)),
         salt: encryptedWallet.salt,
       });
       commit('setMnemonic', '');
