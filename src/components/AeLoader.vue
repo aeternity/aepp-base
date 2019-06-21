@@ -46,7 +46,7 @@
   }
 
   .stop-start {
-    stop-color: #fff;
+    stop-color: rgba($color-primary, 0);
   }
 
   .stop-end {
