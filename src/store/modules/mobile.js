@@ -42,4 +42,14 @@ export default {
       state.readSecurityCourses.push(courseName);
     },
   },
+
+  actions: {
+    removeFollower({ state: { followers }, commit, dispatch }, followerId) {
+      dispatch('modals/open', {
+        name: 'notification',
+        text: `Access was successfully revoked for ${followers[followerId].name}`,
+      });
+      commit('removeFollower', followerId);
+    },
+  },
 };
