@@ -6,14 +6,14 @@
       :title="network.name"
       :subtitle="network.url"
     >
-      <ButtonPlain
+      <div
         v-if="network.custom"
         slot="icon"
         :ref="`button-${idx}`"
         @click="menuForNetworkIdx = idx"
       >
         <More />
-      </ButtonPlain>
+      </div>
       <AeRadio
         slot="right"
         :checked="network === currentNetwork"
@@ -47,7 +47,6 @@ import { mapGetters } from 'vuex';
 import copyOnClick from '../directives/copyOnClick';
 import ListItem from './ListItem.vue';
 import ListItemButton from './ListItemButton.vue';
-import ButtonPlain from './ButtonPlain.vue';
 import { More, Copy, Close } from './icons';
 import AeRadio from './AeRadio.vue';
 import Menu from './Menu.vue';
@@ -57,7 +56,6 @@ export default {
   components: {
     ListItem,
     ListItemButton,
-    ButtonPlain,
     More,
     AeRadio,
     Menu,
