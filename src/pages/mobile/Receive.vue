@@ -87,10 +87,8 @@ export default {
         ? new Promise(resolve => window.plugins.socialsharing.shareWithOptions(
           { message: this.activeAccount.address },
           ({ app }) => app && resolve(),
-        )) : navigator.share({
-          title: 'My address',
-          text: this.activeAccount.address,
-        }));
+        ))
+        : navigator.share({ text: this.activeAccount.address }));
 
       this.sharedChecked = true;
       setTimeout(() => { this.sharedChecked = false; }, 500);
