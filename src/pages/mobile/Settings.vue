@@ -57,9 +57,11 @@
         title="Backup Recovery Phrase"
         class="mnemonic"
       >
-        <ListItemCircle slot="icon">
-          <Key />
-        </ListItemCircle>
+        <MnemonicBackupWarning slot="icon">
+          <ListItemCircle>
+            <Key />
+          </ListItemCircle>
+        </MnemonicBackupWarning>
         <LeftMore slot="right" />
       </ListItem>
     </AeCard>
@@ -110,6 +112,7 @@ import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
+import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import {
   Globe, LeftMore, Device, Grid, Key, Share, LockOpen,
 } from '../../components/icons';
@@ -123,6 +126,7 @@ export default {
     ListItemCircle,
     ListItemAccount,
     ListItemSettingsReset,
+    MnemonicBackupWarning,
     Globe,
     LeftMore,
     Device,

@@ -27,7 +27,7 @@ const store = new Vuex.Store({
       ({
         migrations, sdkUrl, addressBook, customNetworks,
         apps, cachedAppManifests, peerId,
-        accounts: { list, activeIdx, hdWallet: { encryptedWallet } = {} } = {},
+        accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
         mobile: { readSecurityCourses, followers } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
@@ -50,7 +50,7 @@ const store = new Vuex.Store({
             }
           }),
           activeIdx,
-          hdWallet: { encryptedWallet },
+          hdWallet: { encryptedWallet, mnemonicBackedUp },
         },
         ...process.env.IS_MOBILE_DEVICE ? {
           apps,
