@@ -74,10 +74,10 @@
           numerator="3"
           denominator="3"
         />
-        Confirm your Ledger address
+        Create a first account by pressing the button below
       </Guide>
       <ListItem
-        title="Create a first account"
+        title="Create a new account"
         @click="create"
       >
         <ListItemCircle slot="icon">
