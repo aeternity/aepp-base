@@ -1,4 +1,12 @@
-# Base æpp
+# Base æpp [![Build Status](https://api.travis-ci.org/aeternity/aepp-base.svg?branch=master)](https://api.travis-ci.org/aeternity/aepp-base)
+
+## How to get the Base æpp
+
+* [Google Play](https://play.google.com/store/apps/details?id=com.aeternity.base)
+* [App Store](https://apps.apple.com/ru/app/base-%C3%A6pp-wallet/id1458655724)
+* [Web version](https://base.aepps.com/)
+
+Also join our [Telegram channel](https://t.me/aeppbase) and our [Forum](https://forum.aeternity.com/t/base-aepp-wallet-we-would-like-your-feedback/3387).
 
 ## Build Setup
 
@@ -12,17 +20,44 @@ npm run serve
 # serve with hot reload at https://localhost:8080/
 npm run serve -- --https
 
+# run on android emulator or device
+npm run serve:android
+
+# run on ios emulator
+npm run serve:ios
+
 # build for production with minification
 npm run build
 
 # build for production and view the bundle analyzer report
 npm run build -- --report
 
+# generate resources for cordova
+npm run gen:cordova-resource
+
+# build for cordova
+npm run build:cordova
+
+# build an app file
+npm run build:ios
+
+# build an apk file
+npm run build:android
+
 # run unit tests
 npm run test:unit
 
+# run e2e tests
+npm run test:e2e
+
 # run all tests
 npm test
+
+# build a storybook
+npm run storybook:build
+
+# serve a storybook at http://localhost:6006
+npm run storybook:serve
 ```
 
 ## Contributing
@@ -35,16 +70,28 @@ We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workfl
 * Create a PR to master which then also has to be accepted.
 * Create a tag for this version and push the tag.
 * Also merge back the changes (like the version bump) into develop.
-* The master branch is deployed to the [live environment](https://identity.aepps.com) by travis.
+* The master branch has to be deployed to the [production environment](https://base.aepps.com/) manually.
 
-## Live vs. Stage
+## Deployment
 
-We have a stage (develop) and a live (master) branch and environments where these branches will be deployed to.
+We have a stage (develop) and a production (master) branch and environments where these branches will be deployed to.
 * [stage environment](https://stage-identity.aepps.com)
-* [live environment](https://identity.aepps.com)
+* [production environment](https://base.aepps.com/)
 
 ### stage
-* Is used to see changes to the code in effect in a "real" environment without the fear of breaking the live environment.
+* Is used to see changes to the code in effect in a "real" environment without the fear of breaking the production environment.
 
-### live
-* Is the live environment, code lives in the "master" branch
+### production
+* Is the production environment, code lives in the "master" branch.
+
+### other branches
+* Every branch is auto-deployed on https://`branch-name`.origin.aepps.com/, with each `/`, `.` symbol in a branch name replaced by `-`.
+
+### unsigned .apk and .app file
+* Find `aetenity.app.tar.gz` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest) or download corresponding
+version from a branch https://`branch-name`.origin.aepps.com/aetenity.app.tar.gz
+* Find `aeternity.apk` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest) or download corresponding
+version from a branch https://`branch-name`.origin.aepps.com/aeternity.apk
+
+### bundle analyzer report
+* Get bundle analyzer report on each domain by adding /report.html. Example [https://stage-identity.aepps.com/report.html](https://stage-identity.aepps.com/report.html).
