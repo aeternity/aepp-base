@@ -84,13 +84,14 @@ export default {
     async discover({
       state, getters, rootState: { sdk }, commit,
     }) {
+      const { api } = sdk.then ? await sdk : sdk;
       let account;
       do {
         if (account) {
           commit('accounts/add', { ...account, type: 'hd-wallet' }, { root: true });
         }
         account = getHdWalletAccount(state.wallet, getters.nextIdx);
-      } while (await sdk.api // eslint-disable-line no-await-in-loop
+      } while (await api // eslint-disable-line no-await-in-loop
         .getAccountByPubkey(account.address).then(() => true, () => false));
     },
 
