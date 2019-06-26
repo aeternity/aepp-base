@@ -6,6 +6,7 @@ import modals from './modals';
 import notificationForMnemonicBackup from './notificationForMnemonicBackup';
 import notificationOnRemoteConnection from './notificationOnRemoteConnection';
 import observables from './observables';
+import unlockWalletIfNotEncrypted from './unlockWalletIfNotEncrypted';
 
 export default store => [
   connectionStatusTracker,
@@ -16,6 +17,7 @@ export default store => [
       browserPathTracker,
       notificationForMnemonicBackup,
       notificationOnRemoteConnection,
+      unlockWalletIfNotEncrypted,
     ]
     : [
       desktopGuide,

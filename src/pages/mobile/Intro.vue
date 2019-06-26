@@ -18,9 +18,9 @@
         {{ encryptedWallet ? 'Login' : 'Recover' }}
       </AeButton>
       <AeButton
-        :to="{ name: 'set-password' }"
         fill="light"
         plain
+        @click="() => createWallet()"
       >
         Create New Account
       </AeButton>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
@@ -45,6 +45,7 @@ import AeButton from '../../components/AeButton.vue';
 export default {
   components: { MobilePage, AeButton, Guide },
   computed: mapState('accounts/hdWallet', ['encryptedWallet']),
+  methods: mapActions('accounts/hdWallet', ['createWallet']),
 };
 </script>
 

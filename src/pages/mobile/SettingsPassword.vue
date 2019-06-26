@@ -9,12 +9,16 @@
   >
     <AeCard fill="maximum">
       <ListItem
-        title="Change password"
-        subtitle="Update your password"
+        :title="`${isWalletEncrypted ? 'Change' : 'Choose'} password`"
+        :subtitle="isWalletEncrypted ? 'Update your password' : ''"
+        :to="{ name: 'settings-password-set' }"
       >
         <LeftMore slot="right" />
       </ListItem>
-      <ListItemButton>
+      <ListItemButton
+        v-if="isWalletEncrypted"
+        @click="() => changeWalletPassword()"
+      >
         Remove password
       </ListItemButton>
     </AeCard>
@@ -22,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -36,6 +41,8 @@ export default {
     LeftMore,
     ListItemButton,
   },
+  computed: mapGetters('accounts/hdWallet', ['isWalletEncrypted']),
+  methods: mapActions('accounts/hdWallet', ['changeWalletPassword']),
 };
 </script>
 

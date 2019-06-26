@@ -95,6 +95,7 @@
     <h2>Account</h2>
     <AeCard fill="maximum">
       <ListItem
+        v-if="isWalletEncrypted"
         title="Logout"
         subtitle="And see you soon!"
         class="logout"
@@ -164,6 +165,7 @@ export default {
     removableAccounts: ({ accounts: { list } }) => list
       .map((account, idx) => ({ ...account, idx }))
       .filter(({ source: { type } }) => type !== 'hd-wallet'),
+    isWalletEncrypted: (state, getters) => getters['accounts/hdWallet/isWalletEncrypted'],
   }),
   methods: mapActions(['logout']),
 };

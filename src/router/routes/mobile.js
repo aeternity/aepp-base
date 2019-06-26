@@ -10,7 +10,6 @@ import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
 import AppIntro from '../../pages/mobile/AppIntro.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
-import SetPassword from '../../pages/mobile/SetPassword.vue';
 import AccountsNew from '../../pages/mobile/AccountsNew.vue';
 import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
@@ -44,6 +43,7 @@ import SettingsSecurityCoursePrivacy from '../../pages/mobile/SettingsSecurityCo
 import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCourseLayers.vue';
 import SettingsAccountRemove from '../../pages/mobile/SettingsAccountRemove.vue';
 import SettingsPassword from '../../pages/mobile/SettingsPassword.vue';
+import SettingsPasswordSet from '../../pages/mobile/SettingsPasswordSet.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -80,7 +80,7 @@ export default [{
   path: '/',
   component: Intro,
   beforeEnter(to, from, next) {
-    if (!from.name && store.state.accounts.hdWallet.encryptedWallet) {
+    if (!from.name && store.getters['accounts/hdWallet/isWalletEncrypted']) {
       next({ name: 'login' });
       return;
     }
@@ -112,7 +112,7 @@ export default [{
   component: Login,
   beforeEnter(to, from, next) {
     if (!store.state.accounts.hdWallet.encryptedWallet) {
-      next({ name: 'set-password' });
+      next({ name: 'intro' });
       return;
     }
     if (store.getters.loggedIn) {
@@ -125,11 +125,6 @@ export default [{
   name: 'recover',
   path: '/recover',
   component: Recover,
-}, {
-  name: 'set-password',
-  path: '/set-password',
-  component: SetPassword,
-  props: true,
 }, {
   name: 'app-intro',
   path: '/browser/intro',
@@ -328,5 +323,10 @@ export default [{
   name: 'settings-password',
   path: '/settings/password',
   component: SettingsPassword,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'settings-password-set',
+  path: '/settings/password/set',
+  component: SettingsPasswordSet,
   beforeEnter: ensureLoggedIn,
 }];
