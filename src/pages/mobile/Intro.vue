@@ -12,10 +12,10 @@
 
     <template slot="footer">
       <AeButton
-        :to="{ name: encryptedHdWallet ? 'login' : 'recover' }"
+        :to="{ name: encryptedWallet ? 'login' : 'recover' }"
         fill="secondary"
       >
-        {{ encryptedHdWallet ? 'Login' : 'Recover' }}
+        {{ encryptedWallet ? 'Login' : 'Recover' }}
       </AeButton>
       <AeButton
         :to="{ name: 'set-password' }"
@@ -44,9 +44,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: { MobilePage, AeButton, Guide },
-  computed: mapState({
-    encryptedHdWallet: state => state.accounts.hdWallet.encryptedWallet,
-  }),
+  computed: mapState('accounts/hdWallet', ['encryptedWallet']),
 };
 </script>
 
