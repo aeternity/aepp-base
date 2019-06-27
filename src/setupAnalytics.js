@@ -8,6 +8,7 @@ export default async () => {
     `${process.env.VUE_APP_MATOMO_URL}/piwik.php`,
     process.env.VUE_APP_MATOMO_SITE_ID,
   );
+  matomo.disableCookies();
   matomo.setCustomDimension(1, process.env.IS_MOBILE_DEVICE);
   matomo.setCustomDimension(2, process.env.IS_PWA);
   matomo.setCustomDimension(3, process.env.IS_IOS);
