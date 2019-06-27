@@ -1,5 +1,6 @@
 require('./scripts/label-icons');
 const path = require('path');
+const branch = require('./scripts/current-branch');
 
 const parseBool = val => (val ? JSON.parse(val) : false);
 
@@ -7,6 +8,10 @@ const parseBool = val => (val ? JSON.parse(val) : false);
 const { IS_MOBILE_DEVICE, IS_PWA, npm_package_version } = process.env;
 const IS_CORDOVA = parseBool(process.env.IS_CORDOVA);
 const UNFINISHED_FEATURES = parseBool(process.env.UNFINISHED_FEATURES);
+
+if (branch === 'master') {
+  process.env.VUE_APP_MATOMO_SITE_ID = 2;
+}
 
 module.exports = {
   publicPath: IS_CORDOVA ? './' : '/',
