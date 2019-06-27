@@ -130,7 +130,7 @@ export default {
               ...this.$store.state.sdk.Ae.defaults,
               senderId: address,
               recipientId: address,
-              amount: BigNumber(amount || 0).shiftedBy(MAGNITUDE),
+              amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
               ttl: 0,
               nonce: nonce + 1,
               payload: '',
