@@ -96,7 +96,8 @@ export default {
   computed: {
     ...mapState('accounts/hdWallet', ['mnemonic']),
     mnemonicPermutation() {
-      return shuffle(this.mnemonic.split(' '));
+      const words = this.mnemonic.split(' ');
+      return process.env.NODE_ENV === 'production' ? shuffle(words) : words;
     },
     selectedMnemonic() {
       return this.selectedWordIds.map(idx => this.mnemonicPermutation[idx]).join(' ');
