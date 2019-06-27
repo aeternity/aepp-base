@@ -22,6 +22,7 @@ export default async () => {
       default:
     }
     matomo.setCustomUrl(fullPath);
+    matomo.setDocumentTitle(route.name);
     matomo.trackPageView();
   };
 
