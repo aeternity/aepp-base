@@ -100,7 +100,8 @@ export default {
   computed: {
     ...mapGetters('accounts', ['activeColor']),
     max() {
-      return this.activeAccount.balance.minus(this.minFee).toString();
+      const max = this.activeAccount.balance.minus(this.minFee);
+      return (max.isPositive() ? max : 0).toString();
     },
     amount: {
       get() {
