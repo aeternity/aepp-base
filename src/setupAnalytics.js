@@ -1,13 +1,30 @@
 import Matomo from 'vue-matomo/src/matomo';
-import { defer } from 'lodash-es';
 import routerPromise from './router';
 import store from './store';
 
 export default async () => {
+  const router = await routerPromise;
   const matomo = Matomo.getTracker(
     `${process.env.VUE_APP_MATOMO_URL}/piwik.php`,
     process.env.VUE_APP_MATOMO_SITE_ID,
   );
+
+  const trackPageView = (route) => {
+    let { fullPath } = route;
+    switch (route.name) {
+      case 'send-to':
+      case 'send-confirm':
+        fullPath = fullPath.replace(route.params.to, '<to>');
+        break;
+      case 'transaction-details':
+        fullPath = fullPath.replace(route.params.hash, '<hash>');
+        break;
+      default:
+    }
+    matomo.setCustomUrl(fullPath);
+    matomo.trackPageView();
+  };
+
   matomo.disableCookies();
   matomo.setCustomDimension(1, process.env.IS_MOBILE_DEVICE);
   matomo.setCustomDimension(2, process.env.IS_PWA);
@@ -15,15 +32,11 @@ export default async () => {
   matomo.setCustomDimension(4, process.env.npm_package_version);
   matomo.setCustomDimension(5, process.env.IS_CORDOVA);
   matomo.setCustomVariable(1, 'accounts-count', store.state.accounts.list.length);
-  matomo.trackPageView();
+  trackPageView(router.currentRoute);
   matomo.enableLinkTracking();
   matomo.enableJSErrorTracking();
 
-  (await routerPromise).afterEach(() => defer(() => {
-    const url = window.location.pathname + window.location.hash;
-    matomo.setCustomUrl(url);
-    matomo.trackPageView();
-  }));
+  router.afterEach(to => trackPageView(to));
 
   store.subscribeAction(({ type, payload }) => {
     if (type !== 'modals/open') return;
