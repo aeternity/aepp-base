@@ -24,6 +24,7 @@
     <DetailsFeeInput
       v-model="newFee"
       :min="minFee"
+      :amount="amount"
     />
 
     <DetailsRawData
