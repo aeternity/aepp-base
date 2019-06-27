@@ -55,6 +55,7 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.5" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
+    <plugin name="cordova-clipboard" spec="github:ihadeed/cordova-clipboard#12dadc710dd2d374f942abe746ae2f828112e934" />
     <engine name="android" spec="^8.0.0" />
     <engine name="ios" spec="^5.0.0" />
 </widget>
