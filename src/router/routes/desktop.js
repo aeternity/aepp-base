@@ -2,7 +2,7 @@ import Apps from '../../pages/desktop/Apps.vue';
 import Send from '../../pages/desktop/Send.vue';
 import Receive from '../../pages/desktop/Receive.vue';
 import Settings from '../../pages/desktop/Settings.vue';
-import { checkLoggedIn } from '../utils';
+import { ensureLoggedIn } from '../utils';
 
 export default [{
   name: 'apps',
@@ -12,7 +12,7 @@ export default [{
   name: 'send',
   path: '/send',
   component: Send,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'receive',
   path: '/receive',

@@ -1,4 +1,4 @@
-import { checkLoggedIn } from '../utils';
+import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
 import Intro from '../../pages/mobile/Intro.vue';
 import Onboarding from '../../pages/mobile/Onboarding.vue';
@@ -71,8 +71,8 @@ const checkStoreMnemonic = (to, from, next) => {
   next();
 };
 
-const vaultBeforeEnter = mergeEnterHandlers(checkLoggedIn(true), checkAccountName);
-const settingsMnemonicBeforeEnter = mergeEnterHandlers(checkLoggedIn(true), checkStoreMnemonic);
+const vaultBeforeEnter = mergeEnterHandlers(ensureLoggedIn, checkAccountName);
+const settingsMnemonicBeforeEnter = mergeEnterHandlers(ensureLoggedIn, checkStoreMnemonic);
 
 export default [{
   name: 'intro',
@@ -133,22 +133,22 @@ export default [{
   name: 'app-intro',
   path: '/browser/intro',
   component: AppIntro,
-  beforeEnter: checkLoggedIn(false),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'apps',
   path: '/browser',
   component: Apps,
-  beforeEnter: checkLoggedIn(false),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'app-browser',
   path: '/browser/*',
   component: AppBrowser,
-  beforeEnter: checkLoggedIn(false),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'accounts-new',
   path: '/accounts-new',
   component: AccountsNew,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   meta: {
     accountType: 'hd-wallet',
   },
@@ -156,7 +156,7 @@ export default [{
   name: 'vault-new',
   path: '/vault/new',
   component: AccountsNew,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   meta: {
     accountType: 'air-gap',
   },
@@ -195,76 +195,76 @@ export default [{
   name: 'transfer',
   path: '/transfer',
   component: Transfer,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'receive',
   path: '/transfer/receive',
   component: Receive,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'send',
   path: '/transfer/send',
   component: Send,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'send-to',
   path: '/transfer/send/:to',
   component: SendAmount,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'send-confirm',
   path: '/transfer/send/:to/:amount',
   component: SendConfirm,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'transaction-list',
   path: '/transfer/transactions/:direction?',
   component: TransactionList,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'transaction-details',
   path: '/transfer/transactions/details/:hash',
   component: TransactionDetails,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'settings',
   path: '/settings',
   component: Settings,
-  beforeEnter: checkLoggedIn(false),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-network',
   path: '/settings/network',
   component: SettingsNetwork,
-  beforeEnter: checkLoggedIn(false),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-network-new',
   path: '/settings/network/new',
   component: SettingsNetworkNew,
-  beforeEnter: checkLoggedIn(false),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-remote-connection',
   path: '/settings/remote-connection',
   component: SettingsRemoteConnection,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-remote-connection-new',
   path: '/settings/remote-connection/new',
   component: SettingsRemoteConnectionNew,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-app-list',
   path: '/settings/apps',
   component: SettingsAppList,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-app-details',
   path: '/settings/apps/:appHost',
   component: SettingsAppDetails,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'settings-mnemonic',
@@ -290,37 +290,37 @@ export default [{
   name: 'settings-mnemonic-deleted',
   path: '/settings/mnemonic/deleted',
   component: SettingsMnemonicDeleted,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-security-course-list',
   path: '/settings/security-courses',
   component: SettingsSecurityCourseList,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'settings-security-course-intro',
   path: '/settings/security-courses/intro',
   component: SettingsSecurityCourseIntro,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-security-course-bank',
   path: '/settings/security-courses/bank',
   component: SettingsSecurityCourseBank,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-security-course-privacy',
   path: '/settings/security-courses/privacy',
   component: SettingsSecurityCoursePrivacy,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-security-course-layers',
   path: '/settings/security-courses/layers',
   component: SettingsSecurityCourseLayers,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-account-remove',
   path: '/settings/wallet/:idx',
   component: SettingsAccountRemove,
-  beforeEnter: checkLoggedIn(true),
+  beforeEnter: ensureLoggedIn,
   props: true,
 }];
