@@ -46,7 +46,7 @@
       </template>
 
       <AeToolbarButton
-        v-if="clipboardReadSupported"
+        v-if="$globals.UNFINISHED_FEATURES && clipboardReadSupported"
         type="button"
         @click="readValueFromClipboard"
       >
