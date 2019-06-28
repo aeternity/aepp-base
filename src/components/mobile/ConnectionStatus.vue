@@ -16,6 +16,7 @@ export default {
     message: ({ onLine, sdk }) => {
       if (!onLine) return { text: 'You are offline... Please check your connection.' };
       if (!sdk) return { text: 'We are unable to connect to the chosen node.' };
+      if (sdk.then) return { text: 'Connecting to the network...', className: 'connecting' };
       if (process.env.NODE_ENV === 'production' && sdk.nodeNetworkId !== 'ae_mainnet') {
         return { text: 'You are connected to a testnet.', className: 'test-net' };
       }
@@ -36,7 +37,8 @@ export default {
   text-align: center;
   background-color: $color-primary;
 
-  &.test-net {
+  &.test-net,
+  &.connecting {
     background-color: $color-secondary;
   }
 }

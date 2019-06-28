@@ -17,7 +17,7 @@ export default (store) => {
     options,
   );
 
-  const sdk$ = watchAsObservable(({ sdk }) => sdk, { immediate: true })
+  const sdk$ = watchAsObservable(({ sdk }) => (sdk && sdk.then ? null : sdk), { immediate: true })
     .pipe(
       pluck('newValue'),
     );

@@ -10,6 +10,7 @@ import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
 import ConfirmSpendModal from '../../components/mobile/ConfirmSpendModal.vue';
 import VaultSignModal from '../../components/mobile/VaultSignModal.vue';
 import NotificationMnemonicBackup from '../../components/mobile/NotificationMnemonicBackup.vue';
+import PasswordModal from '../../components/mobile/PasswordModal.vue';
 
 export default () => {
   registerModal({ name: 'accountSwitcher', component: AccountSwitcherModal });
@@ -22,4 +23,5 @@ export default () => {
   registerModal({ name: 'confirmSpend', component: ConfirmSpendModal, hidePage: true });
   registerModal({ name: 'vaultSign', component: VaultSignModal, hidePage: true });
   registerModal({ name: 'notificationMnemonicBackup', component: NotificationMnemonicBackup, ...notificationOptions });
+  registerModal({ name: 'ensureKnowPassword', component: PasswordModal, hidePage: true });
 };

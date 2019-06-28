@@ -64,6 +64,17 @@
         </MnemonicBackupWarning>
         <LeftMore slot="right" />
       </ListItem>
+      <ListItem
+        :to="{ name: 'settings-password' }"
+        subtitle="Setup and manage a password"
+        title="Wallet Authentication"
+        class="password"
+      >
+        <ListItemCircle slot="icon">
+          <Shield />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
     </AeCard>
 
     <template v-if="removableAccounts.length">
@@ -84,6 +95,7 @@
     <h2>Account</h2>
     <AeCard fill="maximum">
       <ListItem
+        v-if="isWalletEncrypted"
         title="Logout"
         subtitle="And see you soon!"
         class="logout"
@@ -114,7 +126,7 @@ import ListItemAccount from '../../components/ListItemAccount.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import {
-  Globe, LeftMore, Device, Grid, Key, Share, LockOpen,
+  Globe, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
 } from '../../components/icons';
 
 export default {
@@ -134,6 +146,7 @@ export default {
     Key,
     Share,
     LockOpen,
+    Shield,
   },
   data: () => ({
     version: process.env.npm_package_version,
@@ -152,6 +165,7 @@ export default {
     removableAccounts: ({ accounts: { list } }) => list
       .map((account, idx) => ({ ...account, idx }))
       .filter(({ source: { type } }) => type !== 'hd-wallet'),
+    isWalletEncrypted: (state, getters) => getters['accounts/hdWallet/isWalletEncrypted'],
   }),
   methods: mapActions(['logout']),
 };
@@ -169,8 +183,10 @@ export default {
       }
     }
 
-    &.remote-connection .list-item-circle {
-      background-color: #515ec8;
+    &.remote-connection, &.password {
+      .list-item-circle {
+        background-color: #515ec8;
+      }
     }
 
     &.app-list .list-item-circle {

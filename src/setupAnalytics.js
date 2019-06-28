@@ -1,10 +1,10 @@
 import Matomo from 'vue-matomo/src/matomo';
 import Countly from 'countly-sdk-web';
 import { defer } from 'lodash-es';
-import router from './router';
+import routerPromise from './router';
 import store from './store';
 
-export default () => {
+export default async () => {
   const matomo = Matomo.getTracker(
     `${process.env.VUE_APP_MATOMO_URL}/piwik.php`,
     process.env.VUE_APP_MATOMO_SITE_ID,
@@ -36,7 +36,7 @@ export default () => {
   Countly.track_links();
   Countly.track_errors();
 
-  router.afterEach(() => defer(() => {
+  (await routerPromise).afterEach(() => defer(() => {
     const url = window.location.pathname + window.location.hash;
     matomo.setCustomUrl(url);
     matomo.trackPageView();

@@ -4,7 +4,7 @@ import './ui-common';
 import registerModals from './router/modals';
 import sync from './lib/vuexRouterSync';
 import VeeValidate from './lib/veeValidatePlugin';
-import router from './router';
+import routerPromise from './router';
 import store from './store';
 import uiPlugin from './store/plugins/ui';
 
@@ -16,12 +16,15 @@ Vue.use(VeeValidate);
 
 import(/* webpackChunkName: "analytics" */ './setupAnalytics').then(module => module.default());
 
-sync(store, router);
-uiPlugin(store);
-registerModals();
+(async () => {
+  const [router] = await Promise.all([routerPromise, registerModals()]);
+  sync(store, router);
 
-new Vue({
-  store,
-  router,
-  render: h => h(process.env.IS_MOBILE_DEVICE ? AppMobile : AppDesktop),
-}).$mount('#app');
+  new Vue({
+    store,
+    router,
+    render: h => h(process.env.IS_MOBILE_DEVICE ? AppMobile : AppDesktop),
+  }).$mount('#app');
+
+  uiPlugin(store);
+})();
