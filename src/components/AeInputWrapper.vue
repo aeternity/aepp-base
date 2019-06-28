@@ -19,6 +19,12 @@
         :setFocus="f => focus = f"
       />
     </main>
+    <AeToolbar
+      v-if="$slots['footer-buttons']"
+      class="footer-buttons"
+    >
+      <div><slot name="footer-buttons" /></div>
+    </AeToolbar>
     <AeToolbar v-if="footer || $slots.footer || footerRight || $slots['footer-right']">
       <div>
         {{ footer }}
@@ -97,7 +103,7 @@ export default {
   &.error:not(.focus) {
     background-color: $color-primary-positive-3;
 
-    .ae-toolbar {
+    .ae-toolbar:not(.footer-buttons) {
       background-color: $color-primary-positive-1;
       color: $color-white;
     }
@@ -138,6 +144,11 @@ export default {
     justify-content: space-between;
     @extend %face-sans-xs;
     line-height: rem(32px);
+
+    &.footer-buttons {
+      justify-content: flex-end;
+      background-color: transparent;
+    }
   }
 }
 </style>
