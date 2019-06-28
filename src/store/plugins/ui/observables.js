@@ -17,17 +17,20 @@ export default (store) => {
     options,
   );
 
-  const sdk$ = watchAsObservable(({ sdk }) => sdk, { immediate: true })
+  const sdk$ = watchAsObservable(({ sdk }) => (sdk && sdk.then ? null : sdk), { immediate: true })
     .pipe(
       pluck('newValue'),
     );
 
-  const getBalance = memoize(address => sdk$
+  const defaultAccountInfo = { balance: BigNumber(0), nonce: 0 };
+  const getAccountInfo = memoize(address => sdk$
     .pipe(
       switchMap(sdk => timer(0, 3000).pipe(map(() => sdk))),
-      switchMap(async sdk => BigNumber(sdk ? await sdk.balance(address).catch(() => 0) : 0)
-        .shiftedBy(-MAGNITUDE)),
-      multicast(new BehaviorSubject(BigNumber(0))),
+      switchMap(sdk => (sdk
+        ? sdk.api.getAccountByPubkey(address).catch(() => defaultAccountInfo)
+        : defaultAccountInfo)),
+      map(aci => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
+      multicast(new BehaviorSubject(defaultAccountInfo)),
       refCountDelay(1000),
     ));
 
@@ -35,8 +38,8 @@ export default (store) => {
     .pipe(
       pluck('newValue'),
       switchMap(acs => (acs.length
-        ? combineLatest(acs.map(({ address }) => getBalance(address)))
-          .pipe(map(balances => balances.map((balance, idx) => ({ ...acs[idx], balance }))))
+        ? combineLatest(acs.map(({ address }) => getAccountInfo(address)))
+          .pipe(map(acis => acis.map((aci, idx) => ({ ...acs[idx], ...aci }))))
         : of([]))),
     );
 
@@ -47,7 +50,11 @@ export default (store) => {
   }) => ({
     ...otherTransaction,
     blockHash,
-    time: new Date(time || (await store.state.sdk.api.getMicroBlockHeaderByHash(blockHash)).time),
+    ...blockHash !== 'none' && {
+      time: new Date(
+        time || (await store.state.sdk.api.getMicroBlockHeaderByHash(blockHash)).time,
+      ),
+    },
     tx: {
       ...otherTx,
       amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
@@ -133,14 +140,18 @@ export default (store) => {
   const getTransactionsByAddress = (address) => {
     if (!transactionRangeForAddress[address]) return [];
     const txs = Object.values(transactions)
-      .filter(({ tx }) => [tx.senderId, tx.accountId, tx.recipientId, tx.ownerId].includes(address))
+      .filter(({ tx }) => [tx.senderId, tx.accountId, tx.recipientId, tx.ownerId]
+        .includes(address));
+    const minedTxs = txs
+      .filter(({ pending }) => !pending)
       .sort((a, b) => b.time - a.time);
     const { begin, end } = transactionRangeForAddress[address];
-    const beginIdx = txs.findIndex(({ hash }) => hash === begin);
-    const endIdx = txs.findIndex(({ hash }) => hash === end);
-    return txs
-      .slice(beginIdx, endIdx - beginIdx + 1)
-      .map(tx => setTransactionFieldsRelatedToAddress(tx, address));
+    const beginIdx = minedTxs.findIndex(({ hash }) => hash === begin);
+    const endIdx = minedTxs.findIndex(({ hash }) => hash === end);
+    return [
+      ...txs.filter(({ pending }) => pending),
+      ...minedTxs.slice(beginIdx, endIdx - beginIdx + 1),
+    ].map(tx => setTransactionFieldsRelatedToAddress(tx, address));
   };
 
   const getTransactionList = (loadMore$) => {
@@ -247,7 +258,6 @@ export default (store) => {
 
   store.state.observables = { // eslint-disable-line no-param-reassign
     topBlockHeight: topBlockHeight$,
-    getBalance,
     getTransaction,
     getTransactionList,
     activeAccount: watchAsObservable(
@@ -257,7 +267,7 @@ export default (store) => {
       .pipe(
         pluck('newValue'),
         switchMap(acc => (acc
-          ? getBalance(acc.address).pipe(map(balance => ({ ...acc, balance })))
+          ? getAccountInfo(acc.address).pipe(map(acci => ({ ...acc, ...acci })))
           : of(acc))),
       ),
     accounts: accounts$,

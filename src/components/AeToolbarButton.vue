@@ -1,6 +1,7 @@
 <template>
   <ButtonPlain
     class="ae-toolbar-button"
+    :class="{ active }"
     v-bind="$attrs"
     v-on="$listeners"
   >
@@ -13,6 +14,7 @@ import ButtonPlain from './ButtonPlain.vue';
 
 export default {
   components: { ButtonPlain },
+  props: { active: Boolean },
 };
 </script>
 
@@ -29,6 +31,10 @@ export default {
   letter-spacing: rem(1.1px);
   text-transform: uppercase;
   color: $color-neutral-negative-1;
+
+  &.active {
+    color: #000;
+  }
 
   /deep/ .icon {
     height: rem(14px);

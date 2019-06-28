@@ -65,7 +65,7 @@ export default {
     async setMnemonic() {
       if (!await this.$validator.validateAll()) return;
 
-      this.$router.push({ name: 'set-password', params: { mnemonic: this.mnemonic } });
+      await this.$store.dispatch('accounts/hdWallet/createWallet', this.mnemonic);
     },
   },
 };

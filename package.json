@@ -1,6 +1,6 @@
 {
   "name": "aepp-base",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "author": "Sascha Hanse <shanse@posteo.de>",
   "private": true,
   "scripts": {
@@ -20,7 +20,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@aeternity/aepp-sdk": "^3.4.1",
+    "@aeternity/aepp-sdk": "github:aeternity/aepp-sdk-js#9a959c61b4a2c0e7ff344cd2a6b15e66072c94fe",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
     "@aeternity/ledger-app-api": "0.1.0",
@@ -31,7 +31,6 @@
     "bignumber.js": "^8.1.1",
     "bluebird": "^3.5.3",
     "copy-to-clipboard": "^3.0.8",
-    "countly-sdk-web": "^19.2.1",
     "emoji-datasource-apple": "^4.0.3",
     "focus-visible": "^4.1.5",
     "fuse.js": "^3.4.2",
@@ -101,7 +100,6 @@
     "./src/lib/storeErrorHandler.js",
     "./src/lib/switchWebmanifest.js",
     "./src/store/index.js",
-    "./src/register-modals.js",
     "./src/ui-common.js",
     "*.css",
     "*.scss",

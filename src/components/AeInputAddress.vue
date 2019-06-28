@@ -19,7 +19,7 @@
       size="s"
     />
 
-    <template slot="footer-right">
+    <template :slot="$globals.IS_MOBILE_DEVICE ? 'default-bottom-right' : 'footer-right'">
       <template v-if="!$globals.IS_MOBILE_DEVICE">
         <AeToolbarButton
           v-if="accounts.length"
@@ -46,6 +46,14 @@
       </template>
 
       <AeToolbarButton
+        v-if="clipboardReadSupported"
+        type="button"
+        @click="readValueFromClipboard"
+      >
+        <Paste />
+        {{ $globals.IS_MOBILE_DEVICE ? 'Paste' : '' }}
+      </AeToolbarButton>
+      <AeToolbarButton
         type="button"
         @click="readValueFromQrCode"
       >
@@ -61,7 +69,7 @@ import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeIdenticon from './AeIdenticon.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
-import { Card, Camera } from './icons';
+import { Card, Paste, Camera } from './icons';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
 
@@ -70,7 +78,14 @@ export default {
     removeSpacesOnCopy,
   },
   components: {
-    AeIdenticon, AeTextareaFormatted, AeToolbarButton, Card, Camera, AePopover, ListItemAccount,
+    AeIdenticon,
+    AeTextareaFormatted,
+    AeToolbarButton,
+    Card,
+    Paste,
+    Camera,
+    AePopover,
+    ListItemAccount,
   },
   props: {
     value: {
@@ -80,6 +95,7 @@ export default {
   },
   data: () => ({
     showAccountsDropdown: false,
+    clipboardReadSupported: process.env.IS_CORDOVA || navigator.clipboard,
   }),
   subscriptions() {
     return !process.env.IS_MOBILE_DEVICE && {
@@ -113,6 +129,11 @@ export default {
     },
     async readValueFromQrCode() {
       this.setAddress(await this.$store.dispatch('modals/open', { name: 'readQrCode', title: 'Scan AE Address' }));
+    },
+    async readValueFromClipboard() {
+      this.setAddress(await (process.env.IS_CORDOVA
+        ? new Promise((...args) => window.cordova.plugins.clipboard.paste(...args))
+        : navigator.clipboard.readText()));
     },
   },
 };

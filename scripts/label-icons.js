@@ -1,13 +1,11 @@
-const { execSync } = require('child_process');
 const sharp = require('sharp'); // eslint-disable-line import/no-extraneous-dependencies
+const branch = require('./current-branch');
 
 (async () => {
-  const { NODE_ENV, npm_lifecycle_event: npmEvent, TRAVIS_BRANCH } = process.env;
+  const { NODE_ENV, npm_lifecycle_event: npmEvent } = process.env;
 
   if (!['build', 'serve'].includes(npmEvent)) return;
 
-  const branch = (TRAVIS_BRANCH || execSync('git rev-parse --abbrev-ref HEAD').toString().trim())
-    .replace('feature/', '');
   const showLabel = branch !== 'master';
   console.log(`Generating ${showLabel ? 'labeled ' : ''}icons`);
 

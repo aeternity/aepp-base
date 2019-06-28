@@ -3,23 +3,35 @@
     class="ae-input-amount-ae"
     header="Amount"
     header-right="AE"
-    :footer="footer || 'Minimum transaction fee'"
-    :footer-right="footerRight || (footer ? '' : minSpendTxFee)"
+    :footer="footer || (max ? '' : 'Minimum transaction fee')"
+    :footer-right="footerRight || (footer || max ? '' : minSpendTxFee)"
     :value="value"
     v-bind="$attrs"
     v-on="$listeners"
-  />
+  >
+    <AeToolbarButton
+      v-if="max"
+      slot="footer-right"
+      type="button"
+      :active="max === value"
+      @click="$emit('input', max)"
+    >
+      Max
+    </AeToolbarButton>
+  </AeInputAmount>
 </template>
 
 <script>
 import AeInputAmount from './AeInputAmount.vue';
+import AeToolbarButton from './AeToolbarButton.vue';
 import { MIN_SPEND_TX_FEE } from '../lib/constants';
 import prefixedAmount from '../filters/prefixedAmount';
 
 export default {
-  components: { AeInputAmount },
+  components: { AeInputAmount, AeToolbarButton },
   props: {
     value: { type: [String, Number], default: '' },
+    max: { type: [String, Number], default: '' },
     footer: { type: String, default: '' },
     footerRight: { type: String, default: '' },
   },

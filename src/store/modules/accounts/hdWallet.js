@@ -25,6 +25,7 @@ export default {
     encryptedWallet: null,
     passwordDerivedKey: null,
     mnemonic: '',
+    mnemonicBackedUp: false,
     wallet: null,
   } : {},
 
@@ -33,6 +34,7 @@ export default {
       ...rootGetters['accounts/getByType']('hd-wallet').map(({ source: { idx } }) => idx),
       -1,
     ) + 1,
+    isWalletEncrypted: ({ encryptedWallet }) => encryptedWallet && !!encryptedWallet.mac,
   } : {},
 
   mutations: process.env.IS_MOBILE_DEVICE ? {
@@ -46,6 +48,10 @@ export default {
 
     setMnemonic(state, mnemonic) {
       state.mnemonic = mnemonic;
+    },
+
+    markMnemonicAsBackedUp(state) {
+      state.mnemonicBackedUp = true;
     },
 
     setWallet(state, wallet) {
@@ -78,64 +84,108 @@ export default {
     async discover({
       state, getters, rootState: { sdk }, commit,
     }) {
+      const { api } = sdk.then ? await sdk : sdk;
       let account;
       do {
         if (account) {
           commit('accounts/add', { ...account, type: 'hd-wallet' }, { root: true });
         }
         account = getHdWalletAccount(state.wallet, getters.nextIdx);
-      } while (await sdk.api // eslint-disable-line no-await-in-loop
+      } while (await api // eslint-disable-line no-await-in-loop
         .getAccountByPubkey(account.address).then(() => true, () => false));
     },
 
-    async createWallet({ commit, dispatch }, { password, mnemonic }) {
-      const salt = genRandomBuffer(16);
-      const passwordDerivedKey = await derivePasswordKey(password, salt);
-      const aes = new AES(passwordDerivedKey);
-      commit('setPasswordDerivedKey', passwordDerivedKey);
+    async createWallet({ commit, dispatch }, mnemonic) {
+      if (mnemonic) commit('markMnemonicAsBackedUp');
       const newMnemonic = mnemonic || generateMnemonic();
       commit('setMnemonic', newMnemonic);
-      commit('setEncryptedWallet', {
-        mnemonic: await aes.encrypt(Buffer.from(newMnemonic)),
-        mac: await aes.encrypt(new Uint8Array(2)),
-        salt,
-      });
+      commit('setEncryptedWallet', { mnemonic: newMnemonic });
       commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
       dispatch('create', 'Main Account');
       dispatch('discover');
       dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
     },
 
-    async unlockWallet({ state: { encryptedWallet }, commit, dispatch }, password) {
+    async setWalletPassword({ state: { wallet, mnemonic }, commit }, password) {
+      if (password) {
+        const salt = genRandomBuffer(16);
+        const newPasswordDerivedKey = await derivePasswordKey(password, salt);
+        commit('setPasswordDerivedKey', newPasswordDerivedKey);
+        const aes = new AES(newPasswordDerivedKey);
+        commit('setEncryptedWallet', {
+          ...mnemonic ? {
+            mnemonic: await aes.encrypt(Buffer.from(mnemonic)),
+          } : {
+            privateKey: await aes.encrypt(wallet.privateKey),
+            chainCode: await aes.encrypt(wallet.chainCode),
+          },
+          mac: await aes.encrypt(new Uint8Array(2)),
+          salt,
+        });
+      } else {
+        commit('setPasswordDerivedKey', null);
+        commit('setEncryptedWallet', mnemonic ? { mnemonic } : wallet);
+      }
+    },
+
+    async changeWalletPassword({ getters, dispatch }, { password, newPassword } = {}) {
+      if (getters.isWalletEncrypted) {
+        if (password) await dispatch('deriveAndCheckPasswordKey', password);
+        else await dispatch('modals/open', { name: 'ensureKnowPassword' }, { root: true });
+      }
+      await dispatch('setWalletPassword', newPassword);
+    },
+
+    async deriveAndCheckPasswordKey({ state: { encryptedWallet } }, password) {
       const passwordDerivedKey = await derivePasswordKey(password, encryptedWallet.salt);
       const aes = new AES(passwordDerivedKey);
-      let mnemonic;
-      let wallet;
       if (encryptedWallet.mnemonic) {
-        mnemonic = Buffer.from(await aes.decrypt(encryptedWallet.mnemonic)).toString();
-        wallet = generateHdWallet(mnemonicToSeed(mnemonic));
+        await aes.decrypt(encryptedWallet.mnemonic);
       } else {
-        wallet = {
+        await aes.decrypt(encryptedWallet.privateKey);
+        await aes.decrypt(encryptedWallet.chainCode);
+      }
+      const mac = new Uint8Array(await aes.decrypt(encryptedWallet.mac));
+      if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Wrong password');
+      return passwordDerivedKey;
+    },
+
+    async unlockWallet({
+      state: { encryptedWallet }, getters: { isWalletEncrypted }, commit, dispatch,
+    }, password) {
+      let wallet;
+      if (isWalletEncrypted) {
+        const passwordDerivedKey = await dispatch('deriveAndCheckPasswordKey', password);
+        const aes = new AES(passwordDerivedKey);
+        commit('setPasswordDerivedKey', passwordDerivedKey);
+
+        wallet = encryptedWallet.mnemonic ? {
+          mnemonic: Buffer.from(await aes.decrypt(encryptedWallet.mnemonic)).toString(),
+        } : {
           privateKey: await aes.decrypt(encryptedWallet.privateKey),
           chainCode: await aes.decrypt(encryptedWallet.chainCode),
         };
+      } else wallet = encryptedWallet;
+      if (wallet.mnemonic) {
+        commit('setMnemonic', wallet.mnemonic);
+        wallet = generateHdWallet(mnemonicToSeed(wallet.mnemonic));
       }
-      const mac = new Uint8Array(await aes.decrypt(encryptedWallet.mac));
-      if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Invalid password');
-      if (mnemonic) commit('setMnemonic', mnemonic);
-      commit('setPasswordDerivedKey', passwordDerivedKey);
       commit('setWallet', wallet);
       dispatch('discover');
     },
 
     async deleteMnemonic({ state: { passwordDerivedKey, encryptedWallet, wallet }, commit }) {
-      const newAes = new AES(passwordDerivedKey);
-      commit('setEncryptedWallet', {
-        privateKey: await newAes.encrypt(wallet.privateKey),
-        chainCode: await newAes.encrypt(wallet.chainCode),
-        mac: await newAes.encrypt(new Uint8Array(2)),
-        salt: encryptedWallet.salt,
-      });
+      if (passwordDerivedKey) {
+        const aes = new AES(passwordDerivedKey);
+        commit('setEncryptedWallet', {
+          privateKey: await aes.encrypt(wallet.privateKey),
+          chainCode: await aes.encrypt(wallet.chainCode),
+          mac: await aes.encrypt(new Uint8Array(2)),
+          salt: encryptedWallet.salt,
+        });
+      } else {
+        commit('setEncryptedWallet', wallet);
+      }
       commit('setMnemonic', '');
     },
 

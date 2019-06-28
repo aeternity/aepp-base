@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -53,6 +53,6 @@ export default {
         disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
       })),
   }),
-  methods: mapMutations(['removeFollower']),
+  methods: mapActions(['removeFollower']),
 };
 </script>

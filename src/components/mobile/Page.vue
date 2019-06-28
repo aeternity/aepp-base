@@ -69,6 +69,17 @@ export default {
     },
     hideTabBar: { type: Boolean },
   },
+  async mounted() {
+    if (process.env.IS_CORDOVA && process.env.IS_IOS) {
+      await new Promise(resolve => document.addEventListener('deviceready', resolve));
+      this.$watch(({ headerFill, fill }) => headerFill || fill, (fill) => {
+        const style = ['primary', 'alternative', 'dark']
+          .includes(fill) ? 'LightContent' : 'Default';
+        window.StatusBar[`style${style}`]();
+      }, { immediate: true });
+      this.$once('hook:destroyed', () => window.StatusBar.styleDefault());
+    }
+  },
 };
 </script>
 

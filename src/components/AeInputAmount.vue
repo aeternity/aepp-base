@@ -3,6 +3,11 @@
     class="ae-input-amount"
     v-bind="$attrs"
   >
+    <slot
+      v-for="slot in Object.keys($slots)"
+      :slot="slot"
+      :name="slot"
+    />
     <input
       :id="id"
       v-focus.lazy="autofocus"

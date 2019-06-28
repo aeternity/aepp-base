@@ -26,6 +26,7 @@
     </template>
 
     <DetailsField
+      v-if="!transaction.pending"
       name="Date"
       :value="transaction.time.toLocaleString()"
     />
@@ -39,7 +40,6 @@
 
     <Component
       :is="transaction.received ? 'DetailsAmount' : 'DetailsAmountAndFee'"
-      :name="!transaction.received && 'Transaction Fee'"
       :amount="transaction.tx.amount"
       :fee="transaction.tx.fee"
     />

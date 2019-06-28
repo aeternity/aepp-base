@@ -5,16 +5,28 @@ const KEY = 'vuex';
 
 const setState = state => localStorage.setItem(
   KEY,
-  JSON.stringify(state, (key, value) => (value instanceof ArrayBuffer
-    ? { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) }
-    : value)),
+  JSON.stringify(state, (key, value) => {
+    if (value instanceof ArrayBuffer) {
+      return { type: 'ArrayBuffer', data: Array.from(new Uint8Array(value)) };
+    }
+    if (value instanceof Uint8Array) {
+      return { type: 'Uint8Array', data: Array.from(value) };
+    }
+    return value;
+  }),
 );
 
 const getState = () => JSON.parse(
   localStorage.getItem(KEY),
-  (key, value) => (value && value.type === 'ArrayBuffer'
-    ? new Uint8Array(value.data).buffer
-    : value),
+  (key, value) => {
+    if (value && value.type === 'ArrayBuffer') {
+      return new Uint8Array(value.data).buffer;
+    }
+    if (value && value.type === 'Uint8Array') {
+      return new Uint8Array(value.data);
+    }
+    return value;
+  },
 );
 
 export const resetState = () => {

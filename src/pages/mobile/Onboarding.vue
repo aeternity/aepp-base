@@ -9,7 +9,7 @@
 
     <footer>
       <AeButton
-        :to="{ name: 'set-password'}"
+        :to="{ name: 'intro'}"
         size="small"
         plain
       >
@@ -27,7 +27,7 @@
         />
       </TransitionGroup>
       <AeButton
-        :to="{ name: isLastStep ? 'set-password' : stepRouteNames[currentStepIdx + 1] }"
+        :to="{ name: isLastStep ? 'intro' : stepRouteNames[currentStepIdx + 1] }"
         size="small"
         plain
       >

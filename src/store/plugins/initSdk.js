@@ -79,24 +79,19 @@ export default (store) => {
   };
 
   let lastNetwork;
-  let latestSdkPromise;
 
   store.watch(
     ({ onLine }, { currentNetwork }) => ({ ...currentNetwork, onLine }),
     async (currentNetwork) => {
       if (isEqual(currentNetwork, lastNetwork)) return;
       lastNetwork = currentNetwork;
+      if (store.state.sdk && !store.state.sdk.then) store.state.sdk.destroyInstance();
       const sdkPromise = createSdk(currentNetwork.url);
-      latestSdkPromise = sdkPromise;
-      let sdk = null;
-      try {
-        sdk = await sdkPromise;
-      } finally {
-        if (sdkPromise === latestSdkPromise) {
-          if (store.state.sdk) store.state.sdk.destroyInstance();
-          store.commit('setSdk', sdk);
-        } else sdk.destroyInstance();
-      }
+      const sdkThenable = { then: sdkPromise.then.bind(sdkPromise) };
+      store.commit('setSdk', sdkThenable);
+      const sdk = await sdkThenable.then(s => s, () => null);
+      if (sdkThenable === store.state.sdk) store.commit('setSdk', sdk);
+      else if (sdk) sdk.destroyInstance();
     },
     { immediate: true },
   );

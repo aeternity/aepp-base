@@ -1,28 +1,30 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import './ui-common';
-import './register-modals';
+import registerModals from './router/modals';
 import sync from './lib/vuexRouterSync';
 import VeeValidate from './lib/veeValidatePlugin';
-import App from './App.vue';
-import AppDesktop from './AppDesktop.vue';
-import router from './router';
+import routerPromise from './router';
 import store from './store';
 import uiPlugin from './store/plugins/ui';
-import setupAnalytics from './setupAnalytics';
+
+const AppMobile = () => import(/* webpackChunkName: "ui-mobile" */ './App.vue');
+const AppDesktop = () => import(/* webpackChunkName: "ui-desktop" */ './AppDesktop.vue');
 
 Vue.use(Router);
 Vue.use(VeeValidate);
 
-if (process.env.UNFINISHED_FEATURES) {
-  setupAnalytics();
-}
+import(/* webpackChunkName: "analytics" */ './setupAnalytics').then(module => module.default());
 
-sync(store, router);
-uiPlugin(store);
+(async () => {
+  const [router] = await Promise.all([routerPromise, registerModals()]);
+  sync(store, router);
 
-new Vue({
-  store,
-  router,
-  render: h => h(process.env.IS_MOBILE_DEVICE ? App : AppDesktop),
-}).$mount('#app');
+  new Vue({
+    store,
+    router,
+    render: h => h(process.env.IS_MOBILE_DEVICE ? AppMobile : AppDesktop),
+  }).$mount('#app');
+
+  uiPlugin(store);
+})();
