@@ -19,7 +19,26 @@
         :setFocus="f => focus = f"
       />
     </main>
-    <AeToolbar v-if="footer || $slots.footer || footerRight || $slots['footer-right']">
+    <AeToolbar
+      v-if="
+        defaultBottom || $slots['default-bottom']
+          || defaultBottomRight || $slots['default-bottom-right']
+      "
+      class="default-bottom"
+    >
+      <div>
+        {{ defaultBottom }}
+        <slot name="default-bottom" />
+      </div>
+      <div>
+        {{ defaultBottomRight }}
+        <slot name="default-bottom-right" />
+      </div>
+    </AeToolbar>
+    <AeToolbar
+      v-if="footer || $slots.footer || footerRight || $slots['footer-right']"
+      class="footer"
+    >
       <div>
         {{ footer }}
         <slot name="footer" />
@@ -47,6 +66,14 @@ export default {
       default: '',
     },
     headerRight: {
+      type: String,
+      default: '',
+    },
+    defaultBottom: {
+      type: String,
+      default: '',
+    },
+    defaultBottomRight: {
       type: String,
       default: '',
     },
@@ -97,7 +124,7 @@ export default {
   &.error:not(.focus) {
     background-color: $color-primary-positive-3;
 
-    .ae-toolbar {
+    .ae-toolbar.footer {
       background-color: $color-primary-positive-1;
       color: $color-white;
     }
@@ -138,6 +165,11 @@ export default {
     justify-content: space-between;
     @extend %face-sans-xs;
     line-height: rem(32px);
+
+    &.default-bottom {
+      justify-content: flex-end;
+      background-color: transparent;
+    }
   }
 }
 </style>

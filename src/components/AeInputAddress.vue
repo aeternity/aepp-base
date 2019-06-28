@@ -19,7 +19,7 @@
       size="s"
     />
 
-    <template slot="footer-right">
+    <template :slot="$globals.IS_MOBILE_DEVICE ? 'default-bottom-right' : 'footer-right'">
       <template v-if="!$globals.IS_MOBILE_DEVICE">
         <AeToolbarButton
           v-if="accounts.length"
@@ -46,7 +46,7 @@
       </template>
 
       <AeToolbarButton
-        v-if="$globals.UNFINISHED_FEATURES && clipboardReadSupported"
+        v-if="clipboardReadSupported"
         type="button"
         @click="readValueFromClipboard"
       >
