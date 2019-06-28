@@ -22,12 +22,15 @@ export default (store) => {
       pluck('newValue'),
     );
 
-  const getBalance = memoize(address => sdk$
+  const defaultAccountInfo = { balance: BigNumber(0), nonce: 0 };
+  const getAccountInfo = memoize(address => sdk$
     .pipe(
       switchMap(sdk => timer(0, 3000).pipe(map(() => sdk))),
-      switchMap(async sdk => BigNumber(sdk ? await sdk.balance(address).catch(() => 0) : 0)
-        .shiftedBy(-MAGNITUDE)),
-      multicast(new BehaviorSubject(BigNumber(0))),
+      switchMap(sdk => (sdk
+        ? sdk.api.getAccountByPubkey(address).catch(() => defaultAccountInfo)
+        : defaultAccountInfo)),
+      map(aci => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
+      multicast(new BehaviorSubject(defaultAccountInfo)),
       refCountDelay(1000),
     ));
 
@@ -35,8 +38,8 @@ export default (store) => {
     .pipe(
       pluck('newValue'),
       switchMap(acs => (acs.length
-        ? combineLatest(acs.map(({ address }) => getBalance(address)))
-          .pipe(map(balances => balances.map((balance, idx) => ({ ...acs[idx], balance }))))
+        ? combineLatest(acs.map(({ address }) => getAccountInfo(address)))
+          .pipe(map(acis => acis.map((aci, idx) => ({ ...acs[idx], ...aci }))))
         : of([]))),
     );
 
@@ -255,7 +258,6 @@ export default (store) => {
 
   store.state.observables = { // eslint-disable-line no-param-reassign
     topBlockHeight: topBlockHeight$,
-    getBalance,
     getTransaction,
     getTransactionList,
     activeAccount: watchAsObservable(
@@ -265,7 +267,7 @@ export default (store) => {
       .pipe(
         pluck('newValue'),
         switchMap(acc => (acc
-          ? getBalance(acc.address).pipe(map(balance => ({ ...acc, balance })))
+          ? getAccountInfo(acc.address).pipe(map(acci => ({ ...acc, ...acci })))
           : of(acc))),
       ),
     accounts: accounts$,

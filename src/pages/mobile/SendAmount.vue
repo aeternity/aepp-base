@@ -30,8 +30,9 @@
             required: true,
             decimal: MAGNITUDE,
             min_value_exclusive: 0,
-            max_value: activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString(),
+            max_value: max,
           }"
+          :max="max"
           :error="errors.has('amount')"
           :footer="errors.first('amount')"
           autofocus
@@ -39,6 +40,11 @@
         />
       </form>
     </template>
+
+    <DetailsAmount
+      name="Minimum transaction fee"
+      :amount="minFee"
+    />
 
     <DetailsAmount
       name="Balance"
@@ -59,6 +65,7 @@
 import { pick } from 'lodash-es';
 import { mapGetters } from 'vuex';
 import BigNumber from 'bignumber.js';
+import { TxBuilder } from '@aeternity/aepp-sdk/es';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
@@ -66,7 +73,7 @@ import AccountInline from '../../components/AccountInline.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
 import AeButton from '../../components/AeButton.vue';
-import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
+import { MAGNITUDE } from '../../lib/constants';
 
 export default {
   components: {
@@ -85,14 +92,55 @@ export default {
     },
   },
   data: () => ({
-    amount: '',
+    customAmount: '',
+    maxSelected: false,
+    minFee: BigNumber(0),
     MAGNITUDE,
-    MIN_SPEND_TX_FEE,
-    BigNumber,
   }),
-  computed: mapGetters('accounts', ['activeColor']),
+  computed: {
+    ...mapGetters('accounts', ['activeColor']),
+    max() {
+      const max = this.activeAccount.balance.minus(this.minFee);
+      return (max.isPositive() ? max : 0).toString();
+    },
+    amount: {
+      get() {
+        return this.maxSelected ? this.max : this.customAmount;
+      },
+      set(value) {
+        if (value === this.max) this.maxSelected = true;
+        else {
+          this.customAmount = value;
+          this.maxSelected = false;
+        }
+      },
+    },
+  },
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
+  },
+  mounted() {
+    this.$watch(
+      ({ activeAccount: { address, nonce }, amount }) => ({ address, nonce, amount }),
+      ({ address, nonce, amount }) => {
+        const minFee = BigNumber(TxBuilder.calculateMinFee(
+          'spendTx', {
+            gas: this.$store.state.sdk.Ae.defaults.gas,
+            params: {
+              ...this.$store.state.sdk.Ae.defaults,
+              senderId: address,
+              recipientId: address,
+              amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
+              ttl: 0,
+              nonce: nonce + 1,
+              payload: '',
+            },
+          },
+        )).shiftedBy(-MAGNITUDE);
+        if (!minFee.isEqualTo(this.minFee)) this.minFee = minFee;
+      },
+      { immediate: true },
+    );
   },
   methods: {
     async setAmount() {

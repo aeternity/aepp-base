@@ -5,23 +5,26 @@
     :value="`${toMicroString(value)} MICRO AE`"
     value-monospace
   >
-    <DetailsRow class="turtle-rabbit">
-      <img src="../../assets/icons/turtle.svg">
-      <img src="../../assets/icons/rabbit.svg">
-    </DetailsRow>
+    <template v-if="min.isLessThan(max)">
+      <DetailsRow class="turtle-rabbit">
+        <img src="../../assets/icons/turtle.svg">
+        <img src="../../assets/icons/rabbit.svg">
+      </DetailsRow>
 
-    <AeInputRange
-      fill="light"
-      :value="value | toMicroString"
-      :min="min | toMicroString"
-      :max="min.multipliedBy(10) | toMicroString"
-      step="0.01"
-      @input="$emit('input', toBigNumber($event))"
-    />
+      <AeInputRange
+        fill="light"
+        :value="value | toMicroString"
+        :min="min | toMicroString"
+        :max="max | toMicroString"
+        step="0.01"
+        @input="$emit('input', toBigNumber($event))"
+      />
+    </template>
   </DetailsField>
 </template>
 
 <script>
+import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import DetailsField from './DetailsField.vue';
 import DetailsRow from './DetailsRow.vue';
@@ -41,6 +44,18 @@ export default {
   props: {
     value: { type: BigNumber, required: true },
     min: { type: BigNumber, required: true },
+    amount: { type: BigNumber, default: null },
+  },
+  subscriptions() {
+    return pick(this.$store.state.observables, ['activeAccount']);
+  },
+  computed: {
+    max() {
+      const recommendedMax = this.min.multipliedBy(10);
+      if (!this.amount) return recommendedMax;
+      const actualMax = this.activeAccount.balance.minus(this.amount);
+      return actualMax.isLessThan(recommendedMax) ? actualMax : recommendedMax;
+    },
   },
   methods: { toMicroString, toBigNumber },
 };
