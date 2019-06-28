@@ -11,6 +11,7 @@ const UNFINISHED_FEATURES = parseBool(process.env.UNFINISHED_FEATURES);
 module.exports = {
   publicPath: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
+  productionSourceMap: !IS_CORDOVA,
   chainWebpack: config => config.plugin('define').tap((options) => {
     const definitions = Object.assign({}, options[0]);
 
