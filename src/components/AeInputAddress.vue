@@ -19,7 +19,7 @@
       size="s"
     />
 
-    <template slot="footer-buttons">
+    <template slot="default-bottom-right">
       <template v-if="!$globals.IS_MOBILE_DEVICE">
         <AeToolbarButton
           v-if="accounts.length"
