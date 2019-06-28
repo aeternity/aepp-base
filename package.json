@@ -1,6 +1,6 @@
 {
   "name": "aepp-base",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "author": "Sascha Hanse <shanse@posteo.de>",
   "private": true,
   "scripts": {
