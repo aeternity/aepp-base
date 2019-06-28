@@ -19,7 +19,7 @@
       size="s"
     />
 
-    <template slot="default-bottom-right">
+    <template :slot="$globals.IS_MOBILE_DEVICE ? 'default-bottom-right' : 'footer-right'">
       <template v-if="!$globals.IS_MOBILE_DEVICE">
         <AeToolbarButton
           v-if="accounts.length"
