@@ -108,7 +108,7 @@ export default (store) => {
 
       const getRpcPeer = memoize(followerId => new RpcPeer(
         response => socket.emit('message-to-follower', followerId, response), {
-          createAccount: name => store.dispatch('accounts/hdWallet/create', name),
+          createAccount: () => store.dispatch('accounts/hdWallet/create'),
           sign: (...args) => store.state.sdk.sign(...args),
           signTransaction: (...args) => store.state.sdk.signTransaction(...args),
         },
@@ -141,7 +141,7 @@ export default (store) => {
       store.registerModule('remoteConnection', {
         namespaced: true,
         actions: {
-          call(_, { name, args }) {
+          call(_, { name, args = [] }) {
             return leader.call(name, ...args);
           },
         },

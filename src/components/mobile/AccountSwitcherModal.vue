@@ -21,8 +21,8 @@
         </ListItemAccount>
 
         <ListItem
-          :to="{ name: 'accounts-new' }"
           title="New subaccount"
+          @click="createHdWalletAccount"
         >
           <ListItemCircle slot="icon">
             <Plus />
@@ -30,9 +30,9 @@
         </ListItem>
 
         <ListItem
-          :to="{ name: 'vault-new' }"
           title="Create a vault for AirGap"
           class="vault-new"
+          @click="createAirGapAccount"
         >
           <ListItemCircle slot="icon">
             <Plus />
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import { pick } from 'lodash-es';
 import Overlay from '../Overlay.vue';
 import ListItem from '../ListItem.vue';
@@ -87,7 +87,13 @@ export default {
   subscriptions() {
     return pick(this.$store.state.observables, ['accounts', 'totalBalance']);
   },
-  methods: mapMutations('accounts', ['setActiveIdx']),
+  methods: {
+    ...mapMutations('accounts', ['setActiveIdx']),
+    ...mapActions({
+      createHdWalletAccount: 'accounts/hdWallet/create',
+      createAirGapAccount: 'accounts/airGap/create',
+    }),
+  },
 };
 </script>
 
