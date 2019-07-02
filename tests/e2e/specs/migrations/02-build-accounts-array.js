@@ -10,7 +10,6 @@ describe('Migration 2: Build accounts array', () => {
       },
       rpcUrl: 'https://sdk-mainnet.aepps.com',
       selectedIdentityIdx: 2,
-      addressBook: [],
       customNetworks: [],
       apps: [{
         host: 'example-aepp.origin.aepps.com',

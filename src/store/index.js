@@ -25,7 +25,7 @@ const store = new Vuex.Store({
     persistState(
       state => state,
       ({
-        migrations, sdkUrl, addressBook, customNetworks,
+        migrations, sdkUrl, customNetworks,
         apps, cachedAppManifests, peerId,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
         mobile: { readSecurityCourses, followers } = {},
@@ -34,7 +34,6 @@ const store = new Vuex.Store({
         migrations,
         peerId,
         sdkUrl,
-        addressBook,
         customNetworks,
         accounts: {
           list: list.map(({ name, address, source }) => {

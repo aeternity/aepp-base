@@ -20,10 +20,7 @@
         <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
 
-      <ButtonPlain
-        :to="{ name: 'address-book' }"
-        :disabled="!$globals.UNFINISHED_FEATURES"
-      >
+      <ButtonPlain disabled>
         <Contacts />
         <div>Contacts</div>
       </ButtonPlain>

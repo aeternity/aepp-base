@@ -43,9 +43,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import {
-  Grid, Receive, Contacts, Settings,
-} from '../icons';
+import { Grid, Receive, Settings } from '../icons';
 import ButtonPlain from '../ButtonPlain.vue';
 import AeIdenticon from '../AeIdenticon.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
@@ -66,11 +64,7 @@ export default {
       name: 'Receive',
       routeName: 'receive',
       icon: Receive,
-    }, ...process.env.UNFINISHED_FEATURES ? [{
-      name: 'Contacts',
-      routeName: 'address-book',
-      icon: Contacts,
-    }] : [], {
+    }, {
       name: 'Settings',
       routeName: 'settings',
       icon: Settings,

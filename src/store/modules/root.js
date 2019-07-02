@@ -13,7 +13,6 @@ export default {
     sdkUrl: networksRegistry[0].url,
     sdk: null,
     serviceWorkerRegistration: null,
-    addressBook: [],
     customNetworks: [],
     apps: [],
     cachedAppManifests: {},
@@ -95,9 +94,6 @@ export default {
     },
     setSdk(state, sdk) {
       state.sdk = sdk;
-    },
-    addAddressBookItem(state, item) {
-      state.addressBook.push(item);
     },
     addNetwork(state, network) {
       state.customNetworks.push(network);

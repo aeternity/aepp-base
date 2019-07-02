@@ -6,7 +6,7 @@ import RpcPeer from '../../lib/rpc';
 const io = async () => (await import(/* webpackChunkName: "socket-io" */ 'socket.io-client')).default;
 
 const getStateForSync = ({
-  sdkUrl, accounts: { list, activeIdx }, addressBook, apps, customNetworks,
+  sdkUrl, accounts: { list, activeIdx }, apps, customNetworks,
 }) => ({
   sdkUrl,
   accounts: {
@@ -24,7 +24,6 @@ const getStateForSync = ({
     }),
     activeIdx,
   },
-  addressBook,
   apps,
   customNetworks,
 });
