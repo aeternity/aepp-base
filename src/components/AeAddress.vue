@@ -22,6 +22,7 @@ export default {
       type: [String, Number],
       default: 0,
     },
+    disableCopyOnClick: Boolean,
   },
   computed: {
     lines() {
@@ -51,12 +52,13 @@ export default {
       'span',
       {
         class: ['ae-address', this.length],
-        directives: [{
-          name: 'copy-on-click',
-          value: this.address,
-        }, {
-          name: 'remove-spaces-on-copy',
-        }],
+        directives: [
+          ...this.disableCopyOnClick ? [] : [{
+            name: 'copy-on-click',
+            value: this.address,
+          }],
+          { name: 'remove-spaces-on-copy' },
+        ],
       },
       this.lines.reduce((p, line, idx) => [...p, idx ? createElement('br') : null, line], []),
     );
@@ -66,7 +68,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/placeholders/typography.scss';
-@import '../styles/variables/colors.scss';
+@import './address-copied.scss';
 
 .ae-address {
   @extend %face-mono-base;
@@ -74,22 +76,7 @@ export default {
   letter-spacing: rem(1.9px);
 
   &.v-copied {
-    position: relative;
-
-    &:before {
-      content: 'address copied';
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: $color-neutral-negative-3;
-      background: rgba($color-neutral-positive-1, 0.9);
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-    }
+    @extend %address-copied;
   }
 
   &.short.v-copied:before {

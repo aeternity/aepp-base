@@ -1,5 +1,6 @@
 <template>
   <AeCard
+    v-copy-on-click="address"
     :fill="fill"
     class="ae-account"
   >
@@ -12,6 +13,7 @@
       <AeAddress
         :address="address"
         length="medium"
+        disable-copy-on-click
       />
     </main>
 
@@ -26,12 +28,14 @@
 <script>
 import { mapState } from 'vuex';
 import BigNumber from 'bignumber.js';
+import copyOnClick from '../directives/copyOnClick';
 import AeCard from './AeCard.vue';
 import AeIdenticon from './AeIdenticon.vue';
 import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 
 export default {
+  directives: { copyOnClick },
   components: {
     AeCard,
     AeIdenticon,
@@ -65,8 +69,13 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/placeholders/typography.scss';
 @import '../styles/variables/colors.scss';
+@import './address-copied.scss';
 
 .ae-account.ae-card {
+  &.v-copied {
+    @extend %address-copied;
+  }
+
   header {
     display: flex;
     align-items: center;
