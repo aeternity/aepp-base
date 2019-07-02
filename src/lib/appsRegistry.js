@@ -23,4 +23,9 @@ export const aeternityApps = [{
   description: 'Based on the example from JS SDK.',
   path: 'example-aepp.origin.aepps.com',
   icon: blockchainExplorerIcon,
+}, {
+  name: 'Naming æpp example',
+  description: '',
+  path: 'aeternity.com/aepp-naming-example',
+  icon: blockchainExplorerIcon,
 }]];
