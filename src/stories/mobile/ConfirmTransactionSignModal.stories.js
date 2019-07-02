@@ -45,7 +45,7 @@ storiesOf('mobile ConfirmTransactionSignModal', module)
     amount,
     fee,
     minFee,
-    payload: 'Example payload',
+    payload: 'ba_RXhhbXBsZSBwYXlsb2FkcuABtw==',
   }))
   .add('contractCreate', genStory({
     tag: 42, code, callData, amount, fee, minFee,

@@ -90,7 +90,13 @@ const genDetailsAddress = genDetailsWrapper(DetailsAddress, 'address');
 const genDetailsField = genDetailsWrapper(DetailsField, 'value');
 
 const TX_FIELDS = {
-  payload: genDetailsRawData('Payload'),
+  payload: {
+    functional: true,
+    render(createElement, { props: { value } }) {
+      const data = Crypto.decodeBase64Check(Crypto.assertedType(value, 'ba')).toString();
+      return data ? createElement(DetailsRawData, { attrs: { name: 'Payload', data } }) : null;
+    },
+  },
   recipientId: genDetailsAddress('Recipient Account'),
   code: genDetailsRawData('Contract compiled code'),
   callData: genDetailsRawData('Call data'),
