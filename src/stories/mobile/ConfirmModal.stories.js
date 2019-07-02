@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
+import { Observable } from 'rxjs';
 import Vuex from 'vuex';
 import ConfirmAccountAccessModal from '../../components/mobile/ConfirmAccountAccessModal.vue';
 import ConfirmContractCallModal from '../../components/mobile/ConfirmContractCallModal.vue';
@@ -28,6 +29,9 @@ const base = {
         list: [account],
       },
       addressBook: [],
+      observables: {
+        activeAccount: new Observable(subscriber => subscriber.next(account)),
+      },
     },
     getters: {
       'accounts/active': () => account,
