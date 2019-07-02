@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
+import '../components/icon.scss';
 import Notification from '../components/Notification.vue';
 import NotificationSpend from '../components/NotificationSpend.vue';
 import { amount } from './mock-data';
