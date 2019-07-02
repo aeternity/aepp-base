@@ -32,9 +32,6 @@ export default {
     setActiveIdx(state, activeIdx) {
       state.activeIdx = activeIdx;
     },
-    setName(state, name) {
-      this.getters['accounts/active'].name = name;
-    },
     add(state, {
       address, name, active, ...source
     }) {

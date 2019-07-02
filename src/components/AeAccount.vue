@@ -5,26 +5,7 @@
   >
     <header>
       <AeIdenticon :address="address" />
-      <form
-        v-if="nameEditable"
-        @submit.prevent="$emit('name-blur')"
-      >
-        <AeInputPlain
-          v-focus="nameEditable"
-          :value="name"
-          placeholder="Account name"
-          fill="light"
-          maxlength="16"
-          @input="$emit('name-input', $event)"
-          @blur.native="$emit('name-blur')"
-        />
-      </form>
-      <span v-else>
-        {{ name }}
-      </span>
-      <div class="slot-icon">
-        <slot name="icon" />
-      </div>
+      {{ name }}
     </header>
 
     <main>
@@ -44,20 +25,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import { focus } from 'vue-focus';
 import BigNumber from 'bignumber.js';
 import AeCard from './AeCard.vue';
 import AeIdenticon from './AeIdenticon.vue';
-import AeInputPlain from './AeInputPlain.vue';
 import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 
 export default {
-  directives: { focus },
   components: {
     AeCard,
     AeIdenticon,
-    AeInputPlain,
     AeAddress,
     Balance,
   },
@@ -74,7 +51,6 @@ export default {
       type: BigNumber,
       required: true,
     },
-    nameEditable: Boolean,
     source: {
       type: Object,
       required: true,
@@ -95,15 +71,8 @@ export default {
     display: flex;
     align-items: center;
     margin: rem(12px) rem(16px);
+    @extend %face-sans-base;
     color: $color-neutral-maximum;
-
-    .slot-icon {
-      margin-left: auto;
-    }
-
-    span {
-      @extend %face-sans-base;
-    }
 
     .ae-identicon {
       margin-right: rem(8px);
