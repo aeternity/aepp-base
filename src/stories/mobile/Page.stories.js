@@ -31,6 +31,7 @@ const base = {
         header-fill="primary"
         left-button-icon-name="back"
         right-button-icon-name="close"
+        hide-tab-bar
         @left-button-click="leftButtonClickHandler"
         @right-button-click="rightButtonClickHandler"
       >
@@ -73,6 +74,7 @@ storiesOf('mobile Page', module)
           header-fill="primary"
           left-button-icon-name="back"
           right-button-icon-name="close"
+          hide-tab-bar
           @left-button-click="leftButtonClickHandler"
           @right-button-click="rightButtonClickHandler"
         >
