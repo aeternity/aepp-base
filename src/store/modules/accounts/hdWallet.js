@@ -223,22 +223,22 @@ export default {
         return dispatch('confirmRawDataSigning', txBinary);
       }
 
-      const modalName = {
-        [TX_TYPE.spend]: 'confirmSpend',
-        [TX_TYPE.contractCreate]: 'confirmContractDeploy',
-        [TX_TYPE.contractCall]: 'confirmContractCall',
-      }[OBJECT_ID_TX_TYPE[txObject.tag]];
-      if (!modalName) return dispatch('confirmRawDataSigning', txBinary);
+      const SUPPORTED_TX_TYPES = [TX_TYPE.spend, TX_TYPE.contractCreate, TX_TYPE.contractCall];
+      if (!SUPPORTED_TX_TYPES.includes(OBJECT_ID_TX_TYPE[txObject.tag])) {
+        return dispatch('confirmRawDataSigning', txBinary);
+      }
 
       const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
       const confirmProps = {
-        ...txObject,
-        amount: format(txObject.amount),
-        fee: format(txObject.fee),
-        minFee: format(TxBuilder.calculateFee(
-          0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
-        )),
-        name: modalName,
+        name: 'confirmTransactionSign',
+        transaction: {
+          ...txObject,
+          amount: format(txObject.amount),
+          fee: format(txObject.fee),
+          minFee: format(TxBuilder.calculateFee(
+            0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
+          )),
+        },
       };
 
       return TxBuilder.buildTx(
