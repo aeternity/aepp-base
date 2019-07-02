@@ -95,6 +95,18 @@ export default {
         .getAccountByPubkey(account.address).then(() => true, () => false));
     },
 
+    handleUnlock: ({ state: { mnemonicBackedUp }, dispatch }, isCreate) => Promise.all([
+      dispatch('discover'),
+      (async () => {
+        if (isCreate) {
+          await dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
+        }
+        if (!mnemonicBackedUp) {
+          await dispatch('modals/open', { name: 'notificationMnemonicBackup' }, { root: true });
+        }
+      })(),
+    ]),
+
     async createWallet({ commit, dispatch }, mnemonic) {
       if (mnemonic) commit('markMnemonicAsBackedUp');
       const newMnemonic = mnemonic || generateMnemonic();
@@ -102,8 +114,7 @@ export default {
       commit('setEncryptedWallet', { mnemonic: newMnemonic });
       commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
       dispatch('create', 'Main Account');
-      dispatch('discover');
-      dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
+      await dispatch('handleUnlock', true);
     },
 
     async setWalletPassword({ state: { wallet, mnemonic }, commit }, password) {
@@ -171,7 +182,7 @@ export default {
         wallet = generateHdWallet(mnemonicToSeed(wallet.mnemonic));
       }
       commit('setWallet', wallet);
-      dispatch('discover');
+      await dispatch('handleUnlock');
     },
 
     async deleteMnemonic({ state: { passwordDerivedKey, encryptedWallet, wallet }, commit }) {
@@ -189,7 +200,7 @@ export default {
       commit('setMnemonic', '');
     },
 
-    async create({ state: { wallet }, getters: { nextIdx }, commit }, name) {
+    create({ state: { wallet }, getters: { nextIdx }, commit }, name) {
       commit('accounts/add', {
         ...getHdWalletAccount(wallet, nextIdx), name, active: true, type: 'hd-wallet',
       }, { root: true });
