@@ -25,7 +25,10 @@
       </template>
     </Guide>
 
-    <DetailsAmount :amount="transaction.amount" />
+    <DetailsAmount
+      v-if="transaction.amount"
+      :amount="transaction.amount"
+    />
 
     <DetailsFeeInput
       v-model="newFee"
@@ -61,6 +64,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import { Crypto } from '@aeternity/aepp-sdk/es';
 import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
@@ -70,6 +74,7 @@ import DetailsAmount from './DetailsAmount.vue';
 import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';
+import DetailsField from './DetailsField.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
 import AeButton from '../AeButton.vue';
 
@@ -82,6 +87,7 @@ const genDetailsWrapper = (Component, valueFieldName) => (name, otherProps) => (
 
 const genDetailsRawData = genDetailsWrapper(DetailsRawData, 'data');
 const genDetailsAddress = genDetailsWrapper(DetailsAddress, 'address');
+const genDetailsField = genDetailsWrapper(DetailsField, 'value');
 
 const TX_FIELDS = {
   payload: genDetailsRawData('Payload'),
@@ -90,6 +96,44 @@ const TX_FIELDS = {
   callData: genDetailsRawData('Call data'),
   contractId: genDetailsAddress('Contract Address'),
   commitmentId: genDetailsRawData('Commitment'),
+  name: {
+    functional: true,
+    render(createElement, { props: { value } }) {
+      return createElement(DetailsField, {
+        attrs: {
+          name: 'Name',
+          value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString(),
+        },
+      });
+    },
+  },
+  nameSalt: genDetailsField('Name salt'),
+  nameId: genDetailsRawData('Name ID'),
+  pointers: {
+    functional: true,
+    render(createElement, { props: { value } }) {
+      return createElement('div', value.map(({ key, id }, idx) => {
+        switch (key) {
+          case 'account_pubkey':
+            return createElement(DetailsAddress, {
+              key: idx,
+              attrs: { name: `Pointer #${idx + 1}`, address: id },
+            });
+          default:
+            return [
+              createElement(DetailsField, {
+                key: `${idx}-1`,
+                attrs: { name: `Pointer #${idx + 1} key`, value: key },
+              }),
+              createElement(DetailsRawData, {
+                key: `${idx}-2`,
+                attrs: { name: `Pointer #${idx + 1} ID`, data: id },
+              }),
+            ];
+        }
+      }));
+    },
+  },
 };
 
 export default {
@@ -127,6 +171,9 @@ export default {
       return {
         [TX_TYPE.contractCreate]: 'Create a new contract',
         [TX_TYPE.contractCall]: 'Call contract method',
+        [TX_TYPE.namePreClaim]: 'Preclaim name',
+        [TX_TYPE.nameClaim]: 'Claim name',
+        [TX_TYPE.nameUpdate]: 'Update name',
       }[this.txType] || '';
     },
   },

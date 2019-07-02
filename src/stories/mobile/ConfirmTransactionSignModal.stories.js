@@ -52,4 +52,32 @@ storiesOf('mobile ConfirmTransactionSignModal', module)
   }))
   .add('contractCall', genStory({
     tag: 43, contractId: contractAddress, callData, amount, fee, minFee,
+  }))
+  .add('namePreClaim', genStory({
+    tag: 33,
+    commitmentId: 'cm_GF7MX1V5ZxZXgAp9E2V9jS4W2gE3D8Q66qwZsg5kGKvqKMSWB',
+    fee,
+    minFee,
+  }))
+  .add('nameClaim', genStory({
+    tag: 32,
+    name: 'nm_xJg74ni9AnNyKxBQN7ZZnXA',
+    nameSalt: '5768289676548235',
+    fee,
+    minFee,
+  }))
+  .add('nameUpdate', genStory({
+    tag: 34,
+    clientTtl: '1',
+    nameId: 'nm_Pt4qXUK6eSV5wdUGWYqDFcbfb1u1NHP1Fhmf5GmeYzMd4wAme',
+    nameTtl: '50000',
+    pointers: [{
+      id: 'ak_2swhLkgBPeeADxVTAVCJnZLY5NZtCFiM93JxsEaMuC59euuFRQ',
+      key: 'account_pubkey',
+    }, {
+      id: 'example data',
+      key: 'some_data',
+    }],
+    fee,
+    minFee,
   }));
