@@ -14,6 +14,7 @@ export default {
 
   account: {
     type: 'air-gap',
+    typeVerbose: 'AirGap account',
     color: 'alternative',
   },
 

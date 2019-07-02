@@ -18,6 +18,7 @@ export default {
 
   account: {
     type: 'hd-wallet',
+    typeVerbose: 'Account',
     color: 'primary',
   },
 

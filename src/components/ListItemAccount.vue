@@ -20,6 +20,7 @@
 
 <script>
 import BigNumber from 'bignumber.js';
+import { mapState } from 'vuex';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
 import prefixedAmount from '../filters/prefixedAmount';
@@ -27,9 +28,9 @@ import prefixedAmount from '../filters/prefixedAmount';
 export default {
   components: { ListItem, AeIdenticon },
   props: {
-    name: { type: String, required: true },
     address: { type: String, required: true },
     balance: { type: BigNumber, default: null },
+    source: { type: Object, required: true },
     subtitle: { type: String, default: 'balance' },
   },
   computed: {
@@ -43,6 +44,9 @@ export default {
           return this.subtitle;
       }
     },
+    ...mapState('accounts', {
+      name(state, { getName }) { return getName(this); },
+    }),
   },
 };
 </script>

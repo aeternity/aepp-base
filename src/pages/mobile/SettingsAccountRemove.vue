@@ -21,7 +21,10 @@
       </ListItemAccount>
     </AeCard>
 
-    <AeAccountReverse :address="account.address" />
+    <AeAccountReverse
+      v-bind="account"
+      hide-name
+    />
   </MobilePage>
 </template>
 

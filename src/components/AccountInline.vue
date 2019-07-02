@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import AeIdenticon from './AeIdenticon.vue';
 import AeAddress from './AeAddress.vue';
 
@@ -21,14 +22,12 @@ export default {
   props: {
     address: { type: String, required: true },
   },
-  computed: {
-    name() {
-      return (
-        this.$store.state.accounts.list
-          .find(({ address }) => address === this.address) || { name: '' }
-      ).name;
+  computed: mapState('accounts', {
+    name({ list }, { getName }) {
+      const account = list.find(({ address }) => address === this.address);
+      return account ? getName(account) : '';
     },
-  },
+  }),
 };
 </script>
 

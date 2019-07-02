@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import AeCard from '../AeCard.vue';
 import { AeQrCode } from '../async';
 import AeAddress from '../AeAddress.vue';
@@ -34,8 +35,12 @@ export default {
   },
   props: {
     address: { type: String, required: true },
-    name: { type: String, default: '' },
+    source: { type: Object, required: true },
+    hideName: Boolean,
   },
+  computed: mapState('accounts', {
+    name(state, { getName }) { return this.hideName ? '' : getName(this); },
+  }),
 };
 </script>
 

@@ -10,16 +10,15 @@ const getStateForSync = ({
 }) => ({
   sdkUrl,
   accounts: {
-    list: list.map(({ name, address, source }) => {
+    list: list.map(({ address, source }) => {
       switch (source.type) {
         case 'hd-wallet':
           return {
-            name,
             address,
             source: pick(source, ['type', 'idx']),
           };
         default:
-          return { name, address, source };
+          return { address, source };
       }
     }),
     activeIdx,

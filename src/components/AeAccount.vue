@@ -43,10 +43,6 @@ export default {
     Balance,
   },
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
     address: {
       type: String,
       required: true,
@@ -62,6 +58,7 @@ export default {
   },
   computed: mapState('accounts', {
     fill(state, { getColor }) { return getColor(this); },
+    name(state, { getName }) { return getName(this); },
   }),
 };
 </script>
