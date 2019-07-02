@@ -28,7 +28,7 @@ export default (store) => {
       switchMap(sdk => timer(0, 3000).pipe(map(() => sdk))),
       switchMap(sdk => (sdk
         ? sdk.api.getAccountByPubkey(address).catch(() => defaultAccountInfo)
-        : defaultAccountInfo)),
+        : Promise.resolve(defaultAccountInfo))),
       map(aci => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
       multicast(new BehaviorSubject(defaultAccountInfo)),
       refCountDelay(1000),
