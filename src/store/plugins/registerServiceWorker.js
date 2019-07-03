@@ -9,7 +9,9 @@ export default (store) => {
       updated() {
         store.dispatch('modals/open', {
           name: 'notification',
-          text: 'New version is available, please restart the Base æpp',
+          text: `A new version is available. ${process.env.IS_PWA
+            ? 'Please restart the Base æpp'
+            : 'Please close all Base æpp tabs and navigate to the Base æpp again to restart.'}`,
         });
       },
     });
