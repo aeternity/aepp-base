@@ -27,7 +27,6 @@
     "@download/blockies": "^1.0.3",
     "@ledgerhq/hw-transport-u2f": "^4.63.2",
     "@zxing/library": "^0.14.2",
-    "base-x": "3.0.6",
     "bignumber.js": "^9.0.0",
     "bluebird": "^3.5.5",
     "copy-to-clipboard": "^3.2.0",
