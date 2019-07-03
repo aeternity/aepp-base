@@ -47,9 +47,13 @@ export default {
   props: {
     idx: { type: Number, required: true },
   },
-  computed: mapState({
-    account({ accounts: { list } }) {
-      return list[this.idx];
+  computed: mapState('accounts', {
+    account({ list }, { getName }) {
+      const account = list[this.idx];
+      return {
+        ...account,
+        name: getName(account),
+      };
     },
   }),
   methods: {
