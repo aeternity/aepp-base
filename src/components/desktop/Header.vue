@@ -27,7 +27,7 @@
       @click="toggleSidebar"
     >
       <div class="details">
-        {{ account ? account.name : 'Connect an account' }}
+        {{ account ? name : 'Connect an account' }}
         <div class="balance">
           {{
             account
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { Grid, Receive, Settings } from '../icons';
 import ButtonPlain from '../ButtonPlain.vue';
 import AeIdenticon from '../AeIdenticon.vue';
@@ -73,6 +73,9 @@ export default {
   subscriptions() {
     return { account: this.$store.state.observables.activeAccount };
   },
+  computed: mapState('accounts', {
+    name(state, { getName }) { return this.account && getName(this.account); },
+  }),
   methods: {
     prefixedAmount,
     ...mapMutations(['toggleSidebar']),
