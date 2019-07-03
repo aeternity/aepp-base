@@ -71,7 +71,7 @@
     "cordova-android": "^8.0.0",
     "cordova-ios": "^5.0.1",
     "cordova-res": "^0.5.1",
-    "eslint": "^6.0.1",
+    "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
     "jest-canvas-mock": "^2.1.0",
     "node-sass": "^4.12.0",
