@@ -2,7 +2,7 @@
   <MobilePage
     :header-fill="accountModule.account.color"
     right-button-icon-name="close"
-    @right-button-click="$router.back"
+    @right-button-click="() => $router.back()"
   >
     <template slot="header">
       <Guide fill="neutral">
