@@ -1,2 +1,26 @@
 {
+  "settings": {
+    "label": "Settings",
+    "network": "Network",
+    "remote-connections": "Remote connections",
+    "remote-connections-count": "No devices connected | {n} device connected | {n} devices connected",
+    "app-permissions": "Aepp account access",
+    "app-permissions-count": "No aepps have account access | {n} aepp have account access | {n} aepps have account access",
+    "security-courses": "AE Security Courses",
+    "security-courses-subtitle": "Disclaimer and information",
+    "mnemonic": "Backup Recovery Phrase",
+    "mnemonic-subtitle": "Secure your funds",
+    "password": "Wallet Authentication",
+    "password-subtitle": "Setup and manage a password",
+    "language": "Language",
+    "wallets": "Synced Wallets",
+    "account": "Account",
+    "logout": "Logout",
+    "logout-subtitle": "And see you soon!",
+    "reset-mobile": "Reset Key Storage",
+    "reset-mobile-subtitle": "After resetting, a recovery is required",
+    "reset-desktop": "Reset All Data",
+    "reset-desktop-subtitle": "",
+    "version": "Version"
+  }
 }

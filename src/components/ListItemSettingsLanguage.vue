@@ -2,7 +2,7 @@
   <ListItem
     :subtitle="active.name"
     v-bind="$attrs"
-    title="Language"
+    :title="$t('settings.language')"
   >
     <ListItemCircle slot="icon">
       <Globe />

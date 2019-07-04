@@ -2,7 +2,7 @@
   <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
-    title="Language"
+    :title="$t('settings.language')"
     header-fill="light"
     fill="neutral"
   >

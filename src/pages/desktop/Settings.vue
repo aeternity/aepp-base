@@ -1,7 +1,7 @@
 <template>
   <div class="settings">
     <Guide size="big">
-      <em>Settings</em>
+      <em>{{ $t('settings.label') }}</em>
     </Guide>
 
     <AeCard fill="maximum">
