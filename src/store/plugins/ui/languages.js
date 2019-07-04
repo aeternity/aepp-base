@@ -67,6 +67,17 @@ export default async (store) => {
     },
   });
 
+  VueI18n.prototype.getChoiceIndex = (choice, choicesLength) => {
+    let value = {
+      one: 1,
+      few: 2,
+      many: 3,
+      other: 3,
+    }[new Intl.PluralRules(store.state.languages.activeCode).select(choice)];
+    if (choice === 0) value = 0;
+    return Math.min(value, choicesLength - 1);
+  };
+
   await store.dispatch('languages/fetch', store.state.languages.activeCode);
   i18n.locale = store.state.languages.activeCode;
 };
