@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import Vuex from 'vuex';
 import ConfirmTransactionSignModal from '../../components/mobile/ConfirmTransactionSignModal.vue';
 import {
-  account, accounts, accountsModule, contractAddress, callData, code, amount, fee, minFee,
+  account, accounts, accountsModules, contractAddress, callData, code, amount, fee, minFee,
 } from '../mock-data';
 
 const genStory = transaction => () => ({
@@ -14,7 +14,7 @@ const genStory = transaction => () => ({
     reject: action('reject'),
   },
   store: new Vuex.Store({
-    modules: { accounts: accountsModule },
+    modules: accountsModules,
     state: {
       mobile: {
         stepFraction: {

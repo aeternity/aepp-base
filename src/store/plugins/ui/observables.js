@@ -5,10 +5,10 @@ import {
   multicast, pluck, switchMap, map, filter, pairwise, startWith, catchError,
 } from 'rxjs/operators';
 import { refCountDelay } from 'rxjs-etc/operators';
-import { camelCase, memoize } from 'lodash-es';
+import { memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
-import { fetchJson, mapKeysDeep } from '../../utils';
+import { fetchMiddlewareEndpoint } from '../../utils';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -119,8 +119,7 @@ export default (store) => {
     mdwUrl.searchParams.set('limit', limit.toString());
     mdwUrl.searchParams.set('page', page.toString());
     const txs = await Promise.all(
-      mapKeysDeep(await fetchJson(mdwUrl), (value, key) => camelCase(key))
-        .map(normalizeTransaction),
+      (await fetchMiddlewareEndpoint(mdwUrl)).map(normalizeTransaction),
     );
     txs.forEach(registerTx);
     return txs;
