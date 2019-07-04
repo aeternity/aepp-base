@@ -32,7 +32,7 @@
       <div class="wrapper">
         <slot name="footer" />
       </div>
-      <tab-bar v-if="!hideTabBar" />
+      <TabBar v-if="!hideTabBar" />
     </footer>
   </div>
 </template>

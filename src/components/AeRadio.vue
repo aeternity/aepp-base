@@ -4,7 +4,7 @@
       :name="name"
       :value="value"
       :checked="checked"
-      :type="checkbox? 'checkbox' : 'radio'"
+      :type="checkbox ? 'checkbox' : 'radio'"
       @change="$emit('change')"
     >
     <span slot="right">
