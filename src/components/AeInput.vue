@@ -30,7 +30,7 @@ export default {
   directives: { focus },
   props: {
     value: { type: String, default: '' },
-    autofocus: { type: Boolean, default: false },
+    autofocus: Boolean,
   },
 };
 </script>

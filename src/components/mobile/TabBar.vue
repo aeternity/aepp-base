@@ -58,7 +58,7 @@ export default {
     MnemonicBackupWarning,
   },
   props: {
-    showAccountSwitcher: { type: Boolean },
+    showAccountSwitcher: Boolean,
   },
   computed: {
     ...mapGetters({ activeAccount: 'accounts/active' }),

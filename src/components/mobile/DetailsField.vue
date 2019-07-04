@@ -30,7 +30,7 @@ export default {
       type: String,
       default: '',
     },
-    valueMonospace: { type: Boolean },
+    valueMonospace: Boolean,
   },
 };
 </script>

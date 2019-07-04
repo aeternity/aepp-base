@@ -62,7 +62,7 @@ export default {
     copyOnClick,
   },
   props: {
-    forLedger: { type: Boolean, default: false },
+    forLedger: Boolean,
   },
   subscriptions() {
     return {
