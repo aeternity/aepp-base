@@ -43,9 +43,9 @@ export default {
     to: { type: [Object, String], default: undefined },
     title: { type: String, default: undefined },
     subtitle: { type: String, default: undefined },
-    subtitleMonospace: { type: Boolean, default: false },
-    inactive: { type: Boolean, default: false },
-    borderDark: { type: Boolean, default: false },
+    subtitleMonospace: Boolean,
+    inactive: Boolean,
+    borderDark: Boolean,
   },
   computed: {
     renderAs() {

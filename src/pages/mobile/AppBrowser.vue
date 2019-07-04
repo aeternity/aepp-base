@@ -42,7 +42,7 @@
       @load="loading = false"
     />
 
-    <tab-bar />
+    <TabBar />
   </div>
 </template>
 

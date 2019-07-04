@@ -32,7 +32,7 @@
       <div class="wrapper">
         <slot name="footer" />
       </div>
-      <tab-bar v-if="!hideTabBar" />
+      <TabBar v-if="!hideTabBar" />
     </footer>
   </div>
 </template>
@@ -67,7 +67,7 @@ export default {
       ].includes(value),
       default: 'light',
     },
-    hideTabBar: { type: Boolean },
+    hideTabBar: Boolean,
   },
   async mounted() {
     if (process.env.IS_CORDOVA && process.env.IS_IOS) {

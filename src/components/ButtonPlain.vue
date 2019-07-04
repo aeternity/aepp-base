@@ -17,7 +17,7 @@ export default {
   components: { AeLink },
   props: {
     to: { type: [String, Object], default: null },
-    disabled: { type: Boolean },
+    disabled: Boolean,
   },
 };
 </script>

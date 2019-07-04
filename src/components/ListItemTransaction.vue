@@ -53,8 +53,8 @@ export default {
     ListItem, AeIdenticon, AeAddress, Balance,
   },
   props: {
-    pending: { type: Boolean },
-    received: { type: Boolean },
+    pending: Boolean,
+    received: Boolean,
     time: { type: Date, default: null },
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },

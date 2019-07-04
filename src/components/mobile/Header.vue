@@ -53,8 +53,8 @@ export default {
       ].includes(value),
       default: 'light',
     },
-    shadow: { type: Boolean, default: false },
-    padded: { type: Boolean, default: false },
+    shadow: Boolean,
+    padded: Boolean,
   },
   data: () => ({ scrolled: false }),
   computed: {

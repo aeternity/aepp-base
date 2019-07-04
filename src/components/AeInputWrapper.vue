@@ -57,10 +57,7 @@ import AeToolbar from './AeToolbar.vue';
 export default {
   components: { AeToolbar },
   props: {
-    error: {
-      type: Boolean,
-      default: false,
-    },
+    error: Boolean,
     header: {
       type: String,
       default: '',

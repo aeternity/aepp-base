@@ -16,7 +16,7 @@ import { Close } from '../icons';
 export default {
   components: { ButtonPlain, Close },
   props: {
-    iconClose: { type: Boolean, default: false },
+    iconClose: Boolean,
   },
 };
 </script>

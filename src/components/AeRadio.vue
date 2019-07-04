@@ -4,7 +4,7 @@
       :name="name"
       :value="value"
       :checked="checked"
-      :type="checkbox? 'checkbox' : 'radio'"
+      :type="checkbox ? 'checkbox' : 'radio'"
       @change="$emit('change')"
     >
     <span slot="right">
@@ -21,8 +21,8 @@ export default {
   props: {
     name: { type: String, default: '' },
     value: { type: [String, Number, Boolean], default: '' },
-    checked: { type: Boolean, default: false },
-    checkbox: { type: Boolean, default: false },
+    checked: Boolean,
+    checkbox: Boolean,
   },
 };
 </script>

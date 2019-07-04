@@ -74,10 +74,7 @@ export default {
       type: BigNumber,
       required: true,
     },
-    nameEditable: {
-      type: Boolean,
-      default: false,
-    },
+    nameEditable: Boolean,
     source: {
       type: Object,
       required: true,

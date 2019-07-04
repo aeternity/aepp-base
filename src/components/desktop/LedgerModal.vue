@@ -42,7 +42,7 @@ export default {
   },
   props: {
     title: { type: String, required: true },
-    closable: { type: Boolean, default: false },
+    closable: Boolean,
   },
 };
 </script>

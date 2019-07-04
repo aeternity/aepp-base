@@ -9,7 +9,7 @@
 
     <footer>
       <AeButton
-        :to="{ name: 'intro'}"
+        :to="{ name: 'intro' }"
         size="small"
         plain
       >
