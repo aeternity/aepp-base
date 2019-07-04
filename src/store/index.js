@@ -26,13 +26,14 @@ const store = new Vuex.Store({
       state => state,
       ({
         migrations, sdkUrl, customNetworks,
-        apps, cachedAppManifests, peerId,
+        apps, cachedAppManifests, peerId, languages,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
         mobile: { readSecurityCourses, followers } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
         migrations,
         peerId,
+        languages,
         sdkUrl,
         customNetworks,
         accounts: {

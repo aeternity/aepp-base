@@ -1,6 +1,7 @@
 import browserPathTracker from './browserPathTracker';
 import connectionStatusTracker from './connectionStatusTracker';
 import desktopGuide from './desktopGuide';
+import languages from './languages';
 import ledgerConnection from './ledgerConnection';
 import modals from './modals';
 import notificationOnRemoteConnection from './notificationOnRemoteConnection';
@@ -9,6 +10,7 @@ import unlockWalletIfNotEncrypted from './unlockWalletIfNotEncrypted';
 
 export default store => [
   connectionStatusTracker,
+  languages,
   modals,
   observables,
   ...process.env.IS_MOBILE_DEVICE

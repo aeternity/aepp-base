@@ -75,6 +75,9 @@
         </ListItemCircle>
         <LeftMore slot="right" />
       </ListItem>
+      <ListItemSettingsLanguage :to="{ name: 'settings-language' }">
+        <LeftMore />
+      </ListItemSettingsLanguage>
     </AeCard>
 
     <template v-if="removableAccounts.length">
@@ -124,6 +127,7 @@ import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
+import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import {
   Globe, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
@@ -138,6 +142,7 @@ export default {
     ListItemCircle,
     ListItemAccount,
     ListItemSettingsReset,
+    ListItemSettingsLanguage,
     MnemonicBackupWarning,
     Globe,
     LeftMore,

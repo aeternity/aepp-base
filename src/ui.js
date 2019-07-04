@@ -7,6 +7,7 @@ import VeeValidate from './lib/veeValidatePlugin';
 import routerPromise from './router';
 import store from './store';
 import uiPlugin from './store/plugins/ui';
+import { i18n } from './store/plugins/ui/languages';
 
 const AppMobile = () => import(/* webpackChunkName: "ui-mobile" */ './App.vue');
 const AppDesktop = () => import(/* webpackChunkName: "ui-desktop" */ './AppDesktop.vue');
@@ -23,6 +24,7 @@ import(/* webpackChunkName: "analytics" */ './setupAnalytics').then(module => mo
   new Vue({
     store,
     router,
+    i18n,
     render: h => h(process.env.IS_MOBILE_DEVICE ? AppMobile : AppDesktop),
   }).$mount('#app');
 
