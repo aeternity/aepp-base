@@ -14,28 +14,16 @@ export default {
 
   account: {
     type: 'air-gap',
+    typeVerbose: 'AirGap account',
     color: 'alternative',
   },
 
-  state: {
-    newAccountName: '',
-  },
-
-  mutations: {
-    setNewAccountName(state, newAccountName) {
-      state.newAccountName = newAccountName;
-    },
-  },
-
   actions: process.env.IS_MOBILE_DEVICE ? {
-    createByResponseUrl({ state: { newAccountName }, commit }, {
-      responseUrl, transport = TRANSPORT_DEEP_LINK,
-    }) {
+    createByResponseUrl({ commit }, { responseUrl, transport = TRANSPORT_DEEP_LINK }) {
       const publicKey = getPublicKeyByResponseUrl(responseUrl);
       const address = Crypto.aeEncodeKey(publicKey);
       commit('accounts/add', {
         address,
-        name: newAccountName,
         active: true,
         type: 'air-gap',
         transport,
@@ -52,8 +40,7 @@ export default {
       dispatch('createByResponseUrl', { responseUrl, transport: TRANSPORT_QR_CODE });
     },
 
-    create({ commit, dispatch }, name) {
-      commit('setNewAccountName', name);
+    create({ dispatch }) {
       dispatch('router/push', { name: 'vault-setup-method' }, { root: true });
     },
 

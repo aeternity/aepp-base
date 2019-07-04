@@ -132,7 +132,7 @@ export default {
     align-items: center;
 
     .balance {
-      @media (max-width: 370px) {
+      @media (max-width: 410px) {
         display: none;
       }
     }

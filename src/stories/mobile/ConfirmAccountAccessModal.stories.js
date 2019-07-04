@@ -14,7 +14,7 @@ storiesOf('mobile ConfirmAccountAccessModal', module)
     },
     store: new Vuex.Store({
       modules: { accounts: accountsModule },
-      state: { addressBook: [], mobile: {} },
+      state: { mobile: {} },
       getters: {
         getAppMetadata,
       },

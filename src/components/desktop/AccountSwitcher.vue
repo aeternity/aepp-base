@@ -1,14 +1,7 @@
 <template>
   <div class="account-switcher">
     <header>
-      <AeAccount v-bind="activeAccount">
-        <ButtonPlain
-          slot="icon"
-          v-copy-on-click="activeAccount.address"
-        >
-          <Copy />
-        </ButtonPlain>
-      </AeAccount>
+      <AeAccount v-bind="activeAccount" />
     </header>
 
     <main>
@@ -44,22 +37,17 @@
 <script>
 import { mapMutations } from 'vuex';
 import AeAccount from '../AeAccount.vue';
-import ButtonPlain from '../ButtonPlain.vue';
-import { Copy, Plus } from '../icons';
+import { Plus } from '../icons';
 import ListItem from '../ListItem.vue';
 import ListItemCircle from '../ListItemCircle.vue';
 import ListItemAccount from '../ListItemAccount.vue';
 import AeRadio from '../AeRadio.vue';
 import Balance from '../Balance.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
-import copyOnClick from '../../directives/copyOnClick';
 
 export default {
   components: {
-    AeAccount, ButtonPlain, Copy, ListItem, ListItemCircle, Plus, ListItemAccount, AeRadio, Balance,
-  },
-  directives: {
-    copyOnClick,
+    AeAccount, ListItem, ListItemCircle, Plus, ListItemAccount, AeRadio, Balance,
   },
   props: {
     forLedger: Boolean,

@@ -15,7 +15,6 @@ const base = {
       accounts: {
         list: [account],
       },
-      addressBook: [],
     },
     getters: {
       'accounts/active': () => account,

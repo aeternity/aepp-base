@@ -10,7 +10,6 @@ describe('Migration 2: Build accounts array', () => {
       },
       rpcUrl: 'https://sdk-mainnet.aepps.com',
       selectedIdentityIdx: 2,
-      addressBook: [],
       customNetworks: [],
       apps: [{
         host: 'example-aepp.origin.aepps.com',
@@ -80,7 +79,6 @@ describe('Migration 2: Build accounts array', () => {
         const state = JSON.parse(localStorage.vuex);
         expect(state.sdkUrl).equal(stateBeforeMigration.rpcUrl);
         expect(state.accounts.list.length).equal(stateBeforeMigration.mobile.names.length);
-        expect(state.accounts.list[0].name).equal(stateBeforeMigration.mobile.names[0]);
         expect(state.accounts.activeIdx).equal(stateBeforeMigration.selectedIdentityIdx);
         expect(state.accounts.hdWallet.encryptedWallet).eql(stateBeforeMigration.mobile.keystore);
       });

@@ -18,6 +18,7 @@ export default {
 
   account: {
     type: 'hd-wallet',
+    typeVerbose: 'Account',
     color: 'primary',
   },
 
@@ -113,7 +114,7 @@ export default {
       commit('setMnemonic', newMnemonic);
       commit('setEncryptedWallet', { mnemonic: newMnemonic });
       commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
-      dispatch('create', 'Main Account');
+      dispatch('create');
       await dispatch('handleUnlock', true);
     },
 
@@ -200,9 +201,9 @@ export default {
       commit('setMnemonic', '');
     },
 
-    create({ state: { wallet }, getters: { nextIdx }, commit }, name) {
+    create({ state: { wallet }, getters: { nextIdx }, commit }) {
       commit('accounts/add', {
-        ...getHdWalletAccount(wallet, nextIdx), name, active: true, type: 'hd-wallet',
+        ...getHdWalletAccount(wallet, nextIdx), active: true, type: 'hd-wallet',
       }, { root: true });
     },
 
@@ -271,12 +272,8 @@ export default {
       return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, TX_TYPE.signed).tx;
     },
   } : {
-    create({ dispatch }, name) {
-      return dispatch(
-        'remoteConnection/call',
-        { name: 'createAccount', args: [name] },
-        { root: true },
-      );
+    create({ dispatch }) {
+      return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
     },
     sign: getDesktopRemoveSignAction('sign'),
     signTransaction: getDesktopRemoveSignAction('signTransaction'),

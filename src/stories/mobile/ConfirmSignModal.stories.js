@@ -14,7 +14,6 @@ storiesOf('mobile ConfirmSignModal', module)
     },
     store: new Vuex.Store({
       modules: { accounts: accountsModule },
-      state: { addressBook: [] },
     }),
     components: { ConfirmSignModal },
     template: `

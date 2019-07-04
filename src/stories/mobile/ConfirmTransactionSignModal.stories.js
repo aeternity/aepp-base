@@ -22,7 +22,6 @@ const genStory = transaction => () => ({
           denominator: 3,
         },
       },
-      addressBook: [],
       observables: {
         activeAccount: new Observable(s => s.next(account)),
       },
