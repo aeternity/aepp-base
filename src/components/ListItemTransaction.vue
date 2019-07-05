@@ -2,6 +2,8 @@
   <ListItem
     v-bind="$attrs"
     class="list-item-transaction"
+    :class="{ pending }"
+    :subtitle="pending ? `Pending` : time.toLocaleTimeString()"
     subtitle-monospace
     v-on="$listeners"
   >
@@ -16,18 +18,6 @@
         :address="peerId"
         length="short"
       />
-    </template>
-
-    <template slot="subtitle">
-      <span
-        v-if="pending"
-        class="pending"
-      >
-        Pending
-      </span>
-      <template v-else>
-        {{ time.toLocaleTimeString() }}
-      </template>
     </template>
 
     <div
@@ -66,16 +56,15 @@ export default {
 @import '../styles/variables/colors.scss';
 
 .list-item-transaction {
+  &.pending /deep/ .title .subtitle {
+    text-transform: uppercase;
+    color: $color-primary;
+  }
+
   .ae-address {
     @extend %face-mono-s;
     font-weight: bold;
     color: $color-neutral-negative-3;
-  }
-
-  .pending {
-    @extend %face-uppercase-xs;
-    font-weight: bold;
-    color: $color-primary;
   }
 
   .balance-change {

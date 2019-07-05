@@ -12,17 +12,18 @@
       <slot name="icon" />
 
       <div
-        v-if="title || $slots.subtitle || subtitle"
+        v-if="title || subtitle"
         class="title"
         :class="{ 'has-content-after': $slots.default || $slots.right }"
       >
         <slot name="title">
           {{ title }}
         </slot>
-        <small :class="{ monospace: subtitleMonospace }">
-          <slot name="subtitle">
-            {{ subtitle }}
-          </slot>
+        <small
+          class="subtitle"
+          :class="{ monospace: subtitleMonospace }"
+        >
+          {{ subtitle }}
         </small>
       </div>
 
