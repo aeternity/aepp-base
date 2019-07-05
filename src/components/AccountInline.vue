@@ -22,11 +22,9 @@ export default {
   props: {
     address: { type: String, required: true },
   },
-  computed: mapState({
-    name({ accounts: { list } }, getters) {
-      if (getters['names/get'](this.address)) return getters['names/get'](this.address);
-      const account = list.find(({ address }) => address === this.address);
-      return account ? getters['accounts/getName'](account) : '';
+  computed: mapState('names', {
+    name(state, { get }) {
+      return get(this.address);
     },
   }),
 };

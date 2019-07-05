@@ -40,10 +40,8 @@ export const getAppMetadata = () => host => ({
 export const accountsModules = {
   accounts: {
     namespaced: true,
-    state: { list: [account] },
     getters: {
       active: () => account,
-      getName: () => () => 'Account name',
     },
   },
   names: {

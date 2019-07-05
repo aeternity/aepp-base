@@ -5,9 +5,14 @@ export default store => store.registerModule('names', {
   namespaced: true,
   state: { names: {} },
   getters: {
-    get: ({ names }) => (address) => {
+    get: ({ names }, getters, { accounts: { list } }, rootGetters) => (address, local = true) => {
       store.dispatch('names/fetch', address);
-      return names[address].name;
+      if (names[address].name) return names[address].name;
+      if (local) {
+        const account = list.find(a => a.address === address);
+        if (account) return rootGetters['accounts/getName'](account);
+      }
+      return '';
     },
   },
   mutations: {
