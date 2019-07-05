@@ -13,18 +13,21 @@
 
       <div
         v-if="title || subtitle"
-        class="title"
+        class="label"
         :class="{ 'has-content-after': $slots.default || $slots.right }"
       >
-        <slot name="title">
+        <div
+          class="title"
+          :class="{ monospace: titleMonospace }"
+        >
           {{ title }}
-        </slot>
-        <small
+        </div>
+        <div
           class="subtitle"
           :class="{ monospace: subtitleMonospace }"
         >
           {{ subtitle }}
-        </small>
+        </div>
       </div>
 
       <slot />
@@ -43,6 +46,7 @@ export default {
   props: {
     to: { type: [Object, String], default: undefined },
     title: { type: String, default: undefined },
+    titleMonospace: Boolean,
     subtitle: { type: String, default: undefined },
     subtitleMonospace: Boolean,
     inactive: Boolean,
@@ -84,12 +88,12 @@ export default {
         flex-shrink: 0;
       }
 
-      .title {
+      .label {
         margin-left: rem(12px);
       }
     }
 
-    .title {
+    .label {
       @extend %face-sans-s;
       white-space: nowrap;
       font-weight: 500;
@@ -99,21 +103,19 @@ export default {
         margin-right: rem(4px);
       }
 
-      &, small {
+      &, .title, .subtitle {
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &.monospace {
+          font-family: $font-mono;
+        }
       }
 
-      small {
-        display: block;
+      .subtitle {
         @extend %face-sans-xs;
         letter-spacing: normal;
         color: $color-neutral-negative-1;
-
-        &.monospace {
-          @extend %face-mono-xs;
-          letter-spacing: normal;
-        }
       }
     }
 
