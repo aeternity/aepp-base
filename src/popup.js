@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import './ui-common';
 import store from './store';
+import { i18n } from './store/plugins/ui/languages';
 import ConfirmAccountAccess from './components/ConfirmAccountAccess.vue';
 
 Vue.use(Vuex);
@@ -20,6 +21,7 @@ const closingWrapper = f => (...args) => {
 
 new Vue({
   store,
+  i18n,
   render: h => h(
     ConfirmAccountAccess, {
       props: {

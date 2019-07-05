@@ -17,7 +17,8 @@
     "storybook:build": "vue-cli-service storybook:build -c config/storybook",
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
     "@aeternity/aepp-sdk": "github:aeternity/aepp-sdk-js#9a959c61b4a2c0e7ff344cd2a6b15e66072c94fe",
@@ -43,6 +44,7 @@
     "vue": "^2.6.10",
     "vue-clickaway": "^2.2.2",
     "vue-focus": "^2.1.0",
+    "vue-i18n": "^8.11.2",
     "vue-matomo": "^3.9.1-2",
     "vue-router": "^3.0.6",
     "vue-rx": "^6.2.0",
@@ -72,6 +74,7 @@
     "cordova-res": "^0.5.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
+    "eslint-plugin-vue-i18n": "^0.1.1",
     "jest-canvas-mock": "^2.1.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
@@ -80,6 +83,7 @@
     "svg-url-loader": "^3.0.0",
     "svgo": "^1.2.2",
     "svgo-loader": "^2.2.1",
+    "vue-cli-plugin-i18n": "^0.6.0",
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-svg-loader": "^0.12.0",
     "vue-template-compiler": "^2.6.10"

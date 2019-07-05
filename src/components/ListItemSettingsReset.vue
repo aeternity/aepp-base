@@ -1,7 +1,8 @@
 <template>
   <ListItem
-    :title="$globals.IS_MOBILE_DEVICE ? 'Reset Key Storage' : 'Reset All Data'"
-    :subtitle="$globals.IS_MOBILE_DEVICE ? 'After resetting, a recovery is required' : ''"
+    :title="$globals.IS_MOBILE_DEVICE ? $t('settings.reset-mobile') : $t('settings.reset-desktop')"
+    :subtitle="$globals.IS_MOBILE_DEVICE
+      ? $t('settings.reset-mobile-subtitle') : $t('settings.reset-desktop-subtitle')"
     @click="reset"
   >
     <ListItemCircle slot="icon">

@@ -43,6 +43,7 @@ import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCou
 import SettingsAccountRemove from '../../pages/mobile/SettingsAccountRemove.vue';
 import SettingsPassword from '../../pages/mobile/SettingsPassword.vue';
 import SettingsPasswordSet from '../../pages/mobile/SettingsPasswordSet.vue';
+import SettingsLanguage from '../../pages/mobile/SettingsLanguage.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -302,5 +303,10 @@ export default [{
   name: 'settings-password-set',
   path: '/settings/password/set',
   component: SettingsPasswordSet,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'settings-language',
+  path: '/settings/language',
+  component: SettingsLanguage,
   beforeEnter: ensureLoggedIn,
 }];
