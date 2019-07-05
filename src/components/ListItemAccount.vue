@@ -24,6 +24,7 @@ import { mapState } from 'vuex';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
 import prefixedAmount from '../filters/prefixedAmount';
+import formatAddress from '../filters/formatAddress';
 
 export default {
   components: { ListItem, AeIdenticon },
@@ -39,7 +40,7 @@ export default {
         case 'balance':
           return this.balance ? `${prefixedAmount(this.balance)} AE` : '';
         case 'address':
-          return `${this.address.slice(0, 6)}···${this.address.slice(-3)}`;
+          return formatAddress(this.address);
         default:
           return this.subtitle;
       }
