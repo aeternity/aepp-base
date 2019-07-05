@@ -5,7 +5,9 @@
     :class="{ pending }"
     :title="peerName || formatAddress(peerId)"
     :title-monospace="!peerName"
-    :subtitle="pending ? `Pending` : time.toLocaleTimeString()"
+    :subtitle="pending
+      ? $t('transfer.transaction.pending')
+      : time.toLocaleTimeString()"
     subtitle-monospace
     v-on="$listeners"
   >

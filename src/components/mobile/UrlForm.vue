@@ -6,7 +6,7 @@
   >
     <input
       :value="newUrl || currentUrl"
-      placeholder="Enter æpp URL"
+      :placeholder="$t('app.url-form-placeholder')"
       type="url"
       spellcheck="false"
       @input="inputHandler"

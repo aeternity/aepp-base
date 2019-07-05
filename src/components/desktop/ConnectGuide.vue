@@ -1,83 +1,58 @@
 <template>
   <div class="connect-guide">
     <template v-if="!forLedger">
-      <Guide size="small">
-        How to connect from <em>Base æpp</em>
-      </Guide>
-      <Guide size="small">
+      <Guide
+        :template="$t('remote-connection.connect-guide.title')"
+        size="small"
+      />
+
+      <Guide
+        v-for="(step, idx) in $t('remote-connection.connect-guide.steps')"
+        :key="idx"
+        :template="step"
+        size="small"
+      >
         <AeFraction
           slot="icon"
-          numerator="1"
-          denominator="5"
+          :numerator="idx + 1"
+          :denominator="$t('remote-connection.connect-guide.steps').length"
         />
-        Open Base æpp on your phone: base.aepps.com
+        <span
+          slot="icon-settings"
+          class="icon-wrapper settings"
+        ><Settings /></span>
+        <span
+          slot="icon-device"
+          class="icon-wrapper device"
+        >
+          <Device />
+        </span>
       </Guide>
-      <Guide size="small">
-        <AeFraction
-          slot="icon"
-          numerator="2"
-          denominator="5"
-        />
-        Create an account, or login
-      </Guide>
-      <Guide size="small">
-        <AeFraction
-          slot="icon"
-          numerator="3"
-          denominator="5"
-        />
-        Go to Settings <span class="icon-wrapper settings"><Settings /></span>
-      </Guide>
-      <Guide size="small">
-        <AeFraction
-          slot="icon"
-          numerator="4"
-          denominator="5"
-        />
-        Tap on Remote Connections <span class="icon-wrapper device"><Device /></span>
-        and tap the ‘+’
-      </Guide>
-      <Guide size="small">
-        <AeFraction
-          slot="icon"
-          numerator="5"
-          denominator="5"
-        />
-        Scan the QR code below with Base æpp
-      </Guide>
+
       <AeQrCode :data="peerId" />
     </template>
 
     <template v-else-if="ledgerSupported">
-      <Guide size="small">
-        How to connect from <em>Ledger</em>
-      </Guide>
-      <Guide size="small">
+      <Guide
+        :template="$t('ledger.connect-guide.title')"
+        size="small"
+      />
+
+      <Guide
+        v-for="(step, idx) in $t('ledger.connect-guide.steps')"
+        :key="idx"
+        :template="step"
+        size="small"
+      >
         <AeFraction
           slot="icon"
-          numerator="1"
-          denominator="3"
+          :numerator="idx + 1"
+          :denominator="$t('ledger.connect-guide.steps').length"
         />
-        Connect your Ledger via USB and unlock it
       </Guide>
-      <Guide size="small">
-        <AeFraction
-          slot="icon"
-          numerator="2"
-          denominator="3"
-        />
-        Open the æternity app on your Ledger
-      </Guide>
-      <Guide size="small">
-        <AeFraction
-          slot="icon"
-          numerator="3"
-          denominator="3"
-        />
-        Create a first account by pressing the button below
-      </Guide>
+
       <ListItem
-        title="Create a new account"
+        :title="$t('account-switcher.create-account-desktop')"
         @click="create"
       >
         <ListItemCircle slot="icon">
@@ -91,13 +66,9 @@
       class="no-ledger-support"
     >
       <img src="../../assets/switch-to-chrome.svg">
-      <Guide>
-        Please switch to
-        Google&nbsp;Chrome
-      </Guide>
+      <Guide :template="$t('ledger.not-supported.guide')" />
       <Note>
-        Interacting with the Ledger is only
-        <br>supported by Chrome for now.
+        {{ $t('ledger.not-supported.note') }}
       </Note>
     </div>
   </div>

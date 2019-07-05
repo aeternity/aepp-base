@@ -1,12 +1,17 @@
 <template>
   <div class="send">
-    <Guide size="big">
-      <em>Send</em> AE from<br>
-      <AccountInline :address="activeAccount.address" />
+    <Guide
+      :template="$t('transfer.send.guide')"
+      size="big"
+    >
+      <AccountInline
+        slot="senderAddress"
+        :address="activeAccount.address"
+      />
     </Guide>
 
     <Note>
-      Paste the recipient address below, scan QR code or send to subaccounts.
+      {{ $t('transfer.send.note') }}
     </Note>
 
     <form @submit.prevent="send">
@@ -17,7 +22,7 @@
         :footer="errors.first('accountTo')"
         autofocus
         name="accountTo"
-        header="To"
+        :header="$t('transfer.send.to.recipient')"
       />
 
       <AeInputAmountAe
@@ -34,7 +39,7 @@
       />
 
       <AeButton :disabled="errors.any()">
-        Transfer
+        {{ $t('transfer.send.transfer') }}
       </AeButton>
     </form>
   </div>

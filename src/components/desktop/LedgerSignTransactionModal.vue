@@ -1,6 +1,6 @@
 <template>
   <LedgerModal
-    title="Sign transaction on the Ledger"
+    :title="$t('ledger.modal.sign-transaction')"
     class="ledger-sign-transaction"
   >
     <LedgerModalNanoS />
@@ -8,7 +8,7 @@
     <AeLoader />
 
     <div class="confirm">
-      Sign the transaction on the Ledger
+      {{ $t('ledger.modal.sign-transaction') }}
     </div>
   </LedgerModal>
 </template>

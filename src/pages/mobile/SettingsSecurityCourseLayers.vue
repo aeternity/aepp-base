@@ -19,13 +19,13 @@
       fill="alternative"
       :to="{ name: 'vault-setup-method' }"
     >
-      Setup airgap
+      {{ $t('security-courses.settings.details.layers.setup') }}
     </AeButton>
     <AeButton
       to="https://www.ledger.com"
       fill="dark"
     >
-      Buy a Ledger wallet
+      {{ $t('security-courses.settings.details.layers.buy') }}
     </AeButton>
   </SettingsSecurityCourseWrapper>
 </template>

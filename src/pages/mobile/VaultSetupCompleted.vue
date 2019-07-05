@@ -4,21 +4,22 @@
     hide-tab-bar
   >
     <template slot="title">
-      AirGap Setup
+      {{ $t('air-gap.setup.title') }}
       <AeFraction
         numerator="3"
         denominator="3"
       />
     </template>
 
-    <Guide fill="alternative">
+    <Guide
+      :template="$t('air-gap.setup.completed.guide')"
+      fill="alternative"
+    >
       <AeFraction
         slot="icon"
         numerator="3"
         denominator="3"
       />
-      <em>Vault sync completed</em>
-      <br>Find your AirGap Vault under your accounts.
     </Guide>
 
     <AeButton
@@ -26,7 +27,7 @@
       fill="alternative"
       :to="{ name: 'apps' }"
     >
-      Finish
+      {{ $t('air-gap.setup.completed.finish') }}
     </AeButton>
   </MobilePage>
 </template>

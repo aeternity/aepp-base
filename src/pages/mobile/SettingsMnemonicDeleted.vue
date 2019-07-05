@@ -2,20 +2,17 @@
   <MobilePage
     :right-button-to="{ name: 'settings' }"
     right-button-icon-name="close"
-    title="Backup Recovery Phrase"
+    :title="$t('settings.mnemonic.title')"
     hide-tab-bar
   >
-    <Guide>
-      You have deleted the recovery phrase from this device.
-      <mark>Please look for the backup that you made before deleting it.</mark>
-    </Guide>
+    <Guide :template="$t('settings.mnemonic.deleted.guide')" />
 
     <AeButton
       slot="footer"
       :to="{ name: 'settings' }"
       fill="secondary"
     >
-      Back
+      {{ $t('settings.mnemonic.deleted.back') }}
     </AeButton>
   </MobilePage>
 </template>

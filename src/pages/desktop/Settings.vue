@@ -1,16 +1,16 @@
 <template>
   <div class="settings">
     <Guide size="big">
-      <em>{{ $t('settings.label') }}</em>
+      <em>{{ $t('settings.title') }}</em>
     </Guide>
 
     <AeCard fill="maximum">
       <ListItemSettingsReset />
 
       <ListItem
-        title="Network"
+        :title="$t('network.settings.title')"
         class="network"
-        :subtitle="networkId ? `Network ID ${networkId}` : ''"
+        :subtitle="networkId ? $t('network.settings.title', { id: networkId }) : ''"
       >
         <ListItemCircle slot="icon">
           <Globe />

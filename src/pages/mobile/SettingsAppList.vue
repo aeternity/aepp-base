@@ -2,11 +2,11 @@
   <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
-    title="Aepp account access"
+    :title="$t('app.settings.title')"
     header-fill="light"
     fill="neutral"
   >
-    <p>Manage which æpps can access your (sub)accounts</p>
+    <p>{{ $t('app.settings.list.note') }}</p>
 
     <AeCard fill="maximum">
       <ListItem
@@ -44,17 +44,19 @@ export default {
     LeftMore,
   },
   computed: mapState({
-    apps: ({ apps }, { getAppMetadata }) => apps
-      .filter(app => get(app, 'permissions.accessToAccounts.length', 0))
-      .map((app) => {
-        const c = app.permissions.accessToAccounts.length;
-        return {
-          icon: DEFAULT_ICON,
-          ...app,
-          ...getAppMetadata(app.host),
-          subtitle: `can access ${c} account${c === 1 ? '' : 's'}`,
-        };
-      }),
+    apps({ apps }, { getAppMetadata }) {
+      return apps
+        .filter(app => get(app, 'permissions.accessToAccounts.length', 0))
+        .map((app) => {
+          const c = app.permissions.accessToAccounts.length;
+          return {
+            icon: DEFAULT_ICON,
+            ...app,
+            ...getAppMetadata(app.host),
+            subtitle: this.$tc('app.settings.list.subtitle', c),
+          };
+        });
+    },
   }),
 };
 </script>

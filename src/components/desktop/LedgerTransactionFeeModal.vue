@@ -1,6 +1,6 @@
 <template>
   <LedgerModal
-    title="Define the Transaction fee"
+    :title="$t('ledger.modal.transaction-fee.title')"
     class="transaction-fee"
     closable
     @close="handleClose"
@@ -20,8 +20,8 @@
         :error="errors.has('fee')"
         :footer="errors.first('fee')"
         autofocus
-        header="Transaction Fee"
-        header-right="Micro AE"
+        :header="$t('ledger.modal.transaction-fee.fee')"
+        :header-right="$t('ledger.modal.transaction-fee.micro-ae')"
         name="fee"
         step="0.01"
       />
@@ -35,8 +35,7 @@
     </form>
 
     <LedgerModalNote fill="dark">
-      A higher transaction fee leads to a faster
-      transaction time.
+      {{ $t('ledger.modal.transaction-fee.note') }}
     </LedgerModalNote>
 
     <AeButton
@@ -45,7 +44,7 @@
       plain
       :form="_uid"
     >
-      Next
+      {{ $t('next') }}
     </AeButton>
   </LedgerModal>
 </template>

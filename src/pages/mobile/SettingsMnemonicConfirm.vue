@@ -5,23 +5,19 @@
     :right-button-to="{ name: 'settings' }"
     right-button-icon-name="close"
     class="settings-mnemonic-confirm"
-    title="Backup Recovery Phrase"
+    :title="$t('settings.mnemonic.title')"
     hide-tab-bar
   >
-    <Guide>
+    <Guide :template="$t('settings.mnemonic.confirm.guide')">
       <AeFraction
         slot="icon"
         numerator="3"
         denominator="4"
       />
-      <p>
-        <em>Confirm <img :src="crossedFingersEmoji"> your phrase</em>
-      </p>
-      <p>
-        Tap the words below
-        to compose your phrase,
-        <mark>note</mark> correct order!
-      </p>
+      <img
+        slot="crossedFingersEmoji"
+        :src="crossedFingersEmoji"
+      >
     </Guide>
 
     <ButtonMnemonicWord
@@ -35,7 +31,9 @@
 
     <AeInputWrapper
       :error="error"
-      :header="error ? 'Oops! Not the correct order, try again' : 'Your recovery phrase'"
+      :header="error
+        ? $t('settings.mnemonic.confirm.error')
+        : $t('settings.mnemonic.confirm.mnemonic')"
     >
       <template v-if="selectedWordIds.length">
         <ButtonMnemonicWord
@@ -48,7 +46,7 @@
         </ButtonMnemonicWord>
       </template>
       <ButtonMnemonicWord
-        v-for="placeholderWord in ['first', 'second', 'third', '···']"
+        v-for="placeholderWord in $t('settings.mnemonic.confirm.placeholder').split(' ')"
         v-else
         :key="placeholderWord"
         disabled
@@ -63,7 +61,7 @@
       fill="secondary"
       @click="confirmPhrase"
     >
-      Confirm
+      {{ $t('confirm') }}
     </AeButton>
   </MobilePage>
 </template>

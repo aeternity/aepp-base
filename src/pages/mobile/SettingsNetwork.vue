@@ -2,7 +2,7 @@
   <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
-    title="Network"
+    :title="$t('network.settings.title')"
     header-fill="light"
     fill="neutral"
   >

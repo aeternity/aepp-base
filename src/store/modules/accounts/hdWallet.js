@@ -12,13 +12,14 @@ import {
 } from '../../utils';
 import AES from '../../../lib/aes';
 import { getDesktopRemoveSignAction } from './utils';
+import { i18n } from '../../plugins/ui/languages';
 
 export default {
   namespaced: true,
 
   account: {
     type: 'hd-wallet',
-    typeVerbose: 'Account',
+    typeVerbose: i18n.t('hd-wallet.account-name'),
     color: 'primary',
   },
 

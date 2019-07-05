@@ -1,11 +1,12 @@
 <template>
   <div class="apps">
-    <Guide size="big">
-      æpps <em>browser</em> (beta)
-    </Guide>
+    <Guide
+      :template="$t('app.list.guide')"
+      size="big"
+    />
 
     <Note>
-      æpps running on the æternity blockchain will be added below.
+      {{ $t('app.list.note') }}
     </Note>
 
     <div class="shortcuts">

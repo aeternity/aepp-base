@@ -1,13 +1,12 @@
 <template>
   <div class="onboarding-page send">
     <img src="../../assets/onboarding/send.svg">
-    <Guide>
-      <em>Send & receive AE</em>
-      effortlessly
-      <div class="note">
-        Transfer to accounts and
-        subaccounts. Receive by
-        sharing your address.
+    <Guide :template="$t('onboarding.send.guide')">
+      <div
+        slot="note"
+        class="note"
+      >
+        {{ $t('onboarding.send.note') }}
       </div>
     </Guide>
   </div>

@@ -8,7 +8,12 @@
   >
     <template slot="header">
       <h1>{{ course.title }}</h1>
-      <p>Security Course {{ course.idx }} of {{ coursesCount }}</p>
+      <p>
+        {{ $t(
+          'security-courses.settings.subtitle',
+          { n: course.idx, count: courses.length },
+        ) }}
+      </p>
     </template>
 
     <slot />
@@ -18,19 +23,19 @@
       fill="alternative"
       :to="{ name: course.nextRouteName, params: $route.params }"
     >
-      Go to course {{ course.idx + 1 }}
+      {{ $tc('security-courses.settings.details.to-next', course.idx + 1) }}
     </AeButton>
     <AeButton
       plain
       :to="{ name: 'settings-security-course-list', params: $route.params }"
     >
-      To course overview
+      {{ $t('security-courses.settings.details.to-list') }}
     </AeButton>
   </MobilePage>
 </template>
 
 <script>
-import courses from './settingsSecurityCourseList';
+import getCourses from './settingsSecurityCourseList';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeButton from '../../components/AeButton.vue';
 
@@ -42,14 +47,14 @@ export default {
   props: {
     name: { type: String, required: true },
   },
-  data: () => ({ coursesCount: courses.length }),
   computed: {
+    courses: getCourses,
     course() {
-      const idx = courses.findIndex(c => c.name === this.name) + 1;
+      const idx = this.courses.findIndex(c => c.name === this.name) + 1;
       return {
-        ...courses[idx - 1],
+        ...this.courses[idx - 1],
         idx,
-        nextRouteName: idx === courses.length ? null : courses[idx].routeName,
+        nextRouteName: idx === this.courses.length ? null : this.courses[idx].routeName,
       };
     },
   },

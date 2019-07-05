@@ -1,6 +1,6 @@
 <template>
   <div class="network-add">
-    <Guide>Connect to<br><em>another node</em></Guide>
+    <Guide :template="$t('network.settings.new.guide')" />
     <form @submit.prevent="addNetwork">
       <AeInput
         v-model="name"
@@ -8,7 +8,7 @@
         :error="errors.has('name')"
         :footer="errors.first('name')"
         autofocus
-        header="Node Name"
+        :header="$t('network.settings.new.node-name')"
         name="name"
       />
       <AeInput
@@ -20,14 +20,14 @@
         }"
         :error="errors.has('url')"
         :footer="errors.first('url')"
-        header="Node URL"
+        :header="$t('network.settings.new.node-url')"
         name="url"
       />
       <AeButton
         :disabled="errors.any()"
         fill="secondary"
       >
-        Connect
+        {{ $t('network.settings.new.connect') }}
       </AeButton>
       <AeButton
         :to="finallyTo"
@@ -35,7 +35,7 @@
         plain
         @click="$emit('finally')"
       >
-        Cancel
+        {{ $t('cancel') }}
       </AeButton>
     </form>
   </div>

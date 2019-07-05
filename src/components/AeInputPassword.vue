@@ -4,7 +4,7 @@
     :type="showPassword ? 'text' : 'password'"
     :value="value"
     v-bind="$attrs"
-    :header="header"
+    :header="header || $t('settings.password.set.password')"
     v-on="$listeners"
   >
     <slot
@@ -32,7 +32,7 @@ export default {
   components: { AeInput, AeToolbarButton, Eye },
   props: {
     value: { type: String, default: '' },
-    header: { type: String, default: 'Password' },
+    header: { type: String, default: '' },
     hideRevealButton: Boolean,
   },
   data: () => ({ showPassword: false }),

@@ -5,7 +5,7 @@
     @right-button-click="cancelHandler"
   >
     <Guide>
-      Enter your password to continue
+      {{ $t('settings.password.modal.guide') }}
     </Guide>
 
     <form
@@ -27,7 +27,7 @@
             {{ errors.first('password') }}
           </template>
           <template v-else-if="wrongPassword">
-            Wrong password, try again
+            {{ $t('settings.password.wrong-password') }}
           </template>
         </template>
       </AeInputPassword>
@@ -39,7 +39,7 @@
       :form="_uid"
       fill="secondary"
     >
-      Continue
+      {{ $t('settings.password.modal.continue') }}
     </AeButton>
   </MobilePage>
 </template>

@@ -1,8 +1,11 @@
 <template>
   <ListItem
-    :title="$globals.IS_MOBILE_DEVICE ? $t('settings.reset-mobile') : $t('settings.reset-desktop')"
+    :title="$globals.IS_MOBILE_DEVICE
+      ? $t('settings.reset.title')
+      : $t('settings.reset.title-desktop')"
     :subtitle="$globals.IS_MOBILE_DEVICE
-      ? $t('settings.reset-mobile-subtitle') : $t('settings.reset-desktop-subtitle')"
+      ? $t('settings.reset.subtitle')
+      : $t('settings.reset.subtitle-desktop')"
     @click="reset"
   >
     <ListItemCircle slot="icon">
@@ -20,13 +23,12 @@ export default {
   components: { ListItem, ListItemCircle, SignOut },
   methods: {
     async reset() {
-      const message = process.env.IS_MOBILE_DEVICE
-        ? 'If you haven\'t backup your account, you won\'t be able to enter it again.'
-        : 'You will revoke your connection with mobile Base æpp and clear saved state.';
       await this.$store.dispatch('modals/open', {
         name: 'confirm',
-        text: `${message} Are you sure?`,
-        primaryButtonText: 'Reset',
+        text: process.env.IS_MOBILE_DEVICE
+          ? this.$t('settings.reset.message')
+          : this.$t('settings.reset.message-desktop'),
+        primaryButtonText: this.$t('settings.reset.button'),
       });
       this.$store.dispatch('reset');
     },

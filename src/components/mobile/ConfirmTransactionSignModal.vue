@@ -5,24 +5,25 @@
     right-button-icon-name="close"
     @right-button-click="denyHandler"
   >
-    <Guide fill="neutral">
+    <Guide
+      :template="txType === TX_TYPE.spend
+        ? $t('modal.confirm-transaction-sign.guide-spend')
+        : $t('modal.confirm-transaction-sign.guide', { title })"
+      fill="neutral"
+    >
       <AeFraction
         v-if="stepFraction"
         slot="icon"
         v-bind="stepFraction"
       />
-      <template v-if="txType === TX_TYPE.spend">
-        <em>Complete your transfer</em>
-        <br>from
-        <AccountInline :address="account.address" />
-        <br>to
-        <AccountInline :address="transaction.recipientId" />
-      </template>
-      <template v-else>
-        <em>{{ title }}</em>
-        <br>by
-        <AccountInline :address="account.address" />
-      </template>
+      <AccountInline
+        slot="senderAddress"
+        :address="account.address"
+      />
+      <AccountInline
+        slot="recipientAddress"
+        :address="transaction.recipientId"
+      />
     </Guide>
 
     <DetailsAmount
@@ -50,13 +51,13 @@
         fill="light"
         @click="denyHandler"
       >
-        Cancel
+        {{ $t('cancel') }}
       </AeButton>
       <AeButton
         fill="secondary"
         @click="allowHandler"
       >
-        Confirm
+        {{ $t('confirm') }}
       </AeButton>
     </AeButtonGroup>
   </MobilePage>
@@ -89,59 +90,6 @@ const genDetailsRawData = genDetailsWrapper(DetailsRawData, 'data');
 const genDetailsAddress = genDetailsWrapper(DetailsAddress, 'address');
 const genDetailsField = genDetailsWrapper(DetailsField, 'value');
 
-const TX_FIELDS = {
-  payload: {
-    functional: true,
-    render(createElement, { props: { value } }) {
-      const data = Crypto.decodeBase64Check(Crypto.assertedType(value, 'ba')).toString();
-      return data ? createElement(DetailsRawData, { attrs: { name: 'Payload', data } }) : null;
-    },
-  },
-  recipientId: genDetailsAddress('Recipient Account'),
-  code: genDetailsRawData('Contract compiled code'),
-  callData: genDetailsRawData('Call data'),
-  contractId: genDetailsAddress('Contract Address'),
-  commitmentId: genDetailsRawData('Commitment'),
-  name: {
-    functional: true,
-    render(createElement, { props: { value } }) {
-      return createElement(DetailsField, {
-        attrs: {
-          name: 'Name',
-          value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString(),
-        },
-      });
-    },
-  },
-  nameSalt: genDetailsField('Name salt'),
-  nameId: genDetailsRawData('Name ID'),
-  pointers: {
-    functional: true,
-    render(createElement, { props: { value } }) {
-      return createElement('div', value.map(({ key, id }, idx) => {
-        switch (key) {
-          case 'account_pubkey':
-            return createElement(DetailsAddress, {
-              key: idx,
-              attrs: { name: `Pointer #${idx + 1}`, address: id },
-            });
-          default:
-            return [
-              createElement(DetailsField, {
-                key: `${idx}-1`,
-                attrs: { name: `Pointer #${idx + 1} key`, value: key },
-              }),
-              createElement(DetailsRawData, {
-                key: `${idx}-2`,
-                attrs: { name: `Pointer #${idx + 1} ID`, data: id },
-              }),
-            ];
-        }
-      }));
-    },
-  },
-};
-
 export default {
   components: {
     MobilePage,
@@ -162,7 +110,6 @@ export default {
     return {
       newFee: this.transaction.fee,
       TX_TYPE,
-      TX_FIELDS,
     };
   },
   subscriptions() {
@@ -177,11 +124,11 @@ export default {
     },
     title() {
       return {
-        [TX_TYPE.contractCreate]: 'Create a new contract',
-        [TX_TYPE.contractCall]: 'Call contract method',
-        [TX_TYPE.namePreClaim]: 'Preclaim name',
-        [TX_TYPE.nameClaim]: 'Claim name',
-        [TX_TYPE.nameUpdate]: 'Update name',
+        [TX_TYPE.contractCreate]: this.$t('modal.confirm-transaction-sign.contract-create'),
+        [TX_TYPE.contractCall]: this.$t('modal.confirm-transaction-sign.contract-call'),
+        [TX_TYPE.namePreClaim]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
+        [TX_TYPE.nameClaim]: this.$t('modal.confirm-transaction-sign.name-claim'),
+        [TX_TYPE.nameUpdate]: this.$t('modal.confirm-transaction-sign.name-update'),
       }[this.txType] || '';
     },
     maxFee() {
@@ -192,6 +139,73 @@ export default {
     },
     isEnoughFounds() {
       return this.transaction.minFee.isLessThanOrEqualTo(this.maxFee);
+    },
+    TX_FIELDS() {
+      return {
+        payload: {
+          functional: true,
+          render(createElement, { props: { value } }) {
+            const data = Crypto.decodeBase64Check(Crypto.assertedType(value, 'ba')).toString();
+            return data
+              ? createElement(DetailsRawData, {
+                attrs: { name: this.$t('modal.confirm-transaction-sign.payload'), data },
+              })
+              : null;
+          },
+        },
+        recipientId: genDetailsAddress(this.$t('modal.confirm-transaction-sign.recipient-account')),
+        code: genDetailsRawData(this.$t('modal.confirm-transaction-sign.contract-compiled-code')),
+        callData: genDetailsRawData(this.$t('modal.confirm-transaction-sign.call-data')),
+        contractId: genDetailsAddress(this.$t('modal.confirm-transaction-sign.contract-address')),
+        commitmentId: genDetailsRawData(this.$t('modal.confirm-transaction-sign.commitment')),
+        name: {
+          functional: true,
+          render(createElement, { props: { value } }) {
+            return createElement(DetailsField, {
+              attrs: {
+                name: 'Name',
+                value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString(),
+              },
+            });
+          },
+        },
+        nameSalt: genDetailsField(this.$t('modal.confirm-transaction-sign.name-salt')),
+        nameId: genDetailsRawData(this.$t('modal.confirm-transaction-sign.name-id')),
+        pointers: {
+          functional: true,
+          render(createElement, { props: { value } }) {
+            return createElement('div', value.map(({ key, id }, idx) => {
+              switch (key) {
+                case 'account_pubkey':
+                  return createElement(DetailsAddress, {
+                    key: idx,
+                    attrs: {
+                      name: this.$tc('modal.confirm-transaction-sign.pointer', idx + 1),
+                      address: id,
+                    },
+                  });
+                default:
+                  return [
+                    createElement(DetailsField, {
+                      key: `${idx}-1`,
+                      attrs: {
+                        name: this.$tc('modal.confirm-transaction-sign.pointer-key', idx + 1),
+                        value: key,
+                      },
+                    }),
+                    createElement(DetailsRawData, {
+                      key: `${idx}-2`,
+                      attrs: {
+                        name: this.$tc('modal.confirm-transaction-sign.pointer-id', idx + 1),
+                        data: id,
+                      },
+                    }),
+                  ];
+              }
+            }));
+          },
+        },
+      };
     },
   },
   methods: {

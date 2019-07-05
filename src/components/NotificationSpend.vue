@@ -4,8 +4,8 @@
     class="notification-spend"
   >
     <ListItem
-      title="Transfer completed"
-      :subtitle="`You've sent ${ prefixedAmount(amount) } AE`"
+      :title="$t('transfer.send.notification.title')"
+      :subtitle="$t('transfer.send.notification.subtitle', { amount: prefixedAmount(amount) })"
     >
       <ListItemCircle slot="icon">
         <Check />
@@ -21,7 +21,9 @@
         size="small"
         plain
       >
-        View {{ $globals.IS_MOBILE_DEVICE ? 'in history' : 'on explorer' }}
+        {{ $globals.IS_MOBILE_DEVICE
+          ? $t('transfer.send.notification.to-history')
+          : $t('transfer.send.notification.to-explorer') }}
       </AeButton>
       <AeButton
         v-copy-on-click="transactionHash"
@@ -29,7 +31,7 @@
         size="small"
         plain
       >
-        Copy tx hash
+        {{ $t('transfer.send.notification.copy') }}
       </AeButton>
     </template>
   </Notification>

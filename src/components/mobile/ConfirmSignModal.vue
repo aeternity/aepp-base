@@ -5,10 +5,14 @@
     right-button-icon-name="close"
     @right-button-click="denyHandler"
   >
-    <Guide fill="neutral">
-      <em>Sign raw transaction</em>
-      <br>by
-      <AccountInline :address="activeAccount.address" />
+    <Guide
+      :template="$t('modal.confirm-sign.guide')"
+      fill="neutral"
+    >
+      <AccountInline
+        slot="address"
+        :address="activeAccount.address"
+      />
     </Guide>
 
     <DetailsRawData
@@ -21,13 +25,13 @@
         fill="light"
         @click="denyHandler"
       >
-        Cancel
+        {{ $t('cancel') }}
       </AeButton>
       <AeButton
         fill="secondary"
         @click="allowHandler"
       >
-        Confirm
+        {{ $t('confirm') }}
       </AeButton>
     </AeButtonGroup>
   </MobilePage>

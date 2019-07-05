@@ -1,6 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
+import { i18n } from '../plugins/ui/languages';
 
 export default {
   state: {
@@ -47,7 +48,7 @@ export default {
     removeFollower({ state: { followers }, commit, dispatch }, followerId) {
       dispatch('modals/open', {
         name: 'notification',
-        text: `Access was successfully revoked for ${followers[followerId].name}`,
+        text: i18n.t('remote-connection.revoke-notification', [followers[followerId].name]),
       });
       commit('removeFollower', followerId);
     },

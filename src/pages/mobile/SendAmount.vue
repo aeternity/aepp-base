@@ -7,17 +7,23 @@
     :header-fill="activeColor"
   >
     <template slot="header">
-      <Guide fill="neutral">
+      <Guide
+        :template="$t('transfer.send.amount.guide')"
+        fill="neutral"
+      >
         <AeFraction
           slot="icon"
           numerator="2"
           denominator="3"
         />
-        <em>New Transfer</em>
-        <br>from
-        <AccountInline :address="activeAccount.address" />
-        <br>to
-        <AccountInline :address="to" />
+        <AccountInline
+          slot="senderAddress"
+          :address="activeAccount.address"
+        />
+        <AccountInline
+          slot="recipientAddress"
+          :address="to"
+        />
       </Guide>
 
       <form
@@ -42,12 +48,12 @@
     </template>
 
     <DetailsAmount
-      name="Minimum transaction fee"
+      :name="$t('transfer.send.amount.fee')"
       :amount="minFee"
     />
 
     <DetailsAmount
-      name="Balance"
+      :name="$t('transfer.send.amount.balance')"
       :amount="activeAccount.balance"
     />
 
@@ -56,7 +62,7 @@
       :form="_uid"
       fill="secondary"
     >
-      Next
+      {{ $t('next') }}
     </AeButton>
   </MobilePage>
 </template>

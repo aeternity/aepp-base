@@ -8,21 +8,21 @@
     :right-button-to="{ name: 'apps' }"
   >
     <template slot="title">
-      AirGap Setup
+      {{ $t('air-gap.setup.title') }}
       <AeFraction
         numerator="2"
         denominator="3"
       />
     </template>
-    <Guide fill="alternative">
+    <Guide
+      :template="$t('air-gap.setup.another-device.install.guide')"
+      fill="alternative"
+    >
       <AeFraction
         slot="icon"
         numerator="2"
         denominator="3"
       />
-      <em>Install AirGap on another phone</em>
-      <br>Search for AirGap.it in the
-      store or scan this QR code.
     </Guide>
 
     <AeQrCode :data="INSTALL_URL" />
@@ -32,7 +32,7 @@
       fill="alternative"
       :to="{ name: 'vault-setup-another-device-guide' }"
     >
-      Link
+      {{ $t('air-gap.setup.another-device.install.link') }}
     </AeButton>
   </MobilePage>
 </template>

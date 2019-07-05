@@ -4,8 +4,8 @@
     class="notification-mnemonic-backup"
   >
     <ListItem
-      title="Please Backup your Recover Phrase!"
-      subtitle="Secure your funds to prevent loss."
+      :title="$t('settings.mnemonic.notification.title')"
+      :subtitle="$t('settings.mnemonic.notification.subtitle')"
     >
       <ListItemCircle slot="icon">
         !
@@ -19,7 +19,7 @@
         size="small"
         plain
       >
-        Security course
+        {{ $t('settings.mnemonic.notification.to-security-course') }}
       </AeButton>
       <AeButton
         :to="{ name: 'settings-mnemonic' }"
@@ -27,7 +27,7 @@
         size="small"
         plain
       >
-        Backup now
+        {{ $t('settings.mnemonic.notification.to-mnemonic') }}
       </AeButton>
     </template>
   </Notification>

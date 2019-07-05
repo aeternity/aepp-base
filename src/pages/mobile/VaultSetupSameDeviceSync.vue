@@ -8,20 +8,21 @@
     :right-button-to="{ name: 'apps' }"
   >
     <template slot="title">
-      AirGap Setup
+      {{ $t('air-gap.setup.title') }}
       <AeFraction
         numerator="3"
         denominator="3"
       />
     </template>
-    <Guide fill="alternative">
+    <Guide
+      :template="$t('air-gap.setup.same-device.sync.guide')"
+      fill="alternative"
+    >
       <AeFraction
         slot="icon"
         numerator="3"
         denominator="3"
       />
-      <em>Vault sync on the way</em>
-      <br>Paste the sync code below.
     </Guide>
 
     <form
@@ -31,7 +32,7 @@
       <AeTextarea
         v-model="responseUrl"
         v-validate="'required|air_gap_response_url'"
-        header="AirGap Sync Code"
+        :header="$t('air-gap.setup.same-device.sync.sync-code')"
         rows="3"
         submit-on-enter
         autofocus
@@ -46,7 +47,7 @@
       :form="_uid"
       fill="alternative"
     >
-      Sync
+      {{ $t('air-gap.setup.same-device.sync.button') }}
     </AeButton>
   </MobilePage>
 </template>

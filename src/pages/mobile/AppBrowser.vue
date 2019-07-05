@@ -27,7 +27,7 @@
       @close="showMenu = false"
     >
       <MenuItem @click="reload">
-        <Reload />Refresh
+        <Reload /> {{ $t('app.browser.refresh') }}
       </MenuItem>
     </Menu>
 

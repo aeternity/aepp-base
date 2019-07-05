@@ -13,7 +13,7 @@
         size="small"
         plain
       >
-        Skip
+        {{ $t('onboarding.skip') }}
       </AeButton>
       <TransitionGroup
         name="step-dots"
@@ -31,7 +31,7 @@
         size="small"
         plain
       >
-        {{ isLastStep ? 'Start' : 'Next' }}
+        {{ isLastStep ? $t('onboarding.start') : $t('next') }}
       </AeButton>
     </footer>
   </div>

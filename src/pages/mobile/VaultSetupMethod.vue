@@ -6,25 +6,26 @@
     :right-button-to="{ name: 'apps' }"
   >
     <template slot="title">
-      AirGap Setup
+      {{ $t('air-gap.setup.title') }}
       <AeFraction
         numerator="1"
         denominator="3"
       />
     </template>
-    <Guide fill="alternative">
+    <Guide
+      :template="$t('air-gap.setup.method-guide')"
+      fill="alternative"
+    >
       <AeFraction
         slot="icon"
         numerator="1"
         denominator="3"
       />
-      <em>Robust security with AirGap Vault</em>
-      <br>We recommend using a secondary offline device.
     </Guide>
 
     <ListItemChoose
-      title="Maximum (recommended)"
-      subtitle="Install AirGap on another device"
+      :title="$t('air-gap.setup.another-device.title')"
+      :subtitle="$t('air-gap.setup.another-device.subtitle')"
       :active="maximumSecure"
       :checked="maximumSecure"
       @click="maximumSecure = true"
@@ -36,8 +37,8 @@
     </ListItemChoose>
     <ListItemChoose
       v-if="$globals.IS_CORDOVA && $globals.IS_IOS"
-      title="Normal"
-      subtitle="Install AirGap on this device"
+      :title="$t('air-gap.setup.same-device.title')"
+      :subtitle="$t('air-gap.setup.same-device.subtitle')"
       :active="!maximumSecure"
       :checked="!maximumSecure"
       @click="maximumSecure = false"
@@ -53,7 +54,7 @@
       fill="alternative"
       :to="{ name: maximumSecure ? 'vault-setup-another-device' : 'vault-setup-same-device' }"
     >
-      Next
+      {{ $t('next') }}
     </AeButton>
   </MobilePage>
 </template>
