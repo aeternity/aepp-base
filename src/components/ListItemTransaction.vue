@@ -34,24 +34,22 @@
       slot="right"
       class="balance-change"
     >
-      <span :class="received ? 'plus' : 'minus'" />
-      <Balance :balance="tx.amount" />
-      <small><Balance :balance="tx.fee" /></small>
+      <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+      <small>{{ tx.fee | prefixedAmount }}&nbsp;AE</small>
     </div>
   </ListItem>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import prefixedAmount from '../filters/prefixedAmount';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
 import AeAddress from './AeAddress.vue';
-import Balance from './Balance.vue';
 
 export default {
-  components: {
-    ListItem, AeIdenticon, AeAddress, Balance,
-  },
+  components: { ListItem, AeIdenticon, AeAddress },
+  filters: { prefixedAmount },
   props: {
     pending: Boolean,
     received: Boolean,
@@ -83,40 +81,25 @@ export default {
   .balance-change {
     @extend %face-mono-xs;
     font-weight: bold;
-    color: $color-primary;
+    color: $color-neutral-negative-3;
     text-align: right;
 
-    .plus {
+    .plus:after {
       color: $color-alternative;
-
-      &:after {
-        content: '+';
-      }
+      content: '+';
     }
 
-    .minus {
+    .minus:after {
       color: $color-primary;
-
-      &:after {
-        content: '—';
-      }
-    }
-
-    .balance {
-      @extend %face-mono-xs;
-      font-weight: bold;
-      color: $color-neutral-negative-3;
+      content: '—';
     }
 
     small {
       display: block;
-
-      .balance {
-        @extend %face-sans-xs;
-        font-size: rem(11px);
-        font-weight: normal;
-        color: $color-neutral-negative-1;
-      }
+      @extend %face-sans-xs;
+      font-size: rem(11px);
+      font-weight: normal;
+      color: $color-neutral-negative-1;
     }
   }
 }
