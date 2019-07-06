@@ -7,7 +7,7 @@
       <AeQrCode :data="address" />
       <AeAddress
         :address="address"
-        split-by="3"
+        mode="three-columns"
       />
     </main>
 

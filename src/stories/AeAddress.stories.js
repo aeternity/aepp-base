@@ -13,15 +13,15 @@ storiesOf('AeAddress', module)
     ...base,
     template: '<ae-address :address="address" />',
   }))
-  .add('grouped', () => ({
+  .add('three-columns', () => ({
     ...base,
-    template: '<ae-address :address="address" split-by="3" />',
+    template: '<ae-address :address="address" mode="three-columns" />',
   }))
-  .add('medium', () => ({
+  .add('three-columns-short', () => ({
     ...base,
-    template: '<ae-address :address="address" length="medium" />',
+    template: '<ae-address :address="address" mode="three-columns-short" />',
   }))
-  .add('short', () => ({
+  .add('without copy on click', () => ({
     ...base,
-    template: '<ae-address :address="address" length="short" />',
+    template: '<ae-address :address="address" disable-copy-on-click />',
   }));
