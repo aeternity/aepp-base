@@ -7,7 +7,7 @@ Vue.prototype.$globals = {
 };
 
 const testAddress = 'ak_12345678912345678912345678912345678912345678912345';
-const testAddressFormatted = 'ak_ 12 345 678 912 345 678 912 345 678 912 345 678 912 345 678 912 345';
+const testAddressFormatted = 'ak_ 123 456 789 123 456 789 123 456 789 123 456 789 123 456 789 123 45';
 const testAddress51 = 'ak_xXRgaNBuFudv8QHVX52BYmfFyBEZDSWrdMWt2PNk8Mo2ZgHQ';
 const testAddress51Formatted = 'ak_ xXR gaN BuF udv 8QH VX5 2BY mfF yBE ZDS Wrd MWt 2PN k8M o2Z gHQ';
 
@@ -32,7 +32,7 @@ describe('AeInputAddress', () => {
     const emittedValue = inputListener.mock.calls[0][0];
     expect(emittedValue).toEqual('ak_beef');
     wrapper.setProps({ value: emittedValue });
-    expect(textarea.element.value).toBe('ak_ be ef');
+    expect(textarea.element.value).toBe('ak_ bee f');
   });
 
   it('removes non-base58 symbols', () => {
@@ -47,7 +47,7 @@ describe('AeInputAddress', () => {
     const emittedValue = inputListener.mock.calls[0][0];
     expect(emittedValue).toEqual('ak_19AHJNPZakmz');
     wrapper.setProps({ value: emittedValue });
-    expect(textarea.element.value).toBe('ak_ 19 AHJ NPZ akm z');
+    expect(textarea.element.value).toBe('ak_ 19A HJN PZa kmz');
   });
 
   it('emitted input event contains address without space symbols', () => {

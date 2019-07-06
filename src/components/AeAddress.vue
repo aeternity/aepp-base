@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     lines() {
-      const chunks = this.address.match(/^\w{2}_|.{2}(?=.{47,48}$)|.{2,3}/g);
+      const chunks = this.address.match(/.{1,3}/g);
       if (this.length !== 'short' && chunks[1].length === 2) {
         chunks[1] = `\xa0${chunks[1]}`;
       }
