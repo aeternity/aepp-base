@@ -14,7 +14,7 @@
     <span
       v-if="name"
       slot="toolbar"
-      class="balance-title"
+      class="name"
     >
       {{ name }}
     </span>
@@ -69,7 +69,7 @@ export default {
     }
   }
 
-  .balance-title {
+  .name {
     @extend %face-sans-xs;
   }
 }
