@@ -1,8 +1,5 @@
-import { prepare } from '../../utils';
-
 describe('Migration 3: Set mnemonic backed up', () => {
   it('applicable', () => {
-    prepare();
     window.localStorage.vuex = JSON.stringify({
       migrations: {
         0: true,
