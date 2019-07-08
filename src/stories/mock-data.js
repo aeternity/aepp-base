@@ -37,11 +37,17 @@ export const getAppMetadata = () => host => ({
   icon: appIcon,
 });
 
-export const accountsModule = {
-  namespaced: true,
-  state: { list: [account] },
-  getters: {
-    active: () => account,
-    getName: () => () => 'Account name',
+export const accountsModules = {
+  accounts: {
+    namespaced: true,
+    getters: {
+      active: () => account,
+    },
+  },
+  names: {
+    namespaced: true,
+    getters: {
+      get: () => () => 'AENS Account name',
+    },
   },
 };

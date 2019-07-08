@@ -26,11 +26,12 @@ export default {
       return { ...module, name };
     },
     getColor: (state, { getModule }) => account => getModule(account).account.color,
-    getName: (state, { getModule, getByType }) => account => [
-      getModule(account).account.typeVerbose,
-      ' #',
-      getByType(account.source.type).findIndex(({ address }) => address === account.address) + 1,
-    ].join(''),
+    getName: (state, { getModule, getByType }, rootState, rootGetters) => account => (
+      rootGetters['names/get'](account.address, false) || [
+        getModule(account).account.typeVerbose,
+        ' #',
+        getByType(account.source.type).findIndex(({ address }) => address === account.address) + 1,
+      ].join('')),
   },
 
   mutations: {

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import Vuex from 'vuex';
 import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
-import { accountsModule } from '../mock-data';
+import { accountsModules } from '../mock-data';
 
 
 storiesOf('mobile ConfirmSignModal', module)
@@ -13,7 +13,7 @@ storiesOf('mobile ConfirmSignModal', module)
       reject: action('reject'),
     },
     store: new Vuex.Store({
-      modules: { accounts: accountsModule },
+      modules: accountsModules,
     }),
     components: { ConfirmSignModal },
     template: `
