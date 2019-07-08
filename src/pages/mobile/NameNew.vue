@@ -10,18 +10,23 @@
         <AccountInline :address="active.address" />
       </Guide>
 
-      <form :id="_uid">
+      <form
+        :id="_uid"
+        @submit.prevent="handleSubmit"
+      >
         <AeInput
           v-model="name"
-          v-validate="'required'"
+          v-validate="'required|aens_name|aens_name_unregistered'"
           autofocus
           autocomplete="off"
-          :error="errors.has('name')"
-          :footer="errors.first('name')"
+          :error="errors.has('name') || error"
+          :footer="errors.first('name') || (error ? 'Unknown error' : '')"
+          :disabled="busy"
           name="name"
           header="Name"
-          placeholder="Name"
+          placeholder="Name.test"
           maxlength="16"
+          @input="error = false"
         />
       </form>
     </template>
@@ -29,6 +34,7 @@
     <AeButton
       fill="secondary"
       :form="_uid"
+      :disabled="busy || errors.has('name') || error"
     >
       Register
     </AeButton>
@@ -51,7 +57,52 @@ export default {
     AccountInline,
     AeButton,
   },
-  data: () => ({ name: '' }),
+  data: () => ({ name: '', busy: false, error: false }),
   computed: mapGetters('accounts', ['active', 'activeColor']),
+  methods: {
+    async handleSubmit() {
+      if (!await this.$validator.validateAll()) return;
+      this.busy = true;
+      let claimTxHash;
+
+      try {
+        const { salt } = await this.$store.state.sdk.aensPreclaim(this.name);
+        claimTxHash = (
+          await this.$store.state.sdk.aensClaim(this.name, salt, { waitMined: false })
+        ).hash;
+
+        this.$store.dispatch('modals/open', {
+          name: 'notification',
+          text: `Claim for ${this.name} name was successfully sent`,
+        });
+        this.$router.back();
+      } catch (e) {
+        if (e.message === 'Rejected by user') return;
+        this.error = true;
+        throw e;
+      } finally {
+        this.busy = false;
+      }
+
+      try {
+        await this.$store.state.sdk.poll(claimTxHash);
+        await this.$store.state.sdk.aensUpdate(
+          (await this.$store.state.sdk.aensQuery(this.name)).id,
+          this.$store.getters['accounts/active'].address,
+        );
+        this.$store.dispatch('modals/open', {
+          name: 'notification',
+          text: `${this.name} was successfully registered`,
+        });
+      } catch (e) {
+        if (e.message === 'Rejected by user') return;
+        this.$store.dispatch('modals/open', {
+          name: 'notification',
+          text: `${this.name} was not registered for unknown reason`,
+        });
+        throw e;
+      }
+    },
+  },
 };
 </script>
