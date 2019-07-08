@@ -25,6 +25,7 @@ export { default as Github } from '../assets/icons/inline/github.svg?icon-compon
 export { default as Globe } from '../assets/icons/inline/globe.svg?icon-component';
 export { default as Grid } from '../assets/icons/inline/grid.svg?icon-component';
 export { default as Headline } from '../assets/icons/inline/headline.svg?icon-component';
+export { default as Help } from '../assets/icons/inline/help.svg?icon-component';
 export { default as Home } from '../assets/icons/inline/home.svg?icon-component';
 export { default as Info } from '../assets/icons/inline/info.svg?icon-component';
 export { default as Italic } from '../assets/icons/inline/italic.svg?icon-component';

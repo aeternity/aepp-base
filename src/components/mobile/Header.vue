@@ -31,10 +31,15 @@
 
 <script>
 import ButtonPlain from '../ButtonPlain.vue';
-import { Back, Close } from '../icons';
+import { Back, Close, Help } from '../icons';
 
 export default {
-  components: { ButtonPlain, Back, Close },
+  components: {
+    ButtonPlain,
+    Back,
+    Close,
+    Help,
+  },
   props: {
     leftButtonIconName: { type: String, default: null },
     leftButtonTo: { type: [String, Object], default: null },
