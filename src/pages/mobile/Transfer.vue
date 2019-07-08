@@ -2,6 +2,8 @@
   <MobilePage
     class="transfer"
     header-fill="neutral"
+    :right-button-icon-name="showTooltips ? 'close' : 'help'"
+    @right-button-click="toggleTooltips"
   >
     <template slot="header">
       <Guide>
@@ -60,6 +62,60 @@
       >
       <LeftMore slot="right" />
     </ListItem>
+
+    <Overlay
+      v-if="showTooltips"
+      @click="toggleTooltips"
+    >
+      <Tooltip
+        v-if="$el"
+        :anchor="$el.querySelector('.ae-identicon')"
+        origin="bottom"
+      >
+        <Guide
+          fill="neutral"
+          size="small"
+        >
+          <em>Identicon</em>
+          <br>Recognize which account is active. Accounts & subaccounts have unique identicons.
+        </Guide>
+      </Tooltip>
+      <Tooltip>
+        <Guide
+          fill="neutral"
+          size="small"
+        >
+          <em>Learn how to use the Base æpp</em>
+          <br>Tap on any <span>highlighted region</span> to learn more about its functionality.
+        </Guide>
+      </Tooltip>
+      <Tooltip
+        v-if="$el"
+        :anchor="$el.querySelector('.wrapper .ae-link')"
+        origin="top"
+      >
+        <Guide
+          fill="neutral"
+          size="small"
+        >
+          <em>æpps</em>
+          <br>Explore æpps powered by the æternity blockchain.
+        </Guide>
+      </Tooltip>
+      <Tooltip
+        v-if="$el"
+        :anchor="$el.querySelector('.button-plain .ae-identicon')"
+        origin="top"
+      >
+        <Guide
+          fill="neutral"
+          size="small"
+        >
+          <em>Account Switcher</em>
+          <br>Tap to switch accounts or create subaccounts.
+        </Guide>
+      </Tooltip>
+    </Overlay>
   </MobilePage>
 </template>
 
@@ -75,6 +131,8 @@ import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
 import { LeftMore } from '../../components/icons';
 import ListItem from '../../components/ListItem.vue';
+import Overlay from '../../components/Overlay.vue';
+import Tooltip from '../../components/Tooltip.vue';
 
 export default {
   components: {
@@ -83,16 +141,47 @@ export default {
     AeAccount,
     ListItem,
     LeftMore,
+    Overlay,
+    Tooltip,
   },
   data: () => ({
     moneyWithWingsEmoji,
     manTippingHandEmoji,
     mantelpieceClockEmoji,
     glowingStarEmoji,
+    showTooltips: false,
   }),
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
-  methods: mapActions('modals', ['open']),
+  methods: {
+    ...mapActions('modals', ['open']),
+    toggleTooltips() {
+      this.showTooltips = !this.showTooltips;
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../../styles/variables/colors.scss';
+@import '../../styles/globals/functions.scss';
+
+.mobile-page {
+  /deep/ .icon.close {
+    color: $color-primary-negative-1;
+  }
+
+  .overlay {
+    position: absolute;
+    padding: 0;
+    background-color: transparent;
+    z-index: 1;
+  }
+
+  .guide span {
+    border: rem(1px) solid rgba($color-primary, 0.3);
+    background-color: rgba($color-primary, 0.2);
+  }
+}
+</style>
