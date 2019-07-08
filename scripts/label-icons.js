@@ -46,20 +46,19 @@ const branch = require('./current-branch');
       <text x="100" dy="85">${[platform, nodeEnv].filter(a => a).join(', ')}</text>
     </svg>`);
 
-  const iconCreators = appIcons.map(({ path, side, platform }) => async () => {
-    const result = sharp(sourceIcon).resize(side);
-    if (showLabel) {
-      result.composite([{
-        input: await sharp(labelSvg({ platform }), { density: 300 })
-          .resize(side).toBuffer(),
-      }]);
-    }
-    await result.toFile(path);
-  });
-
-  if (process.platform === 'win32') {
-    await iconCreators.reduce((promise, creator) => promise.then(creator), Promise.resolve());
-  } else await Promise.all(iconCreators.map(creator => creator()));
+  await appIcons.reduce(
+    (promise, { path, side, platform }) => promise.then(async () => {
+      const result = sharp(sourceIcon).resize(side);
+      if (showLabel) {
+        result.composite([{
+          input: await sharp(labelSvg({ platform }), { density: 300 })
+            .resize(side).toBuffer(),
+        }]);
+      }
+      await result.toFile(path);
+    }),
+    Promise.resolve(),
+  );
 })().catch((error) => {
   console.error(error);
   process.exit(1);
