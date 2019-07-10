@@ -1,7 +1,7 @@
 <template>
   <ListItem
     v-bind="$attrs"
-    :title="name"
+    :title="name || nameFromStore"
     :subtitle="subtitleContent"
     subtitle-monospace
     v-on="$listeners"
@@ -29,9 +29,10 @@ import formatAddress from '../filters/formatAddress';
 export default {
   components: { ListItem, AeIdenticon },
   props: {
+    name: { type: String, default: '' },
     address: { type: String, required: true },
     balance: { type: BigNumber, default: null },
-    source: { type: Object, required: true },
+    source: { type: Object, default: () => {} },
     subtitle: { type: String, default: 'balance' },
   },
   computed: {
@@ -46,7 +47,7 @@ export default {
       }
     },
     ...mapState('accounts', {
-      name(state, { getName }) { return getName(this); },
+      nameFromStore(state, { getName }) { return getName(this); },
     }),
   },
 };
