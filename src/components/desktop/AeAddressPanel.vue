@@ -33,9 +33,9 @@ export default {
 @import '../../styles/variables/colors.scss';
 
 .ae-address-panel {
-  width: rem(372px);
+  width: rem(400px);
   background-color: $color-neutral-positive-3;
-  padding: rem(10px) 0 rem(10px) rem(18px);
+  padding: rem(10px) rem(18px);
   border-radius: rem(4px);
 
   .title {
@@ -45,10 +45,7 @@ export default {
   }
 
   .ae-address {
-    display: block;
     color: $color-neutral-negative-1;
-    font-weight: normal;
-    letter-spacing: normal;
   }
 }
 </style>

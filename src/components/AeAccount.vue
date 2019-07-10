@@ -12,7 +12,7 @@
     <main>
       <AeAddress
         :address="address"
-        length="medium"
+        mode="three-columns-short"
         disable-copy-on-click
       />
     </main>

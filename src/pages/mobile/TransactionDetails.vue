@@ -10,10 +10,7 @@
     <template slot="header">
       <Guide fill="neutral">
         {{ transaction.received ? 'You received' : 'You sent' }}
-        <Balance
-          :balance="transaction.tx.amount"
-          invert
-        />
+        <em class="balance">{{ transaction.tx.amount | prefixedAmount }} AE</em>
         <template v-if="transaction.tx.senderId">
           <br>from
           <AccountInline :address="transaction.tx.senderId" />
@@ -80,9 +77,9 @@
 <script>
 import { mapGetters } from 'vuex';
 import { pluck } from 'rxjs/operators';
+import prefixedAmount from '../../filters/prefixedAmount';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
-import Balance from '../../components/Balance.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
 import DetailsAmountAndFee from '../../components/mobile/DetailsAmountAndFee.vue';
@@ -94,7 +91,6 @@ export default {
   components: {
     MobilePage,
     Guide,
-    Balance,
     AccountInline,
     DetailsField,
     DetailsAmountAndFee,
@@ -102,6 +98,7 @@ export default {
     DetailsAddress,
     AeButton,
   },
+  filters: { prefixedAmount },
   props: {
     hash: { type: String, required: true },
   },
@@ -134,9 +131,7 @@ export default {
   }
 
   .guide .balance {
-    &, &:after {
-      font-size: rem(23px);
-    }
+    font-family: $font-mono;
   }
 
   .details-item {

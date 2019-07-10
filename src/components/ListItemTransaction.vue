@@ -2,6 +2,10 @@
   <ListItem
     v-bind="$attrs"
     class="list-item-transaction"
+    :class="{ pending }"
+    :title="peerName || formatAddress(peerId)"
+    :title-monospace="!peerName"
+    :subtitle="pending ? `Pending` : time.toLocaleTimeString()"
     subtitle-monospace
     v-on="$listeners"
   >
@@ -10,48 +14,28 @@
         slot="icon"
         :address="peerId"
       />
-
-      <AeAddress
-        slot="title"
-        :address="peerId"
-        length="short"
-      />
-    </template>
-
-    <template slot="subtitle">
-      <span
-        v-if="pending"
-        class="pending"
-      >
-        Pending
-      </span>
-      <template v-else>
-        {{ time.toLocaleTimeString() }}
-      </template>
     </template>
 
     <div
       slot="right"
       class="balance-change"
     >
-      <span :class="received ? 'plus' : 'minus'" />
-      <Balance :balance="tx.amount" />
-      <small><Balance :balance="tx.fee" /></small>
+      <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+      <small>{{ tx.fee | prefixedAmount }}&nbsp;AE</small>
     </div>
   </ListItem>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
+import prefixedAmount from '../filters/prefixedAmount';
+import formatAddress from '../filters/formatAddress';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
-import AeAddress from './AeAddress.vue';
-import Balance from './Balance.vue';
 
 export default {
-  components: {
-    ListItem, AeIdenticon, AeAddress, Balance,
-  },
+  components: { ListItem, AeIdenticon },
+  filters: { prefixedAmount },
   props: {
     pending: Boolean,
     received: Boolean,
@@ -59,7 +43,13 @@ export default {
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
   },
-  computed: mapGetters({ activeAccount: 'accounts/active' }),
+  computed: mapState('names', {
+    peerName(state, { get }) {
+      if (!this.peerId) return this.tx.type;
+      return get(this.peerId);
+    },
+  }),
+  methods: { formatAddress },
 };
 </script>
 
@@ -68,55 +58,33 @@ export default {
 @import '../styles/variables/colors.scss';
 
 .list-item-transaction {
-  .ae-address {
-    @extend %face-mono-s;
-    font-weight: bold;
-    color: $color-neutral-negative-3;
-  }
-
-  .pending {
-    @extend %face-uppercase-xs;
-    font-weight: bold;
+  &.pending /deep/ .label .subtitle {
+    text-transform: uppercase;
     color: $color-primary;
   }
 
   .balance-change {
     @extend %face-mono-xs;
     font-weight: bold;
-    color: $color-primary;
+    color: $color-neutral-negative-3;
     text-align: right;
 
-    .plus {
+    .plus:after {
       color: $color-alternative;
-
-      &:after {
-        content: '+';
-      }
+      content: '+';
     }
 
-    .minus {
+    .minus:after {
       color: $color-primary;
-
-      &:after {
-        content: '—';
-      }
-    }
-
-    .balance {
-      @extend %face-mono-xs;
-      font-weight: bold;
-      color: $color-neutral-negative-3;
+      content: '—';
     }
 
     small {
       display: block;
-
-      .balance {
-        @extend %face-sans-xs;
-        font-size: rem(11px);
-        font-weight: normal;
-        color: $color-neutral-negative-1;
-      }
+      @extend %face-sans-xs;
+      font-size: rem(11px);
+      font-weight: normal;
+      color: $color-neutral-negative-1;
     }
   }
 }

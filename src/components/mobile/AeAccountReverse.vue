@@ -7,14 +7,14 @@
       <AeQrCode :data="address" />
       <AeAddress
         :address="address"
-        split-by="3"
+        mode="three-columns"
       />
     </main>
 
     <span
       v-if="name"
       slot="toolbar"
-      class="balance-title"
+      class="name"
     >
       {{ name }}
     </span>
@@ -69,7 +69,7 @@ export default {
     }
   }
 
-  .balance-title {
+  .name {
     @extend %face-sans-xs;
   }
 }

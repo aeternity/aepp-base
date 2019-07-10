@@ -21,8 +21,6 @@ export default {
 @import '../../styles/variables/colors.scss';
 
 .details-field .ae-address {
-  font-weight: normal;
   color: var(--color-primary, $color-neutral-maximum);
-  letter-spacing: rem(1.5px);
 }
 </style>
