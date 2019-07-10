@@ -1,5 +1,5 @@
 <svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg">
-    <g fill="none" fill-rule="evenodd" stroke="#FFF" transform="translate(1 1)">
+    <g fill="none" fill-rule="evenodd" stroke="currentColor" transform="translate(1 1)">
         <circle cx="1.63" cy="4.239" r="1.63" stroke-width="1.2"/>
         <circle cx="1.957" cy="11.739" r="1.304" stroke-width="1.2"/>
         <circle cx="9.457" cy="14.022" r="1.63" stroke-width="1.2"/>
