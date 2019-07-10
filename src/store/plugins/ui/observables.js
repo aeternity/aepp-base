@@ -126,6 +126,7 @@ export default (store) => {
   };
 
   const fetchPendingTransactions = async (address) => {
+    if (store.state.sdk.then) await store.state.sdk;
     const txs = await Promise.all((
       await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
         .then(r => r.transactions, () => [])
