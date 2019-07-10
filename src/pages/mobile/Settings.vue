@@ -14,7 +14,7 @@
         class="network"
       >
         <ListItemCircle slot="icon">
-          <Globe />
+          <Network />
         </ListItemCircle>
         <LeftMore slot="right" />
       </ListItem>
@@ -130,7 +130,7 @@ import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import {
-  Globe, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
+  Network, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
 } from '../../components/icons';
 
 export default {
@@ -144,7 +144,7 @@ export default {
     ListItemSettingsReset,
     ListItemSettingsLanguage,
     MnemonicBackupWarning,
-    Globe,
+    Network,
     LeftMore,
     Device,
     Grid,
