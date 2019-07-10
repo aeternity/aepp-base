@@ -20,6 +20,7 @@ export default (store) => {
         }
         return '';
       },
+      isPending: ({ owned }) => name => !!(owned.find(t => t.name === name) || {}).pending,
     },
     mutations: {
       set({ names }, { address, name }) {
