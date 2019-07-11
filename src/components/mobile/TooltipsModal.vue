@@ -92,8 +92,8 @@ export default {
   left: 0;
 
   .selection {
-    border: rem(1px) solid rgba($color-alternative, 0.3);
-    background-color: rgba($color-alternative, 0.2);
+    border: rem(1px) solid rgba($color-secondary, 0.5);
+    background-color: rgba($color-secondary, 0.3);
   }
 
   div.selection {
