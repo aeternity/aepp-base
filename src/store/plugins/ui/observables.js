@@ -5,7 +5,7 @@ import {
   multicast, pluck, switchMap, map, filter, pairwise, startWith, catchError,
 } from 'rxjs/operators';
 import { refCountDelay } from 'rxjs-etc/operators';
-import { memoize } from 'lodash-es';
+import { memoize, upperFirst, lowerCase } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import { fetchMiddlewareEndpoint } from '../../utils';
@@ -57,9 +57,12 @@ export default (store) => {
     },
     tx: {
       ...otherTx,
-      amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
+      ...amount !== undefined && { amount: BigNumber(amount).shiftedBy(-MAGNITUDE) },
       fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
     },
+    type: upperFirst(
+      lowerCase(otherTx.type.replace(/Tx$/, '')).split(' ').reverse().join(' '),
+    ),
   });
 
   const setTransactionFieldsRelatedToAddress = ({ tx, ...otherTransaction }, currentAddress) => ({

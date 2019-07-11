@@ -20,7 +20,9 @@
       slot="right"
       class="balance-change"
     >
-      <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+      <template v-if="tx.amount">
+        <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+      </template>
       <small>{{ tx.fee | prefixedAmount }}&nbsp;AE</small>
     </div>
   </ListItem>
@@ -42,10 +44,11 @@ export default {
     time: { type: Date, default: null },
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
+    type: { type: String, required: true },
   },
   computed: mapState('names', {
     peerName(state, { get }) {
-      if (!this.peerId) return this.tx.type;
+      if (!this.peerId) return this.type;
       return get(this.peerId);
     },
   }),
