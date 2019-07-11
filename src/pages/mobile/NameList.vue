@@ -49,6 +49,7 @@ export default {
   },
   computed: mapState('names', ['owned']),
   async mounted() {
+    await this.$store.dispatch('intros/names');
     const update = () => this.$store.dispatch('names/fetchOwned');
     await update();
     const id = setInterval(update, 3000);
