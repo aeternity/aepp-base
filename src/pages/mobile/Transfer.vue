@@ -2,7 +2,8 @@
   <MobilePage
     class="transfer"
     header-fill="neutral"
-    :right-button-icon-name="showTooltips ? 'close' : 'help'"
+    :right-button-icon-name="`${showTooltips ? 'close' : 'question'}-circle`"
+    :right-button-color="showTooltips ? 'primary' : ''"
     @right-button-click="toggleTooltips"
   >
     <template slot="header">
@@ -168,10 +169,6 @@ export default {
 @import '../../styles/globals/functions.scss';
 
 .mobile-page {
-  /deep/ .icon.close {
-    color: $color-primary-negative-1;
-  }
-
   .overlay {
     position: absolute;
     padding: 0;

@@ -12,6 +12,7 @@ export { default as Card } from '../assets/icons/inline/card.svg?icon-component'
 export { default as Chat } from '../assets/icons/inline/chat.svg?icon-component';
 export { default as Check } from '../assets/icons/inline/check.svg?icon-component';
 export { default as Close } from '../assets/icons/inline/close.svg?icon-component';
+export { default as CloseCircle } from '../assets/icons/inline/close-circle.svg?icon-component';
 export { default as Contacts } from '../assets/icons/inline/contacts.svg?icon-component';
 export { default as Copy } from '../assets/icons/inline/copy.svg?icon-component';
 export { default as Delete } from '../assets/icons/inline/delete.svg?icon-component';
@@ -25,7 +26,6 @@ export { default as Github } from '../assets/icons/inline/github.svg?icon-compon
 export { default as Globe } from '../assets/icons/inline/globe.svg?icon-component';
 export { default as Grid } from '../assets/icons/inline/grid.svg?icon-component';
 export { default as Headline } from '../assets/icons/inline/headline.svg?icon-component';
-export { default as Help } from '../assets/icons/inline/help.svg?icon-component';
 export { default as Home } from '../assets/icons/inline/home.svg?icon-component';
 export { default as Info } from '../assets/icons/inline/info.svg?icon-component';
 export { default as Italic } from '../assets/icons/inline/italic.svg?icon-component';
@@ -38,6 +38,7 @@ export { default as LockOpen } from '../assets/icons/inline/lock-open.svg?icon-c
 export { default as More } from '../assets/icons/inline/more.svg?icon-component';
 export { default as Paste } from '../assets/icons/inline/paste.svg?icon-component';
 export { default as Plus } from '../assets/icons/inline/plus.svg?icon-component';
+export { default as QuestionCircle } from '../assets/icons/inline/question-circle.svg?icon-component';
 export { default as Receive } from '../assets/icons/inline/receive.svg?icon-component';
 export { default as Reload } from '../assets/icons/inline/reload.svg?icon-component';
 export { default as Save } from '../assets/icons/inline/save.svg?icon-component';
