@@ -1,10 +1,10 @@
 @import '../styles/variables/colors.scss';
 
-%address-copied {
+%copied {
   position: relative;
 
   &:before {
-    content: 'address copied';
+    content: 'Copied';
     display: flex;
     justify-content: center;
     align-items: center;
