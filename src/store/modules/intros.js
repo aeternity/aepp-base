@@ -45,8 +45,8 @@ export default {
       ...p,
       async [key]({ state: { read }, commit, dispatch }) {
         if (read[key]) return;
-        commit('markAsRead', key);
         await dispatch('modals/open', { name: 'showIntro', content }, { root: true });
+        commit('markAsRead', key);
       },
     }),
     {},
