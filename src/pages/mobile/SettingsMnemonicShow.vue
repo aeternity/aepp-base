@@ -85,7 +85,7 @@ export default {
 @import '../../styles/placeholders/typography.scss';
 @import '../../styles/variables/colors.scss';
 
-.settings-mnemonic-show {
+.settings-mnemonic-show.mobile-page {
   .mnemonic {
     @extend %face-mono-s;
     line-height: 1.67;
