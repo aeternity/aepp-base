@@ -44,10 +44,11 @@ export default {
     time: { type: Date, default: null },
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
+    type: { type: String, required: true },
   },
   computed: mapState('names', {
     peerName(state, { get }) {
-      if (!this.peerId) return this.tx.type;
+      if (!this.peerId) return this.type;
       return get(this.peerId);
     },
   }),
