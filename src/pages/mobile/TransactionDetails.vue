@@ -71,6 +71,11 @@
       :address="transaction.hash"
     />
 
+    <DetailsField
+      name="Transaction type"
+      :value="transaction.type"
+    />
+
     <AeButton
       slot="footer"
       :fill="transaction.received ? 'alternative' : 'primary'"
