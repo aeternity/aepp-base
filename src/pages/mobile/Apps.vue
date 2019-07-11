@@ -88,6 +88,9 @@ export default {
       return this.searchTerm ? this.fuse.search(this.searchTerm) : this.bookmarkedApps;
     },
   },
+  async mounted() {
+    await this.$store.dispatch('intros/apps');
+  },
 };
 </script>
 

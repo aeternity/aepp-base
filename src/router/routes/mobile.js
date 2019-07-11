@@ -8,7 +8,6 @@ import OnboardingAepps from '../../pages/mobile/OnboardingAepps.vue';
 import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
-import AppIntro from '../../pages/mobile/AppIntro.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
 import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
@@ -118,11 +117,6 @@ export default [{
   name: 'recover',
   path: '/recover',
   component: Recover,
-}, {
-  name: 'app-intro',
-  path: '/browser/intro',
-  component: AppIntro,
-  beforeEnter: ensureLoggedIn,
 }, {
   name: 'apps',
   path: '/browser',
