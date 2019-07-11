@@ -55,7 +55,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/placeholders/typography.scss';
-@import './address-copied.scss';
+@import './copied.scss';
 
 .ae-address {
   $char-width: 11px;
@@ -76,7 +76,7 @@ export default {
   }
 
   &.v-copied {
-    @extend %address-copied;
+    @extend %copied;
   }
 }
 </style>

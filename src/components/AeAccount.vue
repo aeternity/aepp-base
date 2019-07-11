@@ -66,11 +66,11 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/placeholders/typography.scss';
 @import '../styles/variables/colors.scss';
-@import './address-copied.scss';
+@import './copied.scss';
 
 .ae-account.ae-card {
   &.v-copied {
-    @extend %address-copied;
+    @extend %copied;
   }
 
   header {

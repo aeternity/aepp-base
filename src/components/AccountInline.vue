@@ -32,7 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/variables/typography.scss';
-@import './address-copied.scss';
+@import './copied.scss';
 
 .account-inline {
   &.address {
@@ -40,11 +40,7 @@ export default {
   }
 
   &.v-copied {
-    @extend %address-copied;
-
-    &:before {
-      content: 'copied';
-    }
+    @extend %copied;
   }
 
   .ae-identicon {
