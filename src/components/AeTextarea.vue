@@ -30,9 +30,9 @@ export default {
   components: { AeInputWrapper },
   directives: { focus },
   props: {
-    autofocus: { type: Boolean, default: false },
-    monospace: { type: Boolean, default: false },
-    submitOnEnter: { type: Boolean, default: false },
+    autofocus: Boolean,
+    monospace: Boolean,
+    submitOnEnter: Boolean,
   },
   methods: {
     keypressHandler(event) {

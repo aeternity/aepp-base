@@ -7,14 +7,14 @@
       <AeQrCode :data="address" />
       <AeAddress
         :address="address"
-        split-by="3"
+        mode="three-columns"
       />
     </main>
 
     <span
       v-if="name"
       slot="toolbar"
-      class="balance-title"
+      class="name"
     >
       {{ name }}
     </span>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import AeCard from '../AeCard.vue';
 import { AeQrCode } from '../async';
 import AeAddress from '../AeAddress.vue';
@@ -34,8 +35,12 @@ export default {
   },
   props: {
     address: { type: String, required: true },
-    name: { type: String, default: '' },
+    source: { type: Object, required: true },
+    hideName: Boolean,
   },
+  computed: mapState('accounts', {
+    name(state, { getName }) { return this.hideName ? '' : getName(this); },
+  }),
 };
 </script>
 
@@ -64,7 +69,7 @@ export default {
     }
   }
 
-  .balance-title {
+  .name {
     @extend %face-sans-xs;
   }
 }

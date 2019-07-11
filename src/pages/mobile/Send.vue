@@ -53,7 +53,7 @@
       :key="account.address"
       :to="{
         name: 'send-to',
-        params: { to: account.address }
+        params: { to: account.address },
       }"
       border-dark
       v-bind="account"

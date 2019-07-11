@@ -1,36 +1,19 @@
 <template>
   <AeCard
+    v-copy-on-click="address"
     :fill="fill"
     class="ae-account"
   >
     <header>
       <AeIdenticon :address="address" />
-      <form
-        v-if="nameEditable"
-        @submit.prevent="$emit('name-blur')"
-      >
-        <AeInputPlain
-          v-focus="nameEditable"
-          :value="name"
-          placeholder="Account name"
-          fill="light"
-          maxlength="16"
-          @input="$emit('name-input', $event)"
-          @blur.native="$emit('name-blur')"
-        />
-      </form>
-      <span v-else>
-        {{ name }}
-      </span>
-      <div class="slot-icon">
-        <slot name="icon" />
-      </div>
+      {{ name }}
     </header>
 
     <main>
       <AeAddress
         :address="address"
-        length="medium"
+        mode="three-columns-short"
+        disable-copy-on-click
       />
     </main>
 
@@ -44,28 +27,22 @@
 
 <script>
 import { mapState } from 'vuex';
-import { focus } from 'vue-focus';
 import BigNumber from 'bignumber.js';
+import copyOnClick from '../directives/copyOnClick';
 import AeCard from './AeCard.vue';
 import AeIdenticon from './AeIdenticon.vue';
-import AeInputPlain from './AeInputPlain.vue';
 import AeAddress from './AeAddress.vue';
 import Balance from './Balance.vue';
 
 export default {
-  directives: { focus },
+  directives: { copyOnClick },
   components: {
     AeCard,
     AeIdenticon,
-    AeInputPlain,
     AeAddress,
     Balance,
   },
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
     address: {
       type: String,
       required: true,
@@ -74,10 +51,6 @@ export default {
       type: BigNumber,
       required: true,
     },
-    nameEditable: {
-      type: Boolean,
-      default: false,
-    },
     source: {
       type: Object,
       required: true,
@@ -85,6 +58,7 @@ export default {
   },
   computed: mapState('accounts', {
     fill(state, { getColor }) { return getColor(this); },
+    name(state, { getName }) { return getName(this); },
   }),
 };
 </script>
@@ -92,21 +66,19 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/placeholders/typography.scss';
 @import '../styles/variables/colors.scss';
+@import './copied.scss';
 
 .ae-account.ae-card {
+  &.v-copied {
+    @extend %copied;
+  }
+
   header {
     display: flex;
     align-items: center;
     margin: rem(12px) rem(16px);
+    @extend %face-sans-base;
     color: $color-neutral-maximum;
-
-    .slot-icon {
-      margin-left: auto;
-    }
-
-    span {
-      @extend %face-sans-base;
-    }
 
     .ae-identicon {
       margin-right: rem(8px);

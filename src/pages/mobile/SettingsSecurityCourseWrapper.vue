@@ -81,10 +81,12 @@ export default {
       h2, p, ul {
         margin: 0;
         @extend %face-sans-base;
+        color: #000;
       }
 
       h2 {
         margin-top: rem(16px);
+        font-weight: 700;
 
         &.important {
           color: $color-primary;

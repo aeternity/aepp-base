@@ -34,7 +34,7 @@ export default {
     LedgerModalNote,
   },
   props: {
-    create: { type: Boolean, default: false },
+    create: Boolean,
     address: { type: String, required: true },
   },
 };

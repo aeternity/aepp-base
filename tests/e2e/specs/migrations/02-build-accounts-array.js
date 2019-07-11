@@ -1,8 +1,5 @@
-import { prepare } from '../../utils';
-
 describe('Migration 2: Build accounts array', () => {
   it('applicable', () => {
-    prepare();
     const stateBeforeMigration = {
       migrations: {
         0: true,
@@ -10,7 +7,6 @@ describe('Migration 2: Build accounts array', () => {
       },
       rpcUrl: 'https://sdk-mainnet.aepps.com',
       selectedIdentityIdx: 2,
-      addressBook: [],
       customNetworks: [],
       apps: [{
         host: 'example-aepp.origin.aepps.com',
@@ -66,10 +62,9 @@ describe('Migration 2: Build accounts array', () => {
         names: ['Main Account', 'Test 1', 'Test 2'],
       },
     };
-    window.localStorage.vuex = JSON.stringify(stateBeforeMigration);
     cy
       .viewport('iphone-5')
-      .visit('/login')
+      .visit('/login', { state: stateBeforeMigration })
       .get('input[type=password]').type('1234')
       .get('button')
       .contains('Log in')
@@ -80,7 +75,6 @@ describe('Migration 2: Build accounts array', () => {
         const state = JSON.parse(localStorage.vuex);
         expect(state.sdkUrl).equal(stateBeforeMigration.rpcUrl);
         expect(state.accounts.list.length).equal(stateBeforeMigration.mobile.names.length);
-        expect(state.accounts.list[0].name).equal(stateBeforeMigration.mobile.names[0]);
         expect(state.accounts.activeIdx).equal(stateBeforeMigration.selectedIdentityIdx);
         expect(state.accounts.hdWallet.encryptedWallet).eql(stateBeforeMigration.mobile.keystore);
       });

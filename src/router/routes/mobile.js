@@ -8,9 +8,7 @@ import OnboardingAepps from '../../pages/mobile/OnboardingAepps.vue';
 import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
-import AppIntro from '../../pages/mobile/AppIntro.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
-import AccountsNew from '../../pages/mobile/AccountsNew.vue';
 import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
 import VaultSetupAnotherDeviceGuide from '../../pages/mobile/VaultSetupAnotherDeviceGuide.vue';
@@ -24,6 +22,8 @@ import SendAmount from '../../pages/mobile/SendAmount.vue';
 import SendConfirm from '../../pages/mobile/SendConfirm.vue';
 import TransactionList from '../../pages/mobile/TransactionList.vue';
 import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
+import NameList from '../../pages/mobile/NameList.vue';
+import NameNew from '../../pages/mobile/NameNew.vue';
 import Settings from '../../pages/mobile/Settings.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
@@ -44,6 +44,7 @@ import SettingsSecurityCourseLayers from '../../pages/mobile/SettingsSecurityCou
 import SettingsAccountRemove from '../../pages/mobile/SettingsAccountRemove.vue';
 import SettingsPassword from '../../pages/mobile/SettingsPassword.vue';
 import SettingsPasswordSet from '../../pages/mobile/SettingsPasswordSet.vue';
+import SettingsLanguage from '../../pages/mobile/SettingsLanguage.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 
@@ -56,14 +57,6 @@ const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
   }, undefined),
 );
 
-const checkAccountName = (to, from, next) => {
-  if (!store.state.accounts.airGap.newAccountName) {
-    next({ name: 'vault-new' });
-    return;
-  }
-  next();
-};
-
 const checkStoreMnemonic = (to, from, next) => {
   if (!store.state.accounts.hdWallet.mnemonic) {
     next({ name: 'settings-mnemonic-deleted' });
@@ -72,7 +65,6 @@ const checkStoreMnemonic = (to, from, next) => {
   next();
 };
 
-const vaultBeforeEnter = mergeEnterHandlers(ensureLoggedIn, checkAccountName);
 const settingsMnemonicBeforeEnter = mergeEnterHandlers(ensureLoggedIn, checkStoreMnemonic);
 
 export default [{
@@ -126,11 +118,6 @@ export default [{
   path: '/recover',
   component: Recover,
 }, {
-  name: 'app-intro',
-  path: '/browser/intro',
-  component: AppIntro,
-  beforeEnter: ensureLoggedIn,
-}, {
   name: 'apps',
   path: '/browser',
   component: Apps,
@@ -141,52 +128,36 @@ export default [{
   component: AppBrowser,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'accounts-new',
-  path: '/accounts-new',
-  component: AccountsNew,
-  beforeEnter: ensureLoggedIn,
-  meta: {
-    accountType: 'hd-wallet',
-  },
-}, {
-  name: 'vault-new',
-  path: '/vault/new',
-  component: AccountsNew,
-  beforeEnter: ensureLoggedIn,
-  meta: {
-    accountType: 'air-gap',
-  },
-}, {
   name: 'vault-setup-method',
   path: '/vault/choose',
   component: VaultSetupMethod,
-  beforeEnter: vaultBeforeEnter,
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'vault-setup-another-device',
   path: '/vault/another-device',
   component: VaultSetupAnotherDevice,
-  beforeEnter: vaultBeforeEnter,
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'vault-setup-another-device-guide',
   path: '/vault/another-device/guide',
   component: VaultSetupAnotherDeviceGuide,
-  beforeEnter: vaultBeforeEnter,
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'vault-setup-completed',
   path: '/vault/sync-completed',
   component: VaultSetupCompleted,
-  beforeEnter: vaultBeforeEnter,
+  beforeEnter: ensureLoggedIn,
 }, ...process.env.IS_CORDOVA
   ? [{
     name: 'vault-setup-same-device',
     path: '/vault/same-device',
     component: VaultSetupSameDevice,
-    beforeEnter: vaultBeforeEnter,
+    beforeEnter: ensureLoggedIn,
   }, {
     name: 'vault-setup-same-device-sync',
     path: '/vault/same-device/sync',
     component: VaultSetupSameDeviceSync,
-    beforeEnter: vaultBeforeEnter,
+    beforeEnter: ensureLoggedIn,
   }] : [], {
   name: 'transfer',
   path: '/transfer',
@@ -226,6 +197,16 @@ export default [{
   component: TransactionDetails,
   beforeEnter: ensureLoggedIn,
   props: true,
+}, {
+  name: 'name-list',
+  path: '/names',
+  component: NameList,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'name-new',
+  path: '/names/new',
+  component: NameNew,
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings',
   path: '/settings',
@@ -328,5 +309,10 @@ export default [{
   name: 'settings-password-set',
   path: '/settings/password/set',
   component: SettingsPasswordSet,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'settings-language',
+  path: '/settings/language',
+  component: SettingsLanguage,
   beforeEnter: ensureLoggedIn,
 }];

@@ -10,7 +10,7 @@
           Connect an<br>account to start
         </template>
         <template v-else>
-          Your connected<br>account{{ accountsCount !== 1 ? 's': '' }}
+          Your connected<br>account{{ accountsCount !== 1 ? 's' : '' }}
         </template>
         <ButtonPlain @click="toggleSidebar">
           <Close />
@@ -64,7 +64,7 @@ export default {
     }),
     currentTab() {
       return (this.accountTypes.includes('ledger') && this.ledgerTab)
-      || (this.accountTypes.some(type => type !== 'ledger') && !this.ledgerTab)
+        || (this.accountTypes.some(type => type !== 'ledger') && !this.ledgerTab)
         ? 'account-switcher' : 'connect-guide';
     },
   },

@@ -34,7 +34,7 @@ export default {
   directives: { focus },
   props: {
     value: { type: [String, Number], default: '' },
-    autofocus: { type: Boolean, default: false },
+    autofocus: Boolean,
   },
 };
 </script>

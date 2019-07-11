@@ -22,6 +22,7 @@ export default {
 
   account: {
     type: 'ledger',
+    typeVerbose: 'Ledger account',
     color: 'dark',
   },
 

@@ -12,18 +12,22 @@
       <slot name="icon" />
 
       <div
-        v-if="title || $slots.subtitle || subtitle"
-        class="title"
+        v-if="title || subtitle"
+        class="label"
         :class="{ 'has-content-after': $slots.default || $slots.right }"
       >
-        <slot name="title">
+        <div
+          class="title"
+          :class="{ monospace: titleMonospace }"
+        >
           {{ title }}
-        </slot>
-        <small :class="{ monospace: subtitleMonospace }">
-          <slot name="subtitle">
-            {{ subtitle }}
-          </slot>
-        </small>
+        </div>
+        <div
+          class="subtitle"
+          :class="{ monospace: subtitleMonospace }"
+        >
+          {{ subtitle }}
+        </div>
       </div>
 
       <slot />
@@ -42,10 +46,11 @@ export default {
   props: {
     to: { type: [Object, String], default: undefined },
     title: { type: String, default: undefined },
+    titleMonospace: Boolean,
     subtitle: { type: String, default: undefined },
-    subtitleMonospace: { type: Boolean, default: false },
-    inactive: { type: Boolean, default: false },
-    borderDark: { type: Boolean, default: false },
+    subtitleMonospace: Boolean,
+    inactive: Boolean,
+    borderDark: Boolean,
   },
   computed: {
     renderAs() {
@@ -78,17 +83,12 @@ export default {
     @extend %face-sans-s;
     font-weight: 500;
 
-    &.has-icon {
-      > :first-child {
-        flex-shrink: 0;
-      }
-
-      .title {
-        margin-left: rem(12px);
-      }
+    &.has-icon .label {
+      margin-left: rem(12px);
     }
 
-    .title {
+    .label {
+      flex-shrink: 1;
       @extend %face-sans-s;
       white-space: nowrap;
       font-weight: 500;
@@ -98,26 +98,34 @@ export default {
         margin-right: rem(4px);
       }
 
-      &, small {
+      &, .title, .subtitle {
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &.monospace {
+          font-family: $font-mono;
+        }
       }
 
-      small {
-        display: block;
+      .subtitle {
         @extend %face-sans-xs;
         letter-spacing: normal;
         color: $color-neutral-negative-1;
-
-        &.monospace {
-          @extend %face-mono-xs;
-          letter-spacing: normal;
-        }
       }
     }
 
-    /deep/ img {
-      width: rem(33px);
+    .space {
+      flex-grow: 1;
+    }
+
+    /deep/ {
+      img {
+        width: rem(33px);
+      }
+
+      > * {
+        flex-shrink: 0;
+      }
     }
   }
 
@@ -131,10 +139,6 @@ export default {
         }
       }
     }
-  }
-
-  .space {
-    flex-grow: 1;
   }
 }
 </style>

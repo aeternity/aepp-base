@@ -3,7 +3,7 @@
     <ConnectionStatus />
 
     <div class="wrapper">
-      <ButtonPlain :to="browserPath || { name: 'app-intro' }">
+      <ButtonPlain :to="browserPath || { name: 'apps' }">
         <Grid />
         <div>æpps</div>
       </ButtonPlain>
@@ -20,12 +20,9 @@
         <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
 
-      <ButtonPlain
-        :to="{ name: 'address-book' }"
-        :disabled="!$globals.UNFINISHED_FEATURES"
-      >
+      <ButtonPlain :to="{ name: 'name-list' }">
         <Contacts />
-        <div>Contacts</div>
+        <div>Names</div>
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'settings' }">
@@ -58,7 +55,7 @@ export default {
     MnemonicBackupWarning,
   },
   props: {
-    showAccountSwitcher: { type: Boolean },
+    showAccountSwitcher: Boolean,
   },
   computed: {
     ...mapGetters({ activeAccount: 'accounts/active' }),
@@ -79,6 +76,7 @@ export default {
 @import '../../styles/variables/typography.scss';
 @import '../../styles/variables/colors.scss';
 @import '../../styles/fallback/variables.scss';
+@import '../../styles/globals/functions.scss';
 
 .tab-bar {
   background-color: $color-neutral-minimum;
@@ -86,21 +84,24 @@ export default {
 
   .wrapper {
     display: flex;
-    align-items: center;
+    justify-content: space-around;
+    align-items: stretch;
     max-width: $screen-phone;
     margin: 0 auto;
     padding: 10px;
 
     .button-plain {
-      flex-grow: 1;
-      flex-basis: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: rem(52px);
       font-family: $font-sans;
       font-size: 11px;
       font-weight: 500;
       line-height: 1.45;
       letter-spacing: 0.2px;
       color: $color-neutral-negative-1;
-      text-align: center;
 
       &:disabled {
         color: $color-neutral-negative-3;

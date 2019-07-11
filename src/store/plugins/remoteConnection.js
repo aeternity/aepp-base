@@ -6,25 +6,23 @@ import RpcPeer from '../../lib/rpc';
 const io = async () => (await import(/* webpackChunkName: "socket-io" */ 'socket.io-client')).default;
 
 const getStateForSync = ({
-  sdkUrl, accounts: { list, activeIdx }, addressBook, apps, customNetworks,
+  sdkUrl, accounts: { list, activeIdx }, apps, customNetworks,
 }) => ({
   sdkUrl,
   accounts: {
-    list: list.map(({ name, address, source }) => {
+    list: list.map(({ address, source }) => {
       switch (source.type) {
         case 'hd-wallet':
           return {
-            name,
             address,
             source: pick(source, ['type', 'idx']),
           };
         default:
-          return { name, address, source };
+          return { address, source };
       }
     }),
     activeIdx,
   },
-  addressBook,
   apps,
   customNetworks,
 });
@@ -109,7 +107,7 @@ export default (store) => {
 
       const getRpcPeer = memoize(followerId => new RpcPeer(
         response => socket.emit('message-to-follower', followerId, response), {
-          createAccount: name => store.dispatch('accounts/hdWallet/create', name),
+          createAccount: () => store.dispatch('accounts/hdWallet/create'),
           sign: (...args) => store.state.sdk.sign(...args),
           signTransaction: (...args) => store.state.sdk.signTransaction(...args),
         },
@@ -142,7 +140,7 @@ export default (store) => {
       store.registerModule('remoteConnection', {
         namespaced: true,
         actions: {
-          call(_, { name, args }) {
+          call(_, { name, args = [] }) {
             return leader.call(name, ...args);
           },
         },

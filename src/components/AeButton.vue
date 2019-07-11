@@ -34,7 +34,7 @@ export default {
       validator: value => ['small', 'medium'].includes(value),
       default: 'medium',
     },
-    plain: { type: Boolean, default: false },
+    plain: Boolean,
   },
 };
 </script>

@@ -33,7 +33,7 @@ export default {
   props: {
     value: { type: String, default: '' },
     header: { type: String, default: 'Password' },
-    hideRevealButton: { type: Boolean, default: false },
+    hideRevealButton: Boolean,
   },
   data: () => ({ showPassword: false }),
 };

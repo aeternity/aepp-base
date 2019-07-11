@@ -99,4 +99,12 @@ module.exports = {
     msTileColor: '#f7296e',
   },
   transpileDependencies: ['@aeternity/aepp-sdk/es', '@aeternity/hd-wallet', '@download/blockies'],
+  pluginOptions: {
+    i18n: {
+      locale: 'en',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: false,
+    },
+  },
 };

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import Vuex from 'vuex';
 import ConfirmAccountAccess from '../components/ConfirmAccountAccess.vue';
-import { account, getAppMetadata } from './mock-data';
+import { accountsModules, getAppMetadata } from './mock-data';
 
 const base = {
   methods: {
@@ -11,14 +11,8 @@ const base = {
     reject: action('reject'),
   },
   store: new Vuex.Store({
-    state: {
-      accounts: {
-        list: [account],
-      },
-      addressBook: [],
-    },
+    modules: accountsModules,
     getters: {
-      'accounts/active': () => account,
       getAppMetadata,
     },
   }),

@@ -2,6 +2,9 @@
   <MobilePage
     class="transfer"
     header-fill="neutral"
+    :right-button-icon-name="`${tooltipsVisible ? 'close' : 'question'}-circle`"
+    :right-button-color="tooltipsVisible ? 'primary' : ''"
+    @right-button-click="showTooltips"
   >
     <template slot="header">
       <Guide>
@@ -9,35 +12,7 @@
         Æ
       </Guide>
 
-      <Menu
-        :anchor="showAccountMenu ? $refs.accountButton : null"
-        :anchor-origin="{ vertical: 'top', horizontal: 'right' }"
-        :transform-origin="{ vertical: 'top', horizontal: 'right' }"
-        @close="showAccountMenu = false"
-      >
-        <MenuItem v-copy-on-click="activeAccount.address">
-          <Copy />Copy Address
-        </MenuItem>
-        <MenuItem @click="accountNameEditable = true">
-          <Edit />Rename
-        </MenuItem>
-      </Menu>
-
-      <AeAccount
-        v-bind="activeAccount"
-        :name-editable="accountNameEditable"
-        security-status=""
-        @name-input="setName"
-        @name-blur="accountNameEditable = false"
-      >
-        <ButtonPlain
-          slot="icon"
-          ref="accountButton"
-          @click="showAccountMenu = true"
-        >
-          <More />
-        </ButtonPlain>
-      </AeAccount>
+      <AeAccount v-bind="activeAccount" />
     </template>
 
     <ListItem
@@ -93,21 +68,15 @@
 
 <script>
 import { pick } from 'lodash-es';
-import { mapMutations, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import mantelpieceClockEmoji from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
 import glowingStarEmoji from 'emoji-datasource-apple/img/apple/64/1f31f.png';
-import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
-import ButtonPlain from '../../components/ButtonPlain.vue';
-import {
-  Copy, Edit, More, LeftMore,
-} from '../../components/icons';
-import Menu from '../../components/Menu.vue';
-import MenuItem from '../../components/MenuItem.vue';
+import { LeftMore } from '../../components/icons';
 import ListItem from '../../components/ListItem.vue';
 
 export default {
@@ -115,32 +84,41 @@ export default {
     MobilePage,
     Guide,
     AeAccount,
-    ButtonPlain,
-    More,
-    Menu,
-    MenuItem,
-    Copy,
-    Edit,
     ListItem,
     LeftMore,
   },
-  directives: { copyOnClick },
-  data() {
-    return {
-      moneyWithWingsEmoji,
-      manTippingHandEmoji,
-      mantelpieceClockEmoji,
-      glowingStarEmoji,
-      showAccountMenu: false,
-      accountNameEditable: false,
-    };
-  },
+  data: () => ({
+    moneyWithWingsEmoji,
+    manTippingHandEmoji,
+    mantelpieceClockEmoji,
+    glowingStarEmoji,
+    tooltipsVisible: false,
+  }),
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
   methods: {
-    ...mapMutations('accounts', ['setName']),
     ...mapActions('modals', ['open']),
+    async showTooltips() {
+      this.tooltipsVisible = true;
+      await this.open({
+        name: 'showTooltips',
+        tooltips: [{
+          selector: '.transfer .ae-account .ae-identicon',
+          header: 'Identicon',
+          content: 'Recognize which account is active. Accounts & subaccounts have unique identicons.',
+        }, {
+          selector: '.transfer .tab-bar .button-plain',
+          header: 'æpps',
+          content: 'Explore æpps powered by the æternity blockchain.',
+        }, {
+          selector: '.transfer .tab-bar .button-plain:nth-child(3)',
+          header: 'Account Switcher',
+          content: 'Tap to switch accounts or create subaccounts.',
+        }],
+      });
+      this.tooltipsVisible = false;
+    },
   },
 };
 </script>

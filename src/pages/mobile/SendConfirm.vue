@@ -28,8 +28,8 @@ export default {
         denominator: 3,
       });
       const amount = BigNumber(this.amount);
+      if (this.$store.state.sdk.then) await this.$store.state.sdk;
       const { hash } = await this.$store.state.sdk.spend(amount.shiftedBy(MAGNITUDE), this.to);
-      this.$store.commit('setStepFraction');
 
       this.$router.push({ name: 'transfer' });
       this.$store.dispatch('modals/open', {
@@ -43,6 +43,8 @@ export default {
         return;
       }
       throw e;
+    } finally {
+      this.$store.commit('setStepFraction');
     }
   },
 };

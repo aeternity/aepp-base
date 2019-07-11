@@ -9,6 +9,7 @@ import rootModule from './modules/root'; // eslint-disable-line import/no-cycle
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import accountsModule from './modules/accounts';
+import introsModule from './modules/intros';
 import persistState from './plugins/persistState';
 import remoteConnection from './plugins/remoteConnection';
 import initSdk from './plugins/initSdk';
@@ -25,28 +26,28 @@ const store = new Vuex.Store({
     persistState(
       state => state,
       ({
-        migrations, sdkUrl, addressBook, customNetworks,
-        apps, cachedAppManifests, peerId,
+        migrations, sdkUrl, customNetworks,
+        apps, cachedAppManifests, peerId, languages, intros,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
         mobile: { readSecurityCourses, followers } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
         migrations,
         peerId,
+        languages,
+        intros,
         sdkUrl,
-        addressBook,
         customNetworks,
         accounts: {
-          list: list.map(({ name, address, source }) => {
+          list: list.map(({ address, source }) => {
             switch (source.type) {
               case 'hd-wallet':
                 return {
-                  name,
                   address,
                   source: pick(source, ['type', 'idx']),
                 };
               default:
-                return { name, address, source };
+                return { address, source };
             }
           }),
           activeIdx,
@@ -78,7 +79,7 @@ const store = new Vuex.Store({
   modules: {
     ...process.env.RUNNING_IN_POPUP ? {} : {
       ...process.env.IS_MOBILE_DEVICE
-        ? { mobile: mobileModule }
+        ? { mobile: mobileModule, intros: introsModule }
         : { desktop: desktopModule },
     },
     accounts: accountsModule,

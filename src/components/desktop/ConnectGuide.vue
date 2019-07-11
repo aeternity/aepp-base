@@ -126,7 +126,7 @@ export default {
     ListItemCircle,
   },
   props: {
-    forLedger: { type: Boolean, default: false },
+    forLedger: Boolean,
   },
   computed: mapState({
     peerId: ({ peerId }) => peerId,

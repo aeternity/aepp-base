@@ -18,10 +18,7 @@ export default {
       type: BigNumber,
       required: true,
     },
-    invert: {
-      type: Boolean,
-      default: false,
-    },
+    invert: Boolean,
   },
 };
 </script>

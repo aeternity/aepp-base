@@ -4,24 +4,24 @@
     fill="neutral"
   >
     <Guide>
-      <em>Settings</em>
+      <em>{{ $t('settings.label') }}</em>
     </Guide>
     <AeCard fill="maximum">
       <ListItem
         :to="{ name: 'settings-network' }"
         :subtitle="networkName"
-        title="Network"
+        :title="$t('settings.network')"
         class="network"
       >
         <ListItemCircle slot="icon">
-          <Globe />
+          <Network />
         </ListItemCircle>
         <LeftMore slot="right" />
       </ListItem>
       <ListItem
         :to="{ name: 'settings-remote-connection' }"
-        :subtitle="remoteConnectionsSubtitle"
-        title="Remote connections"
+        :title="$t('settings.remote-connections')"
+        :subtitle="$tc('settings.remote-connections-count', remoteConnectionsCount)"
         class="remote-connection"
       >
         <ListItemCircle slot="icon">
@@ -31,8 +31,8 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-app-list' }"
-        :subtitle="appsAccountAccessSubtitle"
-        title="Aepp account access"
+        :title="$t('settings.app-permissions')"
+        :subtitle="$tc('settings.app-permissions-count', appsAccountAccessCount)"
         class="app-list"
       >
         <ListItemCircle slot="icon">
@@ -42,8 +42,8 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-security-course-list' }"
-        subtitle="Disclaimer and information"
-        title="AE Security Courses"
+        :title="$t('settings.security-courses')"
+        :subtitle="$t('settings.security-courses-subtitle')"
         class="courses"
       >
         <ListItemCircle slot="icon">
@@ -53,8 +53,8 @@
       </ListItem>
       <ListItem
         :to="{ name: mnemonic ? 'settings-mnemonic' : 'settings-mnemonic-deleted' }"
-        subtitle="Secure your funds"
-        title="Backup Recovery Phrase"
+        :title="$t('settings.mnemonic')"
+        :subtitle="$t('settings.mnemonic-subtitle')"
         class="mnemonic"
       >
         <MnemonicBackupWarning slot="icon">
@@ -66,8 +66,8 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-password' }"
-        subtitle="Setup and manage a password"
-        title="Wallet Authentication"
+        :title="$t('settings.password')"
+        :subtitle="$t('settings.password-subtitle')"
         class="password"
       >
         <ListItemCircle slot="icon">
@@ -75,10 +75,13 @@
         </ListItemCircle>
         <LeftMore slot="right" />
       </ListItem>
+      <ListItemSettingsLanguage :to="{ name: 'settings-language' }">
+        <LeftMore />
+      </ListItemSettingsLanguage>
     </AeCard>
 
     <template v-if="removableAccounts.length">
-      <h2>Synced Wallets</h2>
+      <h2>{{ $t('settings.wallets') }}</h2>
       <AeCard fill="maximum">
         <ListItemAccount
           v-for="account in removableAccounts"
@@ -92,12 +95,12 @@
       </AeCard>
     </template>
 
-    <h2>Account</h2>
+    <h2>{{ $t('settings.account') }}</h2>
     <AeCard fill="maximum">
       <ListItem
         v-if="isWalletEncrypted"
-        title="Logout"
-        subtitle="And see you soon!"
+        :title="$t('settings.logout')"
+        :subtitle="$t('settings.logout-subtitle')"
         class="logout"
         @click="logout"
       >
@@ -109,7 +112,7 @@
     </AeCard>
 
     <div class="version">
-      Version {{ version }}
+      {{ $t('settings.version') }} {{ version }}
     </div>
   </MobilePage>
 </template>
@@ -124,9 +127,10 @@ import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
+import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import {
-  Globe, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
+  Network, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
 } from '../../components/icons';
 
 export default {
@@ -138,8 +142,9 @@ export default {
     ListItemCircle,
     ListItemAccount,
     ListItemSettingsReset,
+    ListItemSettingsLanguage,
     MnemonicBackupWarning,
-    Globe,
+    Network,
     LeftMore,
     Device,
     Grid,
@@ -153,14 +158,10 @@ export default {
   }),
   computed: mapState({
     networkName: (state, { currentNetwork }) => currentNetwork.name,
-    remoteConnectionsSubtitle: ({ mobile }) => {
-      const c = Object.entries(mobile.followers).filter(([, f]) => f.connected).length;
-      return `${c} device${c === 1 ? '' : 's'} connected`;
-    },
-    appsAccountAccessSubtitle: ({ apps }) => {
-      const c = apps.filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length;
-      return `${c} aepp${c === 1 ? '' : 's'} have account access`;
-    },
+    remoteConnectionsCount: ({ mobile }) => Object
+      .entries(mobile.followers).filter(([, f]) => f.connected).length,
+    appsAccountAccessCount: ({ apps }) => apps
+      .filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length,
     mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
     removableAccounts: ({ accounts: { list } }) => list
       .map((account, idx) => ({ ...account, idx }))
@@ -201,12 +202,6 @@ export default {
       transform: rotate(90deg);
       background-color: $color-secondary;
     }
-  }
-
-  h2 {
-    @extend %face-sans-s;
-    margin-top: rem(30px);
-    font-weight: 500;
   }
 
   .version {

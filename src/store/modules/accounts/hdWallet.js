@@ -18,6 +18,7 @@ export default {
 
   account: {
     type: 'hd-wallet',
+    typeVerbose: 'Account',
     color: 'primary',
   },
 
@@ -95,15 +96,26 @@ export default {
         .getAccountByPubkey(account.address).then(() => true, () => false));
     },
 
+    handleUnlock: ({ state: { mnemonicBackedUp }, dispatch }, isCreate) => Promise.all([
+      dispatch('discover'),
+      (async () => {
+        if (isCreate) {
+          await dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
+        }
+        if (!mnemonicBackedUp) {
+          await dispatch('modals/open', { name: 'notificationMnemonicBackup' }, { root: true });
+        }
+      })(),
+    ]),
+
     async createWallet({ commit, dispatch }, mnemonic) {
       if (mnemonic) commit('markMnemonicAsBackedUp');
       const newMnemonic = mnemonic || generateMnemonic();
       commit('setMnemonic', newMnemonic);
       commit('setEncryptedWallet', { mnemonic: newMnemonic });
       commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
-      dispatch('create', 'Main Account');
-      dispatch('discover');
-      dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
+      dispatch('create');
+      await dispatch('handleUnlock', true);
     },
 
     async setWalletPassword({ state: { wallet, mnemonic }, commit }, password) {
@@ -171,7 +183,7 @@ export default {
         wallet = generateHdWallet(mnemonicToSeed(wallet.mnemonic));
       }
       commit('setWallet', wallet);
-      dispatch('discover');
+      await dispatch('handleUnlock');
     },
 
     async deleteMnemonic({ state: { passwordDerivedKey, encryptedWallet, wallet }, commit }) {
@@ -189,9 +201,9 @@ export default {
       commit('setMnemonic', '');
     },
 
-    async create({ state: { wallet }, getters: { nextIdx }, commit }, name) {
+    create({ state: { wallet }, getters: { nextIdx }, commit }) {
       commit('accounts/add', {
-        ...getHdWalletAccount(wallet, nextIdx), name, active: true, type: 'hd-wallet',
+        ...getHdWalletAccount(wallet, nextIdx), active: true, type: 'hd-wallet',
       }, { root: true });
     },
 
@@ -212,22 +224,25 @@ export default {
         return dispatch('confirmRawDataSigning', txBinary);
       }
 
-      const modalName = {
-        [TX_TYPE.spend]: 'confirmSpend',
-        [TX_TYPE.contractCreate]: 'confirmContractDeploy',
-        [TX_TYPE.contractCall]: 'confirmContractCall',
-      }[OBJECT_ID_TX_TYPE[txObject.tag]];
-      if (!modalName) return dispatch('confirmRawDataSigning', txBinary);
+      const SUPPORTED_TX_TYPES = [
+        TX_TYPE.spend, TX_TYPE.contractCreate, TX_TYPE.contractCall,
+        TX_TYPE.namePreClaim, TX_TYPE.nameClaim, TX_TYPE.nameUpdate,
+      ];
+      if (!SUPPORTED_TX_TYPES.includes(OBJECT_ID_TX_TYPE[txObject.tag])) {
+        return dispatch('confirmRawDataSigning', txBinary);
+      }
 
       const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
       const confirmProps = {
-        ...txObject,
-        amount: format(txObject.amount),
-        fee: format(txObject.fee),
-        minFee: format(TxBuilder.calculateFee(
-          0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
-        )),
-        name: modalName,
+        name: 'confirmTransactionSign',
+        transaction: {
+          ...txObject,
+          amount: txObject.amount && format(txObject.amount),
+          fee: format(txObject.fee),
+          minFee: format(TxBuilder.calculateFee(
+            0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
+          )),
+        },
       };
 
       return TxBuilder.buildTx(
@@ -257,12 +272,8 @@ export default {
       return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, TX_TYPE.signed).tx;
     },
   } : {
-    create({ dispatch }, name) {
-      return dispatch(
-        'remoteConnection/call',
-        { name: 'createAccount', args: [name] },
-        { root: true },
-      );
+    create({ dispatch }) {
+      return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
     },
     sign: getDesktopRemoveSignAction('sign'),
     signTransaction: getDesktopRemoveSignAction('signTransaction'),

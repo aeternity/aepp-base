@@ -1,7 +1,7 @@
 <template>
   <ListItem
     v-bind="$attrs"
-    :title="name"
+    :title="name || nameFromStore"
     :subtitle="subtitleContent"
     subtitle-monospace
     v-on="$listeners"
@@ -20,16 +20,19 @@
 
 <script>
 import BigNumber from 'bignumber.js';
+import { mapState } from 'vuex';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
 import prefixedAmount from '../filters/prefixedAmount';
+import formatAddress from '../filters/formatAddress';
 
 export default {
   components: { ListItem, AeIdenticon },
   props: {
-    name: { type: String, required: true },
+    name: { type: String, default: '' },
     address: { type: String, required: true },
     balance: { type: BigNumber, default: null },
+    source: { type: Object, default: () => {} },
     subtitle: { type: String, default: 'balance' },
   },
   computed: {
@@ -38,11 +41,14 @@ export default {
         case 'balance':
           return this.balance ? `${prefixedAmount(this.balance)} AE` : '';
         case 'address':
-          return `${this.address.slice(0, 6)}···${this.address.slice(-3)}`;
+          return formatAddress(this.address);
         default:
           return this.subtitle;
       }
     },
+    ...mapState('accounts', {
+      nameFromStore(state, { getName }) { return getName(this); },
+    }),
   },
 };
 </script>

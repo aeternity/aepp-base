@@ -2,11 +2,12 @@ import { get, isEqual } from 'lodash-es';
 
 export default (store) => {
   const createSdk = async (url) => {
-    const [Ae, ChainNode, Transaction, Contract, Rpc] = (await Promise.all([
+    const [Ae, ChainNode, Transaction, Contract, Aens, Rpc] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/tx/tx'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/contract'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/rpc/server'),
     ])).map(module => module.default);
 
@@ -52,7 +53,7 @@ export default (store) => {
     };
 
     return Ae.compose(
-      ChainNode, Transaction, Contract, Rpc, {
+      ChainNode, Transaction, Contract, Aens, Rpc, {
         init(options, { stamp }) {
           const rpcMethods = [
             ...stamp.compose.deepConfiguration.Ae.methods,

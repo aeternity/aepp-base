@@ -5,10 +5,10 @@ import {
   multicast, pluck, switchMap, map, filter, pairwise, startWith, catchError,
 } from 'rxjs/operators';
 import { refCountDelay } from 'rxjs-etc/operators';
-import { camelCase, memoize } from 'lodash-es';
+import { memoize, upperFirst, lowerCase } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
-import { fetchJson, mapKeysDeep } from '../../utils';
+import { fetchMiddlewareEndpoint } from '../../utils';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -28,7 +28,7 @@ export default (store) => {
       switchMap(sdk => timer(0, 3000).pipe(map(() => sdk))),
       switchMap(sdk => (sdk
         ? sdk.api.getAccountByPubkey(address).catch(() => defaultAccountInfo)
-        : defaultAccountInfo)),
+        : Promise.resolve(defaultAccountInfo))),
       map(aci => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
       multicast(new BehaviorSubject(defaultAccountInfo)),
       refCountDelay(1000),
@@ -57,9 +57,12 @@ export default (store) => {
     },
     tx: {
       ...otherTx,
-      amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
+      ...amount !== undefined && { amount: BigNumber(amount).shiftedBy(-MAGNITUDE) },
       fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
     },
+    type: upperFirst(
+      lowerCase(otherTx.type.replace(/Tx$/, '')).split(' ').reverse().join(' '),
+    ),
   });
 
   const setTransactionFieldsRelatedToAddress = ({ tx, ...otherTransaction }, currentAddress) => ({
@@ -119,14 +122,14 @@ export default (store) => {
     mdwUrl.searchParams.set('limit', limit.toString());
     mdwUrl.searchParams.set('page', page.toString());
     const txs = await Promise.all(
-      mapKeysDeep(await fetchJson(mdwUrl), (value, key) => camelCase(key))
-        .map(normalizeTransaction),
+      (await fetchMiddlewareEndpoint(mdwUrl)).map(normalizeTransaction),
     );
     txs.forEach(registerTx);
     return txs;
   };
 
   const fetchPendingTransactions = async (address) => {
+    if (store.state.sdk.then) await store.state.sdk;
     const txs = await Promise.all((
       await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
         .then(r => r.transactions, () => [])

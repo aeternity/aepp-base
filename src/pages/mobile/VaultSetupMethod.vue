@@ -35,7 +35,7 @@
       >
     </ListItemChoose>
     <ListItemChoose
-      v-if="$globals.IS_CORDOVA"
+      v-if="$globals.IS_CORDOVA && $globals.IS_IOS"
       title="Normal"
       subtitle="Install AirGap on this device"
       :active="!maximumSecure"

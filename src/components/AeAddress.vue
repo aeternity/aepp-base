@@ -1,7 +1,24 @@
+<template>
+  <div
+    v-copy-on-click="disableCopyOnClick ? '' : address"
+    v-remove-spaces-on-copy
+    class="ae-address"
+    :class="mode"
+  >
+    <div
+      v-for="(chunk, idx) in chunks"
+      :key="idx"
+    >
+      {{ chunk }}
+    </div>
+  </div>
+</template>
+
 <script>
-import { times, chunk } from 'lodash-es';
+import { times } from 'lodash-es';
 import copyOnClick from '../directives/copyOnClick';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
+import formatAddress from '../filters/formatAddress';
 
 export default {
   directives: {
@@ -13,87 +30,53 @@ export default {
       type: String,
       required: true,
     },
-    length: {
+    mode: {
       type: String,
-      validator: value => ['full', 'medium', 'short'].includes(value),
+      validator: value => ['full', 'three-columns', 'three-columns-short'].includes(value),
       default: 'full',
     },
-    splitBy: {
-      type: [String, Number],
-      default: 0,
-    },
+    disableCopyOnClick: Boolean,
   },
   computed: {
-    lines() {
-      const chunks = this.address.match(/^\w{2}_|.{2}(?=.{47,48}$)|.{2,3}/g);
-      if (this.length !== 'short' && chunks[1].length === 2) {
-        chunks[1] = `\xa0${chunks[1]}`;
+    chunks() {
+      const chunks = formatAddress(this.address, 'full').split(' ');
+      if (this.mode === 'three-columns-short') {
+        return [
+          ...chunks.slice(0, 3),
+          ...times(3, () => '···'),
+          ...chunks.slice(-3),
+        ];
       }
-      switch (this.length) {
-        case 'full':
-          return chunk(chunks, this.splitBy || chunks.length)
-            .map(line => line.join(' '));
-        case 'medium':
-          return [
-            chunks.slice(0, 3).join(' '),
-            times(3, () => '···').join(' '),
-            chunks.slice(-3).join(' '),
-          ];
-        case 'short':
-          return [`${chunks.slice(0, 2).join(' ')}···${chunks.slice(-1)}`];
-        default:
-          throw new Error('Invalid length');
-      }
+      return chunks;
     },
-  },
-  render(createElement) {
-    return createElement(
-      'span',
-      {
-        class: ['ae-address', this.length],
-        directives: [{
-          name: 'copy-on-click',
-          value: this.address,
-        }, {
-          name: 'remove-spaces-on-copy',
-        }],
-      },
-      this.lines.reduce((p, line, idx) => [...p, idx ? createElement('br') : null, line], []),
-    );
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../styles/placeholders/typography.scss';
-@import '../styles/variables/colors.scss';
+@import './copied.scss';
 
 .ae-address {
+  $char-width: 11px;
+  $chunk-width-rem: rem(3 * $char-width);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, $chunk-width-rem);
+  grid-column-gap: rem($char-width);
+  justify-content: space-between;
   @extend %face-mono-base;
-  font-weight: 500;
-  letter-spacing: rem(1.9px);
+  letter-spacing: rem(1.5px);
 
-  &.v-copied {
-    position: relative;
-
-    &:before {
-      content: 'address copied';
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: $color-neutral-negative-3;
-      background: rgba($color-neutral-positive-1, 0.9);
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-    }
+  &.three-columns, &.three-columns-short {
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: rem(12px);
+    letter-spacing: rem(1.9px);
+    font-weight: 500;
   }
 
-  &.short.v-copied:before {
-    content: 'copied';
+  &.v-copied {
+    @extend %copied;
   }
 }
 </style>

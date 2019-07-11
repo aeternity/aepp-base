@@ -1,7 +1,7 @@
 <template>
   <div class="settings">
     <Guide size="big">
-      <em>Settings</em>
+      <em>{{ $t('settings.label') }}</em>
     </Guide>
 
     <AeCard fill="maximum">
@@ -21,17 +21,22 @@
         >
           {{ currentNetwork.name }}
           <ButtonPlain @click="networkMode = 'switch'">
-            <LeftMore ref="icon" />
+            <LeftMore ref="networkIcon" />
           </ButtonPlain>
         </div>
       </ListItem>
+
+      <ListItemSettingsLanguage>
+        <ButtonPlain @click="showLanguageSwitcher = true">
+          <LeftMore ref="languageIcon" />
+        </ButtonPlain>
+      </ListItemSettingsLanguage>
     </AeCard>
 
     <AePopover
-      :anchor="networkMode ? $refs.icon : null"
-      :anchor-origin="{ vertical: 'bottom', horizontal: 'right' }"
-      :transform-origin="{ vertical: 'top', horizontal: 'right' }"
-      @close="closePopover"
+      :anchor="networkMode ? $refs.networkIcon : null"
+      v-bind="popoverOrigin"
+      @close="closeNetworkPopover"
     >
       <NetworkSwitcher
         v-if="networkMode === 'switch'"
@@ -42,6 +47,14 @@
         v-else-if="networkMode === 'add'"
         @finally="networkMode = 'switch'"
       />
+    </AePopover>
+
+    <AePopover
+      :anchor="showLanguageSwitcher ? $refs.languageIcon : null"
+      v-bind="popoverOrigin"
+      @close="showLanguageSwitcher = false"
+    >
+      <LanguageSwitcher @switch="showLanguageSwitcher = false" />
     </AePopover>
   </div>
 </template>
@@ -55,10 +68,12 @@ import AePopover from '../../components/AePopover.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
+import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
 import { Globe, LeftMore } from '../../components/icons';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
+import LanguageSwitcher from '../../components/LanguageSwitcher.vue';
 
 export default {
   components: {
@@ -68,14 +83,21 @@ export default {
     ListItem,
     ListItemCircle,
     ListItemSettingsReset,
+    ListItemSettingsLanguage,
     Globe,
     ButtonPlain,
     LeftMore,
     NetworkSwitcher,
     NetworkAdd,
+    LanguageSwitcher,
   },
   data: () => ({
+    popoverOrigin: {
+      anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
+      transformOrigin: { vertical: 'top', horizontal: 'right' },
+    },
     networkMode: false,
+    showLanguageSwitcher: false,
   }),
   computed: {
     ...mapGetters(['currentNetwork']),
@@ -84,7 +106,7 @@ export default {
     }),
   },
   methods: {
-    closePopover() {
+    closeNetworkPopover() {
       defer(() => { this.networkMode = false; });
     },
   },
@@ -107,14 +129,14 @@ export default {
       .value {
         @extend %face-sans-xs;
         color: $color-neutral-negative-1;
+      }
 
-        .button-plain {
-          margin-left: rem(10px);
+      .button-plain {
+        margin-left: rem(10px);
 
-          .icon {
-            transform: rotate(90deg);
-            color: #000;
-          }
+        .icon {
+          transform: rotate(90deg);
+          color: #000;
         }
       }
     }

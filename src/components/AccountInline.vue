@@ -1,40 +1,51 @@
 <template>
-  <span class="account-inline">
-    <AeIdenticon :address="address" />{{ ' ' }}
-    <template v-if="name">
-      {{ name }}
-    </template>
-    <AeAddress
-      v-else
-      :address="address"
-      length="short"
-    />
+  <span
+    v-copy-on-click="address"
+    class="account-inline"
+    :class="{ address: !name }"
+  >
+    <AeIdenticon :address="address" />
+    {{ name ? name : formatAddress(address, 'short') }}
   </span>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import formatAddress from '../filters/formatAddress';
+import copyOnClick from '../directives/copyOnClick';
 import AeIdenticon from './AeIdenticon.vue';
-import AeAddress from './AeAddress.vue';
 
 export default {
-  components: { AeIdenticon, AeAddress },
+  components: { AeIdenticon },
+  directives: { copyOnClick },
   props: {
     address: { type: String, required: true },
   },
-  computed: {
-    name() {
-      return (
-        [...this.$store.state.accounts.list, ...this.$store.state.addressBook]
-          .find(({ address }) => address === this.address) || { name: '' }
-      ).name;
+  computed: mapState('names', {
+    name(state, { get }) {
+      return get(this.address);
     },
-  },
+  }),
+  methods: { formatAddress },
 };
 </script>
 
 <style lang="scss" scoped>
-.account-inline .ae-identicon {
-  vertical-align: middle;
-  height: 1.055em;
+@import '../styles/variables/typography.scss';
+@import './copied.scss';
+
+.account-inline {
+  &.address {
+    font-family: $font-mono;
+  }
+
+  &.v-copied {
+    @extend %copied;
+  }
+
+  .ae-identicon {
+    vertical-align: middle;
+    height: 1.055em;
+  }
 }
 </style>
