@@ -67,7 +67,7 @@
     />
 
     <DetailsAddress
-      name="Tx hash"
+      name="Transaction hash"
       :address="transaction.hash"
     />
 
