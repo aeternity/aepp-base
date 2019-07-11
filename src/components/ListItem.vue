@@ -119,6 +119,10 @@ export default {
       }
     }
 
+    .space {
+      flex-grow: 1;
+    }
+
     /deep/ img {
       width: rem(33px);
     }
@@ -134,10 +138,6 @@ export default {
         }
       }
     }
-  }
-
-  .space {
-    flex-grow: 1;
   }
 }
 </style>
