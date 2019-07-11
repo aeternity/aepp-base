@@ -22,8 +22,7 @@ const intros = {
     body: `
       The AENS allows users to claim names and associate them with one or more æternity accounts.
       For now, only names ending in .test (part of the .test namespace) can be claimed. After you
-      have successfully claimed a name it is associated with one of your accounts. At that point
-      anyone can send tokens by typing the name instead of the account address.
+      have successfully claimed a name it is associated with one of your accounts.
     `,
   }],
 };
