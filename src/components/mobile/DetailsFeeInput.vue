@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import DetailsField from './DetailsField.vue';
 import DetailsRow from './DetailsRow.vue';
@@ -44,18 +43,7 @@ export default {
   props: {
     value: { type: BigNumber, required: true },
     min: { type: BigNumber, required: true },
-    amount: { type: BigNumber, default: null },
-  },
-  subscriptions() {
-    return pick(this.$store.state.observables, ['activeAccount']);
-  },
-  computed: {
-    max() {
-      const recommendedMax = this.min.multipliedBy(10);
-      if (!this.amount) return recommendedMax;
-      const actualMax = this.activeAccount.balance.minus(this.amount);
-      return actualMax.isLessThan(recommendedMax) ? actualMax : recommendedMax;
-    },
+    max: { type: BigNumber, required: true },
   },
   methods: { toMicroString, toBigNumber },
 };

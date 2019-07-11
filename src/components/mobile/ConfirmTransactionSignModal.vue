@@ -33,7 +33,7 @@
     <DetailsFeeInput
       v-model="newFee"
       :min="transaction.minFee"
-      :amount="transaction.amount"
+      :max="maxFee"
     />
 
     <template v-for="fieldName in Object.keys(TX_FIELDS)">
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
 import MobilePage from './Page.vue';
@@ -165,8 +165,10 @@ export default {
       TX_FIELDS,
     };
   },
+  subscriptions() {
+    return { account: this.$store.state.observables.activeAccount };
+  },
   computed: {
-    ...mapGetters('accounts', { account: 'active' }),
     ...mapState({
       stepFraction: state => state.mobile.stepFraction,
     }),
@@ -182,12 +184,30 @@ export default {
         [TX_TYPE.nameUpdate]: 'Update name',
       }[this.txType] || '';
     },
+    maxFee() {
+      const recommendedMax = this.transaction.minFee.multipliedBy(10);
+      const amount = this.transaction.amount || 0;
+      const actualMax = this.account.balance.minus(amount);
+      return actualMax.isLessThan(recommendedMax) ? actualMax : recommendedMax;
+    },
+    isEnoughFounds() {
+      return this.transaction.minFee.isLessThanOrEqualTo(this.maxFee);
+    },
   },
   methods: {
     denyHandler() {
       this.reject(new Error('Rejected by user'));
     },
-    allowHandler() {
+    async allowHandler() {
+      if (!this.isEnoughFounds) {
+        await this.$store.dispatch('modals/open', {
+          name: 'confirm',
+          text: `
+            Looks like you don't have enough funds to make this transaction.
+            Are you sure want to continue?
+          `,
+        });
+      }
       this.resolve(this.newFee);
     },
   },
