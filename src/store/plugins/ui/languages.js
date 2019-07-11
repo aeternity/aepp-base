@@ -33,7 +33,8 @@ if (module.hot) {
 }
 
 export default async (store) => {
-  const preferredLanguageCode = navigator.language.split('-')[0];
+  const preferredLanguageCode = process.env.UNFINISHED_FEATURES
+    ? navigator.language.split('-')[0] : 'en';
 
   store.registerModule('languages', {
     namespaced: true,
