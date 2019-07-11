@@ -7,6 +7,7 @@
       <ButtonPlain
         v-if="leftButtonIconName"
         class="left"
+        :class="leftButtonColor"
         :to="leftButtonTo"
         @click="$emit('left-button-click', $event)"
       >
@@ -20,6 +21,7 @@
       <ButtonPlain
         v-if="rightButtonIconName"
         class="right"
+        :class="rightButtonColor"
         :to="rightButtonTo"
         @click="$emit('right-button-click', $event)"
       >
@@ -31,16 +33,28 @@
 
 <script>
 import ButtonPlain from '../ButtonPlain.vue';
-import { Back, Close } from '../icons';
+import {
+  Back, Close, CloseCircle, QuestionCircle,
+} from '../icons';
+
+const buttonColorType = {
+  type: String,
+  validator: value => ['primary', ''].includes(value),
+  default: '',
+};
 
 export default {
-  components: { ButtonPlain, Back, Close },
+  components: {
+    ButtonPlain, Back, Close, CloseCircle, QuestionCircle,
+  },
   props: {
     leftButtonIconName: { type: String, default: null },
     leftButtonTo: { type: [String, Object], default: null },
+    leftButtonColor: buttonColorType,
     title: { type: String, default: '' },
     rightButtonIconName: { type: String, default: null },
     rightButtonTo: { type: [String, Object], default: null },
+    rightButtonColor: buttonColorType,
     fill: {
       type: String,
       validator: value => [
@@ -141,6 +155,10 @@ export default {
 
     .button-plain {
       color: inherit;
+
+      &.primary {
+        color: $color-primary-negative-1;
+      }
     }
 
     $button-width: rem(48px);

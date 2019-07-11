@@ -2,6 +2,9 @@
   <MobilePage
     class="transfer"
     header-fill="neutral"
+    :right-button-icon-name="`${tooltipsVisible ? 'close' : 'question'}-circle`"
+    :right-button-color="tooltipsVisible ? 'primary' : ''"
+    @right-button-click="showTooltips"
   >
     <template slot="header">
       <Guide>
@@ -89,10 +92,33 @@ export default {
     manTippingHandEmoji,
     mantelpieceClockEmoji,
     glowingStarEmoji,
+    tooltipsVisible: false,
   }),
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
-  methods: mapActions('modals', ['open']),
+  methods: {
+    ...mapActions('modals', ['open']),
+    async showTooltips() {
+      this.tooltipsVisible = true;
+      await this.open({
+        name: 'showTooltips',
+        tooltips: [{
+          selector: '.transfer .ae-account .ae-identicon',
+          header: 'Identicon',
+          content: 'Recognize which account is active. Accounts & subaccounts have unique identicons.',
+        }, {
+          selector: '.transfer .tab-bar .button-plain',
+          header: 'æpps',
+          content: 'Explore æpps powered by the æternity blockchain.',
+        }, {
+          selector: '.transfer .tab-bar .button-plain:nth-child(3)',
+          header: 'Account Switcher',
+          content: 'Tap to switch accounts or create subaccounts.',
+        }],
+      });
+      this.tooltipsVisible = false;
+    },
+  },
 };
 </script>
