@@ -9,8 +9,10 @@
   >
     <template slot="header">
       <Guide fill="neutral">
-        {{ transaction.received ? 'You received' : 'You sent' }}
-        <em class="balance">{{ transaction.tx.amount | prefixedAmount }} AE</em>
+        <template v-if="transaction.tx.amount">
+          {{ transaction.received ? 'You received' : 'You sent' }}
+          <em class="balance">{{ transaction.tx.amount | prefixedAmount }} AE</em>
+        </template>
         <template v-if="transaction.tx.senderId">
           <br>from
           <AccountInline :address="transaction.tx.senderId" />
@@ -35,8 +37,13 @@
       :value="status"
     />
 
-    <Component
-      :is="transaction.received ? 'DetailsAmount' : 'DetailsAmountAndFee'"
+    <DetailsAmount
+      v-if="transaction.received || !transaction.tx.amount"
+      :amount="transaction.tx.amount || transaction.tx.fee"
+      :name="transaction.tx.amount ? 'Amount' : 'Fee'"
+    />
+    <DetailsAmountAndFee
+      v-else
       :amount="transaction.tx.amount"
       :fee="transaction.tx.fee"
     />

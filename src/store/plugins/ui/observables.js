@@ -57,7 +57,7 @@ export default (store) => {
     },
     tx: {
       ...otherTx,
-      amount: BigNumber(amount).shiftedBy(-MAGNITUDE),
+      ...amount !== undefined && { amount: BigNumber(amount).shiftedBy(-MAGNITUDE) },
       fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
     },
   });

@@ -20,7 +20,9 @@
       slot="right"
       class="balance-change"
     >
-      <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+      <template v-if="tx.amount">
+        <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+      </template>
       <small>{{ tx.fee | prefixedAmount }}&nbsp;AE</small>
     </div>
   </ListItem>
