@@ -11,7 +11,6 @@
         <Close />
       </ButtonPlain>
       <slot />
-      {{ showBelow }}
       <div
         v-if="anchorRect"
         class="arrow"
