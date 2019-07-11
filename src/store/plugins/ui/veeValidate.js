@@ -1,12 +1,16 @@
+import Vue from 'vue';
 import { Validator, install as VeeValidate } from 'vee-validate/dist/vee-validate.minimal.esm';
 import {
   confirmed, decimal, excluded, min, required,
 } from 'vee-validate/dist/rules.esm';
 import BigNumber from 'bignumber.js';
+import { throttle } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { validateMnemonic } from '@aeternity/bip39';
-import { toUrl } from './utils';
-import { getPublicKeyByResponseUrl } from './airGap';
+import { toUrl } from '../../../lib/utils';
+import { getPublicKeyByResponseUrl } from '../../../lib/airGap';
+
+Vue.use(VeeValidate);
 
 Validator.extend('confirmed', confirmed);
 Validator.extend('decimal', decimal);
@@ -35,6 +39,7 @@ Validator.extend('air_gap_response_url', (value) => {
     return false;
   }
 });
+Validator.extend('aens_name', value => value.endsWith('.test'));
 
 Validator.localize('en', {
   messages: {
@@ -51,9 +56,17 @@ Validator.localize('en', {
     mnemonic: () => 'Invalid recovery phrase',
     url_http: () => 'This field is not a valid HTTP(S) URL',
     air_gap_response_url: () => 'This is not a valid sync code.',
+    aens_name: () => 'This field must ends with .test',
+    aens_name_unregistered: () => 'This name is already registered',
   },
 });
 
-export default {
-  install: Vue => Vue.use(VeeValidate),
+export default (store) => {
+  Validator.extend(
+    'aens_name_unregistered',
+    throttle(
+      value => store.state.sdk.aensQuery(value).then(() => false, () => true),
+      300,
+    ),
+  );
 };

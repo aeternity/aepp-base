@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import VeeValidate from '../lib/veeValidatePlugin';
+import '../store/plugins/ui/veeValidate';
 import AeButton from '../components/AeButton.vue';
 import MigratedBalanceModal from '../components/mobile/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
@@ -13,7 +13,6 @@ import LedgerTransactionFeeModal from '../components/desktop/LedgerTransactionFe
 import { account } from './mock-data';
 
 Vue.use(Vuex);
-Vue.use(VeeValidate);
 
 storiesOf('AeModal', module)
   .add('MigratedBalanceModal', () => ({

@@ -8,14 +8,14 @@
     <Guide>
       <em>Welcome to the æpps browser!</em>
     </Guide>
-    <p>
+    <p class="big">
       This part of the Base æpp Wallet is in beta. It is safe to use,
       but we are in the process of refining the experience.
     </p>
     <Guide>
       <em>What is an æpp?</em>
     </Guide>
-    <p>
+    <p class="big">
       æpps are decentralized applications powered by the æternity blockchain.
     </p>
   </MobilePage>
@@ -38,7 +38,7 @@ export default {
     margin-bottom: 0;
   }
 
-  p {
+  p.big {
     margin-top: rem(5px);
     @extend %face-sans-base;
     color: #fff;

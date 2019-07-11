@@ -9,15 +9,17 @@
     >
       <AeCard fill="maximum">
         <ListItemAccount
-          v-for="(account, index) in accounts"
+          v-for="(account, index) in accountsWithNamePending"
           :key="account.address"
           v-bind="account"
         >
-          <AeRadio
-            slot="right"
-            :checked="index === activeIdx"
-            @change="setActiveIdx(index)"
-          />
+          <template slot="right">
+            <NamePending v-if="account.namePending" />
+            <AeRadio
+              :checked="index === activeIdx"
+              @change="setActiveIdx(index)"
+            />
+          </template>
         </ListItemAccount>
 
         <ListItem
@@ -61,6 +63,7 @@ import { pick } from 'lodash-es';
 import Overlay from '../Overlay.vue';
 import ListItem from '../ListItem.vue';
 import ListItemAccount from '../ListItemAccount.vue';
+import NamePending from './NamePending.vue';
 import ListItemCircle from '../ListItemCircle.vue';
 import { Plus } from '../icons';
 import AeCard from '../AeCard.vue';
@@ -73,6 +76,7 @@ export default {
     Overlay,
     ListItem,
     ListItemAccount,
+    NamePending,
     ListItemCircle,
     Plus,
     AeCard,
@@ -83,7 +87,17 @@ export default {
   props: {
     resolve: { type: Function, required: true },
   },
-  computed: mapState('accounts', ['activeIdx']),
+  computed: {
+    ...mapState('accounts', ['activeIdx']),
+    ...mapState('names', {
+      accountsWithNamePending(state, { get, isPending }) {
+        return this.accounts.map(account => ({
+          ...account,
+          namePending: isPending(get(account.address)),
+        }));
+      },
+    }),
+  },
   subscriptions() {
     return pick(this.$store.state.observables, ['accounts', 'totalBalance']);
   },
@@ -131,6 +145,10 @@ export default {
     @include abovePhone {
       width: 100%;
       align-self: center;
+    }
+
+    .name-pending {
+      margin-right: rem(8px);
     }
 
     .list-item.vault-new .list-item-circle {

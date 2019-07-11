@@ -8,6 +8,7 @@ import names from './names';
 import notificationOnRemoteConnection from './notificationOnRemoteConnection';
 import observables from './observables';
 import unlockWalletIfNotEncrypted from './unlockWalletIfNotEncrypted';
+import veeValidate from './veeValidate';
 
 export default store => [
   connectionStatusTracker,
@@ -15,6 +16,7 @@ export default store => [
   modals,
   names,
   observables,
+  veeValidate,
   ...process.env.IS_MOBILE_DEVICE
     ? [
       browserPathTracker,

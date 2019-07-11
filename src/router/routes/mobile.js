@@ -23,6 +23,8 @@ import SendAmount from '../../pages/mobile/SendAmount.vue';
 import SendConfirm from '../../pages/mobile/SendConfirm.vue';
 import TransactionList from '../../pages/mobile/TransactionList.vue';
 import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
+import NameList from '../../pages/mobile/NameList.vue';
+import NameNew from '../../pages/mobile/NameNew.vue';
 import Settings from '../../pages/mobile/Settings.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
@@ -201,6 +203,16 @@ export default [{
   component: TransactionDetails,
   beforeEnter: ensureLoggedIn,
   props: true,
+}, {
+  name: 'name-list',
+  path: '/names',
+  component: NameList,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'name-new',
+  path: '/names/new',
+  component: NameNew,
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings',
   path: '/settings',
