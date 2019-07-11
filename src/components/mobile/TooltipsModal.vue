@@ -1,7 +1,7 @@
 <template>
-  <Overlay
+  <div
     class="tooltips-modal"
-    @click="resolve"
+    @click.self="resolve"
   >
     <div
       v-for="(t, idx) in tooltips"
@@ -28,15 +28,14 @@
         {{ tooltips[activeIdx].content }}
       </template>
     </Tooltip>
-  </Overlay>
+  </div>
 </template>
 
 <script>
-import Overlay from '../Overlay.vue';
 import Tooltip from './Tooltip.vue';
 
 export default {
-  components: { Overlay, Tooltip },
+  components: { Tooltip },
   props: {
     resolve: { type: Function, required: true },
     tooltips: { type: Array, required: true },
@@ -71,7 +70,11 @@ export default {
     };
     updateAnchorRects();
     window.addEventListener('resize', updateAnchorRects);
-    this.$once('hook:destroyed', () => window.removeEventListener('resize', updateAnchorRects));
+    window.addEventListener('scroll', updateAnchorRects);
+    this.$once('hook:destroyed', () => {
+      window.removeEventListener('resize', updateAnchorRects);
+      window.removeEventListener('scroll', updateAnchorRects);
+    });
   },
 };
 </script>
@@ -81,8 +84,12 @@ export default {
 @import '../../styles/globals/functions.scss';
 
 .tooltips-modal {
-  padding: 0;
-  background: transparent;
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   .selection {
     border: rem(1px) solid rgba($color-alternative, 0.3);
@@ -96,6 +103,7 @@ export default {
   .tooltip.initial {
     position: static;
     margin: auto;
+    z-index: 1;
   }
 }
 </style>
