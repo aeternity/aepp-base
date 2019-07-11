@@ -83,17 +83,12 @@ export default {
     @extend %face-sans-s;
     font-weight: 500;
 
-    &.has-icon {
-      > :first-child {
-        flex-shrink: 0;
-      }
-
-      .label {
-        margin-left: rem(12px);
-      }
+    &.has-icon .label {
+      margin-left: rem(12px);
     }
 
     .label {
+      flex-shrink: 1;
       @extend %face-sans-s;
       white-space: nowrap;
       font-weight: 500;
@@ -123,8 +118,14 @@ export default {
       flex-grow: 1;
     }
 
-    /deep/ img {
-      width: rem(33px);
+    /deep/ {
+      img {
+        width: rem(33px);
+      }
+
+      > * {
+        flex-shrink: 0;
+      }
     }
   }
 
