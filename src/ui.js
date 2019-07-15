@@ -13,7 +13,9 @@ const AppDesktop = () => import(/* webpackChunkName: "ui-desktop" */ './AppDeskt
 
 Vue.use(Router);
 
-import(/* webpackChunkName: "analytics" */ './setupAnalytics').then(module => module.default());
+if (!process.env.IS_MASTER) {
+  import(/* webpackChunkName: "analytics" */ './setupAnalytics').then(module => module.default());
+}
 
 (async () => {
   const [router] = await Promise.all([routerPromise, registerModals()]);
