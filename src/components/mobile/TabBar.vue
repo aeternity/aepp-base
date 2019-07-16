@@ -40,7 +40,7 @@ import {
   Grid, Transfer, Contacts, Settings,
 } from '../icons';
 import AeIdenticon from '../AeIdenticon.vue';
-import ConnectionStatus from './ConnectionStatus.vue';
+import ConnectionStatus from '../ConnectionStatus.vue';
 import MnemonicBackupWarning from './MnemonicBackupWarning.vue';
 
 export default {

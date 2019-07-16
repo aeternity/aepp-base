@@ -14,6 +14,7 @@
       :key="key"
       v-bind="props"
     />
+    <ConnectionStatus />
   </div>
 </template>
 
@@ -21,11 +22,13 @@
 import { mapGetters } from 'vuex';
 import HeaderDesktop from './components/desktop/Header.vue';
 import SidebarDesktop from './components/desktop/Sidebar.vue';
+import ConnectionStatus from './components/ConnectionStatus.vue';
 
 export default {
   components: {
     HeaderDesktop,
     SidebarDesktop,
+    ConnectionStatus,
   },
   computed: mapGetters('modals', ['opened', 'hidePage']),
 };
@@ -37,6 +40,12 @@ export default {
     max-width: 520px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .connection-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }
 </style>
