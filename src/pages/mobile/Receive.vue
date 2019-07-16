@@ -18,10 +18,6 @@
       :subtitle="$t('transfer.receive.copy-subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="writingHandEmoji"
-      >
       <ListItemCircle slot="right">
         <Check />
       </ListItemCircle>
@@ -33,10 +29,6 @@
       border-dark
       @click="share"
     >
-      <img
-        slot="icon"
-        :src="envelopeEmoji"
-      >
       <ListItemCircle
         v-if="sharedChecked"
         slot="right"
@@ -49,8 +41,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import writingHandEmoji from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
-import envelopeEmoji from 'emoji-datasource-apple/img/apple/64/2709-fe0f.png';
 import copyOnClick from '../../directives/copyOnClick';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -71,8 +61,6 @@ export default {
   directives: { copyOnClick },
   data() {
     return {
-      writingHandEmoji,
-      envelopeEmoji,
       sharingSupported: navigator.share || process.env.IS_CORDOVA,
       sharedChecked: false,
     };

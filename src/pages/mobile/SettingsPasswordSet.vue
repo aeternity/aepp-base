@@ -9,12 +9,7 @@
       :template="isWalletEncrypted
         ? $t('settings.password.set.change-guide')
         : $t('settings.password.set.choose-guide')"
-    >
-      <img
-        slot="keyEmoji"
-        :src="keyEmoji"
-      >
-    </Guide>
+    />
 
     <form
       :id="_uid"
@@ -76,7 +71,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import keyEmoji from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import PasswordPurpose from '../../components/mobile/PasswordPurpose.vue';
@@ -92,7 +86,6 @@ export default {
     newPassword: '',
     newPasswordConfirm: '',
     wrongPassword: false,
-    keyEmoji,
   }),
   computed: mapGetters('accounts/hdWallet', ['isWalletEncrypted']),
   methods: {

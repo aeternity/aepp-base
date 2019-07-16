@@ -14,10 +14,6 @@
         numerator="2"
         denominator="4"
       />
-      <img
-        slot="keyEmoji"
-        :src="keyEmoji"
-      >
     </Guide>
     <p class="mnemonic">
       {{ mnemonic }}
@@ -41,7 +37,6 @@
 </template>
 
 <script>
-import keyEmoji from 'emoji-datasource-apple/img/apple/64/1f511.png';
 import { mapState } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -55,7 +50,6 @@ export default {
   data: () => ({
     readingPaused: false,
     readingEnded: false,
-    keyEmoji,
   }),
   computed: mapState('accounts/hdWallet', ['mnemonic']),
   methods: {

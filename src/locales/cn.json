@@ -107,7 +107,7 @@
   },
 
   "login": {
-    "guide": "<primary>你好！</primary> <wavingHandEmoji /> <secondary>登录</secondary>使用密码登录æternity",
+    "guide": "<primary>你好！</primary> <secondary>登录</secondary>使用密码登录æternity",
     "try-again-or": "请重试",
     "button": "登录"
   },
@@ -593,12 +593,12 @@
       "to-show": "显示助记词",
 
       "show": {
-        "guide": "<primary>请妥善保管助记词</primary><keyEmoji /><primary>并注意安全!</primary><br />写下这12个单词并保存<alternative>在安全的地方</alternative>. 将来你需要它们来<secondary>恢复</secondary> 你的账号.",
+        "guide": "<primary>请妥善保管助记词</primary><primary>并注意安全!</primary><br />写下这12个单词并保存<alternative>在安全的地方</alternative>. 将来你需要它们来<secondary>恢复</secondary> 你的账号.",
         "alert": "这也太快了！请确保已在纸上记录助记词 ... 并保存在安全的地方."
       },
 
       "confirm": {
-        "guide": "<primary>确认</primary><crossedFingersEmoji /></primary>你的助记词</primary><br />敲击以下单词来组成你的助记词, <secondary>注意</secondary>保持正确的先后顺序!",
+        "guide": "<primary>确认</primary></primary>你的助记词</primary><br />敲击以下单词来组成你的助记词, <secondary>注意</secondary>保持正确的先后顺序!",
         "mnemonic": "你的助记词",
         "error": "顺序不正确，请重试",
         "placeholder": "第一 第二 第三 ····"

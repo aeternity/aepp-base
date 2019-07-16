@@ -4,12 +4,7 @@
     right-button-icon-name="close"
     hide-tab-bar
   >
-    <Guide :template="$t('login.guide')">
-      <img
-        slot="wavingHandEmoji"
-        :src="wavingHandEmoji"
-      >
-    </Guide>
+    <Guide :template="$t('login.guide')" />
 
     <form
       :id="_uid"
@@ -57,7 +52,6 @@
 </template>
 
 <script>
-import wavingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f44b.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
@@ -70,7 +64,6 @@ export default {
   },
   data() {
     return {
-      wavingHandEmoji,
       password: '',
       wrongPassword: false,
     };

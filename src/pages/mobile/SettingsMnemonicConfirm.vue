@@ -14,10 +14,6 @@
         numerator="3"
         denominator="4"
       />
-      <img
-        slot="crossedFingersEmoji"
-        :src="crossedFingersEmoji"
-      >
     </Guide>
 
     <ButtonMnemonicWord
@@ -67,7 +63,6 @@
 </template>
 
 <script>
-import crossedFingersEmoji from 'emoji-datasource-apple/img/apple/64/1f91e.png';
 import { mapState } from 'vuex';
 import { shuffle } from 'lodash-es';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -89,7 +84,6 @@ export default {
   data: () => ({
     selectedWordIds: [],
     error: false,
-    crossedFingersEmoji,
   }),
   computed: {
     ...mapState('accounts/hdWallet', ['mnemonic']),

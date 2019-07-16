@@ -18,10 +18,6 @@
       :subtitle="$t('transfer.send.subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="moneyWithWingsEmoji"
-      >
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
@@ -30,10 +26,6 @@
       :subtitle="$t('transfer.receive.subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="manTippingHandEmoji"
-      >
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
@@ -42,10 +34,6 @@
       :subtitle="$t('transfer.transaction.subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="mantelpieceClockEmoji"
-      >
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
@@ -54,10 +42,6 @@
       border-dark
       @click="open({ name: 'migratedBalance' })"
     >
-      <img
-        slot="icon"
-        :src="glowingStarEmoji"
-      >
       <LeftMore slot="right" />
     </ListItem>
   </MobilePage>
@@ -66,10 +50,6 @@
 <script>
 import { pick } from 'lodash-es';
 import { mapActions } from 'vuex';
-import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
-import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
-import mantelpieceClockEmoji from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
-import glowingStarEmoji from 'emoji-datasource-apple/img/apple/64/1f31f.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
@@ -85,10 +65,6 @@ export default {
     LeftMore,
   },
   data: () => ({
-    moneyWithWingsEmoji,
-    manTippingHandEmoji,
-    mantelpieceClockEmoji,
-    glowingStarEmoji,
     tooltipsVisible: false,
   }),
   subscriptions() {

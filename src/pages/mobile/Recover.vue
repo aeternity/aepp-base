@@ -5,12 +5,7 @@
     :title="$t('recover.title')"
     hide-tab-bar
   >
-    <Guide :template="$t('recover.guide')">
-      <img
-        slot="dizzySymbolEmoji"
-        :src="dizzySymbolEmoji"
-      >
-    </Guide>
+    <Guide :template="$t('recover.guide')" />
 
     <form
       :id="_uid"
@@ -38,7 +33,6 @@
 </template>
 
 <script>
-import dizzySymbolEmoji from 'emoji-datasource-apple/img/apple/64/1f4ab.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
@@ -50,7 +44,6 @@ export default {
   },
   data() {
     return {
-      dizzySymbolEmoji,
       mnemonic: '',
       error: false,
     };

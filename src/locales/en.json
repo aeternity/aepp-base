@@ -101,13 +101,13 @@
 
   "recover": {
     "title": "Recover Account",
-    "guide": "Enter <dizzySymbolEmoji /> your <alternative>recovery phrase</alternative>. From the <secondary>backup</secondary> you made.",
+    "guide": "Enter your <alternative>recovery phrase</alternative>. From the <secondary>backup</secondary> you made.",
     "mnemonic": "Recovery phrase",
     "button": "Recover account"
   },
 
   "login": {
-    "guide": "<primary>Hello!</primary> <wavingHandEmoji /> <secondary>Log in</secondary> to æternity with your password",
+    "guide": "<primary>Hello!</primary> <secondary>Log in</secondary> to æternity with your password",
     "try-again-or": "Try again or",
     "button": "Log in"
   },
@@ -593,12 +593,12 @@
       "to-show": "Show Recovery Phrase",
 
       "show": {
-        "guide": "<p><primary>Carefully keep this phrase <keyEmoji /> safe!</primary></p><p>Write these 12 words down and keep them <alternative>in a safe place</alternative>. You need them to <secondary>recover</secondary> your account in the future.</p>",
+        "guide": "<p><primary>Carefully keep this phrase safe!</primary></p><p>Write these 12 words down and keep them <alternative>in a safe place</alternative>. You need them to <secondary>recover</secondary> your account in the future.</p>",
         "alert": "That was too fast! Please make sure you write down the recovery phrase on paper... and keep it in a safe place."
       },
 
       "confirm": {
-        "guide": "<p><primary>Confirm <crossedFingersEmoji /> your phrase</primary></p><p>Tap the words below to compose your phrase, <secondary>note</secondary> correct order!</p>",
+        "guide": "<p><primary>Confirm your phrase</primary></p><p>Tap the words below to compose your phrase, <secondary>note</secondary> correct order!</p>",
         "mnemonic": "Your recovery phrase",
         "error": "Oops! Not the correct order, try again",
         "placeholder": "first second third ···"

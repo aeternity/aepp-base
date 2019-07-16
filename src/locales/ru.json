@@ -86,12 +86,12 @@
   },
   "recover": {
     "title": "Восстановить аккаунт",
-    "guide": "Введите <dizzySymbolEmoji /> вашу <alternative>мнемоническую фразу</alternative>. Которую вы записали во время <secondary>резервного копирования</secondary>.",
+    "guide": "Введите вашу <alternative>мнемоническую фразу</alternative>. Которую вы записали во время <secondary>резервного копирования</secondary>.",
     "mnemonic": "Мнемоническая фраза",
     "button": "Восстановить аккаунт"
   },
   "login": {
-    "guide": "<primary>Привет!</primary> <wavingHandEmoji /> <secondary>Войдите</secondary> в æternity с помощью пароля",
+    "guide": "<primary>Привет!</primary> <secondary>Войдите</secondary> в æternity с помощью пароля",
     "try-again-or": "Попробуйте еще раз или",
     "button": "Войдите"
   },
@@ -515,11 +515,11 @@
       "guide": "<secondary>Проверьте правильность написания</secondary> каждого слова и <primary>никогда</primary> не создавайте скриншот или фотографию этой фразы.",
       "to-show": "Показать мнемоническую фразу",
       "show": {
-        "guide": "<p><primary>Тщательно сохраняйте <keyEmoji /> эту фразу!</primary></p><p>Запишите эти 12 слов и сохраните их <alternative>в безопасном месте</alternative>. Они нужны вам для <secondary>восстановления</secondary> вашего аккаунта в будущем.</p>",
+        "guide": "<p><primary>Тщательно сохраняйте эту фразу!</primary></p><p>Запишите эти 12 слов и сохраните их <alternative>в безопасном месте</alternative>. Они нужны вам для <secondary>восстановления</secondary> вашего аккаунта в будущем.</p>",
         "alert": "Это было слишком быстро! Убедитесь, что вы записали мнемоническую фразу на бумаге... и храните ее в надежном месте."
       },
       "confirm": {
-        "guide": "<p><primary>Подтвердите <CrossFingerEmoji /> свою фразу</primary></p><p>Нажмите на слова ниже, чтобы составить свою фразу. <secondary>Порядок</secondary> слов важен!</p>",
+        "guide": "<p><primary>Подтвердите свою фразу</primary></p><p>Нажмите на слова ниже, чтобы составить свою фразу. <secondary>Порядок</secondary> слов важен!</p>",
         "mnemonic": "Ваша мнемоническая фраза",
         "error": "Ой! Фраза в неправильном порядке, попробуйте еще раз",
         "placeholder": "first second third ···"
