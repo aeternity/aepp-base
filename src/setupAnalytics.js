@@ -1,3 +1,4 @@
+import { defer } from 'lodash-es';
 import Matomo from 'vue-matomo/src/matomo';
 import routerPromise from './router';
 import store from './store';
@@ -10,7 +11,7 @@ export default async () => {
   );
 
   const trackPageView = (route) => {
-    let { fullPath } = route;
+    let fullPath = window.location.toString();
     switch (route.name) {
       case 'send-to':
       case 'send-confirm':
@@ -37,7 +38,7 @@ export default async () => {
   matomo.enableLinkTracking();
   matomo.enableJSErrorTracking();
 
-  router.afterEach(to => trackPageView(to));
+  router.afterEach(to => defer(trackPageView, to));
 
   store.subscribeAction(({ type, payload }) => {
     if (type !== 'modals/open') return;
