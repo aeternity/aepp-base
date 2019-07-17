@@ -7,7 +7,7 @@ export default (store) => {
         name: 'alert',
         text: `
           The Base æpp can currently work only when opened in a single browser tab.
-          Please close any additional instances (tabs) running the Base æpp.
+          If you have any additional instances (tabs) of the Base æpp open, please close them.
         `,
       });
       store.commit('markGuideAsRead');
