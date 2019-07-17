@@ -1,4 +1,4 @@
-# Base æpp [![Build Status](https://api.travis-ci.org/aeternity/aepp-base.svg?branch=develop)](https://travis-ci.org/aeternity/aepp-base)
+# Base æpp [![Build Status](https://api.travis-ci.org/aeternity/aepp-base.svg?branch=develop)](https://travis-ci.org/aeternity/aepp-base/branches)
 
 ## How to get the Base æpp
 
