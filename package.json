@@ -21,7 +21,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
-    "@aeternity/aepp-sdk": "github:aeternity/aepp-sdk-js#48c42e48b6fd4fa9d54b19582ac7e53fadf85d8c",
+    "@aeternity/aepp-sdk": "^4.2.0",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
     "@aeternity/ledger-app-api": "0.1.0",
