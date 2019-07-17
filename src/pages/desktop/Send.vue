@@ -6,7 +6,7 @@
     </Guide>
 
     <Note>
-      Paste the recipient address below. Or send to subaccounts, contacts or scan QR code.
+      Paste the recipient address below, scan QR code or send to subaccounts.
     </Note>
 
     <form @submit.prevent="send">
