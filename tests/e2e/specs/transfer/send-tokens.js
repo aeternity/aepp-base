@@ -21,6 +21,7 @@ describe('Transfer: Send tokens', () => {
       .type(testReceiverAddress)
       .get('.ae-button')
       .contains('Next')
+      .should('be.enabled', { timeout: 8000 })
       .click()
 
       .url()
@@ -29,6 +30,7 @@ describe('Transfer: Send tokens', () => {
       .type(testAmount)
       .get('button')
       .contains('Next')
+      .should('be.enabled', { timeout: 8000 })
       .click()
 
       .url()
