@@ -32,6 +32,7 @@
         </ButtonPlain>
       </ListItemSettingsLanguage>
     </AeCard>
+    <SettingsVersion />
 
     <AePopover
       :anchor="networkMode ? $refs.networkIcon : null"
@@ -74,6 +75,7 @@ import ButtonPlain from '../../components/ButtonPlain.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
 import LanguageSwitcher from '../../components/LanguageSwitcher.vue';
+import SettingsVersion from '../../components/SettingsVersion.vue';
 
 export default {
   components: {
@@ -90,6 +92,7 @@ export default {
     NetworkSwitcher,
     NetworkAdd,
     LanguageSwitcher,
+    SettingsVersion,
   },
   data: () => ({
     popoverOrigin: {
