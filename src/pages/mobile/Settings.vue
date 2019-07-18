@@ -110,10 +110,7 @@
       </ListItem>
       <ListItemSettingsReset />
     </AeCard>
-
-    <div class="version">
-      {{ $t('settings.version') }} {{ version }}
-    </div>
+    <SettingsVersion />
   </MobilePage>
 </template>
 
@@ -129,6 +126,7 @@ import ListItemAccount from '../../components/ListItemAccount.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
+import SettingsVersion from '../../components/SettingsVersion.vue';
 import {
   Network, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
 } from '../../components/icons';
@@ -144,6 +142,7 @@ export default {
     ListItemSettingsReset,
     ListItemSettingsLanguage,
     MnemonicBackupWarning,
+    SettingsVersion,
     Network,
     LeftMore,
     Device,
@@ -153,9 +152,6 @@ export default {
     LockOpen,
     Shield,
   },
-  data: () => ({
-    version: process.env.npm_package_version,
-  }),
   computed: mapState({
     networkName: (state, { currentNetwork }) => currentNetwork.name,
     remoteConnectionsCount: ({ mobile }) => Object
@@ -173,7 +169,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
 @import '../../styles/variables/colors.scss';
 
 .settings {
@@ -202,13 +197,6 @@ export default {
       transform: rotate(90deg);
       background-color: $color-secondary;
     }
-  }
-
-  .version {
-    margin: rem(24px) 0;
-    @extend %face-sans-s;
-    color: $color-neutral-negative-1;
-    text-align: center;
   }
 }
 </style>
