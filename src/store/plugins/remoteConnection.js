@@ -126,8 +126,13 @@ export default (store) => {
         .filter(v => !followers[v])
         .forEach(followerId => socket.emit('add-follower', followerId));
     } else {
-      socket.on('added-to-group', () => store.commit('setRemoteConnected', true));
+      socket.on('added-to-group', () => {
+        store.commit('setRemoteConnected', true);
+        store.commit('setLeaderConnected', true);
+      });
       socket.on('removed-from-group', () => store.dispatch('reset'));
+      socket.on('leader-disconnected', () => store.commit('setLeaderConnected', false));
+      socket.on('leader-connected', () => store.commit('setLeaderConnected', true));
 
       const leader = new RpcPeer(message => socket.emit('message-to-leader', message));
       socket.on('message-from-leader', message => leader.processMessage(message));

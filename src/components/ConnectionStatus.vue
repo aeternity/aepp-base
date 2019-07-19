@@ -13,7 +13,13 @@ import { mapState } from 'vuex';
 
 export default {
   computed: mapState({
-    message: ({ onLine, sdk }) => {
+    message: ({ onLine, sdk, desktop }) => {
+      if (desktop && desktop.remoteConnected && !desktop.leaderConnected) {
+        return {
+          text: `You are currently not connected to a mobile wallet.
+          Working in offline mode.`,
+        };
+      }
       if (!onLine) return { text: 'You are offline... Please check your connection.' };
       if (!sdk) return { text: 'We are unable to connect to the chosen node.' };
       if (sdk.then) return { text: 'Connecting to the network...', className: 'connecting' };

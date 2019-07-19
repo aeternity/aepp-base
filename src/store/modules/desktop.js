@@ -3,6 +3,7 @@
 export default {
   state: {
     remoteConnected: false,
+    leaderConnected: false,
     ledgerSupported: false,
     showSidebar: false,
     showGuideOnStartup: true,
@@ -16,6 +17,9 @@ export default {
     setRemoteConnected(state, remoteConnected) {
       state.showSidebar = false;
       state.remoteConnected = remoteConnected;
+    },
+    setLeaderConnected(state, leaderConnected) {
+      state.leaderConnected = leaderConnected;
     },
     setLedgerSupported(state, ledgerSupported) {
       state.ledgerSupported = ledgerSupported;
