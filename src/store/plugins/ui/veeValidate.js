@@ -8,7 +8,7 @@ import { throttle } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { validateMnemonic } from '@aeternity/bip39';
 import { i18n } from './languages';
-import { toUrl } from '../../../lib/utils';
+import { toUrl, isAensName } from '../../../lib/utils';
 import { getPublicKeyByResponseUrl } from '../../../lib/airGap';
 
 Vue.use(VeeValidate);
@@ -20,6 +20,7 @@ Validator.extend('min', min);
 Validator.extend('required', required);
 
 Validator.extend('address', value => Crypto.isAddressValid(value));
+Validator.extend('account', value => Crypto.isAddressValid(value));
 Validator.extend('max_value', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('min_value', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
 Validator.extend('min_value_exclusive', (value, [arg]) => BigNumber(value).isGreaterThan(arg));
@@ -40,7 +41,7 @@ Validator.extend('air_gap_response_url', (value) => {
     return false;
   }
 });
-Validator.extend('aens_name', value => value.endsWith('.test'));
+Validator.extend('aens_name', isAensName);
 
 Validator.localize('en', {
   messages: {
@@ -53,6 +54,7 @@ Validator.localize('en', {
     required: () => i18n.t('validation.required'),
 
     address: () => i18n.t('validation.address'),
+    account: () => i18n.t('validation.account'),
     max_value: (field, [arg]) => i18n.t('validation.max_value', [arg]),
     min_value: (field, [arg]) => i18n.t('validation.min_value', [arg]),
     min_value_exclusive: (field, [arg]) => i18n.t('validation.min_value_exclusive', [arg]),

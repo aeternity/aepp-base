@@ -57,7 +57,8 @@
     "url_http": "This field is not a valid HTTP(S) URL",
     "air_gap_response_url": "This is not a valid sync code.",
     "aens_name": "This field must ends with .test",
-    "aens_name_unregistered": "This name is already registered"
+    "aens_name_unregistered": "This name is already registered",
+    "account": "Invalid AE address or AENS name"
   },
 
   "intro": {
@@ -182,6 +183,7 @@
       "to": {
         "guide": "<primary>New Transfer</primary><br />from <account />",
         "recipient": "Recipient",
+        "address-or-name": "ak_ … or name.test",
         "paste": "Paste",
         "scan": "Scan",
         "subaccount": "Or send to subaccount"
@@ -387,7 +389,7 @@
       "body": "This part of the Base æpp Wallet is in beta. We are actively refining the AENS functionality and are excited to share the process with you."
     }, {
       "header": "How does the AENS work?",
-      "body": "The AENS allows users to claim names and associate them with one or more æternity accounts. For now, only names ending in .test (part of the .test namespace) can be claimed. After you have successfully claimed a name it is associated with one of your accounts."
+      "body": "The AENS allows users to claim names and associate them with one or more æternity accounts. For now, only names ending in .test (part of the .test namespace) can be claimed. After you have successfully claimed a name it is associated with one of your accounts. At that point anyone can send tokens by typing the name instead of the account address."
     }],
 
     "list": {
