@@ -33,7 +33,7 @@
         Next
       </AeButton>
       <AeButton
-        to="https://itunes.apple.com/us/app/airgap-vault-secure-secrets/id1417126841?l=de&ls=1&mt=8"
+        :to="INSTALL_URL"
         plain
       >
         Install AirGap Vault
@@ -47,11 +47,13 @@ import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
+import { INSTALL_URL } from '../../lib/airGap';
 
 export default {
   components: {
     MobilePage, AeButton, Guide, AeFraction,
   },
+  data: () => ({ INSTALL_URL }),
 };
 </script>
 
