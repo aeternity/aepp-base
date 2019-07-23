@@ -13,6 +13,7 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <access origin="*.aepps.com" />
+        <access origin="*.piwo.app" />
         <access origin="aeternity.com" />
         <access origin="api.backendless.com" />
         <access origin="cors-anywhere.herokuapp.com" />
