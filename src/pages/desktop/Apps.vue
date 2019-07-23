@@ -5,8 +5,7 @@
     </Guide>
 
     <Note>
-      æpps running working with the æternity blockchain will be visible here.
-      We will implement a full æpp browser here soon. The æpps listed below are now only links.
+      æpps running on the æternity blockchain will be added below.
     </Note>
 
     <div class="shortcuts">
