@@ -28,8 +28,8 @@
   },
 
   "update-available": {
-    "app": "发现新版本。请重新启动Base æpp.",
-    "web": "发现新版本.请关闭所有 Base æpp 标签和导航，重新启动 Base æpp."
+    "title": "发现新版本。",
+    "restart": "Restart the Base æpp"
   },
 
   "store-load-error": {

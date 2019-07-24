@@ -28,8 +28,8 @@
   },
 
   "update-available": {
-    "app": "A new version is available. Please restart the Base æpp",
-    "web": "A new version is available. Please close all Base æpp tabs and navigate to the Base æpp again to restart."
+    "title": "A new version is available.",
+    "restart": "Restart the Base æpp"
   },
 
   "store-load-error": {
