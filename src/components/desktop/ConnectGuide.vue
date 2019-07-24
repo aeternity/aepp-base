@@ -141,7 +141,7 @@ export default {
 @import '../../styles/placeholders/typography.scss';
 
 .connect-guide {
-  margin: rem(60px) rem(40px);
+  margin: rem(40px) rem(40px);
 
   .guide .icon-wrapper {
     display: inline-block;
@@ -168,7 +168,7 @@ export default {
   }
 
   .ae-qr-code {
-    width: rem(240px);
+    width: rem(216px);
     margin: rem(40px) auto;
   }
 

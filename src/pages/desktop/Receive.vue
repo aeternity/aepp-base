@@ -78,7 +78,7 @@ export default {
     }
 
     .ae-qr-code {
-      width: rem(260px);
+      width: rem(216px);
       margin-bottom: rem(50px);
 
       &.inactive {
