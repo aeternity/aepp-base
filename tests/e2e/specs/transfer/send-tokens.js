@@ -37,7 +37,7 @@ describe('Transfer: Send tokens', () => {
       .contains('Confirm')
       .click()
 
-      .get('.notification-spend', { timeout: 8000 })
+      .get('.notification-spend-success', { timeout: 8000 })
       .contains(testAmount)
       .get('@oldBalance')
       .then(oldBalance => cy

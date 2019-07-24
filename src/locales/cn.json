@@ -195,8 +195,9 @@
         "fee": "最小转账手续费"
       },
 
-      "notification": {
+      "resolved": {
         "title": "转账完成",
+        "note": "Transaction broadcast successfully!",
         "subtitle": "",
         "to-history": "View in history",
         "to-explorer": "View on explorer",

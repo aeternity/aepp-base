@@ -195,8 +195,9 @@
         "fee": "Minimum transaction fee"
       },
 
-      "notification": {
+      "resolved": {
         "title": "Transfer completed",
+        "note": "Transaction broadcast successfully!",
         "subtitle": "You've sent {amount} AE",
         "to-history": "View in history",
         "to-explorer": "View on explorer",

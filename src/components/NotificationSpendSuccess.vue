@@ -1,11 +1,11 @@
 <template>
   <Notification
     v-bind="$attrs"
-    class="notification-spend"
+    class="notification-spend-success"
   >
     <ListItem
-      :title="$t('transfer.send.notification.title')"
-      :subtitle="$t('transfer.send.notification.subtitle', { amount: prefixedAmount(amount) })"
+      :title="$t('transfer.send.resolved.title')"
+      :subtitle="$t('transfer.send.resolved.subtitle', { amount: prefixedAmount(amount) })"
     >
       <ListItemCircle slot="icon">
         <Check />
@@ -14,16 +14,12 @@
 
     <template slot="footer">
       <AeButton
-        :to="$globals.IS_MOBILE_DEVICE
-          ? { name: 'transaction-details', params: { hash: transactionHash } }
-          : `${currentNetwork.explorerUrl}/#/tx/${transactionHash}`"
+        :to="{ name: 'transaction-details', params: { hash: transactionHash } }"
         fill="dark"
         size="small"
         plain
       >
-        {{ $globals.IS_MOBILE_DEVICE
-          ? $t('transfer.send.notification.to-history')
-          : $t('transfer.send.notification.to-explorer') }}
+        {{ $t('transfer.send.resolved.to-history') }}
       </AeButton>
       <AeButton
         v-copy-on-click="transactionHash"
@@ -31,7 +27,7 @@
         size="small"
         plain
       >
-        {{ $t('transfer.send.notification.copy') }}
+        {{ $t('transfer.send.resolved.copy') }}
       </AeButton>
     </template>
   </Notification>
@@ -39,7 +35,6 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapGetters } from 'vuex';
 import Notification from './Notification.vue';
 import ListItem from './ListItem.vue';
 import ListItemCircle from './ListItemCircle.vue';
@@ -61,7 +56,6 @@ export default {
     amount: { type: BigNumber, required: true },
     transactionHash: { type: String, required: true },
   },
-  computed: mapGetters(['currentNetwork']),
   methods: { prefixedAmount },
 };
 </script>
@@ -69,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/variables/colors.scss';
 
-.notification-spend .list-item-circle {
+.notification-spend-success .list-item-circle {
   background-color: $color-alternative;
 }
 </style>
