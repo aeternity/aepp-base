@@ -20,11 +20,15 @@ const languages = {
     name: 'Русский',
     getMessages: () => import(/* webpackChunkName: "locale-ru" */ '../../../locales/ru.json'),
   },
+  cn: {
+    name: '中文',
+    getMessages: () => import(/* webpackChunkName: "locale-cn" */ '../../../locales/cn.json'),
+  },
 };
 
 if (module.hot) {
   module.hot.accept(
-    ['../../../locales/en.json', '../../../locales/ru.json'],
+    ['../../../locales/en.json', '../../../locales/ru.json', '../../../locales/cn.json'],
     async () => {
       Object.entries(languages).forEach(async ([code, { getMessages }]) => i18n
         .setLocaleMessage(code, (await getMessages()).default));

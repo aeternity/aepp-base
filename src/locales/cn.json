@@ -1,0 +1,650 @@
+{
+  "cancel": "取消",
+  "close": "Close",
+  "confirm": "确认",
+  "next": "下一步",
+  "ok": "OK",
+  "deny": "Deny",
+  "allow": "Allow",
+  "add-to-home-screen": "Please add this app to home screen.",
+  "guide-desktop": "The Base æpp can currently work only when opened in a single browser tab. If you have any additional instances (tabs) of the Base æpp open, please close them.",
+
+  "header": {
+    "title": "Base web",
+    "connect-account": "Connect an account",
+    "connect-account-with": "With Base æpp or Ledger"
+  },
+
+  "sidebar": {
+    "connect-account": "Connect an account to start",
+    "connected-account": "| Your connected account | Your connected accounts",
+    "base-app": "Base æpp",
+    "ledger": "Ledger"
+  },
+
+  "not-found": {
+    "note": "It looks like the page you are looking for was not found.",
+    "to-home": "Go home"
+  },
+
+  "update-available": {
+    "app": "A new version is available. Please restart the Base æpp",
+    "web": "A new version is available. Please close all Base æpp tabs and navigate to the Base æpp again to restart."
+  },
+
+  "store-load-error": {
+    "note": "Base app failed to load its state.",
+    "reset": "Reset All Data"
+  },
+
+  "account-switcher": {
+    "create-account": "新子账户",
+    "create-account-desktop": "Create a new account",
+    "create-vault": "为AirGap创建一个"
+  },
+
+  "validation": {
+    "confirmed": "密码不匹配，请重试",
+    "decimal": "该字段必须为数字，并且可能包含{n}个小数点",
+    "excluded": "该字段必须是有效值。",
+    "min": "该字段必须至少为{n}个字符",
+    "required": "这是必填栏",
+    "address": "无效AE地址",
+    "max_value": "该字段必须为{n}或更少",
+    "min_value": "该字段必须为{n}或更多",
+    "min_value_exclusive": "该字段必须大于{n} ",
+    "mnemonic": "无效助记词",
+    "url_http": "该字段不是有效的HTTP(S) URL",
+    "air_gap_response_url": "这不是有效的同步代码。",
+    "aens_name": "This field must ends with .test",
+    "aens_name_unregistered": "This name is already registered"
+  },
+
+  "intro": {
+    "guide": "<primary>Base æpp</primary><br>æternity 区块链<br>掌控在您手中",
+    "login": "登录",
+    "recover": "助记词恢复",
+    "create-account": "创建一个新账号",
+    "onboarding": "查看使用说明。"
+  },
+
+  "onboarding": {
+    "skip": "跳过",
+    "start": "开始",
+
+    "welcome": {
+      "guide": "<primary>Base aepp</primary><br>æternity从这里开始<note />",
+      "note": "发送 & 接收AE，探索 æpps并管理您的账户。"
+    },
+
+    "send": {
+      "guide": "<primary>发送 &amp; 接收AE</primary>轻而易举<note />",
+      "note": "转账到联系人和子帐户。通过分享您的地址进行接收。"
+    },
+
+    "aepps": {
+      "guide": "探索æpps",
+      "note": "让æternity区块链为您的日常生活增添活力。"
+    },
+
+    "subaccounts": {
+      "guide": "<primary>创建子账号</primary>在毫秒之间<note />",
+      "note": "创建专用账户，用于支付、存储和提供æpps燃料。"
+    }
+  },
+
+  "recover": {
+    "title": "恢复账号",
+    "guide": "输入您的 <strong>助记词</strong>. 您在<mark>账户创建时</mark>写下的那些助记词。",
+    "mnemonic": "助记词恢复",
+    "button": "恢复账号"
+  },
+
+  "login": {
+    "guide": "<primary>你好！</primary> <wavingHandEmoji /> <secondary>登录</secondary>使用密码登录æternity",
+    "try-again-or": "请重试",
+    "button": "登录"
+  },
+
+  "app": {
+    "title": "æpps",
+
+    "intro": [{
+      "header": "欢迎来到æpps浏览器！",
+      "body": "虽然Base æpp钱包的这部分功能仍在加强中，但可安全使用，同时我们仍在继续完善您的使用体验。"
+    }, {
+      "header": "什么是æpp？",
+      "body": "æpps是由æternity区块链提供支持的去中心化应用程序。"
+    }],
+
+    "list": {
+      "featured-guide": "<primary>精选æpps</primary>",
+      "browse-guide": "浏览æpps",
+      "bookmarked-guide": "我的æpps",
+      "guide": "æpps <primary>browser</primary> (beta)",
+      "note": "æpps running on the æternity blockchain will be added below."
+    },
+
+    "url-form-placeholder": "输入æpps链接",
+
+    "browser": {
+      "refresh": "Refresh",
+
+      "confirm-account-access": {
+        "guide": "<app /><br />requests access to<br /><account />",
+        "address": {
+          "name": "地址",
+          "explanation": "这个æpp要求访问您的公共地址。"
+        },
+        "transactions": {
+          "name": "转账记录",
+          "explanation": "涉及一个拍卖。æpp将准备交易，您负责确认交易。"
+        }
+      }
+    },
+
+    "settings": {
+      "title": "Aepp帐户访问权限",
+      "count": "没有aepps有帐户访问权限| {n} aepp有帐户访问权限| {n} aepps有帐户访问权限",
+
+      "list": {
+        "note": "管理哪些æpps可以访问您的（子）帐户",
+        "subtitle": "| can access {n} account | can access {n} accounts"
+      }
+    }
+  },
+
+  "transfer": {
+    "title": "Transfer",
+    "guide": "<primary>发送和接收</primary> Æ",
+
+    "tooltips": [{
+      "selector": ".transfer .ae-account .ae-identicon",
+      "header": "Identicon",
+      "content": "Recognize which account is active. Accounts & subaccounts have unique identicons."
+    }, {
+      "selector": ".transfer .tab-bar .button-plain",
+      "header": "æpps",
+      "content": "Explore æpps powered by the æternity blockchain."
+    }, {
+      "selector": ".transfer .tab-bar .button-plain:nth-child(3)",
+      "header": "Account Switcher",
+      "content": "Tap to switch accounts or create subaccounts."
+    }],
+
+    "send": {
+      "title": "发送",
+      "subtitle": "转账资金",
+      "guide": "<primary>Send</primary> AE from<br /><senderAddress />",
+      "note": "Paste the recipient address below, scan QR code or send to subaccounts.",
+      "transfer": "Transfer",
+
+      "to": {
+        "guide": "<primary>新转账</primary><br>从",
+        "recipient": "账户",
+        "paste": "复制",
+        "scan": "扫描",
+        "subaccount": "或发送给子账户"
+      },
+
+      "amount": {
+        "guide": "<primary>New Transfer</primary><br />from <senderAddress /><br />to <recipientAddress />",
+        "balance": "余额",
+        "amount": "量",
+        "max": "Max",
+        "fee": "最小转账手续费"
+      },
+
+      "notification": {
+        "title": "转账完成",
+        "subtitle": "",
+        "to-history": "View in history",
+        "to-explorer": "View on explorer",
+        "copy": "复制tx hash"
+      }
+    },
+
+    "receive": {
+      "title": "接收",
+      "subtitle": "分享你的地址",
+      "guide": "<primary>分享你的地址</primary>给发送者",
+      "guide-desktop": "<primary>Receive</primary> tokens",
+      "note": "Let others scan your QR code or share your address",
+      "copy": "复制地址",
+      "copy-subtitle": "保存到剪贴板",
+      "share": "分享地址",
+      "share-subtitle": "给其他人",
+      "connect-account": "Connect an account first"
+    },
+
+    "transaction": {
+      "title": "转账记录",
+      "subtitle": "展示转账历史",
+      "pending": "正在发送",
+
+      "list": {
+        "all": "所有",
+        "incoming": "收入",
+        "outgoing": "支出",
+        "error": "转账期间发生错误。",
+        "loaded": "已加载所有转账。",
+        "no-transactions": "没有与此账户关联的转账记录。",
+        "pending-transactions": "正在转账",
+        "today": "今天"
+      },
+
+      "details": {
+        "title": "转账详情",
+        "received": "您已收到",
+        "sent": "您已发送",
+        "from": "从",
+        "to": "到",
+        "date": "日期",
+        "status": "状态",
+        "owner": "所有者",
+        "hash": "Tx hash",
+        "to-explorer": "浏览器查询",
+        "confirmations": "{n} 确认数",
+        "amount": "数量",
+        "fee": "转账手续费",
+        "total": "总计"
+      }
+    },
+
+    "migrated-balance": {
+      "title": "迁移中的数量",
+      "subtitle": "未显示为上述余额",
+      "note": "正在迁移中。他们将在下一次硬分叉后可使用。",
+      "to-migrations": "查看迁移"
+    }
+  },
+
+  "hd-wallet": {
+    "account-name": "账户"
+  },
+
+  "air-gap": {
+    "account-name": "AirGap account",
+    "scan-signed-transaction": "Scan Signed Transaction",
+
+    "setup": {
+      "title": "AirGap Setup",
+      "method-guide": "<primary>Robust security with AirGap Vault</primary><br />We recommend using a secondary offline device.",
+
+      "another-device": {
+        "title": "Maximum (recommended)",
+        "subtitle": "Install AirGap on another device",
+
+        "install": {
+          "guide": "<primary>Install AirGap on another phone</primary><br />Search for AirGap.it in the store or scan this QR code.",
+          "link": "Link"
+        },
+
+        "guide": {
+          "steps": [
+            "<primary>Open AirGap on the 2nd device</primary><br />Turn off the internet connection before opening AirGap.",
+            "<primary>Create secret key</primary><br />No internet connection means maximum security for the key.",
+            "<primary>Write it down in the right order</primary><br />You will need it for recovery.",
+            "<primary>Add an æternity wallet</primary><br />Tap wallet, add wallet and choose æternity.",
+            "<primary>Link your æternity wallet</primary><br />Finish by linking your vault to you æternity address."
+          ],
+          "link": "Link Vault"
+        }
+      },
+
+      "same-device": {
+        "title": "Normal",
+        "subtitle": "Install AirGap on this device",
+
+        "install": {
+          "guide": "<primary>Install or open AirGap on this smartphone</primary><br />Open the AirGap Vault app, open the account you would like to sync, tap on the three dots in the top right corner, and select Copy Sync Code.",
+          "button": "Install AirGap Vault"
+        },
+
+        "sync": {
+          "guide": "<primary>Vault sync on the way</primary><br />Paste the sync code below.",
+          "sync-code": "AirGap Sync Code",
+          "button": "Sync"
+        }
+      },
+
+      "completed": {
+        "guide": "<primary>Vault sync completed</primary><br />Find your AirGap Vault under your accounts.",
+        "finish": "Finish"
+      }
+    },
+
+    "modal": {
+      "sign": {
+        "guide": "<primary>Scan with AirGap Vault app</primary> to sign the transaction",
+        "done": "Done"
+      }
+    }
+  },
+
+  "ledger": {
+    "account-name": "Ledger account",
+    "mobile-not-supported": "Signing on mobile using Ledger is not supported now. Please use desktop version of Base æpp to sign this transaction.",
+
+    "not-supported": {
+      "guide": "Please switch to Google\u00A0Chrome",
+      "note": "Interacting with the Ledger is only supported by Chrome for now."
+    },
+
+    "connect-guide": {
+      "title": "How to connect from <primary>Ledger</primary>",
+      "steps": [
+        "Connect your Ledger via USB and unlock it",
+        "Open the æternity app on your Ledger",
+        "Create a first account by pressing the button below"
+      ]
+    },
+
+    "modal": {
+      "address-confirm": {
+        "create-guide": "Create your address on the Ledger",
+        "confirm-guide": "Confirm your address on the Ledger",
+        "address": "Ledger Address",
+        "create-note": "To create a new account on your Ledger, confirm your address there first",
+        "confirm-note": "To proceed, confirm your address on the Ledger"
+      },
+
+      "address-not-confirmed": {
+        "title": "Address not confirmed",
+        "note": "The Ledger cannot be used without address confirmation. Address mismatch can happen due to malware software. Please contact support to resolve this."
+      },
+
+      "account-not-found": {
+        "title": "Account not found",
+        "note": "The connected Ledger does not hold the specified account. You can still use it, but you have to create a new account."
+      },
+
+      "request": "Sending request to the Ledger",
+
+      "request-retry": {
+        "title": "Request failed",
+        "note": "Ledger is not connected or the request was not confirmed.",
+        "try": "Try again"
+      },
+
+      "transaction-fee": {
+        "title": "Define the Transaction fee",
+        "fee": "Transaction Fee",
+        "micro-ae": "Micro AE",
+        "note": "A higher transaction fee leads to a faster transaction time."
+      },
+
+      "sign-transaction": "Sign transaction on the Ledger"
+    }
+  },
+
+  "name": {
+    "title": "Names",
+
+    "intro": [{
+      "header": "Welcome to the æternity Naming System (AENS)!",
+      "body": "This part of the Base æpp Wallet is in beta. We are actively refining the AENS functionality and are excited to share the process with you."
+    }, {
+      "header": "How does the AENS work?",
+      "body": "The AENS allows users to claim names and associate them with one or more æternity accounts. For now, only names ending in .test (part of the .test namespace) can be claimed. After you have successfully claimed a name it is associated with one of your accounts."
+    }],
+
+    "list": {
+      "note": "Claim a name for your account!",
+      "explanation": "Tap the “+” button below to claim a name and associate it with one of your accounts.",
+      "registered": "Registered Names"
+    },
+
+    "new": {
+      "guide": "<primary>Claim a name</primary> for <inlineAccount />",
+      "unknown-error": "Unknown error",
+      "name": "Name",
+      "name-placeholder": "Name.test",
+      "register": "Register",
+
+      "notification":{
+        "claim-sent": "Claim for {name} name was successfully sent",
+        "registered": "{name} was successfully registered",
+        "unknown-error": "{name} was not registered for unknown reason"
+      }
+    }
+  },
+
+  "modal": {
+    "confirm-sign": {
+      "guide": "<primary>Sign raw transaction</primary><br />by <address />"
+    },
+
+    "confirm-transaction-sign": {
+      "guide-spend": "<primary>完成转账</primary><br />从 <senderAddress /><br />到 <recipientAddress />",
+      "guide": "<primary>{title}</primary><br />by <senderAddress />",
+      "payload": "Payload",
+      "recipient-account": "收件人账户",
+      "contract-compiled-code": "合约编译代码",
+      "call-data": "调用数据",
+      "contract-address": "合约地址",
+      "commitment": "提交",
+      "name-salt": "命名",
+      "name-id": "名字ID",
+      "pointer": "Pointer #{n}",
+      "pointer-key": "Pointer #{n} key",
+      "pointer-id": "Pointer #{n} ID",
+      "contract-create": "创建新合约",
+      "contract-call": "调用合约",
+      "name-pre-claim": "预备取名",
+      "name-claim": "确定取名",
+      "name-update": "更新名称",
+
+      "details-fee-input": {
+        "title": "Transaction fee",
+        "value": "{value} MICRO AE"
+      }
+    }
+  },
+
+  "components": {
+    "address-panel": {
+      "title-default": "Address"
+    }
+  },
+
+  "network": {
+    "connection-status": {
+      "offline": "您已离线，请检查您的网络连接。",
+      "no-sdk": "我们无法连接到您选择的节点。",
+      "connecting": "正在连接网络中...",
+      "connected-to-testnet": "您已连接到测试网。"
+    },
+
+    "settings": {
+      "title": "连接网络",
+      "subtitle": "Network ID {id}",
+
+      "list": {
+        "copy-link": "复制链接",
+        "remove": "移除"
+      },
+
+      "new": {
+        "title": "连接其他节点",
+        "guide": "连接<primary>其他节点</primary>",
+        "node-name": "节点名称",
+        "node-url": "节点链接",
+        "connect": "连接"
+      }
+    }
+  },
+
+  "remote-connection": {
+    "connect-notification": "您已成功连接{0}",
+    "revoke-notification": "Access was successfully revoked for {0}",
+
+    "settings": {
+      "title": "远程连接",
+      "count": "没有设备连接| {n}设备已连接| {n}多设备已连接",
+
+      "list": {
+        "connected": "已连接",
+        "disconnected": "未连接 {date}",
+        "revoke": "撤消"
+      },
+
+      "new": {
+        "title": "远程连接",
+        "wrong-qr-code": "扫描的二维码错误。 请务必扫描Base æpp生成的二维码",
+        "camera-not-allowed": "Please enable access to your camera for the mobile browser that you are using to open the Base æpp Wallet.",
+        "prompt-name": "命名此设备",
+        "default-name": "重命名"
+      }
+    },
+
+    "connect-guide": {
+      "title": "How to connect from <primary>Base æpp</primary>",
+      "steps": [
+        "Open Base æpp on your phone: base.aepps.com",
+        "Create an account, or login",
+        "Go to Settings <icon-settings />",
+        "Tap on Remote Connections <icon-device /> and tap the ‘+’",
+        "Scan the QR code below with Base æpp"
+      ]
+    },
+
+    "modal": {
+      "cancel-sign": {
+        "guide": "Sign the transaction in the <primary>Base æpp</primary>",
+        "note": "Open your Base æpp, check the transaction details and sign",
+        "cancel": "Cancel Transaction"
+      }
+    }
+  },
+
+  "security-courses": {
+    "modal": {
+      "guide": "<primary>恭喜！</primary>您创建了一个帐户",
+      "note": "请花2分钟时间了解安全的重要性",
+      "to-security-course-1": "开始安全教程1",
+      "skip": "我稍后再做"
+    },
+
+    "settings": {
+      "title": "AE 安全教程",
+      "subtitle": "免责声明",
+
+      "list": {
+        "subtitle": "安全教程",
+        "to-base-app": "前往Base aepp",
+        "note": "在“设置”中随时可以重新访问教程"
+      },
+
+      "details": {
+        "to-next": "前往教程{n}",
+        "to-list": "教程概述",
+
+        "intro": {
+          "title": "介绍&免责声明"
+        },
+
+        "bank": {
+          "title": "你是银行"
+        },
+
+        "privacy": {
+          "title": "你的隐私"
+        },
+
+        "layers": {
+          "title": "安全层",
+          "setup": "Setup airgap",
+          "buy": "Buy a Ledger wallet"
+        }
+      }
+    }
+  },
+
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "account": "账户",
+    "logout": "登出",
+    "logout-subtitle": "下次再见!",
+    "version": "版本号",
+
+    "mnemonic": {
+      "title": "备份助记词",
+      "subtitle": "保护您的资金",
+
+      "guide": "<secondary>Check the spelling</secondary> of each word and <primary>never</primary> create a screenshot or photo of this phrase.",
+      "to-show": "显示助记词",
+
+      "show": {
+        "guide": "<p><primary>Carefully keep this phrase <keyEmoji /> safe!</primary></p><p>Write these 12 words down and keep them <alternative>in a safe place</alternative>. You need them to <secondary>recover</secondary> your account in the future.</p>",
+        "alert": "That was too fast! Please make sure you write down the recovery phrase on paper... and keep it in a safe place."
+      },
+
+      "confirm": {
+        "guide": "<p><primary>Confirm <crossedFingersEmoji /> your phrase</primary></p><p>Tap the words below to compose your phrase, <secondary>note</secondary> correct order!</p>",
+        "mnemonic": "你的助记词",
+        "error": "顺序不正确，请重试",
+        "placeholder": "first second third ···"
+      },
+
+      "confirmed": {
+        "guide": "Would you like to <primary>delete the recovery phrase</primary> from this device? This will provide <alternative>extra security</alternative>… but it cannot be undone.",
+        "delete": "删除助记词",
+        "keep": "保管助记词"
+      },
+
+      "deleted": {
+        "guide": "You have deleted the recovery phrase from this device. <secondary>Please look for the backup that you made before deleting it.</secondary>",
+        "back": "返回"
+      },
+
+      "notification": {
+        "title": "Please Backup your Recover Phrase!",
+        "subtitle": "Secure your funds to prevent loss.",
+        "to-security-course": "Security course",
+        "to-mnemonic": "Backup now"
+      }
+    },
+
+    "password": {
+      "title": "钱包认证",
+      "subtitle": "设置和管理密码",
+
+      "change": "更改",
+      "change-subtitle": "更新你的密码",
+      "choose": "选择",
+      "choose-subtitle": "",
+      "remove": "移除密码",
+      "wrong-password": "错误密码，请重试",
+
+      "set": {
+        "change-guide": "更改你的密码",
+        "choose-guide": "选择一个密码并进行确认。",
+        "password": "密码",
+        "password-new": "新密码",
+        "password-new-confirm": "确认你的新密码"
+      },
+
+      "modal": {
+        "guide": "Enter your password to continue",
+        "continue": "Continue"
+      }
+    },
+
+    "account-remove": {
+      "title": "同步钱包",
+      "disconnect": "未连接"
+    },
+
+    "reset": {
+      "button": "Reset",
+      "title": "重置密钥",
+      "subtitle": "重置后，需要恢复助记词",
+      "message": "If you haven't backup your account, you won't be able to enter it again. Are you sure?",
+      "title-desktop": "重置所有数据",
+      "subtitle-desktop": "",
+      "message-desktop": "You will revoke your connection with mobile Base æpp and clear saved state. Are you sure?"
+    }
+  }
+}
