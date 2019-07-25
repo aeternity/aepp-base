@@ -18,10 +18,10 @@
       @close="activeIdx = 'none'"
     >
       <template v-if="activeIdx === 'initial'">
-        <h1>Learn how to use the Base æpp</h1>
-        Tap on any
-        <span class="selection">highlighted region</span>
-        to learn more about its functionality.
+        <h1>{{ $t('modal.tooltips-modal.initial-header') }}</h1>
+        <i18n path="modal.tooltips-modal.initial-content">
+          <span class="selection">{{ $t('modal.tooltips-modal.highlighted-region') }}</span>
+        </i18n>
       </template>
       <template v-else>
         <h1>{{ tooltips[activeIdx].header }}</h1>
