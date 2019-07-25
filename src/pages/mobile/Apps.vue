@@ -3,7 +3,7 @@
     class="apps"
     fill="neutral"
   >
-    <Guide><em>Featured æpps</em></Guide>
+    <Guide :template="$t('app.list.featured-guide')" />
 
     <AeCard fill="maximum">
       <template v-for="(app, idx) in aeternityApps">
@@ -28,12 +28,12 @@
       </template>
     </AeCard>
 
-    <Guide>Browse æpps</Guide>
+    <Guide :template="$t('app.list.browse-guide')" />
 
     <UrlForm @input="searchTerm = $event" />
 
     <template v-if="bookmarkedApps.length">
-      <Guide>My æpps</Guide>
+      <Guide :template="$t('app.list.bookmarked-guide')" />
 
       <div class="shortcuts">
         <AppShortcut
@@ -89,7 +89,7 @@ export default {
     },
   },
   async mounted() {
-    await this.$store.dispatch('intros/apps');
+    await this.$store.dispatch('intros/ensureRead', 'apps');
   },
 };
 </script>

@@ -6,13 +6,16 @@
     right-button-icon-name="close"
     @right-button-click="closeHandler"
   >
-    <Guide fill="neutral">
+    <Guide
+      :template="$t('air-gap.modal.sign.guide')
+      "
+      fill="neutral"
+    >
       <AeFraction
         v-if="stepFraction"
         slot="icon"
         v-bind="stepFraction"
       />
-      <em>Scan with AirGap Vault app</em> to sign the transaction
     </Guide>
 
     <AeQrCode :data="url" />
@@ -22,7 +25,7 @@
       fill="light"
       @click="resolve"
     >
-      Done
+      {{ $t('air-gap.modal.sign.done') }}
     </AeButton>
   </MobilePage>
 </template>

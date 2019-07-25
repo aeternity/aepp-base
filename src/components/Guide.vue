@@ -9,14 +9,63 @@
     >
       <slot name="icon" />
     </span>
-    <div class="content">
+
+    <TemplateRenderer
+      v-if="template"
+      class="content"
+      :node="templateRootNode"
+      :slots="$slots"
+    />
+    <div
+      v-else
+      class="content"
+    >
       <slot />
     </div>
   </div>
 </template>
 
 <script>
+const renderNodeContent = (createElement, node, slots) => (!node.childNodes.length
+  ? node.textContent
+  : Array.from(node.childNodes)
+    .filter(n => [Node.ELEMENT_NODE, Node.TEXT_NODE].includes(n.nodeType))
+    .map((n) => {
+      switch (n.tagName) {
+        case 'primary':
+          return createElement('em', renderNodeContent(createElement, n, slots));
+        case 'secondary':
+          return createElement('mark', renderNodeContent(createElement, n, slots));
+        case 'alternative':
+          return createElement('strong', renderNodeContent(createElement, n, slots));
+        case 'br':
+          return createElement('br');
+        case 'p':
+          return createElement('p', renderNodeContent(createElement, n, slots));
+        case undefined:
+          return n.textContent;
+        default:
+          return slots[n.tagName];
+      }
+    }));
+
+const TemplateRenderer = {
+  functional: true,
+  props: {
+    node: { type: Node, required: true },
+    slots: { type: Object, required: true },
+  },
+  render(createElement, { data, props }) {
+    return createElement(
+      'div',
+      { class: data.staticClass },
+      renderNodeContent(createElement, props.node, props.slots),
+    );
+  },
+};
+
 export default {
+  components: { TemplateRenderer },
   props: {
     fill: {
       type: String,
@@ -31,6 +80,16 @@ export default {
       type: String,
       validator: value => ['small', 'medium', 'big'].includes(value),
       default: 'medium',
+    },
+    template: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    templateRootNode() {
+      return new DOMParser()
+        .parseFromString(`<root>${this.template}</root>`, 'text/xml').childNodes[0];
     },
   },
 };

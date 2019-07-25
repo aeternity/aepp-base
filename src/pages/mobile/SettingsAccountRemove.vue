@@ -16,7 +16,7 @@
           plain
           @click="disconnect"
         >
-          Disconnect
+          {{ $t('settings.account-remove.disconnect') }}
         </AeButton>
       </ListItemAccount>
     </AeCard>

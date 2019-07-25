@@ -12,7 +12,12 @@ describe('UrlForm', () => {
     `passes address "${typedAddress}" to router properly`,
     () => {
       const push = jest.fn();
-      const wrapper = shallowMount(UrlForm, { mocks: { $router: { push } } });
+      const wrapper = shallowMount(UrlForm, {
+        mocks: {
+          $router: { push },
+          $t: () => 'locale-specific-text',
+        },
+      });
       wrapper.vm.newUrl = typedAddress;
       wrapper.vm.submitHandler();
       expect(push).toHaveBeenCalledWith(routerPath);

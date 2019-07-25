@@ -1,24 +1,22 @@
 <template>
   <Modal class="security-course-modal">
     <img src="../../assets/account-card.svg">
-    <Guide>
-      <em>Congratulations!</em> You created an account
-    </Guide>
+    <Guide :template="$t('security-courses.modal.guide')" />
     <div class="note">
-      Please take 2 minutes to learn about the importance of security
+      {{ $t('security-courses.modal.note') }}
     </div>
     <div class="buttons">
       <AeButton
         fill="alternative"
         @click="openSecurityCourse"
       >
-        Start security course 1
+        {{ $t('security-courses.modal.to-security-course-1') }}
       </AeButton>
       <AeButton
         plain
         @click="resolve"
       >
-        I'll do it later
+        {{ $t('security-courses.modal.skip') }}
       </AeButton>
     </div>
   </Modal>

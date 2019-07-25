@@ -1,10 +1,9 @@
 <template>
-  <LedgerModal title="Account not found">
+  <LedgerModal :title="$t('ledger.modal.account-not-found.title')">
     <LedgerModalNanoS />
 
     <LedgerModalNote fill="dark">
-      The connected Ledger does not hold the specified account.
-      You can still use it, but you have to create a new account.
+      {{ $t('ledger.modal.account-not-found.note') }}
     </LedgerModalNote>
 
     <AeButton
@@ -13,7 +12,7 @@
       plain
       @click="resolve"
     >
-      Close
+      {{ $t('close') }}
     </AeButton>
   </LedgerModal>
 </template>

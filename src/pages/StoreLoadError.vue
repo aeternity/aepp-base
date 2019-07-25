@@ -1,13 +1,13 @@
 <template>
   <div class="store-load-error">
     <div>
-      <p>Base app failed to load its state.</p>
+      <p>{{ $t('store-load-error.note') }}</p>
 
       <AeButton
         fill="secondary"
         @click="resetState"
       >
-        Reset All Data
+        {{ $t('store-load-error.reset') }}
       </AeButton>
     </div>
   </div>

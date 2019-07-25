@@ -1,17 +1,19 @@
 <template>
   <MobilePage
-    title="Wallet Authentication"
+    :title="$t('settings.password.title')"
     :right-button-to="{ name: 'settings-password' }"
     right-button-icon-name="close"
     hide-tab-bar
   >
-    <Guide>
-      <template v-if="isWalletEncrypted">
-        <mark>Change your password</mark>
-      </template>
-      <template v-else>
-        <mark>Choose a <img :src="keyEmoji"> password</mark> and confirm.
-      </template>
+    <Guide
+      :template="isWalletEncrypted
+        ? $t('settings.password.set.change-guide')
+        : $t('settings.password.set.choose-guide')"
+    >
+      <img
+        slot="keyEmoji"
+        :src="keyEmoji"
+      >
     </Guide>
 
     <form
@@ -34,7 +36,7 @@
             {{ errors.first('password') }}
           </template>
           <template v-else-if="wrongPassword">
-            Wrong password, try again
+            {{ $t('settings.password.wrong-password') }}
           </template>
         </template>
       </AeInputPassword>
@@ -42,20 +44,20 @@
         v-model="newPassword"
         v-validate="'required|min:4'"
         :autofocus="!isWalletEncrypted"
-        autocomplete="new-password"
+        autocomplete="password-new"
         :error="errors.has('newPassword')"
         :footer="errors.first('newPassword')"
-        header="New password"
+        :header="$t('settings.password.set.password-new')"
         name="newPassword"
         hide-reveal-button
       />
       <AeInputPassword
         v-model="newPasswordConfirm"
         v-validate="`required|confirmed:${newPassword}`"
-        autocomplete="new-password"
+        autocomplete="password-new"
         :error="errors.has('newPasswordConfirm')"
         :footer="errors.first('newPasswordConfirm')"
-        header="Confirm your new password"
+        :header="$t('settings.password.set.password-new-confirm')"
         name="newPasswordConfirm"
         hide-reveal-button
       />
@@ -67,7 +69,7 @@
       :disabled="errors.any() || wrongPassword"
       fill="secondary"
     >
-      Confirm
+      {{ $t('confirm') }}
     </AeButton>
   </MobilePage>
 </template>

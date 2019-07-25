@@ -3,22 +3,24 @@
     v-if="transaction"
     :header-fill="transaction.received ? 'alternative' : 'primary'"
     class="transaction-details"
-    title="Transaction details"
+    :title="$t('transfer.transaction.details.title')"
     left-button-icon-name="back"
     @left-button-click="$router.push({ name: 'transaction-list' })"
   >
     <template slot="header">
       <Guide fill="neutral">
         <template v-if="transaction.tx.amount">
-          {{ transaction.received ? 'You received' : 'You sent' }}
+          {{ transaction.received
+            ? $t('transfer.transaction.details.received')
+            : $t('transfer.transaction.details.sent') }}
           <em class="balance">{{ transaction.tx.amount | prefixedAmount }} AE</em>
         </template>
         <template v-if="transaction.tx.senderId">
-          <br>from
+          <br>{{ $t('transfer.transaction.details.from').toLowerCase() }}
           <AccountInline :address="transaction.tx.senderId" />
         </template>
         <template v-if="transaction.tx.recipientId">
-          <br>to
+          <br>{{ $t('transfer.transaction.details.to').toLowerCase() }}
           <AccountInline :address="transaction.tx.recipientId" />
         </template>
       </Guide>
@@ -26,14 +28,14 @@
 
     <DetailsField
       v-if="!transaction.pending"
-      name="Date"
+      :name="$t('transfer.transaction.details.date')"
       :value="transaction.time.toLocaleString()"
     />
 
     <DetailsField
       :class="{ pending: transaction.pending }"
       class="status"
-      name="Status"
+      :name="$t('transfer.transaction.details.status')"
       :value="status"
     />
 
@@ -50,24 +52,24 @@
 
     <DetailsAddress
       v-if="transaction.tx.senderId"
-      name="From"
+      :name="$t('transfer.transaction.details.from')"
       :address="transaction.tx.senderId"
     />
 
     <DetailsAddress
       v-if="transaction.tx.recipientId"
-      name="To"
+      :name="$t('transfer.transaction.details.to')"
       :address="transaction.tx.recipientId"
     />
 
     <DetailsAddress
       v-if="transaction.tx.ownerId"
-      name="Owner"
+      :name="$t('transfer.transaction.details.owner')"
       :address="transaction.tx.ownerId"
     />
 
     <DetailsAddress
-      name="Transaction hash"
+      :name="$t('transfer.transaction.details.hash')"
       :address="transaction.hash"
     />
 
@@ -81,7 +83,7 @@
       :fill="transaction.received ? 'alternative' : 'primary'"
       :to="`${currentNetwork.explorerUrl}/#/tx/${hash}`"
     >
-      View in explorer
+      {{ $t('transfer.transaction.details.to-explorer') }}
     </AeButton>
   </MobilePage>
 </template>
@@ -118,8 +120,11 @@ export default {
     ...mapGetters({ activeAccount: 'accounts/active', currentNetwork: 'currentNetwork' }),
     status() {
       return this.transaction.pending
-        ? 'Pending'
-        : `${this.transaction.confirmationCount} Confirmations`;
+        ? this.$t('transfer.transaction.pending')
+        : this.$tc(
+          'transfer.transaction.details.confirmations',
+          this.transaction.confirmationCount,
+        );
     },
   },
   subscriptions() {

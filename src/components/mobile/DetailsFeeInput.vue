@@ -1,8 +1,11 @@
 <template>
   <DetailsField
     class="details-fee-input"
-    name="Transaction fee"
-    :value="`${toMicroString(value)} MICRO AE`"
+    :name="$t('modal.confirm-transaction-sign.details-fee-input.title')"
+    :value="$t(
+      'modal.confirm-transaction-sign.details-fee-input.value',
+      { value: toMicroString(value) },
+    )"
     value-monospace
   >
     <template v-if="min.isLessThan(max)">

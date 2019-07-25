@@ -7,10 +7,10 @@
     <header>
       <h1>
         <template v-if="!accountsCount">
-          Connect an<br>account to start
+          {{ $t('sidebar.connect-account') }}
         </template>
         <template v-else>
-          Your connected<br>account{{ accountsCount !== 1 ? 's' : '' }}
+          {{ $tc('sidebar.connected-account', accountsCount) }}
         </template>
         <ButtonPlain @click="toggleSidebar">
           <Close />
@@ -22,13 +22,13 @@
           :class="{ active: !ledgerTab }"
           @click="ledgerTab = false"
         >
-          Base æpp
+          {{ $t('sidebar.base-app') }}
         </ButtonPlain>
         <ButtonPlain
           :class="{ active: ledgerTab }"
           @click="ledgerTab = true"
         >
-          Ledger
+          {{ $t('sidebar.ledger') }}
         </ButtonPlain>
       </div>
     </header>

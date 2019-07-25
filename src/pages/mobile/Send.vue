@@ -6,15 +6,19 @@
     class="send"
   >
     <template slot="header">
-      <Guide fill="neutral">
+      <Guide
+        :template="$t('transfer.send.to.guide')"
+        fill="neutral"
+      >
         <AeFraction
           slot="icon"
           numerator="1"
           denominator="3"
         />
-        <em>New Transfer</em>
-        <br>from
-        <AccountInline :address="activeAccount.address" />
+        <AccountInline
+          slot="account"
+          :address="activeAccount.address"
+        />
       </Guide>
 
       <form
@@ -28,7 +32,7 @@
           :error="errors.has('accountTo')"
           :footer="errors.first('accountTo')"
           name="accountTo"
-          header="Recipient"
+          :header="$t('transfer.send.to.recipient')"
         />
       </form>
     </template>
@@ -39,14 +43,14 @@
       fill="secondary"
       @click="setAddress"
     >
-      Next
+      {{ $t('next') }}
     </AeButton>
 
     <div
       v-if="inactiveAccounts.length"
       class="own-account"
     >
-      Or send to subaccount
+      {{ $t('transfer.send.to.subaccount') }}
     </div>
     <ListItemAccount
       v-for="account in inactiveAccounts"

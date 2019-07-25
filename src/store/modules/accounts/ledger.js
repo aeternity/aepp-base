@@ -5,14 +5,12 @@ import Ae from '@aeternity/ledger-app-api';
 import { Crypto, TxBuilder } from '@aeternity/aepp-sdk/es';
 import { OBJECT_ID_TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
 import { MAGNITUDE } from '../../../lib/constants';
+import { i18n } from '../../plugins/ui/languages';
 
 const signOnMobile = async ({ dispatch }) => {
   await dispatch('modals/open', {
     name: 'alert',
-    text: `
-      Signing on mobile using Ledger is not supported now.
-      Please use desktop version of Base æpp to sign this transaction.
-    `,
+    text: i18n.t('ledger.mobile-not-supported'),
   }, { root: true });
   throw new Error('Not implemented yet');
 };
@@ -22,7 +20,7 @@ export default {
 
   account: {
     type: 'ledger',
-    typeVerbose: 'Ledger account',
+    typeVerbose: i18n.t('ledger.account-name'),
     color: 'dark',
   },
 

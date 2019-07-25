@@ -2,7 +2,7 @@
   <MobilePage
     :left-button-to="{ name: 'settings-network' }"
     left-button-icon-name="back"
-    title="Connect to another node"
+    :title="$t('network.settings.new.title')"
     header-fill="light"
     fill="neutral"
   >

@@ -2,7 +2,7 @@
   <MobilePage
     class="settings-security-course-list"
     fill="neutral"
-    title="AE Security courses"
+    :title="$t('security-courses.settings.title')"
     header-fill="light"
     right-button-icon-name="close"
     :right-button-to="{ name: 'settings' }"
@@ -12,7 +12,10 @@
       v-for="(course, idx) in courses"
       :key="idx"
       :title="course.title"
-      :subtitle="`Security Course ${idx + 1}`"
+      :subtitle="$t(
+        'security-courses.settings.list.subtitle',
+        { n: idx + 1, count: courses.length },
+      )"
       :to="{ name: course.routeName, params: { firstEnter } }"
       :checked="course.isRead"
       active
@@ -31,10 +34,10 @@
         fill="secondary"
         :to="{ name: 'transfer' }"
       >
-        Go to Base aepp
+        {{ $t('security-courses.settings.list.to-base-app') }}
       </AeButton>
       <Note>
-        Revisit the courses anytime under Settings
+        {{ $t('security-courses.settings.list.note') }}
       </Note>
     </template>
   </MobilePage>
@@ -43,7 +46,7 @@
 <script>
 import { mapState } from 'vuex';
 import lockEmoji from 'emoji-datasource-apple/img/apple/64/1f513.png';
-import courses from './settingsSecurityCourseList';
+import getCourses from './settingsSecurityCourseList';
 import ListItemChoose from '../../components/ListItemChoose.vue';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeButton from '../../components/AeButton.vue';
@@ -61,7 +64,7 @@ export default {
   },
   data: () => ({ lockEmoji }),
   computed: mapState({
-    courses: ({ mobile: { readSecurityCourses } }) => courses.map(course => ({
+    courses: ({ mobile: { readSecurityCourses } }) => getCourses().map(course => ({
       ...course,
       isRead: readSecurityCourses.includes(course.name),
     })),

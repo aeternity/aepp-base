@@ -7,18 +7,15 @@
     @right-button-click="showTooltips"
   >
     <template slot="header">
-      <Guide>
-        <em>Send and receive</em>
-        Æ
-      </Guide>
+      <Guide :template=" $t('transfer.guide')" />
 
       <AeAccount v-bind="activeAccount" />
     </template>
 
     <ListItem
       :to="{ name: 'send' }"
-      title="Send"
-      subtitle="Transfer funds"
+      :title="$t('transfer.send.title')"
+      :subtitle="$t('transfer.send.subtitle')"
       border-dark
     >
       <img
@@ -29,8 +26,8 @@
     </ListItem>
     <ListItem
       :to="{ name: 'receive' }"
-      title="Receive"
-      subtitle="Share your address"
+      :title="$t('transfer.receive.title')"
+      :subtitle="$t('transfer.receive.subtitle')"
       border-dark
     >
       <img
@@ -41,8 +38,8 @@
     </ListItem>
     <ListItem
       :to="{ name: 'transaction-list' }"
-      title="Transactions"
-      subtitle="Show transaction history"
+      :title="$t('transfer.transaction.title')"
+      :subtitle="$t('transfer.transaction.subtitle')"
       border-dark
     >
       <img
@@ -52,8 +49,8 @@
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
-      title="Tokens in migration"
-      subtitle="Not shown as balance above"
+      :title="$t('transfer.migrated-balance.title')"
+      :subtitle="$t('transfer.migrated-balance.subtitle')"
       border-dark
       @click="open({ name: 'migratedBalance' })"
     >
@@ -103,19 +100,7 @@ export default {
       this.tooltipsVisible = true;
       await this.open({
         name: 'showTooltips',
-        tooltips: [{
-          selector: '.transfer .ae-account .ae-identicon',
-          header: 'Identicon',
-          content: 'Recognize which account is active. Accounts & subaccounts have unique identicons.',
-        }, {
-          selector: '.transfer .tab-bar .button-plain',
-          header: 'æpps',
-          content: 'Explore æpps powered by the æternity blockchain.',
-        }, {
-          selector: '.transfer .tab-bar .button-plain:nth-child(3)',
-          header: 'Account Switcher',
-          content: 'Tap to switch accounts or create subaccounts.',
-        }],
+        tooltips: this.$t('transfer.tooltips'),
       });
       this.tooltipsVisible = false;
     },

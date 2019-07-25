@@ -4,11 +4,11 @@
     right-button-icon-name="close"
     hide-tab-bar
   >
-    <Guide>
-      <em>Hello!</em>{{ ' ' }}<img :src="wavingHandEmoji">
-      {{ ' ' }}<mark>Log in</mark> to
-      æternity with your
-      password
+    <Guide :template="$t('login.guide')">
+      <img
+        slot="wavingHandEmoji"
+        :src="wavingHandEmoji"
+      >
     </Guide>
 
     <form
@@ -30,16 +30,17 @@
             {{ errors.first('password') }}
           </template>
           <template v-else-if="wrongPassword">
-            Try again or
+            {{ $t('login.try-again-or') }}
             <RouterLink :to="{ name: 'recover' }">
-              recover account
+              {{ $t('recover.button').toLowerCase() }}
             </RouterLink>
           </template>
-          <template v-else>
-            <RouterLink :to="{ name: 'recover' }">
-              Recover account
-            </RouterLink>
-          </template>
+          <RouterLink
+            v-else
+            :to="{ name: 'recover' }"
+          >
+            {{ $t('recover.button') }}
+          </RouterLink>
         </template>
       </AeInputPassword>
     </form>
@@ -50,7 +51,7 @@
       :form="_uid"
       fill="secondary"
     >
-      Log in
+      {{ $t('login.button') }}
     </AeButton>
   </MobilePage>
 </template>

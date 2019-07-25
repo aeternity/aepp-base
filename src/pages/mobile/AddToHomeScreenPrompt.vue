@@ -1,7 +1,7 @@
 <template>
   <div class="add-to-home-screen-prompt">
     <p>
-      Please add this app to home screen.
+      {{ $t('add-to-home-screen') }}
     </p>
   </div>
 </template>

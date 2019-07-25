@@ -24,7 +24,7 @@
       :to="networkAddButtonTo"
       @click="$emit('network-add-button-click')"
     >
-      Connect to another node
+      {{ $t('network.settings.new.title') }}
     </ListItemButton>
 
     <Menu
@@ -33,10 +33,10 @@
       @close="menuForNetworkIdx = -1"
     >
       <MenuItem v-copy-on-click="networks[menuForNetworkIdx].url">
-        <Copy />Copy link
+        <Copy />{{ $t('network.settings.list.copy-link') }}
       </MenuItem>
       <MenuItem @click="removeNetwork">
-        <Close />Remove
+        <Close />{{ $t('network.settings.list.remove') }}
       </MenuItem>
     </Menu>
   </div>

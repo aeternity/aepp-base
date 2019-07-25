@@ -8,10 +8,10 @@
         fill="secondary"
         @click="cancelHandler"
       >
-        Cancel
+        {{ $t('cancel') }}
       </AeButton>
       <AeButton @click="resolve">
-        {{ primaryButtonText }}
+        {{ primaryButtonText || $t('ok') }}
       </AeButton>
     </AeButtonGroup>
   </Modal>
@@ -26,7 +26,7 @@ export default {
   components: { Modal, AeButtonGroup, AeButton },
   props: {
     text: { type: String, required: true },
-    primaryButtonText: { type: String, default: 'OK' },
+    primaryButtonText: { type: String, default: '' },
     resolve: { type: Function, required: true },
     reject: { type: Function, required: true },
     confirm: Boolean,

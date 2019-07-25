@@ -23,7 +23,7 @@
         </ListItemAccount>
 
         <ListItem
-          title="New subaccount"
+          :title="$t('account-switcher.create-account')"
           @click="createHdWalletAccount"
         >
           <ListItemCircle slot="icon">
@@ -32,7 +32,7 @@
         </ListItem>
 
         <ListItem
-          title="Create a vault for AirGap"
+          :title="$t('account-switcher.create-vault')"
           class="vault-new"
           @click="createAirGapAccount"
         >

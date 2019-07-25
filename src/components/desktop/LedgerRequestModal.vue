@@ -1,6 +1,6 @@
 <template>
   <LedgerModal
-    title="Sending request to the Ledger"
+    :title="$t('ledger.modal.request')"
     class="ledger-request"
   >
     <LedgerModalNanoS />
@@ -8,7 +8,7 @@
     <AeLoader />
 
     <div class="label">
-      Sending request to the Ledger
+      {{ $t('ledger.modal.request') }}
     </div>
   </LedgerModal>
 </template>

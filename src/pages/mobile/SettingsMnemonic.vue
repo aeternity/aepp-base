@@ -2,19 +2,15 @@
   <MobilePage
     :right-button-to="{ name: 'settings' }"
     right-button-icon-name="close"
-    title="Backup Recovery Phrase"
+    :title="$t('settings.mnemonic.title')"
     hide-tab-bar
   >
-    <Guide>
+    <Guide :template="$t('settings.mnemonic.guide')">
       <AeFraction
         slot="icon"
         numerator="1"
         denominator="4"
       />
-      <mark>Check the spelling</mark>
-      of each word and <em>never</em>
-      create a screenshot
-      or photo of this phrase.
     </Guide>
 
     <AeButton
@@ -22,7 +18,7 @@
       :to="{ name: 'settings-mnemonic-show' }"
       fill="secondary"
     >
-      Show Recovery Phrase
+      {{ $t('settings.mnemonic.to-show') }}
     </AeButton>
   </MobilePage>
 </template>

@@ -1,14 +1,15 @@
 <template>
   <AeModal class="cancel-sign-modal">
-    <Guide size="big">
-      Sign the transaction in the <em>Base æpp</em>
-    </Guide>
+    <Guide
+      :template="$t('remote-connection.modal.cancel-sign.guide')"
+      size="big"
+    />
     <div class="note">
-      Open your Base æpp, check the transaction details and sign
+      {{ $t('remote-connection.modal.cancel-sign.note') }}
     </div>
     <img src="../../assets/base-aepp-confirm.svg">
     <AeButton @click="resolve">
-      Cancel Transaction
+      {{ $t('remote-connection.modal.cancel-sign.cancel') }}
     </AeButton>
   </AeModal>
 </template>

@@ -1,14 +1,14 @@
 <template>
   <MobilePage fill="neutral">
     <Guide>
-      <em>Names</em>
+      <em>{{ $t('name.title') }}</em>
     </Guide>
 
-    <h2>Claim a name for your account!</h2>
-    <p>Tap the “+” button below to claim a name and associate it with one of your accounts.</p>
+    <h2>{{ $t('name.list.note') }}</h2>
+    <p>{{ $t('name.list.explanation') }}</p>
 
     <template v-if="owned.length">
-      <h2>Registered Names</h2>
+      <h2>{{ $t('name.list.registered') }}</h2>
       <AeCard fill="maximum">
         <ListItemAccount
           v-for="name in owned"
@@ -49,7 +49,7 @@ export default {
   },
   computed: mapState('names', ['owned']),
   async mounted() {
-    await this.$store.dispatch('intros/names');
+    await this.$store.dispatch('intros/ensureRead', 'names');
     const update = () => this.$store.dispatch('names/fetchOwned');
     await update();
     const id = setInterval(update, 3000);

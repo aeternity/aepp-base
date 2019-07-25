@@ -2,9 +2,12 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import AeInputAddress from '../AeInputAddress.vue';
 
-Vue.prototype.$globals = {
-  IS_MOBILE_DEVICE: true,
-};
+Object.assign(Vue.prototype, {
+  $globals: {
+    IS_MOBILE_DEVICE: true,
+  },
+  $t: () => 'locale-specific-text',
+});
 
 const testAddress = 'ak_12345678912345678912345678912345678912345678912345';
 const testAddressFormatted = 'ak_ 123 456 789 123 456 789 123 456 789 123 456 789 123 456 789 123 45';

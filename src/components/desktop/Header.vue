@@ -4,7 +4,7 @@
       :to="{ name: 'apps' }"
       class="logo"
     >
-      <img src="../../assets/icons/base.svg">Base web
+      <img src="../../assets/icons/base.svg"> {{ $t('header.title') }}
     </RouterLink>
 
     <div class="links">
@@ -27,12 +27,12 @@
       @click="toggleSidebar"
     >
       <div class="details">
-        {{ account ? name : 'Connect an account' }}
+        {{ account ? name : $t('header.connect-account') }}
         <div class="balance">
           {{
             account
               ? `${prefixedAmount(account.balance)} AE`
-              : 'With Base æpp or Ledger'
+              : $t('header.connect-account-with')
           }}
         </div>
       </div>
@@ -50,32 +50,34 @@ import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
   components: { AeIdenticon, ButtonPlain },
-  data: () => ({
-    links: [{
-      name: 'æpps',
-      routeName: 'apps',
-      icon: Grid,
-    }, {
-      name: 'Send',
-      routeName: 'send',
-      icon: Receive,
-      iconClass: 'send',
-    }, {
-      name: 'Receive',
-      routeName: 'receive',
-      icon: Receive,
-    }, {
-      name: 'Settings',
-      routeName: 'settings',
-      icon: Settings,
-    }],
-  }),
   subscriptions() {
     return { account: this.$store.state.observables.activeAccount };
   },
-  computed: mapState('accounts', {
-    name(state, { getName }) { return this.account && getName(this.account); },
-  }),
+  computed: {
+    ...mapState('accounts', {
+      name(state, { getName }) { return this.account && getName(this.account); },
+    }),
+    links() {
+      return [{
+        name: this.$t('app.title'),
+        routeName: 'apps',
+        icon: Grid,
+      }, {
+        name: this.$t('transfer.send.title'),
+        routeName: 'send',
+        icon: Receive,
+        iconClass: 'send',
+      }, {
+        name: this.$t('transfer.receive.title'),
+        routeName: 'receive',
+        icon: Receive,
+      }, {
+        name: this.$t('settings.title'),
+        routeName: 'settings',
+        icon: Settings,
+      }];
+    },
+  },
   methods: {
     prefixedAmount,
     ...mapMutations(['toggleSidebar']),

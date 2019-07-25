@@ -1,4 +1,5 @@
 import { register } from 'register-service-worker';
+import { i18n } from './ui/languages';
 
 export default (store) => {
   if (process.env.NODE_ENV === 'production') {
@@ -9,9 +10,8 @@ export default (store) => {
       updated() {
         store.dispatch('modals/open', {
           name: 'notification',
-          text: `A new version is available. ${process.env.IS_PWA
-            ? 'Please restart the Base æpp'
-            : 'Please close all Base æpp tabs and navigate to the Base æpp again to restart.'}`,
+          text: process.env.IS_PWA
+            ? i18n.t('update-available.app') : i18n.t('update-available.web'),
         });
       },
     });

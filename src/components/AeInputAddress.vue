@@ -51,14 +51,14 @@
         @click="readValueFromClipboard"
       >
         <Paste />
-        {{ $globals.IS_MOBILE_DEVICE ? 'Paste' : '' }}
+        {{ $globals.IS_MOBILE_DEVICE ? $t('transfer.send.to.paste') : '' }}
       </AeToolbarButton>
       <AeToolbarButton
         type="button"
         @click="readValueFromQrCode"
       >
         <Camera />
-        {{ $globals.IS_MOBILE_DEVICE ? 'Scan' : '' }}
+        {{ $globals.IS_MOBILE_DEVICE ? $t('transfer.send.to.scan') : '' }}
       </AeToolbarButton>
     </template>
   </AeTextareaFormatted>

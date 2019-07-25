@@ -1,12 +1,16 @@
 <template>
   <div class="confirm-account-access">
-    <Guide>
-      <img
-        v-if="app.icon"
-        :src="app.icon"
-      > {{ app.name }}
-      <br>requests access to
-      <br><AccountInline :address="activeAccount.address" />
+    <Guide :template="$t('app.browser.confirm-account-access.guide')">
+      <template slot="app">
+        <img
+          v-if="app.icon"
+          :src="app.icon"
+        > {{ app.name }}
+      </template>
+      <AccountInline
+        slot="account"
+        :address="activeAccount.address"
+      />
     </Guide>
 
     <DetailsAccountAccessPermission :app-name="app.name" />
@@ -16,10 +20,10 @@
         fill="secondary"
         @click="denyHandler"
       >
-        Deny
+        {{ $t('deny') }}
       </AeButton>
       <AeButton @click="allowHandler">
-        Allow
+        {{ $t('allow') }}
       </AeButton>
     </AeButtonGroup>
   </div>

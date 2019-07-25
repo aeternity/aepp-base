@@ -4,14 +4,14 @@
     class="not-found"
     :hide-tab-bar="!loggedIn"
   >
-    It looks like the page you are looking for was not found.
+    {{ $t('not-found.note') }}
 
     <AeButton
       v-if="!loggedIn && $globals.IS_MOBILE_DEVICE"
       slot="footer"
       :to="{ name: 'intro' }"
     >
-      Go home
+      {{ $t('not-found.to-home') }}
     </AeButton>
   </Component>
 </template>
