@@ -554,7 +554,7 @@
 
         "layers": {
           "title": "Security layers",
-          "setup": "Setup airgap",
+          "setup": "Setup AirGap",
           "buy": "Buy a Ledger wallet"
         }
       }
