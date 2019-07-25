@@ -1,19 +1,37 @@
 <template>
   <SettingsSecurityCourseWrapper name="layers">
-    <h2>Adding security layers is highly recommended</h2>
-    <p>
-      Certainly when you are handling more than lunch money.
-    </p>
+    <template v-if="$i18n.locale === 'cn'">
+      <h2>强烈建议添加安全层</h2>
+      <p>
+        当然，当你处理的不仅仅是午餐钱的时候。
+      </p>
 
-    <h2>The Base æpp is built for small transactions </h2>
-    <p>
-      It is safe but not meant for high volume transactions or storage.
-    </p>
+      <h2>Base æpp用于小额支付</h2>
+      <p>
+        它是安全的，但不适用于大额交易或存储。
+      </p>
 
-    <h2>Vault-like security </h2>
-    <p>
-      Comes from AirGap (integrated with Base æpp) or a hardware crypto wallet.
-    </p>
+      <h2>建议使用Vault-like security </h2>
+      <p>
+        来自AirGap（与Base æpp完全整合）或者使用硬件钱包。
+      </p>
+    </template>
+    <template v-else>
+      <h2>Adding security layers is highly recommended</h2>
+      <p>
+        Certainly when you are handling more than lunch money.
+      </p>
+
+      <h2>The Base æpp is built for small transactions </h2>
+      <p>
+        It is safe but not meant for high volume transactions or storage.
+      </p>
+
+      <h2>Vault-like security </h2>
+      <p>
+        Comes from AirGap (integrated with Base æpp) or a hardware crypto wallet.
+      </p>
+    </template>
 
     <AeButton
       fill="alternative"
