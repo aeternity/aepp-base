@@ -439,6 +439,12 @@
         "title": "Transaction fee",
         "value": "{value} MICRO AE"
       }
+    },
+
+    "tooltips-modal": {
+      "initial-header": "Learn how to use the Base æpp",
+      "highlighted-region": "highlighted region",
+      "initial-content": "Tap on any {0} to learn more about its functionality."
     }
   },
 

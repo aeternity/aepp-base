@@ -386,6 +386,11 @@
         "title": "Плата за транзакцию",
         "value": "{value} МИКРО AE"
       }
+    },
+    "tooltips-modal": {
+      "initial-header": "Узнайте как использовать Base æpp",
+      "highlighted-region": "подсвеченную область",
+      "initial-content": "Нажмите на любую {0} чтобы узнать больше о её функциональности."
     }
   },
   "components": {
