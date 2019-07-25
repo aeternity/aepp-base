@@ -24,8 +24,18 @@ export const aeternityApps = [{
   path: 'example-aepp.origin.aepps.com',
   icon: blockchainExplorerIcon,
 }, {
+  name: 'Middleware æpp',
+  description: 'Verify interactions in real-time. Search the æternity network by address, block or transaction.',
+  path: 'mdw.aepps.com',
+  icon: blockchainExplorerIcon,
+}, {
   name: 'Naming æpp example',
   description: '',
   path: 'aeternity.com/aepp-naming-example',
+  icon: blockchainExplorerIcon,
+}, {
+  name: 'Faucet æpp',
+  description: '',
+  path: 'faucet.aepps.com',
   icon: blockchainExplorerIcon,
 }]];
