@@ -24,6 +24,7 @@ describe('AppBrowser', () => [{
         $route: { fullPath: `/browser/${inputUrl}` },
         $store: { state: { apps: [] } },
         $globals: { IS_IOS: false },
+        $t: () => 'locale-specific-text',
       },
     });
     expect(wrapper.vm.url).toBe(outputUrl);
