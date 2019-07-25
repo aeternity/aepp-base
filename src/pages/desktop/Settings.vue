@@ -13,7 +13,7 @@
         :subtitle="networkId ? $t('network.settings.title', { id: networkId }) : ''"
       >
         <ListItemCircle slot="icon">
-          <Globe />
+          <Network />
         </ListItemCircle>
         <div
           slot="right"
@@ -70,7 +70,7 @@ import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
-import { Globe, LeftMore } from '../../components/icons';
+import { Network, LeftMore } from '../../components/icons';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
@@ -86,7 +86,7 @@ export default {
     ListItemCircle,
     ListItemSettingsReset,
     ListItemSettingsLanguage,
-    Globe,
+    Network,
     ButtonPlain,
     LeftMore,
     NetworkSwitcher,
