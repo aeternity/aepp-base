@@ -10,7 +10,7 @@
       <ListItem
         :title="$t('network.settings.title')"
         class="network"
-        :subtitle="networkId ? $t('network.settings.title', { id: networkId }) : ''"
+        :subtitle="networkId ? $t('network.settings.subtitle', { id: networkId }) : ''"
       >
         <ListItemCircle slot="icon">
           <Network />
