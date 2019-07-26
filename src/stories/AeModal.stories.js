@@ -1,9 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import Vue from 'vue';
 import Vuex from 'vuex';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import '../store/plugins/ui/veeValidate';
 import AeButton from '../components/AeButton.vue';
 import MigratedBalanceModal from '../components/mobile/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
@@ -11,8 +9,6 @@ import LedgerAddressConfirmModal from '../components/desktop/LedgerAddressConfir
 import LedgerSignTransactionModal from '../components/desktop/LedgerSignTransactionModal.vue';
 import LedgerTransactionFeeModal from '../components/desktop/LedgerTransactionFeeModal.vue';
 import { account } from './mock-data';
-
-Vue.use(Vuex);
 
 storiesOf('AeModal', module)
   .add('MigratedBalanceModal', () => ({
