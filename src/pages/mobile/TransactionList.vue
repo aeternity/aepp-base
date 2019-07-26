@@ -102,7 +102,7 @@ export default {
           )),
         (tx) => {
           const dateString = tx.pending
-            ? this.$t('transfer.transaction.pending')
+            ? this.$t('transfer.transaction.list.pending-transactions')
             : tx.time.toDateString();
           return dateString === new Date().toDateString()
             ? this.$t('transfer.transaction.list.today')
