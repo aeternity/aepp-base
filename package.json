@@ -18,7 +18,7 @@
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/locales/**/*.json'"
   },
   "dependencies": {
     "@aeternity/aepp-sdk": "^4.2.0",
@@ -53,6 +53,7 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
+    "@aeternity/vue-i18n-extract": "^0.1.0",
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-backgrounds": "^5.1.9",
     "@storybook/addon-links": "^5.1.9",
