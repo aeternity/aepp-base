@@ -15,6 +15,7 @@
         <access origin="*.aepps.com" />
         <access origin="*.piwo.app" />
         <access origin="aeternity.com" />
+        <access origin="*.aeternity.com" />
         <access origin="api.backendless.com" />
         <access origin="cors-anywhere.herokuapp.com" />
         <allow-intent href="market:*" />
