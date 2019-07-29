@@ -138,6 +138,8 @@
   "transfer": {
     "title": "Переводы",
     "guide": "<primary>Отправить и получить</primary> Æ",
+    "amount": "Сумма",
+    "fee": "Комиссия",
     "tooltips": [
       {
         "selector": ".transfer .ae-account .ae-identicon",
@@ -172,7 +174,6 @@
       "amount": {
         "guide": "<primary>Новый перевод</primary><br />из <senderAddress />< br />на <recipientAddress />",
         "balance": "Баланс",
-        "amount": "Сумма",
         "max": "Макс.",
         "fee": "Минимальная комиссия за транзакцию"
       },
@@ -221,9 +222,9 @@
         "status": "Статус",
         "owner": "Владелец",
         "hash": "Хэш транзакции",
+        "type": "Тип транзакции",
         "to-explorer": "Просмотреть в проводнике",
         "confirmations": "0 Подтверждений | {n} Подтверждение | {n} Подтверждений",
-        "amount": "Сумма",
         "fee": "Комиссия",
         "total": "Итого"
       }

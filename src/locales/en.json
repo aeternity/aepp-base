@@ -159,6 +159,8 @@
   "transfer": {
     "title": "Transfer",
     "guide": "<primary>Send and receive</primary> Æ",
+    "amount": "Amount",
+    "fee": "Fee",
 
     "tooltips": [{
       "selector": ".transfer .ae-account .ae-identicon",
@@ -193,7 +195,6 @@
       "amount": {
         "guide": "<primary>New Transfer</primary><br />from <senderAddress /><br />to <recipientAddress />",
         "balance": "Balance",
-        "amount": "Amount",
         "max": "Max",
         "fee": "Minimum transaction fee"
       },
@@ -247,9 +248,9 @@
         "status": "Status",
         "owner": "Owner",
         "hash": "Transaction hash",
+        "type": "Transaction type",
         "to-explorer": "View in explorer",
         "confirmations": "0 Confirmations | {n} Confirmation | {n} Confirmations",
-        "amount": "Amount",
         "fee": "Transaction fee",
         "total": "Total"
       }
