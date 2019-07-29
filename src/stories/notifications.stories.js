@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import '../components/icon.scss';
 import Notification from '../components/Notification.vue';
 import NotificationSpendSuccess from '../components/NotificationSpendSuccess.vue';
-import { amount } from './mock-data';
+import { amount, transactionHash } from './mock-data';
 
 const methods = { resolve: action('resolve') };
 
@@ -32,9 +32,9 @@ storiesOf('notifications', module)
     template: `
       <NotificationSpendSuccess
         :amount="amount"
-        transaction-hash="th_9HqNoJafu4sbTgxZBQf91Xm4xD5Rw6FNSxxrqPTr98TCZW71o"
+        transaction-hash="transactionHash"
         :resolve="resolve"
       />`,
-    data: () => ({ amount }),
+    data: () => ({ amount, transactionHash }),
     methods,
   }));
