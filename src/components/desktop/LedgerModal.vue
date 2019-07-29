@@ -1,91 +1,26 @@
 <template>
-  <AeModal
+  <Modal
     class="ledger-modal"
-    @close="$emit('close')"
+    v-bind="$attrs"
+    v-on="$listeners"
   >
-    <header>
-      <img
-        class="logo"
-        src="../../assets/ledger-logo.svg"
-      >
-      {{ title }}
-      <div>
-        <ButtonPlain
-          v-if="closable"
-          @click="$emit('close')"
-        >
-          <Close />
-        </ButtonPlain>
-      </div>
-    </header>
+    <slot
+      v-for="slot in Object.keys($slots)"
+      :slot="slot"
+      :name="slot"
+    />
 
-    <main>
-      <slot />
-    </main>
-
-    <footer v-if="$slots.footer">
-      <slot name="footer" />
-    </footer>
-  </AeModal>
+    <img
+      slot="logo"
+      src="../../assets/ledger-logo.svg"
+    >
+  </Modal>
 </template>
 
 <script>
-import AeModal from '../AeModal.vue';
-import ButtonPlain from '../ButtonPlain.vue';
-import { Close } from '../icons';
+import Modal from './Modal.vue';
 
 export default {
-  components: {
-    AeModal,
-    ButtonPlain,
-    Close,
-  },
-  props: {
-    title: { type: String, required: true },
-    closable: Boolean,
-  },
+  components: { Modal },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
-
-.ledger-modal {
-  /deep/ .modal-plain {
-    display: flex;
-    flex-direction: column;
-    width: rem(560px);
-    height: rem(500px);
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    padding: rem(25px) rem(30px);
-    background-color: $color-neutral-positive-2;
-    @extend %face-sans-base;
-    font-weight: 500;
-
-    * {
-      width: rem(24px);
-    }
-
-    .logo {
-      height: rem(24px);
-    }
-
-    .button-plain .icon {
-      height: rem(22px);
-    }
-  }
-
-  main {
-    flex-grow: 1;
-  }
-
-  footer {
-    margin: rem(25px) rem(30px);
-  }
-}
-</style>
