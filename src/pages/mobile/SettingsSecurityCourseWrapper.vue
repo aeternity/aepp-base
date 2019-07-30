@@ -10,7 +10,7 @@
       <h1>{{ course.title }}</h1>
       <p>
         {{ $t(
-          'security-courses.settings.subtitle',
+          'security-courses.settings.details.subtitle',
           { n: course.idx, count: courses.length },
         ) }}
       </p>

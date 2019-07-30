@@ -540,12 +540,13 @@
       "subtitle": "免责声明",
 
       "list": {
-        "subtitle": "安全教程",
+        "subtitle": "安全教程 {n}",
         "to-base-app": "前往Base aepp",
         "note": "在“设置”中随时可以重新访问教程"
       },
 
       "details": {
+        "subtitle": "Security Course {n} of {count}",
         "to-next": "前往教程{n}",
         "to-list": "教程概述",
 

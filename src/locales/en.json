@@ -540,12 +540,13 @@
       "subtitle": "Disclaimer and information",
 
       "list": {
-        "subtitle": "Security Course {n} of {count}",
+        "subtitle": "Security Course {n}",
         "to-base-app": "Go to Base aepp",
         "note": "Revisit the courses anytime under Settings"
       },
 
       "details": {
+        "subtitle": "Security Course {n} of {count}",
         "to-next": "Go to course {n}",
         "to-list": "To course overview",
 

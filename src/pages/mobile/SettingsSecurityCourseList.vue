@@ -12,10 +12,7 @@
       v-for="(course, idx) in courses"
       :key="idx"
       :title="course.title"
-      :subtitle="$t(
-        'security-courses.settings.list.subtitle',
-        { n: idx + 1, count: courses.length },
-      )"
+      :subtitle="$t('security-courses.settings.list.subtitle', { n: idx + 1 })"
       :to="{ name: course.routeName, params: { firstEnter } }"
       :checked="course.isRead"
       active
