@@ -48,6 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeInput from '../../components/AeInput.vue';
@@ -98,13 +99,13 @@ export default {
         );
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: this.$t('name.new.notification.registered', { name: this.name }),
+          text: i18n.t('name.new.notification.registered', { name: this.name }),
         });
       } catch (e) {
         if (e.message === 'Rejected by user') return;
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: this.$t('name.new.notification.unknown-error', { name: this.name }),
+          text: i18n.t('name.new.notification.unknown-error', { name: this.name }),
         });
         throw e;
       } finally {
