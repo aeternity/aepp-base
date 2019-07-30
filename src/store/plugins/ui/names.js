@@ -78,6 +78,17 @@ export default (store) => {
           }))).flat(),
         );
       },
+      async fetchName({ rootState, commit }, name) {
+        const address = (await rootState.sdk.api.getNameEntryByName(name))
+          .pointers.find(({ key }) => key === 'account_pubkey').id;
+        commit('set', { address, name });
+        return address;
+      },
+      async getAddressByName({ state, dispatch }, name) {
+        return (
+          Object.entries(state.names).find(([, value]) => value.name === name) || {}
+        ).key || dispatch('fetchName', name);
+      },
     },
   });
 

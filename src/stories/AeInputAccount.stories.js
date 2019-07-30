@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { Observable } from 'rxjs';
 import { storiesOf } from '@storybook/vue';
-import AeInputAddress from '../components/AeInputAddress.vue';
+import AeInputAccount from '../components/AeInputAccount.vue';
 import { accounts } from './mock-data';
 
 const store = new Vuex.Store({
@@ -14,9 +14,9 @@ const store = new Vuex.Store({
   },
 });
 
-storiesOf('AeInputAddress', module)
+storiesOf('AeInputAccount', module)
   .add('default', () => ({
-    components: { AeInputAddress },
+    components: { AeInputAccount },
     template: `
       <div>
         <ae-input-address
@@ -30,7 +30,7 @@ storiesOf('AeInputAddress', module)
     data: () => ({ value: '' }),
   }))
   .add('mobile', () => ({
-    components: { AeInputAddress },
+    components: { AeInputAccount },
     template: '<ae-input-address header="Recipient" />',
     store,
   }), {
@@ -41,7 +41,7 @@ storiesOf('AeInputAddress', module)
     },
   })
   .add('desktop', () => ({
-    components: { AeInputAddress },
+    components: { AeInputAccount },
     template: `
       <ae-input-address
         header="To"

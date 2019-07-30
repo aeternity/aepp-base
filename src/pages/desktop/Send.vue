@@ -15,9 +15,9 @@
     </Note>
 
     <form @submit.prevent="send">
-      <AeInputAddress
+      <AeInputAccount
         v-model="accountTo"
-        v-validate="'required|address'"
+        v-validate="'required|account'"
         :error="errors.has('accountTo')"
         :footer="errors.first('accountTo')"
         autofocus
@@ -51,7 +51,7 @@ import { pick } from 'lodash-es';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
-import AeInputAddress from '../../components/AeInputAddress.vue';
+import AeInputAccount from '../../components/AeInputAccount.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
@@ -61,7 +61,7 @@ export default {
     Guide,
     AccountInline,
     Note,
-    AeInputAddress,
+    AeInputAccount,
     AeInputAmountAe,
     AeButton,
   },

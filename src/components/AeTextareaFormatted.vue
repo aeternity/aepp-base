@@ -31,7 +31,7 @@ export default {
     },
   },
   methods: {
-    handleInput() {
+    async handleInput() {
       const textarea = this.$children[0].$el.querySelector('textarea');
       const { selectionStart, value } = textarea;
 
@@ -43,7 +43,7 @@ export default {
         setSelection();
         setTimeout(setSelection, 0);
       }
-      this.$emit('input', this.formatEmitValue(newValue));
+      this.$emit('input', await Promise.resolve(this.formatEmitValue(newValue)));
     },
     getNewCursor(value, cursor) {
       return this.formatDisplayValue(value.slice(0, cursor)).length;

@@ -57,7 +57,8 @@
     "url_http": "该字段不是有效的HTTP(S) URL",
     "air_gap_response_url": "这不是有效的同步代码。",
     "aens_name": "必须以.test结尾",
-    "aens_name_unregistered": "这个名称已被注册"
+    "aens_name_unregistered": "这个名称已被注册",
+    "account": "Invalid AE address or AENS name"
   },
 
   "intro": {
@@ -182,6 +183,7 @@
       "to": {
         "guide": "<primary>新转账</primary><br>从",
         "recipient": "账户",
+        "address-or-name": "ak_ … or name.test",
         "paste": "复制",
         "scan": "扫描",
         "subaccount": "或发送给子账户"
@@ -387,7 +389,7 @@
       "body": "Base æpp钱包的这部分目前为测试版. 我们正在积极改进AENS的功能，很兴奋能与您分享这个过程."
     }, {
       "header": "AENS 如何工作?",
-      "body": "AENS允许用户申请一个名称,并与一个或多个æternity帐户关联. 目前为止,只有以.test结尾的名字可以申请.您成功申请后,它会与您的帐户关联."
+      "body": "AENS允许用户申请一个名称,并与一个或多个æternity帐户关联. 目前为止,只有以.test结尾的名字可以申请.您成功申请后,它会与您的帐户关联. At that point anyone can send tokens by typing the name instead of the account address."
     }],
 
     "list": {
