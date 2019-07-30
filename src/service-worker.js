@@ -28,3 +28,12 @@ self.addEventListener('notificationclick', (event) => {
     await clients.openWindow('/');
   })());
 });
+
+self.addEventListener('message', (event) => {
+  if (event.data.action === 'skipWaiting') {
+    event.waitUntil(self.skipWaiting());
+  }
+});
+
+self.addEventListener('activate', event => event
+  .waitUntil(self.clients.claim()));
