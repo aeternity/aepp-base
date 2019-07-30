@@ -1,12 +1,11 @@
 <template>
   <div class="details-account-access-permission">
-    <DetailsPermission name="Address">
-      This aepp asks for access your public address.
+    <DetailsPermission :name="$t('app.browser.confirm-account-access.address.name')">
+      {{ $t('app.browser.confirm-account-access.address.explanation') }}
     </DetailsPermission>
 
-    <DetailsPermission name="Transactions">
-      {{ appName }} involves an auction.
-      The æpp will prepare a transaction, you are in charge of confirming it.
+    <DetailsPermission :name="$t('app.browser.confirm-account-access.transactions.name')">
+      {{ $t('app.browser.confirm-account-access.transactions.explanation', { appName }) }}
     </DetailsPermission>
   </div>
 </template>

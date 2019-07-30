@@ -5,6 +5,7 @@ import { getDesktopRemoveSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
 } from '../../../lib/airGap';
+import { i18n } from '../../plugins/ui/languages';
 
 const TRANSPORT_QR_CODE = 'qr-code';
 const TRANSPORT_DEEP_LINK = 'deep-link';
@@ -14,7 +15,7 @@ export default {
 
   account: {
     type: 'air-gap',
-    typeVerbose: 'AirGap account',
+    typeVerbose: i18n.t('air-gap.account-name'),
     color: 'alternative',
   },
 
@@ -66,7 +67,7 @@ export default {
       await dispatch('modals/open', { name: 'vaultSign', url }, { root: true });
       return dispatch(
         'modals/open',
-        { title: 'Scan Signed Transaction', name: 'readQrCode' },
+        { title: i18n.t('air-gap.scan-signed-transaction'), name: 'readQrCode' },
         { root: true },
       );
     },

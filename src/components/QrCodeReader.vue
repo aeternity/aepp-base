@@ -18,8 +18,7 @@
       v-if="!cameraAllowed"
       class="permission-denied"
     >
-      Please enable access to your camera for the mobile browser
-      that you are using to open the Base æpp Wallet.
+      {{ $t('remote-connection.settings.new.camera-not-allowed') }}
     </div>
   </div>
 </template>

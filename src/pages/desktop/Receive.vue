@@ -1,11 +1,12 @@
 <template>
   <div class="receive">
-    <Guide size="big">
-      <em>Receive</em> tokens
-    </Guide>
+    <Guide
+      :template="$t('transfer.receive.guide-desktop')"
+      size="big"
+    />
 
     <Note>
-      Let others scan your QR code or share your address
+      {{ $t('transfer.receive.note') }}
     </Note>
 
     <AeCard fill="maximum">
@@ -21,7 +22,7 @@
         :disabled="!account"
         fill="secondary"
       >
-        Copy address
+        {{ $t('transfer.receive.copy') }}
       </AeButton>
 
       <AeButton
@@ -30,7 +31,7 @@
         class="connect-an-account"
         @click="toggleSidebar"
       >
-        Connect an account first
+        {{ $t('transfer.receive.connect-account') }}
       </AeButton>
     </AeCard>
   </div>
@@ -78,7 +79,7 @@ export default {
     }
 
     .ae-qr-code {
-      width: rem(260px);
+      width: rem(216px);
       margin-bottom: rem(50px);
 
       &.inactive {

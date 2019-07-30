@@ -1,12 +1,12 @@
 <template>
   <div class="onboarding-page">
     <img src="../../assets/onboarding/subaccounts.svg">
-    <Guide>
-      <em>Create subaccounts</em>
-      in&nbsp;seconds
-      <div class="note">
-        Create dedicated accounts for
-        spending, storage and to fuel æpps.
+    <Guide :template="$t('onboarding.subaccounts.guide')">
+      <div
+        slot="note"
+        class="note"
+      >
+        {{ $t('onboarding.subaccounts.note') }}
       </div>
     </Guide>
   </div>

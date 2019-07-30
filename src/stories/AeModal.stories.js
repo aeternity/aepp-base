@@ -1,18 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import Vue from 'vue';
 import Vuex from 'vuex';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import '../store/plugins/ui/veeValidate';
 import AeButton from '../components/AeButton.vue';
 import MigratedBalanceModal from '../components/mobile/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
 import LedgerAddressConfirmModal from '../components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerSignTransactionModal from '../components/desktop/LedgerSignTransactionModal.vue';
 import LedgerTransactionFeeModal from '../components/desktop/LedgerTransactionFeeModal.vue';
-import { account } from './mock-data';
-
-Vue.use(Vuex);
+import ModalSpendSuccess from '../components/desktop/ModalSpendSuccess.vue';
+import { account, amount, transactionHash } from './mock-data';
 
 storiesOf('AeModal', module)
   .add('MigratedBalanceModal', () => ({
@@ -65,5 +62,26 @@ storiesOf('AeModal', module)
     data: () => ({
       resolve: action('resolve'),
       reject: action('reject'),
+    }),
+  }))
+  .add('ModalSpendSuccess', () => ({
+    components: { ModalSpendSuccess },
+    template: `
+      <ModalSpendSuccess
+        :amount="amount"
+        transaction-hash="transactionHash"
+        :resolve="resolve"
+      />`,
+    data: () => ({
+      amount,
+      transactionHash,
+      resolve: action('resolve'),
+    }),
+    store: new Vuex.Store({
+      getters: {
+        currentNetwork: () => ({
+          explorerUrl: 'http://example.com',
+        }),
+      },
     }),
   }));

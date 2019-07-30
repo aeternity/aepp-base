@@ -6,10 +6,7 @@
     header-fill="neutral"
   >
     <template slot="header">
-      <Guide>
-        <em>Share your address</em>
-        with sender
-      </Guide>
+      <Guide :template="$t('transfer.receive.guide')" />
 
       <AeAccountReverse v-bind="activeAccount" />
     </template>
@@ -17,8 +14,8 @@
     <ListItem
       v-copy-on-click="activeAccount.address"
       class="copy"
-      title="Copy address"
-      subtitle="Save to clipboard"
+      :title="$t('transfer.receive.copy')"
+      :subtitle="$t('transfer.receive.copy-subtitle')"
       border-dark
     >
       <img
@@ -31,8 +28,8 @@
     </ListItem>
     <ListItem
       v-if="sharingSupported"
-      title="Share address"
-      subtitle="With others"
+      :title="$t('transfer.receive.share')"
+      :subtitle="$t('transfer.receive.share-subtitle')"
       border-dark
       @click="share"
     >

@@ -4,13 +4,13 @@
     fill="neutral"
   >
     <Guide>
-      <em>{{ $t('settings.label') }}</em>
+      <em>{{ $t('settings.title') }}</em>
     </Guide>
     <AeCard fill="maximum">
       <ListItem
         :to="{ name: 'settings-network' }"
         :subtitle="networkName"
-        :title="$t('settings.network')"
+        :title="$t('network.settings.title')"
         class="network"
       >
         <ListItemCircle slot="icon">
@@ -20,8 +20,8 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-remote-connection' }"
-        :title="$t('settings.remote-connections')"
-        :subtitle="$tc('settings.remote-connections-count', remoteConnectionsCount)"
+        :title="$t('remote-connection.settings.title')"
+        :subtitle="$tc('remote-connection.settings.count', remoteConnectionsCount)"
         class="remote-connection"
       >
         <ListItemCircle slot="icon">
@@ -31,8 +31,8 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-app-list' }"
-        :title="$t('settings.app-permissions')"
-        :subtitle="$tc('settings.app-permissions-count', appsAccountAccessCount)"
+        :title="$t('app.settings.title')"
+        :subtitle="$tc('app.settings.count', appsAccountAccessCount)"
         class="app-list"
       >
         <ListItemCircle slot="icon">
@@ -42,8 +42,8 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-security-course-list' }"
-        :title="$t('settings.security-courses')"
-        :subtitle="$t('settings.security-courses-subtitle')"
+        :title="$t('security-courses.settings.title')"
+        :subtitle="$t('security-courses.settings.subtitle')"
         class="courses"
       >
         <ListItemCircle slot="icon">
@@ -53,8 +53,8 @@
       </ListItem>
       <ListItem
         :to="{ name: mnemonic ? 'settings-mnemonic' : 'settings-mnemonic-deleted' }"
-        :title="$t('settings.mnemonic')"
-        :subtitle="$t('settings.mnemonic-subtitle')"
+        :title="$t('settings.mnemonic.title')"
+        :subtitle="$t('settings.mnemonic.subtitle')"
         class="mnemonic"
       >
         <MnemonicBackupWarning slot="icon">
@@ -66,8 +66,8 @@
       </ListItem>
       <ListItem
         :to="{ name: 'settings-password' }"
-        :title="$t('settings.password')"
-        :subtitle="$t('settings.password-subtitle')"
+        :title="$t('settings.password.title')"
+        :subtitle="$t('settings.password.subtitle')"
         class="password"
       >
         <ListItemCircle slot="icon">
@@ -81,7 +81,7 @@
     </AeCard>
 
     <template v-if="removableAccounts.length">
-      <h2>{{ $t('settings.wallets') }}</h2>
+      <h2>{{ $t('settings.account-remove.title') }}</h2>
       <AeCard fill="maximum">
         <ListItemAccount
           v-for="account in removableAccounts"
@@ -110,10 +110,7 @@
       </ListItem>
       <ListItemSettingsReset />
     </AeCard>
-
-    <div class="version">
-      {{ $t('settings.version') }} {{ version }}
-    </div>
+    <SettingsVersion />
   </MobilePage>
 </template>
 
@@ -129,6 +126,7 @@ import ListItemAccount from '../../components/ListItemAccount.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
+import SettingsVersion from '../../components/SettingsVersion.vue';
 import {
   Network, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
 } from '../../components/icons';
@@ -144,6 +142,7 @@ export default {
     ListItemSettingsReset,
     ListItemSettingsLanguage,
     MnemonicBackupWarning,
+    SettingsVersion,
     Network,
     LeftMore,
     Device,
@@ -153,9 +152,6 @@ export default {
     LockOpen,
     Shield,
   },
-  data: () => ({
-    version: process.env.npm_package_version,
-  }),
   computed: mapState({
     networkName: (state, { currentNetwork }) => currentNetwork.name,
     remoteConnectionsCount: ({ mobile }) => Object
@@ -173,7 +169,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
 @import '../../styles/variables/colors.scss';
 
 .settings {
@@ -202,13 +197,6 @@ export default {
       transform: rotate(90deg);
       background-color: $color-secondary;
     }
-  }
-
-  .version {
-    margin: rem(24px) 0;
-    @extend %face-sans-s;
-    color: $color-neutral-negative-1;
-    text-align: center;
   }
 }
 </style>

@@ -18,13 +18,13 @@
 
     <div class="tabs">
       <ButtonPlain :to="{ name: 'transaction-list' }">
-        All
+        {{ $t('transfer.transaction.list.all') }}
       </ButtonPlain>
       <ButtonPlain :to="{ name: 'transaction-list', params: { direction: 'incoming' } }">
-        Incoming
+        {{ $t('transfer.transaction.list.incoming') }}
       </ButtonPlain>
       <ButtonPlain :to="{ name: 'transaction-list', params: { direction: 'outgoing' } }">
-        Outgoing
+        {{ $t('transfer.transaction.list.outgoing') }}
       </ButtonPlain>
     </div>
 
@@ -50,10 +50,10 @@
       class="no-transactions"
     >
       {{ transactions.status === 'error'
-        ? 'An error occurred during transactions loading.'
+        ? $t('transfer.transaction.list.error')
         : transactions.list.length
-          ? 'All transactions are loaded.'
-          : 'There are no transaction associated with this account.' }}
+          ? $t('transfer.transaction.list.loaded')
+          : $t('transfer.transaction.list.no-transactions') }}
     </div>
   </MobilePage>
 </template>
@@ -101,8 +101,12 @@ export default {
             || this.direction === ''
           )),
         (tx) => {
-          const dateString = tx.pending ? 'Pending transactions' : tx.time.toDateString();
-          return dateString === new Date().toDateString() ? 'Today' : dateString;
+          const dateString = tx.pending
+            ? this.$t('transfer.transaction.list.pending-transactions')
+            : tx.time.toDateString();
+          return dateString === new Date().toDateString()
+            ? this.$t('transfer.transaction.list.today')
+            : dateString;
         },
       );
     },

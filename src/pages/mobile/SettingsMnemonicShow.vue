@@ -5,25 +5,19 @@
     :right-button-to="{ name: 'settings' }"
     right-button-icon-name="close"
     class="settings-mnemonic-show"
-    title="Backup Recovery Phrase"
+    :title="$t('settings.mnemonic.title')"
     hide-tab-bar
   >
-    <Guide>
+    <Guide :template="$t('settings.mnemonic.show.guide')">
       <AeFraction
         slot="icon"
         numerator="2"
         denominator="4"
       />
-      <p>
-        <em>Carefully keep this phrase <img :src="keyEmoji"> safe!</em>
-      </p>
-      <p>
-        Write these 12 words
-        down and keep them
-        <strong>in a safe place</strong>. You need
-        them to <mark>recover</mark> your
-        account in the future.
-      </p>
+      <img
+        slot="keyEmoji"
+        :src="keyEmoji"
+      >
     </Guide>
     <p class="mnemonic">
       {{ mnemonic }}
@@ -35,7 +29,7 @@
       :to="readingEnded ? { name: 'settings-mnemonic-confirm' } : undefined"
       @click="nextClickHandler"
     >
-      Next
+      {{ $t('next') }}
     </AeButton>
 
     <div
@@ -70,10 +64,7 @@ export default {
       this.readingPaused = true;
       await this.$store.dispatch('modals/open', {
         name: 'alert',
-        text: `
-          That was too fast!
-          Please make sure you write down the recovery phrase on paper... and keep it in a safe place.
-        `,
+        text: this.$t('settings.mnemonic.show.alert'),
       });
       this.readingPaused = false;
     },

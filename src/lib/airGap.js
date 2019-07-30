@@ -39,3 +39,5 @@ export const generateSignRequestUrl = (networkId, transaction, publicKey) => {
   url.searchParams.set('d', Crypto.encodeBase58Check(Crypto.encode(rlp)));
   return url.toString();
 };
+
+export const INSTALL_URL = 'https://airgap.it/';

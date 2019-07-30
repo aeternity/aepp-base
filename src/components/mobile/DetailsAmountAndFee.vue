@@ -2,7 +2,7 @@
   <DetailsItem class="details-amount-and-fee">
     <DetailsRow>
       <span class="name">
-        Amount
+        {{ $t('transfer.transaction.details.amount') }}
       </span>
       <span class="value">
         {{ amount | prefixedAmount }} AE
@@ -11,7 +11,7 @@
 
     <DetailsRow>
       <span class="name">
-        Transaction Fee
+        {{ $t('transfer.transaction.details.fee') }}
       </span>
       <span class="value">
         {{ fee | prefixedAmount }} AE
@@ -20,7 +20,7 @@
 
     <DetailsRow class="transfer-total">
       <span class="name">
-        Total
+        {{ $t('transfer.transaction.details.total') }}
       </span>
       <span class="value">
         {{ amount.plus(fee) | prefixedAmount }}<small> AE</small>

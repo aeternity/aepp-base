@@ -1,19 +1,19 @@
 <template>
   <div class="settings">
     <Guide size="big">
-      <em>{{ $t('settings.label') }}</em>
+      <em>{{ $t('settings.title') }}</em>
     </Guide>
 
     <AeCard fill="maximum">
       <ListItemSettingsReset />
 
       <ListItem
-        title="Network"
+        :title="$t('network.settings.title')"
         class="network"
-        :subtitle="networkId ? `Network ID ${networkId}` : ''"
+        :subtitle="networkId ? $t('network.settings.subtitle', { id: networkId }) : ''"
       >
         <ListItemCircle slot="icon">
-          <Globe />
+          <Network />
         </ListItemCircle>
         <div
           slot="right"
@@ -32,6 +32,7 @@
         </ButtonPlain>
       </ListItemSettingsLanguage>
     </AeCard>
+    <SettingsVersion />
 
     <AePopover
       :anchor="networkMode ? $refs.networkIcon : null"
@@ -69,11 +70,12 @@ import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
-import { Globe, LeftMore } from '../../components/icons';
+import { Network, LeftMore } from '../../components/icons';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
 import LanguageSwitcher from '../../components/LanguageSwitcher.vue';
+import SettingsVersion from '../../components/SettingsVersion.vue';
 
 export default {
   components: {
@@ -84,12 +86,13 @@ export default {
     ListItemCircle,
     ListItemSettingsReset,
     ListItemSettingsLanguage,
-    Globe,
+    Network,
     ButtonPlain,
     LeftMore,
     NetworkSwitcher,
     NetworkAdd,
     LanguageSwitcher,
+    SettingsVersion,
   },
   data: () => ({
     popoverOrigin: {

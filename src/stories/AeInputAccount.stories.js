@@ -1,17 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueRx from 'vue-rx';
 import { Observable } from 'rxjs';
 import { storiesOf } from '@storybook/vue';
-import AeInputAddress from '../components/AeInputAddress.vue';
+import AeInputAccount from '../components/AeInputAccount.vue';
 import { accounts } from './mock-data';
 
-Vue.use(Vuex);
-Vue.use(VueRx);
-Vue.prototype.$globals = {
-  IS_MOBILE_DEVICE: true,
-};
 const store = new Vuex.Store({
   state: {
     observables: {
@@ -20,9 +14,9 @@ const store = new Vuex.Store({
   },
 });
 
-storiesOf('AeInputAddress', module)
+storiesOf('AeInputAccount', module)
   .add('default', () => ({
-    components: { AeInputAddress },
+    components: { AeInputAccount },
     template: `
       <div>
         <ae-input-address
@@ -36,7 +30,7 @@ storiesOf('AeInputAddress', module)
     data: () => ({ value: '' }),
   }))
   .add('mobile', () => ({
-    components: { AeInputAddress },
+    components: { AeInputAccount },
     template: '<ae-input-address header="Recipient" />',
     store,
   }), {
@@ -47,7 +41,7 @@ storiesOf('AeInputAddress', module)
     },
   })
   .add('desktop', () => ({
-    components: { AeInputAddress },
+    components: { AeInputAccount },
     template: `
       <ae-input-address
         header="To"

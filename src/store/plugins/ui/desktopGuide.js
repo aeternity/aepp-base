@@ -1,3 +1,5 @@
+import { i18n } from './languages';
+
 export default (store) => {
   store.watch(
     (state, { loggedIn }) => loggedIn,
@@ -5,10 +7,7 @@ export default (store) => {
       if (!loggedIn || !store.state.desktop.showGuideOnStartup) return;
       await store.dispatch('modals/open', {
         name: 'alert',
-        text: `
-          The Base æpp can currently work only when opened in a single browser tab.
-          Please close any additional instances (tabs) running the Base æpp.
-        `,
+        text: i18n.t('guide-desktop'),
       });
       store.commit('markGuideAsRead');
     },

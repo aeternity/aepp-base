@@ -6,14 +6,17 @@ export default (store) => {
       registered(registration) {
         store.commit('setServiceWorkerRegistration', registration);
       },
-      updated() {
-        store.dispatch('modals/open', {
-          name: 'notification',
-          text: `A new version is available. ${process.env.IS_PWA
-            ? 'Please restart the Base æpp'
-            : 'Please close all Base æpp tabs and navigate to the Base æpp again to restart.'}`,
-        });
+      async updated(registration) {
+        if (await store.dispatch('modals/open', { name: 'shouldApplyUpdate' })) {
+          registration.waiting.postMessage({ action: 'skipWaiting' });
+        }
       },
     });
+
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.location.reload();
+      });
+    }
   }
 };

@@ -2,7 +2,7 @@
   <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
-    title="Remote connections"
+    :title="$t('remote-connection.settings.title')"
     header-fill="light"
     fill="neutral"
   >
@@ -11,7 +11,9 @@
         v-for="follower in followers"
         :key="follower.id"
         :title="follower.name"
-        :subtitle="follower.connected ? 'Connected' : `Disconnected at ${follower.disconnectedAt}`"
+        :subtitle="follower.connected
+          ? $t('remote-connection.settings.list.connected')
+          : $t('remote-connection.settings.list.disconnected', { date: follower.disconnectedAt })"
         inactive
       >
         <AeButton
@@ -21,7 +23,7 @@
           plain
           @click="removeFollower(follower.id)"
         >
-          revoke
+          {{ $t('remote-connection.settings.list.revoke') }}
         </AeButton>
       </ListItem>
     </AeCard>

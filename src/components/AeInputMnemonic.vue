@@ -1,7 +1,7 @@
 <template>
   <AeTextareaFormatted
     class="ae-input-mnemonic"
-    header="Recovery phrase"
+    :header="$t('recover.mnemonic')"
     rows="3"
     submit-on-enter
     :format-display-value="formatDisplayMnemonic"

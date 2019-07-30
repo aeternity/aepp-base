@@ -5,9 +5,14 @@
     :right-button-to="{ name: 'name-list' }"
   >
     <template slot="header">
-      <Guide fill="neutral">
-        <em>Claim a name</em> for
-        <AccountInline :address="active.address" />
+      <Guide
+        :template="$t('name.new.guide')"
+        fill="neutral"
+      >
+        <AccountInline
+          slot="inlineAccount"
+          :address="active.address"
+        />
       </Guide>
 
       <form
@@ -20,11 +25,11 @@
           autofocus
           autocomplete="off"
           :error="errors.has('name') || error"
-          :footer="errors.first('name') || (error ? 'Unknown error' : '')"
+          :footer="errors.first('name') || (error ? t('name.new.unknown-error') : '')"
           :disabled="busy"
           name="name"
-          header="Name"
-          placeholder="Name.test"
+          :header="$t('name.new.name')"
+          :placeholder="$t('name.new.name-placeholder')"
           maxlength="16"
           @input="error = false"
         />
@@ -36,13 +41,14 @@
       :form="_uid"
       :disabled="busy || errors.has('name') || error"
     >
-      Register
+      {{ $t('name.new.register') }}
     </AeButton>
   </MobilePage>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeInput from '../../components/AeInput.vue';
@@ -73,7 +79,7 @@ export default {
 
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: `Claim for ${this.name} name was successfully sent`,
+          text: this.$t('name.new.notification.claim-sent', { name: this.name }),
         });
         this.$router.back();
       } catch (e) {
@@ -93,13 +99,13 @@ export default {
         );
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: `${this.name} was successfully registered`,
+          text: i18n.t('name.new.notification.registered', { name: this.name }),
         });
       } catch (e) {
         if (e.message === 'Rejected by user') return;
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: `${this.name} was not registered for unknown reason`,
+          text: i18n.t('name.new.notification.unknown-error', { name: this.name }),
         });
         throw e;
       } finally {

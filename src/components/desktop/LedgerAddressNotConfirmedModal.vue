@@ -1,14 +1,12 @@
 <template>
   <LedgerModal
-    title="Address not confirmed"
+    :title="$t('ledger.modal.address-not-confirmed.title')"
     class="ledger-address-not-confirmed"
   >
     <LedgerModalNanoS />
 
     <LedgerModalNote fill="dark">
-      The Ledger cannot be used without address confirmation.
-      Address mismatch can happen due to malware software.
-      Please contact support to resolve this.
+      {{ $t('ledger.modal.address-not-confirmed.note') }}
     </LedgerModalNote>
 
     <AeButton
@@ -17,7 +15,7 @@
       plain
       @click="resolve"
     >
-      Close
+      {{ $t('close') }}
     </AeButton>
   </LedgerModal>
 </template>

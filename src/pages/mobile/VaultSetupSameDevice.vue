@@ -8,21 +8,21 @@
     :right-button-to="{ name: 'apps' }"
   >
     <template slot="title">
-      AirGap Setup
+      {{ $t('air-gap.setup.title') }}
       <AeFraction
         numerator="2"
         denominator="3"
       />
     </template>
-    <Guide fill="alternative">
+    <Guide
+      :template="$t('air-gap.setup.same-device.install.guide')"
+      fill="alternative"
+    >
       <AeFraction
         slot="icon"
         numerator="2"
         denominator="3"
       />
-      <em>Install or open AirGap on this smartphone</em>
-      <br>Open the AirGap Vault app, open the account you would like to sync,
-      tap on the three dots in the top right corner, and select Copy Sync Code.
     </Guide>
 
     <template slot="footer">
@@ -30,13 +30,13 @@
         fill="alternative"
         :to="{ name: 'vault-setup-same-device-sync' }"
       >
-        Next
+        {{ $t('next') }}
       </AeButton>
       <AeButton
-        to="https://itunes.apple.com/us/app/airgap-vault-secure-secrets/id1417126841?l=de&ls=1&mt=8"
+        :to="INSTALL_URL"
         plain
       >
-        Install AirGap Vault
+        {{ $t('air-gap.setup.same-device.install.button') }}
       </AeButton>
     </template>
   </MobilePage>
@@ -47,11 +47,13 @@ import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
+import { INSTALL_URL } from '../../lib/airGap';
 
 export default {
   components: {
     MobilePage, AeButton, Guide, AeFraction,
   },
+  data: () => ({ INSTALL_URL }),
 };
 </script>
 

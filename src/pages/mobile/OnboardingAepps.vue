@@ -2,10 +2,9 @@
   <div class="onboarding-page aepps">
     <img src="../../assets/onboarding/aepps.svg">
     <Guide>
-      <em>Explore æpps</em>
+      <em>{{ $t('onboarding.aepps.guide') }}</em>
       <div class="note">
-        Bring the power of æternity
-        blockchain to your daily life.
+        {{ $t('onboarding.aepps.note') }}
       </div>
     </Guide>
   </div>

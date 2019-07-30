@@ -4,25 +4,24 @@
     fill="primary"
     hide-tab-bar
   >
-    <Guide fill="neutral">
-      <em>Base æpp</em>
-      <br>æternity blockchain
-      <br>power in your hands.
-    </Guide>
+    <Guide
+      :template="$t('intro.guide')"
+      fill="neutral"
+    />
 
     <template slot="footer">
       <AeButton
         :to="{ name: encryptedWallet ? 'login' : 'recover' }"
         fill="secondary"
       >
-        {{ encryptedWallet ? 'Login' : 'Recover' }}
+        {{ encryptedWallet ? $t('intro.login') : $t('intro.recover') }}
       </AeButton>
       <AeButton
         fill="light"
         plain
         @click="() => createWallet()"
       >
-        Create New Account
+        {{ $t('intro.create-account') }}
       </AeButton>
       <hr>
       <AeButton
@@ -30,7 +29,7 @@
         fill="light"
         plain
       >
-        See how it works
+        {{ $t('intro.onboarding') }}
       </AeButton>
     </template>
   </MobilePage>

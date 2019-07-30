@@ -1,10 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import '../components/icon.scss';
 import Notification from '../components/Notification.vue';
-import NotificationSpend from '../components/NotificationSpend.vue';
-import { amount } from './mock-data';
+import NotificationSpendSuccess from '../components/NotificationSpendSuccess.vue';
+import { amount, transactionHash } from './mock-data';
 
 const methods = { resolve: action('resolve') };
 
@@ -27,14 +26,14 @@ storiesOf('notifications', module)
       />`,
     methods,
   }))
-  .add('NotificationSpend', () => ({
-    components: { NotificationSpend },
+  .add('NotificationSpendSuccess', () => ({
+    components: { NotificationSpendSuccess },
     template: `
-      <NotificationSpend
+      <NotificationSpendSuccess
         :amount="amount"
-        transaction-hash="th_9HqNoJafu4sbTgxZBQf91Xm4xD5Rw6FNSxxrqPTr98TCZW71o"
+        transaction-hash="transactionHash"
         :resolve="resolve"
       />`,
-    data: () => ({ amount }),
+    data: () => ({ amount, transactionHash }),
     methods,
   }));

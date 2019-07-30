@@ -1,26 +1,660 @@
 {
+  "cancel": "Cancel",
+  "close": "Close",
+  "confirm": "Confirm",
+  "next": "Next",
+  "ok": "OK",
+  "deny": "Deny",
+  "allow": "Allow",
+  "add-to-home-screen": "Please add this app to home screen.",
+  "guide-desktop": "The Base æpp can currently work only when opened in a single browser tab. If you have any additional instances (tabs) of the Base æpp open, please close them.",
+
+  "header": {
+    "title": "Base web",
+    "connect-account": "Connect an account",
+    "connect-account-with": "With Base æpp or Ledger"
+  },
+
+  "sidebar": {
+    "connect-account": "Connect an account to start",
+    "connected-account": "| Your connected account | Your connected accounts",
+    "base-app": "Base æpp",
+    "ledger": "Ledger"
+  },
+
+  "not-found": {
+    "note": "It looks like the page you are looking for was not found.",
+    "to-home": "Go home"
+  },
+
+  "update-available": {
+    "title": "A new version is available.",
+    "restart": "Restart the Base æpp"
+  },
+
+  "store-load-error": {
+    "note": "Base app failed to load its state.",
+    "reset": "Reset All Data"
+  },
+
+  "account-switcher": {
+    "create-account": "New subaccount",
+    "create-account-desktop": "Create a new account",
+    "create-vault": "Create a vault for AirGap"
+  },
+
+  "validation": {
+    "confirmed": "Passwords don't match, try again",
+    "decimal": "This field must be numeric and may contain {0} decimal points",
+    "excluded": "This field must be a valid value.",
+    "min": "This field must be at least {0} characters",
+    "required": "This field is required",
+    "address": "Invalid AE Address",
+    "max_value": "This field must be {0} or less",
+    "min_value": "This field must be {0} or more",
+    "min_value_exclusive": "This field must be more than {0}",
+    "mnemonic": "Invalid recovery phrase",
+    "url_http": "This field is not a valid HTTP(S) URL",
+    "air_gap_response_url": "This is not a valid sync code.",
+    "aens_name": "This field must ends with .test",
+    "aens_name_unregistered": "This name is already registered",
+    "account": "Invalid AE address or AENS name"
+  },
+
+  "intro": {
+    "guide": "<primary>Base æpp</primary><br />æternity blockchain<br />power in your hands.",
+    "login": "Login",
+    "recover": "Recover",
+    "create-account": "Create New Account",
+    "onboarding": "See how it works"
+  },
+
+  "onboarding": {
+    "skip": "Skip",
+    "start": "Start",
+
+    "welcome": {
+      "guide": "<primary>Base aepp</primary><br />æternity begins here <note />",
+      "note": "Send & receive AE, explore æpps and manage accounts."
+    },
+
+    "send": {
+      "guide": "<primary>Send &amp; receive AE</primary> effortlessly <note />",
+      "note": "Transfer to accounts and subaccounts. Receive by sharing your address."
+    },
+
+    "aepps": {
+      "guide": "Explore æpps",
+      "note": "Bring the power of æternity blockchain to your daily life."
+    },
+
+    "subaccounts": {
+      "guide": "<primary>Create subaccounts</primary> in\u00A0seconds <note />",
+      "note": "Create dedicated accounts for spending, storage and to fuel æpps."
+    }
+  },
+
+  "recover": {
+    "title": "Recover Account",
+    "guide": "Enter <dizzySymbolEmoji /> your <alternative>recovery phrase</alternative>. From the <secondary>backup</secondary> you made.",
+    "mnemonic": "Recovery phrase",
+    "button": "Recover account"
+  },
+
+  "login": {
+    "guide": "<primary>Hello!</primary> <wavingHandEmoji /> <secondary>Log in</secondary> to æternity with your password",
+    "try-again-or": "Try again or",
+    "button": "Log in"
+  },
+
+  "app": {
+    "title": "æpps",
+
+    "intro": [{
+      "header": "Welcome to the æpps browser!",
+      "body": "This part of the Base æpp Wallet is in beta. It is safe to use, but we are in the process of refining the experience."
+    }, {
+      "header": "What is an æpp?",
+      "body": "æpps are decentralized applications powered by the æternity blockchain."
+    }],
+
+    "list": {
+      "featured-guide": "<primary>Featured æpps</primary>",
+      "browse-guide": "Browse æpps",
+      "bookmarked-guide": "My æpps",
+      "guide": "æpps <primary>browser</primary> (beta)",
+      "note": "æpps running on the æternity blockchain will be added below."
+    },
+
+    "url-form-placeholder": "Enter æpp URL",
+
+    "browser": {
+      "refresh": "Refresh",
+
+      "confirm-account-access": {
+        "guide": "<app /><br />requests access to<br /><account />",
+        "address": {
+          "name": "Address",
+          "explanation": "This aepp asks for access your public address."
+        },
+        "transactions": {
+          "name": "Transactions",
+          "explanation": "{appName} involves an auction. The æpp will prepare a transaction, you are in charge of confirming it."
+        }
+      }
+    },
+
+    "settings": {
+      "title": "Aepp account access",
+      "count": "No aepps have account access | {n} aepp have account access | {n} aepps have account access",
+
+      "list": {
+        "note": "Manage which æpps can access your (sub)accounts",
+        "subtitle": "| can access {n} account | can access {n} accounts"
+      }
+    }
+  },
+
+  "transfer": {
+    "title": "Transfer",
+    "guide": "<primary>Send and receive</primary> Æ",
+
+    "tooltips": [{
+      "selector": ".transfer .ae-account .ae-identicon",
+      "header": "Identicon",
+      "content": "Recognize which account is active. Accounts & subaccounts have unique identicons."
+    }, {
+      "selector": ".transfer .tab-bar .button-plain",
+      "header": "æpps",
+      "content": "Explore æpps powered by the æternity blockchain."
+    }, {
+      "selector": ".transfer .tab-bar .button-plain:nth-child(3)",
+      "header": "Account Switcher",
+      "content": "Tap to switch accounts or create subaccounts."
+    }],
+
+    "send": {
+      "title": "Send",
+      "subtitle": "Transfer funds",
+      "guide": "<primary>Send</primary> AE from<br /><senderAddress />",
+      "note": "Paste the recipient address below, scan QR code or send to subaccounts.",
+      "transfer": "Transfer",
+
+      "to": {
+        "guide": "<primary>New Transfer</primary><br />from <account />",
+        "recipient": "Recipient",
+        "address-or-name": "ak_ … or name.test",
+        "paste": "Paste",
+        "scan": "Scan",
+        "subaccount": "Or send to subaccount"
+      },
+
+      "amount": {
+        "guide": "<primary>New Transfer</primary><br />from <senderAddress /><br />to <recipientAddress />",
+        "balance": "Balance",
+        "amount": "Amount",
+        "max": "Max",
+        "fee": "Minimum transaction fee"
+      },
+
+      "resolved": {
+        "title": "Transfer completed",
+        "note": "Transaction broadcast successfully!",
+        "subtitle": "You've sent {amount} AE",
+        "to-history": "View in history",
+        "to-explorer": "View on explorer",
+        "copy": "Copy tx hash"
+      }
+    },
+
+    "receive": {
+      "title": "Receive",
+      "subtitle": "Share your address",
+      "guide": "<primary>Share your address</primary> with sender",
+      "guide-desktop": "<primary>Receive</primary> tokens",
+      "note": "Let others scan your QR code or share your address",
+      "copy": "Copy address",
+      "copy-subtitle": "Save to clipboard",
+      "share": "Share address",
+      "share-subtitle": "With others",
+      "connect-account": "Connect an account first"
+    },
+
+    "transaction": {
+      "title": "Transactions",
+      "subtitle": "Show transaction history",
+      "pending": "Pending",
+
+      "list": {
+        "all": "All",
+        "incoming": "Incoming",
+        "outgoing": "Outgoing",
+        "error": "An error occurred during transactions loading.",
+        "loaded": "All transactions are loaded.",
+        "no-transactions": "There are no transaction associated with this account.",
+        "pending-transactions": "Pending transactions",
+        "today": "Today"
+      },
+
+      "details": {
+        "title": "Transaction details",
+        "received": "You received",
+        "sent": "You sent",
+        "from": "From",
+        "to": "To",
+        "date": "Date",
+        "status": "Status",
+        "owner": "Owner",
+        "hash": "Transaction hash",
+        "to-explorer": "View in explorer",
+        "confirmations": "0 Confirmations | {n} Confirmation | {n} Confirmations",
+        "amount": "Amount",
+        "fee": "Transaction fee",
+        "total": "Total"
+      }
+    },
+
+    "migrated-balance": {
+      "title": "Tokens in migration",
+      "subtitle": "Not shown as balance above",
+      "note": "are in migration now. They will be available after the next hardfork.",
+      "to-migrations": "See migrations"
+    }
+  },
+
+  "hd-wallet": {
+    "account-name": "Account"
+  },
+
+  "air-gap": {
+    "account-name": "AirGap account",
+    "scan-signed-transaction": "Scan Signed Transaction",
+
+    "setup": {
+      "title": "AirGap Setup",
+      "method-guide": "<primary>Robust security with AirGap Vault</primary><br />We recommend using a secondary offline device.",
+
+      "another-device": {
+        "title": "Maximum (recommended)",
+        "subtitle": "Install AirGap on another device",
+
+        "install": {
+          "guide": "<primary>Install AirGap on another phone</primary><br />Search for AirGap.it in the store or scan this QR code.",
+          "link": "Link"
+        },
+
+        "guide": {
+          "steps": [
+            "<primary>Open AirGap on the 2nd device</primary><br />Turn off the internet connection before opening AirGap.",
+            "<primary>Create secret key</primary><br />No internet connection means maximum security for the key.",
+            "<primary>Write it down in the right order</primary><br />You will need it for recovery.",
+            "<primary>Add an æternity wallet</primary><br />Tap wallet, add wallet and choose æternity.",
+            "<primary>Link your æternity wallet</primary><br />Finish by linking your vault to you æternity address."
+          ],
+          "link": "Link Vault"
+        }
+      },
+
+      "same-device": {
+        "title": "Normal",
+        "subtitle": "Install AirGap on this device",
+
+        "install": {
+          "guide": "<primary>Install or open AirGap on this smartphone</primary><br />Open the AirGap Vault app, open the account you would like to sync, tap on the three dots in the top right corner, and select Copy Sync Code.",
+          "button": "Install AirGap Vault"
+        },
+
+        "sync": {
+          "guide": "<primary>Vault sync on the way</primary><br />Paste the sync code below.",
+          "sync-code": "AirGap Sync Code",
+          "button": "Sync"
+        }
+      },
+
+      "completed": {
+        "guide": "<primary>Vault sync completed</primary><br />Find your AirGap Vault under your accounts.",
+        "finish": "Finish"
+      }
+    },
+
+    "modal": {
+      "sign": {
+        "guide": "<primary>Scan with AirGap Vault app</primary> to sign the transaction",
+        "done": "Done"
+      }
+    }
+  },
+
+  "ledger": {
+    "account-name": "Ledger account",
+    "mobile-not-supported": "Signing on mobile using Ledger is not supported now. Please use desktop version of Base æpp to sign this transaction.",
+
+    "not-supported": {
+      "guide": "Please switch to Google\u00A0Chrome",
+      "note": "Interacting with the Ledger is only supported by Chrome for now."
+    },
+
+    "connect-guide": {
+      "title": "How to connect from <primary>Ledger</primary>",
+      "steps": [
+        "Connect your Ledger via USB and unlock it",
+        "Open the æternity app on your Ledger",
+        "Create a first account by pressing the button below"
+      ]
+    },
+
+    "modal": {
+      "address-confirm": {
+        "create-guide": "Create your address on the Ledger",
+        "confirm-guide": "Confirm your address on the Ledger",
+        "address": "Ledger Address",
+        "create-note": "To create a new account on your Ledger, confirm your address there first",
+        "confirm-note": "To proceed, confirm your address on the Ledger"
+      },
+
+      "address-not-confirmed": {
+        "title": "Address not confirmed",
+        "note": "The Ledger cannot be used without address confirmation. Address mismatch can happen due to malware software. Please contact support to resolve this."
+      },
+
+      "account-not-found": {
+        "title": "Account not found",
+        "note": "The connected Ledger does not hold the specified account. You can still use it, but you have to create a new account."
+      },
+
+      "request": "Sending request to the Ledger",
+
+      "request-retry": {
+        "title": "Request failed",
+        "note": "Ledger is not connected or the request was not confirmed.",
+        "try": "Try again"
+      },
+
+      "transaction-fee": {
+        "title": "Define the Transaction fee",
+        "fee": "Transaction Fee",
+        "micro-ae": "Micro AE",
+        "note": "A higher transaction fee leads to a faster transaction time."
+      },
+
+      "sign-transaction": "Sign transaction on the Ledger"
+    }
+  },
+
+  "name": {
+    "title": "Names",
+
+    "intro": [{
+      "header": "Welcome to the æternity Naming System (AENS)!",
+      "body": "This part of the Base æpp Wallet is in beta. We are actively refining the AENS functionality and are excited to share the process with you."
+    }, {
+      "header": "How does the AENS work?",
+      "body": "The AENS allows users to claim names and associate them with one or more æternity accounts. For now, only names ending in .test (part of the .test namespace) can be claimed. After you have successfully claimed a name it is associated with one of your accounts. At that point anyone can send tokens by typing the name instead of the account address."
+    }],
+
+    "list": {
+      "note": "Claim a name for your account!",
+      "explanation": "Tap the “+” button below to claim a name and associate it with one of your accounts.",
+      "registered": "Registered Names"
+    },
+
+    "new": {
+      "guide": "<primary>Claim a name</primary> for <inlineAccount />",
+      "unknown-error": "Unknown error",
+      "name": "Name",
+      "name-placeholder": "Name.test",
+      "register": "Register",
+
+      "notification":{
+        "claim-sent": "Claim for {name} name was successfully sent",
+        "registered": "{name} was successfully registered",
+        "unknown-error": "{name} was not registered for unknown reason"
+      }
+    }
+  },
+
+  "modal": {
+    "confirm-sign": {
+      "guide": "<primary>Sign raw transaction</primary><br />by <address />"
+    },
+
+    "confirm-transaction-sign": {
+      "guide-spend": "<primary>Complete your transfer</primary><br />from <senderAddress /><br />to <recipientAddress />",
+      "guide": "<primary>{title}</primary><br />by <senderAddress />",
+      "payload": "Payload",
+      "recipient-account": "Recipient Account",
+      "contract-compiled-code": "Contract compiled code",
+      "call-data": "Call data",
+      "contract-address": "Contract Address",
+      "commitment": "Commitment",
+      "name-salt": "Name salt",
+      "name-id": "Name ID",
+      "pointer": "Pointer #{n}",
+      "pointer-key": "Pointer #{n} key",
+      "pointer-id": "Pointer #{n} ID",
+      "contract-create": "Create a new contract",
+      "contract-call": "Call contract method",
+      "name-pre-claim": "Preclaim name",
+      "name-claim": "Claim name",
+      "name-update": "Update name",
+
+      "details-fee-input": {
+        "title": "Transaction fee",
+        "value": "{value} MICRO AE"
+      }
+    },
+
+    "tooltips-modal": {
+      "initial-header": "Learn how to use the Base æpp",
+      "highlighted-region": "highlighted region",
+      "initial-content": "Tap on any {0} to learn more about its functionality."
+    }
+  },
+
+  "components": {
+    "address-panel": {
+      "title-default": "Address"
+    }
+  },
+
+  "network": {
+    "connection-status": {
+      "offline": "You are offline... Please check your connection.",
+      "no-sdk": "We are unable to connect to the chosen node.",
+      "connecting": "Connecting to the network...",
+      "connected-to-testnet": "You are connected to a testnet."
+    },
+
+    "settings": {
+      "title": "Network",
+      "subtitle": "Network ID {id}",
+
+      "list": {
+        "copy-link": "Copy link",
+        "remove": "Remove"
+      },
+
+      "new": {
+        "title": "Connect to another node",
+        "guide": "Connect to <primary>another node</primary>",
+        "node-name": "Node Name",
+        "node-url": "Node URL",
+        "connect": "Connect"
+      }
+    }
+  },
+
+  "remote-connection": {
+    "connect-notification": "You successfully connected {0}",
+    "revoke-notification": "Access was successfully revoked for {0}",
+
+    "settings": {
+      "title": "Remote connections",
+      "count": "No devices connected | {n} device connected | {n} devices connected",
+
+      "list": {
+        "connected": "Connected",
+        "disconnected": "Disconnected at {date}",
+        "revoke": "Revoke"
+      },
+
+      "new": {
+        "title": "Remote connection",
+        "wrong-qr-code": "Scanned QR code is wrong. Please make sure to scan a QR code generated by the Base æpp",
+        "camera-not-allowed": "Please enable access to your camera for the mobile browser that you are using to open the Base æpp Wallet.",
+        "prompt-name": "Name this device",
+        "default-name": "Unnamed"
+      }
+    },
+
+    "connect-guide": {
+      "title": "How to connect from <primary>Base æpp</primary>",
+      "steps": [
+        "Open Base æpp on your phone: base.aepps.com",
+        "Create an account, or login",
+        "Go to Settings <icon-settings />",
+        "Tap on Remote Connections <icon-device /> and tap the ‘+’",
+        "Scan the QR code below with Base æpp"
+      ]
+    },
+
+    "modal": {
+      "cancel-sign": {
+        "guide": "Sign the transaction in the <primary>Base æpp</primary>",
+        "note": "Open your Base æpp, check the transaction details and sign",
+        "cancel": "Cancel Transaction"
+      }
+    }
+  },
+
+  "security-courses": {
+    "modal": {
+      "guide": "<primary>Congratulations!</primary> You created an account",
+      "note": "Please take 2 minutes to learn about the importance of security",
+      "to-security-course-1": "Start security course 1",
+      "skip": "I'll do it later"
+    },
+
+    "settings": {
+      "title": "AE Security Courses",
+      "subtitle": "Disclaimer and information",
+
+      "list": {
+        "subtitle": "Security Course {n}",
+        "to-base-app": "Go to Base aepp",
+        "note": "Revisit the courses anytime under Settings"
+      },
+
+      "details": {
+        "subtitle": "Security Course {n} of {count}",
+        "to-next": "Go to course {n}",
+        "to-list": "To course overview",
+
+        "intro": {
+          "title": "Intro & Disclaimer"
+        },
+
+        "bank": {
+          "title": "You are the bank"
+        },
+
+        "privacy": {
+          "title": "Your privacy"
+        },
+
+        "layers": {
+          "title": "Security layers",
+          "setup": "Setup AirGap",
+          "buy": "Buy a Ledger wallet"
+        }
+      }
+    }
+  },
+
   "settings": {
-    "label": "Settings",
-    "network": "Network",
-    "remote-connections": "Remote connections",
-    "remote-connections-count": "No devices connected | {n} device connected | {n} devices connected",
-    "app-permissions": "Aepp account access",
-    "app-permissions-count": "No aepps have account access | {n} aepp have account access | {n} aepps have account access",
-    "security-courses": "AE Security Courses",
-    "security-courses-subtitle": "Disclaimer and information",
-    "mnemonic": "Backup Recovery Phrase",
-    "mnemonic-subtitle": "Secure your funds",
-    "password": "Wallet Authentication",
-    "password-subtitle": "Setup and manage a password",
+    "title": "Settings",
     "language": "Language",
-    "wallets": "Synced Wallets",
     "account": "Account",
     "logout": "Logout",
     "logout-subtitle": "And see you soon!",
-    "reset-mobile": "Reset Key Storage",
-    "reset-mobile-subtitle": "After resetting, a recovery is required",
-    "reset-desktop": "Reset All Data",
-    "reset-desktop-subtitle": "",
-    "version": "Version"
+    "version": "Version",
+
+    "mnemonic": {
+      "title": "Backup Recovery Phrase",
+      "subtitle": "Secure your funds",
+
+      "guide": "<secondary>Check the spelling</secondary> of each word and <primary>never</primary> create a screenshot or photo of this phrase.",
+      "to-show": "Show Recovery Phrase",
+
+      "show": {
+        "guide": "<p><primary>Carefully keep this phrase <keyEmoji /> safe!</primary></p><p>Write these 12 words down and keep them <alternative>in a safe place</alternative>. You need them to <secondary>recover</secondary> your account in the future.</p>",
+        "alert": "That was too fast! Please make sure you write down the recovery phrase on paper... and keep it in a safe place."
+      },
+
+      "confirm": {
+        "guide": "<p><primary>Confirm <crossedFingersEmoji /> your phrase</primary></p><p>Tap the words below to compose your phrase, <secondary>note</secondary> correct order!</p>",
+        "mnemonic": "Your recovery phrase",
+        "error": "Oops! Not the correct order, try again",
+        "placeholder": "first second third ···"
+      },
+
+      "confirmed": {
+        "guide": "Would you like to <primary>delete the recovery phrase</primary> from this device? This will provide <alternative>extra security</alternative>… but it cannot be undone.",
+        "delete": "Delete Recovery Phrase",
+        "keep": "Keep Recovery Phrase"
+      },
+
+      "deleted": {
+        "guide": "You have deleted the recovery phrase from this device. <secondary>Please look for the backup that you made before deleting it.</secondary>",
+        "back": "Back"
+      },
+
+      "notification": {
+        "title": "Please Backup your Recover Phrase!",
+        "subtitle": "Secure your funds to prevent loss.",
+        "to-security-course": "Security course",
+        "to-mnemonic": "Backup now"
+      }
+    },
+
+    "password": {
+      "title": "Wallet Authentication",
+      "subtitle": "Setup and manage a password",
+
+      "change": "Change password",
+      "change-subtitle": "Update your password",
+      "choose": "Choose password",
+      "choose-subtitle": "",
+      "remove": "Remove password",
+      "wrong-password": "Wrong password, try again",
+
+      "set": {
+        "change-guide": "<secondary>Change your password</secondary>",
+        "choose-guide": "<secondary>Choose a <keyEmoji /> password</secondary> and confirm.",
+        "password": "Password",
+        "password-new": "New password",
+        "password-new-confirm": "Confirm your new password"
+      },
+
+      "modal": {
+        "guide": "Enter your password to continue",
+        "continue": "Continue"
+      }
+    },
+
+    "account-remove": {
+      "title": "Synced Wallets",
+      "disconnect": "Disconnect"
+    },
+
+    "reset": {
+      "button": "Reset",
+      "title": "Reset Key Storage",
+      "subtitle": "After resetting, a recovery is required",
+      "message": "If you haven't backup your account, you won't be able to enter it again. Are you sure?",
+      "title-desktop": "Reset All Data",
+      "subtitle-desktop": "",
+      "message-desktop": "You will revoke your connection with mobile Base æpp and clear saved state. Are you sure?"
+    }
   }
 }

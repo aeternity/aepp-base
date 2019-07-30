@@ -3,29 +3,27 @@
     :right-button-to="{ name: 'settings' }"
     right-button-icon-name="close"
     class="settings-mnemonic-confirmed"
-    title="Backup Recovery Phrase"
+    :title="$t('settings.mnemonic.title')"
     hide-tab-bar
   >
-    <Guide>
+    <Guide :template="$t('settings.mnemonic.confirmed.guide')">
       <AeFraction
         slot="icon"
         numerator="4"
         denominator="4"
       />
-      Would you like to <em>delete the recovery phrase</em> from this device?
-      This will provide <strong>extra security</strong>… but it cannot be undone.
     </Guide>
 
     <template slot="footer">
       <AeButton @click="deleteMnemonic">
-        Delete Recovery Phrase
+        {{ $t('settings.mnemonic.confirmed.delete') }}
       </AeButton>
 
       <AeButton
         :to="{ name: 'settings' }"
         fill="secondary"
       >
-        Keep Recovery Phrase
+        {{ $t('settings.mnemonic.confirmed.keep') }}
       </AeButton>
     </template>
   </MobilePage>

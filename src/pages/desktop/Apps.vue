@@ -1,12 +1,12 @@
 <template>
   <div class="apps">
-    <Guide size="big">
-      æpps <em>browser</em> (beta)
-    </Guide>
+    <Guide
+      :template="$t('app.list.guide')"
+      size="big"
+    />
 
     <Note>
-      æpps running working with the æternity blockchain will be visible here.
-      We will implement a full æpp browser here soon. The æpps listed below are now only links.
+      {{ $t('app.list.note') }}
     </Note>
 
     <div class="shortcuts">

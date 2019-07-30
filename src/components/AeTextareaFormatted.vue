@@ -22,6 +22,9 @@ export default {
     formatDisplayValue: { type: Function, required: true },
     formatEmitValue: { type: Function, default: a => a },
   },
+  data: () => ({
+    emitValuePromise: null,
+  }),
   computed: {
     listeners() {
       return {
@@ -43,7 +46,15 @@ export default {
         setSelection();
         setTimeout(setSelection, 0);
       }
-      this.$emit('input', this.formatEmitValue(newValue));
+      const emitValue = this.formatEmitValue(newValue);
+      if (emitValue.then) {
+        this.$emit('input', newValue);
+        if (this.emitValuePromise) this.emitValuePromise.cancel();
+        this.emitValuePromise = emitValue;
+        emitValue.then(v => this.$emit('input', v));
+      } else {
+        this.$emit('input', emitValue);
+      }
     },
     getNewCursor(value, cursor) {
       return this.formatDisplayValue(value.slice(0, cursor)).length;

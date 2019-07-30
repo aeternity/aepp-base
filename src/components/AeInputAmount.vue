@@ -17,6 +17,7 @@
       :value="value"
       v-bind="$attrs"
       type="number"
+      inputmode="decimal"
       step="any"
       @focus="setFocus(true)"
       @blur="setFocus(false)"

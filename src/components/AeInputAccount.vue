@@ -2,13 +2,13 @@
   <AeTextareaFormatted
     v-remove-spaces-on-copy
     :value="value"
-    placeholder="ak_ …"
+    :placeholder="$t('transfer.send.to.address-or-name')"
     class="ae-input-address"
     rows="3"
     monospace
     submit-on-enter
-    :format-display-value="formatDisplayAddress"
-    :format-emit-value="formatEmitAddress"
+    :format-display-value="formatDisplayValue"
+    :format-emit-value="formatEmitValue"
     v-bind="$attrs"
     v-on="$listeners"
   >
@@ -40,7 +40,7 @@
             v-for="account in accounts"
             :key="account.address"
             v-bind="account"
-            @click="setAddress(account.address)"
+            @click="setValue(account.address)"
           />
         </AePopover>
       </template>
@@ -51,20 +51,22 @@
         @click="readValueFromClipboard"
       >
         <Paste />
-        {{ $globals.IS_MOBILE_DEVICE ? 'Paste' : '' }}
+        {{ $globals.IS_MOBILE_DEVICE ? $t('transfer.send.to.paste') : '' }}
       </AeToolbarButton>
       <AeToolbarButton
         type="button"
         @click="readValueFromQrCode"
       >
         <Camera />
-        {{ $globals.IS_MOBILE_DEVICE ? 'Scan' : '' }}
+        {{ $globals.IS_MOBILE_DEVICE ? $t('transfer.send.to.scan') : '' }}
       </AeToolbarButton>
     </template>
   </AeTextareaFormatted>
 </template>
 
 <script>
+import { Crypto } from '@aeternity/aepp-sdk/es';
+import { isAensName } from '../lib/utils';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeIdenticon from './AeIdenticon.vue';
@@ -72,6 +74,10 @@ import AeToolbarButton from './AeToolbarButton.vue';
 import { Card, Paste, Camera } from './icons';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
+
+const ADDRESS_PREFIX = 'ak_';
+const FORMATTED_ADDRESS_REGEXP = /^ak_[1-9A-HJ-NP-Za-km-z ]+$/;
+const NOT_BASE58_CHARS = /[^1-9A-HJ-NP-Za-km-z]/g;
 
 export default {
   directives: {
@@ -103,35 +109,43 @@ export default {
     };
   },
   methods: {
-    formatDisplayAddress(address) {
-      if (['', 'a', 'ak'].includes(address)) return address;
-
+    formatAddress(address) {
       let res = address
-        .slice(address.startsWith('ak_') ? 3 : 0)
-        .replace(/[^1-9A-HJ-NP-Za-km-z]/g, '');
+        .slice(ADDRESS_PREFIX.length)
+        .replace(NOT_BASE58_CHARS, '');
 
-      if (!res) return 'ak_';
+      if (!res) return ADDRESS_PREFIX;
 
       res = res
         .slice(0, 50)
         .match(/.{1,3}/g)
         .join(' ');
 
-      return `ak_ ${res}`;
+      return `${ADDRESS_PREFIX} ${res}`;
     },
-    formatEmitAddress(address) {
-      return address.replace(/ /g, '');
+    formatDisplayValue(value) {
+      const name = Crypto.isAddressValid(value) && this.$store.getters['names/get'](value, false);
+      if (name) return name;
+      if (value.startsWith(ADDRESS_PREFIX)) return this.formatAddress(value);
+      return value;
     },
-    setAddress(newAddress) {
-      this.$children[0].$el.querySelector('textarea').value = newAddress;
+    formatEmitValue(value) {
+      if (isAensName(value)) {
+        return this.$store.dispatch('names/getAddressByName', value).catch(() => value);
+      }
+      if (FORMATTED_ADDRESS_REGEXP.test(value)) return value.replace(/ /g, '');
+      return value;
+    },
+    setValue(newValue) {
+      this.$children[0].$el.querySelector('textarea').value = newValue;
       this.$children[0].handleInput();
       this.showAccountsDropdown = false;
     },
     async readValueFromQrCode() {
-      this.setAddress(await this.$store.dispatch('modals/open', { name: 'readQrCode', title: 'Scan AE Address' }));
+      this.setValue(await this.$store.dispatch('modals/open', { name: 'readQrCode', title: 'Scan AE Address' }));
     },
     async readValueFromClipboard() {
-      this.setAddress(await (process.env.IS_CORDOVA
+      this.setValue(await (process.env.IS_CORDOVA
         ? new Promise((...args) => window.cordova.plugins.clipboard.paste(...args))
         : navigator.clipboard.readText()));
     },

@@ -1,12 +1,12 @@
 <template>
   <div class="onboarding-page">
     <img src="../../assets/onboarding/phones.svg">
-    <Guide>
-      <em>Base aepp</em>
-      <br>æternity begins here
-      <div class="note">
-        Send & receive AE, explore æpps
-        and manage accounts.
+    <Guide :template="$t('onboarding.welcome.guide')">
+      <div
+        slot="note"
+        class="note"
+      >
+        {{ $t('onboarding.welcome.note') }}
       </div>
     </Guide>
   </div>

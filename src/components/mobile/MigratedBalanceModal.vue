@@ -4,18 +4,18 @@
       <div class="label">
         {{ migratedBalance }}
       </div>
-      are in migration now. They will be available after the next hardfork.
+      {{ $t('transfer.migrated-balance.note') }}
     </div>
 
     <div class="buttons">
       <AeButton @click="resolve">
-        Ok
+        {{ $t('ok') }}
       </AeButton>
       <AeButton
         :to="'https://token-migration.aepps.com/#/status/result/' + activeAccount.address"
         plain
       >
-        See migrations
+        {{ $t('transfer.migrated-balance.to-migrations') }}
       </AeButton>
     </div>
   </Modal>

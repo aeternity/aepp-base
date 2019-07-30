@@ -1,21 +1,21 @@
 <template>
   <LedgerModal
-    :title="`${create ? 'Create' : 'Confirm'} your address on the Ledger`"
+    :title="create
+      ? $t('ledger.modal.address-confirm.create-guide')
+      : $t('ledger.modal.address-confirm.confirm-guide')"
     class="ledger-address-confirm"
   >
     <LedgerModalNanoS />
 
     <AeAddressPanel
-      title="Ledger Address"
+      :title="$t('ledger.modal.address-confirm.address')"
       :address="address"
     />
 
     <LedgerModalNote>
-      {{
-        create
-          ? 'To create a new account on your Ledger, confirm your address there first'
-          : 'To proceed, confirm your address on the Ledger'
-      }}
+      {{ create
+        ? $t('ledger.modal.address-confirm.create-note')
+        : $t('ledger.modal.address-confirm.confirm-note') }}
     </LedgerModalNote>
   </LedgerModal>
 </template>

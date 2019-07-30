@@ -5,12 +5,12 @@
     <div class="wrapper">
       <ButtonPlain :to="browserPath || { name: 'apps' }">
         <Grid />
-        <div>æpps</div>
+        <div>{{ $t('app.title') }}</div>
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'transfer' }">
         <Transfer />
-        <div>Transfer</div>
+        <div>{{ $t('transfer.title') }}</div>
       </ButtonPlain>
 
       <ButtonPlain
@@ -22,12 +22,12 @@
 
       <ButtonPlain :to="{ name: 'name-list' }">
         <Contacts />
-        <div>Names</div>
+        <div>{{ $t('name.title') }}</div>
       </ButtonPlain>
 
       <ButtonPlain :to="{ name: 'settings' }">
         <MnemonicBackupWarning><Settings /></MnemonicBackupWarning>
-        <div>Settings</div>
+        <div>{{ $t('settings.title') }}</div>
       </ButtonPlain>
     </div>
   </div>
@@ -40,7 +40,7 @@ import {
   Grid, Transfer, Contacts, Settings,
 } from '../icons';
 import AeIdenticon from '../AeIdenticon.vue';
-import ConnectionStatus from './ConnectionStatus.vue';
+import ConnectionStatus from '../ConnectionStatus.vue';
 import MnemonicBackupWarning from './MnemonicBackupWarning.vue';
 
 export default {

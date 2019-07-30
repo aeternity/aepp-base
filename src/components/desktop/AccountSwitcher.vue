@@ -18,7 +18,7 @@
       </ListItemAccount>
 
       <ListItem
-        title="Create a new account"
+        :title="$t('account-switcher.create-account-desktop')"
         @click="createAccount"
       >
         <ListItemCircle slot="icon">

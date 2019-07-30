@@ -1,23 +1,28 @@
 <template>
   <div class="send">
-    <Guide size="big">
-      <em>Send</em> AE from<br>
-      <AccountInline :address="activeAccount.address" />
+    <Guide
+      :template="$t('transfer.send.guide')"
+      size="big"
+    >
+      <AccountInline
+        slot="senderAddress"
+        :address="activeAccount.address"
+      />
     </Guide>
 
     <Note>
-      Paste the recipient address below. Or send to subaccounts, contacts or scan QR code.
+      {{ $t('transfer.send.note') }}
     </Note>
 
     <form @submit.prevent="send">
-      <AeInputAddress
+      <AeInputAccount
         v-model="accountTo"
-        v-validate="'required|address'"
+        v-validate="'required|account'"
         :error="errors.has('accountTo')"
         :footer="errors.first('accountTo')"
         autofocus
         name="accountTo"
-        header="To"
+        :header="$t('transfer.send.to.recipient')"
       />
 
       <AeInputAmountAe
@@ -33,8 +38,8 @@
         name="amount"
       />
 
-      <AeButton :disabled="errors.any()">
-        Transfer
+      <AeButton :disabled="errors.any() || busy">
+        {{ $t('transfer.send.transfer') }}
       </AeButton>
     </form>
   </div>
@@ -46,7 +51,7 @@ import { pick } from 'lodash-es';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
-import AeInputAddress from '../../components/AeInputAddress.vue';
+import AeInputAccount from '../../components/AeInputAccount.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
@@ -56,7 +61,7 @@ export default {
     Guide,
     AccountInline,
     Note,
-    AeInputAddress,
+    AeInputAccount,
     AeInputAmountAe,
     AeButton,
   },
@@ -65,6 +70,7 @@ export default {
     amount: '',
     MAGNITUDE,
     MIN_SPEND_TX_FEE,
+    busy: false,
   }),
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
@@ -74,15 +80,20 @@ export default {
       if (!await this.$validator.validateAll()) return;
 
       const amount = BigNumber(this.amount);
-      const { hash } = await this.$store.state.sdk.spend(
-        amount.shiftedBy(MAGNITUDE),
-        this.accountTo,
-      );
-      this.$store.dispatch('modals/open', {
-        name: 'notificationSpend',
-        transactionHash: hash,
-        amount,
-      });
+      this.busy = true;
+      try {
+        const { hash } = await this.$store.state.sdk.spend(
+          amount.shiftedBy(MAGNITUDE),
+          this.accountTo,
+        );
+
+        await this.$store.dispatch('modals/open', { name: 'spendSuccess', transactionHash: hash, amount });
+        this.accountTo = '';
+        this.amount = '';
+        this.$validator.reset();
+      } finally {
+        this.busy = false;
+      }
     },
   },
 };

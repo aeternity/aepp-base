@@ -13,12 +13,12 @@ import { mapState } from 'vuex';
 
 export default {
   computed: mapState({
-    message: ({ onLine, sdk }) => {
-      if (!onLine) return { text: 'You are offline... Please check your connection.' };
-      if (!sdk) return { text: 'We are unable to connect to the chosen node.' };
-      if (sdk.then) return { text: 'Connecting to the network...', className: 'connecting' };
+    message({ onLine, sdk }) {
+      if (!onLine) return { text: this.$t('network.connection-status.offline') };
+      if (!sdk) return { text: this.$t('network.connection-status.no-sdk') };
+      if (sdk.then) return { text: this.$t('network.connection-status.connecting'), className: 'connecting' };
       if (process.env.NODE_ENV === 'production' && sdk.nodeNetworkId !== 'ae_mainnet') {
-        return { text: 'You are connected to a testnet.', className: 'test-net' };
+        return { text: this.$t('network.connection-status.connected-to-testnet'), className: 'test-net' };
       }
       return null;
     },
@@ -27,8 +27,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
+@import '../styles/placeholders/typography.scss';
+@import '../styles/variables/colors.scss';
 
 .connection-status {
   padding: rem(6px);

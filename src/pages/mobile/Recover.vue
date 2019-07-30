@@ -2,14 +2,14 @@
   <MobilePage
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
-    title="Recover Account"
+    :title="$t('recover.title')"
     hide-tab-bar
   >
-    <Guide>
-      Enter <img :src="dizzySymbolEmoji"> your
-      <strong>recovery phrase</strong>.
-      The one you wrote
-      down during <mark>account creation</mark>.
+    <Guide :template="$t('recover.guide')">
+      <img
+        slot="dizzySymbolEmoji"
+        :src="dizzySymbolEmoji"
+      >
     </Guide>
 
     <form
@@ -32,7 +32,7 @@
       :form="_uid"
       fill="secondary"
     >
-      Recover account
+      {{ $t('recover.button') }}
     </AeButton>
   </MobilePage>
 </template>

@@ -27,7 +27,7 @@
       @close="showMenu = false"
     >
       <MenuItem @click="reload">
-        <Reload />Refresh
+        <Reload /> {{ $t('app.browser.refresh') }}
       </MenuItem>
     </Menu>
 
@@ -38,7 +38,7 @@
       :src="url"
       :scrolling="$globals.IS_IOS && 'no'"
       importance="high"
-      sandbox="allow-scripts allow-same-origin"
+      sandbox="allow-scripts allow-same-origin allow-forms"
       @load="loading = false"
     />
 

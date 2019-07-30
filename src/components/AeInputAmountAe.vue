@@ -1,9 +1,9 @@
 <template>
   <AeInputAmount
     class="ae-input-amount-ae"
-    header="Amount"
+    :header="$t('transfer.send.amount.amount')"
     header-right="AE"
-    :footer="footer || (max ? '' : 'Minimum transaction fee')"
+    :footer="footer || (max ? '' : $t('transfer.send.amount.fee'))"
     :footer-right="footerRight || (footer || max ? '' : minSpendTxFee)"
     :value="value"
     v-bind="$attrs"
@@ -16,7 +16,7 @@
       :active="max === value"
       @click="$emit('input', max)"
     >
-      Max
+      {{ $t('transfer.send.amount.max') }}
     </AeToolbarButton>
   </AeInputAmount>
 </template>

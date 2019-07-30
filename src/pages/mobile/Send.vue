@@ -6,29 +6,33 @@
     class="send"
   >
     <template slot="header">
-      <Guide fill="neutral">
+      <Guide
+        :template="$t('transfer.send.to.guide')"
+        fill="neutral"
+      >
         <AeFraction
           slot="icon"
           numerator="1"
           denominator="3"
         />
-        <em>New Transfer</em>
-        <br>from
-        <AccountInline :address="activeAccount.address" />
+        <AccountInline
+          slot="account"
+          :address="activeAccount.address"
+        />
       </Guide>
 
       <form
         :id="_uid"
         @submit.prevent="setAddress"
       >
-        <AeInputAddress
+        <AeInputAccount
           v-model="accountTo"
-          v-validate="'required|address'"
+          v-validate="'required|account'"
           autofocus
           :error="errors.has('accountTo')"
           :footer="errors.first('accountTo')"
           name="accountTo"
-          header="Recipient"
+          :header="$t('transfer.send.to.recipient')"
         />
       </form>
     </template>
@@ -39,14 +43,14 @@
       fill="secondary"
       @click="setAddress"
     >
-      Next
+      {{ $t('next') }}
     </AeButton>
 
     <div
       v-if="inactiveAccounts.length"
       class="own-account"
     >
-      Or send to subaccount
+      {{ $t('transfer.send.to.subaccount') }}
     </div>
     <ListItemAccount
       v-for="account in inactiveAccounts"
@@ -70,7 +74,7 @@ import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AccountInline from '../../components/AccountInline.vue';
-import AeInputAddress from '../../components/AeInputAddress.vue';
+import AeInputAccount from '../../components/AeInputAccount.vue';
 import AeButton from '../../components/AeButton.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import { LeftMore } from '../../components/icons';
@@ -81,7 +85,7 @@ export default {
     Guide,
     AeFraction,
     AccountInline,
-    AeInputAddress,
+    AeInputAccount,
     AeButton,
     ListItemAccount,
     LeftMore,

@@ -1,6 +1,6 @@
 <template>
   <LedgerModal
-    title="Request failed"
+    :title="$t('ledger.modal.request-retry.title')"
     class="ledger-request-retry"
     closable
     @close="handleCancel"
@@ -8,7 +8,7 @@
     <LedgerModalNanoS />
 
     <LedgerModalNote fill="dark">
-      Ledger is not connected or the request was not confirmed.
+      {{ $t('ledger.modal.request-retry.note') }}
     </LedgerModalNote>
 
     <template slot="footer">
@@ -17,7 +17,7 @@
         plain
         @click="handleCancel"
       >
-        Cancel
+        {{ $t('cancel') }}
       </AeButton>
 
       <AeButton
@@ -25,7 +25,7 @@
         plain
         @click="resolve"
       >
-        Try again
+        {{ $t('ledger.modal.request-retry.try') }}
       </AeButton>
     </template>
   </LedgerModal>

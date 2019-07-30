@@ -2,15 +2,19 @@
   <MobilePage
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
-    title="Wallet Authentication"
+    :title="$t('settings.password.title')"
     header-fill="light"
     fill="neutral"
     class="settings-password"
   >
     <AeCard fill="maximum">
       <ListItem
-        :title="`${isWalletEncrypted ? 'Change' : 'Choose'} password`"
-        :subtitle="isWalletEncrypted ? 'Update your password' : ''"
+        :title="isWalletEncrypted
+          ? $t('settings.password.change')
+          : $t('settings.password.choose')"
+        :subtitle="isWalletEncrypted
+          ? $t('settings.password.change-subtitle')
+          : $t('settings.password.choose-subtitle')"
         :to="{ name: 'settings-password-set' }"
       >
         <LeftMore slot="right" />
@@ -19,7 +23,7 @@
         v-if="isWalletEncrypted"
         @click="() => changeWalletPassword()"
       >
-        Remove password
+        {{ $t('settings.password.remove') }}
       </ListItemButton>
     </AeCard>
   </MobilePage>

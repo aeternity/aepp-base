@@ -1,20 +1,38 @@
 <template>
   <SettingsSecurityCourseWrapper name="privacy">
-    <h2>æternity values privacy</h2>
+    <template v-if="$i18n.locale === 'cn'">
+      <h2>æternity高度重视隐私</h2>
+      <p>
+        Base æpp不会询问、接收、发送或者存储您的：
+      </p>
 
-    <p>
-      The Base æpp will not ask, receive, transmit or store your:
-    </p>
+      <ul>
+        <li>姓名</li>
+        <li>生日</li>
+        <li>家庭地址</li>
+        <li>邮箱地址</li>
+        <li>电话号码</li>
+        <li>社交账号</li>
+        <li>IP地址</li>
+      </ul>
+    </template>
+    <template v-else>
+      <h2>æternity values privacy</h2>
 
-    <ul>
-      <li>First and last name</li>
-      <li>Date of birth</li>
-      <li>Home address</li>
-      <li>Email address</li>
-      <li>Phone number</li>
-      <li>Social media accounts</li>
-      <li>IP address</li>
-    </ul>
+      <p>
+        The Base æpp will not ask, receive, transmit or store your:
+      </p>
+
+      <ul>
+        <li>First and last name</li>
+        <li>Date of birth</li>
+        <li>Home address</li>
+        <li>Email address</li>
+        <li>Phone number</li>
+        <li>Social media accounts</li>
+        <li>IP address</li>
+      </ul>
+    </template>
   </SettingsSecurityCourseWrapper>
 </template>
 
