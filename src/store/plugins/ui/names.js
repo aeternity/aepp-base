@@ -1,6 +1,5 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Vue from 'vue';
-import { uniqBy } from 'lodash-es';
 import { fetchMiddlewareEndpoint } from '../../utils';
 
 export default (store) => {
@@ -65,13 +64,10 @@ export default (store) => {
                     owner: tx.accountId,
                   }));
               })(),
-              (async () => uniqBy(
-                await fetchMiddlewareEndpoint(new URL(
-                  `/middleware/names/reverse/${address}`,
-                  rootGetters.currentNetwork.middlewareUrl,
-                )),
-                'name',
-              ))(),
+              fetchMiddlewareEndpoint(new URL(
+                `/middleware/names/reverse/${address}`,
+                rootGetters.currentNetwork.middlewareUrl,
+              )),
             ])).flat();
 
             commit('set', {
