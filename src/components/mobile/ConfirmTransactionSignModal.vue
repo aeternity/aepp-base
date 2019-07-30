@@ -144,7 +144,7 @@ export default {
       return {
         payload: {
           functional: true,
-          render(createElement, { props: { value } }) {
+          render: (createElement, { props: { value } }) => {
             const data = Crypto.decodeBase64Check(Crypto.assertedType(value, 'ba')).toString();
             return data
               ? createElement(DetailsRawData, {
@@ -160,21 +160,20 @@ export default {
         commitmentId: genDetailsRawData(this.$t('modal.confirm-transaction-sign.commitment')),
         name: {
           functional: true,
-          render(createElement, { props: { value } }) {
-            return createElement(DetailsField, {
-              attrs: {
-                name: 'Name',
-                value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString(),
-              },
-            });
-          },
+          render: (createElement, { props: { value } }) => createElement(DetailsField, {
+            attrs: {
+              name: 'Name',
+              value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString(),
+            },
+          }),
         },
         nameSalt: genDetailsField(this.$t('modal.confirm-transaction-sign.name-salt')),
         nameId: genDetailsRawData(this.$t('modal.confirm-transaction-sign.name-id')),
         pointers: {
           functional: true,
-          render(createElement, { props: { value } }) {
-            return createElement('div', value.map(({ key, id }, idx) => {
+          render: (createElement, { props: { value } }) => createElement(
+            'div',
+            value.map(({ key, id }, idx) => {
               switch (key) {
                 case 'account_pubkey':
                   return createElement(DetailsAddress, {
@@ -202,8 +201,8 @@ export default {
                     }),
                   ];
               }
-            }));
-          },
+            }),
+          ),
         },
       };
     },

@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import './stories-init';
 import { configure, addDecorator } from '@storybook/vue';
 import { withBackgrounds } from '@storybook/addon-backgrounds';
 import { withNotes } from '@storybook/addon-notes';

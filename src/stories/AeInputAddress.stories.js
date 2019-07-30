@@ -1,17 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueRx from 'vue-rx';
 import { Observable } from 'rxjs';
 import { storiesOf } from '@storybook/vue';
 import AeInputAddress from '../components/AeInputAddress.vue';
 import { accounts } from './mock-data';
 
-Vue.use(Vuex);
-Vue.use(VueRx);
-Vue.prototype.$globals = {
-  IS_MOBILE_DEVICE: true,
-};
 const store = new Vuex.Store({
   state: {
     observables: {
