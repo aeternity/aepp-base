@@ -40,7 +40,7 @@
             v-for="account in accounts"
             :key="account.address"
             v-bind="account"
-            @click="setAddress(account.address)"
+            @click="setValue(account.address)"
           />
         </AePopover>
       </template>
