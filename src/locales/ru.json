@@ -81,7 +81,7 @@
   },
   "recover": {
     "title": "Восстановить аккаунт",
-    "guide": "Введите <dizzySymbolEmoji /> вашу <alternative>мнемоническую фразу</alternative>. Которую вы записали во время <secondary>создания аккаунта</secondary>.",
+    "guide": "Введите <dizzySymbolEmoji /> вашу <alternative>мнемоническую фразу</alternative>. Которую вы записали во время <secondary>резервного копирования</secondary>.",
     "mnemonic": "Мнемоническая фраза",
     "button": "Восстановить аккаунт"
   },

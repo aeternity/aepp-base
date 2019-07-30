@@ -95,7 +95,7 @@
 
   "recover": {
     "title": "Recover Account",
-    "guide": "Enter <dizzySymbolEmoji /> your <alternative>recovery phrase</alternative>. The one you wrote down during <secondary>account creation</secondary>.",
+    "guide": "Enter <dizzySymbolEmoji /> your <alternative>recovery phrase</alternative>. From the <secondary>backup</secondary> you made.",
     "mnemonic": "Recovery phrase",
     "button": "Recover account"
   },
