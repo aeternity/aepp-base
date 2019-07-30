@@ -95,7 +95,7 @@
 
   "recover": {
     "title": "恢复账号",
-    "guide": "输入您的 <strong>助记词</strong>. 您在<mark>账户创建时</mark>写下的那些助记词。",
+    "guide": "输入您的 <alternative>助记词</alternative>. From the <secondary>backup</secondary> you made。",
     "mnemonic": "助记词恢复",
     "button": "恢复账号"
   },
