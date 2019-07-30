@@ -32,41 +32,36 @@ describe('AeInputAccount', () => {
     expect(wrapper.find('textarea').element.value).toBe(testAddress51Formatted);
   });
 
-  it('adds prefix on input', (done) => {
+  it('adds prefix on input', () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({ listeners: { input: inputListener } });
     const textarea = wrapper.find('textarea');
     textarea.element.value = 'ak_beef';
-    inputListener.mockImplementation((emittedValue) => {
-      expect(emittedValue).toEqual('ak_beef');
-      wrapper.setProps({ value: emittedValue });
-      expect(textarea.element.value).toBe('ak_ bee f');
-      done();
-    });
     textarea.trigger('input');
+
+    const emittedValue = inputListener.mock.calls[0][0];
+    expect(emittedValue).toEqual('ak_beef');
+    wrapper.setProps({ value: emittedValue });
+    expect(textarea.element.value).toBe('ak_ bee f');
   });
 
-  it('removes non-base58 symbols', (done) => {
+  it('removes non-base58 symbols', () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({ listeners: { input: inputListener } });
     const value = 'ak_019AHIJNOPZaklmz';
     const textarea = wrapper.find('textarea');
     textarea.element.value = value;
     textarea.element.setSelectionRange(value.length, value.length);
-    inputListener.mockImplementation((emittedValue) => {
-      expect(emittedValue).toEqual('ak_19AHJNPZakmz');
-      wrapper.setProps({ value: emittedValue });
-      expect(textarea.element.value).toBe('ak_ 19A HJN PZa kmz');
-      done();
-    });
     textarea.trigger('input');
+
+    const emittedValue = inputListener.mock.calls[0][0];
+    expect(emittedValue).toEqual('ak_19AHJNPZakmz');
+    wrapper.setProps({ value: emittedValue });
+    expect(textarea.element.value).toBe('ak_ 19A HJN PZa kmz');
   });
 
-  it('emitted input event contains address without space symbols', (done) => {
-    const inputListener = jest.fn((emittedValue) => {
-      expect(emittedValue).toBe(testAddress);
-      done();
-    });
+  it('emitted input event contains address without space symbols', () => {
+    const inputListener = jest.fn();
     const wrapper = mountComponent({
       propsData: { value: testAddress },
       listeners: { input: inputListener },
@@ -74,9 +69,12 @@ describe('AeInputAccount', () => {
     const textarea = wrapper.find('textarea');
     textarea.element.setSelectionRange(10, 10);
     textarea.trigger('input');
+
+    const emittedValue = inputListener.mock.calls[0][0];
+    expect(emittedValue).toBe(testAddress);
   });
 
-  it('limits address length', (done) => {
+  it('limits address length', () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({ listeners: { input: inputListener } });
     const begin = testAddressFormatted.slice(0, 25);
@@ -84,16 +82,15 @@ describe('AeInputAccount', () => {
     const textarea = wrapper.find('textarea');
     textarea.element.value = begin + end;
     textarea.element.setSelectionRange(begin.length, begin.length);
-    inputListener.mockImplementation((emittedValue) => {
-      expect(emittedValue).toEqual(testAddress);
-      wrapper.setProps({ value: emittedValue });
-      expect(textarea.element.value).toBe(testAddressFormatted);
-      done();
-    });
     textarea.trigger('input');
+
+    const emittedValue = inputListener.mock.calls[0][0];
+    expect(emittedValue).toEqual(testAddress);
+    wrapper.setProps({ value: emittedValue });
+    expect(textarea.element.value).toBe(testAddressFormatted);
   });
 
-  it('backspace can remove the whole value', async () => {
+  it('backspace can remove the whole value', () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({
       propsData: { value: 'ak_12' },
@@ -106,8 +103,6 @@ describe('AeInputAccount', () => {
       textarea.element.value = value.slice(0, value.length - 1);
       textarea.element.setSelectionRange(value.length - 1, value.length - 1);
       textarea.trigger('input');
-      // eslint-disable-next-line no-await-in-loop
-      await new Promise(resolve => inputListener.mockImplementation(resolve));
       wrapper.setProps({ value: inputListener.mock.calls.pop()[0] });
       expect(textarea.element.value.length).toBeLessThan(value.length);
     }
