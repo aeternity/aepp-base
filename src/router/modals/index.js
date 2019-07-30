@@ -4,7 +4,6 @@ import { notificationOptions } from './utils';
 import AlertModal from '../../components/AlertModal.vue';
 import { QrCodeReader } from '../../components/async';
 import Notification from '../../components/Notification.vue';
-import NotificationSpend from '../../components/NotificationSpend.vue';
 
 export default async () => {
   registerModal({ name: 'alert', component: AlertModal });
@@ -17,7 +16,6 @@ export default async () => {
   });
   registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
   registerModal({ name: 'notification', component: Notification, ...notificationOptions });
-  registerModal({ name: 'notificationSpend', component: NotificationSpend, ...notificationOptions });
 
   (await (process.env.IS_MOBILE_DEVICE
     ? import(/* webpackChunkName: "ui-mobile" */ './mobile')

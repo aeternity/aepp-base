@@ -38,7 +38,7 @@
         name="amount"
       />
 
-      <AeButton :disabled="errors.any()">
+      <AeButton :disabled="errors.any() || busy">
         {{ $t('transfer.send.transfer') }}
       </AeButton>
     </form>
@@ -70,6 +70,7 @@ export default {
     amount: '',
     MAGNITUDE,
     MIN_SPEND_TX_FEE,
+    busy: false,
   }),
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
@@ -79,15 +80,20 @@ export default {
       if (!await this.$validator.validateAll()) return;
 
       const amount = BigNumber(this.amount);
-      const { hash } = await this.$store.state.sdk.spend(
-        amount.shiftedBy(MAGNITUDE),
-        this.accountTo,
-      );
-      this.$store.dispatch('modals/open', {
-        name: 'notificationSpend',
-        transactionHash: hash,
-        amount,
-      });
+      this.busy = true;
+      try {
+        const { hash } = await this.$store.state.sdk.spend(
+          amount.shiftedBy(MAGNITUDE),
+          this.accountTo,
+        );
+
+        await this.$store.dispatch('modals/open', { name: 'spendSuccess', transactionHash: hash, amount });
+        this.accountTo = '';
+        this.amount = '';
+        this.$validator.reset();
+      } finally {
+        this.busy = false;
+      }
     },
   },
 };

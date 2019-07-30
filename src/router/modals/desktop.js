@@ -7,6 +7,7 @@ import LedgerRequestRetryModal from '../../components/desktop/LedgerRequestRetry
 import LedgerSignTransactionModal from '../../components/desktop/LedgerSignTransactionModal.vue';
 import LedgerTransactionFeeModal from '../../components/desktop/LedgerTransactionFeeModal.vue';
 import CancelSignModal from '../../components/desktop/CancelSignModal.vue';
+import ModalSpendSuccess from '../../components/desktop/ModalSpendSuccess.vue';
 
 export default () => {
   registerModal({ name: 'ledgerAccountNotFound', component: LedgerAccountNotFoundModal });
@@ -17,4 +18,5 @@ export default () => {
   registerModal({ name: 'getLedgerTransactionFee', component: LedgerTransactionFeeModal });
   registerModal({ name: 'ledgerSignTransaction', component: LedgerSignTransactionModal });
   registerModal({ name: 'cancelSign', component: CancelSignModal });
+  registerModal({ name: 'spendSuccess', component: ModalSpendSuccess });
 };

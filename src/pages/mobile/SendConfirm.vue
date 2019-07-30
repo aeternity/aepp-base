@@ -33,7 +33,7 @@ export default {
 
       this.$router.push({ name: 'transfer' });
       this.$store.dispatch('modals/open', {
-        name: 'notificationSpend',
+        name: 'spendSuccess',
         transactionHash: hash,
         amount,
       });
