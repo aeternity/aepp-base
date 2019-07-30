@@ -4,7 +4,7 @@
   position: relative;
 
   &:before {
-    content: 'Copied';
+    content: attr(data-copied-text);
     display: flex;
     justify-content: center;
     align-items: center;
