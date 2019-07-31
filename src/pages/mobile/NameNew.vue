@@ -94,10 +94,6 @@ export default {
       try {
         this.$store.dispatch('names/fetchOwned');
         await this.$store.state.sdk.poll(claimTxHash);
-        await this.$store.state.sdk.aensUpdate(
-          (await this.$store.state.sdk.aensQuery(this.name)).id,
-          this.$store.getters['accounts/active'].address,
-        );
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: i18n.t('name.new.notification.registered', { name: this.name }),
