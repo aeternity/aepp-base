@@ -3,14 +3,15 @@ import { get, isEqual } from 'lodash-es';
 export default (store) => {
   let recreateSdk;
 
-  const createSdk = async (url) => {
-    const [Ae, ChainNode, Transaction, Contract, Aens, Rpc] = (await Promise.all([
+  const createSdk = async (network) => {
+    const [Ae, ChainNode, Transaction, Contract, Aens, Rpc, Swagger] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/tx/tx'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/contract'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/rpc/server'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
     ])).map(module => module.default);
 
     async function confirmAccountAccess({ app }) {
@@ -65,49 +66,60 @@ export default (store) => {
     };
 
     let sdkActive = false;
-    const sdk = await Ae.compose(
-      ChainNode, Transaction, Contract, Aens, Rpc, {
-        init(options, { stamp }) {
-          const rpcMethods = [
-            ...stamp.compose.deepConfiguration.Ae.methods,
-            ...stamp.compose.deepConfiguration.Contract.methods,
-          ];
-          this.rpcMethods = {
-            ...rpcMethods
-              .map(m => [m, ({ params, origin }) => {
-                const { host } = new URL(origin);
-                const app = store.getters.getApp(host) || { host };
-                return Promise.resolve(this[m](...params, { app }));
-              }])
-              .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
-            ...this.rpcMethods,
-          };
+    const errorHandler = (error) => {
+      if (
+        !sdkActive
+        || (error.isAxiosError && error.response && error.response.status === 404)
+      ) return;
+      recreateSdk();
+      sdkActive = false;
+    };
+    const [sdk, middleware] = await Promise.all([
+      Ae.compose(
+        ChainNode, Transaction, Contract, Aens, Rpc, {
+          init(options, { stamp }) {
+            const rpcMethods = [
+              ...stamp.compose.deepConfiguration.Ae.methods,
+              ...stamp.compose.deepConfiguration.Contract.methods,
+            ];
+            this.rpcMethods = {
+              ...rpcMethods
+                .map(m => [m, ({ params, origin }) => {
+                  const { host } = new URL(origin);
+                  const app = store.getters.getApp(host) || { host };
+                  return Promise.resolve(this[m](...params, { app }));
+                }])
+                .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
+              ...this.rpcMethods,
+            };
+          },
+          methods,
         },
-        methods,
-      },
-    )({
-      url,
-      internalUrl: url,
-      compilerUrl: 'https://compiler.aepps.com',
-      axiosConfig: {
-        errorHandler: (error) => {
-          if (
-            !sdkActive
-            || (error.isAxiosError && error.response && error.response.status === 404)
-          ) return;
-          recreateSdk();
-          sdkActive = false;
-        },
-      },
-    });
+      )({
+        url: network.url,
+        internalUrl: network.url,
+        compilerUrl: 'https://compiler.aepps.com',
+        axiosConfig: { errorHandler },
+      }),
+      (async () => {
+        const swag = await (await fetch(`${network.middlewareUrl}/middleware/api`)).json();
+        return Swagger.compose({
+          methods: {
+            urlFor: path => network.middlewareUrl + path,
+            axiosError: () => errorHandler,
+          },
+        })({ swag });
+      })(),
+    ]);
     sdkActive = true;
+    sdk.middleware = middleware.api;
     return sdk;
   };
 
   recreateSdk = async () => {
     const { currentNetwork } = store.getters;
     if (store.state.sdk && !store.state.sdk.then) store.state.sdk.destroyInstance();
-    const sdkPromise = createSdk(currentNetwork.url);
+    const sdkPromise = createSdk(currentNetwork);
     const sdkThenable = { then: sdkPromise.then.bind(sdkPromise) };
     store.commit('setSdk', sdkThenable);
     const sdk = await sdkThenable.then(s => s, () => null);

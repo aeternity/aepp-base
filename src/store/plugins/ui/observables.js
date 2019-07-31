@@ -8,7 +8,6 @@ import { refCountDelay } from 'rxjs-etc/operators';
 import { memoize, upperFirst, lowerCase } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
-import { fetchMiddlewareEndpoint } from '../../utils';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -115,14 +114,10 @@ export default (store) => {
     );
 
   const fetchMdwTransactions = async (address, limit, page) => {
-    const mdwUrl = new URL(
-      `/middleware/transactions/account/${address}`,
-      store.getters.currentNetwork.middlewareUrl,
-    );
-    mdwUrl.searchParams.set('limit', limit.toString());
-    mdwUrl.searchParams.set('page', page.toString());
+    if (store.state.sdk.then) await store.state.sdk;
     const txs = await Promise.all(
-      (await fetchMiddlewareEndpoint(mdwUrl)).map(normalizeTransaction),
+      (await store.state.sdk.middleware.transactionsListAccountGet(address, { limit, page }))
+        .map(normalizeTransaction),
     );
     txs.forEach(registerTx);
     return txs;
