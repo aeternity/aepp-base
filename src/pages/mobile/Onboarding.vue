@@ -69,6 +69,7 @@ export default {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  background: $color-neutral-positive-2;
 
   footer {
     display: flex;
