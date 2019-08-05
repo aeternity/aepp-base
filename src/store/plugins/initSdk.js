@@ -11,39 +11,49 @@ export default (store) => {
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/rpc/server'),
     ])).map(module => module.default);
 
+    async function confirmAccountAccess({ app }) {
+      const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
+      if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
+      const promise = store.dispatch(
+        'modals/open',
+        { name: 'confirmAccountAccess', appHost: app.host },
+      );
+      const unsubscribe = store.watch(
+        (state, getters) => getters['accounts/active'].address,
+        address => accessToAccounts.includes(address) && promise.cancel(),
+      );
+
+      try {
+        await Promise.race([
+          promise,
+          new Promise((resolve, reject) => promise.finally(() => {
+            if (!promise.isCancelled()) return;
+            if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
+              resolve();
+            } else reject(new Error('Unexpected state'));
+          })),
+        ]);
+      } finally {
+        unsubscribe();
+      }
+
+      const { address: accountAddress } = store.getters['accounts/active'];
+      if (!accessToAccounts.includes(accountAddress)) {
+        store.commit('toggleAccessToAccount', { appHost: app.host, accountAddress });
+      }
+    }
+    const confirmAccountAccessPromises = {};
+
     const methods = {
       async address(options) {
         if (options) {
-          const { app } = options;
-          const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
-          if (!accessToAccounts.includes(store.getters['accounts/active'].address)) {
-            const promise = store.dispatch(
-              'modals/open',
-              { name: 'confirmAccountAccess', appHost: app.host },
-            );
-            const unsubscribe = store.watch(
-              (state, getters) => getters['accounts/active'].address,
-              address => accessToAccounts.includes(address) && promise.cancel(),
-            );
-
-            try {
-              await Promise.race([
-                promise,
-                new Promise((resolve, reject) => promise.finally(() => {
-                  if (!promise.isCancelled()) return;
-                  if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
-                    resolve();
-                  } else reject(new Error('Unexpected state'));
-                })),
-              ]);
-            } finally {
-              unsubscribe();
-            }
-
-            const { address: accountAddress } = store.getters['accounts/active'];
-            if (!accessToAccounts.includes(accountAddress)) {
-              store.commit('toggleAccessToAccount', { appHost: app.host, accountAddress });
-            }
+          const { app: { host } } = options;
+          confirmAccountAccessPromises[host] = confirmAccountAccessPromises[host]
+            || confirmAccountAccess(options);
+          try {
+            await confirmAccountAccessPromises[host];
+          } finally {
+            delete confirmAccountAccessPromises[host];
           }
         }
         return store.getters['accounts/active'].address;
