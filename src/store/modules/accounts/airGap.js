@@ -74,7 +74,7 @@ export default {
 
     async signTransaction({ rootState: { sdk }, rootGetters, dispatch }, transaction) {
       const requestUrl = generateSignRequestUrl(
-        sdk.nodeNetworkId,
+        sdk.getNetworkId(),
         transaction,
         rootGetters['accounts/active'].source.publicKey,
       );
