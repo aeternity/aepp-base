@@ -1,6 +1,8 @@
 import { get, isEqual } from 'lodash-es';
 
 export default (store) => {
+  let recreateSdk;
+
   const createSdk = async (url) => {
     const [Ae, ChainNode, Transaction, Contract, Aens, Rpc] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
@@ -62,7 +64,8 @@ export default (store) => {
       signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
     };
 
-    return Ae.compose(
+    let sdkActive = false;
+    const sdk = await Ae.compose(
       ChainNode, Transaction, Contract, Aens, Rpc, {
         init(options, { stamp }) {
           const rpcMethods = [
@@ -86,7 +89,30 @@ export default (store) => {
       url,
       internalUrl: url,
       compilerUrl: 'https://compiler.aepps.com',
+      axiosConfig: {
+        errorHandler: (error) => {
+          if (
+            !sdkActive
+            || (error.isAxiosError && error.response && error.response.status === 404)
+          ) return;
+          recreateSdk();
+          sdkActive = false;
+        },
+      },
     });
+    sdkActive = true;
+    return sdk;
+  };
+
+  recreateSdk = async () => {
+    const { currentNetwork } = store.getters;
+    if (store.state.sdk && !store.state.sdk.then) store.state.sdk.destroyInstance();
+    const sdkPromise = createSdk(currentNetwork.url);
+    const sdkThenable = { then: sdkPromise.then.bind(sdkPromise) };
+    store.commit('setSdk', sdkThenable);
+    const sdk = await sdkThenable.then(s => s, () => null);
+    if (sdkThenable === store.state.sdk) store.commit('setSdk', sdk);
+    else if (sdk) sdk.destroyInstance();
   };
 
   let lastNetwork;
@@ -96,13 +122,7 @@ export default (store) => {
     async (currentNetwork) => {
       if (isEqual(currentNetwork, lastNetwork)) return;
       lastNetwork = currentNetwork;
-      if (store.state.sdk && !store.state.sdk.then) store.state.sdk.destroyInstance();
-      const sdkPromise = createSdk(currentNetwork.url);
-      const sdkThenable = { then: sdkPromise.then.bind(sdkPromise) };
-      store.commit('setSdk', sdkThenable);
-      const sdk = await sdkThenable.then(s => s, () => null);
-      if (sdkThenable === store.state.sdk) store.commit('setSdk', sdk);
-      else if (sdk) sdk.destroyInstance();
+      await recreateSdk();
     },
     { immediate: true },
   );
