@@ -5,7 +5,7 @@
     class="transaction-details"
     :title="$t('transfer.transaction.details.title')"
     left-button-icon-name="back"
-    @left-button-click="$router.push({ name: 'transaction-list' })"
+    :left-button-to="{ name: 'transaction-list' }"
   >
     <template slot="header">
       <Guide fill="neutral">
