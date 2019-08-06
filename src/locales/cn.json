@@ -6,6 +6,7 @@
   "ok": "OK",
   "deny": "拒绝",
   "allow": "允许",
+  "copied": "Copied",
   "add-to-home-screen": "请添加这个app到主屏幕.",
   "guide-desktop": "目前Base æpp只能在只在一个浏览器选项卡中打开的情况下运行. 请关闭所有运行的标签.",
 
@@ -158,6 +159,8 @@
   "transfer": {
     "title": "Transfer",
     "guide": "<primary>发送和接收</primary> Æ",
+    "amount": "量",
+    "fee": "Fee",
 
     "tooltips": [{
       "selector": ".transfer .ae-account .ae-identicon",
@@ -192,7 +195,6 @@
       "amount": {
         "guide": "<primary>新转账</primary><br />从 <senderAddress /><br />到 <recipientAddress />",
         "balance": "余额",
-        "amount": "量",
         "max": "Max",
         "fee": "最小转账手续费"
       },
@@ -245,10 +247,10 @@
         "date": "日期",
         "status": "状态",
         "owner": "所有者",
-        "hash": "Tx hash",
+        "hash": "Transaction hash",
+        "type": "Transaction type",
         "to-explorer": "浏览器查询",
         "confirmations": "{n} 确认数",
-        "amount": "数量",
         "fee": "转账手续费",
         "total": "总计"
       }

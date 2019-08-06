@@ -1,7 +1,7 @@
 <template>
   <AeInputAmount
     class="ae-input-amount-ae"
-    :header="$t('transfer.send.amount.amount')"
+    :header="$t('transfer.amount')"
     header-right="AE"
     :footer="footer || (max ? '' : $t('transfer.send.amount.fee'))"
     :footer-right="footerRight || (footer || max ? '' : minSpendTxFee)"

@@ -42,7 +42,7 @@
     <DetailsAmount
       v-if="transaction.received || !transaction.tx.amount"
       :amount="transaction.tx.amount || transaction.tx.fee"
-      :name="transaction.tx.amount ? 'Amount' : 'Fee'"
+      :name="transaction.tx.amount ? $t('transfer.amount') : $t('transfer.fee')"
     />
     <DetailsAmountAndFee
       v-else
@@ -74,7 +74,7 @@
     />
 
     <DetailsField
-      name="Transaction type"
+      :name="$t('transfer.transaction.details.type')"
       :value="transaction.type"
     />
 

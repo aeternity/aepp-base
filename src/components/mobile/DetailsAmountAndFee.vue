@@ -2,7 +2,7 @@
   <DetailsItem class="details-amount-and-fee">
     <DetailsRow>
       <span class="name">
-        {{ $t('transfer.transaction.details.amount') }}
+        {{ $t('transfer.amount') }}
       </span>
       <span class="value">
         {{ amount | prefixedAmount }} AE

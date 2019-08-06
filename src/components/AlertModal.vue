@@ -11,7 +11,7 @@
         {{ $t('cancel') }}
       </AeButton>
       <AeButton @click="resolve">
-        {{ primaryButtonText || $t('ok') }}
+        {{ primaryButtonText }}
       </AeButton>
     </AeButtonGroup>
   </Modal>
@@ -26,7 +26,10 @@ export default {
   components: { Modal, AeButtonGroup, AeButton },
   props: {
     text: { type: String, required: true },
-    primaryButtonText: { type: String, default: '' },
+    primaryButtonText: {
+      type: String,
+      default() { return this.$t('ok'); },
+    },
     resolve: { type: Function, required: true },
     reject: { type: Function, required: true },
     confirm: Boolean,
