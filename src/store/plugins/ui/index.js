@@ -2,6 +2,7 @@ import browserPathTracker from './browserPathTracker';
 import connectionStatusTracker from './connectionStatusTracker';
 import desktopGuide from './desktopGuide';
 import languages from './languages';
+import currencies from './currencies';
 import ledgerConnection from './ledgerConnection';
 import modals from './modals';
 import names from './names';
@@ -13,6 +14,7 @@ import veeValidate from './veeValidate';
 export default store => [
   connectionStatusTracker,
   languages,
+  currencies,
   modals,
   names,
   observables,
