@@ -1,5 +1,6 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Vue from 'vue';
+import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
 
 export default (store) => {
   store.registerModule('names', {
@@ -48,7 +49,12 @@ export default (store) => {
           (await Promise.all(rootState.accounts.list.map(async ({ address }) => {
             const names = (await Promise.all([
               (async () => (await rootState.sdk.api.getPendingAccountTransactionsByPubkey(address)
-                .catch(() => ({ transactions: [] })))
+                .catch((error) => {
+                  if (!isAccountNotFoundError(error)) {
+                    handleUnknownError(error);
+                  }
+                  return { transactions: [] };
+                }))
                 .transactions
                 .filter(({ tx: { type } }) => type === 'NameClaimTx')
                 .map(({ tx, ...otherTx }) => ({

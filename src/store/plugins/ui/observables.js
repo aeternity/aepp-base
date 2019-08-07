@@ -8,6 +8,7 @@ import { refCountDelay } from 'rxjs-etc/operators';
 import { memoize, upperFirst, lowerCase } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
+import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -26,7 +27,12 @@ export default (store) => {
     .pipe(
       switchMap(sdk => timer(0, 3000).pipe(map(() => sdk))),
       switchMap(sdk => (sdk
-        ? sdk.api.getAccountByPubkey(address).catch(() => defaultAccountInfo)
+        ? sdk.api.getAccountByPubkey(address).catch((error) => {
+          if (!isAccountNotFoundError(error)) {
+            handleUnknownError(error);
+          }
+          return defaultAccountInfo;
+        })
         : Promise.resolve(defaultAccountInfo))),
       map(aci => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
       multicast(new BehaviorSubject(defaultAccountInfo)),
@@ -127,7 +133,15 @@ export default (store) => {
     if (store.state.sdk.then) await store.state.sdk;
     const txs = await Promise.all((
       await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
-        .then(r => r.transactions, () => [])
+        .then(
+          r => r.transactions,
+          (error) => {
+            if (!isAccountNotFoundError(error)) {
+              handleUnknownError(error);
+            }
+            return [];
+          },
+        )
     )
       .map(transaction => ({ ...transaction, pending: true }))
       .map(normalizeTransaction));
@@ -250,7 +264,10 @@ export default (store) => {
           list: getTransactionsByAddress(store.getters['accounts/active'].address),
           status: '',
         }),
-        catchError(() => of({ list: [], status: 'error' })),
+        catchError((error) => {
+          handleUnknownError(error);
+          return of({ list: [], status: 'error' });
+        }),
       );
   };
 
