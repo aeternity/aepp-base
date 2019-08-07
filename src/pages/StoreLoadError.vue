@@ -9,10 +9,13 @@
 <script>
 import FullscreenPrompt from './FullscreenPrompt.vue';
 import { resetState } from '../store/plugins/persistState';
-import { i18n } from '../store/plugins/ui/languages';
+import { i18n, fetchAndSetLocale, preferredLocale } from '../store/plugins/ui/languages';
 
 export default {
   components: { FullscreenPrompt },
+  async mounted() {
+    await fetchAndSetLocale(preferredLocale);
+  },
   methods: { resetState },
   i18n,
 };

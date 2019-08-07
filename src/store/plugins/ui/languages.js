@@ -29,6 +29,19 @@ const languages = {
   },
 };
 
+export const fetchAndSetLocale = async (languageCode) => {
+  if (!i18n.availableLocales.includes(languageCode)) {
+    const messages = (await languages[languageCode].getMessages()).default;
+    i18n.setLocaleMessage(languageCode, messages);
+  }
+  i18n.locale = languageCode;
+};
+
+export const preferredLocale = (() => {
+  const code = navigator.language.split('-')[0];
+  return languages[code] ? code : fallbackLocale;
+})();
+
 if (module.hot) {
   module.hot.accept(
     ['../../../locales/en.json', '../../../locales/ru.json', '../../../locales/cn.json'],
@@ -40,13 +53,10 @@ if (module.hot) {
 }
 
 export default async (store) => {
-  const preferredLanguageCode = navigator.language.split('-')[0];
-
   store.registerModule('languages', {
     namespaced: true,
     state: {
-      activeCode: (store.state.languages && store.state.languages.activeCode)
-        || (languages[preferredLanguageCode] ? preferredLanguageCode : 'en'),
+      activeCode: store.state.languages ? store.state.languages.activeCode : preferredLocale,
     },
     getters: {
       list: () => Object.entries(languages)
@@ -57,18 +67,11 @@ export default async (store) => {
     mutations: {
       setActiveCode(state, languageCode) {
         state.activeCode = languageCode;
-        i18n.locale = languageCode;
       },
     },
     actions: {
-      async fetch(context, languageCode) {
-        if (!i18n.availableLocales.includes(languageCode)) {
-          const messages = (await languages[languageCode].getMessages()).default;
-          i18n.setLocaleMessage(languageCode, messages);
-        }
-      },
-      async setActiveCode({ commit, dispatch }, languageCode) {
-        await dispatch('fetch', languageCode);
+      async setActiveCode({ commit }, languageCode) {
+        await fetchAndSetLocale(languageCode);
         commit('setActiveCode', languageCode);
       },
     },
@@ -87,6 +90,5 @@ export default async (store) => {
     };
   }
 
-  await store.dispatch('languages/fetch', store.state.languages.activeCode);
-  i18n.locale = store.state.languages.activeCode;
+  await fetchAndSetLocale(store.state.languages.activeCode);
 };
