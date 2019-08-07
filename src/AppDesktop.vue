@@ -55,6 +55,5 @@ export default {
 
 body {
   background: $color-neutral-positive-2;
-  margin: 0;
 }
 </style>
