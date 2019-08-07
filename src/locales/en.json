@@ -649,6 +649,12 @@
       }
     },
 
+    "currency": {
+      "title": "Display Currency",
+      "subtitle": "Choose a currency to display",
+      "use-as-main": "Use as display currency"
+    },
+
     "account-remove": {
       "title": "Synced Wallets",
       "disconnect": "Disconnect"

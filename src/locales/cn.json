@@ -648,6 +648,12 @@
       }
     },
 
+    "currency": {
+      "title": "Display Currency",
+      "subtitle": "Choose a currency to display",
+      "use-as-main": "Use as display currency"
+    },
+
     "account-remove": {
       "title": "同步钱包",
       "disconnect": "未连接"

@@ -19,6 +19,17 @@
         <LeftMore slot="right" />
       </ListItem>
       <ListItem
+        :to="{ name: 'settings-currency' }"
+        :title="$t('settings.currency.title')"
+        :subtitle="$t('settings.currency.subtitle')"
+        class="currency"
+      >
+        <ListItemCircle slot="icon">
+          <Currency />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
+      <ListItem
         :to="{ name: 'settings-remote-connection' }"
         :title="$t('remote-connection.settings.title')"
         :subtitle="$tc('remote-connection.settings.count', remoteConnectionsCount)"
@@ -128,7 +139,7 @@ import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import SettingsVersion from '../../components/SettingsVersion.vue';
 import {
-  Network, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
+  Network, Currency, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
 } from '../../components/icons';
 
 export default {
@@ -144,6 +155,7 @@ export default {
     MnemonicBackupWarning,
     SettingsVersion,
     Network,
+    Currency,
     LeftMore,
     Device,
     Grid,
@@ -185,8 +197,10 @@ export default {
       }
     }
 
-    &.app-list .list-item-circle {
-      background-color: #f8963d;
+    &.app-list, &.currency {
+      .list-item-circle {
+        background-color: #f8963d;
+      }
     }
 
     &.courses .list-item-circle {
