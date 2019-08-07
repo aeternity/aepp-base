@@ -29,11 +29,11 @@
       <div class="details">
         {{ account ? name : $t('header.connect-account') }}
         <div class="balance">
-          {{
-            account
-              ? `${prefixedAmount(account.balance)} AE`
-              : $t('header.connect-account-with')
-          }}
+          <Balance
+            v-if="account"
+            :balance="account.balance"
+          />
+          <span v-else>$t('header.connect-account-with')</span>
         </div>
       </div>
       <AeIdenticon :address="account ? account.address : ''" />
@@ -46,10 +46,11 @@ import { mapState, mapMutations } from 'vuex';
 import { Grid, Receive, Settings } from '../icons';
 import ButtonPlain from '../ButtonPlain.vue';
 import AeIdenticon from '../AeIdenticon.vue';
+import Balance from '../Balance.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
-  components: { AeIdenticon, ButtonPlain },
+  components: { AeIdenticon, ButtonPlain, Balance },
   subscriptions() {
     return { account: this.$store.state.observables.activeAccount };
   },

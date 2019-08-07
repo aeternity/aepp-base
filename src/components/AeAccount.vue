@@ -22,6 +22,8 @@
       slot="toolbar"
       :balance="balance"
       invert
+      convertable
+      left-visible
     />
   </AeCard>
 </template>

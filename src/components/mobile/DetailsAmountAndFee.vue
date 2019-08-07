@@ -5,7 +5,7 @@
         {{ $t('transfer.amount') }}
       </span>
       <span class="value">
-        {{ amount | prefixedAmount }} AE
+        <Balance :balance="amount" />
       </span>
     </DetailsRow>
 
@@ -23,7 +23,10 @@
         {{ $t('transfer.transaction.details.total') }}
       </span>
       <span class="value">
-        {{ amount.plus(fee) | prefixedAmount }}<small> AE</small>
+        <Balance
+          :balance="amount"
+          convertable
+        />
       </span>
     </DetailsRow>
   </DetailsItem>
@@ -33,10 +36,11 @@
 import BigNumber from 'bignumber.js';
 import DetailsItem from './DetailsItem.vue';
 import DetailsRow from './DetailsRow.vue';
+import Balance from '../Balance.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
-  components: { DetailsItem, DetailsRow },
+  components: { DetailsItem, DetailsRow, Balance },
   filters: { prefixedAmount },
   props: {
     amount: { type: BigNumber, required: true },
@@ -70,17 +74,6 @@ export default {
     align-items: baseline;
     margin-top: rem(20px);
     color: var(--color-primary, $color-neutral-maximum);
-
-    .value {
-      font-size: rem(23px);
-      line-height: rem(23px);
-      font-weight: normal;
-
-      small {
-        font-size: rem(13px);
-        font-weight: 500;
-      }
-    }
   }
 }
 </style>

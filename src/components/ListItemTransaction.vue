@@ -23,7 +23,7 @@
       class="balance-change"
     >
       <template v-if="tx.amount">
-        <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+        <span :class="received ? 'plus' : 'minus'" />&nbsp;<Balance :balance="tx.amount" />
       </template>
       <small>{{ tx.fee | prefixedAmount }}&nbsp;AE</small>
     </div>
@@ -36,9 +36,10 @@ import prefixedAmount from '../filters/prefixedAmount';
 import formatAddress from '../filters/formatAddress';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
+import Balance from './Balance.vue';
 
 export default {
-  components: { ListItem, AeIdenticon },
+  components: { ListItem, AeIdenticon, Balance },
   filters: { prefixedAmount },
   props: {
     pending: Boolean,
@@ -69,10 +70,13 @@ export default {
   }
 
   .balance-change {
-    @extend %face-mono-xs;
-    font-weight: bold;
-    color: $color-neutral-negative-3;
     text-align: right;
+
+    &, .balance {
+      @extend %face-mono-xs;
+      font-weight: bold;
+      color: $color-neutral-negative-3;
+    }
 
     .plus:after {
       color: $color-alternative;
