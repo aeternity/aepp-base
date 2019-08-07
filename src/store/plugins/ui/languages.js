@@ -6,8 +6,11 @@ import en from '../../../locales/en.json';
 
 Vue.use(VueI18n);
 
+const fallbackLocale = 'en';
+
 export const i18n = new VueI18n({
-  fallbackLocale: 'en',
+  fallbackLocale,
+  locale: fallbackLocale,
   messages: { en },
 });
 
