@@ -26,6 +26,7 @@
           class="subtitle"
           :class="{ monospace: subtitleMonospace }"
         >
+          <slot name="subtitle" />
           {{ subtitle }}
         </div>
       </div>

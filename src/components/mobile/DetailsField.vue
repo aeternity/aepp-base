@@ -9,6 +9,7 @@
         :class="{ monospace: valueMonospace }"
       >
         {{ value }}
+        <slot name="value" />
       </span>
     </DetailsRow>
     <slot />
