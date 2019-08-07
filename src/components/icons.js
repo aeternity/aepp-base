@@ -15,6 +15,7 @@ export { default as Close } from '../assets/icons/inline/close.svg?icon-componen
 export { default as CloseCircle } from '../assets/icons/inline/close-circle.svg?icon-component';
 export { default as Contacts } from '../assets/icons/inline/contacts.svg?icon-component';
 export { default as Copy } from '../assets/icons/inline/copy.svg?icon-component';
+export { default as Currency } from '../assets/icons/inline/currency.svg?icon-component';
 export { default as Delete } from '../assets/icons/inline/delete.svg?icon-component';
 export { default as Device } from '../assets/icons/inline/device.svg?icon-component';
 export { default as Diagram } from '../assets/icons/inline/diagram.svg?icon-component';
