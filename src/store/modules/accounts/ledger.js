@@ -109,7 +109,7 @@ export default {
         args: [
           rootGetters['accounts/active'].source.idx,
           binaryTx,
-          sdk.nodeNetworkId,
+          sdk.getNetworkId(),
         ],
       }), 'hex');
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));

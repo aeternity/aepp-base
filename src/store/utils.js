@@ -1,6 +1,3 @@
-import {
-  isPlainObject, mapKeys, mapValues, camelCase,
-} from 'lodash-es';
 import { derivePathFromKey, getKeyPair } from '@aeternity/hd-wallet/src/hd-key';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 
@@ -28,22 +25,6 @@ export const derivePasswordKey = async (password, salt) => {
     ['encrypt', 'decrypt'],
   );
 };
-
-export const fetchJson = async (...args) => {
-  const response = await fetch(...args);
-  return response.json();
-};
-
-export const mapKeysDeep = (object, callback) => {
-  if (Array.isArray(object)) return object.map(item => mapKeysDeep(item, callback));
-  if (!isPlainObject(object)) return object;
-  return mapValues(mapKeys(object, callback), item => mapKeysDeep(item, callback));
-};
-
-export const fetchMiddlewareEndpoint = async url => mapKeysDeep(
-  await fetchJson(url),
-  (value, key) => camelCase(key),
-);
 
 export { generateHDWallet as generateHdWallet } from '@aeternity/hd-wallet/src';
 
