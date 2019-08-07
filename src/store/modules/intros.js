@@ -26,8 +26,13 @@ export default {
       state: { read }, getters: { intros }, commit, dispatch,
     }, key) {
       if (read[key]) return;
-      await dispatch('modals/open', { name: 'showIntro', content: intros[key] }, { root: true });
-      commit('markAsRead', key);
+      try {
+        await dispatch('modals/open', { name: 'showIntro', content: intros[key] }, { root: true });
+        commit('markAsRead', key);
+      } catch (error) {
+        if (error.message === 'User navigated outside') return;
+        throw error;
+      }
     },
   },
 };
