@@ -207,7 +207,7 @@
       "resolved": {
         "title": "Transfer completed",
         "note": "Transaction broadcast successfully!",
-        "subtitle": "You've sent {amount} AE",
+        "subtitle": "You've sent {amount}",
         "to-history": "View in history",
         "to-explorer": "View on explorer",
         "copy": "Copy tx hash"

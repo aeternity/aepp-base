@@ -5,7 +5,7 @@
   >
     <ListItem
       :title="$t('transfer.send.resolved.title')"
-      :subtitle="$t('transfer.send.resolved.subtitle', { amount: prefixedAmount(amount) })"
+      :subtitle="$t('transfer.send.resolved.subtitle', { amount: convertedAmount })"
     >
       <ListItemCircle slot="icon">
         <Check />
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 import BigNumber from 'bignumber.js';
 import Notification from './Notification.vue';
 import ListItem from './ListItem.vue';
@@ -41,6 +42,7 @@ import ListItemCircle from './ListItemCircle.vue';
 import { Check } from './icons';
 import AeButton from './AeButton.vue';
 import prefixedAmount from '../filters/prefixedAmount';
+import currencyAmount from '../filters/currencyAmount';
 import copyOnClick from '../directives/copyOnClick';
 
 export default {
@@ -56,7 +58,19 @@ export default {
     amount: { type: BigNumber, required: true },
     transactionHash: { type: String, required: true },
   },
+  computed: {
+    ...mapState('currencies', ['swapped']),
+    ...mapGetters('currencies', ['active']),
+    convertedAmount() {
+      return this.swapped
+        ? currencyAmount(this.amount.multipliedBy(this.rate), this.active)
+        : currencyAmount(prefixedAmount(this.amount), { symbol: 'AE' });
+    },
+  },
   methods: { prefixedAmount },
+  subscriptions() {
+    return { rate: this.$store.state.observables.rate };
+  },
 };
 </script>
 
