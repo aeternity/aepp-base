@@ -271,6 +271,23 @@ export default (store) => {
       );
   };
 
+  const rate$ = watchAsObservable(
+    ({ currencies: { activeCode, referenceCurrency } }) => [activeCode, referenceCurrency],
+    { immediate: true },
+  )
+    .pipe(
+      pluck('newValue'),
+      switchMap(p => timer(0, 60000).pipe(map(() => p))),
+      switchMap(([activeCode, referenceCurrency]) => new Observable(async (subscriber) => {
+        const response = await fetch(
+          `https://api.coingecko.com/api/v3/simple/price?ids=${referenceCurrency}&vs_currencies=${activeCode}`,
+        );
+        subscriber.next((await response.json())[referenceCurrency][activeCode]);
+      })),
+      multicast(new BehaviorSubject(BigNumber(0))),
+      refCountDelay(1000),
+    );
+
   store.state.observables = { // eslint-disable-line no-param-reassign
     topBlockHeight: topBlockHeight$,
     getTransaction,
@@ -295,5 +312,6 @@ export default (store) => {
     totalBalance: accounts$.pipe(
       map(acs => acs.reduce((prev, { balance }) => prev.plus(balance), BigNumber(0))),
     ),
+    rate: rate$,
   };
 };
