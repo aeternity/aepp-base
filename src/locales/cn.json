@@ -30,7 +30,7 @@
 
   "update-available": {
     "title": "发现新版本。",
-    "restart": "Restart the Base æpp"
+    "restart": "请重新启动Base æpp."
   },
 
   "store-load-error": {
@@ -51,9 +51,9 @@
     "min": "该字段必须至少为{n}个字符",
     "required": "这是必填栏",
     "address": "无效AE地址",
-    "max_value": "该字段必须为{n}或更少",
-    "min_value": "该字段必须为{n}或更多",
-    "min_value_exclusive": "该字段必须大于{n} ",
+    "max_value": "余额不足",
+    "min_value": "请适当缩小数位",
+    "min_value_exclusive": "必须大于",
     "mnemonic": "无效助记词",
     "url_http": "该字段不是有效的HTTP(S) URL",
     "air_gap_response_url": "这不是有效的同步代码。",
@@ -401,7 +401,7 @@
     },
 
     "new": {
-      "guide": "<primary>申请一个名称</primary> 为 <inlineAccount />",
+      "guide": "为 <inlineAccount /><primary>申请一个新名称</primary> ",
       "unknown-error": "未知错误",
       "name": "名称",
       "name-placeholder": "Name.test",
