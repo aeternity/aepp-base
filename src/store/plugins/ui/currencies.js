@@ -23,10 +23,10 @@ export default async (store) => {
 
   store.registerModule('currencies', {
     namespaced: true,
-    state: {
+    state: Object.assign({
       activeCode: preferredCurrencyCode,
       swapped: false,
-    },
+    }, store.state.currencies),
     getters: {
       list: () => Object.entries(currencies)
         .map(([code, { name, symbol, isCrypto }]) => ({
