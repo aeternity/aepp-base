@@ -9,6 +9,9 @@ import { memoize, upperFirst, lowerCase } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
+import { fetchJson } from '../../utils';
+import currencyAmount from '../../../filters/currencyAmount';
+import prefixedAmount from '../../../filters/prefixedAmount';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -92,6 +95,43 @@ export default (store) => {
   )
     .pipe(pluck('newValue'));
 
+  const referenceCurrency = 'aeternity';
+
+  const rate$ = watchAsObservable(
+    ({ currencies: { activeCode } }) => activeCode,
+    { immediate: true },
+  )
+    .pipe(
+      pluck('newValue'),
+      switchMap(p => timer(0, 60000).pipe(map(() => p))),
+      switchMap(async (activeCode) => {
+        const url = new URL('https://api.coingecko.com/api/v3/simple/price');
+        url.searchParams.set('ids', referenceCurrency);
+        url.searchParams.set('vs_currencies', activeCode);
+        return (await fetchJson(url))[referenceCurrency][activeCode];
+      }),
+      multicast(new BehaviorSubject(0)),
+      refCountDelay(1000),
+    );
+
+  const convertAmount = (amountAeGetter, overrideSwapped) => watchAsObservable(
+    ({ currencies }, getters) => ({
+      amount: amountAeGetter(),
+      swapped: overrideSwapped !== undefined ? overrideSwapped : currencies.swapped,
+      active: getters['currencies/active'],
+    }),
+    { immediate: true },
+  )
+    .pipe(
+      pluck('newValue'),
+      switchMap(args => (args.swapped
+        ? rate$.pipe(map(rate => ({ ...args, amount: args.amount.multipliedBy(rate) })))
+        : Promise.resolve(args))),
+      map(({ swapped, amount, active }) => currencyAmount(
+        ...swapped ? [amount, active] : [prefixedAmount(amount), { symbol: 'AE' }],
+      )),
+    );
+
   let transactions = {};
   let transactionRangeForAddress = {};
 
@@ -101,6 +141,11 @@ export default (store) => {
   });
 
   const registerTx = (tx) => { transactions[tx.hash] = tx; };
+
+  const addConvertedAmount = tx => (tx.tx.amount
+    ? convertAmount(() => tx.tx.amount)
+      .pipe(map(convertedAmount => ({ ...tx, convertedAmount })))
+    : Promise.resolve(tx));
 
   const getTransaction = transactionHash$ => combineLatest([
     activeAccountAddress$, topBlockHeight$, transactionHash$, sdk$,
@@ -117,6 +162,7 @@ export default (store) => {
           confirmationCount: height - tx.blockHeight,
         });
       }),
+      switchMap(addConvertedAmount),
     );
 
   const fetchMdwTransactions = async (address, limit, page) => {
@@ -260,8 +306,16 @@ export default (store) => {
             subscriber.error(error);
           }
         })),
+        switchMap(({ list, ...other }) => combineLatest(list.map(addConvertedAmount))
+          .pipe(map(txs => ({ list: txs, ...other })))),
         startWith({
-          list: getTransactionsByAddress(store.getters['accounts/active'].address),
+          list: getTransactionsByAddress(store.getters['accounts/active'].address)
+            .map(tx => ({
+              ...tx,
+              ...tx.tx.amount && {
+                convertedAmount: currencyAmount(prefixedAmount(tx.tx.amount), { symbol: 'AE' }),
+              },
+            })),
           status: '',
         }),
         catchError((error) => {
@@ -295,5 +349,7 @@ export default (store) => {
     totalBalance: accounts$.pipe(
       map(acs => acs.reduce((prev, { balance }) => prev.plus(balance), BigNumber(0))),
     ),
+    rate: rate$,
+    convertAmount,
   };
 };

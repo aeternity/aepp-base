@@ -26,7 +26,7 @@
       />
     </Guide>
 
-    <DetailsAmount
+    <DetailsAmountCurrency
       v-if="transaction.amount"
       :amount="transaction.amount"
     />
@@ -71,7 +71,7 @@ import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
 import AccountInline from '../AccountInline.vue';
-import DetailsAmount from './DetailsAmount.vue';
+import DetailsAmountCurrency from './DetailsAmountCurrency.vue';
 import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';
@@ -96,7 +96,7 @@ export default {
     Guide,
     AeFraction,
     AccountInline,
-    DetailsAmount,
+    DetailsAmountCurrency,
     DetailsFeeInput,
     AeButtonGroup,
     AeButton,

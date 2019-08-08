@@ -9,7 +9,7 @@
       {{ $t('transfer.send.resolved.note') }}
     </ModalHeader>
     <div class="note">
-      {{ $t('transfer.send.resolved.subtitle', { amount: prefixedAmount(amount) }) }}
+      {{ $t('transfer.send.resolved.subtitle', { amount: convertedAmount }) }}
     </div>
 
     <template slot="footer">
@@ -47,6 +47,9 @@ export default {
     resolve: { type: Function, required: true },
   },
   computed: mapGetters(['currentNetwork']),
+  subscriptions() {
+    return { convertedAmount: this.$store.state.observables.convertAmount(() => this.amount) };
+  },
   methods: { prefixedAmount },
 };
 </script>

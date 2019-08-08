@@ -26,6 +26,11 @@ export const derivePasswordKey = async (password, salt) => {
   );
 };
 
+export const fetchJson = async (...args) => {
+  const response = await fetch(...args);
+  return response.json();
+};
+
 export { generateHDWallet as generateHdWallet } from '@aeternity/hd-wallet/src';
 
 export const getHdWalletAccount = (wallet, accountIdx) => {

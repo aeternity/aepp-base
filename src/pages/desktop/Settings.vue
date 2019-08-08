@@ -26,6 +26,22 @@
         </div>
       </ListItem>
 
+      <ListItem
+        :title="$t('settings.currency.title')"
+        :subtitle="$t('settings.currency.subtitle')"
+        class="currency"
+      >
+        <ListItemCircle slot="icon">
+          <Currency />
+        </ListItemCircle>
+        <ButtonPlain
+          slot="right"
+          @click="showCurrencySwitcher = true"
+        >
+          <LeftMore ref="currencyIcon" />
+        </ButtonPlain>
+      </ListItem>
+
       <ListItemSettingsLanguage>
         <ButtonPlain @click="showLanguageSwitcher = true">
           <LeftMore ref="languageIcon" />
@@ -51,6 +67,14 @@
     </AePopover>
 
     <AePopover
+      :anchor="showCurrencySwitcher ? $refs.currencyIcon : null"
+      v-bind="popoverOrigin"
+      @close="showCurrencySwitcher = false"
+    >
+      <CurrencySwitcher @switch="showCurrencySwitcher = false" />
+    </AePopover>
+
+    <AePopover
       :anchor="showLanguageSwitcher ? $refs.languageIcon : null"
       v-bind="popoverOrigin"
       @close="showLanguageSwitcher = false"
@@ -70,10 +94,11 @@ import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
 import ListItemSettingsReset from '../../components/ListItemSettingsReset.vue';
 import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.vue';
-import { Network, LeftMore } from '../../components/icons';
+import { Network, LeftMore, Currency } from '../../components/icons';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
+import CurrencySwitcher from '../../components/CurrencySwitcher.vue';
 import LanguageSwitcher from '../../components/LanguageSwitcher.vue';
 import SettingsVersion from '../../components/SettingsVersion.vue';
 
@@ -89,8 +114,10 @@ export default {
     Network,
     ButtonPlain,
     LeftMore,
+    Currency,
     NetworkSwitcher,
     NetworkAdd,
+    CurrencySwitcher,
     LanguageSwitcher,
     SettingsVersion,
   },
@@ -101,6 +128,7 @@ export default {
     },
     networkMode: false,
     showLanguageSwitcher: false,
+    showCurrencySwitcher: false,
   }),
   computed: {
     ...mapGetters(['currentNetwork']),
@@ -127,6 +155,10 @@ export default {
     .list-item {
       &.network .list-item-circle {
         background-color: $color-secondary;
+      }
+
+      &.currency .list-item-circle {
+        background-color: #f8963d;
       }
 
       .value {
