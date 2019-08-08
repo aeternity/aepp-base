@@ -1,14 +1,19 @@
 <template>
   <AeInputAmount
     class="ae-input-amount-ae"
-    :header="$t('transfer.send.amount.amount')"
-    header-right="AE"
+    :header="$t('transfer.amount')"
     :footer="footer || (max ? '' : $t('transfer.send.amount.fee'))"
     :footer-right="footerRight || (footer || max ? '' : minSpendTxFee)"
     :value="value"
     v-bind="$attrs"
     v-on="$listeners"
   >
+    <span
+      slot="header-right"
+      @click="swapCurrencies"
+    >
+      {{ symbol }}
+    </span>
     <AeToolbarButton
       v-if="max"
       slot="footer-right"
@@ -22,6 +27,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 import AeInputAmount from './AeInputAmount.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import { MIN_SPEND_TX_FEE } from '../lib/constants';
@@ -38,5 +44,9 @@ export default {
   data: () => ({
     minSpendTxFee: `${prefixedAmount(MIN_SPEND_TX_FEE)} AE`,
   }),
+  computed: mapState('currencies', {
+    symbol: ({ swapped }, { active: { symbol } }) => (swapped ? symbol : 'AE'),
+  }),
+  methods: mapMutations('currencies', ['swapCurrencies']),
 };
 </script>

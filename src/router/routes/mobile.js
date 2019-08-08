@@ -27,6 +27,7 @@ import NameNew from '../../pages/mobile/NameNew.vue';
 import Settings from '../../pages/mobile/Settings.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
+import SettingsCurrency from '../../pages/mobile/SettingsCurrency.vue';
 import SettingsRemoteConnection from '../../pages/mobile/SettingsRemoteConnection.vue';
 import SettingsRemoteConnectionNew from '../../pages/mobile/SettingsRemoteConnectionNew.vue';
 import SettingsAppList from '../../pages/mobile/SettingsAppList.vue';
@@ -221,6 +222,11 @@ export default [{
   name: 'settings-network-new',
   path: '/settings/network/new',
   component: SettingsNetworkNew,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'settings-currency',
+  path: '/settings/currency',
+  component: SettingsCurrency,
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-remote-connection',

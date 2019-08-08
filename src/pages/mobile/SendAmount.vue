@@ -34,7 +34,7 @@
           v-model="amount"
           v-validate="{
             required: true,
-            decimal: MAGNITUDE,
+            decimal: swapped ? 2 : MAGNITUDE,
             min_value_exclusive: 0,
             max_value: max,
           }"
@@ -52,7 +52,7 @@
       :amount="minFee"
     />
 
-    <DetailsAmount
+    <DetailsAmountCurrency
       :name="$t('transfer.send.amount.balance')"
       :amount="activeAccount.balance"
     />
@@ -69,7 +69,7 @@
 
 <script>
 import { pick } from 'lodash-es';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import BigNumber from 'bignumber.js';
 import { TxBuilder } from '@aeternity/aepp-sdk/es';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -78,8 +78,12 @@ import AeFraction from '../../components/AeFraction.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
 import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
+import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE } from '../../lib/constants';
+
+const toCurrency = (value, rate) => value.multipliedBy(rate).precision(17, BigNumber.ROUND_FLOOR);
+const toAe = (value, rate) => value.dividedBy(rate).precision(17, BigNumber.ROUND_FLOOR).toFixed();
 
 export default {
   components: {
@@ -89,6 +93,7 @@ export default {
     AccountInline,
     AeInputAmountAe,
     DetailsAmount,
+    DetailsAmountCurrency,
     AeButton,
   },
   props: {
@@ -105,9 +110,11 @@ export default {
   }),
   computed: {
     ...mapGetters('accounts', ['activeColor']),
+    ...mapState('currencies', ['swapped']),
     max() {
       const max = this.activeAccount.balance.minus(this.minFee);
-      return (max.isPositive() ? max : 0).toString();
+      const convertedMax = this.swapped ? toCurrency(max, this.rate) : max;
+      return (convertedMax.isPositive() ? convertedMax : 0).toString();
     },
     amount: {
       get() {
@@ -123,7 +130,7 @@ export default {
     },
   },
   subscriptions() {
-    return pick(this.$store.state.observables, ['activeAccount']);
+    return pick(this.$store.state.observables, ['activeAccount', 'rate']);
   },
   mounted() {
     this.$watch(
@@ -151,7 +158,11 @@ export default {
   methods: {
     async setAmount() {
       if (!await this.$validator.validateAll()) return;
-      this.$router.push({ name: 'send-confirm', params: { to: this.to, amount: this.amount } });
+      const convertedAmount = this.swapped ? toAe(BigNumber(this.amount), this.rate) : this.amount;
+      this.$router.push({
+        name: 'send-confirm',
+        params: { to: this.to, amount: convertedAmount.toString() },
+      });
     },
   },
 };

@@ -1,6 +1,5 @@
 <template>
   <ListItem
-    v-if="$globals.UNFINISHED_FEATURES"
     :subtitle="active.name"
     v-bind="$attrs"
     :title="$t('settings.language')"

@@ -48,6 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { handleUnknownError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -85,7 +86,7 @@ export default {
       } catch (e) {
         if (e.message === 'Rejected by user') return;
         this.error = true;
-        throw e;
+        handleUnknownError(e);
       } finally {
         this.busy = false;
       }
@@ -107,7 +108,7 @@ export default {
           name: 'notification',
           text: i18n.t('name.new.notification.unknown-error', { name: this.name }),
         });
-        throw e;
+        handleUnknownError(e);
       } finally {
         this.$store.dispatch('names/fetchOwned');
       }

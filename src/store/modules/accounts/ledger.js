@@ -20,7 +20,7 @@ export default {
 
   account: {
     type: 'ledger',
-    typeVerbose: i18n.t('ledger.account-name'),
+    getTypeVerbose: () => i18n.t('ledger.account-name'),
     color: 'dark',
   },
 
@@ -109,7 +109,7 @@ export default {
         args: [
           rootGetters['accounts/active'].source.idx,
           binaryTx,
-          sdk.nodeNetworkId,
+          sdk.getNetworkId(),
         ],
       }), 'hex');
       return Crypto.encodeTx(Crypto.prepareTx(signature, binaryTx));

@@ -5,7 +5,7 @@
   >
     <ListItem
       :title="$t('transfer.send.resolved.title')"
-      :subtitle="$t('transfer.send.resolved.subtitle', { amount: prefixedAmount(amount) })"
+      :subtitle="$t('transfer.send.resolved.subtitle', { amount: convertedAmount })"
     >
       <ListItemCircle slot="icon">
         <Check />
@@ -57,6 +57,9 @@ export default {
     transactionHash: { type: String, required: true },
   },
   methods: { prefixedAmount },
+  subscriptions() {
+    return { convertedAmount: this.$store.state.observables.convertAmount(() => this.amount) };
+  },
 };
 </script>
 

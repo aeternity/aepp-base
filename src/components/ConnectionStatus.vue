@@ -17,7 +17,7 @@ export default {
       if (!onLine) return { text: this.$t('network.connection-status.offline') };
       if (!sdk) return { text: this.$t('network.connection-status.no-sdk') };
       if (sdk.then) return { text: this.$t('network.connection-status.connecting'), className: 'connecting' };
-      if (process.env.NODE_ENV === 'production' && sdk.nodeNetworkId !== 'ae_mainnet') {
+      if (process.env.NODE_ENV === 'production' && sdk.getNetworkId() !== 'ae_mainnet') {
         return { text: this.$t('network.connection-status.connected-to-testnet'), className: 'test-net' };
       }
       return null;

@@ -10,3 +10,6 @@ trim_trailing_whitespace = true
 
 [/config.xml]
 indent_size = 4
+
+[*.webmanifest]
+indent_size = 4

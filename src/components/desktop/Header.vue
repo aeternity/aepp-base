@@ -29,11 +29,7 @@
       <div class="details">
         {{ account ? name : $t('header.connect-account') }}
         <div class="balance">
-          {{
-            account
-              ? `${prefixedAmount(account.balance)} AE`
-              : $t('header.connect-account-with')
-          }}
+          {{ account ? convertedBalance : $t('header.connect-account-with') }}
         </div>
       </div>
       <AeIdenticon :address="account ? account.address : ''" />
@@ -43,6 +39,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import { pluck, switchMap } from 'rxjs/operators';
 import { Grid, Receive, Settings } from '../icons';
 import ButtonPlain from '../ButtonPlain.vue';
 import AeIdenticon from '../AeIdenticon.vue';
@@ -51,7 +48,17 @@ import prefixedAmount from '../../filters/prefixedAmount';
 export default {
   components: { AeIdenticon, ButtonPlain },
   subscriptions() {
-    return { account: this.$store.state.observables.activeAccount };
+    return {
+      account: this.$store.state.observables.activeAccount,
+      convertedBalance: this
+        .$watchAsObservable(() => this.account, { immediate: true })
+        .pipe(
+          pluck('newValue'),
+          switchMap(shouldSubscribe => (shouldSubscribe
+            ? this.$store.state.observables.convertAmount(() => this.account.balance)
+            : Promise.resolve(''))),
+        ),
+    };
   },
   computed: {
     ...mapState('accounts', {

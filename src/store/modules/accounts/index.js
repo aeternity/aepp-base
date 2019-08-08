@@ -28,7 +28,7 @@ export default {
     getColor: (state, { getModule }) => account => getModule(account).account.color,
     getName: (state, { getModule, getByType }, rootState, rootGetters) => account => (
       rootGetters['names/get'](account.address, false) || [
-        getModule(account).account.typeVerbose,
+        getModule(account).account.getTypeVerbose(),
         ' #',
         getByType(account.source.type).findIndex(({ address }) => address === account.address) + 1,
       ].join('')),

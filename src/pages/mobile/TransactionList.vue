@@ -3,7 +3,7 @@
     header-fill="primary"
     class="transaction-list"
     right-button-icon-name="close"
-    @right-button-click="$router.push({ name: 'transfer' })"
+    :right-button-to="{ name: 'transfer' }"
   >
     <div
       slot="title"
@@ -13,6 +13,7 @@
       <Balance
         :balance="activeAccount.balance"
         invert
+        short
       />
     </div>
 

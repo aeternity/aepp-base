@@ -15,7 +15,7 @@ export default {
 
   account: {
     type: 'air-gap',
-    typeVerbose: i18n.t('air-gap.account-name'),
+    getTypeVerbose: () => i18n.t('air-gap.account-name'),
     color: 'alternative',
   },
 
@@ -74,7 +74,7 @@ export default {
 
     async signTransaction({ rootState: { sdk }, rootGetters, dispatch }, transaction) {
       const requestUrl = generateSignRequestUrl(
-        sdk.nodeNetworkId,
+        sdk.getNetworkId(),
         transaction,
         rootGetters['accounts/active'].source.publicKey,
       );

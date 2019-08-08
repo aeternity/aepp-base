@@ -6,8 +6,13 @@
   "ok": "OK",
   "deny": "Deny",
   "allow": "Allow",
-  "add-to-home-screen": "Please add this app to home screen.",
+  "copied": "Copied",
   "guide-desktop": "The Base æpp can currently work only when opened in a single browser tab. If you have any additional instances (tabs) of the Base æpp open, please close them.",
+
+  "add-to-home-screen": {
+    "note": "Please add this app to home screen.",
+    "button": "Add"
+  },
 
   "header": {
     "title": "Base web",
@@ -28,8 +33,8 @@
   },
 
   "update-available": {
-    "title": "A new version is available.",
-    "restart": "Restart the Base æpp"
+    "title": "A new version is available. Tap below to update.",
+    "restart": "Update"
   },
 
   "store-load-error": {
@@ -158,6 +163,8 @@
   "transfer": {
     "title": "Transfer",
     "guide": "<primary>Send and receive</primary> Æ",
+    "amount": "Amount",
+    "fee": "Fee",
 
     "tooltips": [{
       "selector": ".transfer .ae-account .ae-identicon",
@@ -192,7 +199,6 @@
       "amount": {
         "guide": "<primary>New Transfer</primary><br />from <senderAddress /><br />to <recipientAddress />",
         "balance": "Balance",
-        "amount": "Amount",
         "max": "Max",
         "fee": "Minimum transaction fee"
       },
@@ -200,7 +206,7 @@
       "resolved": {
         "title": "Transfer completed",
         "note": "Transaction broadcast successfully!",
-        "subtitle": "You've sent {amount} AE",
+        "subtitle": "You've sent {amount}",
         "to-history": "View in history",
         "to-explorer": "View on explorer",
         "copy": "Copy tx hash"
@@ -246,9 +252,9 @@
         "status": "Status",
         "owner": "Owner",
         "hash": "Transaction hash",
+        "type": "Transaction type",
         "to-explorer": "View in explorer",
         "confirmations": "0 Confirmations | {n} Confirmation | {n} Confirmations",
-        "amount": "Amount",
         "fee": "Transaction fee",
         "total": "Total"
       }
@@ -640,6 +646,12 @@
         "guide": "Enter your password to continue",
         "continue": "Continue"
       }
+    },
+
+    "currency": {
+      "title": "Display Currency",
+      "subtitle": "Choose a currency to display",
+      "use-as-main": "Use as display currency"
     },
 
     "account-remove": {

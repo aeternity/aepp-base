@@ -1,21 +1,22 @@
 <template>
   <AeCard
-    v-copy-on-click="address"
     :fill="fill"
     class="ae-account"
   >
-    <header>
-      <AeIdenticon :address="address" />
-      {{ name }}
-    </header>
+    <div v-copy-on-click="address">
+      <header>
+        <AeIdenticon :address="address" />
+        {{ name }}
+      </header>
 
-    <main>
-      <AeAddress
-        :address="address"
-        mode="three-columns-short"
-        disable-copy-on-click
-      />
-    </main>
+      <main>
+        <AeAddress
+          :address="address"
+          mode="three-columns-short"
+          disable-copy-on-click
+        />
+      </main>
+    </div>
 
     <Balance
       slot="toolbar"
@@ -69,7 +70,8 @@ export default {
 @import './copied.scss';
 
 .ae-account.ae-card {
-  &.v-copied {
+  div.v-copied {
+    overflow: hidden;
     @extend %copied;
   }
 

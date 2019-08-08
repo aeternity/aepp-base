@@ -5,7 +5,7 @@
     class="transaction-details"
     :title="$t('transfer.transaction.details.title')"
     left-button-icon-name="back"
-    @left-button-click="$router.push({ name: 'transaction-list' })"
+    :left-button-to="{ name: 'transaction-list' }"
   >
     <template slot="header">
       <Guide fill="neutral">
@@ -13,7 +13,7 @@
           {{ transaction.received
             ? $t('transfer.transaction.details.received')
             : $t('transfer.transaction.details.sent') }}
-          <em class="balance">{{ transaction.tx.amount | prefixedAmount }} AE</em>
+          <em class="balance">{{ transaction.convertedAmount }}</em>
         </template>
         <template v-if="transaction.tx.senderId">
           <br>{{ $t('transfer.transaction.details.from').toLowerCase() }}
@@ -39,10 +39,11 @@
       :value="status"
     />
 
-    <DetailsAmount
+    <DetailsAmountCurrency
       v-if="transaction.received || !transaction.tx.amount"
       :amount="transaction.tx.amount || transaction.tx.fee"
-      :name="transaction.tx.amount ? 'Amount' : 'Fee'"
+      :name="transaction.tx.amount ? $t('transfer.amount') : $t('transfer.fee')"
+      short
     />
     <DetailsAmountAndFee
       v-else
@@ -74,7 +75,7 @@
     />
 
     <DetailsField
-      name="Transaction type"
+      :name="$t('transfer.transaction.details.type')"
       :value="transaction.type"
     />
 
@@ -97,7 +98,7 @@ import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
 import DetailsAmountAndFee from '../../components/mobile/DetailsAmountAndFee.vue';
-import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
+import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import DetailsAddress from '../../components/mobile/DetailsAddress.vue';
 import AeButton from '../../components/AeButton.vue';
 
@@ -108,7 +109,7 @@ export default {
     AccountInline,
     DetailsField,
     DetailsAmountAndFee,
-    DetailsAmount,
+    DetailsAmountCurrency,
     DetailsAddress,
     AeButton,
   },

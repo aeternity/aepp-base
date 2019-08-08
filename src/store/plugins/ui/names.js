@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Vue from 'vue';
-import { fetchMiddlewareEndpoint } from '../../utils';
+import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
 
 export default (store) => {
   store.registerModule('names', {
@@ -34,40 +34,36 @@ export default (store) => {
       },
     },
     actions: {
-      async fetch({ state, rootGetters, commit }, address) {
+      async fetch({ rootState, state, commit }, address) {
         if (state.names[address]) return;
         commit('set', { address });
-        const url = new URL(
-          `/middleware/names/reverse/${address}`,
-          rootGetters.currentNetwork.middlewareUrl,
-        );
-        url.searchParams.set('limit', '1');
-        url.searchParams.set('page', '1');
-        const names = await fetchMiddlewareEndpoint(url);
+        if (rootState.sdk.then) await rootState.sdk;
+        const names = await rootState.sdk.middleware
+          .namesReverseGet(address, { limit: 1, page: 1 });
         if (names.length) commit('set', { address, name: names[0].name });
       },
-      async fetchOwned({ rootState, rootGetters, commit }) {
+      async fetchOwned({ rootState, commit }) {
+        if (rootState.sdk.then) await rootState.sdk;
         commit(
           'setOwned',
           (await Promise.all(rootState.accounts.list.map(async ({ address }) => {
             const names = (await Promise.all([
-              (async () => {
-                if (rootState.sdk.then) await rootState.sdk;
-                return (await rootState.sdk.api.getPendingAccountTransactionsByPubkey(address)
-                  .catch(() => ({ transactions: [] })))
-                  .transactions
-                  .filter(({ tx: { type } }) => type === 'NameClaimTx')
-                  .map(({ tx, ...otherTx }) => ({
-                    ...otherTx,
-                    ...tx,
-                    pending: true,
-                    owner: tx.accountId,
-                  }));
-              })(),
-              fetchMiddlewareEndpoint(new URL(
-                `/middleware/names/reverse/${address}`,
-                rootGetters.currentNetwork.middlewareUrl,
-              )),
+              (async () => (await rootState.sdk.api.getPendingAccountTransactionsByPubkey(address)
+                .catch((error) => {
+                  if (!isAccountNotFoundError(error)) {
+                    handleUnknownError(error);
+                  }
+                  return { transactions: [] };
+                }))
+                .transactions
+                .filter(({ tx: { type } }) => type === 'NameClaimTx')
+                .map(({ tx, ...otherTx }) => ({
+                  ...otherTx,
+                  ...tx,
+                  pending: true,
+                  owner: tx.accountId,
+                })))(),
+              rootState.sdk.middleware.namesReverseGet(address),
             ])).flat();
 
             commit('set', {

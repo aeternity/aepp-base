@@ -1,26 +1,24 @@
 <template>
-  <div class="add-to-home-screen-prompt">
-    <p>
-      {{ $t('add-to-home-screen') }}
-    </p>
-  </div>
+  <FullscreenPrompt
+    :message="$t('add-to-home-screen.note')"
+    :button-text="deferredPrompt ? $t('add-to-home-screen.button') : ''"
+    @button-click="() => deferredPrompt.prompt()"
+  />
 </template>
 
-<style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+<script>
+import FullscreenPrompt from '../FullscreenPrompt.vue';
 
-.add-to-home-screen-prompt {
-  flex-grow: 1;
-  display: flex;
-  background-color: $color-primary;
-
-  p {
-    text-align: center;
-    margin: auto;
-    max-width: rem(250px);
-    @extend %face-sans-l;
-    color: $color-neutral-maximum;
-  }
-}
-</style>
+export default {
+  components: { FullscreenPrompt },
+  data: () => ({
+    deferredPrompt: null,
+  }),
+  mounted() {
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      this.deferredPrompt = event;
+    });
+  },
+};
+</script>

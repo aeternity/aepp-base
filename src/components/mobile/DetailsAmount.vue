@@ -15,7 +15,10 @@ import prefixedAmount from '../../filters/prefixedAmount';
 export default {
   components: { DetailsField },
   props: {
-    name: { type: String, default: 'Amount' },
+    name: {
+      type: String,
+      default() { return this.$t('transfer.amount'); },
+    },
     amount: { type: BigNumber, required: true },
   },
   methods: { prefixedAmount },

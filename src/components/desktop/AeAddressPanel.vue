@@ -1,7 +1,7 @@
 <template>
   <div class="ae-address-panel">
     <div class="title">
-      {{ title || $t('components.address-panel.title-default') }}
+      {{ title }}
     </div>
     <AeAddress
       :address="address"
@@ -18,7 +18,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: '',
+      default() { return this.$t('components.address-panel.title-default'); },
     },
     address: {
       type: String,

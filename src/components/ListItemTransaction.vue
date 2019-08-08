@@ -23,7 +23,7 @@
       class="balance-change"
     >
       <template v-if="tx.amount">
-        <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ tx.amount | prefixedAmount }}&nbsp;AE
+        <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ convertedAmount }}
       </template>
       <small>{{ tx.fee | prefixedAmount }}&nbsp;AE</small>
     </div>
@@ -47,6 +47,7 @@ export default {
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
     type: { type: String, required: true },
+    convertedAmount: { type: String, default: '' },
   },
   computed: mapState('names', {
     peerName(state, { get }) {

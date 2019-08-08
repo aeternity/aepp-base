@@ -66,7 +66,10 @@ export default {
   methods: {
     accountSwitcher() {
       if (this.showAccountSwitcher) return;
-      this.$store.dispatch('modals/open', { name: 'accountSwitcher' }).catch(() => {});
+      this.$store.dispatch('modals/open', { name: 'accountSwitcher' }).catch((error) => {
+        if (error.message === 'User navigated outside') return;
+        throw error;
+      });
     },
   },
 };

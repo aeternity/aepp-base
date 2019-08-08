@@ -48,6 +48,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
+import { mapState } from 'vuex';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
@@ -72,22 +73,25 @@ export default {
     MIN_SPEND_TX_FEE,
     busy: false,
   }),
+  computed: mapState('currencies', ['swapped']),
   subscriptions() {
-    return pick(this.$store.state.observables, ['activeAccount']);
+    return pick(this.$store.state.observables, ['activeAccount', 'rate']);
   },
   methods: {
     async send() {
       if (!await this.$validator.validateAll()) return;
 
       const amount = BigNumber(this.amount);
+      const convertedAmount = this.swapped
+        ? amount.dividedBy(this.rate).precision(18, BigNumber.ROUND_FLOOR) : amount;
       this.busy = true;
       try {
         const { hash } = await this.$store.state.sdk.spend(
-          amount.shiftedBy(MAGNITUDE),
+          convertedAmount.shiftedBy(MAGNITUDE),
           this.accountTo,
         );
 
-        await this.$store.dispatch('modals/open', { name: 'spendSuccess', transactionHash: hash, amount });
+        await this.$store.dispatch('modals/open', { name: 'spendSuccess', transactionHash: hash, amount: convertedAmount });
         this.accountTo = '';
         this.amount = '';
         this.$validator.reset();

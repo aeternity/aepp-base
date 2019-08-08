@@ -21,9 +21,9 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { mapState } from 'vuex';
+import { pluck, switchMap } from 'rxjs/operators';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
-import prefixedAmount from '../filters/prefixedAmount';
 import formatAddress from '../filters/formatAddress';
 
 export default {
@@ -39,7 +39,7 @@ export default {
     subtitleContent() {
       switch (this.subtitle) {
         case 'balance':
-          return this.balance ? `${prefixedAmount(this.balance)} AE` : '';
+          return this.convertedBalance;
         case 'address':
           return formatAddress(this.address);
         default:
@@ -49,6 +49,18 @@ export default {
     ...mapState('accounts', {
       nameFromStore(state, { getName }) { return getName(this); },
     }),
+  },
+  subscriptions() {
+    return {
+      convertedBalance: this
+        .$watchAsObservable(() => this.balance && this.subtitle === 'balance', { immediate: true })
+        .pipe(
+          pluck('newValue'),
+          switchMap(shouldSubscribe => (shouldSubscribe
+            ? this.$store.state.observables.convertAmount(() => this.balance)
+            : Promise.resolve(''))),
+        ),
+    };
   },
 };
 </script>
