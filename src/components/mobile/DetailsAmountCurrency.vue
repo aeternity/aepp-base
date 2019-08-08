@@ -15,22 +15,26 @@
 import BigNumber from 'bignumber.js';
 import DetailsField from './DetailsField.vue';
 import Balance from '../Balance.vue';
-import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
   components: { DetailsField, Balance },
   props: {
-    name: { type: String, default: 'Amount' },
+    name: {
+      type: String,
+      default() { return this.$t('transfer.amount'); },
+    },
     amount: { type: BigNumber, required: true },
   },
-  methods: { prefixedAmount },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
+.details-amount-currency .balance {
+  font-weight: inherit;
 
-.balance {
-  font-size: rem(13px);
+  &, /deep/ .left {
+    color: inherit;
+    font-size: inherit;
+  }
 }
 </style>

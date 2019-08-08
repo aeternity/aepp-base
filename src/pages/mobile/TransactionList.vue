@@ -13,7 +13,7 @@
       <Balance
         :balance="activeAccount.balance"
         invert
-        convertable
+        short
       />
     </div>
 

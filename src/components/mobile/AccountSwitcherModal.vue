@@ -44,8 +44,6 @@
         <Balance
           :balance="totalBalance"
           total
-          convertable
-          left-visible
         />
       </AeCard>
 

@@ -81,8 +81,9 @@ import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
 import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE } from '../../lib/constants';
-import toCurrency from '../../filters/toCurrency';
-import toAe from '../../filters/toAe';
+
+const toCurrency = (value, rate) => value.multipliedBy(rate).precision(18, BigNumber.ROUND_FLOOR);
+const toAe = (value, rate) => value.dividedBy(rate).precision(18, BigNumber.ROUND_FLOOR).toFixed();
 
 export default {
   components: {
@@ -158,7 +159,10 @@ export default {
     async setAmount() {
       if (!await this.$validator.validateAll()) return;
       const convertedAmount = this.swapped ? toAe(BigNumber(this.amount), this.rate) : this.amount;
-      this.$router.push({ name: 'send-confirm', params: { to: this.to, amount: `${convertedAmount}` } });
+      this.$router.push({
+        name: 'send-confirm',
+        params: { to: this.to, amount: convertedAmount.toString() },
+      });
     },
   },
 };

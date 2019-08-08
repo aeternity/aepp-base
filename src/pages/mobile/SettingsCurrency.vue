@@ -1,5 +1,6 @@
 <template>
   <MobilePage
+    class="settings-currency"
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     :title="$t('settings.currency.title')"
@@ -49,7 +50,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/globals/functions.scss';
 
-.use-as-main {
+.settings-currency .use-as-main {
   margin-top: rem(20px);
 }
 </style>

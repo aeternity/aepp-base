@@ -20,13 +20,11 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
+import { pluck, switchMap } from 'rxjs/operators';
 import ListItem from './ListItem.vue';
 import AeIdenticon from './AeIdenticon.vue';
-import prefixedAmount from '../filters/prefixedAmount';
 import formatAddress from '../filters/formatAddress';
-import currencyAmount from '../filters/currencyAmount';
-import toCurrency from '../filters/toCurrency';
 
 export default {
   components: { ListItem, AeIdenticon },
@@ -41,11 +39,7 @@ export default {
     subtitleContent() {
       switch (this.subtitle) {
         case 'balance':
-          if (!this.balance) return '';
-          return this.swapped ? currencyAmount(
-            toCurrency(this.balance, this.rate),
-            this.active,
-          ) : `${prefixedAmount(this.balance)} AE`;
+          return this.convertedBalance;
         case 'address':
           return formatAddress(this.address);
         default:
@@ -55,11 +49,18 @@ export default {
     ...mapState('accounts', {
       nameFromStore(state, { getName }) { return getName(this); },
     }),
-    ...mapState('currencies', ['swapped']),
-    ...mapGetters('currencies', ['active']),
   },
   subscriptions() {
-    return { rate: this.$store.state.observables.rate };
+    return {
+      convertedBalance: this
+        .$watchAsObservable(() => this.balance && this.subtitle === 'balance', { immediate: true })
+        .pipe(
+          pluck('newValue'),
+          switchMap(shouldSubscribe => (shouldSubscribe
+            ? this.$store.state.observables.convertAmount(() => this.balance)
+            : Promise.resolve(''))),
+        ),
+    };
   },
 };
 </script>

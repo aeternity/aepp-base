@@ -13,7 +13,7 @@
           {{ transaction.received
             ? $t('transfer.transaction.details.received')
             : $t('transfer.transaction.details.sent') }}
-          <em class="balance"><Balance :balance="transaction.tx.amount" /></em>
+          <em class="balance">{{ transaction.convertedAmount }}</em>
         </template>
         <template v-if="transaction.tx.senderId">
           <br>{{ $t('transfer.transaction.details.from').toLowerCase() }}
@@ -43,7 +43,7 @@
       v-if="transaction.received || !transaction.tx.amount"
       :amount="transaction.tx.amount || transaction.tx.fee"
       :name="transaction.tx.amount ? $t('transfer.amount') : $t('transfer.fee')"
-      convertable
+      short
     />
     <DetailsAmountAndFee
       v-else
@@ -95,7 +95,6 @@ import { pluck } from 'rxjs/operators';
 import prefixedAmount from '../../filters/prefixedAmount';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
-import Balance from '../../components/Balance.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
 import DetailsAmountAndFee from '../../components/mobile/DetailsAmountAndFee.vue';
@@ -107,7 +106,6 @@ export default {
   components: {
     MobilePage,
     Guide,
-    Balance,
     AccountInline,
     DetailsField,
     DetailsAmountAndFee,
@@ -151,8 +149,7 @@ export default {
   }
 
   .guide .balance {
-    color: white;
-    @extend %face-sans-l;
+    font-family: $font-mono;
   }
 
   .details-item {

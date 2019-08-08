@@ -1,60 +1,45 @@
 <template>
   <span
-    :class="{ invert, swapped, convertable }"
+    :class="{ invert }"
     class="balance"
-    @click="swapPrices"
+    @click="swapCurrencies"
   >
-    <span
-      v-if="leftVisible && convertable && !active.isCrypto"
-      class="left"
-    >
-      {{ prices.left }}
-    </span>
-    <small v-if="convertable">⇄</small>
-    <span class="right">
-      {{ prices.right }}
-    </span>
+    <span class="left">{{ prices[0] }}</span>
+    <small> ⇄ </small>
+    <span class="right">{{ prices[1] }}</span>
   </span>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import BigNumber from 'bignumber.js';
-import prefixedAmount from '../filters/prefixedAmount';
-import currencyAmount from '../filters/currencyAmount';
 
 export default {
-  filters: { currencyAmount, prefixedAmount },
   props: {
     balance: {
       type: BigNumber,
       required: true,
     },
     invert: Boolean,
-    convertable: Boolean,
-    leftVisible: Boolean,
+    short: Boolean,
   },
-  computed: {
-    ...mapState('currencies', ['swapped']),
-    ...mapGetters('currencies', ['active']),
-    prices() {
-      const leftPrice = currencyAmount(this.balance.multipliedBy(this.rate), this.active);
-      const rightPrice = currencyAmount(prefixedAmount(this.balance), { symbol: 'AE' });
-      return {
-        left: this.swapped ? rightPrice : leftPrice,
-        right: this.swapped ? leftPrice : rightPrice,
-      };
+  computed: mapState('currencies', {
+    prices({ swapped }, { active }) {
+      const prices = [this.balanceSwapped, this.balanceNotSwapped];
+      if (swapped) prices.reverse();
+      if (active.isCrypto || this.short) {
+        prices[0] = swapped ? 'AE' : active.symbol;
+      }
+      return prices;
     },
-  },
+  }),
   subscriptions() {
-    return { rate: this.$store.state.observables.rate };
+    return {
+      balanceSwapped: this.$store.state.observables.convertAmount(() => this.balance, true),
+      balanceNotSwapped: this.$store.state.observables.convertAmount(() => this.balance, false),
+    };
   },
-  methods: {
-    swapPrices() {
-      if (!this.convertable) return;
-      this.$store.commit('currencies/swapCurrencies');
-    },
-  },
+  methods: mapMutations('currencies', ['swapCurrencies']),
 };
 </script>
 
@@ -71,13 +56,6 @@ export default {
   .left {
     color: $color-neutral-negative-1;
     font-size: rem(13px);
-  }
-
-  &:not(.convertable) {
-    @extend %face-mono-xs;
-    letter-spacing: normal;
-    font-weight: 500;
-    color: $color-neutral-negative-1;
   }
 
   &.invert {

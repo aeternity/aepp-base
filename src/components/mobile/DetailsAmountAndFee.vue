@@ -5,7 +5,7 @@
         {{ $t('transfer.amount') }}
       </span>
       <span class="value">
-        <Balance :balance="amount" />
+        {{ convertedAmount }}
       </span>
     </DetailsRow>
 
@@ -24,8 +24,8 @@
       </span>
       <span class="value">
         <Balance
-          :balance="amount"
-          convertable
+          :balance="amount.plus(fee)"
+          short
         />
       </span>
     </DetailsRow>
@@ -45,6 +45,9 @@ export default {
   props: {
     amount: { type: BigNumber, required: true },
     fee: { type: BigNumber, required: true },
+  },
+  subscriptions() {
+    return { convertedAmount: this.$store.state.observables.convertAmount(() => this.amount) };
   },
 };
 </script>

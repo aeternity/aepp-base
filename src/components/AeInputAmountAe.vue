@@ -12,7 +12,7 @@
       slot="header-right"
       @click="swapCurrencies"
     >
-      {{ swapped ? active.symbol : 'AE' }}
+      {{ symbol }}
     </span>
     <AeToolbarButton
       v-if="max"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import AeInputAmount from './AeInputAmount.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
 import { MIN_SPEND_TX_FEE } from '../lib/constants';
@@ -44,10 +44,9 @@ export default {
   data: () => ({
     minSpendTxFee: `${prefixedAmount(MIN_SPEND_TX_FEE)} AE`,
   }),
-  computed: {
-    ...mapGetters('currencies', ['active']),
-    ...mapState('currencies', ['swapped']),
-  },
+  computed: mapState('currencies', {
+    symbol: ({ swapped }, { active: { symbol } }) => (swapped ? symbol : 'AE'),
+  }),
   methods: mapMutations('currencies', ['swapCurrencies']),
 };
 </script>

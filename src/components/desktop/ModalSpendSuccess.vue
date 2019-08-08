@@ -29,12 +29,11 @@
 
 <script>
 import BigNumber from 'bignumber.js';
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import Modal from './Modal.vue';
 import ModalHeader from './ModalHeader.vue';
 import AeButton from '../AeButton.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
-import currencyAmount from '../../filters/currencyAmount';
 import copyOnClick from '../../directives/copyOnClick';
 
 export default {
@@ -47,18 +46,9 @@ export default {
     transactionHash: { type: String, required: true },
     resolve: { type: Function, required: true },
   },
-  computed: {
-    ...mapGetters(['currentNetwork']),
-    ...mapState('currencies', ['swapped']),
-    ...mapGetters('currencies', ['active']),
-    convertedAmount() {
-      return this.swapped
-        ? currencyAmount(this.amount.multipliedBy(this.rate), this.active)
-        : currencyAmount(prefixedAmount(this.amount), { symbol: 'AE' });
-    },
-  },
+  computed: mapGetters(['currentNetwork']),
   subscriptions() {
-    return { rate: this.$store.state.observables.rate };
+    return { convertedAmount: this.$store.state.observables.convertAmount(() => this.amount) };
   },
   methods: { prefixedAmount },
 };

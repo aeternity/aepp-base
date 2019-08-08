@@ -29,9 +29,6 @@
     <DetailsAmountCurrency
       v-if="transaction.amount"
       :amount="transaction.amount"
-      invert
-      convertable
-      left-visible
     />
 
     <DetailsFeeInput

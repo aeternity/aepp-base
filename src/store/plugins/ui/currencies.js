@@ -4,10 +4,12 @@ const currencies = {
   usd: {
     name: 'US Dollar',
     symbol: '$',
+    isCrypto: false,
   },
   eur: {
     name: 'Euro',
     symbol: '€',
+    isCrypto: false,
   },
   btc: {
     name: 'Bitcoin',
@@ -24,7 +26,6 @@ export default async (store) => {
     state: {
       activeCode: preferredCurrencyCode,
       swapped: false,
-      referenceCurrency: 'aeternity',
     },
     getters: {
       list: () => Object.entries(currencies)
