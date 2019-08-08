@@ -1,6 +1,15 @@
 {
     "name": "Base æpp",
     "short_name": "Base æpp",
+    "prefer_related_applications": true,
+    "related_applications": [{
+        "platform": "play",
+        "url": "https://play.google.com/store/apps/details?id=com.aeternity.base",
+        "id": "com.aeternity.base"
+    }, {
+        "platform": "itunes",
+        "url": "https://apps.apple.com/app/base-æpp-wallet/id1458655724"
+    }],
     "icons": [
         {
             "src": "/favicons/android-chrome-192x192.png",
