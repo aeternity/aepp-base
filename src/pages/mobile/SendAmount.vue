@@ -34,7 +34,7 @@
           v-model="amount"
           v-validate="{
             required: true,
-            decimal: MAGNITUDE,
+            decimal: swapped ? 2 : MAGNITUDE,
             min_value_exclusive: 0,
             max_value: max,
           }"
@@ -82,8 +82,8 @@ import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE } from '../../lib/constants';
 
-const toCurrency = (value, rate) => value.multipliedBy(rate).precision(18, BigNumber.ROUND_FLOOR);
-const toAe = (value, rate) => value.dividedBy(rate).precision(18, BigNumber.ROUND_FLOOR).toFixed();
+const toCurrency = (value, rate) => value.multipliedBy(rate).precision(17, BigNumber.ROUND_FLOOR);
+const toAe = (value, rate) => value.dividedBy(rate).precision(17, BigNumber.ROUND_FLOOR).toFixed();
 
 export default {
   components: {
