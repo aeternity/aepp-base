@@ -15,7 +15,7 @@ export default {
 
   account: {
     type: 'air-gap',
-    typeVerbose: i18n.t('air-gap.account-name'),
+    getTypeVerbose: () => i18n.t('air-gap.account-name'),
     color: 'alternative',
   },
 
