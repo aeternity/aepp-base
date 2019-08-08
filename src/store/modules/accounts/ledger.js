@@ -20,7 +20,7 @@ export default {
 
   account: {
     type: 'ledger',
-    typeVerbose: i18n.t('ledger.account-name'),
+    getTypeVerbose: () => i18n.t('ledger.account-name'),
     color: 'dark',
   },
 

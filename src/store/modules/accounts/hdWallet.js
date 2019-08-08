@@ -19,7 +19,7 @@ export default {
 
   account: {
     type: 'hd-wallet',
-    typeVerbose: i18n.t('hd-wallet.account-name'),
+    getTypeVerbose: () => i18n.t('hd-wallet.account-name'),
     color: 'primary',
   },
 
