@@ -1,4 +1,5 @@
 import { get, isEqual } from 'lodash-es';
+import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 
 export default (store) => {
   let recreateSdk;
@@ -67,12 +68,11 @@ export default (store) => {
 
     let sdkActive = false;
     const errorHandler = (error) => {
-      if (
-        !sdkActive
-        || (error.isAxiosError && error.response && error.response.status === 404)
-      ) return;
-      recreateSdk();
-      sdkActive = false;
+      if (sdkActive && !isNotFoundError(error)) {
+        recreateSdk();
+        sdkActive = false;
+      }
+      throw error;
     };
     const [sdk, middleware] = await Promise.all([
       Ae.compose(
@@ -122,7 +122,10 @@ export default (store) => {
     const sdkPromise = createSdk(currentNetwork);
     const sdkThenable = { then: sdkPromise.then.bind(sdkPromise) };
     store.commit('setSdk', sdkThenable);
-    const sdk = await sdkThenable.then(s => s, () => null);
+    const sdk = await sdkThenable.then(s => s, (error) => {
+      handleUnknownError(error);
+      return null;
+    });
     if (sdkThenable === store.state.sdk) store.commit('setSdk', sdk);
     else if (sdk) sdk.destroyInstance();
   };
