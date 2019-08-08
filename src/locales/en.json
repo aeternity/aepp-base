@@ -29,8 +29,8 @@
   },
 
   "update-available": {
-    "title": "A new version is available.",
-    "restart": "Restart the Base æpp"
+    "title": "A new version is available. Tap below to update.",
+    "restart": "Update"
   },
 
   "store-load-error": {
