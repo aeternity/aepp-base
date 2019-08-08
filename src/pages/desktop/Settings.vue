@@ -105,7 +105,7 @@ export default {
   computed: {
     ...mapGetters(['currentNetwork']),
     ...mapState({
-      networkId: state => state.sdk && state.sdk.getNetworkId(),
+      networkId: state => state.sdk && state.sdk.getNetworkId && state.sdk.getNetworkId(),
     }),
   },
   methods: {
