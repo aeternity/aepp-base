@@ -49,6 +49,16 @@ export default {
     },
   },
   async mounted() {
+    const tryMediaStream = async () => {
+      try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        mediaStream.getTracks().forEach(track => track.stop());
+        this.cameraAllowed = true;
+      } catch (e) {
+        this.cameraAllowed = false;
+      }
+    };
+
     if (process.env.IS_CORDOVA) {
       await new Promise((resolve, reject) => window.QRScanner
         .prepare((error, status) => (!error && status.authorized
@@ -57,21 +67,14 @@ export default {
       return;
     }
 
-    if (navigator.permissions) {
+    try {
       const status = await navigator.permissions.query({ name: 'camera' });
       this.cameraAllowed = status.state !== 'denied';
       status.onchange = () => {
         this.cameraAllowed = status.state !== 'denied';
       };
-      return;
-    }
-
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      mediaStream.getTracks().forEach(track => track.stop());
-      this.cameraAllowed = true;
     } catch (e) {
-      this.cameraAllowed = false;
+      await tryMediaStream();
     }
   },
   beforeDestroy() {
