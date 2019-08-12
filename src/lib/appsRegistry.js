@@ -9,11 +9,6 @@ export const aeternityApps = [{
   path: 'aeternity.com/aepp-hybrid-voting',
   icon: blockchainExplorerIcon,
 }, {
-  name: 'Blockchain Explorer',
-  description: 'Verify interactions in real-time. Search the æternity network by address, block or transaction.',
-  path: 'explorer.aepps.com',
-  icon: blockchainExplorerIcon,
-}, {
   name: 'Token Migration',
   description: 'AE token migration to the æternity Mainnet is ongoing. If you still haven\'t transfered your Ethereum AE tokens, you can do it using this app.',
   path: 'token-migration.aepps.com',
