@@ -25,6 +25,7 @@
 
 <script>
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
+import { handleUnknownError } from '../lib/utils';
 import HeaderMobile from './mobile/Header.vue';
 
 export default {
@@ -49,16 +50,6 @@ export default {
     },
   },
   async mounted() {
-    const tryMediaStream = async () => {
-      try {
-        const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        mediaStream.getTracks().forEach(track => track.stop());
-        this.cameraAllowed = true;
-      } catch (e) {
-        this.cameraAllowed = false;
-      }
-    };
-
     if (process.env.IS_CORDOVA) {
       await new Promise((resolve, reject) => window.QRScanner
         .prepare((error, status) => (!error && status.authorized
@@ -67,14 +58,25 @@ export default {
       return;
     }
 
-    try {
-      const status = await navigator.permissions.query({ name: 'camera' });
+    const status = navigator.permissions
+      && await navigator.permissions.query({ name: 'camera' }).catch((error) => {
+        const firefoxExceptionMessage = '\'name\' member of PermissionDescriptor \'camera\' is not a valid value for enumeration PermissionName.';
+        if (error.message !== firefoxExceptionMessage) handleUnknownError(error);
+        return null;
+      });
+    if (status) {
       this.cameraAllowed = status.state !== 'denied';
       status.onchange = () => {
         this.cameraAllowed = status.state !== 'denied';
       };
+    }
+
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      mediaStream.getTracks().forEach(track => track.stop());
+      this.cameraAllowed = true;
     } catch (e) {
-      await tryMediaStream();
+      this.cameraAllowed = false;
     }
   },
   beforeDestroy() {
