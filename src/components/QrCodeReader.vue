@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/globals/functions.scss';
+@import '../styles/placeholders/typography.scss';
 
 .qr-code-reader {
   display: flex;
@@ -124,10 +124,9 @@ export default {
 
   .permission-denied {
     text-align: center;
-    line-height: 1.56;
-    padding: 0 20px;
+    padding: 0 rem(20px);
     margin: auto;
-    font-size: 18px;
+    @extend %face-sans-base;
   }
 
   .video-wrapper {
