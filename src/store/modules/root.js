@@ -139,11 +139,15 @@ export default {
       const fetchTextCors = async url => (
         await fetch(`https://cors-anywhere.herokuapp.com/${url}`)).text();
       try {
-        const appUrl = new URL(`http://${host}`);
+        let appUrl = new URL(`http://${host}`);
         if (appUrl.hostname === 'localhost') return {};
 
         const parser = new DOMParser();
         const document = parser.parseFromString(await fetchTextCors(appUrl), 'text/html');
+
+        const base = document.querySelector('base');
+        if (base) appUrl = new URL(base.getAttribute('href'), appUrl);
+
         const manifestUrl = new URL(
           document.querySelector('link[rel=manifest]').getAttribute('href'),
           appUrl,
