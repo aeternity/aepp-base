@@ -27,7 +27,7 @@
     "@aeternity/ledger-app-api": "0.1.0",
     "@download/blockies": "^1.0.3",
     "@ledgerhq/hw-transport-u2f": "^4.66.0",
-    "@zxing/library": "^0.14.2",
+    "@zxing/library": "^0.15.1",
     "bignumber.js": "^9.0.0",
     "bluebird": "^3.5.5",
     "copy-to-clipboard": "^3.2.0",
