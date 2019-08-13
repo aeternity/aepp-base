@@ -46,7 +46,15 @@ export default {
         return;
       }
 
-      this.resolve(await this.scan());
+      try {
+        this.resolve(await this.scan());
+      } catch (error) {
+        if (error.name === 'NotAllowedError') {
+          this.cameraAllowed = false;
+          return;
+        }
+        handleUnknownError(error);
+      }
     },
   },
   async mounted() {
@@ -71,13 +79,7 @@ export default {
       };
     }
 
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      mediaStream.getTracks().forEach(track => track.stop());
-      this.cameraAllowed = true;
-    } catch (e) {
-      this.cameraAllowed = false;
-    }
+    this.cameraAllowed = true;
   },
   beforeDestroy() {
     this.stopReading();
