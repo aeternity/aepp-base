@@ -144,10 +144,10 @@ export default {
 
         const parser = new DOMParser();
         const document = parser.parseFromString(await fetchTextCors(appUrl), 'text/html');
-        const base = document.createElement('base');
-        base.href = appUrl;
-        document.head.appendChild(base);
-        const manifestUrl = document.querySelector('link[rel=manifest]').href;
+        const manifestUrl = new URL(
+          document.querySelector('link[rel=manifest]').getAttribute('href'),
+          appUrl,
+        );
 
         const manifest = JSON.parse(await fetchTextCors(manifestUrl));
         manifest.fetchedAt = new Date().toJSON();
