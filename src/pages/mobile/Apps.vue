@@ -19,12 +19,6 @@
             :alt="app.name"
           >
         </ListItem>
-        <p
-          :key="idx"
-          class="app-description"
-        >
-          {{ app.description }}
-        </p>
       </template>
     </AeCard>
 
@@ -115,18 +109,6 @@ export default {
 
   .ae-card {
     margin-bottom: rem(24px);
-  }
-
-  .app-description {
-    padding-bottom: rem(16px);
-    margin: 0 rem(16px);
-    border-bottom: 2px solid $color-neutral-positive-2;
-    @extend %face-sans-s;
-    color: $color-neutral-negative-3;
-
-    &:last-child {
-      border-bottom: none;
-    }
   }
 }
 </style>
