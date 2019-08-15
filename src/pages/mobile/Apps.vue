@@ -6,20 +6,19 @@
     <Guide :template="$t('app.list.featured-guide')" />
 
     <AeCard fill="maximum">
-      <template v-for="(app, idx) in aeternityApps">
-        <ListItem
-          :key="`list-item-aeternity-app-${idx}`"
-          :to="`/browser/${app.path}`"
-          :title="app.name"
-          :subtitle="app.path"
+      <ListItem
+        v-for="(app, idx) in aeternityApps"
+        :key="`list-item-aeternity-app-${idx}`"
+        :to="`/browser/${app.path}`"
+        :title="app.name"
+        :subtitle="app.path"
+      >
+        <img
+          slot="icon"
+          :src="app.icon"
+          :alt="app.name"
         >
-          <img
-            slot="icon"
-            :src="app.icon"
-            :alt="app.name"
-          >
-        </ListItem>
-      </template>
+      </ListItem>
     </AeCard>
 
     <Guide :template="$t('app.list.browse-guide')" />
