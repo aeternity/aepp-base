@@ -168,7 +168,7 @@ export default (store) => {
   const fetchMdwTransactions = async (address, limit, page) => {
     if (store.state.sdk.then) await store.state.sdk;
     const txs = await Promise.all(
-      (await store.state.sdk.middleware.transactionsListAccountGet(address, { limit, page }))
+      (await store.state.sdk.middleware.getTxByAccount(address, { limit, page }))
         .map(normalizeTransaction),
     );
     txs.forEach(registerTx);
