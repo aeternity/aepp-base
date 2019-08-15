@@ -39,7 +39,7 @@ export default (store) => {
         commit('set', { address });
         if (rootState.sdk.then) await rootState.sdk;
         const names = await rootState.sdk.middleware
-          .namesReverseGet(address, { limit: 1, page: 1 });
+          .getNameByAddress(address, { limit: 1, page: 1 });
         if (names.length) commit('set', { address, name: names[0].name });
       },
       async fetchOwned({ rootState, commit }) {
@@ -63,7 +63,7 @@ export default (store) => {
                   pending: true,
                   owner: tx.accountId,
                 })))(),
-              rootState.sdk.middleware.namesReverseGet(address),
+              rootState.sdk.middleware.getNameByAddress(address),
             ])).flat();
 
             commit('set', {
