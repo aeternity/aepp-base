@@ -6,26 +6,19 @@
     <Guide :template="$t('app.list.featured-guide')" />
 
     <AeCard fill="maximum">
-      <template v-for="(app, idx) in aeternityApps">
-        <ListItem
-          :key="`list-item-aeternity-app-${idx}`"
-          :to="`/browser/${app.path}`"
-          :title="app.name"
-          :subtitle="app.path"
+      <ListItem
+        v-for="(app, idx) in aeternityApps"
+        :key="`list-item-aeternity-app-${idx}`"
+        :to="`/browser/${app.path}`"
+        :title="app.name"
+        :subtitle="app.path"
+      >
+        <img
+          slot="icon"
+          :src="app.icon"
+          :alt="app.name"
         >
-          <img
-            slot="icon"
-            :src="app.icon"
-            :alt="app.name"
-          >
-        </ListItem>
-        <p
-          :key="idx"
-          class="app-description"
-        >
-          {{ app.description }}
-        </p>
-      </template>
+      </ListItem>
     </AeCard>
 
     <Guide :template="$t('app.list.browse-guide')" />
@@ -95,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/globals/functions.scss';
 @import '../../styles/variables/colors.scss';
 
 .apps {
@@ -115,18 +108,6 @@ export default {
 
   .ae-card {
     margin-bottom: rem(24px);
-  }
-
-  .app-description {
-    padding-bottom: rem(16px);
-    margin: 0 rem(16px);
-    border-bottom: 2px solid $color-neutral-positive-2;
-    @extend %face-sans-s;
-    color: $color-neutral-negative-3;
-
-    &:last-child {
-      border-bottom: none;
-    }
   }
 }
 </style>
