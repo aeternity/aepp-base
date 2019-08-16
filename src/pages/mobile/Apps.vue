@@ -3,6 +3,10 @@
     class="apps"
     fill="neutral"
   >
+    <Guide :template="$t('app.list.browse-guide')" />
+
+    <UrlForm @input="searchTerm = $event" />
+
     <Guide :template="$t('app.list.featured-guide')" />
 
     <AeCard fill="maximum">
@@ -20,10 +24,6 @@
         >
       </ListItem>
     </AeCard>
-
-    <Guide :template="$t('app.list.browse-guide')" />
-
-    <UrlForm @input="searchTerm = $event" />
 
     <template v-if="bookmarkedApps.length">
       <Guide :template="$t('app.list.bookmarked-guide')" />

@@ -11,14 +11,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <access origin="*" />
     <platform name="android">
-        <access origin="*.aepps.com" />
-        <access origin="*.piwo.app" />
-        <access origin="aeternity.com" />
-        <access origin="*.aeternity.com" />
-        <access origin="api.backendless.com" />
-        <access origin="api.coingecko.com" />
-        <access origin="cors-anywhere.herokuapp.com" />
         <allow-intent href="market:*" />
         <preference name="SplashMaintainAspectRatio" value="true" />
         <preference name="HeaderColor" value="#f7296e" />
@@ -27,7 +21,6 @@
         </edit-config>
     </platform>
     <platform name="ios">
-        <access origin="*" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <allow-navigation href="*" />
