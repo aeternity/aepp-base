@@ -50,7 +50,7 @@ export default (store) => {
 
     const methods = {
       async address(options) {
-        if (options) {
+        if (options.app) {
           const { app: { host } } = options;
           confirmAccountAccessPromises[host] = confirmAccountAccessPromises[host]
             || confirmAccountAccess(options);
