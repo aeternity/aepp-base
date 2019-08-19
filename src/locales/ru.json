@@ -118,7 +118,7 @@
     "browser": {
       "refresh": "Обновить",
       "confirm-account-access": {
-        "guide": "<app /><br />запрашивает доступ к<br /><account / >",
+        "guide": "<app /><br />запрашивает доступ к<br /><account />",
         "address": {
           "name": "Адрес",
           "explanation": "Этот aepp запрашивает доступ к вашему публичному адресу."
@@ -175,7 +175,7 @@
         "subaccount": "Или отправить на субаккаунт"
       },
       "amount": {
-        "guide": "<primary>Новый перевод</primary><br />из <senderAddress />< br />на <recipientAddress />",
+        "guide": "<primary>Новый перевод</primary><br />из <senderAddress /><br />на <recipientAddress />",
         "balance": "Баланс",
         "max": "Макс.",
         "fee": "Минимальная комиссия за транзакцию"
@@ -372,7 +372,7 @@
       "guide": "<primary>Подписать необработанную транзакцию</primary><br />с помощью <address />"
     },
     "confirm-transaction-sign": {
-      "guide-spend": "<primary>Завершить перевод</primary><br />из <senderAddress /><br />на <recipientAddress / >",
+      "guide-spend": "<primary>Завершить перевод</primary><br />из <senderAddress /><br />на <recipientAddress />",
       "guide": "<primary>{title}</primary><br />из <senderAddress />",
       "payload": "Полезная нагрузка",
       "recipient-account": "Аккаунт получателя",
