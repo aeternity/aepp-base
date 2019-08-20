@@ -123,7 +123,7 @@ export default {
 
     .ae-toolbar.footer {
       background-color: $color-primary-positive-1;
-      color: $color-white;
+      color: #fff;
     }
   }
 
