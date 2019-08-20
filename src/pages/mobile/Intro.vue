@@ -31,6 +31,12 @@
       >
         {{ $t('intro.onboarding') }}
       </AeButton>
+      <div class="terms-and-conditions">
+        {{ $t('terms-and-conditions.note') }}
+        <RouterLink :to="{ name: 'terms-and-conditions' }">
+          {{ $t('terms-and-conditions.link') }}
+        </RouterLink>
+      </div>
     </template>
   </MobilePage>
 </template>
@@ -49,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
+@import '../../styles/placeholders/typography.scss';
 @import '../../styles/variables/colors.scss';
 
 .intro.mobile-page {
@@ -64,6 +70,17 @@ export default {
 
   .ae-button.medium.plain:last-child {
     margin-bottom: 0;
+  }
+
+  .terms-and-conditions {
+    @extend %face-sans-xs;
+    text-align: center;
+    margin-bottom: rem(15px);
+    color: #fff;
+
+    a {
+      color: inherit;
+    }
   }
 }
 </style>

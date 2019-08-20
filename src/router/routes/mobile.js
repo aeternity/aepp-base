@@ -1,6 +1,7 @@
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
 import Intro from '../../pages/mobile/Intro.vue';
+import TermsAndCondition from '../../pages/mobile/TermsAndCondition.vue';
 import Onboarding from '../../pages/mobile/Onboarding.vue';
 import OnboardingWelcome from '../../pages/mobile/OnboardingWelcome.vue';
 import OnboardingSend from '../../pages/mobile/OnboardingSend.vue';
@@ -79,6 +80,10 @@ export default [{
     }
     next();
   },
+}, {
+  name: 'terms-and-conditions',
+  path: '/terms-and-conditions',
+  component: TermsAndCondition,
 }, {
   path: '/onboarding',
   component: Onboarding,

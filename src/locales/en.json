@@ -74,6 +74,12 @@
     "onboarding": "See how it works"
   },
 
+  "terms-and-conditions": {
+    "title": "Terms and Conditions",
+    "note": "By tapping “LOGIN” or “CREATE NEW ACCOUNT” you agree to these",
+    "link": "Terms and Conditions"
+  },
+
   "onboarding": {
     "skip": "Skip",
     "start": "Start",
