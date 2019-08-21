@@ -7,6 +7,7 @@ export default (store) => {
       if (!hasNotLedgerAccounts || !store.state.desktop.showGuideOnStartup) return;
       await store.dispatch('modals/open', {
         name: 'alert',
+        allowRedirect: true,
         text: i18n.t('guide-desktop'),
       });
       store.commit('markGuideAsRead');
