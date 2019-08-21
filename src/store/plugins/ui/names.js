@@ -75,8 +75,8 @@ export default (store) => {
         );
       },
       async fetchName({ rootState, commit }, name) {
-        const address = (await rootState.sdk.api.getNameEntryByName(name))
-          .pointers.find(({ key }) => key === 'account_pubkey').id;
+        const { owner: address } = (await rootState.sdk.middleware.namesSearchGet(name))
+          .find(nameDetails => nameDetails.name === name);
         commit('set', { address, name });
         return address;
       },
