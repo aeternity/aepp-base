@@ -1,28 +1,28 @@
 <template>
   <MobilePage
     class="name-details"
-    title="Name details"
+    :title="$t('name.details.title')"
     left-button-icon-name="back"
     :left-button-to="{ name: 'name-list' }"
   >
     <DetailsField
-      name="Name"
+      :name="$t('name.details.name')"
       :value="details.name"
     />
     <DetailsRawData
-      name="Name hash"
+      :name="$t('name.details.name-hash')"
       :data="details.nameHash"
     />
     <DetailsAddress
-      name="Owner"
+      :name="$t('name.details.owner')"
       :address="details.owner"
     />
     <DetailsField
-      name="Created at height"
+      :name="$t('name.details.created-at-height')"
       :value="details.createdAtHeight"
     />
     <DetailsField
-      name="Expires at height"
+      :name="$t('name.details.expires-at-height')"
       :value="details.expiresAt"
     />
     <DetailsNamePointers :value="details.pointers" />
@@ -30,7 +30,7 @@
     <AeButton
       :to="{ name: 'transaction-details', params: { hash: details.txHash } }"
     >
-      View in transactions
+      {{ $t('name.details.to-transactions') }}
     </AeButton>
   </MobilePage>
 </template>
