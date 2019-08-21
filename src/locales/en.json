@@ -404,6 +404,16 @@
       "registered": "Registered Names"
     },
 
+    "details": {
+      "title": "Name details",
+      "name": "Name",
+      "name-hash": "Name hash",
+      "owner": "Owner",
+      "created-at-height": "Created at height",
+      "expires-at-height": "Expires at height",
+      "to-transactions": "View in transactions"
+    },
+
     "new": {
       "guide": "<primary>Claim a name</primary> for <inlineAccount />",
       "unknown-error": "Unknown error",

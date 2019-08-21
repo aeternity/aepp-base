@@ -404,6 +404,16 @@
       "registered": "注册名称"
     },
 
+    "details": {
+      "title": "Name details",
+      "name": "Name",
+      "name-hash": "Name hash",
+      "owner": "Owner",
+      "created-at-height": "Created at height",
+      "expires-at-height": "Expires at height",
+      "to-transactions": "View in transactions"
+    },
+
     "new": {
       "guide": "为 <inlineAccount /><primary>申请一个新名称</primary> ",
       "unknown-error": "未知错误",
