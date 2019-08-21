@@ -33,12 +33,14 @@ export default {
   mounted() {
     this.$watch(
       ({ activeAccount: { address, nonce }, amount }) => ({ address, nonce, amount }),
-      ({ address, nonce, amount }) => {
+      async ({ address, nonce, amount }) => {
+        const sdk = this.$store.state.sdk.then
+          ? await this.$store.state.sdk : this.$store.state.sdk;
         const minFee = BigNumber(TxBuilder.calculateMinFee(
           'spendTx', {
-            gas: this.$store.state.sdk.Ae.defaults.gas,
+            gas: sdk.Ae.defaults.gas,
             params: {
-              ...this.$store.state.sdk.Ae.defaults,
+              ...sdk.Ae.defaults,
               senderId: address,
               recipientId: address,
               amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
