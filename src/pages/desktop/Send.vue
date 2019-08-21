@@ -25,13 +25,13 @@
         :header="$t('transfer.send.to.recipient')"
       />
 
-      <AeInputAmountAe
+      <AeInputAmountCurrency
         v-model="amount"
         v-validate="{
           required: true,
           decimal: MAGNITUDE,
           min_value_exclusive: 0,
-          max_value: activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString(),
+          max_value_currency: activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString(),
         }"
         :error="errors.has('amount')"
         :footer="errors.first('amount')"
@@ -53,7 +53,7 @@ import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
 import AeInputAccount from '../../components/AeInputAccount.vue';
-import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
+import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
 import AeButton from '../../components/AeButton.vue';
 import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
 
@@ -63,7 +63,7 @@ export default {
     AccountInline,
     Note,
     AeInputAccount,
-    AeInputAmountAe,
+    AeInputAmountCurrency,
     AeButton,
   },
   data: () => ({
