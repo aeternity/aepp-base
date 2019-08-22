@@ -24,7 +24,7 @@ export default {
   computed: mapGetters('languages', ['list', 'active']),
   methods: {
     setLanguage(language) {
-      this.$store.dispatch('languages/setActiveCode', language.code);
+      this.$store.commit('languages/setActiveCode', language.code);
       this.$emit('switch');
     },
   },
