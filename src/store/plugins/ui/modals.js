@@ -34,12 +34,14 @@ export default (store) => {
       grayscalePage: (state, { opened }) => opened.some(({ grayscalePage }) => grayscalePage),
     },
     actions: {
-      open({ commit }, { name, ...props }) {
+      open({ commit }, { name, allowRedirect, ...props }) {
         if (!modals[name]) return Promise.reject(new Error(`Modal with name "${name}" not registered`));
         const key = modalCounter;
         modalCounter += 1;
         return new Promise(
-          (resolve, reject) => commit('open', { name, key, props: { ...props, resolve, reject } }),
+          (resolve, reject) => commit('open', {
+            name, key, allowRedirect, props: { ...props, resolve, reject },
+          }),
         )
           .finally(() => commit('closeByKey', key));
       },
@@ -49,7 +51,7 @@ export default (store) => {
   store.watch(
     ({ route }) => route,
     () => store.state.modals.opened
-      .filter(({ name }) => !modals[name].allowRedirect)
+      .filter(({ name, allowRedirect }) => !modals[name].allowRedirect && !allowRedirect)
       .forEach(({ props: { reject } }) => reject(new Error('User navigated outside'))),
   );
 };

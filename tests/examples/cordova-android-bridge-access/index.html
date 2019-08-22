@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cordova android bridge access test</title>
+
+  <style>
+    #actions, #actions > button {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="actions">
+    <button id="init">init</button>
+    <button id="execCopy">exec copy</button>
+  </div>
+  <pre id="output"></pre>
+  <script>
+    document.body.prepend(`Cordova android bridge interface ${window._cordovaNative ? '' : 'not '}available`);
+    let bridgeSecret;
+
+    if (window._cordovaNative) {
+      window.init.addEventListener('click', () => {
+        bridgeSecret = +prompt('', 'gap_init:' + 3);
+        window.output.innerText = `bridgeSecret: ${bridgeSecret}`;
+      });
+
+      window.execCopy.addEventListener('click', () => {
+        window.output.innerText = window._cordovaNative
+          .exec(bridgeSecret, 'Clipboard', 'copy', 8, '["test"]');
+      });
+    } else {
+      window.actions.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

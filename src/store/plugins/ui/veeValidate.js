@@ -22,6 +22,7 @@ Validator.extend('required', required);
 Validator.extend('address', value => Crypto.isAddressValid(value));
 Validator.extend('account', value => Crypto.isAddressValid(value));
 Validator.extend('max_value', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
+Validator.extend('max_value_currency', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('min_value', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
 Validator.extend('min_value_exclusive', (value, [arg]) => BigNumber(value).isGreaterThan(arg));
 Validator.extend('mnemonic', value => validateMnemonic(value));
@@ -74,4 +75,18 @@ export default (store) => {
       300,
     ),
   );
+
+  Validator.localize('en', {
+    messages: {
+      max_value_currency: (field, [amountAe]) => {
+        let amount = +amountAe;
+        if (store.state.currencies.swapped) {
+          store.state.observables.rate
+            .subscribe((rate) => { amount = amountAe * rate; })
+            .unsubscribe();
+        }
+        return i18n.t('validation.max_value', [amount.toPrecision(5)]);
+      },
+    },
+  });
 };

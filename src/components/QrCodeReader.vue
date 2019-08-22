@@ -25,6 +25,7 @@
 
 <script>
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
+import { handleUnknownError } from '../lib/utils';
 import HeaderMobile from './mobile/Header.vue';
 
 export default {
@@ -45,7 +46,15 @@ export default {
         return;
       }
 
-      this.resolve(await this.scan());
+      try {
+        this.resolve(await this.scan());
+      } catch (error) {
+        if (error.name === 'NotAllowedError') {
+          this.cameraAllowed = false;
+          return;
+        }
+        handleUnknownError(error);
+      }
     },
   },
   async mounted() {
@@ -57,22 +66,20 @@ export default {
       return;
     }
 
-    if (navigator.permissions) {
-      const status = await navigator.permissions.query({ name: 'camera' });
+    const status = navigator.permissions
+      && await navigator.permissions.query({ name: 'camera' }).catch((error) => {
+        const firefoxExceptionMessage = '\'name\' member of PermissionDescriptor \'camera\' is not a valid value for enumeration PermissionName.';
+        if (error.message !== firefoxExceptionMessage) handleUnknownError(error);
+        return null;
+      });
+    if (status) {
       this.cameraAllowed = status.state !== 'denied';
       status.onchange = () => {
         this.cameraAllowed = status.state !== 'denied';
       };
-      return;
     }
 
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      mediaStream.getTracks().forEach(track => track.stop());
-      this.cameraAllowed = true;
-    } catch (e) {
-      this.cameraAllowed = false;
-    }
+    this.cameraAllowed = true;
   },
   beforeDestroy() {
     this.stopReading();
@@ -107,7 +114,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/globals/functions.scss';
+@import '../styles/placeholders/typography.scss';
 
 .qr-code-reader {
   display: flex;
@@ -117,10 +124,9 @@ export default {
 
   .permission-denied {
     text-align: center;
-    line-height: 1.56;
-    padding: 0 20px;
+    padding: 0 rem(20px);
     margin: auto;
-    font-size: 18px;
+    @extend %face-sans-base;
   }
 
   .video-wrapper {

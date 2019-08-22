@@ -37,7 +37,7 @@ export default {
   color: $color-neutral-negative-3;
 
   &[disabled] {
-    background: $color-white;
+    background: #fff;
     border-color: $color-neutral-positive-3;
     cursor: not-allowed;
     color: $color-neutral-positive-1;

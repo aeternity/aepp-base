@@ -25,17 +25,28 @@
         :header="$t('transfer.send.to.recipient')"
       />
 
-      <AeInputAmountAe
+      <AeInputAmountCurrency
         v-model="amount"
         v-validate="{
           required: true,
           decimal: MAGNITUDE,
           min_value_exclusive: 0,
-          max_value: activeAccount.balance.minus(MIN_SPEND_TX_FEE).toString(),
+          max_value_currency: max,
         }"
+        :max="max"
         :error="errors.has('amount')"
         :footer="errors.first('amount')"
         name="amount"
+      />
+
+      <DetailsAmount
+        :name="$t('transfer.send.amount.fee')"
+        :amount="minFee"
+      />
+
+      <DetailsAmountCurrency
+        :name="$t('transfer.send.amount.balance')"
+        :amount="activeAccount.balance"
       />
 
       <AeButton :disabled="errors.any() || busy">
@@ -48,14 +59,16 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
-import { mapState } from 'vuex';
+import SendAmountMixin from '../SendAmountMixin';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import Note from '../../components/Note.vue';
 import AeInputAccount from '../../components/AeInputAccount.vue';
-import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
+import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
+import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
+import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import AeButton from '../../components/AeButton.vue';
-import { MAGNITUDE, MIN_SPEND_TX_FEE } from '../../lib/constants';
+import { MAGNITUDE } from '../../lib/constants';
 
 export default {
   components: {
@@ -63,35 +76,33 @@ export default {
     AccountInline,
     Note,
     AeInputAccount,
-    AeInputAmountAe,
+    AeInputAmountCurrency,
+    DetailsAmount,
+    DetailsAmountCurrency,
     AeButton,
   },
+  mixins: [SendAmountMixin],
   data: () => ({
     accountTo: '',
-    amount: '',
     MAGNITUDE,
-    MIN_SPEND_TX_FEE,
     busy: false,
   }),
-  computed: mapState('currencies', ['swapped']),
   subscriptions() {
-    return pick(this.$store.state.observables, ['activeAccount', 'rate']);
+    return pick(this.$store.state.observables, ['activeAccount']);
   },
   methods: {
     async send() {
       if (!await this.$validator.validateAll()) return;
 
       const amount = BigNumber(this.amount);
-      const convertedAmount = this.swapped
-        ? amount.dividedBy(this.rate).precision(18, BigNumber.ROUND_FLOOR) : amount;
       this.busy = true;
       try {
         const { hash } = await this.$store.state.sdk.spend(
-          convertedAmount.shiftedBy(MAGNITUDE),
+          amount.shiftedBy(MAGNITUDE),
           this.accountTo,
         );
 
-        await this.$store.dispatch('modals/open', { name: 'spendSuccess', transactionHash: hash, amount: convertedAmount });
+        await this.$store.dispatch('modals/open', { name: 'spendSuccess', transactionHash: hash, amount });
         this.accountTo = '';
         this.amount = '';
         this.$validator.reset();
@@ -105,12 +116,23 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/globals/functions.scss';
+@import '../../styles/variables/colors.scss';
 
 .send {
   .ae-input-wrapper {
     margin-bottom: rem(42px);
     background: #fff;
     box-shadow: 0 0 rem(8px) rgba(27, 68, 121, 0.1);
+  }
+
+  .ae-input-wrapper + .details-item {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .details-item {
+    --color-primary: #{$color-neutral-negative-1};
+    --color-secondary: #{$color-neutral-negative-1};
   }
 
   .ae-button {

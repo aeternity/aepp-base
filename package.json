@@ -1,6 +1,6 @@
 {
   "name": "aepp-base",
-  "version": "0.8.11",
+  "version": "0.9.0",
   "author": "Sascha Hanse <shanse@posteo.de>",
   "private": true,
   "scripts": {
@@ -21,13 +21,13 @@
     "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/locales/**/*.json'"
   },
   "dependencies": {
-    "@aeternity/aepp-sdk": "^4.3.0",
+    "@aeternity/aepp-sdk": "^4.5.1",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
     "@aeternity/ledger-app-api": "0.1.0",
     "@download/blockies": "^1.0.3",
     "@ledgerhq/hw-transport-u2f": "^4.66.0",
-    "@zxing/library": "^0.14.2",
+    "@zxing/library": "^0.15.1",
     "bignumber.js": "^9.0.0",
     "bluebird": "^3.5.5",
     "copy-to-clipboard": "^3.2.0",

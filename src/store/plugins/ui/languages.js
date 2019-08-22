@@ -52,7 +52,7 @@ if (module.hot) {
   );
 }
 
-export default async (store) => {
+export default (store) => {
   store.registerModule('languages', {
     namespaced: true,
     state: {
@@ -67,12 +67,6 @@ export default async (store) => {
     mutations: {
       setActiveCode(state, languageCode) {
         state.activeCode = languageCode;
-      },
-    },
-    actions: {
-      async setActiveCode({ commit }, languageCode) {
-        await fetchAndSetLocale(languageCode);
-        commit('setActiveCode', languageCode);
       },
     },
   });
@@ -90,5 +84,9 @@ export default async (store) => {
     };
   }
 
-  await fetchAndSetLocale(store.state.languages.activeCode);
+  store.watch(
+    ({ languages: { activeCode } }) => activeCode,
+    activeCode => fetchAndSetLocale(activeCode),
+    { immediate: true },
+  );
 };

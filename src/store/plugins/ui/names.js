@@ -37,18 +37,18 @@ export default (store) => {
       async fetch({ rootState, state, commit }, address) {
         if (state.names[address]) return;
         commit('set', { address });
-        if (rootState.sdk.then) await rootState.sdk;
-        const names = await rootState.sdk.middleware
-          .getNameByAddress(address, { limit: 1, page: 1 });
+        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
+        const names = await sdk.middleware
+          .getActiveNames({ owner: address, limit: 1, page: 1 });
         if (names.length) commit('set', { address, name: names[0].name });
       },
       async fetchOwned({ rootState, commit }) {
-        if (rootState.sdk.then) await rootState.sdk;
+        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         commit(
           'setOwned',
           (await Promise.all(rootState.accounts.list.map(async ({ address }) => {
             const names = (await Promise.all([
-              (async () => (await rootState.sdk.api.getPendingAccountTransactionsByPubkey(address)
+              (async () => (await sdk.api.getPendingAccountTransactionsByPubkey(address)
                 .catch((error) => {
                   if (!isAccountNotFoundError(error)) {
                     handleUnknownError(error);
@@ -63,7 +63,7 @@ export default (store) => {
                   pending: true,
                   owner: tx.accountId,
                 })))(),
-              rootState.sdk.middleware.getNameByAddress(address),
+              sdk.middleware.getActiveNames({ owner: address }),
             ])).flat();
 
             commit('set', {
@@ -75,8 +75,8 @@ export default (store) => {
         );
       },
       async fetchName({ rootState, commit }, name) {
-        const address = (await rootState.sdk.api.getNameEntryByName(name))
-          .pointers.find(({ key }) => key === 'account_pubkey').id;
+        const { owner: address } = (await rootState.sdk.middleware.namesSearchGet(name))
+          .find(nameDetails => nameDetails.name === name);
         commit('set', { address, name });
         return address;
       },

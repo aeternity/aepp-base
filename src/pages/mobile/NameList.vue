@@ -15,6 +15,7 @@
           :key="`${name.name}-${name.id}`"
           :address="name.owner"
           :name="name.name"
+          :to="{ name: 'name-details', params: { name: name.name } }"
           subtitle="address"
         >
           <NamePending

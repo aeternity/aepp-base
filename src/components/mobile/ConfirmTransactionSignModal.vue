@@ -76,6 +76,7 @@ import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';
 import DetailsField from './DetailsField.vue';
+import DetailsNamePointers from './DetailsNamePointers.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
 import AeButton from '../AeButton.vue';
 
@@ -169,41 +170,7 @@ export default {
         },
         nameSalt: genDetailsField(this.$t('modal.confirm-transaction-sign.name-salt')),
         nameId: genDetailsRawData(this.$t('modal.confirm-transaction-sign.name-id')),
-        pointers: {
-          functional: true,
-          render: (createElement, { props: { value } }) => createElement(
-            'div',
-            value.map(({ key, id }, idx) => {
-              switch (key) {
-                case 'account_pubkey':
-                  return createElement(DetailsAddress, {
-                    key: idx,
-                    attrs: {
-                      name: this.$tc('modal.confirm-transaction-sign.pointer', idx + 1),
-                      address: id,
-                    },
-                  });
-                default:
-                  return [
-                    createElement(DetailsField, {
-                      key: `${idx}-1`,
-                      attrs: {
-                        name: this.$tc('modal.confirm-transaction-sign.pointer-key', idx + 1),
-                        value: key,
-                      },
-                    }),
-                    createElement(DetailsRawData, {
-                      key: `${idx}-2`,
-                      attrs: {
-                        name: this.$tc('modal.confirm-transaction-sign.pointer-id', idx + 1),
-                        data: id,
-                      },
-                    }),
-                  ];
-              }
-            }),
-          ),
-        },
+        pointers: DetailsNamePointers,
       };
     },
   },

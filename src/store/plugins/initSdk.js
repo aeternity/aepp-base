@@ -15,50 +15,62 @@ export default (store) => {
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
     ])).map(module => module.default);
 
-    async function confirmAccountAccess({ app }) {
-      const accessToAccounts = get(app, 'permissions.accessToAccounts', []);
-      if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
-      const promise = store.dispatch(
-        'modals/open',
-        { name: 'confirmAccountAccess', appHost: app.host },
-      );
-      const unsubscribe = store.watch(
-        (state, getters) => getters['accounts/active'].address,
-        address => accessToAccounts.includes(address) && promise.cancel(),
-      );
-
-      try {
-        await Promise.race([
-          promise,
-          new Promise((resolve, reject) => promise.finally(() => {
-            if (!promise.isCancelled()) return;
-            if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
-              resolve();
-            } else reject(new Error('Unexpected state'));
-          })),
-        ]);
-      } finally {
-        unsubscribe();
+    class App {
+      constructor(host) {
+        this.host = host;
       }
 
-      const { address: accountAddress } = store.getters['accounts/active'];
-      if (!accessToAccounts.includes(accountAddress)) {
-        store.commit('toggleAccessToAccount', { appHost: app.host, accountAddress });
+      async ensureCurrentAccountAccessPure() {
+        const accessToAccounts = get(
+          store.getters.getApp(this.host), 'permissions.accessToAccounts', [],
+        );
+        if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
+        const promise = store.dispatch(
+          'modals/open',
+          { name: 'confirmAccountAccess', appHost: this.host },
+        );
+        const unsubscribe = store.watch(
+          (state, getters) => getters['accounts/active'].address,
+          address => accessToAccounts.includes(address) && promise.cancel(),
+        );
+
+        try {
+          await Promise.race([
+            promise,
+            new Promise((resolve, reject) => promise.finally(() => {
+              if (!promise.isCancelled()) return;
+              if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
+                resolve();
+              } else reject(new Error('Unexpected state'));
+            })),
+          ]);
+        } finally {
+          unsubscribe();
+        }
+
+        const { address: accountAddress } = store.getters['accounts/active'];
+        if (!accessToAccounts.includes(accountAddress)) {
+          store.commit('toggleAccessToAccount', { appHost: this.host, accountAddress });
+        }
+      }
+
+      ensureCurrentAccountAccess() {
+        if (!this.accountAccessPromise) {
+          this.accountAccessPromise = this.ensureCurrentAccountAccessPure();
+          this.accountAccessPromise.finally(() => {
+            delete this.accountAccessPromise;
+          });
+        }
+        return this.accountAccessPromise;
       }
     }
-    const confirmAccountAccessPromises = {};
+
+    const apps = {};
 
     const methods = {
-      async address(options) {
-        if (options) {
-          const { app: { host } } = options;
-          confirmAccountAccessPromises[host] = confirmAccountAccessPromises[host]
-            || confirmAccountAccess(options);
-          try {
-            await confirmAccountAccessPromises[host];
-          } finally {
-            delete confirmAccountAccessPromises[host];
-          }
+      async address(...args) {
+        if (args[args.length - 1] instanceof App) {
+          await args[args.length - 1].ensureCurrentAccountAccess();
         }
         return store.getters['accounts/active'].address;
       },
@@ -86,8 +98,8 @@ export default (store) => {
               ...rpcMethods
                 .map(m => [m, ({ params, origin }) => {
                   const { host } = new URL(origin);
-                  const app = store.getters.getApp(host) || { host };
-                  return Promise.resolve(this[m](...params, { app }));
+                  const app = apps[host] || (apps[host] = new App(host));
+                  return Promise.resolve(this[m](...params, app));
                 }])
                 .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
               ...this.rpcMethods,
@@ -126,7 +138,7 @@ export default (store) => {
       handleUnknownError(error);
       return null;
     });
-    if (sdkThenable === store.state.sdk) store.commit('setSdk', sdk);
+    if (sdkThenable.then === store.state.sdk.then) store.commit('setSdk', sdk);
     else if (sdk) sdk.destroyInstance();
   };
 

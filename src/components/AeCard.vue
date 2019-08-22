@@ -56,7 +56,7 @@ export default {
 
   &.dark {
     background: $color-neutral-negative-3;
-    color: $color-white;
+    color: #fff;
   }
 
   &.alternative {
