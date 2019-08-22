@@ -138,10 +138,12 @@
 
       "confirm-account-access": {
         "guide": "<app /><br />requests access to<br /><account />",
+
         "address": {
           "name": "Address",
           "explanation": "This aepp asks for access your public address."
         },
+
         "transactions": {
           "name": "Transactions",
           "explanation": "{appName} involves an auction. The æpp will prepare a transaction, you are in charge of confirming it."
@@ -598,7 +600,6 @@
     "mnemonic": {
       "title": "Backup Recovery Phrase",
       "subtitle": "Secure your funds",
-
       "guide": "<secondary>Check the spelling</secondary> of each word and <primary>never</primary> create a screenshot or photo of this phrase.",
       "to-show": "Show Recovery Phrase",
 
@@ -636,7 +637,6 @@
     "password": {
       "title": "Wallet Authentication",
       "subtitle": "Setup and manage a password",
-
       "change": "Change password",
       "change-subtitle": "Update your password",
       "choose": "Choose password",

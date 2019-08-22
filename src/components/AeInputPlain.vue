@@ -44,7 +44,7 @@ export default {
   }
 
   &.light {
-    color: $color-white;
+    color: #fff;
 
     &::placeholder {
       color: $color-neutral-positive-1;

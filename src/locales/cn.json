@@ -138,10 +138,12 @@
 
       "confirm-account-access": {
         "guide": "<app /><br />请求路径到<br /><account />",
+
         "address": {
           "name": "地址",
           "explanation": "这个æpp要求访问您的公共地址。"
         },
+
         "transactions": {
           "name": "转账记录",
           "explanation": "涉及一个拍卖。æpp将准备交易，您负责确认交易。"
@@ -598,7 +600,6 @@
     "mnemonic": {
       "title": "备份助记词",
       "subtitle": "保护您的资金",
-
       "guide": "<secondary>检查每个单词</secondary> 拼写 <primary>永远不要</primary> 截屏或者拍照保留。",
       "to-show": "显示助记词",
 
@@ -636,7 +637,6 @@
     "password": {
       "title": "钱包认证",
       "subtitle": "设置和管理密码",
-
       "change": "更改",
       "change-subtitle": "更新你的密码",
       "choose": "选择",
