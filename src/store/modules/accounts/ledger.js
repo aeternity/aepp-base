@@ -4,7 +4,6 @@ import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import Ae from '@aeternity/ledger-app-api';
 import { Crypto, TxBuilder } from '@aeternity/aepp-sdk/es';
 import { OBJECT_ID_TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
-import { MAGNITUDE } from '../../../lib/constants';
 import { i18n } from '../../plugins/ui/languages';
 
 const signOnMobile = async ({ dispatch }) => {
@@ -92,16 +91,7 @@ export default {
       await dispatch('ensureCurrentAccountAvailable');
 
       const txObject = TxBuilder.unpackTx(txBase64).tx;
-      const stringTx = TxBuilder.buildTx(
-        {
-          ...txObject,
-          ...!process.env.RUNNING_IN_FRAME && {
-            fee: (await dispatch('modals/open', { name: 'getLedgerTransactionFee' }, { root: true }))
-              .shiftedBy(MAGNITUDE),
-          },
-        },
-        OBJECT_ID_TX_TYPE[txObject.tag],
-      ).tx;
+      const stringTx = TxBuilder.buildTx(txObject, OBJECT_ID_TX_TYPE[txObject.tag]).tx;
 
       const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));
       const signature = Buffer.from(await dispatch('request', {
