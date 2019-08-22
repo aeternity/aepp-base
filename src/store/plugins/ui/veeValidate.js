@@ -79,7 +79,7 @@ export default (store) => {
   Validator.localize('en', {
     messages: {
       max_value_currency: (field, [amountAe]) => {
-        let amount = amountAe;
+        let amount = +amountAe;
         if (store.state.currencies.swapped) {
           store.state.observables.rate
             .subscribe((rate) => { amount = amountAe * rate; })
