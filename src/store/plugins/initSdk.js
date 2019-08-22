@@ -17,11 +17,13 @@ export default (store) => {
 
     class App {
       constructor(host) {
-        Object.assign(this, store.getters.getApp(host) || { host });
+        this.host = host;
       }
 
       async ensureCurrentAccountAccessPure() {
-        const accessToAccounts = get(this, 'permissions.accessToAccounts', []);
+        const accessToAccounts = get(
+          store.getters.getApp(this.host), 'permissions.accessToAccounts', [],
+        );
         if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
         const promise = store.dispatch(
           'modals/open',

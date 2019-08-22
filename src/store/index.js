@@ -54,8 +54,8 @@ const store = new Vuex.Store({
           activeIdx,
           hdWallet: { encryptedWallet, mnemonicBackedUp },
         },
+        apps,
         ...process.env.IS_MOBILE_DEVICE ? {
-          apps,
           cachedAppManifests,
           mobile: {
             readSecurityCourses,
