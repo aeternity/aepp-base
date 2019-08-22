@@ -126,7 +126,7 @@ export default (store) => {
       handleUnknownError(error);
       return null;
     });
-    if (sdkThenable === store.state.sdk) store.commit('setSdk', sdk);
+    if (sdkThenable.then === store.state.sdk.then) store.commit('setSdk', sdk);
     else if (sdk) sdk.destroyInstance();
   };
 

@@ -4,6 +4,7 @@
     :right-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
     right-button-icon-name="close"
+    class="send-amount"
     :header-fill="activeColor"
   >
     <template slot="header">
@@ -171,7 +172,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/variables/colors.scss';
 
-.mobile-page .details-item {
+.send-amount .details-item {
   --color-primary: #{$color-neutral-negative-1};
   --color-secondary: #{$color-neutral-negative-1};
 
