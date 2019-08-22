@@ -2,10 +2,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import './ui-common';
 import store from './store';
-import { i18n } from './store/plugins/ui/languages';
+import languages, { i18n } from './store/plugins/ui/languages';
+import initSdk from './store/plugins/initSdk';
+import names from './store/plugins/ui/names';
 import ConfirmAccountAccess from './components/ConfirmAccountAccess.vue';
 
 Vue.use(Vuex);
+
+[languages, initSdk, names].forEach(plugin => plugin(store));
 
 const unloadHandler = () => {
   window.reject(new Error('Rejected by user'));
