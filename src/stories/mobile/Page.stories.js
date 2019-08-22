@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import Vuex from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
-import AeInputAmountAe from '../../components/AeInputAmountAe.vue';
+import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
 import { account, lorem } from '../mock-data';
 
 const rootStyles = `
@@ -66,7 +66,7 @@ storiesOf('mobile Page', module)
   }))
   .add('input at header end', () => ({
     ...base,
-    components: { MobilePage, AeInputAmountAe },
+    components: { MobilePage, AeInputAmountCurrency },
     template: `
       <div style="${rootStyles}">
         <mobile-page
@@ -86,7 +86,7 @@ storiesOf('mobile Page', module)
               placeholder="Test"
             />
           </template>
-    
+
           <strong>Content</strong>
           {{ lorem }}
         </mobile-page>

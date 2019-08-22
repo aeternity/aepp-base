@@ -4,9 +4,9 @@
     :header="$t('transfer.amount')"
     :footer="footer || (max ? '' : $t('transfer.send.amount.fee'))"
     :footer-right="footerRight || (footer || max ? '' : minSpendTxFee)"
-    :value="value"
+    :value="internalValue"
     v-bind="$attrs"
-    v-on="$listeners"
+    v-on="{ ...$listeners, input }"
   >
     <span
       slot="header-right"
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { pick } from 'lodash-es';
 import { mapState, mapMutations } from 'vuex';
 import AeInputAmount from './AeInputAmount.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
@@ -43,10 +44,51 @@ export default {
   },
   data: () => ({
     minSpendTxFee: `${prefixedAmount(MIN_SPEND_TX_FEE)} AE`,
+    internalValue: '',
+    lastEmitedInternalValue: null,
   }),
   computed: mapState('currencies', {
+    swapped: 'swapped',
     symbol: ({ swapped }, { active: { symbol } }) => (swapped ? symbol : 'AE'),
   }),
-  methods: mapMutations('currencies', ['swapCurrencies']),
+  subscriptions() {
+    return pick(this.$store.state.observables, ['rate']);
+  },
+  watch: {
+    value: {
+      handler(value) {
+        if (this.lastEmitedInternalValue === value) return;
+        this.updateInternalValue();
+      },
+      immediate: true,
+    },
+    swapped: 'updateInternalValue',
+  },
+  created() {
+    this.$watch(
+      ({ rate }) => rate,
+      () => {
+        if (!this.swapped) return;
+        if (this.value === this.max) this.updateInternalValue();
+        else this.emitInternalValue();
+      },
+    );
+  },
+  methods: {
+    ...mapMutations('currencies', ['swapCurrencies']),
+    updateInternalValue() {
+      const { value } = this;
+      this.internalValue = value && (this.swapped ? value * this.rate : value);
+    },
+    input(value) {
+      this.internalValue = value;
+      this.emitInternalValue();
+    },
+    emitInternalValue() {
+      const value = this.internalValue;
+      this.lastEmitedInternalValue = value && (this.swapped ? value / this.rate : value).toString();
+      this.$emit('input', this.lastEmitedInternalValue);
+    },
+  },
 };
 </script>

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import AeInputAmount from '../components/AeInputAmount.vue';
-import AeInputAmountAe from '../components/AeInputAmountAe.vue';
+import AeInputAmountCurrency from '../components/AeInputAmountCurrency.vue';
 
 storiesOf('AeInputAmount', module)
   .add('default', () => ({
@@ -38,8 +38,8 @@ storiesOf('AeInputAmount', module)
 `,
     },
   })
-  .add('AeInputAmountAe', () => ({
-    components: { AeInputAmountAe },
+  .add('AeInputAmountCurrency', () => ({
+    components: { AeInputAmountCurrency },
     template: '<ae-input-amount-ae />',
   }), {
     notes: {
