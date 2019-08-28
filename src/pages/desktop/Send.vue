@@ -50,7 +50,7 @@
       />
 
       <AeButton :disabled="errors.any() || busy">
-        {{ $t('transfer.send.transfer') }}
+        <AeLoader v-if="busy" /> {{ $t('transfer.send.transfer') }}
       </AeButton>
     </form>
   </div>
@@ -68,6 +68,7 @@ import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
 import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
 import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import AeButton from '../../components/AeButton.vue';
+import AeLoader from '../../components/AeLoader.vue';
 import { MAGNITUDE } from '../../lib/constants';
 
 export default {
@@ -80,6 +81,7 @@ export default {
     DetailsAmount,
     DetailsAmountCurrency,
     AeButton,
+    AeLoader,
   },
   mixins: [SendAmountMixin],
   data: () => ({
@@ -140,6 +142,11 @@ export default {
     margin-top: rem(53px);
     margin-left: auto;
     margin-right: auto;
+
+    .ae-loader {
+      width: rem(24px);
+      vertical-align: middle;
+    }
   }
 }
 </style>
