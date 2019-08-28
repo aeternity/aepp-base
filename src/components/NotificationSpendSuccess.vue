@@ -65,8 +65,15 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/variables/colors.scss';
+@import './copied.scss';
 
-.notification-spend-success .list-item-circle {
-  background-color: $color-alternative;
+.notification-spend-success {
+  .list-item-circle {
+    background-color: $color-alternative;
+  }
+
+  .ae-button.v-copied {
+    @extend %copied;
+  }
 }
 </style>

@@ -56,6 +56,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/placeholders/typography.scss';
+@import '../copied.scss';
 
 .modal-spend-success {
   text-align: center;
@@ -73,6 +74,10 @@ export default {
     max-width: rem(310px);
     margin-left: auto;
     margin-right: auto;
+
+    &.v-copied {
+      @extend %copied;
+    }
   }
 }
 </style>
