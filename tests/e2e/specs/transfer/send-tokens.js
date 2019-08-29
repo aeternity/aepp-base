@@ -6,7 +6,7 @@ describe('Transfer: Send tokens', () => {
     cy
       .viewport('iphone-5')
       .visit('/transfer', { login: true })
-      .get('.ae-account .balance')
+      .get('.ae-account .balance', { timeout: 10000 })
       .invoke('text')
       .should('not.match', /\s0\s/)
       .as('oldBalance')
@@ -18,9 +18,7 @@ describe('Transfer: Send tokens', () => {
       .url()
       .should('contain', '/transfer/send')
       .get('.ae-input-address textarea')
-      .type(testReceiverAddress)
-      .get('.ae-button')
-      .contains('Next')
+      .get('.list-item:first')
       .click()
 
       .url()
@@ -37,7 +35,7 @@ describe('Transfer: Send tokens', () => {
       .contains('Confirm')
       .click()
 
-      .get('.notification-spend-success', { timeout: 8000 })
+      .get('.notification-spend-success', { timeout: 12000 })
       .contains(testAmount)
       .get('@oldBalance')
       .then(oldBalance => cy
