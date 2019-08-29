@@ -85,7 +85,10 @@ export default (store) => {
             .subscribe((rate) => { amount = amountAe * rate; })
             .unsubscribe();
         }
-        return i18n.t('validation.max_value', [amount.toPrecision(5)]);
+        const approximateAmount = +amount.toPrecision(5);
+        return i18n.t('validation.max_value', [
+          `${approximateAmount === amount ? '' : '~'}${approximateAmount}`,
+        ]);
       },
     },
   });
