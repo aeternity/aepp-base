@@ -8,7 +8,7 @@ import { throttle } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { validateMnemonic } from '@aeternity/bip39';
 import { i18n } from './languages';
-import { toUrl, isAensName } from '../../../lib/utils';
+import { toUrl, isAensName, ConvertibleToString } from '../../../lib/utils';
 import { getPublicKeyByResponseUrl } from '../../../lib/airGap';
 
 Vue.use(VeeValidate);
@@ -78,18 +78,18 @@ export default (store) => {
 
   Validator.localize('en', {
     messages: {
-      max_value_currency: (field, [amountAe]) => {
+      max_value_currency: (field, [amountAe]) => new ConvertibleToString(() => {
         let amount = +amountAe;
         if (store.state.currencies.swapped) {
           store.state.observables.rate
-            .subscribe((rate) => { amount = amountAe * rate; })
+            .subscribe((rate) => { amount *= rate; })
             .unsubscribe();
         }
         const approximateAmount = +amount.toPrecision(5);
         return i18n.t('validation.max_value', [
           `${approximateAmount === amount ? '' : '~'}${approximateAmount}`,
         ]);
-      },
+      }),
     },
   });
 };

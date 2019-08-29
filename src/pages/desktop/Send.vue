@@ -35,7 +35,7 @@
         }"
         :max="max"
         :error="errors.has('amount')"
-        :footer="errors.first('amount')"
+        :footer="errors.first('amount') && errors.first('amount').toString()"
         name="amount"
       />
 
