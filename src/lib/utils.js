@@ -12,3 +12,9 @@ export const isNotFoundError = error => error.isAxiosError
 
 export const isAccountNotFoundError = error => isNotFoundError(error)
   && get(error, 'response.data.reason') === 'Account not found';
+
+export class ConvertibleToString {
+  constructor(toString) {
+    this.toString = toString;
+  }
+}
