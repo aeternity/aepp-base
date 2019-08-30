@@ -8,21 +8,32 @@
       :slot="slot"
       :name="slot"
     />
-    <input
-      :id="id"
-      v-focus.lazy="autofocus"
+    <div
       slot-scope="{ setFocus, id }"
-      placeholder="0.0"
-      autocomplete="off"
-      :value="value"
-      v-bind="$attrs"
-      type="number"
-      inputmode="decimal"
-      step="any"
-      @focus="setFocus(true)"
-      @blur="setFocus(false)"
-      @input="$emit('input', $event.target.value)"
+      class="unit-amount"
+      :class="{ 'unit-reverse': unitReverse }"
     >
+      <input
+        :id="id"
+        v-focus.lazy="autofocus"
+        placeholder="0.0"
+        autocomplete="off"
+        :value="value"
+        v-bind="$attrs"
+        type="number"
+        inputmode="decimal"
+        step="any"
+        @focus="setFocus(true)"
+        @blur="setFocus(false)"
+        @input="$emit('input', $event.target.value)"
+      >
+      <label
+        :for="id"
+        @click="$emit('unit-click')"
+      >
+        {{ unit }}
+      </label>
+    </div>
   </AeInputWrapper>
 </template>
 
@@ -36,6 +47,8 @@ export default {
   props: {
     value: { type: [String, Number], default: '' },
     autofocus: Boolean,
+    unit: { type: String, default: '' },
+    unitReverse: Boolean,
   },
 };
 </script>
@@ -44,26 +57,38 @@ export default {
 @import '../styles/variables/colors.scss';
 @import '../styles/placeholders/typography.scss';
 
-.ae-input-amount input {
-  display: block;
-  width: 100%;
-  margin: 0 0 rem(16px) 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-  -moz-appearance: textfield;
-  @extend %face-mono-xl;
-  text-align: center;
-  font-weight: 300;
-  color: $color-neutral-negative-3;
+.ae-input-amount .unit-amount {
+  display: flex;
+  align-items: center;
 
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+  &.unit-reverse {
+    flex-direction: row-reverse;
   }
 
-  &::placeholder {
-    color: $color-neutral;
+  input,
+  label {
+    @extend %face-mono-xl;
+    margin: 0 0 rem(16px) 0;
+    font-weight: 300;
+  }
+
+  input {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    -moz-appearance: textfield;
+    text-align: center;
+    color: $color-neutral-negative-3;
+
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    &::placeholder {
+      color: $color-neutral;
+    }
   }
 }
 </style>

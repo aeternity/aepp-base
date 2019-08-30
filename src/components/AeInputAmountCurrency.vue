@@ -5,15 +5,12 @@
     :footer="footer || (max ? '' : $t('transfer.send.amount.fee'))"
     :footer-right="footerRight || (footer || max ? '' : minSpendTxFee)"
     :value="internalValue"
+    :unit="symbol"
+    :unitReverse="!isCrypto"
     v-bind="$attrs"
     v-on="{ ...$listeners, input }"
+    @unit-click="swapCurrencies"
   >
-    <span
-      slot="header-right"
-      @click="swapCurrencies"
-    >
-      {{ symbol }}
-    </span>
     <AeToolbarButton
       v-if="max"
       slot="footer-right"
@@ -50,6 +47,7 @@ export default {
   computed: mapState('currencies', {
     swapped: 'swapped',
     symbol: ({ swapped }, { active: { symbol } }) => (swapped ? symbol : 'AE'),
+    isCrypto: ({ swapped }, { active: { isCrypto } }) => (swapped ? isCrypto : true),
   }),
   subscriptions() {
     return pick(this.$store.state.observables, ['rate']);
