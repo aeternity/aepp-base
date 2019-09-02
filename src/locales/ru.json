@@ -259,6 +259,25 @@
         "confirmations": "0 Подтверждений | {n} Подтверждение | {n} Подтверждений",
         "fee": "Комиссия",
         "total": "Итого"
+      },
+
+      "type": {
+        "SpendTx": "Перевод",
+        "ContractCreateTx": "Создание контракта",
+        "ContractCallTx": "Вызов контракта",
+        "NamePreclaimTx": "Предварительная заявка на имя",
+        "NameClaimTx": "Заявка на имя",
+        "NameUpdateTx": "Обновление имени",
+        "NameTransferTx": "Передача имени",
+        "NameRevokeTx": "Аннулирование имени",
+        "OracleRegisterTx": "Регистрация оракла",
+        "OracleExtendTx": "Расширение оракла",
+        "OraclePostQueryTx": "Запрос к ораклу",
+        "OracleRespondTx": "Ответ оракла",
+        "ChannelCloseSoloTx": "Одностороннее закрытие канала",
+        "ChannelSlashTx": "Сокращение канала",
+        "ChannelSettleTx": "Закрытие канала",
+        "ChannelSnapshotSoloTx": "Сольный снимок канала"
       }
     },
 
