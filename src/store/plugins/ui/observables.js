@@ -5,13 +5,14 @@ import {
   multicast, pluck, switchMap, map, filter, pairwise, startWith, catchError,
 } from 'rxjs/operators';
 import { refCountDelay } from 'rxjs-etc/operators';
-import { memoize, upperFirst, lowerCase } from 'lodash-es';
+import { memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
 import { fetchJson } from '../../utils';
 import currencyAmount from '../../../filters/currencyAmount';
 import prefixedAmount from '../../../filters/prefixedAmount';
+import { i18n } from './languages';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -68,9 +69,7 @@ export default (store) => {
       ...amount !== undefined && { amount: BigNumber(amount).shiftedBy(-MAGNITUDE) },
       fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
     },
-    type: upperFirst(
-      lowerCase(otherTx.type.replace(/Tx$/, '')).split(' ').reverse().join(' '),
-    ),
+    type: i18n.t('transfer.transaction.type')[otherTx.type],
   });
 
   const setTransactionFieldsRelatedToAddress = ({ tx, ...otherTransaction }, currentAddress) => ({
