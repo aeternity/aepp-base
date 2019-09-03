@@ -41,7 +41,6 @@
       :disabled="errors.any()"
       :form="_uid"
       fill="secondary"
-      @click="setAddress"
     >
       {{ $t('next') }}
     </AeButton>
