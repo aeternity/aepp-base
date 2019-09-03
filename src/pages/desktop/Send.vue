@@ -95,6 +95,12 @@ export default {
   methods: {
     async send() {
       if (!await this.$validator.validateAll()) return;
+      if (this.activeAccount.address === this.accountTo) {
+        await this.$store.dispatch('modals/open', {
+          name: 'confirm',
+          text: this.$t('transfer.send.to.message'),
+        });
+      }
 
       const amount = BigNumber(this.amount);
       this.busy = true;

@@ -195,7 +195,8 @@
         "address-or-name": "ak_ … or name.test",
         "paste": "复制",
         "scan": "扫描",
-        "subaccount": "或发送给子账户"
+        "subaccount": "或发送给子账户",
+        "message": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
       },
 
       "amount": {
