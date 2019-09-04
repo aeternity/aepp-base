@@ -196,7 +196,7 @@
         "paste": "复制",
         "scan": "扫描",
         "subaccount": "或发送给子账户",
-        "message": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
+        "confirm-sending-to-same-account": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
       },
 
       "amount": {
@@ -674,10 +674,10 @@
       "button": "重置",
       "title": "重置密钥",
       "subtitle": "重置后，需要恢复助记词",
-      "message": "如果你没有备份帐号, 你将不能再次登录. 你确定吗?",
+      "confirm": "如果你没有备份帐号, 你将不能再次登录. 你确定吗?",
       "title-desktop": "重置所有数据",
       "subtitle-desktop": "",
-      "message-desktop": "你将会取消与Base æpp的连接并清除所有已保存的状态. 你确定吗?"
+      "confirm-desktop": "你将会取消与Base æpp的连接并清除所有已保存的状态. 你确定吗?"
     }
   }
 }

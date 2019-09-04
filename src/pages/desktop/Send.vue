@@ -98,7 +98,7 @@ export default {
       if (this.activeAccount.address === this.accountTo) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
-          text: this.$t('transfer.send.to.message'),
+          text: this.$t('transfer.send.to.confirm-sending-to-same-account'),
         });
       }
 
