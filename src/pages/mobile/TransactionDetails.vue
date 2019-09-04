@@ -52,6 +52,12 @@
     />
 
     <DetailsAddress
+      v-if="transaction.tx.accountId"
+      :name="$t('transfer.transaction.details.account')"
+      :address="transaction.tx.accountId"
+    />
+
+    <DetailsAddress
       v-if="transaction.tx.senderId"
       :name="$t('transfer.transaction.details.from')"
       :address="transaction.tx.senderId"

@@ -27,9 +27,11 @@
     />
     <DetailsNamePointers :value="details.pointers" />
 
-    <AeButton
-      :to="{ name: 'transaction-details', params: { hash: details.txHash } }"
-    >
+    <AeButton :to="{ name: 'name-transfer', params: { name } }">
+      {{ $t('name.details.to-transfer') }}
+    </AeButton>
+
+    <AeButton :to="{ name: 'transaction-details', params: { hash: details.txHash } }">
       {{ $t('name.details.to-transactions') }}
     </AeButton>
   </MobilePage>

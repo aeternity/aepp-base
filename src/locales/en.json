@@ -250,6 +250,7 @@
         "title": "Transaction details",
         "received": "You received",
         "sent": "You sent",
+        "account": "Account address",
         "from": "From",
         "to": "To",
         "date": "Date",
@@ -434,7 +435,19 @@
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "to-transfer": "Transfer name",
       "to-transactions": "View in transactions"
+    },
+
+    "transfer": {
+      "guide": "Transfer name owned by <account />",
+      "subaccount": "Or transfer to subaccount",
+      "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
+
+      "notification":{
+        "succeed": "{name} was successfully transfered",
+        "failed": "{name} was not transfered for unknown reason"
+      }
     },
 
     "new": {
@@ -476,6 +489,7 @@
       "name-pre-claim": "Preclaim name",
       "name-claim": "Claim name",
       "name-update": "Update name",
+      "name-transfer": "Transfer name",
 
       "details-fee-input": {
         "title": "Transaction fee",

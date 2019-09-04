@@ -250,6 +250,7 @@
         "title": "转账详情",
         "received": "您已收到",
         "sent": "您已发送",
+        "account": "Account address",
         "from": "从",
         "to": "到",
         "date": "日期",
@@ -434,7 +435,19 @@
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "to-transfer": "Transfer name",
       "to-transactions": "View in transactions"
+    },
+
+    "transfer": {
+      "guide": "Transfer name owned by <account />",
+      "subaccount": "Or transfer to subaccount",
+      "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
+
+      "notification":{
+        "succeed": "{name} was successfully transfered",
+        "failed": "{name} was not transfered for unknown reason"
+      }
     },
 
     "new": {
@@ -476,6 +489,7 @@
       "name-pre-claim": "预备取名",
       "name-claim": "确定取名",
       "name-update": "更新名称",
+      "name-transfer": "Transfer name",
 
       "details-fee-input": {
         "title": "交易费用",
