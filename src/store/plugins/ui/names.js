@@ -75,7 +75,15 @@ export default (store) => {
         );
       },
       async fetchName({ rootState, commit }, name) {
+        const height = await new Promise((resolve) => {
+          const subscription = rootState.observables.topBlockHeight.subscribe((h) => {
+            if (h === 0) return;
+            resolve(h);
+            subscription.unsubscribe();
+          });
+        });
         const { owner: address } = (await rootState.sdk.middleware.namesSearchGet(name))
+          .filter(({ expiresAt }) => expiresAt > height)
           .find(nameDetails => nameDetails.name === name);
         commit('set', { address, name });
         return address;
