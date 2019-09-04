@@ -196,7 +196,8 @@
         "address-or-name": "ak_ … or name.test",
         "paste": "Paste",
         "scan": "Scan",
-        "subaccount": "Or send to subaccount"
+        "subaccount": "Or send to subaccount",
+        "confirm-sending-to-same-account": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
       },
 
       "amount": {
@@ -693,10 +694,10 @@
       "button": "Reset",
       "title": "Reset Key Storage",
       "subtitle": "After resetting, a recovery is required",
-      "message": "If you haven't backup your account, you won't be able to enter it again. Are you sure?",
+      "confirm": "If you haven't backup your account, you won't be able to enter it again. Are you sure?",
       "title-desktop": "Reset All Data",
       "subtitle-desktop": "",
-      "message-desktop": "You will revoke your connection with mobile Base æpp and clear saved state. Are you sure?"
+      "confirm-desktop": "You will revoke your connection with mobile Base æpp and clear saved state. Are you sure?"
     }
   }
 }
