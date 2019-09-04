@@ -357,7 +357,7 @@
 
   "ledger": {
     "account-name": "Ledger account",
-    "mobile-not-supported": "Signing on mobile using Ledger is not supported now. Please use desktop version of Base æpp to sign this transaction.",
+    "mobile-not-supported": "Signing on mobile using Ledger is not supported now.",
 
     "not-supported": {
       "guide": "Please switch to Google\u00A0Chrome",

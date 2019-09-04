@@ -357,7 +357,7 @@
 
   "ledger": {
     "account-name": "Ledger 账户",
-    "mobile-not-supported": "暂时不支持使用 Ledger 在移动设备上签名。请使用桌面版本的Base æpp.",
+    "mobile-not-supported": "暂时不支持使用 Ledger 在移动设备上签名。",
 
     "not-supported": {
       "guide": "请切换到 Google\u00A0Chrome",
