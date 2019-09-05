@@ -10,11 +10,6 @@
       class="header"
     >
       <AccountInline :address="activeAccount.address" />
-      <Balance
-        :balance="activeAccount.balance"
-        invert
-        short
-      />
     </div>
 
     <div class="tabs">
@@ -62,9 +57,9 @@
 <script>
 import { Subject } from 'rxjs';
 import { groupBy } from 'lodash-es';
+import { mapGetters } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AccountInline from '../../components/AccountInline.vue';
-import Balance from '../../components/Balance.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import ListItemTransaction from '../../components/ListItemTransaction.vue';
@@ -73,7 +68,6 @@ export default {
   components: {
     MobilePage,
     AccountInline,
-    Balance,
     ButtonPlain,
     AeLoader,
     ListItemTransaction,
@@ -88,7 +82,6 @@ export default {
   subscriptions() {
     this.loadMore$ = new Subject();
     return {
-      activeAccount: this.$store.state.observables.activeAccount,
       transactions: this.$store.state.observables.getTransactionList(this.loadMore$),
     };
   },
@@ -111,6 +104,7 @@ export default {
         },
       );
     },
+    ...mapGetters({ activeAccount: 'accounts/active' }),
   },
   mounted() {
     const checkLoadMore = () => {
@@ -135,12 +129,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .balance {
-      @media (max-width: 410px) {
-        display: none;
-      }
-    }
   }
 
   .tabs, .date {
