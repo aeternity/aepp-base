@@ -190,7 +190,7 @@
       "to": {
         "guide": "<primary>新转账</primary><br>从",
         "recipient": "账户",
-        "address-or-name": "ak_ … or name.test",
+        "address": "ak_ …",
         "paste": "复制",
         "scan": "扫描",
         "subaccount": "或发送给子账户",

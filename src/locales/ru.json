@@ -190,7 +190,7 @@
       "to": {
         "guide": "<primary>Новый перевод</primary><br />из <account />",
         "recipient": "Получатель",
-        "address-or-name": "ak_ … или имя.test",
+        "address": "ak_ …",
         "paste": "Вставить",
         "scan": "Сканировать",
         "subaccount": "Или отправить на субаккаунт",
