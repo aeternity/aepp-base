@@ -6,7 +6,7 @@
     :footer-right="footerRight || (footer || max ? '' : minSpendTxFee)"
     :value="internalValue"
     :unit="symbol"
-    :unitReverse="!isCrypto"
+    :unit-reverse="!isCrypto"
     v-bind="$attrs"
     v-on="{ ...$listeners, input }"
     @unit-click="swapCurrencies"
