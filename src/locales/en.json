@@ -190,7 +190,7 @@
       "to": {
         "guide": "<primary>New Transfer</primary><br />from <account />",
         "recipient": "Recipient",
-        "address-or-name": "ak_ … or name.test",
+        "address": "ak_ …",
         "paste": "Paste",
         "scan": "Scan",
         "subaccount": "Or send to subaccount",

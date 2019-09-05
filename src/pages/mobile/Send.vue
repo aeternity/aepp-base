@@ -27,7 +27,7 @@
       >
         <AeInputAccount
           v-model="accountTo"
-          v-validate="'required|account'"
+          v-validate="'required|address'"
           autofocus
           :error="errors.has('accountTo')"
           :footer="errors.first('accountTo')"
