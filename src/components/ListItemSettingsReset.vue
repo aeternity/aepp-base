@@ -26,8 +26,8 @@ export default {
       await this.$store.dispatch('modals/open', {
         name: 'confirm',
         text: process.env.IS_MOBILE_DEVICE
-          ? this.$t('settings.reset.message')
-          : this.$t('settings.reset.message-desktop'),
+          ? this.$t('settings.reset.confirm')
+          : this.$t('settings.reset.confirm-desktop'),
         primaryButtonText: this.$t('settings.reset.button'),
       });
       this.$store.dispatch('reset');

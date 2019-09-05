@@ -7,6 +7,7 @@
   "deny": "拒绝",
   "allow": "允许",
   "copied": "Copied",
+  "scan-qr-code": "Scan QR code",
   "guide-desktop": "目前Base æpp只能在只在一个浏览器选项卡中打开的情况下运行. 请关闭所有运行的标签.",
 
   "add-to-home-screen": {
@@ -117,9 +118,6 @@
 
     "intro": [{
       "header": "欢迎来到æpps浏览器！",
-      "body": "虽然Base æpp钱包的这部分功能仍在加强中，但可安全使用，同时我们仍在继续完善您的使用体验。"
-    }, {
-      "header": "什么是æpp？",
       "body": "æpps是由æternity区块链提供支持的去中心化应用程序。"
     }],
 
@@ -192,10 +190,11 @@
       "to": {
         "guide": "<primary>新转账</primary><br>从",
         "recipient": "账户",
-        "address-or-name": "ak_ … or name.test",
+        "address": "ak_ …",
         "paste": "复制",
         "scan": "扫描",
-        "subaccount": "或发送给子账户"
+        "subaccount": "或发送给子账户",
+        "confirm-sending-to-same-account": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
       },
 
       "amount": {
@@ -248,8 +247,10 @@
         "title": "转账详情",
         "received": "您已收到",
         "sent": "您已发送",
+        "account": "Account address",
         "from": "从",
         "to": "到",
+        "name-owner": "New name's owner",
         "date": "日期",
         "status": "状态",
         "owner": "所有者",
@@ -259,6 +260,25 @@
         "confirmations": "{n} 确认数",
         "fee": "转账手续费",
         "total": "总计"
+      },
+
+      "type": {
+        "SpendTx": "Spend",
+        "ContractCreateTx": "Contract create",
+        "ContractCallTx": "Contract call",
+        "NamePreclaimTx": "Preclaim name",
+        "NameClaimTx": "Claim name",
+        "NameUpdateTx": "Update name",
+        "NameTransferTx": "Transfer name",
+        "NameRevokeTx": "Revoke name",
+        "OracleRegisterTx": "Register oracle",
+        "OracleExtendTx": "Extend oracle",
+        "OraclePostQueryTx": "Post query oracle",
+        "OracleRespondTx": "Respond oracle",
+        "ChannelCloseSoloTx": "Solo close channel",
+        "ChannelSlashTx": "Slash channel",
+        "ChannelSettleTx": "Settle channel",
+        "ChannelSnapshotSoloTx": "Solo snapshot channel"
       }
     },
 
@@ -335,7 +355,7 @@
 
   "ledger": {
     "account-name": "Ledger 账户",
-    "mobile-not-supported": "暂时不支持使用 Ledger 在移动设备上签名。请使用桌面版本的Base æpp.",
+    "mobile-not-supported": "暂时不支持使用 Ledger 在移动设备上签名。",
 
     "not-supported": {
       "guide": "请切换到 Google\u00A0Chrome",
@@ -394,10 +414,7 @@
 
     "intro": [{
       "header": "欢迎来到 æternity 命名系统(AENS)!",
-      "body": "Base æpp钱包的这部分目前为测试版. 我们正在积极改进AENS的功能，很兴奋能与您分享这个过程."
-    }, {
-      "header": "AENS 如何工作?",
-      "body": "AENS允许用户申请一个名称,并与一个或多个æternity帐户关联. 目前为止,只有以.test结尾的名字可以申请.您成功申请后,它会与您的帐户关联. At that point anyone can send tokens by typing the name instead of the account address."
+      "body": "AENS允许用户申请一个名称,并与一个或多个æternity帐户关联. 您成功申请后,它会与您的帐户关联. At that point anyone can send tokens by typing the name instead of the account address."
     }],
 
     "list": {
@@ -413,7 +430,19 @@
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "to-transfer": "Transfer name",
       "to-transactions": "View in transactions"
+    },
+
+    "transfer": {
+      "guide": "Transfer name owned by <account />",
+      "subaccount": "Or transfer to subaccount",
+      "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
+
+      "notification":{
+        "succeed": "{name} was successfully transfered",
+        "failed": "{name} was not transfered for unknown reason"
+      }
     },
 
     "new": {
@@ -455,6 +484,7 @@
       "name-pre-claim": "预备取名",
       "name-claim": "确定取名",
       "name-update": "更新名称",
+      "name-transfer": "Transfer name",
 
       "details-fee-input": {
         "title": "交易费用",
@@ -673,10 +703,10 @@
       "button": "重置",
       "title": "重置密钥",
       "subtitle": "重置后，需要恢复助记词",
-      "message": "如果你没有备份帐号, 你将不能再次登录. 你确定吗?",
+      "confirm": "如果你没有备份帐号, 你将不能再次登录. 你确定吗?",
       "title-desktop": "重置所有数据",
       "subtitle-desktop": "",
-      "message-desktop": "你将会取消与Base æpp的连接并清除所有已保存的状态. 你确定吗?"
+      "confirm-desktop": "你将会取消与Base æpp的连接并清除所有已保存的状态. 你确定吗?"
     }
   }
 }

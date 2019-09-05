@@ -17,7 +17,7 @@
     <form @submit.prevent="send">
       <AeInputAccount
         v-model="accountTo"
-        v-validate="'required|account'"
+        v-validate="'required|address'"
         :error="errors.has('accountTo')"
         :footer="errors.first('accountTo')"
         autofocus
@@ -35,7 +35,7 @@
         }"
         :max="max"
         :error="errors.has('amount')"
-        :footer="errors.first('amount')"
+        :footer="errors.first('amount') && errors.first('amount').toString()"
         name="amount"
       />
 
@@ -50,7 +50,7 @@
       />
 
       <AeButton :disabled="errors.any() || busy">
-        {{ $t('transfer.send.transfer') }}
+        <AeLoader v-if="busy" /> {{ $t('transfer.send.transfer') }}
       </AeButton>
     </form>
   </div>
@@ -68,6 +68,7 @@ import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
 import DetailsAmount from '../../components/mobile/DetailsAmount.vue';
 import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import AeButton from '../../components/AeButton.vue';
+import AeLoader from '../../components/AeLoader.vue';
 import { MAGNITUDE } from '../../lib/constants';
 
 export default {
@@ -80,6 +81,7 @@ export default {
     DetailsAmount,
     DetailsAmountCurrency,
     AeButton,
+    AeLoader,
   },
   mixins: [SendAmountMixin],
   data: () => ({
@@ -93,6 +95,12 @@ export default {
   methods: {
     async send() {
       if (!await this.$validator.validateAll()) return;
+      if (this.activeAccount.address === this.accountTo) {
+        await this.$store.dispatch('modals/open', {
+          name: 'confirm',
+          text: this.$t('transfer.send.to.confirm-sending-to-same-account'),
+        });
+      }
 
       const amount = BigNumber(this.amount);
       this.busy = true;
@@ -140,6 +148,11 @@ export default {
     margin-top: rem(53px);
     margin-left: auto;
     margin-right: auto;
+
+    .ae-loader {
+      width: rem(24px);
+      vertical-align: middle;
+    }
   }
 }
 </style>

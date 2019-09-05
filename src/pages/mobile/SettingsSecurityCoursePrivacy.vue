@@ -16,6 +16,23 @@
         <li>IP地址</li>
       </ul>
     </template>
+    <template v-else-if="$i18n.locale === 'ru'">
+      <h2>æternity ценит конфиденциальность</h2>
+
+      <p>
+        Base æpp не будет запрашивать, получать, передавать или хранить ваши:
+      </p>
+
+      <ul>
+        <li>ФИО</li>
+        <li>Дата рождения</li>
+        <li>Домашний адрес</li>
+        <li>Email адрес</li>
+        <li>Телефонный номер</li>
+        <li>Аккаунты в социальных сетях</li>
+        <li>IP адрес</li>
+      </ul>
+    </template>
     <template v-else>
       <h2>æternity values privacy</h2>
 

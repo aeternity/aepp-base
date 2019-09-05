@@ -1,5 +1,6 @@
 import { get, isEqual } from 'lodash-es';
 import { handleUnknownError, isNotFoundError } from '../../lib/utils';
+import { i18n } from './ui/languages';
 
 export default (store) => {
   let recreateSdk;
@@ -76,6 +77,10 @@ export default (store) => {
       },
       sign: data => store.dispatch('accounts/sign', data),
       signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
+      readQrCode: ({ title }) => store.dispatch('modals/open', {
+        name: 'readQrCode',
+        title: title || i18n.t('scan-qr-code'),
+      }),
     };
 
     let sdkActive = false;
@@ -106,6 +111,7 @@ export default (store) => {
             };
           },
           methods,
+          deepConfiguration: { Ae: { methods: ['readQrCode'] } },
         },
       )({
         url: network.url,
