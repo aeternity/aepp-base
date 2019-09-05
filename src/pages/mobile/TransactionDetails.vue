@@ -33,6 +33,11 @@
     />
 
     <DetailsField
+      :name="$t('transfer.transaction.details.type')"
+      :value="transaction.type"
+    />
+
+    <DetailsField
       :class="{ pending: transaction.pending }"
       class="status"
       :name="$t('transfer.transaction.details.status')"
@@ -65,7 +70,8 @@
 
     <DetailsAddress
       v-if="transaction.tx.recipientId"
-      :name="$t('transfer.transaction.details.to')"
+      :name="transaction.tx.type === 'NameTransferTx'
+        ? $t('transfer.transaction.details.name-owner') : $t('transfer.transaction.details.to')"
       :address="transaction.tx.recipientId"
     />
 
@@ -78,11 +84,6 @@
     <DetailsAddress
       :name="$t('transfer.transaction.details.hash')"
       :address="transaction.hash"
-    />
-
-    <DetailsField
-      :name="$t('transfer.transaction.details.type')"
-      :value="transaction.type"
     />
 
     <AeButton

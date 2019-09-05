@@ -250,6 +250,7 @@
         "account": "Account address",
         "from": "从",
         "to": "到",
+        "name-owner": "New name's owner",
         "date": "日期",
         "status": "状态",
         "owner": "所有者",

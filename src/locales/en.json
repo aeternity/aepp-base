@@ -250,6 +250,7 @@
         "account": "Account address",
         "from": "From",
         "to": "To",
+        "name-owner": "New name's owner",
         "date": "Date",
         "status": "Status",
         "owner": "Owner",
