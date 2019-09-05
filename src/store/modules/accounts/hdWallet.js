@@ -227,7 +227,7 @@ export default {
 
       const SUPPORTED_TX_TYPES = [
         TX_TYPE.spend, TX_TYPE.contractCreate, TX_TYPE.contractCall,
-        TX_TYPE.namePreClaim, TX_TYPE.nameClaim, TX_TYPE.nameUpdate,
+        TX_TYPE.namePreClaim, TX_TYPE.nameClaim, TX_TYPE.nameUpdate, TX_TYPE.nameTransfer,
       ];
       if (!SUPPORTED_TX_TYPES.includes(OBJECT_ID_TX_TYPE[txObject.tag])) {
         return dispatch('confirmRawDataSigning', txBinary);

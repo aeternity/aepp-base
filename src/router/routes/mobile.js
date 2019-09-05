@@ -25,6 +25,7 @@ import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
 import NameList from '../../pages/mobile/NameList.vue';
 import NameDetails from '../../pages/mobile/NameDetails.vue';
 import NameNew from '../../pages/mobile/NameNew.vue';
+import NameTransfer from '../../pages/mobile/NameTransfer.vue';
 import Settings from '../../pages/mobile/Settings.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
@@ -215,6 +216,12 @@ export default [{
   path: '/names/new',
   component: NameNew,
   beforeEnter: ensureLoggedIn,
+}, {
+  name: 'name-transfer',
+  path: '/names/:name/transfer',
+  component: NameTransfer,
+  beforeEnter: ensureLoggedIn,
+  props: true,
 }, {
   name: 'settings',
   path: '/settings',

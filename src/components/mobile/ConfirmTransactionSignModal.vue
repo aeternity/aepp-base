@@ -130,6 +130,7 @@ export default {
         [TX_TYPE.namePreClaim]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
         [TX_TYPE.nameClaim]: this.$t('modal.confirm-transaction-sign.name-claim'),
         [TX_TYPE.nameUpdate]: this.$t('modal.confirm-transaction-sign.name-update'),
+        [TX_TYPE.nameTransfer]: this.$t('modal.confirm-transaction-sign.name-transfer'),
       }[this.txType] || '';
     },
     maxFee() {
