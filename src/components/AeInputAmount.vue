@@ -89,6 +89,10 @@ export default {
     &::placeholder {
       color: $color-neutral;
     }
+
+    &::-webkit-input-placeholder {
+      line-height: normal;
+    }
   }
 }
 </style>
