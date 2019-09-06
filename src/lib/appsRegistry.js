@@ -7,7 +7,7 @@ export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
 const showGraffitiApp = new Date('2019-09-04T22:00:00.000Z').getTime() <= Date.now();
 
 export const aeternityApps = [...showGraffitiApp ? [{
-  name: 'Graffiti Aepp',
+  name: 'Graffiti',
   path: 'graffiti.aeternity.com',
   icon: graffitiAeppIcon,
 }] : [], {
