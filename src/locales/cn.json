@@ -114,7 +114,7 @@
   },
 
   "app": {
-    "title": "æpps",
+    "title": "Browse",
 
     "intro": [{
       "header": "欢迎来到æpps浏览器！",
@@ -122,14 +122,14 @@
     }],
 
     "list": {
-      "featured-guide": "<primary>精选æpps</primary>",
-      "browse-guide": "浏览æpps",
-      "bookmarked-guide": "我的æpps",
+      "featured-guide": "<primary>精选</primary>",
+      "browse-guide": "浏览",
+      "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>浏览器</primary> (beta)",
       "note": "将运行在æternity区块链上的æpps添加到这里"
     },
 
-    "url-form-placeholder": "输入æpps链接",
+    "url-form-placeholder": "输入链接",
 
     "browser": {
       "refresh": "更新",
@@ -150,11 +150,11 @@
     },
 
     "settings": {
-      "title": "Aepp帐户访问权限",
-      "count": "没有aepps,有帐户访问权限| {n} aepp有帐户访问权限| {n} aepps有帐户访问权限",
+      "title": "帐户访问权限",
+      "count": "没有,有帐户访问权限| {n} 有帐户访问权限",
 
       "list": {
-        "note": "管理哪些æpps可以访问您的（子）帐户",
+        "note": "管理哪些可以访问您的（子）帐户",
         "subtitle": "| 可访问 {n} 账户 | 可访问 {n} 账户(子)"
       }
     }
@@ -172,8 +172,8 @@
       "content": "确认哪个帐户是活动的.帐户和子帐户具有唯一的标识符."
     }, {
       "selector": ".transfer .tab-bar .button-plain",
-      "header": "æpps",
-      "content": "æpps浏览器探索æternity区块链."
+      "header": "Browse",
+      "content": "浏览器探索æternity区块链."
     }, {
       "selector": ".transfer .tab-bar .button-plain:nth-child(3)",
       "header": "切换账户",
