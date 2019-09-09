@@ -90,7 +90,7 @@
     },
 
     "aepps": {
-      "guide": "Explore æpps",
+      "guide": "Explore æternity",
       "note": "Bring the power of æternity blockchain to your daily life."
     },
 
@@ -114,7 +114,7 @@
   },
 
   "app": {
-    "title": "æpps",
+    "title": "Browse",
 
     "intro": [{
       "header": "Welcome to the æpps browser!",
@@ -122,14 +122,14 @@
     }],
 
     "list": {
-      "featured-guide": "<primary>Featured æpps</primary>",
-      "browse-guide": "Browse æpps",
-      "bookmarked-guide": "My æpps",
+      "featured-guide": "<primary>Featured</primary>",
+      "browse-guide": "Browse",
+      "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>browser</primary> (beta)",
       "note": "æpps running on the æternity blockchain will be added below."
     },
 
-    "url-form-placeholder": "Enter æpp URL",
+    "url-form-placeholder": "Enter URL",
 
     "browser": {
       "refresh": "Refresh",
@@ -150,11 +150,11 @@
     },
 
     "settings": {
-      "title": "Aepp account access",
-      "count": "No aepps have account access | {n} aepp have account access | {n} aepps have account access",
+      "title": "Account access",
+      "count": "No one have account access | {n} have account access",
 
       "list": {
-        "note": "Manage which æpps can access your (sub)accounts",
+        "note": "Manage who can access your (sub)accounts",
         "subtitle": "| can access {n} account | can access {n} accounts"
       }
     }
@@ -172,8 +172,8 @@
       "content": "Recognize which account is active. Accounts & subaccounts have unique identicons."
     }, {
       "selector": ".transfer .tab-bar .button-plain",
-      "header": "æpps",
-      "content": "Explore æpps powered by the æternity blockchain."
+      "header": "Browse",
+      "content": "Browse æternity blockchain."
     }, {
       "selector": ".transfer .tab-bar .button-plain:nth-child(3)",
       "header": "Account Switcher",
