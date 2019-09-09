@@ -46,7 +46,6 @@ export default {
     time: { type: Date, default: null },
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
-    type: { type: String, required: true },
     convertedAmount: { type: String, default: '' },
   },
   computed: mapState('names', {
