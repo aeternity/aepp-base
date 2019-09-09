@@ -116,11 +116,6 @@
   "app": {
     "title": "æpps",
 
-    "intro": [{
-      "header": "欢迎来到æpps浏览器！",
-      "body": "æpps是由æternity区块链提供支持的去中心化应用程序。"
-    }],
-
     "list": {
       "featured-guide": "<primary>精选æpps</primary>",
       "browse-guide": "浏览æpps",
@@ -411,11 +406,6 @@
 
   "name": {
     "title": "Names",
-
-    "intro": [{
-      "header": "欢迎来到 æternity 命名系统(AENS)!",
-      "body": "AENS允许用户申请一个名称,并与一个或多个æternity帐户关联. 您成功申请后,它会与您的帐户关联. At that point anyone can send tokens by typing the name instead of the account address."
-    }],
 
     "list": {
       "note": "为您的账户申请一个名称!",
