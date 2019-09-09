@@ -151,17 +151,22 @@ export default (store) => {
   ])
     .pipe(
       switchMap(async ([address, height, hash, sdk]) => {
-        const tx = transactions[hash]
-          || await normalizeTransaction(
+        let tx;
+        if (transactions[hash]) {
+          tx = transactions[hash];
+        } else {
+          if (!sdk) return null;
+          tx = await normalizeTransaction(
             await sdk.api.getTransactionByHash(hash),
           );
-        registerTx(tx);
-        return ({
+          registerTx(tx);
+        }
+        return {
           ...setTransactionFieldsRelatedToAddress(tx, address),
           confirmationCount: height - tx.blockHeight,
-        });
+        };
       }),
-      switchMap(addConvertedAmount),
+      switchMap(tx => (tx ? addConvertedAmount(tx) : Promise.resolve(tx))),
     );
 
   const fetchMdwTransactions = async (address, limit, page) => {
