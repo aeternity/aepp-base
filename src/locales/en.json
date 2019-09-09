@@ -116,11 +116,6 @@
   "app": {
     "title": "Browse",
 
-    "intro": [{
-      "header": "Welcome to the æpps browser!",
-      "body": "æpps are decentralized applications powered by the æternity blockchain."
-    }],
-
     "list": {
       "featured-guide": "<primary>Featured</primary>",
       "browse-guide": "Browse",
@@ -411,11 +406,6 @@
 
   "name": {
     "title": "Names",
-
-    "intro": [{
-      "header": "Welcome to the æternity Naming System (AENS)!",
-      "body": "The AENS allows users to claim names and associate them with one or more æternity accounts. After you have successfully claimed a name it is associated with one of your accounts. At that point anyone can send tokens by typing the name instead of the account address."
-    }],
 
     "list": {
       "note": "Claim a name for your account!",
