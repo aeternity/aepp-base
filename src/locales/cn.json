@@ -62,7 +62,7 @@
     "mnemonic": "无效助记词",
     "url_http": "该字段不是有效的HTTP(S) URL",
     "air_gap_response_url": "这不是有效的同步代码。",
-    "aens_name": "必须以.test结尾",
+    "aens_name": "This field must not contain dots",
     "aens_name_unregistered": "这个名称已被注册",
     "account": "Invalid AE address or AENS name"
   },
@@ -439,7 +439,7 @@
       "guide": "为 <inlineAccount /><primary>申请一个新名称</primary> ",
       "unknown-error": "未知错误",
       "name": "名称",
-      "name-placeholder": "Name.test",
+      "name-placeholder": "Name",
       "register": "注册",
 
       "notification":{

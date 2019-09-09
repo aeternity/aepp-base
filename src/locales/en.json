@@ -62,7 +62,7 @@
     "mnemonic": "Invalid recovery phrase",
     "url_http": "This field is not a valid HTTP(S) URL",
     "air_gap_response_url": "This is not a valid sync code.",
-    "aens_name": "This field must ends with .test",
+    "aens_name": "This field must not contain dots",
     "aens_name_unregistered": "This name is already registered",
     "account": "Invalid AE address or AENS name"
   },
@@ -439,7 +439,7 @@
       "guide": "<primary>Claim a name</primary> for <inlineAccount />",
       "unknown-error": "Unknown error",
       "name": "Name",
-      "name-placeholder": "Name.test",
+      "name-placeholder": "Name",
       "register": "Register",
 
       "notification":{
