@@ -62,7 +62,7 @@
     "mnemonic": "Неверная мнемоническая фраза",
     "url_http": "Это поле не является допустимым HTTP(S) URL-адресом",
     "air_gap_response_url": "Это недопустимый код синхронизации.",
-    "aens_name": "Это поле должно заканчиваться на .test",
+    "aens_name": "Это поле не должно содержать точек",
     "aens_name_unregistered": "Это имя уже зарегистрировано",
     "account": "Неверный AE адрес или AENS имя"
   },
@@ -439,7 +439,7 @@
       "guide": "<primary>Запросить имя</primary> для <inlineAccount />",
       "unknown-error": "Неизвестная ошибка",
       "name": "Имя",
-      "name-placeholder": "Имя.test",
+      "name-placeholder": "Имя",
       "register": "Зарегистрировать",
 
       "notification": {
