@@ -195,8 +195,7 @@ export default (store) => {
   const getTransactionsByAddress = (address) => {
     if (!transactionRangeForAddress[address]) return [];
     const txs = Object.values(transactions)
-      .filter(({ tx }) => [tx.senderId, tx.accountId, tx.recipientId, tx.ownerId]
-        .includes(address));
+      .filter(({ tx }) => Object.values(tx).includes(address));
     const minedTxs = txs
       .filter(({ pending }) => !pending)
       .sort((a, b) => b.time - a.time);
