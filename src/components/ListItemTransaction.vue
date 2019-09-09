@@ -46,12 +46,11 @@ export default {
     time: { type: Date, default: null },
     peerId: { type: String, default: '' },
     tx: { type: Object, required: true },
-    type: { type: String, required: true },
     convertedAmount: { type: String, default: '' },
   },
   computed: mapState('names', {
     peerName(state, { get }) {
-      if (!this.peerId) return this.type;
+      if (!this.peerId) return this.$t('transfer.transaction.type')[this.tx.type];
       return get(this.peerId);
     },
   }),

@@ -2,7 +2,7 @@ import { get } from 'lodash-es';
 
 export const toUrl = url => new URL((/^\w+:\//.test(url) ? '' : 'http://') + url);
 
-export const isAensName = value => value.endsWith('.test');
+export const isAensName = value => !value.includes('.');
 
 // eslint-disable-next-line no-console
 export const handleUnknownError = error => console.warn('Unknown rejection', error);

@@ -62,7 +62,7 @@
     "mnemonic": "Invalid recovery phrase",
     "url_http": "This field is not a valid HTTP(S) URL",
     "air_gap_response_url": "This is not a valid sync code.",
-    "aens_name": "This field must ends with .test",
+    "aens_name": "This field must not contain dots",
     "aens_name_unregistered": "This name is already registered",
     "account": "Invalid AE address or AENS name"
   },
@@ -90,7 +90,7 @@
     },
 
     "aepps": {
-      "guide": "Explore æpps",
+      "guide": "Explore æternity",
       "note": "Bring the power of æternity blockchain to your daily life."
     },
 
@@ -114,22 +114,17 @@
   },
 
   "app": {
-    "title": "æpps",
-
-    "intro": [{
-      "header": "Welcome to the æpps browser!",
-      "body": "æpps are decentralized applications powered by the æternity blockchain."
-    }],
+    "title": "Browse",
 
     "list": {
-      "featured-guide": "<primary>Featured æpps</primary>",
-      "browse-guide": "Browse æpps",
-      "bookmarked-guide": "My æpps",
+      "featured-guide": "<primary>Featured</primary>",
+      "browse-guide": "Browse",
+      "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>browser</primary> (beta)",
       "note": "æpps running on the æternity blockchain will be added below."
     },
 
-    "url-form-placeholder": "Enter æpp URL",
+    "url-form-placeholder": "Enter URL",
 
     "browser": {
       "refresh": "Refresh",
@@ -150,11 +145,11 @@
     },
 
     "settings": {
-      "title": "Aepp account access",
-      "count": "No aepps have account access | {n} aepp have account access | {n} aepps have account access",
+      "title": "Account access",
+      "count": "No one have account access | {n} have account access",
 
       "list": {
-        "note": "Manage which æpps can access your (sub)accounts",
+        "note": "Manage who can access your (sub)accounts",
         "subtitle": "| can access {n} account | can access {n} accounts"
       }
     }
@@ -172,8 +167,8 @@
       "content": "Recognize which account is active. Accounts & subaccounts have unique identicons."
     }, {
       "selector": ".transfer .tab-bar .button-plain",
-      "header": "æpps",
-      "content": "Explore æpps powered by the æternity blockchain."
+      "header": "Browse",
+      "content": "Browse æternity blockchain."
     }, {
       "selector": ".transfer .tab-bar .button-plain:nth-child(3)",
       "header": "Account Switcher",
@@ -412,11 +407,6 @@
   "name": {
     "title": "Names",
 
-    "intro": [{
-      "header": "Welcome to the æternity Naming System (AENS)!",
-      "body": "The AENS allows users to claim names and associate them with one or more æternity accounts. After you have successfully claimed a name it is associated with one of your accounts. At that point anyone can send tokens by typing the name instead of the account address."
-    }],
-
     "list": {
       "note": "Claim a name for your account!",
       "explanation": "Tap the “+” button below to claim a name and associate it with one of your accounts.",
@@ -449,7 +439,7 @@
       "guide": "<primary>Claim a name</primary> for <inlineAccount />",
       "unknown-error": "Unknown error",
       "name": "Name",
-      "name-placeholder": "Name.test",
+      "name-placeholder": "Name",
       "register": "Register",
 
       "notification":{

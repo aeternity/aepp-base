@@ -12,7 +12,6 @@ import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
 import { fetchJson } from '../../utils';
 import currencyAmount from '../../../filters/currencyAmount';
 import prefixedAmount from '../../../filters/prefixedAmount';
-import { i18n } from './languages';
 
 export default (store) => {
   // eslint-disable-next-line no-underscore-dangle
@@ -69,7 +68,6 @@ export default (store) => {
       ...amount !== undefined && { amount: BigNumber(amount).shiftedBy(-MAGNITUDE) },
       fee: BigNumber(fee).shiftedBy(-MAGNITUDE),
     },
-    type: i18n.t('transfer.transaction.type')[otherTx.type],
   });
 
   const setTransactionFieldsRelatedToAddress = ({ tx, ...otherTransaction }, currentAddress) => ({
@@ -151,17 +149,22 @@ export default (store) => {
   ])
     .pipe(
       switchMap(async ([address, height, hash, sdk]) => {
-        const tx = transactions[hash]
-          || await normalizeTransaction(
+        let tx;
+        if (transactions[hash]) {
+          tx = transactions[hash];
+        } else {
+          if (!sdk) return null;
+          tx = await normalizeTransaction(
             await sdk.api.getTransactionByHash(hash),
           );
-        registerTx(tx);
-        return ({
+          registerTx(tx);
+        }
+        return {
           ...setTransactionFieldsRelatedToAddress(tx, address),
           confirmationCount: height - tx.blockHeight,
-        });
+        };
       }),
-      switchMap(addConvertedAmount),
+      switchMap(tx => (tx ? addConvertedAmount(tx) : Promise.resolve(tx))),
     );
 
   const fetchMdwTransactions = async (address, limit, page) => {
@@ -197,8 +200,7 @@ export default (store) => {
   const getTransactionsByAddress = (address) => {
     if (!transactionRangeForAddress[address]) return [];
     const txs = Object.values(transactions)
-      .filter(({ tx }) => [tx.senderId, tx.accountId, tx.recipientId, tx.ownerId]
-        .includes(address));
+      .filter(({ tx }) => Object.values(tx).includes(address));
     const minedTxs = txs
       .filter(({ pending }) => !pending)
       .sort((a, b) => b.time - a.time);

@@ -1,6 +1,9 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Vue from 'vue';
 import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
+import { AENS_DOMAIN } from '../../../lib/constants';
+
+const removeDomain = name => name.replace(AENS_DOMAIN, '');
 
 export default (store) => {
   store.registerModule('names', {
@@ -40,7 +43,7 @@ export default (store) => {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         const names = await sdk.middleware
           .getActiveNames({ owner: address, limit: 1, page: 1 });
-        if (names.length) commit('set', { address, name: names[0].name });
+        if (names.length) commit('set', { address, name: removeDomain(names[0].name) });
       },
       async fetchOwned({ rootState, commit }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
@@ -64,7 +67,9 @@ export default (store) => {
                   owner: tx.accountId,
                 })))(),
               sdk.middleware.getActiveNames({ owner: address }),
-            ])).flat();
+            ]))
+              .flat()
+              .map(({ name, ...other }) => ({ ...other, name: removeDomain(name) }));
 
             commit('set', {
               address,
@@ -82,7 +87,8 @@ export default (store) => {
             subscription.unsubscribe();
           });
         });
-        const { owner: address } = (await rootState.sdk.middleware.namesSearchGet(name))
+        const { owner: address } = (await rootState.sdk.middleware
+          .namesSearchGet(name + AENS_DOMAIN))
           .filter(({ expiresAt }) => expiresAt > height)
           .find(nameDetails => nameDetails.name === name);
         commit('set', { address, name });
