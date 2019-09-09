@@ -34,7 +34,7 @@
 
     <DetailsField
       :name="$t('transfer.transaction.details.type')"
-      :value="transaction.type"
+      :value="$t('transfer.transaction.type')[transaction.tx.type]"
     />
 
     <DetailsField

@@ -51,7 +51,7 @@ export default {
   },
   computed: mapState('names', {
     peerName(state, { get }) {
-      if (!this.peerId) return this.type;
+      if (!this.peerId) return this.$t('transfer.transaction.type')[this.tx.type];
       return get(this.peerId);
     },
   }),
