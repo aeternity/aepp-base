@@ -475,6 +475,7 @@
       "name-claim": "确定取名",
       "name-update": "更新名称",
       "name-transfer": "Transfer name",
+      "confirm-message": "Looks like you don't have enough funds to make this transaction. Are you sure want to continue?",
 
       "details-fee-input": {
         "title": "交易费用",
