@@ -2,7 +2,7 @@
   <AeTextareaFormatted
     v-remove-spaces-on-copy
     :value="value"
-    :placeholder="$t('transfer.send.to.address')"
+    :placeholder="$t('transfer.send.to.address-or-name')"
     class="ae-input-address"
     rows="3"
     monospace
@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { Crypto } from '@aeternity/aepp-sdk/es';
+import { isAensName } from '../lib/utils';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeIdenticon from './AeIdenticon.vue';
@@ -122,11 +124,16 @@ export default {
       return `${ADDRESS_PREFIX} ${res}`;
     },
     formatDisplayValue(value) {
+      const name = Crypto.isAddressValid(value) && this.$store.getters['names/get'](value, false);
+      if (name) return name;
       if (value.startsWith(ADDRESS_PREFIX)) return this.formatAddress(value);
       return value;
     },
     formatEmitValue(value) {
       if (FORMATTED_ADDRESS_REGEXP.test(value)) return value.replace(/ /g, '');
+      if (isAensName(value)) {
+        return this.$store.dispatch('names/getAddressByName', value).catch(() => value);
+      }
       return value;
     },
     setValue(newValue) {

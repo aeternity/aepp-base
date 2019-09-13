@@ -17,7 +17,7 @@
     <form @submit.prevent="send">
       <AeInputAccount
         v-model="accountTo"
-        v-validate="'required|address'"
+        v-validate="'required|account'"
         :error="errors.has('accountTo')"
         :footer="errors.first('accountTo')"
         autofocus
