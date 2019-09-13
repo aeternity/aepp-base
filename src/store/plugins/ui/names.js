@@ -80,24 +80,14 @@ export default (store) => {
         );
       },
       async fetchName({ rootState, commit }, name) {
-        const height = await new Promise((resolve) => {
-          const subscription = rootState.observables.topBlockHeight.subscribe((h) => {
-            if (h === 0) return;
-            resolve(h);
-            subscription.unsubscribe();
-          });
-        });
-        const { owner: address } = (await rootState.sdk.middleware
-          .namesSearchGet(name + AENS_DOMAIN))
-          .filter(({ expiresAt }) => expiresAt > height)
-          .find(nameDetails => nameDetails.name === name);
+        const { id: address } = (await rootState.sdk.getName(name + AENS_DOMAIN)).pointers[0];
         commit('set', { address, name });
         return address;
       },
       async getAddressByName({ state, dispatch }, name) {
         return (
           Object.entries(state.names).find(([, value]) => value.name === name) || {}
-        ).key || dispatch('fetchName', name);
+        )[0] || dispatch('fetchName', name);
       },
     },
   });
