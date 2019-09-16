@@ -452,7 +452,8 @@
 
   "modal": {
     "confirm-sign": {
-      "guide": "<primary>签署原始交易</primary><br />by <address />"
+      "guide": "<primary>签署原始交易</primary><br />by <address />",
+      "data": "Data to sign"
     },
 
     "confirm-transaction-sign": {
@@ -475,6 +476,7 @@
       "name-claim": "确定取名",
       "name-update": "更新名称",
       "name-transfer": "Transfer name",
+      "confirm-message": "Looks like you don't have enough funds to make this transaction. Are you sure want to continue?",
 
       "details-fee-input": {
         "title": "交易费用",
