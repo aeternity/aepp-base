@@ -452,7 +452,8 @@
 
   "modal": {
     "confirm-sign": {
-      "guide": "<primary>Sign raw transaction</primary><br />by <address />"
+      "guide": "<primary>Sign raw transaction</primary><br />by <address />",
+      "data": "Data to sign"
     },
 
     "confirm-transaction-sign": {

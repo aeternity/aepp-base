@@ -452,7 +452,8 @@
 
   "modal": {
     "confirm-sign": {
-      "guide": "<primary>签署原始交易</primary><br />by <address />"
+      "guide": "<primary>签署原始交易</primary><br />by <address />",
+      "data": "Data to sign"
     },
 
     "confirm-transaction-sign": {

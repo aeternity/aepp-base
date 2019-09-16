@@ -16,7 +16,7 @@
     </Guide>
 
     <DetailsRawData
-      name="Data to sign"
+      :name="$t('modal.confirm-sign.data')"
       :data="data"
     />
 

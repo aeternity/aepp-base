@@ -452,7 +452,8 @@
 
   "modal": {
     "confirm-sign": {
-      "guide": "<primary>Подписать необработанную транзакцию</primary><br />с помощью <address />"
+      "guide": "<primary>Подписать необработанную транзакцию</primary><br />с помощью <address />",
+      "data": "Данные для подписи"
     },
 
     "confirm-transaction-sign": {
