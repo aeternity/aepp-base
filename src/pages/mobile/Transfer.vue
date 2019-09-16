@@ -37,6 +37,7 @@
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
+      v-if="!$globals.DISABLED_BROWSER"
       :to="{ name: 'transaction-list' }"
       :title="$t('transfer.transaction.title')"
       :subtitle="$t('transfer.transaction.subtitle')"

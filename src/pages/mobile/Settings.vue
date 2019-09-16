@@ -41,6 +41,7 @@
         <LeftMore slot="right" />
       </ListItem>
       <ListItem
+        v-if="!$globals.DISABLED_BROWSER"
         :to="{ name: 'settings-app-list' }"
         :title="$t('app.settings.title')"
         :subtitle="$tc('app.settings.count', appsAccountAccessCount)"

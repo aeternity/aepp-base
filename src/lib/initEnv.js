@@ -18,3 +18,9 @@ Object.assign(process.env, {
     RUNNING_IN_POPUP: !!window.opener && window.name === 'popup',
   },
 });
+
+Object.assign(process.env, {
+  ...process.env.DISABLED_BROWSER === undefined && {
+    DISABLED_BROWSER: process.env.IS_CORDOVA && process.env.IS_IOS,
+  },
+});
