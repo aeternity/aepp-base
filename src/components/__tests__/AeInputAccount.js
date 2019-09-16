@@ -89,22 +89,4 @@ describe('AeInputAccount', () => {
     wrapper.setProps({ value: emittedValue });
     expect(textarea.element.value).toBe(testAddressFormatted);
   });
-
-  it('backspace can remove the whole value', () => {
-    const inputListener = jest.fn();
-    const wrapper = mountComponent({
-      propsData: { value: 'ak_12' },
-      listeners: { input: inputListener },
-    });
-
-    const textarea = wrapper.find('textarea');
-    while (textarea.element.value) {
-      const { value } = textarea.element;
-      textarea.element.value = value.slice(0, value.length - 1);
-      textarea.element.setSelectionRange(value.length - 1, value.length - 1);
-      textarea.trigger('input');
-      wrapper.setProps({ value: inputListener.mock.calls.pop()[0] });
-      expect(textarea.element.value.length).toBeLessThan(value.length);
-    }
-  });
 });
