@@ -284,6 +284,15 @@
       "subtitle": "Not shown as balance above",
       "note": "are in migration now. They will be available after the next hardfork.",
       "to-migrations": "See migrations"
+    },
+
+    "redeem-balance": {
+      "title": "Redeem Balance",
+      "subtitle": "Scan QR code to redeem",
+      "guide": "<primary>Redeem all tokens</primary> from scanned wallet",
+      "no-funds": "This wallet was already redeemed",
+      "wrong-qr-code": "Scanned QR code is wrong. Please make sure to scan a QR code of the redeem wallet",
+      "scan": "Scan Wallet QR Code"
     }
   },
 

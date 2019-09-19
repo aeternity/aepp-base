@@ -284,6 +284,15 @@
       "subtitle": "未显示为上述余额",
       "note": "正在迁移中。他们将在下一次硬分叉后可使用。",
       "to-migrations": "查看迁移"
+    },
+
+    "redeem-balance": {
+      "title": "Redeem Balance",
+      "subtitle": "Scan QR code to redeem",
+      "guide": "<primary>Redeem all tokens</primary> from scanned wallet",
+      "no-funds": "This wallet was already redeemed",
+      "wrong-qr-code": "Scanned QR code is wrong. Please make sure to scan a QR code of the redeem wallet",
+      "scan": "Scan Wallet QR Code"
     }
   },
 
