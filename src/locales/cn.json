@@ -161,19 +161,20 @@
     "amount": "量",
     "fee": "Fee",
 
-    "tooltips": [{
-      "selector": ".transfer .ae-account .ae-identicon",
-      "header": "相同",
-      "content": "确认哪个帐户是活动的.帐户和子帐户具有唯一的标识符."
-    }, {
-      "selector": ".transfer .tab-bar .button-plain",
-      "header": "Browse",
-      "content": "浏览器探索æternity区块链."
-    }, {
-      "selector": ".transfer .tab-bar .button-plain:nth-child(3)",
-      "header": "切换账户",
-      "content": "点击切换帐户或创建子帐户."
-    }],
+    "tooltips": {
+      "identicon": {
+        "header": "相同",
+        "content": "确认哪个帐户是活动的.帐户和子帐户具有唯一的标识符."
+      },
+      "browser": {
+        "header": "Browse",
+        "content": "浏览器探索æternity区块链."
+      },
+      "account-switcher": {
+        "header": "切换账户",
+        "content": "点击切换帐户或创建子帐户."
+      }
+    },
 
     "send": {
       "title": "发送",
