@@ -165,7 +165,7 @@ export default {
           functional: true,
           render: (createElement, { props: { value } }) => createElement(DetailsField, {
             attrs: {
-              name: 'Name',
+              name: this.$t('name.details.name'),
               value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString().replace(AENS_DOMAIN, ''),
             },
           }),
@@ -184,10 +184,7 @@ export default {
       if (!this.isEnoughFounds) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
-          text: `
-            Looks like you don't have enough funds to make this transaction.
-            Are you sure want to continue?
-          `,
+          text: this.$t('modal.confirm-transaction-sign.confirm-message'),
         });
       }
       this.resolve(this.newFee);

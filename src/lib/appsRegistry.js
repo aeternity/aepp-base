@@ -1,15 +1,25 @@
 import blockchainExplorerIcon from '../assets/icons/aepps/blockchain-explorer.svg';
 import tokenMigrationIcon from '../assets/icons/aepps/token-migration.jpg';
 import graffitiAeppIcon from '../assets/icons/aepps/graffiti-aepp.svg';
+import payMeCustomerAeppIcon from '../assets/icons/aepps/pay-me-customer-aepp.png';
+import payMeMerchantAeppIcon from '../assets/icons/aepps/pay-me-merchant-aepp.png';
 
 export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
 
-const showGraffitiApp = new Date('2019-09-04T22:00:00.000Z').getTime() <= Date.now();
+const showPaymentApp = new Date('2019-09-24T22:00:00.000Z').getTime() >= Date.now();
 
-export const aeternityApps = [...showGraffitiApp ? [{
+export const aeternityApps = [{
   name: 'Graffiti',
   path: 'graffiti.aeternity.com',
   icon: graffitiAeppIcon,
+}, ...showPaymentApp ? [{
+  name: 'Pæy.me Customer',
+  path: 'customer.aehub.coinfabrik.com',
+  icon: payMeCustomerAeppIcon,
+}, {
+  name: 'Pæy.me Merchant',
+  path: 'merchant.aehub.coinfabrik.com',
+  icon: payMeMerchantAeppIcon,
 }] : [], {
   name: 'æternity Voting',
   path: 'aeternity.com/aepp-hybrid-voting',

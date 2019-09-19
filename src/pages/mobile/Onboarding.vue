@@ -46,7 +46,7 @@ export default {
     stepRouteNames: [
       'onboarding',
       'onboarding-send',
-      'onboarding-aepps',
+      ...process.env.DISABLED_BROWSER ? [] : ['onboarding-aepps'],
       'onboarding-subaccounts',
     ],
   }),

@@ -37,6 +37,7 @@
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
+      v-if="!$globals.DISABLED_BROWSER"
       :to="{ name: 'transaction-list' }"
       :title="$t('transfer.transaction.title')"
       :subtitle="$t('transfer.transaction.subtitle')"
@@ -100,7 +101,16 @@ export default {
       this.tooltipsVisible = true;
       await this.open({
         name: 'showTooltips',
-        tooltips: this.$t('transfer.tooltips'),
+        tooltips: [{
+          selector: '.transfer .ae-account .ae-identicon',
+          ...this.$t('transfer.tooltips.identicon'),
+        }, ...!process.env.DISABLED_BROWSER ? [{
+          selector: '.transfer .tab-bar .button-plain',
+          ...this.$t('transfer.tooltips.browser'),
+        }] : [], {
+          selector: '.transfer .tab-bar .button-plain:nth-child(3)',
+          ...this.$t('transfer.tooltips.account-switcher'),
+        }],
       });
       this.tooltipsVisible = false;
     },
