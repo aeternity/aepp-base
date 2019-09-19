@@ -190,13 +190,13 @@ export default [{
   props: true,
 }, {
   name: 'transaction-list',
-  path: '/transfer/transactions/:direction?',
+  path: `${process.env.DISABLED_BROWSER ? '' : '/transfer'}/transactions/:direction?`,
   component: TransactionList,
   beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'transaction-details',
-  path: '/transfer/transactions/details/:hash',
+  path: `${process.env.DISABLED_BROWSER ? '' : '/transfer'}/transactions/details/:hash`,
   component: TransactionDetails,
   beforeEnter: ensureLoggedIn,
   props: true,
