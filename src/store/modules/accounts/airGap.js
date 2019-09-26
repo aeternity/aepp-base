@@ -35,7 +35,7 @@ export default {
     async createByQrCode({ dispatch }) {
       const responseUrl = await dispatch(
         'modals/open',
-        { title: 'Link Vault', name: 'readQrCode' },
+        { title: i18n.t('air-gap.link-vault'), name: 'readQrCode' },
         { root: true },
       );
       dispatch('createByResponseUrl', { responseUrl, transport: TRANSPORT_QR_CODE });

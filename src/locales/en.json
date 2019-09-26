@@ -189,6 +189,7 @@
         "address": "ak_ …",
         "paste": "Paste",
         "scan": "Scan",
+        "scan-address": "Scan AE Address",
         "subaccount": "Or send to subaccount",
         "confirm-sending-to-same-account": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
       },
@@ -293,6 +294,7 @@
   "air-gap": {
     "account-name": "AirGap account",
     "scan-signed-transaction": "Scan Signed Transaction",
+    "link-vault": "Link Vault",
 
     "setup": {
       "title": "AirGap Setup",
@@ -314,8 +316,7 @@
             "<primary>Write it down in the right order</primary><br />You will need it for recovery.",
             "<primary>Add an æternity wallet</primary><br />Tap wallet, add wallet and choose æternity.",
             "<primary>Link your æternity wallet</primary><br />Finish by linking your vault to you æternity address."
-          ],
-          "link": "Link Vault"
+          ]
         }
       },
 

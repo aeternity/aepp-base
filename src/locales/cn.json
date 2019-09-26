@@ -189,6 +189,7 @@
         "address": "ak_ …",
         "paste": "复制",
         "scan": "扫描",
+        "scan-address": "Scan AE Address",
         "subaccount": "或发送给子账户",
         "confirm-sending-to-same-account": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
       },
@@ -293,6 +294,7 @@
   "air-gap": {
     "account-name": "AirGap 账户",
     "scan-signed-transaction": "扫描签署交易",
+    "link-vault": "连接 Vault",
 
     "setup": {
       "title": "AirGap 设置",
@@ -314,8 +316,7 @@
             "<primary>以正确的顺序写下它</primary><br />恢复时你需要用到.",
             "<primary>添加一个æternity 钱包</primary><br />点击钱包, 添加钱包并选择æternity.",
             "<primary>连接æternity钱包</primary><br />连接你的Vault到æternity地址."
-          ],
-          "link": "连接 Vault"
+          ]
         }
       },
 
