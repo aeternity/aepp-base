@@ -135,7 +135,10 @@ export default {
       this.showAccountsDropdown = false;
     },
     async readValueFromQrCode() {
-      this.setValue(await this.$store.dispatch('modals/open', { name: 'readQrCode', title: this.$t('transfer.send.to.scan-address') }));
+      this.setValue(await this.$store.dispatch('modals/open', {
+        name: 'readQrCode',
+        title: this.$t('transfer.send.to.scan-address'),
+      }));
     },
     async readValueFromClipboard() {
       this.setValue(await (process.env.IS_CORDOVA
