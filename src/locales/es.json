@@ -2,7 +2,7 @@
   "cancel": "Cancelar",
   "close": "Cerrar",
   "confirm": "Confirmar",
-  "next": "siguiente",
+  "next": "Siguiente",
   "ok": "OK",
   "deny": "Denegar",
   "allow": "Permitir",
@@ -25,7 +25,7 @@
     "connect-account": "Conectar una cuenta para comenzar",
     "connected-account": "| Su cuenta conectada | Sus cuentas conectadas",
     "base-app": "Base æpp",
-    "ledger": "ledger"
+    "ledger": "Ledger"
   },
 
   "not-found": {
@@ -214,8 +214,8 @@
     "receive": {
       "title": "Recibir",
       "subtitle": "Comparte tu dirección",
-      "guide": "<primary>comparta su dirección</primary> con el remitente",
-      "guide-desktop": "tokens <primary>Recibir</primary>",
+      "guide": "<primary>Comparta su dirección</primary> con el remitente",
+      "guide-desktop": "Tokens <primary>recibir</primary>",
       "note": "Permita que otros escaneen su código QR o comparta su dirección",
       "copy": "Copiar dirección",
       "copy-subtitle": "Guardar en el portapapeles",
@@ -231,8 +231,8 @@
 
       "list": {
         "all": "Todos",
-        "incoming": "entrante",
-        "outgoing": "saliente",
+        "incoming": "Entrante",
+        "outgoing": "Saliente",
         "error": "Se produjo un error durante la carga de transacciones",
         "loaded": "Todas las transacciones están cargadas",
         "no-transactions": "No hay transacciones asociadas con esta cuenta",
@@ -255,7 +255,7 @@
         "type": "Tipo de transacción",
         "to-explorer": "Ver en el explorador",
         "confirmations": "0 Confirmaciones | {n} Confirmación | {n} Confirmaciones",
-        "fee": "tarifa de transacción",
+        "fee": "Tarifa de transacción",
         "total": "Total"
       },
 
@@ -337,7 +337,7 @@
       },
 
       "completed": {
-        "guide": "<primary>sincronización Bóveda completado</primary><br /> Encuentra tu bóveda de AirGap con sus cuentas.",
+        "guide": "<primary>Sincronización Bóveda completado</primary><br /> Encuentra tu bóveda de AirGap con sus cuentas.",
         "finish": "Finalizar"
       }
     },
@@ -624,7 +624,7 @@
     "mnemonic": {
       "title": "Frase de seguridad",
       "subtitle": "Asegure sus fondos",
-      "guide": "<secondary>revise la ortografía</secondary> de cada palabra y <primary>nunca</primary> cree una captura de pantalla o una foto de esta frase",
+      "guide": "<secondary>Revise la ortografía</secondary> de cada palabra y <primary>nunca</primary> cree una captura de pantalla o una foto de esta frase",
       "to-show": "Mostrar frase de recuperación",
 
       "show": {
