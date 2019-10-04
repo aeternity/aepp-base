@@ -186,7 +186,7 @@
       "to": {
         "guide": "<primary>Nueva transferencia</primary><br /> desde <account />",
         "recipient": "Destinatario",
-        "address": "ak _ ...",
+        "address": "ak_ …",
         "paste": "Pegar",
         "scan": "Escanear",
         "scan-address": "Scan AE Address",
