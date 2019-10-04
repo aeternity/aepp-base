@@ -2,8 +2,8 @@
   <MobilePage
     header-fill="primary"
     class="transaction-list"
-    right-button-icon-name="close"
-    :right-button-to="{ name: 'transfer' }"
+    :right-button-icon-name="$globals.DISABLED_BROWSER ? '' : 'close'"
+    :right-button-to="$globals.DISABLED_BROWSER ? '' : { name: 'transfer' }"
   >
     <div
       slot="title"

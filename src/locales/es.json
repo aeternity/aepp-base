@@ -1,0 +1,706 @@
+{
+  "cancel": "Cancelar",
+  "close": "Cerrar",
+  "confirm": "Confirmar",
+  "next": "Siguiente",
+  "ok": "OK",
+  "deny": "Denegar",
+  "allow": "Permitir",
+  "copied": "Copiado",
+  "scan-qr-code": "Scan QR code",
+  "guide-desktop": "Base æpp actualmente solo puede funcionar cuando se abre en una sola pestaña del navegador. Si tiene instancias adicionales (pestañas) de Base æpp abiertas, ciérrelas",
+
+  "add-to-home-screen": {
+    "note": "Agregue esta aplicación a la pantalla de inicio",
+    "button": "Agregar"
+  },
+
+  "header": {
+    "title": "Base web",
+    "connect-account": "Conectar una cuenta",
+    "connect-account-with": "Con Base æpp o Ledger"
+  },
+
+  "sidebar": {
+    "connect-account": "Conectar una cuenta para comenzar",
+    "connected-account": "| Su cuenta conectada | Sus cuentas conectadas",
+    "base-app": "Base æpp",
+    "ledger": "Ledger"
+  },
+
+  "not-found": {
+    "note": "Parece que no se encontró la página que está buscando",
+    "to-home": "Ir a casa"
+  },
+
+  "update-available": {
+    "title": "Hay una nueva versión disponible. Toca a continuación para actualizar",
+    "restart": "Actualizar"
+  },
+
+  "store-load-error": {
+    "note": "La Base aepp no pudo cargar su estado",
+    "reset": "Restablecer todos los datos"
+  },
+
+  "account-switcher": {
+    "create-account": "Nueva subcuenta",
+    "create-account-desktop": "Crear una nueva cuenta",
+    "create-vault": "Crear una bóveda para AirGap"
+  },
+
+  "validation": {
+    "confirmed": "Las contraseñas no coinciden, intente nuevamente",
+    "decimal": "Este campo debe ser numérico y puede contener {0} puntos decimales",
+    "excluded": "Este campo debe ser un valor válido",
+    "min": "Este campo debe tener al menos {0} caracteres",
+    "required": "Este campo es obligatorio",
+    "address": "Dirección AE no válida",
+    "max_value": "Este campo debe ser {0} o menos",
+    "min_value": "Este campo debe ser {0} o más",
+    "min_value_exclusive": "Este campo debe ser mayor que {0}",
+    "mnemonic": "Frase de recuperación no válida",
+    "url_http": "Este campo no es una URL HTTP(S) válida",
+    "air_gap_response_url": "Este no es un código de sincronización válido",
+    "aens_name": "Este campo debe terminar con .test",
+    "aens_name_unregistered": "Este nombre ya está registrado",
+    "account": "Dirección AE o nombre AENS no válidos"
+  },
+
+  "intro": {
+    "guide": "<primary>Base aepp</primary><br /> æternity blockchain <br /> el poder en sus manos.",
+    "login": "Iniciar sesión",
+    "recover": "Recuperar",
+    "create-account": "Crear nueva cuenta",
+    "onboarding": "Vea cómo funciona"
+  },
+
+  "onboarding": {
+    "skip": "Saltar",
+    "start": "Inicio",
+
+    "welcome": {
+      "guide": "<primary>Base aepp</primary><br /> æternity comienza aquí <note />",
+      "note": "Enviar y recibir AE, explorar æpps y administrar cuentas"
+    },
+
+    "send": {
+      "guide": "<primary>Enviar y recibir AE</primary> sin esfuerzo <note />",
+      "note": "Transferencia a cuentas y subcuentas. Reciba compartiendo su dirección"
+    },
+
+    "aepps": {
+      "guide": "Explorar æpps",
+      "note": "Trae el poder de la blockchain de æternity a tu vida diaria"
+    },
+
+    "subaccounts": {
+      "guide": "<primary>Crear subcuentas</primary> en\u00A0seconds <note />",
+      "note": "Cree cuentas dedicadas para gastos, almacenamiento y para alimentar æpps"
+    }
+  },
+
+  "recover": {
+    "title": "Recuperar cuenta",
+    "guide": "Ingresa <dizzySymbolEmoji /> tu <alternative>frase de recuperación</alternative>. Desde la <secondary>copia de seguridad</secondary> que hiciste",
+    "mnemonic": "Frase de recuperación",
+    "button": "Recuperar cuenta"
+  },
+
+  "login": {
+    "guide": "<primary>¡Hola!</primary> <wavingHandEmoji /> <secondary>Inicie sesión</secondary> en æternity con su contraseña",
+    "try-again-or": "Inténtalo de nuevo o",
+    "button": "Iniciar sesión"
+  },
+
+  "app": {
+    "title": "Browse",
+
+    "list": {
+      "featured-guide": "<primary>æpps destacados</primary>",
+      "browse-guide": "Examinar æpps",
+      "bookmarked-guide": "Mis æpps",
+      "guide": "æpps <primary>explorador</primary> (beta)",
+      "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación"
+    },
+
+    "url-form-placeholder": "Ingrese la URL de æpp",
+
+    "browser": {
+      "refresh": "Actualizar",
+
+      "confirm-account-access": {
+        "guide": "<app /><br /> solicita acceso a <br /> <account />",
+
+        "address": {
+          "name": "Dirección",
+          "explanation": "Este aepp solicita acceso a su dirección pública"
+        },
+
+        "transactions": {
+          "name": "Transacciones",
+          "explanation": "{appName} implica una subasta. El æpp preparará una transacción, usted está a cargo de confirmarla"
+        }
+      }
+    },
+
+    "settings": {
+      "title": "Acceso a la cuenta aepp",
+      "count": "Ningún aepps tiene acceso a la cuenta | {n} aepp tiene acceso a la cuenta | {n} aepps tiene acceso a la cuenta",
+
+      "list": {
+        "note": "Administre qué æpps pueden acceder a sus (sub) cuentas",
+        "subtitle": "| puede acceder a {n} cuenta | puede acceder a {n} cuentas"
+      }
+    }
+  },
+
+  "transfer": {
+    "title": "Transferencia",
+    "guide": "<primary>Enviar y recibir</primary> Æ",
+    "amount": "Cantidad",
+    "fee": "Tarifa",
+
+    "tooltips": {
+      "identicon": {
+        "header": "Identicon",
+        "content": "Reconoce qué cuenta está activa. Las cuentas y subcuentas tienen identicons únicos"
+      },
+      "browser": {
+        "header": "æpps",
+        "content": "Explore æpps con tecnología de la blockchain de  æternity"
+      },
+      "account-switcher": {
+        "header": "Account Switcher",
+        "content": "Toca para cambiar de cuenta o crear subcuentas"
+      }
+    },
+
+    "send": {
+      "title": "Enviar",
+      "subtitle": "Transferir fondos",
+      "guide": "<primary>Enviar</primary> AE de <br /> <senderAddress />",
+      "note": "Pegue la dirección del destinatario a continuación, escanee el código QR o envíela a subcuentas",
+      "transfer": "Transferir",
+
+      "to": {
+        "guide": "<primary>Nueva transferencia</primary><br /> desde <account />",
+        "recipient": "Destinatario",
+        "address": "ak_ …",
+        "paste": "Pegar",
+        "scan": "Escanear",
+        "scan-address": "Scan AE Address",
+        "subaccount": "O enviar a subcuenta",
+        "confirm-sending-to-same-account": "The account you are sending from and the recipient are the same account. Are you sure you would like to send to the same account?"
+      },
+
+      "amount": {
+        "guide": "<primary>Nueva transferencia</primary><br /> de <senderAddress /><br /> a <recipientAddress />",
+        "balance": "Balance",
+        "max": "Max",
+        "fee": "Tarifa mínima de transacción"
+      },
+
+      "resolved": {
+        "title": "Transferencia completada",
+        "note": "¡Transacción enviada con éxito!",
+        "subtitle": "Has enviado {amount}",
+        "to-history": "Ver en el historial",
+        "to-explorer": "Ver en el explorador",
+        "copy": "Copiar tx hash"
+      }
+    },
+
+    "receive": {
+      "title": "Recibir",
+      "subtitle": "Comparte tu dirección",
+      "guide": "<primary>Comparta su dirección</primary> con el remitente",
+      "guide-desktop": "Tokens <primary>recibir</primary>",
+      "note": "Permita que otros escaneen su código QR o comparta su dirección",
+      "copy": "Copiar dirección",
+      "copy-subtitle": "Guardar en el portapapeles",
+      "share": "Compartir dirección",
+      "share-subtitle": "Con otros",
+      "connect-account": "Conecta una cuenta primero"
+    },
+
+    "transaction": {
+      "title": "Transacciones",
+      "subtitle": "Mostrar historial de transacciones",
+      "pending": "Pendiente",
+
+      "list": {
+        "all": "Todos",
+        "incoming": "Entrante",
+        "outgoing": "Saliente",
+        "error": "Se produjo un error durante la carga de transacciones",
+        "loaded": "Todas las transacciones están cargadas",
+        "no-transactions": "No hay transacciones asociadas con esta cuenta",
+        "pending-transactions": "Transacciones pendientes",
+        "today": "Hoy"
+      },
+
+      "details": {
+        "title": "Detalles de la transacción",
+        "received": "Recibiste",
+        "sent": "Usted envió",
+        "account": "Account address",
+        "from": "De",
+        "to": "A",
+        "name-owner": "New name's owner",
+        "date": "Fecha",
+        "status": "Estado",
+        "owner": "Propietario",
+        "hash": "Hash de transacción",
+        "type": "Tipo de transacción",
+        "to-explorer": "Ver en el explorador",
+        "confirmations": "0 Confirmaciones | {n} Confirmación | {n} Confirmaciones",
+        "fee": "Tarifa de transacción",
+        "total": "Total"
+      },
+
+      "type": {
+        "SpendTx": "Spend",
+        "ContractCreateTx": "Contract create",
+        "ContractCallTx": "Contract call",
+        "NamePreclaimTx": "Preclaim name",
+        "NameClaimTx": "Claim name",
+        "NameUpdateTx": "Update name",
+        "NameTransferTx": "Transfer name",
+        "NameRevokeTx": "Revoke name",
+        "OracleRegisterTx": "Register oracle",
+        "OracleExtendTx": "Extend oracle",
+        "OraclePostQueryTx": "Post query oracle",
+        "OracleRespondTx": "Respond oracle",
+        "ChannelCloseSoloTx": "Solo close channel",
+        "ChannelSlashTx": "Slash channel",
+        "ChannelSettleTx": "Settle channel",
+        "ChannelSnapshotSoloTx": "Solo snapshot channel"
+      }
+    },
+
+    "migrated-balance": {
+      "title": "Tokens migrados",
+      "subtitle": "No se muestra como saldo arriba",
+      "note": "están en la migración ahora estarán disponibles después del próxima. Hardfork.",
+      "to-migrations": "Ver migraciones"
+    }
+  },
+
+  "hd-wallet": {
+    "account-name": "Cuenta"
+  },
+
+  "air-gap": {
+    "account-name": "Cuenta de AirGap",
+    "scan-signed-transaction": "Escanear transacción firmada",
+    "link-vault": "Vincular boveda",
+
+    "setup": {
+      "title": "Configuración de AirGap",
+      "method-guide": "<primary>Seguridad robusta con AirGap</primary><br /> Se recomienda utilizar un dispositivo secundario sin conexión.",
+
+      "another-device": {
+        "title": "Máximo (recomendado)",
+        "subtitle": "Instalar AirGap en otro dispositivo",
+
+        "install": {
+          "guide": "<primary>Instalar AirGap en otro teléfono</primary><br /> Buscar en AirGap.it en la tienda o escanear el código QR.",
+          "link": "Enlace"
+        },
+
+        "guide": {
+          "steps": [
+            "<primary>Abrir AirGap en el segundo dispositivo</primary><br /> Desactivar la conexión a Internet antes de abrir AirGap.",
+            "<primary>Crear clave secreta</primary><br /> Sin conexión a Internet significa la máxima seguridad para la clave",
+            "<primary>Escríbelo en el orden correcto</primary><br /> Lo necesitarás para la recuperación",
+            "<primary>Añadir una billetera de aeternity</primary><br /> Toque cartera, billetera y añadir elegir æternity.",
+            "<primary>Enlace su cartera æternity</primary><br /> Finalice mediante la vinculación de su bóveda a su dirección de aeternity."
+          ]
+        }
+      },
+
+      "same-device": {
+        "title": "Normal",
+        "subtitle": "Instalar AirGap en este dispositivo",
+
+        "install": {
+          "guide": "<primary>Instalar o abrir AirGap en este teléfono inteligente</primary><br /> Abrir la aplicación de bóveda Airgap, abrir la cuenta que desea sincronizar, pulse en los tres puntos en la esquina superior derecha, y seleccione Copiar código de sincronización",
+          "button": "Instalar AirGap Vault"
+        },
+
+        "sync": {
+          "guide": "<primary>Sincronizacion de bóveda mas adelante</primary><br /> Pegue el código de sincronización a continuación.",
+          "sync-code": "Código de sincronización de AirGap",
+          "button": "Sincronizar"
+        }
+      },
+
+      "completed": {
+        "guide": "<primary>Sincronización Bóveda completado</primary><br /> Encuentra tu bóveda de AirGap con sus cuentas.",
+        "finish": "Finalizar"
+      }
+    },
+
+    "modal": {
+      "sign": {
+        "guide": "<primary>Escanee con la aplicación AirGap Vault</primary> para firmar la transacción",
+        "done": "Listo"
+      }
+    }
+  },
+
+  "ledger": {
+    "account-name": "Nombre-cuenta",
+    "mobile-not-supported": "Firmar en el móvil con Ledger no está disponible ahora. Utilice la versión de escritorio de Base æpp para firmar esta transacción",
+
+    "not-supported": {
+      "guide": "Cambie a Google\u00A0Chrome",
+      "note": "La interacción con el Ledger solo es compatible con Chrome por ahora"
+    },
+
+    "connect-guide": {
+      "title": "Cómo conectarse desde el <primary>Ledger</primary>",
+      "steps": [
+        "Conecte su Ledger a través de USB y desbloquéelo",
+        "Abra la aplicación æternity en su Ledger",
+        "Cree una primera cuenta presionando el botón de abajo"
+      ]
+    },
+
+    "modal": {
+      "address-confirm": {
+        "create-guide": "Cree su dirección en el Ledger",
+        "confirm-guide": "Confirme su dirección en el Ledger",
+        "address": "Dirección del Ledger",
+        "create-note": "Para crear una nueva cuenta en el Ledger, confirmar su dirección primero",
+        "confirm-note": "Para continuar, confirme su dirección en el Ledger"
+      },
+
+      "address-not-confirmed": {
+        "title": "Dirección no confirmada",
+        "note": "El Ledger no se puede usar sin la confirmación de la dirección. La discordancia de direcciones puede ocurrir debido al software de malware. Póngase en contacto con el soporte para resolver esto"
+      },
+
+      "account-not-found": {
+        "title": "Cuenta no encontrada",
+        "note": "El Ledger conectado no contiene la cuenta especificada. Aún puede usarlo, pero debe crear una cuenta nueva"
+      },
+
+      "request": "Envío de solicitud al Ledger",
+
+      "request-retry": {
+        "title": "Solicitud fallida",
+        "note": "Ledger no está conectado o la solicitud no fue confirmada",
+        "try": "Inténtelo de nuevo"
+      },
+
+      "transaction-fee": {
+        "title": "Definir la tarifa de transacción",
+        "fee": "Tarifa de transacción",
+        "micro-ae": "Micro AE",
+        "note": "Una tarifa de transacción más alta conduce a un tiempo de transacción más rápido"
+      },
+
+      "sign-transaction": "Firmar transacción en el Ledger"
+    }
+  },
+
+  "name": {
+    "title": "Nombres",
+
+    "list": {
+      "note": "¡Reclama un nombre para tu cuenta!",
+      "explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
+      "registered": "Nombres registrados"
+    },
+
+    "details": {
+      "title": "Name details",
+      "name": "Name",
+      "name-hash": "Name hash",
+      "owner": "Owner",
+      "created-at-height": "Created at height",
+      "expires-at-height": "Expires at height",
+      "to-transfer": "Transfer name",
+      "to-transactions": "View in transactions"
+    },
+
+    "transfer": {
+      "guide": "Transfer name owned by <account />",
+      "subaccount": "Or transfer to subaccount",
+      "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
+
+      "notification":{
+        "succeed": "{name} was successfully transfered",
+        "failed": "{name} was not transfered for unknown reason"
+      }
+    },
+
+    "new": {
+      "guide": "<primary>Reclama un nombre</primary> para <inlineAccount />",
+      "unknown-error": "Error desconocido",
+      "name": "Nombre",
+      "name-placeholder": "Name.test",
+      "register": "Registrarse",
+
+      "notification": {
+        "claim-sent":"La solicitud de {name} nombre se envió correctamente",
+        "registered": "{name} se registró correctamente",
+        "unknown-error": "{name} no se registró por un motivo desconocido"
+      }
+    }
+  },
+
+  "modal": {
+    "confirm-sign": {
+      "guide": "<primary>Firmar transacción sin procesar</primary><br /> por <address />",
+      "data": "Data to sign"
+    },
+
+    "confirm-transaction-sign": {
+      "guide-spend": "<primary>Complete su transferencia</primary><br /> de <senderAddress /><br /> a <recipientAddress />",
+      "guide": "<primary>{title}</primary><br /> por <senderAddress />",
+      "payload": "Carga útil",
+      "recipient-account": "Cuenta de destinatario",
+      "contract-compiled-code": "Código compilado del contrato",
+      "call-data": "Datos de llamada",
+      "contract-address": "Dirección del contrato",
+      "commitment": "Compromiso",
+      "name-salt": "Nombre salt",
+      "name-id": "Nombre ID",
+      "pointer": "Puntero # {n}",
+      "pointer-key": "puntero # {n} clave",
+      "pointer-id": "Puntero # { n} ID",
+      "contract-create": "Crear un nuevo contrato",
+      "contract-call": "Método de contrato de llamada",
+      "name-pre-claim": "Nombre de solicitud previa",
+      "name-claim": "Nombre del reclamo",
+      "name-update": "Actualizar nombre",
+      "name-transfer": "Transfer name",
+      "confirm-message": "Looks like you don't have enough funds to make this transaction. Are you sure want to continue?",
+
+      "details-fee-input": {
+        "title": "Tarifa de transacción",
+        "value": "{value} MICRO AE"
+      }
+    },
+
+    "tooltips-modal": {
+      "initial-header": "Aprenda a usar Base æpp",
+      "highlighted-region": "región resaltada",
+      "initial-content": "Toque cualquier {0} para obtener más información sobre su funcionalidad"
+    }
+  },
+
+  "components": {
+    "address-panel": {
+      "title-default": "Dirección"
+    }
+  },
+
+  "network": {
+    "connection-status": {
+      "offline": "Estás desconectado... Comprueba tu conexión",
+      "no-sdk": "No podemos conectarnos al nodo elegido",
+      "connecting": "Conectando a la red...",
+      "connected-to-testnet": "Está conectado a una red de prueba"
+    },
+
+    "settings": {
+      "title": "Red",
+      "subtitle": "ID de red {id}",
+
+      "list": {
+        "copy-link": "Copiar enlace",
+        "remove": "Eliminar"
+      },
+
+      "new": {
+        "title": "Conectarse a otro nodo",
+        "guide": "Conéctese a <primary>otro nodo</primary>",
+        "node-name": "Nombre de nodo",
+        "node-url": "URL de nodo",
+        "connect": "Conectar"
+      }
+    }
+  },
+
+  "remote-connection": {
+    "connect-notification": "Conectó correctamente {0}",
+    "revoke-notification": "El acceso se revocó correctamente para {0}",
+
+    "settings": {
+      "title": "Conexiones remotas",
+      "count": "No hay dispositivos conectados | {n} dispositivo conectado | {n} dispositivos conectados",
+
+      "list": {
+        "connected": "Conectado",
+        "disconnected": "Desconectado en {date}",
+        "revoke": "Revocar"
+      },
+
+      "new": {
+        "title": "Conexión remota",
+        "wrong-qr-code": "El código QR escaneado es incorrecto. Asegúrese de escanear un código QR generado por Base æpp",
+        "camera-not-allowed": "Por favor, active el acceso a la cámara para el navegador móvil que está utilizando para abrir la billetera Base aepp.",
+        "prompt-name": "Asigne un nombre a este dispositivo",
+        "default-name": "Sin nombre"
+      }
+    },
+
+    "connect-guide": {
+      "title": "Cómo conectarse desde <primary>Base æpp</primary>",
+      "steps": [
+        "Abra Base æpp en su teléfono: base.aepps.com",
+        "Crear una cuenta o iniciar sesión",
+        "Vaya a Configuración <icon-settings />",
+        "Toca Conexiones remotas <icon-device /> y toca ‘+’",
+        "Escanee el código QR a continuación con Base æpp"
+       ]
+    },
+
+    "modal": {
+      "cancel-sign": {
+        "guide": "Firme la transacción en el <primary>Base æpp</primary>",
+        "note": "Abra su Base æpp, verifique los detalles de la transacción y firme",
+        "cancel": "Cancelar transacción"
+      }
+    }
+  },
+
+  "security-courses": {
+    "modal": {
+      "guide": "<primary>¡Felicitaciones!</primary> Creaste una cuenta",
+      "note": "Tómese 2 minutos para conocer la importancia de la seguridad",
+      "to-security-course-1": "Iniciar el curso de seguridad 1",
+      "skip": "Lo haré más tarde"
+    },
+
+    "settings": {
+      "title": "Cursos de seguridad AE",
+      "subtitle": "Descargo de responsabilidad e información",
+
+      "list": {
+        "subtitle": "Curso de seguridad {n}",
+        "to-base-app": "Ir a Base aepp",
+        "note": "Revisa los cursos en cualquier momento en Configuración"
+      },
+
+      "details": {
+        "subtitle": "Curso de seguridad {n} de {count}",
+        "to-next": "Ir al curso {n}",
+        "to-list": "Al resumen del curso",
+
+        "intro": {
+          "title": "Introducción y descargo de responsabilidad"
+        },
+
+        "bank": {
+          "title": "Eres el banco"
+        },
+
+        "privacy": {
+          "title": "Tu privacidad"
+        },
+
+        "layers": {
+          "title": "Capas de seguridad",
+          "setup": "Configurar AirGap",
+          "buy": "Comprar una billetera Ledger"
+        }
+      }
+    }
+  },
+
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "account": "Cuenta",
+    "logout": "Cerrar sesión",
+    "logout-subtitle": "¡Hasta pronto!",
+    "version": "Versión",
+
+    "mnemonic": {
+      "title": "Frase de seguridad",
+      "subtitle": "Asegure sus fondos",
+      "guide": "<secondary>Revise la ortografía</secondary> de cada palabra y <primary>nunca</primary> cree una captura de pantalla o una foto de esta frase",
+      "to-show": "Mostrar frase de recuperación",
+
+      "show": {
+        "guide": "<p><primary>¡Cuidadosamente guarde esta frase <keyEmoji />segura!</primary></p><p>Escribe estas 12 palabras y mantenlas <alternative>en un lugar seguro</alternative>. La necesita para <secondary>recuperar</secondary> su cuenta en el futuro.</p> ",
+        "alert": "¡Eso fue demasiado rápido! Asegúrese de escribir la frase de recuperación en papel... y guárdela en un lugar seguro"
+      },
+
+      "confirm": {
+        "guide": "<p><primary>Confirma <crossFingersEmoji /> tu frase</primary></p><p>Toca las palabras a continuación para componer tu frase, <secondary>nota</secondary> ¡orden correcto!</p> ",
+        "mnemonic": "Tu frase de recuperación",
+        "error": "¡Vaya! No es el orden correcto, inténtalo de nuevo",
+        "placeholder": "primer segundo tercero ···"
+      },
+
+      "confirmed": {
+        "guide": "¿Desea <primary>eliminar la frase de recuperación</primary>de este dispositivo? Esto proporcionará <alternative>seguridad adicional</alternative> ... pero no se puede deshacer",
+        "delete": "Eliminar frase de recuperación",
+        "keep": "Mantener frase de recuperación"
+      },
+
+      "deleted": {
+        "guide": "Ha eliminado la frase de recuperación de este dispositivo. <secondary>Busque la copia de seguridad que realizó antes de eliminarla.</secondary>",
+        "back": "Atrás"
+      },
+
+      "notification": {
+        "title": "¡Haga una copia de seguridad de su frase de recuperación!",
+        "subtitle": "Asegure sus fondos para evitar pérdidas",
+        "to-security-course": "Curso de seguridad",
+        "to-mnemonic": "Realizar copia de seguridad ahora"
+      }
+    },
+
+    "password": {
+      "title": "Autenticación de billetera",
+      "subtitle": "Configurar y administrar una contraseña",
+      "change": "Cambiar contraseña",
+      "change-subtitle": "Actualice su contraseña",
+      "choose": "Elegir contraseña",
+      "choose-subtitle": "",
+      "remove": "Eliminar contraseña",
+      "wrong-password": "Contraseña incorrecta, intente nuevamente",
+
+      "set": {
+        "change-guide": "<secondary>Cambia tu contraseña</secondary>",
+        "choose-guide": "<secondary>Elija una <keyEmoji /> contraseña</secondary> y confirme",
+        "password": "Contraseña",
+        "password-new": "Nueva contraseña",
+        "password-new-confirm": "Confirme su nueva contraseña"
+      },
+
+      "modal": {
+        "guide": "Ingrese su contraseña para continuar",
+        "continue": "Continuar"
+      }
+    },
+
+    "currency": {
+      "title": "Mostrar moneda",
+      "subtitle": "Elija una moneda para mostrar",
+      "use-as-main": "Usar como moneda de visualización"
+    },
+
+    "account-remove": {
+      "title": "Billeterass sincronizadas",
+      "disconnect": "Desconectar"
+    },
+
+    "reset": {
+      "button": "Restablecer",
+      "title": "Restablecer almacenamiento de clave",
+      "subtitle": "Después de restablecer, se requiere una recuperación",
+      "confirm": "Si no ha hecho una copia de seguridad de su cuenta, no podrá volver a ingresarla. ¿Está seguro?",
+      "title-desktop": "Restablecer todos los datos",
+      "subtitle-desktop": "",
+      "confirm-desktop": "Revocará su conexión con la Base æpp móvil y borrará el estado guardado. ¿Está seguro?"
+    }
+  }
+}

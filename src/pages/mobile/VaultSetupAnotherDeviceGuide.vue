@@ -31,7 +31,7 @@
       fill="alternative"
       @click="readValueFromQrCode"
     >
-      {{ $t('air-gap.setup.another-device.guide.link') }}
+      {{ $t('air-gap.link-vault') }}
     </AeButton>
   </MobilePage>
 </template>

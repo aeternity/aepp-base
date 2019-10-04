@@ -27,6 +27,10 @@ const languages = {
     name: '中文',
     getMessages: () => import(/* webpackChunkName: "locale-cn" */ '../../../locales/cn.json'),
   },
+  es: {
+    name: 'Español',
+    getMessages: () => import(/* webpackChunkName: "locale-es" */ '../../../locales/es.json'),
+  },
 };
 
 export const fetchAndSetLocale = async (languageCode) => {
@@ -44,7 +48,12 @@ export const preferredLocale = (() => {
 
 if (module.hot) {
   module.hot.accept(
-    ['../../../locales/en.json', '../../../locales/ru.json', '../../../locales/cn.json'],
+    [
+      '../../../locales/en.json',
+      '../../../locales/ru.json',
+      '../../../locales/cn.json',
+      '../../../locales/es.json',
+    ],
     async () => {
       Object.entries(languages).forEach(async ([code, { getMessages }]) => i18n
         .setLocaleMessage(code, (await getMessages()).default));
