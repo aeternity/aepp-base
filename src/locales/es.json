@@ -314,7 +314,7 @@
             "<primary>Abrir AirGap en el segundo dispositivo</primary><br /> Desactivar la conexión a Internet antes de abrir AirGap.",
             "<primary>Crear clave secreta</primary><br /> Sin conexión a Internet significa la máxima seguridad para la clave",
             "<primary>Escríbelo en el orden correcto</primary><br /> Lo necesitarás para la recuperación",
-            "<primaryl>Añadir una billetera de aeternity</primary><br /> Toque cartera, billetera y añadir elegir æternity.",
+            "<primary>Añadir una billetera de aeternity</primary><br /> Toque cartera, billetera y añadir elegir æternity.",
             "<primary>Enlace su cartera æternity</primary><br /> Finalice mediante la vinculación de su bóveda a su dirección de aeternity."
           ]
         }
@@ -536,7 +536,7 @@
 
       "list": {
         "connected": "Conectado",
-        "disconnected": "Desconectado en {fecha}",
+        "disconnected": "Desconectado en {date}",
         "revoke": "Revocar"
       },
 
