@@ -633,7 +633,7 @@
       },
 
       "confirm": {
-        "guide": "<p><primary>Confirma <crossFingersEmoji />tu frase</primary></p><p>Toca las palabras a continuación para componer tu frase, <secondary>nota</secondary> ¡orden correcto!</p> ",
+        "guide": "<p><primary>Confirma <crossFingersEmoji /> tu frase</primary></p><p>Toca las palabras a continuación para componer tu frase, <secondary>nota</secondary> ¡orden correcto!</p> ",
         "mnemonic": "Tu frase de recuperación",
         "error": "¡Vaya! No es el orden correcto, inténtalo de nuevo",
         "placeholder": "primer segundo tercero ···"
