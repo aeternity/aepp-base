@@ -10,11 +10,6 @@
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "Base æpp actualmente solo puede funcionar cuando se abre en una sola pestaña del navegador. Si tiene instancias adicionales (pestañas) de Base æpp abiertas, ciérrelas",
 
-  "add-to-home-screen": {
-    "note": "Agregue esta aplicación a la pantalla de inicio",
-    "button": "Agregar"
-  },
-
   "header": {
     "title": "Base web",
     "connect-account": "Conectar una cuenta",

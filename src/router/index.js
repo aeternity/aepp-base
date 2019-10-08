@@ -1,6 +1,5 @@
 import Router from 'vue-router';
 import store from '../store';
-import AddToHomeScreenPrompt from '../pages/mobile/AddToHomeScreenPrompt.vue';
 
 store.subscribe((mutation, state) => {
   switch (mutation.type) {
@@ -22,24 +21,13 @@ export default (async () => {
     },
   });
 
-  if (
-    process.env.IS_MOBILE_DEVICE && !process.env.IS_CORDOVA
-    && !process.env.IS_PWA && !process.env.IS_IOS
-    && process.env.NODE_ENV === 'production'
-  ) {
-    router.addRoutes([{
-      path: '/',
-      component: AddToHomeScreenPrompt,
-    }]);
-  } else {
-    await Promise.all([
-      process.env.IS_MOBILE_DEVICE
-        ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
-        : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),
-      import('./routes/common'),
-    ]
-      .map(async module => router.addRoutes((await module).default)));
-  }
+  await Promise.all([
+    process.env.IS_MOBILE_DEVICE
+      ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
+      : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),
+    import('./routes/common'),
+  ]
+    .map(async module => router.addRoutes((await module).default)));
 
   store.watch(
     (state, { loggedIn }) => loggedIn,

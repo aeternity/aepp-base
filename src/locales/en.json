@@ -10,11 +10,6 @@
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "The Base æpp can currently work only when opened in a single browser tab. If you have any additional instances (tabs) of the Base æpp open, please close them.",
 
-  "add-to-home-screen": {
-    "note": "Please add this app to home screen.",
-    "button": "Add"
-  },
-
   "header": {
     "title": "Base web",
     "connect-account": "Connect an account",
