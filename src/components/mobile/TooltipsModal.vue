@@ -69,7 +69,7 @@ export default {
           rect.height + padding * 2,
         ));
     };
-    updateAnchorRects();
+    setTimeout(updateAnchorRects);
     window.addEventListener('resize', updateAnchorRects);
     window.addEventListener('scroll', updateAnchorRects);
     this.$once('hook:destroyed', () => {
