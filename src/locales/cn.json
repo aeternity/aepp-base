@@ -422,10 +422,16 @@
 
   "name": {
     "title": "Names",
+    "expiration": "Expires in {n} blocks | Expires in {n} block | Expires in {n} blocks",
 
     "list": {
-      "note": "为您的账户申请一个名称!",
-      "explanation": "点击“+”按钮来申请并与您的帐号关联.",
+      "ending-soonest-note": "Auctions Ending Soonest",
+      "character-length-note": "Auctions by Character Length",
+      "max-bid-note": "Auctions by Bid",
+      "personal-note": "为您的账户申请一个名称!",
+      "personal-explanation": "点击“+”按钮来申请并与您的帐号关联.",
+      "auctions-not-supported": "Auctions are not supported by the current network.",
+      "no-auctions": "There are no auctions matching these criteria.",
       "registered": "注册名称"
     },
 
