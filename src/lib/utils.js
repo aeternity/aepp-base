@@ -18,3 +18,17 @@ export class ConvertibleToString {
     this.toString = toString;
   }
 }
+
+export class DOMRect {
+  constructor(left, top, width, height) {
+    this.left = left;
+    this.top = top;
+    this.width = width;
+    this.height = height;
+    Object.freeze(this);
+  }
+
+  get right() { return this.left + this.width; }
+
+  get bottom() { return this.top + this.height; }
+}
