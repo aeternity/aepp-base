@@ -50,7 +50,7 @@ import SettingsPasswordSet from '../../pages/mobile/SettingsPasswordSet.vue';
 import SettingsLanguage from '../../pages/mobile/SettingsLanguage.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
-const Redeem = () => import(/* webpackChunkName: "page-redeem" */ '../../pages/mobile/Redeem.vue');
+const RedeemBalance = () => import(/* webpackChunkName: "page-redeem" */ '../../pages/mobile/RedeemBalance.vue');
 
 const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
   handlers.reduce((nextRoute, handler) => {
@@ -204,7 +204,7 @@ export default [{
 }, {
   name: 'redeem',
   path: '/transfer/redeem',
-  component: Redeem,
+  component: RedeemBalance,
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'name-list',

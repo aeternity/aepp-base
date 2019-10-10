@@ -10,13 +10,12 @@
     header-fill="neutral"
     :right-button-to="{ name: 'transfer' }"
     right-button-icon-name="close"
-    class="redeem"
+    class="redeem-balance"
   >
-    <template slot="header">
-      <Guide
-        :template="$t('transfer.redeem-balance.guide')"
-      />
-    </template>
+    <Guide
+      slot="header"
+      :template="$t('transfer.redeem-balance.guide')"
+    />
 
     <DetailsAmountCurrency
       :name="$t('transfer.send.amount.balance')"
@@ -38,12 +37,7 @@
 <script>
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { Universal, MemoryAccount } from '@aeternity/aepp-sdk/es';
-import {
-  generateKeyPairFromSecret,
-  hexStringToByte,
-  aeEncodeKey,
-} from '@aeternity/aepp-sdk/es/utils/crypto';
+import { Ae, Transaction, Crypto } from '@aeternity/aepp-sdk/es';
 import { handleUnknownError } from '../../lib/utils';
 import AeLoader from '../../components/AeLoader.vue';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -62,64 +56,75 @@ export default {
     ListItemAccount,
     LeftMore,
   },
-  data() {
-    return {
-      balance: 0,
-      busy: true,
-      client: {},
-    };
-  },
+  data: () => ({
+    keypair: null,
+    balance: 0,
+    busy: true,
+  }),
   subscriptions() {
     return pick(this.$store.state.observables, ['accounts']);
   },
   async mounted() {
-    try {
-      const privateKey = await this.$store.dispatch('modals/open', {
+    while (!this.keypair) {
+      try {
+        await this.readQrCode(); // eslint-disable-line no-await-in-loop
+      } catch (error) {
+        this.$router.push({ name: 'transfer' });
+        if (error.message !== 'Cancelled by user') handleUnknownError(error);
+        return;
+      }
+    }
+    this.busy = false;
+  },
+  methods: {
+    async readQrCode() {
+      let privateKey;
+      privateKey = await this.$store.dispatch('modals/open', {
         name: 'readQrCode',
         title: this.$t('transfer.redeem-balance.scan'),
       });
-      const keypair = generateKeyPairFromSecret(hexStringToByte(privateKey));
-      const address = aeEncodeKey(keypair.publicKey);
+
+      try {
+        privateKey = Buffer.from(privateKey, 'hex');
+      } catch (error) {
+        handleUnknownError(error);
+        privateKey = Buffer.from([]);
+      }
+
+      if (privateKey.length !== 64) {
+        await this.$store.dispatch('modals/open', {
+          name: 'alert',
+          text: this.$t('transfer.redeem-balance.wrong-qr-code'),
+        });
+        return;
+      }
+
+      const address = Crypto.aeEncodeKey(Crypto.generateKeyPairFromSecret(privateKey).publicKey);
       this.balance = BigNumber(await this.$store.state.sdk.getBalance(address))
         .shiftedBy(-MAGNITUDE);
-      if (this.balance < MIN_SPEND_TX_FEE) throw new Error(this.$t('transfer.redeem-balance.no-funds'));
-      this.client = await Universal({
-        url: this.$store.state.sdkUrl,
-        compilerUrl: 'https://compiler.aepps.com',
-        accounts: [MemoryAccount({
-          keypair: {
-            secretKey: privateKey,
-            publicKey: address,
-          },
-        })],
-        address,
-      });
-    } catch (e) {
-      let alertMessage;
-      if (['Invalid Key Pair', 'bad secret key size'].includes(e.message)) {
-        alertMessage = this.$t('transfer.redeem-balance.wrong-qr-code');
-      } else if (e.message === this.$t('transfer.redeem-balance.no-funds')) {
-        alertMessage = e.message;
-
-        if (alertMessage) {
-          await this.$store.dispatch('modals/open', {
-            name: 'alert',
-            text: alertMessage,
-          });
-        } else {
-          handleUnknownError(e);
-        }
+      if (this.balance < MIN_SPEND_TX_FEE) {
+        await this.$store.dispatch('modals/open', {
+          name: 'alert',
+          text: this.$t('transfer.redeem-balance.no-funds'),
+        });
+        return;
       }
-      this.$router.push({ name: 'transfer' });
-    } finally {
-      this.busy = false;
-    }
-  },
-  methods: {
+
+      this.keypair = { address, privateKey };
+    },
     async sendToAccount(accountTo) {
-      if (!await this.$validator.validateAll()) return;
       this.busy = true;
-      const { hash, tx: { amount } } = await this.client.transferFunds(1, accountTo);
+      const { hash, tx: { amount } } = await (
+        await Ae.compose(
+          Transaction, {
+            methods: {
+              sign: data => Promise.resolve(Crypto.sign(data, this.keypair.privateKey)),
+              address: () => Promise.resolve(this.keypair.address),
+            },
+          },
+        )({ url: this.$store.state.sdkUrl })
+      )
+        .transferFunds(1, accountTo);
       this.$router.push({ name: 'transfer' });
       this.$store.dispatch('modals/open', {
         name: 'spendSuccess',
@@ -142,7 +147,8 @@ export default {
     margin: auto;
   }
 }
-.redeem .details-item {
+
+.redeem-balance .details-item {
   --color-primary: #{$color-neutral-negative-1};
   --color-secondary: #{$color-neutral-negative-1};
   border-top: none;
