@@ -8,7 +8,7 @@ export default (store) => {
 
   const createSdk = async (network) => {
     const [
-      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler,
+      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler, UrlSchemeHandler,
     ] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
@@ -17,6 +17,7 @@ export default (store) => {
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
       import(/* webpackChunkName: "sdk" */ './PostMessageHandler'),
+      import(/* webpackChunkName: "sdk" */ './UrlSchemeHandler'),
     ])).map(module => module.default);
 
     class App {
@@ -106,7 +107,7 @@ export default (store) => {
           methods,
           deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share'] } },
         },
-        PostMessageHandler,
+        PostMessageHandler, UrlSchemeHandler,
       )({
         url: network.url,
         internalUrl: network.url,
