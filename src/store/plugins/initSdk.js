@@ -1,5 +1,6 @@
 import { get, isEqual } from 'lodash-es';
 import { handleUnknownError, isNotFoundError } from '../../lib/utils';
+import { fetchJson } from '../utils';
 import { i18n } from './ui/languages';
 
 export default (store) => {
@@ -122,7 +123,7 @@ export default (store) => {
         axiosConfig: { errorHandler },
       }),
       (async () => {
-        const swag = await (await fetch(`${network.middlewareUrl}/middleware/api`)).json();
+        const swag = await fetchJson(`${network.middlewareUrl}/middleware/api`);
         return Swagger.compose({
           methods: {
             urlFor: path => network.middlewareUrl + path,
