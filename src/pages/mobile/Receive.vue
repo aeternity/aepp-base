@@ -80,13 +80,7 @@ export default {
   computed: mapGetters({ activeAccount: 'accounts/active' }),
   methods: {
     async share() {
-      await (process.env.IS_CORDOVA
-        ? new Promise(resolve => window.plugins.socialsharing.shareWithOptions(
-          { message: this.activeAccount.address },
-          ({ app }) => app && resolve(),
-        ))
-        : navigator.share({ text: this.activeAccount.address }));
-
+      await this.$store.dispatch('share', { text: this.activeAccount.address });
       this.sharedChecked = true;
       setTimeout(() => { this.sharedChecked = false; }, 500);
     },

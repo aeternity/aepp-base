@@ -81,6 +81,8 @@ export default (store) => {
         name: 'readQrCode',
         title: title || i18n.t('scan-qr-code'),
       }),
+      baseAppVersion: () => process.env.npm_package_version,
+      share: options => store.dispatch('share', options),
     };
 
     let sdkActive = false;
@@ -111,7 +113,7 @@ export default (store) => {
             };
           },
           methods,
-          deepConfiguration: { Ae: { methods: ['readQrCode'] } },
+          deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share'] } },
         },
       )({
         url: network.url,
