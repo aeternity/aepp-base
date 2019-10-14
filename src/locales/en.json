@@ -290,7 +290,7 @@
       "title": "Redeem Balance",
       "subtitle": "Scan QR code to redeem",
       "guide": "<primary>Redeem all tokens</primary> from scanned wallet",
-      "no-funds": "This wallet was already redeemed",
+      "no-funds": "There are no tokens to redeem on this network. Please check if you are connected to the correct network",
       "wrong-qr-code": "Scanned QR code is wrong. Please make sure to scan a QR code of the redeem wallet",
       "scan": "Scan Wallet QR Code"
     }
