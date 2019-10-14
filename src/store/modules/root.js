@@ -4,6 +4,7 @@ import Vue from 'vue';
 import { update, flatMap, mergeWith } from 'lodash-es';
 import store from '../index'; // eslint-disable-line import/no-cycle
 import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
+import { handleUnknownError } from '../../lib/utils';
 import { genRandomBuffer } from '../utils';
 
 export default {
@@ -16,6 +17,7 @@ export default {
     customNetworks: [],
     apps: [],
     cachedAppManifests: {},
+    isAppManifestsFetching: {},
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     onLine: true,
   },
@@ -32,22 +34,8 @@ export default {
     },
     getApp: ({ apps }) => appHost => apps.find(({ host }) => host === appHost),
     getAppMetadata: ({ cachedAppManifests }) => (host) => {
-      const manifest = cachedAppManifests[host];
-
-      if (typeof manifest !== 'object') {
-        if (manifest !== 'fetching') {
-          store.commit('setCachedAppManifest', {
-            host,
-            manifest: 'fetching',
-          });
-          store.dispatch('fetchAppManifest', host)
-            .then(fetchedManifest => store.commit('setCachedAppManifest', {
-              host,
-              manifest: fetchedManifest,
-            }));
-        }
-        return { name: host };
-      }
+      store.dispatch('ensureAppManifestCached', host);
+      const manifest = cachedAppManifests[host] || {};
 
       const metadata = {
         name: manifest.short_name || manifest.name || host,
@@ -126,6 +114,9 @@ export default {
     setCachedAppManifest({ cachedAppManifests }, { host, manifest }) {
       Vue.set(cachedAppManifests, host, manifest);
     },
+    setAppManifestFetching({ isAppManifestsFetching }, { host, fetching }) {
+      Vue.set(isAppManifestsFetching, host, fetching);
+    },
     setServiceWorkerRegistration(state, serviceWorkerRegistration) {
       state.serviceWorkerRegistration = serviceWorkerRegistration;
     },
@@ -138,27 +129,44 @@ export default {
     async fetchAppManifest(_, host) {
       const fetchTextCors = async url => (
         await fetch(`https://cors-anywhere.herokuapp.com/${url}`)).text();
-      try {
-        let appUrl = new URL(`http://${host}`);
-        if (appUrl.hostname === 'localhost') return {};
+      let appUrl = new URL(`http://${host}`);
+      if (appUrl.hostname === 'localhost') return {};
 
-        const parser = new DOMParser();
-        const document = parser.parseFromString(await fetchTextCors(appUrl), 'text/html');
+      const parser = new DOMParser();
+      const document = parser.parseFromString(await fetchTextCors(appUrl), 'text/html');
 
-        const base = document.querySelector('base');
-        if (base) appUrl = new URL(base.getAttribute('href'), appUrl);
+      const base = document.querySelector('base');
+      if (base) appUrl = new URL(base.getAttribute('href'), appUrl);
 
-        const manifestUrl = new URL(
-          document.querySelector('link[rel=manifest]').getAttribute('href'),
-          appUrl,
-        );
+      const manifestUrl = new URL(
+        document.querySelector('link[rel=manifest]').getAttribute('href'),
+        appUrl,
+      );
 
-        const manifest = JSON.parse(await fetchTextCors(manifestUrl));
-        manifest.fetchedAt = new Date().toJSON();
-        return manifest;
-      } catch (e) {
-        return {};
+      return JSON.parse(await fetchTextCors(manifestUrl));
+    },
+    async ensureAppManifestCached({ state: { cachedAppManifests, isAppManifestsFetching } }, host) {
+      if (isAppManifestsFetching[host]) return;
+      const manifest = cachedAppManifests[host];
+      if (manifest && manifest.fetchedAt) {
+        const date = new Date(manifest.fetchedAt);
+        date.setDate(date.getDate() + 1);
+        if (date > new Date()) return;
       }
+
+      store.commit('setAppManifestFetching', { host, fetching: true });
+      let newManifest;
+      try {
+        newManifest = await store.dispatch('fetchAppManifest', host);
+      } catch (error) {
+        newManifest = {};
+        handleUnknownError(error);
+      }
+      store.commit('setCachedAppManifest', {
+        host,
+        manifest: { ...newManifest, fetchedAt: new Date().toJSON() },
+      });
+      store.commit('setAppManifestFetching', { host, fetching: false });
     },
   },
 };

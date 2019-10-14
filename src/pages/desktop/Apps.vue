@@ -21,14 +21,18 @@
 </template>
 
 <script>
-import { aeternityApps } from '../../lib/appsRegistry';
+import { mapState } from 'vuex';
+import { aeternityAppsPaths } from '../../lib/appsRegistry';
 import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
 import AppShortcut from '../../components/AppShortcut.vue';
 
 export default {
   components: { Guide, Note, AppShortcut },
-  data: () => ({ aeternityApps }),
+  computed: mapState({
+    aeternityApps: (state, { getAppMetadata }) => aeternityAppsPaths
+      .map(path => ({ ...getAppMetadata(path), path })),
+  }),
 };
 </script>
 
