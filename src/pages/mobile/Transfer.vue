@@ -63,6 +63,7 @@
     </ListItem>
     <ListItem
       :to="{ name: 'redeem' }"
+      class="redeem-balance"
       :title="$t('transfer.redeem-balance.title')"
       :subtitle="$t('transfer.redeem-balance.subtitle')"
       border-dark
@@ -124,6 +125,9 @@ export default {
         }] : [], {
           selector: '.transfer .tab-bar .button-plain:nth-child(3)',
           ...this.$t('transfer.tooltips.account-switcher'),
+        }, {
+          selector: '.transfer .wrapper .list-item.redeem-balance',
+          ...this.$t('transfer.tooltips.redeem-balance'),
         }],
       });
       this.tooltipsVisible = false;

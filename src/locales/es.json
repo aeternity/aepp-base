@@ -173,6 +173,10 @@
       "account-switcher": {
         "header": "Account Switcher",
         "content": "Toca para cambiar de cuenta o crear subcuentas"
+      },
+      "redeem-balance": {
+        "header": "Redeem Balance",
+        "content": "Tap here to import a balance from a QR code (paper wallet)."
       }
     },
 
