@@ -13,6 +13,7 @@
 import Vue from 'vue';
 import { isEqual } from 'lodash-es';
 import { directive as clickaway } from 'vue-clickaway';
+import { DOMRect } from '../lib/utils';
 
 const originProp = {
   type: Object,
@@ -59,11 +60,14 @@ export default {
         ? new DOMRect(-window.scrollX, -window.scrollY) : parentEl.getBoundingClientRect();
 
       const anchorElRect = anchorEl.getBoundingClientRect();
-      anchorElRect.x -= parentElRect.x;
-      anchorElRect.y -= parentElRect.y;
       const {
         top, right, bottom, left,
-      } = anchorElRect;
+      } = new DOMRect(
+        anchorElRect.left - parentElRect.left,
+        anchorElRect.top - parentElRect.top,
+        anchorElRect.width,
+        anchorElRect.height,
+      );
 
       const anchorPoint = {
         x: {

@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { DOMRect } from '../../lib/utils';
 import Tooltip from './Tooltip.vue';
 
 export default {
@@ -62,13 +63,13 @@ export default {
       this.anchorRects = this.tooltips
         .map(({ selector }) => document.querySelector(selector).getBoundingClientRect())
         .map(rect => new DOMRect(
-          rect.x - padding,
-          rect.y - padding,
+          rect.left - padding,
+          rect.top - padding,
           rect.width + padding * 2,
           rect.height + padding * 2,
         ));
     };
-    updateAnchorRects();
+    setTimeout(updateAnchorRects);
     window.addEventListener('resize', updateAnchorRects);
     window.addEventListener('scroll', updateAnchorRects);
     this.$once('hook:destroyed', () => {
