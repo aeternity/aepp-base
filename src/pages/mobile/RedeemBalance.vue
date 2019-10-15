@@ -138,6 +138,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/variables/colors.scss';
+@import '../../styles/globals/functions.scss';
 
 .loader {
   flex-grow: 1;
@@ -149,9 +150,18 @@ export default {
 }
 
 .redeem-balance .details-item {
-  --color-primary: #{$color-neutral-negative-1};
-  --color-secondary: #{$color-neutral-negative-1};
+  --color-primary: #{$color-neutral-negative-3};
+  --color-secondary: #{$color-neutral-negative-3};
   border-top: none;
   padding-top: 0;
+
+  /deep/ .details-row {
+    font-size: rem(18px);
+    line-height: rem(24px);
+
+    .value .left {
+      font-size: rem(14px);
+    }
+  }
 }
 </style>
