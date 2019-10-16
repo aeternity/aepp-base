@@ -28,7 +28,7 @@ const store = new Vuex.Store({
         migrations, sdkUrl, customNetworks,
         apps, cachedAppManifests, peerId, languages, currencies,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
-        mobile: { readSecurityCourses, followers } = {},
+        mobile: { readSecurityCourses, followers, skipAddingToHomeScreen } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
         migrations,
@@ -60,6 +60,7 @@ const store = new Vuex.Store({
             followers: Object.entries(followers)
               .reduce((p, [k, { id, name, disconnectedAt }]) => (
                 { ...p, [k]: { id, name, disconnectedAt } }), {}),
+            skipAddingToHomeScreen,
           },
         } : {
           desktop: { showGuideOnStartup },

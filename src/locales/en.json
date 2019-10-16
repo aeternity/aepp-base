@@ -12,7 +12,8 @@
 
   "add-to-home-screen": {
     "note": "Please add this app to home screen.",
-    "button": "Add"
+    "button": "Add",
+    "skip": "Use without adding…"
   },
 
   "header": {
