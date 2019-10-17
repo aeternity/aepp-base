@@ -17,10 +17,10 @@
       :template="$t('transfer.redeem-balance.guide')"
     />
 
-    <DetailsAmountCurrency
-      :name="$t('transfer.send.amount.balance')"
-      :amount="balance"
-    />
+    <div class="balance-row">
+      <span>{{ $t('transfer.send.amount.balance') }}</span>
+      <Balance :balance="balance" />
+    </div>
 
     <ListItemAccount
       v-for="account in accounts"
@@ -42,7 +42,7 @@ import { handleUnknownError } from '../../lib/utils';
 import AeLoader from '../../components/AeLoader.vue';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
-import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
+import Balance from '../../components/Balance.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import { LeftMore } from '../../components/icons';
 import { MIN_SPEND_TX_FEE, MAGNITUDE } from '../../lib/constants';
@@ -52,7 +52,7 @@ export default {
     AeLoader,
     MobilePage,
     Guide,
-    DetailsAmountCurrency,
+    Balance,
     ListItemAccount,
     LeftMore,
   },
@@ -137,8 +137,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/globals/functions.scss';
+@import '../../styles/placeholders/typography.scss';
 
 .loader {
   flex-grow: 1;
@@ -149,19 +148,9 @@ export default {
   }
 }
 
-.redeem-balance .details-item {
-  --color-primary: #{$color-neutral-negative-3};
-  --color-secondary: #{$color-neutral-negative-3};
-  border-top: none;
-  padding-top: 0;
-
-  /deep/ .details-row {
-    font-size: rem(18px);
-    line-height: rem(24px);
-
-    .value .left {
-      font-size: rem(14px);
-    }
-  }
+.redeem-balance .balance-row {
+  display: flex;
+  justify-content: space-between;
+  @extend %face-sans-base;
 }
 </style>
