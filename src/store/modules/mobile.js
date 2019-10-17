@@ -9,6 +9,7 @@ export default {
     stepFraction: null,
     browserPath: '',
     readSecurityCourses: [],
+    skipAddingToHomeScreen: false,
   },
 
   getters: {
@@ -42,6 +43,9 @@ export default {
       if (state.readSecurityCourses.includes(courseName)) return;
       state.readSecurityCourses.push(courseName);
     },
+    skipAddingToHomeScreen(state) {
+      state.skipAddingToHomeScreen = true;
+    },
   },
 
   actions: {
@@ -51,6 +55,15 @@ export default {
         text: i18n.t('remote-connection.revoke-notification', [followers[followerId].name]),
       });
       commit('removeFollower', followerId);
+    },
+
+    async share(_, options) {
+      await (process.env.IS_CORDOVA
+        ? new Promise(resolve => window.plugins.socialsharing.shareW3C(
+          options,
+          ({ app }) => app && resolve(),
+        ))
+        : navigator.share(options));
     },
   },
 };

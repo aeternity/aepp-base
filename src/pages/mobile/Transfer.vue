@@ -61,6 +61,19 @@
       >
       <LeftMore slot="right" />
     </ListItem>
+    <ListItem
+      :to="{ name: 'redeem' }"
+      class="redeem-balance"
+      :title="$t('transfer.redeem-balance.title')"
+      :subtitle="$t('transfer.redeem-balance.subtitle')"
+      border-dark
+    >
+      <img
+        slot="icon"
+        :src="mobilePhoneWithAnArrowEmoji"
+      >
+      <LeftMore slot="right" />
+    </ListItem>
   </MobilePage>
 </template>
 
@@ -71,6 +84,7 @@ import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import mantelpieceClockEmoji from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
 import glowingStarEmoji from 'emoji-datasource-apple/img/apple/64/1f31f.png';
+import mobilePhoneWithAnArrowEmoji from 'emoji-datasource-apple/img/apple/64/1f4f2.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
@@ -90,6 +104,7 @@ export default {
     manTippingHandEmoji,
     mantelpieceClockEmoji,
     glowingStarEmoji,
+    mobilePhoneWithAnArrowEmoji,
     tooltipsVisible: false,
   }),
   subscriptions() {
@@ -110,6 +125,9 @@ export default {
         }] : [], {
           selector: '.transfer .tab-bar .button-plain:nth-child(3)',
           ...this.$t('transfer.tooltips.account-switcher'),
+        }, {
+          selector: '.transfer .wrapper .list-item.redeem-balance',
+          ...this.$t('transfer.tooltips.redeem-balance'),
         }],
       });
       this.tooltipsVisible = false;

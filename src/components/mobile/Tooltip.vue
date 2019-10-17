@@ -25,13 +25,14 @@
 import { clamp } from 'lodash-es';
 import ButtonPlain from '../ButtonPlain.vue';
 import { Close } from '../icons';
+import { DOMRect } from '../../lib/utils';
 
 const arrowSize = 12;
 
 export default {
   components: { ButtonPlain, Close },
   props: {
-    anchorRect: { type: DOMRect, default: null },
+    anchorRect: { type: [DOMRect, window.DOMRect], default: null },
   },
   data: () => ({ isMounted: false }),
   computed: {

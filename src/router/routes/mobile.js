@@ -1,5 +1,6 @@
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
+import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
 import Intro from '../../pages/mobile/Intro.vue';
 import Onboarding from '../../pages/mobile/Onboarding.vue';
 import OnboardingWelcome from '../../pages/mobile/OnboardingWelcome.vue';
@@ -50,6 +51,7 @@ import SettingsPasswordSet from '../../pages/mobile/SettingsPasswordSet.vue';
 import SettingsLanguage from '../../pages/mobile/SettingsLanguage.vue';
 
 const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
+const RedeemBalance = () => import(/* webpackChunkName: "page-redeem" */ '../../pages/mobile/RedeemBalance.vue');
 
 const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
   handlers.reduce((nextRoute, handler) => {
@@ -71,6 +73,10 @@ const checkStoreMnemonic = (to, from, next) => {
 const settingsMnemonicBeforeEnter = mergeEnterHandlers(ensureLoggedIn, checkStoreMnemonic);
 
 export default [{
+  name: 'add-to-home-screen',
+  path: '/add-to-home-screen',
+  component: AddToHomeScreenPrompt,
+}, {
   name: 'intro',
   path: '/',
   component: Intro,
@@ -200,6 +206,11 @@ export default [{
   component: TransactionDetails,
   beforeEnter: ensureLoggedIn,
   props: true,
+}, {
+  name: 'redeem',
+  path: '/transfer/redeem',
+  component: RedeemBalance,
+  beforeEnter: ensureLoggedIn,
 }, {
   name: 'name-list',
   path: '/names',

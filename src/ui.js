@@ -29,4 +29,6 @@ if (!process.env.IS_MASTER) {
   }).$mount('#app');
 
   uiPlugin(store);
-})();
+})().catch((error) => {
+  window.onerror(error.message, error.fileName, error.lineNumber, undefined, error);
+});

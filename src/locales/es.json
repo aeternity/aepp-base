@@ -12,7 +12,8 @@
 
   "add-to-home-screen": {
     "note": "Agregue esta aplicación a la pantalla de inicio",
-    "button": "Agregar"
+    "button": "Agregar",
+    "skip": "Use without adding…"
   },
 
   "header": {
@@ -173,6 +174,10 @@
       "account-switcher": {
         "header": "Account Switcher",
         "content": "Toca para cambiar de cuenta o crear subcuentas"
+      },
+      "redeem-balance": {
+        "header": "Redeem Balance",
+        "content": "Tap here to import a balance from a QR code (paper wallet)."
       }
     },
 
@@ -284,6 +289,15 @@
       "subtitle": "No se muestra como saldo arriba",
       "note": "están en la migración ahora estarán disponibles después del próxima. Hardfork.",
       "to-migrations": "Ver migraciones"
+    },
+
+    "redeem-balance": {
+      "title": "Redeem Balance",
+      "subtitle": "Scan QR code to redeem",
+      "guide": "<primary>Redeem all tokens</primary> from scanned wallet",
+      "no-funds": "There are no tokens to redeem on this network. Please make sure you are connected to the correct network and the balance has not been redeemed already.",
+      "wrong-qr-code": "Scanned QR code is wrong. Please make sure to scan a QR code of the redeem wallet",
+      "scan": "Scan Wallet QR Code"
     }
   },
 

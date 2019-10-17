@@ -18,6 +18,7 @@
         :subtitle="app.path"
       >
         <img
+          v-if="app.icon"
           slot="icon"
           :src="app.icon"
           :alt="app.name"
@@ -43,7 +44,7 @@
 <script>
 import Fuse from 'fuse.js';
 import { mapState } from 'vuex';
-import { aeternityApps } from '../../lib/appsRegistry';
+import { aeternityAppsPaths } from '../../lib/appsRegistry';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import UrlForm from '../../components/mobile/UrlForm.vue';
@@ -60,12 +61,11 @@ export default {
     AeCard,
     ListItem,
   },
-  data: () => ({
-    aeternityApps,
-    searchTerm: '',
-  }),
+  data: () => ({ searchTerm: '' }),
   computed: {
     ...mapState({
+      aeternityApps: (state, { getAppMetadata }) => aeternityAppsPaths
+        .map(path => ({ ...getAppMetadata(path), path })),
       bookmarkedApps: ({ apps }, { getAppMetadata }) => apps
         .filter(({ bookmarked }) => bookmarked)
         .map(app => ({ ...app, ...getAppMetadata(app.host) })),
