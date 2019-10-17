@@ -1,5 +1,6 @@
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
+import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
 import Intro from '../../pages/mobile/Intro.vue';
 import Onboarding from '../../pages/mobile/Onboarding.vue';
 import OnboardingWelcome from '../../pages/mobile/OnboardingWelcome.vue';
@@ -72,6 +73,10 @@ const checkStoreMnemonic = (to, from, next) => {
 const settingsMnemonicBeforeEnter = mergeEnterHandlers(ensureLoggedIn, checkStoreMnemonic);
 
 export default [{
+  name: 'add-to-home-screen',
+  path: '/add-to-home-screen',
+  component: AddToHomeScreenPrompt,
+}, {
   name: 'intro',
   path: '/',
   component: Intro,

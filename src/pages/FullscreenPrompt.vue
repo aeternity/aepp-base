@@ -11,6 +11,8 @@
         {{ buttonText }}
       </AeButton>
     </div>
+
+    <slot />
   </div>
 </template>
 
@@ -33,6 +35,8 @@ export default {
 .fullscreen-prompt {
   flex-grow: 1;
   display: flex;
+  flex-direction: column;
+  padding: rem(16px);
   background-color: $color-primary;
 
   div {

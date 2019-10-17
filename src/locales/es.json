@@ -12,7 +12,8 @@
 
   "add-to-home-screen": {
     "note": "Agregue esta aplicación a la pantalla de inicio",
-    "button": "Agregar"
+    "button": "Agregar",
+    "skip": "Use without adding…"
   },
 
   "header": {

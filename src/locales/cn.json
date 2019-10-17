@@ -12,7 +12,8 @@
 
   "add-to-home-screen": {
     "note": "请添加这个app到主屏幕.",
-    "button": "Add"
+    "button": "Add",
+    "skip": "Use without adding…"
   },
 
   "header": {

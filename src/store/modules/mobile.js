@@ -9,6 +9,7 @@ export default {
     stepFraction: null,
     browserPath: '',
     readSecurityCourses: [],
+    skipAddingToHomeScreen: false,
   },
 
   getters: {
@@ -41,6 +42,9 @@ export default {
     markSecurityCourseAsRead(state, courseName) {
       if (state.readSecurityCourses.includes(courseName)) return;
       state.readSecurityCourses.push(courseName);
+    },
+    skipAddingToHomeScreen(state) {
+      state.skipAddingToHomeScreen = true;
     },
   },
 
