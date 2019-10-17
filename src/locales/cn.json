@@ -209,7 +209,7 @@
       "resolved": {
         "title": "转账完成",
         "note": "Transaction broadcast successfully!",
-        "subtitle": "",
+        "subtitle": "You've sent {amount}",
         "to-history": "查看记录",
         "to-explorer": "查看浏览器",
         "copy": "复制tx hash"
