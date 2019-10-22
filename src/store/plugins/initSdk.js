@@ -118,7 +118,7 @@ export default (store) => {
       )({
         url: network.url,
         internalUrl: network.url,
-        compilerUrl: 'https://compiler.aepps.com',
+        compilerUrl: network.compilerUrl,
         axiosConfig: { errorHandler },
       }),
       (async () => {

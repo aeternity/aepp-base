@@ -9,6 +9,7 @@ const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) =>
   url: getUrl(pathName),
   middlewareUrl: getMiddlewareUrl(pathName),
   explorerUrl: getExplorerUrl(pathName),
+  compilerUrl: 'https://compiler.aepps.com',
   ...options,
 });
 
@@ -18,11 +19,13 @@ export const defaultNetwork = genNetwork('Fortuna-net', {
   explorerUrl: getExplorerUrl(),
 });
 
+const testNetwork = genNetwork('Testnet', { compilerUrl: 'https://latest.compiler.aepps.com' });
+
 export default Object.freeze((process.env.NODE_ENV === 'production' ? [
   defaultNetwork,
-  genNetwork('Testnet'),
+  testNetwork,
 ] : [
-  genNetwork('Testnet'),
+  testNetwork,
   defaultNetwork,
   genNetwork('Unstable'),
   genNetwork('Edgenet', pick(defaultNetwork, ['middlewareUrl'])),
