@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/globals/functions.scss';
+@import '../styles/functions';
 
 .mobile-page .wrapper > .button-add-fixed.ae-button.medium {
   width: rem(56px);

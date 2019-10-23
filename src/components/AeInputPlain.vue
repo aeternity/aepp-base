@@ -18,9 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables/colors.scss';
-@import '../styles/placeholders/typography.scss';
-@import '../styles/variables/animations.scss';
+@import '../styles/typography';
 
 .ae-input-plain {
   transition: border-color $base-transition-time;

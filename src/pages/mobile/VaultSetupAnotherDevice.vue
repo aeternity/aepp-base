@@ -54,8 +54,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
-@import './VaultSetup.scss';
+@import '../../styles/functions';
+@import 'VaultSetup';
 
 .vault-setup-another-device .guide {
   margin-bottom: rem(41px);

@@ -55,8 +55,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../copied.scss';
+@import '../../styles/typography';
+@import '../copied';
 
 .modal-spend-success {
   text-align: center;

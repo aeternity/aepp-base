@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/globals/functions.scss';
+@import '../styles/functions';
 
 .icon-group {
   position: relative;

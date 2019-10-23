@@ -144,8 +144,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/typography';
 
 .name-transfer {
   .ae-button .ae-loader {

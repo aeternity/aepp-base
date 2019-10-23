@@ -13,8 +13,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/placeholders/typography.scss';
-@import '../styles/variables/colors.scss';
+@import '../styles/typography';
 
 .settings-version {
   margin: rem(24px) 0;

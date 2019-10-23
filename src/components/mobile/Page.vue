@@ -84,9 +84,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/fallback/mixins.scss';
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/mixins';
+@import '../../styles/typography';
 
 .mobile-page {
   flex-grow: 1;

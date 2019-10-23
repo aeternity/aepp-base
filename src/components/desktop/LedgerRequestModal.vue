@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/functions';
 
 .ledger-request .ae-loader {
   display: block;

@@ -51,7 +51,7 @@ export default {
 </style>
 
 <style lang="scss">
-@import './styles/variables/colors.scss';
+@import 'styles/variables';
 
 body {
   background: $color-neutral-positive-2;

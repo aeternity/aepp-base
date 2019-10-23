@@ -88,10 +88,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/variables/typography.scss';
-@import '../../styles/variables/colors.scss';
-@import '../../styles/fallback/variables.scss';
-@import '../../styles/globals/functions.scss';
+@import '../../styles/functions';
 
 .tab-bar {
   background-color: $color-neutral-minimum;

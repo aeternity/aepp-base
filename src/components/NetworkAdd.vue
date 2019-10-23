@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/globals/functions.scss';
+@import '../styles/functions';
 
 .network-add {
   padding: 0 rem(20px);

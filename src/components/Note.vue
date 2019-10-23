@@ -5,8 +5,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/placeholders/typography.scss';
-@import '../styles/variables/colors.scss';
+@import '../styles/typography';
 
 .note {
   margin-bottom: rem(50px);
