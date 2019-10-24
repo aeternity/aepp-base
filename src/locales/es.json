@@ -63,7 +63,7 @@
     "mnemonic": "Frase de recuperación no válida",
     "url_http": "Este campo no es una URL HTTP(S) válida",
     "air_gap_response_url": "Este no es un código de sincronización válido",
-    "aens_name": "Este campo debe terminar con .test",
+    "aens_name": "This field must not contain dots",
     "aens_name_unregistered": "Este nombre ya está registrado",
     "account": "Dirección AE o nombre AENS no válidos"
   },
