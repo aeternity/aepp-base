@@ -455,7 +455,7 @@
       "guide": "<primary>Reclama un nombre</primary> para <inlineAccount />",
       "unknown-error": "Error desconocido",
       "name": "Nombre",
-      "name-placeholder": "Name.test",
+      "name-placeholder": "Name",
       "register": "Registrarse",
 
       "notification": {
