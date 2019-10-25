@@ -443,7 +443,10 @@
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
       "to-transfer": "Transfer name",
-      "to-transactions": "View in transactions"
+      "to-transactions": "View in transactions",
+      "current-bid": "Current bid",
+      "previous-bids": "Previous Bids",
+      "auction-not-found": "It looks like the auction you are looking for was not found."
     },
 
     "transfer": {

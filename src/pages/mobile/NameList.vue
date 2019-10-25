@@ -41,7 +41,7 @@
           :key="auction.name"
           v-bind="auction"
           :subtitle-winning-bid="view === VIEW_MAX_BID"
-          inactive
+          :to="{ name: 'auction-details', params: { name: auction.name } }"
         />
       </AeCard>
 

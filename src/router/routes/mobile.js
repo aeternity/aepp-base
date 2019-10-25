@@ -25,6 +25,7 @@ import SendConfirm from '../../pages/mobile/SendConfirm.vue';
 import TransactionList from '../../pages/mobile/TransactionList.vue';
 import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
 import NameList from '../../pages/mobile/NameList.vue';
+import AuctionDetails from '../../pages/mobile/AuctionDetails.vue';
 import NameListPersonal from '../../pages/mobile/NameListPersonal.vue';
 import NameDetails from '../../pages/mobile/NameDetails.vue';
 import NameNew from '../../pages/mobile/NameNew.vue';
@@ -228,6 +229,12 @@ export default [{
     page: page && +page,
     view: 'character-length',
   }),
+}, {
+  name: 'auction-details',
+  path: '/names/auction/:name',
+  component: AuctionDetails,
+  beforeEnter: ensureLoggedIn,
+  props: true,
 }, {
   name: 'name-list-personal',
   path: '/names/personal',
