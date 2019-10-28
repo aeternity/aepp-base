@@ -67,7 +67,7 @@
 import { mapState } from 'vuex';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
-import { AENS_DOMAIN } from '../../lib/constants';
+import { removeTopDomain } from '../../lib/utils';
 import MobilePage from './Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
@@ -166,7 +166,7 @@ export default {
           render: (createElement, { props: { value } }) => createElement(DetailsField, {
             attrs: {
               name: this.$t('name.details.name'),
-              value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString().replace(AENS_DOMAIN, ''),
+              value: removeTopDomain(Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString()),
             },
           }),
         },
