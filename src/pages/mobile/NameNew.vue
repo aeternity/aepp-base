@@ -86,7 +86,7 @@ export default {
           name: 'notification',
           text: this.$t('name.new.notification.claim-sent', { name: this.name }),
         });
-        this.$router.back();
+        this.$router.push({ name: 'name-list-personal' });
       } catch (e) {
         if (e.message === 'Rejected by user') return;
         this.error = true;
