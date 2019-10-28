@@ -29,8 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/typography';
 
 .ae-address-panel {
   width: rem(400px);

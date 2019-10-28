@@ -112,8 +112,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/typography';
 
 .send .own-account {
   margin-top: rem(20px);

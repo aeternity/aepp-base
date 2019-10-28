@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
+@import '../../styles/functions';
 
 .settings-security-course-list {
   .list-item-choose:first-child {

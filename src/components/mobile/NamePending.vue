@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
+@import '../../styles/functions';
 
 .name-pending {
   $size: rem(24px);

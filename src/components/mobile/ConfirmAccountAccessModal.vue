@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
+@import '../../styles/functions';
 
 .confirm-account-access-modal {
   padding-bottom: rem(70px + 28px + 20px);

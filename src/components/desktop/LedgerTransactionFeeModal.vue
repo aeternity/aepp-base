@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/functions';
 
 .transaction-fee {
   .ae-input-amount {

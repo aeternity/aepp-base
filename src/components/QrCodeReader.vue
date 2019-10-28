@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/placeholders/typography.scss';
+@import '../styles/typography';
 
 .qr-code-reader {
   display: flex;

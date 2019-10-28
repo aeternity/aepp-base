@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
+@import '../../styles/variables';
 
 .receive .list-item {
   &.copy:not(.v-copied) .list-item-circle {

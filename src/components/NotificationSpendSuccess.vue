@@ -64,8 +64,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables/colors.scss';
-@import './copied.scss';
+@import '../styles/variables';
+@import 'copied';
 
 .notification-spend-success {
   .list-item-circle {

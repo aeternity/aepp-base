@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
+@import '../../styles/functions';
 
 .ledger-sign-transaction .ae-loader {
   display: block;

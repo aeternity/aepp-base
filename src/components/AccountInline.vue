@@ -31,8 +31,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables/typography.scss';
-@import './copied.scss';
+@import '../styles/variables';
+@import 'copied';
 
 .account-inline {
   &.address {

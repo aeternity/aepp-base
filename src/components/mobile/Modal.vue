@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
+@import '../../styles/variables';
 
 .modal-mobile {
   background-color: rgba($color-neutral-positive-2, 0.8);

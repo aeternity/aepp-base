@@ -66,9 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/fallback/variables.scss';
+@import '../../styles/typography';
 
 .tooltip {
   position: fixed;

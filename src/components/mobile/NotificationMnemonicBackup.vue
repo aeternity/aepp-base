@@ -50,8 +50,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/typography';
 
 .notification-mnemonic-backup .list-item-circle {
   @extend %face-sans-l;

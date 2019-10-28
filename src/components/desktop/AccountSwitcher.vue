@@ -84,8 +84,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/functions';
 
 .account-switcher {
   flex-grow: 1;

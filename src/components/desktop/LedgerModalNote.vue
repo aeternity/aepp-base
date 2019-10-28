@@ -23,8 +23,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/typography';
 
 .ledger-modal-note {
   margin-left: rem(70px);

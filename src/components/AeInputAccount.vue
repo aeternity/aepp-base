@@ -150,7 +150,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/globals/functions.scss';
+@import '../styles/functions';
 
 .ae-input-address .ae-identicon {
   height: rem(20px);

@@ -20,8 +20,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/globals/functions.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/functions';
 
 .sidebar-modal.overlay {
   $width: rem(390px);

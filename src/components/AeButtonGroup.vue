@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/variables/colors.scss';
+@import '../styles/variables';
 
 .ae-button-group {
   display: flex;

@@ -65,9 +65,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/placeholders/typography.scss';
-@import '../styles/variables/colors.scss';
-@import './copied.scss';
+@import '../styles/typography';
+@import 'copied';
 
 .ae-account.ae-card {
   div.v-copied {

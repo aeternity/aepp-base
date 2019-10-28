@@ -5,7 +5,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '../../styles/variables/colors.scss';
+@import '../../styles/variables';
 
 .step {
   text-align: center;

@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
+@import '../../styles/variables';
 
 .name-details {
   .details-item, .details-name-pointers {
