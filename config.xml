@@ -31,6 +31,9 @@
                 <string>airgap-vault</string>
             </array>
         </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="UIUserInterfaceStyle">
+            <string>Light</string>
+        </edit-config>
     </platform>
     <preference name="SplashScreen" value="screen" />
     <preference name="ShowSplashScreenSpinner" value="false" />
