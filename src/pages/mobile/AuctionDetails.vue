@@ -11,6 +11,8 @@
       {{ $t('name.details.auction-not-found') }}
     </h2>
     <template v-else>
+      <h2>{{ $tc('name.expiration', expiration - topBlockHeight) }}</h2>
+
       <h2>{{ $t('name.details.current-bid') }}</h2>
       <AeCard fill="maximum">
         <ListItemBid
@@ -37,6 +39,7 @@
 </template>
 
 <script>
+import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../lib/constants';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -57,6 +60,7 @@ export default {
     name: { type: String, required: true },
   },
   data: () => ({
+    expiration: 0,
     bids: null,
     previousRoute: null,
   }),
@@ -70,16 +74,21 @@ export default {
       return this.bids.filter(bid => bid !== this.currentBid);
     },
   },
+  subscriptions() {
+    return pick(this.$store.state.observables, ['topBlockHeight']);
+  },
   watch: {
     name: {
       async handler() {
         this.bids = null;
         if (this.$store.state.sdk.then) await this.$store.state.sdk;
-        this.bids = (await this.$store.state.sdk.middleware.getNameAuctionsBidsbyName(this.name))
-          .map(({ tx }) => ({
-            ...tx,
-            nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-          }));
+        const { info, bids } = await this.$store.state.sdk.middleware
+          .getAuctionInfoByName(this.name);
+        this.expiration = info.expiration;
+        this.bids = bids.map(({ tx }) => ({
+          ...tx,
+          nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
+        }));
       },
       immediate: true,
     },

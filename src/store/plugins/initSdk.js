@@ -124,6 +124,17 @@ export default (store) => {
       }),
       (async () => {
         const swag = await fetchJson(`${network.middlewareUrl}/middleware/api`);
+        swag.paths['/names/auctions/{name}/info'] = {
+          get: {
+            operationId: 'getAuctionInfoByName',
+            parameters: [{
+              in: 'path',
+              name: 'name',
+              required: true,
+              type: 'string',
+            }],
+          },
+        };
         return Swagger.compose({
           methods: {
             urlFor: path => network.middlewareUrl + path,
