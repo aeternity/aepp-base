@@ -1,9 +1,11 @@
 <template>
-  <MobilePage fill="neutral">
-    <Guide>
-      <em>{{ name }}</em>
-    </Guide>
-
+  <MobilePage
+    header-fill="light"
+    fill="neutral"
+    left-button-icon-name="back"
+    :left-button-to="previousRoute || { name: 'name-list', params: { view: 'ending-soonest' } }"
+    :title="name"
+  >
     <AeLoader v-if="bids === null" />
     <h2 v-else-if="bids.length === 0">
       {{ $t('name.details.auction-not-found') }}
@@ -38,7 +40,6 @@
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../lib/constants';
 import MobilePage from '../../components/mobile/Page.vue';
-import Guide from '../../components/Guide.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemBid from '../../components/mobile/ListItemBid.vue';
@@ -47,7 +48,6 @@ import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
 export default {
   components: {
     MobilePage,
-    Guide,
     AeLoader,
     AeCard,
     ListItemBid,
@@ -56,7 +56,10 @@ export default {
   props: {
     name: { type: String, required: true },
   },
-  data: () => ({ bids: null }),
+  data: () => ({
+    bids: null,
+    previousRoute: null,
+  }),
   computed: {
     currentBid() {
       if (!this.bids) return null;
@@ -80,6 +83,12 @@ export default {
       },
       immediate: true,
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      // eslint-disable-next-line no-param-reassign
+      if (from.name !== 'login') vm.previousRoute = from.path;
+    });
   },
 };
 </script>
