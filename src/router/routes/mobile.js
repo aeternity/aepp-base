@@ -261,6 +261,12 @@ export default [{
   component: NameNew,
   beforeEnter: ensureLoggedIn,
 }, {
+  name: 'name-point',
+  path: '/names/:name/point',
+  component: NameTransfer,
+  beforeEnter: ensureLoggedIn,
+  props: ({ params }) => ({ ...params, pointing: true }),
+}, {
   name: 'name-transfer',
   path: '/names/:name/transfer',
   component: NameTransfer,

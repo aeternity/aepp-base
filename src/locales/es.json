@@ -441,11 +441,23 @@
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "to-point": "Set name pointer",
       "to-transfer": "Transfer name",
       "to-transactions": "View in transactions",
       "current-bid": "Current bid",
       "previous-bids": "Previous Bids",
       "auction-not-found": "It looks like the auction you are looking for was not found."
+    },
+
+    "point": {
+      "guide": "Set pointer of name owned by <account />",
+      "subaccount": "Or point to subaccount",
+      "confirm-pointing-to-same-account": "The account you are pointing to and the account, which the name currently points to, are the same account. Are you sure you would like to complete this transaction?",
+
+      "notification":{
+        "succeed": "{name} was successfully pointed",
+        "failed": "{name} was not pointed for unknown reason"
+      }
     },
 
     "transfer": {
