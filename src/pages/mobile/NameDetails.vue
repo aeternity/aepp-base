@@ -5,27 +5,10 @@
     left-button-icon-name="back"
     :left-button-to="{ name: 'name-list-personal' }"
   >
-    <DetailsField
-      :name="$t('name.details.name')"
-      :value="details.name"
+    <DetailsList
+      :object="details"
+      :field-renderers="fieldRenderers"
     />
-    <DetailsRawData
-      :name="$t('name.details.name-hash')"
-      :data="details.nameHash"
-    />
-    <DetailsAddress
-      :name="$t('name.details.owner')"
-      :address="details.owner"
-    />
-    <DetailsField
-      :name="$t('name.details.created-at-height')"
-      :value="details.createdAtHeight"
-    />
-    <DetailsField
-      :name="$t('name.details.expires-at-height')"
-      :value="details.expiresAt"
-    />
-    <DetailsNamePointers :value="details.pointers" />
 
     <AeButton :to="{ name: 'name-transfer', params: { name } }">
       {{ $t('name.details.to-transfer') }}
@@ -41,25 +24,33 @@
 import { mapState } from 'vuex';
 import prefixedAmount from '../../filters/prefixedAmount';
 import MobilePage from '../../components/mobile/Page.vue';
-import DetailsField from '../../components/mobile/DetailsField.vue';
-import DetailsAddress from '../../components/mobile/DetailsAddress.vue';
-import DetailsRawData from '../../components/mobile/DetailsRawData.vue';
+import DetailsList from '../../components/mobile/DetailsList.vue';
+import {
+  Name, NameId, OwnerId, CreatedAtHeight, ExpiresAtHeight,
+} from '../../components/mobile/details-fields';
 import DetailsNamePointers from '../../components/mobile/DetailsNamePointers.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
     MobilePage,
-    DetailsField,
-    DetailsAddress,
-    DetailsRawData,
-    DetailsNamePointers,
+    DetailsList,
     AeButton,
   },
   filters: { prefixedAmount },
   props: {
     name: { type: String, required: true },
   },
+  data: () => ({
+    fieldRenderers: {
+      name: Name,
+      nameHash: NameId,
+      owner: OwnerId,
+      createdAtHeight: CreatedAtHeight,
+      expiresAt: ExpiresAtHeight,
+      pointers: DetailsNamePointers,
+    },
+  }),
   computed: mapState('names', {
     details({ owned }) {
       return owned.find(({ name }) => name === this.name);
@@ -72,13 +63,13 @@ export default {
 @import '../../styles/variables';
 
 .name-details {
-  .details-item, .details-name-pointers {
-    &:first-child {
-      border-top: none;
-    }
-
+  .details-list {
     --color-primary: #{$color-neutral-negative-3};
     --color-secondary: #{$color-neutral-negative-1};
+
+    /deep/ .details-item:first-child {
+      border-top: none;
+    }
   }
 }
 </style>

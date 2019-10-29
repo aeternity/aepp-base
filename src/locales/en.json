@@ -438,7 +438,6 @@
     "details": {
       "title": "Name details",
       "name": "Name",
-      "name-hash": "Name hash",
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
