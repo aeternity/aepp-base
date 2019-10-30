@@ -177,6 +177,11 @@ export default {
           margin-top: rem(15px);
           color: $color-neutral;
         }
+
+        .ae-loader {
+          display: block;
+          margin: rem(60px) auto;
+        }
       }
     }
   }

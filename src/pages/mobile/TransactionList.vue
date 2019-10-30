@@ -154,11 +154,6 @@ export default {
     }
   }
 
-  .ae-loader {
-    display: block;
-    margin: rem(60px) auto;
-  }
-
   .no-transactions {
     margin-top: rem(10px);
     @extend %face-sans-base;
