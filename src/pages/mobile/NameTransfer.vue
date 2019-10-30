@@ -88,13 +88,13 @@ export default {
   data: () => ({ accountTo: '', busy: false }),
   computed: {
     ...mapState('names', {
-      nameRecord({ owned }) {
+      nameEntry({ owned }) {
         return owned.find(({ name }) => name === this.name);
       },
     }),
     ...mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
     currentAccountAddress() {
-      return this.pointing ? getAddressByNameEntry(this.nameRecord) : this.activeAccount.address;
+      return this.pointing ? getAddressByNameEntry(this.nameEntry) : this.activeAccount.address;
     },
   },
   subscriptions() {
@@ -108,7 +108,7 @@ export default {
   mounted() {
     const initialAccountIdx = this.$store.state.accounts.activeIdx;
     const requredAccountIdx = this.$store.state.accounts.list
-      .findIndex(({ address }) => address === this.nameRecord.owner);
+      .findIndex(({ address }) => address === this.nameEntry.owner);
     if (initialAccountIdx !== requredAccountIdx) {
       this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
       this.$once('hook:destroyed', () => this.$store
@@ -134,7 +134,7 @@ export default {
       try {
         await this.$store.state.sdk[
           `aens${this.pointing ? 'Update' : 'Transfer'}`
-        ](this.nameRecord.nameHash, this.accountTo);
+        ](this.nameEntry.nameHash, this.accountTo);
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: this.pointing
