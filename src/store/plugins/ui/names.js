@@ -49,9 +49,9 @@ export default (store) => {
       }, address) {
         if (state.names[address]) return;
         commit('set', { address });
+        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         const height = await dispatch('getHeight');
-        const names = (await rootState.sdk.middleware
-          .getNameByAddress(address))
+        const names = (await sdk.middleware.getNameByAddress(address))
           .filter(({ expiresAt }) => expiresAt > height);
         if (names.length) commit('set', { address, name: removeTopDomain(names[0].name) });
       },
