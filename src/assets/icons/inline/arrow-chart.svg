@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 18 19" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>arrow</title>
+    <desc>Created with Sketch.</desc>
+    <g stroke="currentColor" stroke-width="1.5" stroke-linecap="square" fill="none" fill-rule="evenodd" transform="translate(1, -5.5)">
+        <path d="M0.5,7 L0.5,22" id="Line-3" />
+        <path d="M8,15.5 L8,30.5" id="Line-3" transform="translate(8.000000, 23.000000) rotate(-90.000000) translate(-8.000000, -23.000000) "/>
+        <g transform="translate(5.914214, 9.500000)">
+            <path d="M5.08578644,-1 L5.08578644,2" id="Line-3" transform="translate(5.085786, 0.500000) rotate(-90.000000) translate(-5.085786, -0.500000) " />
+            <path d="M3.5,0.585786438 L3.5,7.58578644" id="Line-3" transform="translate(3.500000, 4.085786) rotate(225.000000) translate(-3.500000, -4.085786) " />
+            <path d="M7.08578644,0.5 L7.08578644,4" id="Line-3" transform="translate(7.085786, 2.250000) rotate(0.000000) translate(-7.085786, -2.250000) " />
+        </g>
+    </g>
+</svg>

@@ -63,7 +63,7 @@
     "mnemonic": "Frase de recuperación no válida",
     "url_http": "Este campo no es una URL HTTP(S) válida",
     "air_gap_response_url": "Este no es un código de sincronización válido",
-    "aens_name": "Este campo debe terminar con .test",
+    "aens_name": "This field must not contain dots",
     "aens_name_unregistered": "Este nombre ya está registrado",
     "account": "Dirección AE o nombre AENS no válidos"
   },
@@ -422,10 +422,16 @@
 
   "name": {
     "title": "Nombres",
+    "expiration": "Expires in {n} blocks | Expires in {n} block | Expires in {n} blocks",
 
     "list": {
-      "note": "¡Reclama un nombre para tu cuenta!",
-      "explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
+      "ending-soonest-note": "Auctions Ending Soonest",
+      "character-length-note": "Auctions by Character Length",
+      "max-bid-note": "Auctions by Bid",
+      "personal-note": "¡Reclama un nombre para tu cuenta!",
+      "personal-explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
+      "auctions-not-supported": "Auctions are not supported by the current network.",
+      "no-auctions": "There are no auctions matching these criteria.",
       "registered": "Nombres registrados"
     },
 
@@ -437,7 +443,10 @@
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
       "to-transfer": "Transfer name",
-      "to-transactions": "View in transactions"
+      "to-transactions": "View in transactions",
+      "current-bid": "Current bid",
+      "previous-bids": "Previous Bids",
+      "auction-not-found": "It looks like the auction you are looking for was not found."
     },
 
     "transfer": {
@@ -455,7 +464,7 @@
       "guide": "<primary>Reclama un nombre</primary> para <inlineAccount />",
       "unknown-error": "Error desconocido",
       "name": "Nombre",
-      "name-placeholder": "Name.test",
+      "name-placeholder": "Name",
       "register": "Registrarse",
 
       "notification": {

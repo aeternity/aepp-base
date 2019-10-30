@@ -19,7 +19,11 @@ export const defaultNetwork = genNetwork('Fortuna-net', {
   explorerUrl: getExplorerUrl(),
 });
 
-const testNetwork = genNetwork('Testnet', { compilerUrl: 'https://latest.compiler.aepps.com' });
+const testNetwork = genNetwork('Testnet', {
+  url: 'https://node.testnet.aeternal.io',
+  middlewareUrl: 'https://testnet.aeternal.io',
+  compilerUrl: 'https://latest.compiler.aepps.com',
+});
 
 export default Object.freeze((process.env.NODE_ENV === 'production' ? [
   defaultNetwork,

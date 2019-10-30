@@ -2,6 +2,8 @@
 
 export { default as Active } from '../assets/icons/inline/active.svg?icon-component';
 export { default as AddContact } from '../assets/icons/inline/add-contact.svg?icon-component';
+export { default as ArrowChart } from '../assets/icons/inline/arrow-chart.svg?icon-component';
+export { default as ArrowDouble } from '../assets/icons/inline/arrow-double.svg?icon-component';
 export { default as Back } from '../assets/icons/inline/back.svg?icon-component';
 export { default as Bold } from '../assets/icons/inline/bold.svg?icon-component';
 export { default as BookmarkFull } from '../assets/icons/inline/bookmark-full.svg?icon-component';
@@ -11,6 +13,7 @@ export { default as Camera } from '../assets/icons/inline/camera.svg?icon-compon
 export { default as Card } from '../assets/icons/inline/card.svg?icon-component';
 export { default as Chat } from '../assets/icons/inline/chat.svg?icon-component';
 export { default as Check } from '../assets/icons/inline/check.svg?icon-component';
+export { default as Clock } from '../assets/icons/inline/clock.svg?icon-component';
 export { default as Close } from '../assets/icons/inline/close.svg?icon-component';
 export { default as CloseCircle } from '../assets/icons/inline/close-circle.svg?icon-component';
 export { default as Contacts } from '../assets/icons/inline/contacts.svg?icon-component';

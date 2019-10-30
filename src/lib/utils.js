@@ -32,3 +32,10 @@ export class DOMRect {
 
   get bottom() { return this.top + this.height; }
 }
+
+export const removeTopDomain = name => name.replace(/\.[^.]*$/, '');
+
+export const isAensAuctionsSupported = nodeInfo => nodeInfo.consensusProtocolVersion >= 4
+  && nodeInfo.version.startsWith('5.') && nodeInfo.version !== '5.0.0-rc.1';
+
+export const getAensDomain = nodeInfo => (isAensAuctionsSupported(nodeInfo) ? '.chain' : '.test');
