@@ -241,18 +241,21 @@ export default [{
   component: NameListPersonal,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-list',
-  path: '/names/:view?/:page?',
-  component: NameList,
-  beforeEnter: mergeEnterHandlers(
-    ensureLoggedIn,
-    (to, from, next) => next(!to.params.view ? { name: 'name-list-personal' } : undefined),
-  ),
-  props: ({ params: { view, page } }) => ({ view, page: page && +page }),
-}, {
   name: 'name-details',
-  path: '/names/:name',
+  path: '/names/personal/:name',
   component: NameDetails,
+  beforeEnter: ensureLoggedIn,
+  props: true,
+}, {
+  name: 'name-point',
+  path: '/names/personal/:name/point',
+  component: NameTransfer,
+  beforeEnter: ensureLoggedIn,
+  props: ({ params }) => ({ ...params, pointing: true }),
+}, {
+  name: 'name-transfer',
+  path: '/names/personal/:name/transfer',
+  component: NameTransfer,
   beforeEnter: ensureLoggedIn,
   props: true,
 }, {
@@ -261,17 +264,14 @@ export default [{
   component: NameNew,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-point',
-  path: '/names/:name/point',
-  component: NameTransfer,
-  beforeEnter: ensureLoggedIn,
-  props: ({ params }) => ({ ...params, pointing: true }),
-}, {
-  name: 'name-transfer',
-  path: '/names/:name/transfer',
-  component: NameTransfer,
-  beforeEnter: ensureLoggedIn,
-  props: true,
+  name: 'name-list',
+  path: '/names/:view?/:page?',
+  component: NameList,
+  beforeEnter: mergeEnterHandlers(
+    ensureLoggedIn,
+    (to, from, next) => next(!to.params.view ? { name: 'name-list-personal' } : undefined),
+  ),
+  props: ({ params: { view, page } }) => ({ view, page: page && +page }),
 }, {
   name: 'settings',
   path: '/settings',
