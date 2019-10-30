@@ -41,6 +41,6 @@ describe('Transfer: Send tokens', () => {
       .then(oldBalance => cy
         .get('.ae-account .balance')
         .invoke('text')
-        .should('not.equal', oldBalance));
+        .should('not.equal', oldBalance, { timeout: 12000 }));
   });
 });
