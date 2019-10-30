@@ -253,6 +253,7 @@ export default {
             .shiftedBy(MAGNITUDE),
         },
         OBJECT_ID_TX_TYPE[txObject.tag],
+        { vsn: txObject.VSN },
       ).rlpEncoded;
     },
 
