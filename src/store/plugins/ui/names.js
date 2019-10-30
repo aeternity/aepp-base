@@ -36,14 +36,13 @@ export default (store) => {
       },
     },
     actions: {
-      getHeight({ rootState }) {
-        return new Promise((resolve) => {
-          const subscription = rootState.observables.topBlockHeight.subscribe((h) => {
-            if (h === 0) return;
-            resolve(h);
-            subscription.unsubscribe();
-          });
+      async getHeight({ rootState }) {
+        let subscription;
+        const height = await new Promise((resolve) => {
+          subscription = rootState.observables.topBlockHeight.subscribe(h => h !== 0 && resolve(h));
         });
+        subscription.unsubscribe();
+        return height;
       },
       async fetch({
         rootState, state, commit, dispatch,
