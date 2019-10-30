@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Vue from 'vue';
 import {
-  handleUnknownError, isAccountNotFoundError, removeTopDomain, getAensDomain,
+  handleUnknownError, isAccountNotFoundError, removeTopDomain, getAensDomain, getAddressByNameEntry,
 } from '../../../lib/utils';
 
 export default (store) => {
@@ -36,60 +36,56 @@ export default (store) => {
       },
     },
     actions: {
-      async fetch({ rootState, state, commit }, address) {
+      async getHeight({ rootState }) {
+        let subscription;
+        const height = await new Promise((resolve) => {
+          subscription = rootState.observables.topBlockHeight.subscribe(h => h !== 0 && resolve(h));
+        });
+        subscription.unsubscribe();
+        return height;
+      },
+      async fetch({
+        rootState, state, commit, dispatch,
+      }, address) {
         if (state.names[address]) return;
         commit('set', { address });
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-        const names = await sdk.middleware
-          .getActiveNames({ owner: address, limit: 1, page: 1 });
+        const height = await dispatch('getHeight');
+        const names = (await sdk.middleware.getNameByAddress(address))
+          .filter(({ expiresAt }) => expiresAt > height);
         if (names.length) commit('set', { address, name: removeTopDomain(names[0].name) });
       },
       async fetchOwned({ rootState, commit }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         commit(
           'setOwned',
-          (await Promise.all(rootState.accounts.list.map(async ({ address }) => {
-            const names = (await Promise.all([
-              (async () => (await sdk.api.getPendingAccountTransactionsByPubkey(address)
-                .catch((error) => {
-                  if (!isAccountNotFoundError(error)) {
-                    handleUnknownError(error);
-                  }
-                  return { transactions: [] };
-                }))
-                .transactions
+          (await Promise.all(rootState.accounts.list.map(({ address }) => Promise.all([
+            sdk.api.getPendingAccountTransactionsByPubkey(address)
+              .then(({ transactions }) => transactions
                 .filter(({ tx: { type } }) => type === 'NameClaimTx')
                 .map(({ tx, ...otherTx }) => ({
                   ...otherTx,
                   ...tx,
                   pending: true,
                   owner: tx.accountId,
-                })))(),
-              sdk.middleware.getActiveNames({ owner: address }),
-            ]))
-              .flat()
-              .map(({ name, ...other }) => ({ ...other, name: removeTopDomain(name) }));
-
-            commit('set', {
-              address,
-              ...names.length && { name: names[0].name },
-            });
-            return names;
-          }))).flat(),
+                })))
+              .catch((error) => {
+                if (!isAccountNotFoundError(error)) {
+                  handleUnknownError(error);
+                }
+                return [];
+              }),
+            sdk.middleware.getActiveNames({ owner: address }),
+          ]))))
+            .flat(2)
+            .map(({ name, ...other }) => ({ ...other, name: removeTopDomain(name) })),
         );
       },
       async fetchName({ rootState, commit }, name) {
-        const height = await new Promise((resolve) => {
-          const subscription = rootState.observables.topBlockHeight.subscribe((h) => {
-            if (h === 0) return;
-            resolve(h);
-            subscription.unsubscribe();
-          });
-        });
-        const { owner: address } = (await rootState.sdk.middleware
-          .namesSearchGet(name + getAensDomain(rootState.sdk.getNodeInfo())))
-          .filter(({ expiresAt }) => expiresAt > height)
-          .find(nameDetails => nameDetails.name === name);
+        const address = getAddressByNameEntry(
+          await rootState.sdk.api
+            .getNameEntryByName(name + getAensDomain(rootState.sdk.getNodeInfo())),
+        );
         commit('set', { address, name });
         return address;
       },
