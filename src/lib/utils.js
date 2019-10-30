@@ -39,3 +39,6 @@ export const isAensAuctionsSupported = nodeInfo => nodeInfo.consensusProtocolVer
   && nodeInfo.version.startsWith('5.') && nodeInfo.version !== '5.0.0-rc.1';
 
 export const getAensDomain = nodeInfo => (isAensAuctionsSupported(nodeInfo) ? '.chain' : '.test');
+
+export const getAddressByNameEntry = nameEntry => ((nameEntry.pointers
+  && nameEntry.pointers.find(({ key }) => key === 'account_pubkey')) || {}).id;

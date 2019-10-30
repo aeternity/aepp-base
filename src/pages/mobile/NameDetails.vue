@@ -10,6 +10,10 @@
       :field-renderers="fieldRenderers"
     />
 
+    <AeButton :to="{ name: 'name-point', params: { name } }">
+      {{ $t('name.details.to-point') }}
+    </AeButton>
+
     <AeButton :to="{ name: 'name-transfer', params: { name } }">
       {{ $t('name.details.to-transfer') }}
     </AeButton>
