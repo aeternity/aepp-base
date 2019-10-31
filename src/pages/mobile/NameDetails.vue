@@ -57,7 +57,7 @@ export default {
   }),
   computed: mapState('names', {
     details({ owned }) {
-      return owned.find(({ name }) => name === this.name);
+      return owned && owned.names.find(({ name }) => name === this.name);
     },
   }),
 };
