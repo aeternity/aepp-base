@@ -25,8 +25,8 @@
         <h2>{{ $t('name.details.previous-bids') }}</h2>
         <AeCard fill="maximum">
           <ListItemBid
-            v-for="bid in previousBids"
-            :key="bid.accountId"
+            v-for="(bid, idx) in previousBids"
+            :key="`${idx}-${bid.accountId}`"
             v-bind="bid"
             inactive
           />
