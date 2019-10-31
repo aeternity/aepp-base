@@ -28,3 +28,6 @@ const toMicro = value => value.shiftedBy(-MAGNITUDE_MICRO).toFixed();
 
 export const MIN_SPEND_TX_FEE_MICRO = toMicro(MIN_SPEND_TX_FEE);
 export const MAX_REASONABLE_FEE_MICRO = toMicro(MAX_REASONABLE_FEE);
+
+export const AENS_DOMAIN = '.chain';
+export const MAX_AUCTION_NAME_LENGTH = 12 + AENS_DOMAIN.length;

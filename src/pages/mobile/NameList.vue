@@ -27,10 +27,7 @@
       </div>
     </template>
 
-    <h2 v-if="!isAuctionsSupported">
-      {{ $t('name.list.auctions-not-supported') }}
-    </h2>
-    <AeLoader v-else-if="auctions === null" />
+    <AeLoader v-if="auctions === null" />
     <h2 v-else-if="auctions.length === 0">
       {{ $t('name.list.no-auctions') }}
     </h2>
@@ -72,8 +69,7 @@
 
 <script>
 import { pick, times } from 'lodash-es';
-import { mapState } from 'vuex';
-import { isAensAuctionsSupported, getAensDomain } from '../../lib/utils';
+import { AENS_DOMAIN } from '../../lib/constants';
 import MobilePage from '../../components/mobile/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import ButtonFlat from '../../components/mobile/ButtonFlat.vue';
@@ -130,19 +126,14 @@ export default {
         }),
       }));
     },
-    ...mapState({
-      isAuctionsSupported: ({ sdk }) => sdk && !sdk.then
-        && isAensAuctionsSupported(sdk.getNodeInfo()),
-    }),
   },
   subscriptions() {
     return pick(this.$store.state.observables, ['topBlockHeight']);
   },
   async mounted() {
     this.$watch(
-      state => pick(state, ['view', 'page', 'length', 'isAuctionsSupported']),
+      state => pick(state, ['view', 'page', 'length']),
       ({ view, page, length }) => {
-        if (!this.isAuctionsSupported) return;
         this.fetchAuctions({
           page,
           ...{
@@ -158,8 +149,7 @@ export default {
   methods: {
     times,
     async fetchAuctions({ page, sort, length: lengthWithoutDomain }) {
-      const length = lengthWithoutDomain
-        + getAensDomain(this.$store.state.sdk.getNodeInfo()).length;
+      const length = lengthWithoutDomain + AENS_DOMAIN.length;
       this.auctions = null;
       const [auctions, { count }] = await Promise.all([
         this.$store.state.sdk.middleware.getActiveNameAuctions({

@@ -1,5 +1,4 @@
 import { Crypto } from '@aeternity/aepp-sdk/es';
-import { removeTopDomain } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';
@@ -46,7 +45,7 @@ export const NameEncoded = {
   render: (createElement, { props: { value } }) => createElement(DetailsField, {
     attrs: {
       name: i18n.t('name.details.name'),
-      value: removeTopDomain(Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString()),
+      value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString(),
     },
   }),
 };

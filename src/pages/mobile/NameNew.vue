@@ -30,7 +30,6 @@
           name="name"
           :header="$t('name.new.name')"
           :placeholder="$t('name.new.name-placeholder')"
-          maxlength="16"
           @input="error = false"
         />
       </form>
@@ -48,7 +47,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { handleUnknownError, isAensAuctionsSupported, getAensDomain } from '../../lib/utils';
+import { MAX_AUCTION_NAME_LENGTH } from '../../lib/constants';
+import { handleUnknownError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -73,13 +73,9 @@ export default {
       let claimTxHash;
 
       try {
-        const name = this.name + getAensDomain(this.$store.state.sdk.getNodeInfo());
-        const { salt } = await this.$store.state.sdk.aensPreclaim(name);
+        const { salt } = await this.$store.state.sdk.aensPreclaim(this.name);
         claimTxHash = (
-          await this.$store.state.sdk.aensClaim(name, salt, {
-            waitMined: false,
-            vsn: isAensAuctionsSupported(this.$store.state.sdk.getNodeInfo()) ? 2 : 1,
-          })
+          await this.$store.state.sdk.aensClaim(this.name, salt, { waitMined: false })
         ).hash;
 
         this.$store.dispatch('modals/open', {
@@ -98,6 +94,12 @@ export default {
       try {
         this.$store.dispatch('names/fetchOwned');
         await this.$store.state.sdk.poll(claimTxHash);
+        if (MAX_AUCTION_NAME_LENGTH < this.name.length) {
+          await this.$store.state.sdk.aensUpdate(
+            (await this.$store.state.sdk.api.getNameEntryByName(this.name)).id,
+            this.$store.getters['accounts/active'].address,
+          );
+        }
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: i18n.t('name.new.notification.registered', { name: this.name }),

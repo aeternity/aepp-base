@@ -1,8 +1,9 @@
 import { get } from 'lodash-es';
+import { AENS_DOMAIN } from './constants';
 
 export const toUrl = url => new URL((/^\w+:\//.test(url) ? '' : 'http://') + url);
 
-export const isAensName = value => !value.includes('.');
+export const isAensName = value => value.endsWith(AENS_DOMAIN);
 
 // eslint-disable-next-line no-console
 export const handleUnknownError = error => console.warn('Unknown rejection', error);
@@ -32,13 +33,6 @@ export class DOMRect {
 
   get bottom() { return this.top + this.height; }
 }
-
-export const removeTopDomain = name => name.replace(/\.[^.]*$/, '');
-
-export const isAensAuctionsSupported = nodeInfo => nodeInfo.consensusProtocolVersion >= 4
-  && nodeInfo.version.startsWith('5.') && nodeInfo.version !== '5.0.0-rc.1';
-
-export const getAensDomain = nodeInfo => (isAensAuctionsSupported(nodeInfo) ? '.chain' : '.test');
 
 export const getAddressByNameEntry = nameEntry => ((nameEntry.pointers
   && nameEntry.pointers.find(({ key }) => key === 'account_pubkey')) || {}).id;
