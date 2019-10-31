@@ -5,12 +5,12 @@
     <h2>{{ $t('name.list.personal-note') }}</h2>
     <p>{{ $t('name.list.personal-explanation') }}</p>
 
-    <template v-if="owned.length">
+    <template v-if="owned && owned.names.length">
       <h2>{{ $t('name.list.registered') }}</h2>
       <AeCard fill="maximum">
         <ListItemAccount
-          v-for="name in owned"
-          :key="`${name.name}-${name.id}`"
+          v-for="name in owned.names"
+          :key="name.name"
           :address="name.owner"
           :name="name.name"
           :to="{ name: 'name-details', params: { name: name.name } }"
@@ -21,6 +21,20 @@
             slot="right"
           />
         </ListItemAccount>
+      </AeCard>
+    </template>
+
+    <template v-if="owned && owned.bids.length">
+      <h2>Active Bids</h2>
+      <AeCard fill="maximum">
+        <ListItemAccount
+          v-for="bid in owned.bids"
+          :key="bid.transaction.hash"
+          :name="bid.nameAuctionEntry.name"
+          :balance="bid.transaction.tx.nameFee"
+          :address="bid.transaction.tx.accountId"
+          :to="{ name: 'auction-details', params: { name: bid.nameAuctionEntry.name } }"
+        />
       </AeCard>
     </template>
 
