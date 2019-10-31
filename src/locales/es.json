@@ -9,6 +9,7 @@
   "copied": "Copiado",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "Base æpp actualmente solo puede funcionar cuando se abre en una sola pestaña del navegador. Si tiene instancias adicionales (pestañas) de Base æpp abiertas, ciérrelas",
+  "blocks": "{n} blocks | {n} block | {n} blocks",
 
   "add-to-home-screen": {
     "note": "Agregue esta aplicación a la pantalla de inicio",
@@ -63,7 +64,7 @@
     "mnemonic": "Frase de recuperación no válida",
     "url_http": "Este campo no es una URL HTTP(S) válida",
     "air_gap_response_url": "Este no es un código de sincronización válido",
-    "aens_name": "Este campo debe terminar con .test",
+    "aens_name": "This field must ends with .chain",
     "aens_name_unregistered": "Este nombre ya está registrado",
     "account": "Dirección AE o nombre AENS no válidos"
   },
@@ -422,22 +423,41 @@
 
   "name": {
     "title": "Nombres",
+    "expiration": "Expires in {n} blocks | Expires in {n} block | Expires in {n} blocks",
 
     "list": {
-      "note": "¡Reclama un nombre para tu cuenta!",
-      "explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
+      "ending-soonest-note": "Auctions Ending Soonest",
+      "character-length-note": "Auctions by Character Length",
+      "max-bid-note": "Auctions by Bid",
+      "personal-note": "¡Reclama un nombre para tu cuenta!",
+      "personal-explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
+      "no-auctions": "There are no auctions matching these criteria.",
       "registered": "Nombres registrados"
     },
 
     "details": {
       "title": "Name details",
       "name": "Name",
-      "name-hash": "Name hash",
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "to-point": "Set name pointer",
       "to-transfer": "Transfer name",
-      "to-transactions": "View in transactions"
+      "to-transactions": "View in transactions",
+      "current-bid": "Current bid",
+      "previous-bids": "Previous Bids",
+      "auction-not-found": "It looks like the auction you are looking for was not found."
+    },
+
+    "point": {
+      "guide": "Set pointer of name owned by <account />",
+      "subaccount": "Or point to subaccount",
+      "confirm-pointing-to-same-account": "The account you are pointing to and the account, which the name currently points to, are the same account. Are you sure you would like to complete this transaction?",
+
+      "notification":{
+        "succeed": "{name} was successfully pointed",
+        "failed": "{name} was not pointed for unknown reason"
+      }
     },
 
     "transfer": {
@@ -451,11 +471,17 @@
       }
     },
 
+    "bid": {
+      "guide": "Bid on <primary><name /></primary>",
+      "highest-bid": "Current highest bid",
+      "remaining-time": "Remaining time"
+    },
+
     "new": {
       "guide": "<primary>Reclama un nombre</primary> para <inlineAccount />",
       "unknown-error": "Error desconocido",
       "name": "Nombre",
-      "name-placeholder": "Name.test",
+      "name-placeholder": "Name.chain",
       "register": "Registrarse",
 
       "notification": {

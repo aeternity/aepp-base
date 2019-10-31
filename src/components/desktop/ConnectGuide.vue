@@ -108,8 +108,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/functions';
 
 .connect-guide {
   margin: rem(40px) rem(40px);

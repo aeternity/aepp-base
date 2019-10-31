@@ -84,9 +84,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/fallback/mixins.scss';
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/mixins';
+@import '../../styles/typography';
 
 .mobile-page {
   flex-grow: 1;
@@ -177,6 +176,11 @@ export default {
         p {
           margin-top: rem(15px);
           color: $color-neutral;
+        }
+
+        .ae-loader {
+          display: block;
+          margin: rem(60px) auto;
         }
       }
     }

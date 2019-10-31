@@ -8,7 +8,7 @@
   >
     <template slot="header">
       <Guide
-        :template="$t('name.transfer.guide')"
+        :template="pointing ? $t('name.point.guide') : $t('name.transfer.guide')"
         fill="neutral"
       >
         <AccountInline
@@ -41,12 +41,12 @@
       <AeLoader v-if="busy" /> {{ $t('next') }}
     </AeButton>
 
-    <template v-if="!busy && inactiveAccounts.length">
+    <template v-if="!busy && accountsToChoose.length">
       <div class="own-account">
-        {{ $t('name.transfer.subaccount') }}
+        {{ pointing ? $t('name.point.subaccount') : $t('name.transfer.subaccount') }}
       </div>
       <ListItemAccount
-        v-for="account in inactiveAccounts"
+        v-for="account in accountsToChoose"
         :key="account.address"
         border-dark
         v-bind="account"
@@ -59,9 +59,8 @@
 </template>
 
 <script>
-import { pick } from 'lodash-es';
 import { mapState, mapGetters } from 'vuex';
-import { handleUnknownError } from '../../lib/utils';
+import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
@@ -83,24 +82,33 @@ export default {
     LeftMore,
   },
   props: {
+    pointing: Boolean,
     name: { type: String, required: true },
   },
   data: () => ({ accountTo: '', busy: false }),
   computed: {
     ...mapState('names', {
-      nameRecord({ owned }) {
-        return owned.find(({ name }) => name === this.name);
+      nameEntry({ owned }) {
+        return owned && owned.names.find(({ name }) => name === this.name);
       },
     }),
     ...mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
+    currentAccountAddress() {
+      return this.pointing ? getAddressByNameEntry(this.nameEntry) : this.activeAccount.address;
+    },
   },
   subscriptions() {
-    return pick(this.$store.state.observables, ['inactiveAccounts']);
+    return {
+      accountsToChoose: this.$store.state.observables.getAccounts(
+        ({ accounts: { list } }) => list
+          .filter(({ address }) => address !== this.currentAccountAddress),
+      ),
+    };
   },
   mounted() {
     const initialAccountIdx = this.$store.state.accounts.activeIdx;
     const requredAccountIdx = this.$store.state.accounts.list
-      .findIndex(({ address }) => address === this.nameRecord.owner);
+      .findIndex(({ address }) => address === this.nameEntry.owner);
     if (initialAccountIdx !== requredAccountIdx) {
       this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
       this.$once('hook:destroyed', () => this.$store
@@ -114,25 +122,33 @@ export default {
     },
     async transfer() {
       if (!await this.$validator.validateAll()) return;
-      if (this.activeAccount.address === this.accountTo) {
+      if (this.currentAccountAddress === this.accountTo) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
-          text: this.$t('name.transfer.confirm-transfering-to-same-account'),
+          text: this.pointing
+            ? this.$t('name.point.confirm-pointing-to-same-account')
+            : this.$t('name.transfer.confirm-transfering-to-same-account'),
         });
       }
       this.busy = true;
       try {
-        await this.$store.state.sdk.aensTransfer(this.nameRecord.nameHash, this.accountTo);
+        await this.$store.state.sdk[
+          `aens${this.pointing ? 'Update' : 'Transfer'}`
+        ](this.nameEntry.nameHash, this.accountTo);
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: this.$t('name.transfer.notification.succeed', { name: this.name }),
+          text: this.pointing
+            ? this.$t('name.point.notification.succeed', { name: this.name })
+            : this.$t('name.transfer.notification.succeed', { name: this.name }),
         });
         this.$router.push({ name: 'name-details', params: { name: this.name } });
       } catch (e) {
         if (e.message === 'Rejected by user') return;
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: this.$t('name.transfer.notification.failed', { name: this.name }),
+          text: this.pointing
+            ? this.$t('name.point.notification.failed', { name: this.name })
+            : this.$t('name.transfer.notification.failed', { name: this.name }),
         });
         handleUnknownError(e);
       } finally {
@@ -144,8 +160,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/typography';
 
 .name-transfer {
   .ae-button .ae-loader {

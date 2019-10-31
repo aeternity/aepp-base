@@ -45,8 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables/colors.scss';
-@import '../styles/placeholders/typography.scss';
+@import '../styles/typography';
 
 .ae-textarea textarea {
   display: block;

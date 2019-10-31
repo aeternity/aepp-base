@@ -27,8 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/typography';
 
 .details-field code {
   @extend %face-mono-base;

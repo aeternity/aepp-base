@@ -123,8 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/functions';
 
 .send {
   .ae-input-wrapper {

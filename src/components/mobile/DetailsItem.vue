@@ -5,8 +5,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/functions';
 
 .details-item {
   padding: rem(16px) 0;

@@ -1,3 +1,4 @@
+import { merge } from 'lodash-es';
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
 import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
@@ -24,6 +25,9 @@ import SendConfirm from '../../pages/mobile/SendConfirm.vue';
 import TransactionList from '../../pages/mobile/TransactionList.vue';
 import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
 import NameList from '../../pages/mobile/NameList.vue';
+import AuctionDetails from '../../pages/mobile/AuctionDetails.vue';
+import AuctionBid from '../../pages/mobile/AuctionBid.vue';
+import NameListPersonal from '../../pages/mobile/NameListPersonal.vue';
 import NameDetails from '../../pages/mobile/NameDetails.vue';
 import NameNew from '../../pages/mobile/NameNew.vue';
 import NameTransfer from '../../pages/mobile/NameTransfer.vue';
@@ -212,27 +216,75 @@ export default [{
   component: RedeemBalance,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-list',
-  path: '/names',
+  name: 'name-list-character-length',
+  path: '/names/character-length/:length?/:page?',
   component: NameList,
+  beforeEnter: mergeEnterHandlers(
+    ensureLoggedIn,
+    (to, from, next) => next(
+      !to.params.length ? merge({}, to, { params: { length: 1 } }) : undefined,
+    ),
+  ),
+  props: ({ params: { length, page } }) => ({
+    length: length && +length,
+    page: page && +page,
+    view: 'character-length',
+  }),
+}, {
+  name: 'auction-details',
+  path: '/names/auction/:name',
+  component: AuctionDetails,
+  beforeEnter: ensureLoggedIn,
+  props: true,
+}, {
+  name: 'name-list-personal',
+  path: '/names/personal',
+  component: NameListPersonal,
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'name-details',
-  path: '/names/:name',
+  path: '/names/personal/:name',
   component: NameDetails,
   beforeEnter: ensureLoggedIn,
   props: true,
+}, {
+  name: 'name-point',
+  path: '/names/personal/:name/point',
+  component: NameTransfer,
+  beforeEnter: ensureLoggedIn,
+  props: ({ params }) => ({ ...params, pointing: true }),
+}, {
+  name: 'name-transfer',
+  path: '/names/personal/:name/transfer',
+  component: NameTransfer,
+  beforeEnter: ensureLoggedIn,
+  props: true,
+}, {
+  name: 'auction-bid',
+  path: '/names/bid/:name?',
+  component: AuctionBid,
+  beforeEnter: ensureLoggedIn,
+  props: true,
+}, {
+  name: 'auction-bid-amount',
+  path: '/names/bid/:name/amount',
+  component: AuctionBid,
+  beforeEnter: ensureLoggedIn,
+  props: ({ params }) => ({ ...params, amountStep: true }),
 }, {
   name: 'name-new',
   path: '/names/new',
   component: NameNew,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-transfer',
-  path: '/names/:name/transfer',
-  component: NameTransfer,
-  beforeEnter: ensureLoggedIn,
-  props: true,
+  name: 'name-list',
+  path: '/names/:view?/:page?',
+  component: NameList,
+  beforeEnter: mergeEnterHandlers(
+    ensureLoggedIn,
+    (to, from, next) => next(!to.params.view ? { name: 'name-list-personal' } : undefined),
+  ),
+  props: ({ params: { view, page } }) => ({ view, page: page && +page }),
 }, {
   name: 'settings',
   path: '/settings',

@@ -89,9 +89,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
-@import '../../styles/fallback/variables.scss';
+@import '../../styles/typography';
+@import '../../styles/variables';
 
 .header-mobile {
   position: sticky;

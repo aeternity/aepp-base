@@ -5,8 +5,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
-@import '../../styles/placeholders/typography.scss';
+@import '../../styles/typography';
 
 .modal-header {
   @extend %face-sans-l;

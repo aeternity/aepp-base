@@ -1,6 +1,6 @@
 {
   "name": "aepp-base",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "author": "Sascha Hanse <shanse@posteo.de>",
   "private": true,
   "scripts": {
@@ -21,7 +21,7 @@
     "i18n:report": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/locales/**/*.json'"
   },
   "dependencies": {
-    "@aeternity/aepp-sdk": "^6.0.0",
+    "@aeternity/aepp-sdk": "^6.0.2",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
     "@aeternity/ledger-app-api": "0.1.0",

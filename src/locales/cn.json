@@ -9,6 +9,7 @@
   "copied": "Copied",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "目前Base æpp只能在只在一个浏览器选项卡中打开的情况下运行. 请关闭所有运行的标签.",
+  "blocks": "{n} blocks | {n} block | {n} blocks",
 
   "add-to-home-screen": {
     "note": "请添加这个app到主屏幕.",
@@ -63,7 +64,7 @@
     "mnemonic": "无效助记词",
     "url_http": "该字段不是有效的HTTP(S) URL",
     "air_gap_response_url": "这不是有效的同步代码。",
-    "aens_name": "This field must not contain dots",
+    "aens_name": "必须以.chain结尾",
     "aens_name_unregistered": "这个名称已被注册",
     "account": "Invalid AE address or AENS name"
   },
@@ -422,22 +423,41 @@
 
   "name": {
     "title": "Names",
+    "expiration": "Expires in {n} blocks | Expires in {n} block | Expires in {n} blocks",
 
     "list": {
-      "note": "为您的账户申请一个名称!",
-      "explanation": "点击“+”按钮来申请并与您的帐号关联.",
+      "ending-soonest-note": "Auctions Ending Soonest",
+      "character-length-note": "Auctions by Character Length",
+      "max-bid-note": "Auctions by Bid",
+      "personal-note": "为您的账户申请一个名称!",
+      "personal-explanation": "点击“+”按钮来申请并与您的帐号关联.",
+      "no-auctions": "There are no auctions matching these criteria.",
       "registered": "注册名称"
     },
 
     "details": {
       "title": "Name details",
       "name": "Name",
-      "name-hash": "Name hash",
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "to-point": "Set name pointer",
       "to-transfer": "Transfer name",
-      "to-transactions": "View in transactions"
+      "to-transactions": "View in transactions",
+      "current-bid": "Current bid",
+      "previous-bids": "Previous Bids",
+      "auction-not-found": "It looks like the auction you are looking for was not found."
+    },
+
+    "point": {
+      "guide": "Set pointer of name owned by <account />",
+      "subaccount": "Or point to subaccount",
+      "confirm-pointing-to-same-account": "The account you are pointing to and the account, which the name currently points to, are the same account. Are you sure you would like to complete this transaction?",
+
+      "notification":{
+        "succeed": "{name} was successfully pointed",
+        "failed": "{name} was not pointed for unknown reason"
+      }
     },
 
     "transfer": {
@@ -451,11 +471,17 @@
       }
     },
 
+    "bid": {
+      "guide": "Bid on <primary><name /></primary>",
+      "highest-bid": "Current highest bid",
+      "remaining-time": "Remaining time"
+    },
+
     "new": {
       "guide": "为 <inlineAccount /><primary>申请一个新名称</primary> ",
       "unknown-error": "未知错误",
       "name": "名称",
-      "name-placeholder": "Name",
+      "name-placeholder": "Name.chain",
       "register": "注册",
 
       "notification":{

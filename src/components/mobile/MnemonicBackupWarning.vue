@@ -21,9 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/typography.scss';
-@import '../../styles/variables/colors.scss';
-@import '../../styles/globals/functions.scss';
+@import '../../styles/functions';
 
 .warning-icon {
   border-radius: 50%;

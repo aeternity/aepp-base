@@ -17,8 +17,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/variables';
 
 .details-field .ae-address {
   color: var(--color-primary, $color-neutral-maximum);

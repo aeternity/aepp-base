@@ -63,18 +63,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/placeholders/typography.scss';
-@import '../styles/variables/colors.scss';
+@import '../styles/typography';
+
+a, label {
+  .list-item:hover {
+    background-color: $color-neutral-positive-3;
+  }
+}
 
 .list-item {
   display: block;
   padding: 0 rem(16px);
   text-decoration: none;
   color: $color-neutral-negative-3;
-
-  &:hover {
-    background-color: $color-neutral-positive-3;
-  }
 
   .content {
     display: flex;

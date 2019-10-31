@@ -88,9 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables/animations.scss';
-@import '../styles/variables/colors.scss';
-@import '../styles/placeholders/typography.scss';
+@import '../styles/typography';
 
 .ae-input-wrapper {
   overflow: hidden;

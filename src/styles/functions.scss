@@ -1,4 +1,4 @@
-@import "../variables/typography";
+@import 'variables';
 
 @function em($px) {
   @return #{$px / $base-font-size}em;

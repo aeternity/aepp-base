@@ -121,8 +121,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/typography';
 
 .transaction-list {
   .header {
@@ -153,11 +152,6 @@ export default {
         border-bottom: rem(2px) solid $color-primary;
       }
     }
-  }
-
-  .ae-loader {
-    display: block;
-    margin: rem(60px) auto;
   }
 
   .no-transactions {

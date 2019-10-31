@@ -348,6 +348,7 @@ export default (store) => {
         ...list.slice(activeIdx + 1),
       ],
     ),
+    getAccounts,
     totalBalance: accounts$.pipe(
       map(acs => acs.reduce((prev, { balance }) => prev.plus(balance), BigNumber(0))),
     ),

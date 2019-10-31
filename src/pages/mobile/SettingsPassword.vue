@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables/colors.scss';
+@import '../../styles/variables';
 
 .settings-password.mobile-page .list-item-button {
   color: $color-primary;

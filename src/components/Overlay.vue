@@ -18,8 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables/colors.scss';
-@import '../styles/globals/functions.scss';
+@import '../styles/functions';
 
 .overlay {
   position: fixed;

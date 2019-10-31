@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/globals/functions.scss';
+@import '../../styles/functions';
 
 .settings-mnemonic-confirm .ae-input-wrapper {
   margin-top: rem(32px);

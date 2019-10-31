@@ -22,8 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/placeholders/typography.scss';
-@import '../../styles/variables/colors.scss';
+@import '../../styles/typography';
 
 .button-mnemonic-word {
   padding: rem(2px) rem(7px) rem(6px) rem(7px);
