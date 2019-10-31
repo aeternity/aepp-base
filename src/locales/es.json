@@ -423,7 +423,7 @@
 
   "name": {
     "title": "Nombres",
-    "expiration": "Expires in {n} blocks | Expires in {n} block | Expires in {n} blocks",
+    "expiration": "Ends in {n} blocks | Ends in {n} block | Ends in {n} blocks",
 
     "list": {
       "ending-soonest-note": "Auctions Ending Soonest",
