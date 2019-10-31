@@ -63,7 +63,7 @@
     "mnemonic": "Frase de recuperación no válida",
     "url_http": "Este campo no es una URL HTTP(S) válida",
     "air_gap_response_url": "Este no es un código de sincronización válido",
-    "aens_name": "This field must not contain dots",
+    "aens_name": "This field must ends with .chain",
     "aens_name_unregistered": "Este nombre ya está registrado",
     "account": "Dirección AE o nombre AENS no válidos"
   },
@@ -430,7 +430,6 @@
       "max-bid-note": "Auctions by Bid",
       "personal-note": "¡Reclama un nombre para tu cuenta!",
       "personal-explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
-      "auctions-not-supported": "Auctions are not supported by the current network.",
       "no-auctions": "There are no auctions matching these criteria.",
       "registered": "Nombres registrados"
     },
@@ -475,7 +474,7 @@
       "guide": "<primary>Reclama un nombre</primary> para <inlineAccount />",
       "unknown-error": "Error desconocido",
       "name": "Nombre",
-      "name-placeholder": "Name",
+      "name-placeholder": "Name.chain",
       "register": "Registrarse",
 
       "notification": {

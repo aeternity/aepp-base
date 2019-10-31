@@ -63,7 +63,7 @@
     "mnemonic": "Invalid recovery phrase",
     "url_http": "This field is not a valid HTTP(S) URL",
     "air_gap_response_url": "This is not a valid sync code.",
-    "aens_name": "This field must not contain dots",
+    "aens_name": "This field must ends with .chain",
     "aens_name_unregistered": "This name is already registered",
     "account": "Invalid AE address or AENS name"
   },
@@ -430,7 +430,6 @@
       "max-bid-note": "Auctions by Bid",
       "personal-note": "Claim a name for your account!",
       "personal-explanation": "Tap the “+” button below to claim a name and associate it with one of your accounts.",
-      "auctions-not-supported": "Auctions are not supported by the current network.",
       "no-auctions": "There are no auctions matching these criteria.",
       "registered": "Registered Names"
     },
@@ -475,7 +474,7 @@
       "guide": "<primary>Claim a name</primary> for <inlineAccount />",
       "unknown-error": "Unknown error",
       "name": "Name",
-      "name-placeholder": "Name",
+      "name-placeholder": "Name.chain",
       "register": "Register",
 
       "notification":{

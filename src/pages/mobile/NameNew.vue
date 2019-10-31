@@ -48,7 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { handleUnknownError, isAensAuctionsSupported, getAensDomain } from '../../lib/utils';
+import { handleUnknownError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -73,13 +73,9 @@ export default {
       let claimTxHash;
 
       try {
-        const name = this.name + getAensDomain(this.$store.state.sdk.getNodeInfo());
-        const { salt } = await this.$store.state.sdk.aensPreclaim(name);
+        const { salt } = await this.$store.state.sdk.aensPreclaim(this.name);
         claimTxHash = (
-          await this.$store.state.sdk.aensClaim(name, salt, {
-            waitMined: false,
-            vsn: isAensAuctionsSupported(this.$store.state.sdk.getNodeInfo()) ? 2 : 1,
-          })
+          await this.$store.state.sdk.aensClaim(this.name, salt, { waitMined: false })
         ).hash;
 
         this.$store.dispatch('modals/open', {

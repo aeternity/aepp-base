@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Vue from 'vue';
 import {
-  handleUnknownError, isAccountNotFoundError, removeTopDomain, getAensDomain, getAddressByNameEntry,
+  handleUnknownError, isAccountNotFoundError, getAddressByNameEntry,
 } from '../../../lib/utils';
 
 export default (store) => {
@@ -53,7 +53,7 @@ export default (store) => {
         const height = await dispatch('getHeight');
         const names = (await sdk.middleware.getNameByAddress(address))
           .filter(({ expiresAt }) => expiresAt > height);
-        if (names.length) commit('set', { address, name: removeTopDomain(names[0].name) });
+        if (names.length) commit('set', { address, name: names[0].name });
       },
       async fetchOwned({ rootState, commit }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
@@ -76,15 +76,12 @@ export default (store) => {
                 return [];
               }),
             sdk.middleware.getActiveNames({ owner: address }),
-          ]))))
-            .flat(2)
-            .map(({ name, ...other }) => ({ ...other, name: removeTopDomain(name) })),
+          ])))).flat(2),
         );
       },
       async fetchName({ rootState, commit }, name) {
         const address = getAddressByNameEntry(
-          await rootState.sdk.api
-            .getNameEntryByName(name + getAensDomain(rootState.sdk.getNodeInfo())),
+          await rootState.sdk.api.getNameEntryByName(name),
         );
         commit('set', { address, name });
         return address;
