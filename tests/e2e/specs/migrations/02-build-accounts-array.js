@@ -5,7 +5,7 @@ describe('Migration 2: Build accounts array', () => {
         0: true,
         1: true,
       },
-      rpcUrl: 'https://sdk-mainnet.aepps.com',
+      rpcUrl: 'https://node.mainnet.aeternal.io',
       selectedIdentityIdx: 2,
       customNetworks: [],
       apps: [{
