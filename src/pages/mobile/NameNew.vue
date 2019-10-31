@@ -30,7 +30,6 @@
           name="name"
           :header="$t('name.new.name')"
           :placeholder="$t('name.new.name-placeholder')"
-          maxlength="16"
           @input="error = false"
         />
       </form>
