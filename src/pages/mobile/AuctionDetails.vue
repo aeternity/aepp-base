@@ -75,15 +75,20 @@ export default {
   subscriptions() {
     return pick(this.$store.state.observables, ['topBlockHeight']);
   },
-  watch: {
-    name: {
-      async handler() {
-        this.bids = null;
-        const res = await this.$store.dispatch('names/fetchAuctionEntry', this.name);
-        this.expiration = res.expiration;
-        this.bids = res.bids;
-      },
-      immediate: true,
+  mounted() {
+    const id = setInterval(() => this.updateAuctionEntry(), 3000);
+    this.$once('hook:destroyed', () => clearInterval(id));
+    this.$watch(
+      ({ name }) => name,
+      () => this.updateAuctionEntry(),
+      { immediate: true },
+    );
+  },
+  methods: {
+    async updateAuctionEntry() {
+      const res = await this.$store.dispatch('names/fetchAuctionEntry', this.name);
+      this.expiration = res.expiration;
+      this.bids = res.bids;
     },
   },
   beforeRouteEnter(to, from, next) {
