@@ -22,7 +22,6 @@ export const defaultNetwork = genNetwork('Lima-net', {
 const testNetwork = genNetwork('Testnet', {
   url: 'https://node.testnet.aeternal.io',
   middlewareUrl: 'https://testnet.aeternal.io',
-  compilerUrl: 'https://latest.compiler.aepps.com',
 });
 
 export default Object.freeze((process.env.NODE_ENV === 'production' ? [
