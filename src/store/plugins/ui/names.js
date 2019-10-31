@@ -1,6 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import Vue from 'vue';
+import { update } from 'lodash-es';
 import BigNumber from 'bignumber.js';
+import Vue from 'vue';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
   handleUnknownError, isAccountNotFoundError, getAddressByNameEntry,
@@ -11,7 +12,7 @@ export default (store) => {
     namespaced: true,
     state: {
       names: {},
-      owned: [],
+      owned: null,
     },
     getters: {
       get: ({ names }, getters, { accounts: { list } }, rootGetters) => (address, local = true) => {
@@ -34,7 +35,7 @@ export default (store) => {
       },
       reset(state) {
         state.names = {};
-        state.owned = [];
+        state.owned = null;
       },
     },
     actions: {
@@ -59,8 +60,7 @@ export default (store) => {
       },
       async fetchOwned({ rootState, commit }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-        commit(
-          'setOwned',
+        const [names, bids] = await Promise.all([
           (await Promise.all(rootState.accounts.list.map(({ address }) => Promise.all([
             sdk.api.getPendingAccountTransactionsByPubkey(address)
               .then(({ transactions }) => transactions
@@ -79,7 +79,18 @@ export default (store) => {
               }),
             sdk.middleware.getActiveNames({ owner: address }),
           ])))).flat(2),
-        );
+          (await Promise.all(rootState.accounts.list
+            .map(({ address }) => sdk.middleware.getNameAuctionsBidsbyAddress(address))))
+            .flat()
+            .filter(({ nameAuctionEntry, transaction }) => nameAuctionEntry
+              .winningBid === transaction.tx.nameFee)
+            .map(bid => update(
+              bid,
+              'transaction.tx.nameFee',
+              v => BigNumber(v).shiftedBy(-MAGNITUDE),
+            )),
+        ]);
+        commit('setOwned', { names, bids });
       },
       async fetchName({ rootState, commit }, name) {
         const address = getAddressByNameEntry(
