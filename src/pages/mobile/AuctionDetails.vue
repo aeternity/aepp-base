@@ -93,8 +93,9 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      // eslint-disable-next-line no-param-reassign
-      if (from.name !== 'login') vm.previousRoute = from.path;
+      if (!['login', 'auction-bid', 'auction-bid-amount'].includes(from.name)) {
+        vm.previousRoute = from.path; // eslint-disable-line no-param-reassign
+      }
     });
   },
 };
