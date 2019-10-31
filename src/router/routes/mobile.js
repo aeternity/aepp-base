@@ -26,6 +26,7 @@ import TransactionList from '../../pages/mobile/TransactionList.vue';
 import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
 import NameList from '../../pages/mobile/NameList.vue';
 import AuctionDetails from '../../pages/mobile/AuctionDetails.vue';
+import AuctionBid from '../../pages/mobile/AuctionBid.vue';
 import NameListPersonal from '../../pages/mobile/NameListPersonal.vue';
 import NameDetails from '../../pages/mobile/NameDetails.vue';
 import NameNew from '../../pages/mobile/NameNew.vue';
@@ -258,6 +259,18 @@ export default [{
   component: NameTransfer,
   beforeEnter: ensureLoggedIn,
   props: true,
+}, {
+  name: 'auction-bid',
+  path: '/names/bid/:name?',
+  component: AuctionBid,
+  beforeEnter: ensureLoggedIn,
+  props: true,
+}, {
+  name: 'auction-bid-amount',
+  path: '/names/bid/:name/amount',
+  component: AuctionBid,
+  beforeEnter: ensureLoggedIn,
+  props: ({ params }) => ({ ...params, amountStep: true }),
 }, {
   name: 'name-new',
   path: '/names/new',

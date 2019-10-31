@@ -25,8 +25,8 @@
         <h2>{{ $t('name.details.previous-bids') }}</h2>
         <AeCard fill="maximum">
           <ListItemBid
-            v-for="bid in previousBids"
-            :key="bid.accountId"
+            v-for="(bid, idx) in previousBids"
+            :key="`${idx}-${bid.accountId}`"
             v-bind="bid"
             inactive
           />
@@ -34,14 +34,12 @@
       </template>
     </template>
 
-    <ButtonAddFixed :to="{ name: 'name-new' }" />
+    <ButtonAddFixed :to="{ name: 'auction-bid', params: { name } }" />
   </MobilePage>
 </template>
 
 <script>
 import { pick } from 'lodash-es';
-import BigNumber from 'bignumber.js';
-import { MAGNITUDE } from '../../lib/constants';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import AeCard from '../../components/AeCard.vue';
@@ -77,26 +75,27 @@ export default {
   subscriptions() {
     return pick(this.$store.state.observables, ['topBlockHeight']);
   },
-  watch: {
-    name: {
-      async handler() {
-        this.bids = null;
-        if (this.$store.state.sdk.then) await this.$store.state.sdk;
-        const { info, bids } = await this.$store.state.sdk.middleware
-          .getAuctionInfoByName(this.name);
-        this.expiration = info.expiration;
-        this.bids = bids.map(({ tx }) => ({
-          ...tx,
-          nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-        }));
-      },
-      immediate: true,
+  mounted() {
+    const id = setInterval(() => this.updateAuctionEntry(), 3000);
+    this.$once('hook:destroyed', () => clearInterval(id));
+    this.$watch(
+      ({ name }) => name,
+      () => this.updateAuctionEntry(),
+      { immediate: true },
+    );
+  },
+  methods: {
+    async updateAuctionEntry() {
+      const res = await this.$store.dispatch('names/fetchAuctionEntry', this.name);
+      this.expiration = res.expiration;
+      this.bids = res.bids;
     },
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      // eslint-disable-next-line no-param-reassign
-      if (from.name !== 'login') vm.previousRoute = from.path;
+      if (!['login', 'auction-bid', 'auction-bid-amount'].includes(from.name)) {
+        vm.previousRoute = from.path; // eslint-disable-line no-param-reassign
+      }
     });
   },
 };
