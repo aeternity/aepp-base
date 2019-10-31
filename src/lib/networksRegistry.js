@@ -13,7 +13,7 @@ const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) =>
   ...options,
 });
 
-export const defaultNetwork = genNetwork('Fortuna-net', {
+export const defaultNetwork = genNetwork('Lima-net', {
   pathName: 'mainnet',
   middlewareUrl: getMiddlewareUrl(),
   explorerUrl: getExplorerUrl(),
