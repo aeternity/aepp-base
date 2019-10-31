@@ -1,5 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import Vue from 'vue';
+import BigNumber from 'bignumber.js';
+import { MAGNITUDE } from '../../../lib/constants';
 import {
   handleUnknownError, isAccountNotFoundError, getAddressByNameEntry,
 } from '../../../lib/utils';
@@ -85,6 +87,17 @@ export default (store) => {
         );
         commit('set', { address, name });
         return address;
+      },
+      async fetchAuctionEntry({ rootState }, name) {
+        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
+        const { info, bids } = await sdk.middleware.getAuctionInfoByName(name);
+        return {
+          ...info,
+          bids: bids.map(({ tx }) => ({
+            ...tx,
+            nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
+          })),
+        };
       },
       async getAddressByName({ state, dispatch }, name) {
         return (

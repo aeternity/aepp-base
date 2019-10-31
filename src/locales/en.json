@@ -9,6 +9,7 @@
   "copied": "Copied",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "The Base æpp can currently work only when opened in a single browser tab. If you have any additional instances (tabs) of the Base æpp open, please close them.",
+  "blocks": "{n} blocks | {n} block | {n} blocks",
 
   "add-to-home-screen": {
     "note": "Please add this app to home screen.",
@@ -468,6 +469,12 @@
         "succeed": "{name} was successfully transfered",
         "failed": "{name} was not transfered for unknown reason"
       }
+    },
+
+    "bid": {
+      "guide": "Bid on <primary><name /></primary>",
+      "highest-bid": "Current highest bid",
+      "remaining-time": "Remaining time"
     },
 
     "new": {

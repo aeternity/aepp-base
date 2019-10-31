@@ -9,6 +9,7 @@
   "copied": "Copiado",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "Base æpp actualmente solo puede funcionar cuando se abre en una sola pestaña del navegador. Si tiene instancias adicionales (pestañas) de Base æpp abiertas, ciérrelas",
+  "blocks": "{n} blocks | {n} block | {n} blocks",
 
   "add-to-home-screen": {
     "note": "Agregue esta aplicación a la pantalla de inicio",
@@ -468,6 +469,12 @@
         "succeed": "{name} was successfully transfered",
         "failed": "{name} was not transfered for unknown reason"
       }
+    },
+
+    "bid": {
+      "guide": "Bid on <primary><name /></primary>",
+      "highest-bid": "Current highest bid",
+      "remaining-time": "Remaining time"
     },
 
     "new": {

@@ -34,14 +34,12 @@
       </template>
     </template>
 
-    <ButtonAddFixed :to="{ name: 'name-new' }" />
+    <ButtonAddFixed :to="{ name: 'auction-bid', params: { name } }" />
   </MobilePage>
 </template>
 
 <script>
 import { pick } from 'lodash-es';
-import BigNumber from 'bignumber.js';
-import { MAGNITUDE } from '../../lib/constants';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import AeCard from '../../components/AeCard.vue';
@@ -81,14 +79,9 @@ export default {
     name: {
       async handler() {
         this.bids = null;
-        if (this.$store.state.sdk.then) await this.$store.state.sdk;
-        const { info, bids } = await this.$store.state.sdk.middleware
-          .getAuctionInfoByName(this.name);
-        this.expiration = info.expiration;
-        this.bids = bids.map(({ tx }) => ({
-          ...tx,
-          nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-        }));
+        const res = await this.$store.dispatch('names/fetchAuctionEntry', this.name);
+        this.expiration = res.expiration;
+        this.bids = res.bids;
       },
       immediate: true,
     },
