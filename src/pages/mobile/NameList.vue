@@ -151,11 +151,12 @@ export default {
     async fetchAuctions({ page, sort, length: lengthWithoutDomain }) {
       const length = lengthWithoutDomain + AENS_DOMAIN.length;
       this.auctions = null;
+      const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
       const [auctions, { count }] = await Promise.all([
-        this.$store.state.sdk.middleware.getActiveNameAuctions({
+        sdk.middleware.getActiveNameAuctions({
           page, limit: ITEMS_PER_PAGE, sort, length,
         }),
-        this.$store.state.sdk.middleware.getActiveNameAuctionsCount({ length }),
+        sdk.middleware.getActiveNameAuctionsCount({ length }),
       ]);
       this.auctions = auctions;
       this.pageCount = Math.ceil(count / ITEMS_PER_PAGE);
