@@ -1,7 +1,7 @@
 import { pick } from 'lodash-es';
 
-const getUrl = networkName => `https://sdk-${networkName}.aepps.com`;
-const getMiddlewareUrl = (networkName = '') => `https://${networkName}${networkName ? '.' : ''}mdw.aepps.com`;
+const getUrl = networkName => `https://node.${networkName}.aeternal.io`;
+const getMiddlewareUrl = networkName => `https://${networkName}.aeternal.io`;
 const getExplorerUrl = (networkName = '') => `https://${networkName}${networkName ? '.' : ''}explorer.aepps.com`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
@@ -15,14 +15,10 @@ const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) =>
 
 export const defaultNetwork = genNetwork('Lima-net', {
   pathName: 'mainnet',
-  middlewareUrl: getMiddlewareUrl(),
   explorerUrl: getExplorerUrl(),
 });
 
-const testNetwork = genNetwork('Testnet', {
-  url: 'https://node.testnet.aeternal.io',
-  middlewareUrl: 'https://testnet.aeternal.io',
-});
+const testNetwork = genNetwork('Testnet');
 
 export default Object.freeze((process.env.NODE_ENV === 'production' ? [
   defaultNetwork,
