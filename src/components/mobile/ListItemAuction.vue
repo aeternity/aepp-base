@@ -21,6 +21,7 @@
 import BigNumber from 'bignumber.js';
 import { pluck, switchMap, map } from 'rxjs/operators';
 import { MAGNITUDE } from '../../lib/constants';
+import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import ListItem from '../ListItem.vue';
 import AeIdenticon from '../AeIdenticon.vue';
 
@@ -49,7 +50,7 @@ export default {
           switchMap(({ subtitleWinningBid, winningBid, expiration }) => (subtitleWinningBid
             ? convertAmount(() => BigNumber(winningBid).shiftedBy(-MAGNITUDE))
             : topBlockHeight.pipe(
-              map(value => this.$tc('name.expiration', expiration - value)),
+              map(value => `${this.$t('name.expiration')} ${blocksToRelativeTime(expiration - value)}`),
             ))),
         ),
     };

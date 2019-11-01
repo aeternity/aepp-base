@@ -11,7 +11,10 @@
       {{ $t('name.details.auction-not-found') }}
     </h2>
     <template v-else>
-      <h2>{{ $tc('name.expiration', expiration - topBlockHeight) }}</h2>
+      <h2>
+        {{ $t('name.expiration') }}
+        {{ blocksToRelativeTime(expiration - topBlockHeight) }}
+      </h2>
 
       <h2>{{ $t('name.details.current-bid') }}</h2>
       <AeCard fill="maximum">
@@ -40,6 +43,7 @@
 
 <script>
 import { pick } from 'lodash-es';
+import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import AeCard from '../../components/AeCard.vue';
@@ -90,6 +94,7 @@ export default {
       this.expiration = res.expiration;
       this.bids = res.bids;
     },
+    blocksToRelativeTime,
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
