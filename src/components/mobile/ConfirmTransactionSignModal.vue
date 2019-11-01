@@ -70,7 +70,8 @@ import DetailsAmountCurrency from './DetailsAmountCurrency.vue';
 import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsList from './DetailsList.vue';
 import {
-  Payload, RecipientId, Code, CallData, ContractId, CommitmentId, NameEncoded, NameSalt, NameId,
+  Payload, RecipientId, Code, CallData, ContractId,
+  CommitmentId, NameEncoded, NameSalt, NameId, NameFee,
 } from './details-fields';
 import DetailsNamePointers from './DetailsNamePointers.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
@@ -105,6 +106,7 @@ export default {
         contractId: ContractId,
         commitmentId: CommitmentId,
         name: NameEncoded,
+        nameFee: NameFee,
         nameSalt: NameSalt,
         nameId: NameId,
         pointers: DetailsNamePointers,
@@ -133,8 +135,9 @@ export default {
     },
     maxFee() {
       const recommendedMax = this.transaction.minFee.multipliedBy(10);
-      const amount = this.transaction.amount || 0;
-      const actualMax = this.account.balance.minus(amount);
+      const actualMax = this.account.balance
+        .minus(this.transaction.amount || 0)
+        .minus(this.transaction.nameFee || 0);
       return actualMax.isLessThan(recommendedMax) ? actualMax : recommendedMax;
     },
     isEnoughFounds() {

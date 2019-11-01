@@ -11,6 +11,9 @@ export const handleUnknownError = error => console.warn('Unknown rejection', err
 export const isNotFoundError = error => error.isAxiosError
   && get(error, 'response.status') === 404;
 
+export const isInternalServerError = error => error.isAxiosError
+  && get(error, 'response.status') === 500;
+
 export const isAccountNotFoundError = error => isNotFoundError(error)
   && get(error, 'response.data.reason') === 'Account not found';
 

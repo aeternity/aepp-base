@@ -12,10 +12,9 @@
     </h2>
 
     <template v-if="view === VIEW_CHARACTER_LENGTH">
-      <div
+      <ButtonGroup
         v-for="lineStartsWith in [1, 7]"
         :key="lineStartsWith"
-        class="length-selector"
       >
         <ButtonFlat
           v-for="l in times(6, idx => idx + lineStartsWith)"
@@ -24,7 +23,7 @@
         >
           {{ l }}
         </ButtonFlat>
-      </div>
+      </ButtonGroup>
     </template>
 
     <AeLoader v-if="auctions === null" />
@@ -72,6 +71,7 @@ import { pick, times } from 'lodash-es';
 import { AENS_DOMAIN } from '../../lib/constants';
 import MobilePage from '../../components/mobile/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
+import ButtonGroup from '../../components/mobile/ButtonGroup.vue';
 import ButtonFlat from '../../components/mobile/ButtonFlat.vue';
 import AeLoader from '../../components/AeLoader.vue';
 import AeCard from '../../components/AeCard.vue';
@@ -88,6 +88,7 @@ export default {
   components: {
     MobilePage,
     NameListHeader,
+    ButtonGroup,
     ButtonFlat,
     AeLoader,
     AeCard,
@@ -169,7 +170,7 @@ export default {
 @import '../../styles/typography';
 
 .name-list {
-  .length-selector {
+  .button-group {
     overflow-x: auto;
     margin-bottom: rem(30px);
     white-space: nowrap;
@@ -185,11 +186,11 @@ export default {
 
   .pagination {
     margin-top: rem(16px);
-    @extend %face-sans-s;
+    @extend %face-sans-base;
     text-align: center;
 
     span, a {
-      padding: 0 rem(2px);
+      padding: 0 rem(10px);
     }
 
     a {

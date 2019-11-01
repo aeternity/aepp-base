@@ -9,7 +9,9 @@
   "copied": "Copiado",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "Base æpp actualmente solo puede funcionar cuando se abre en una sola pestaña del navegador. Si tiene instancias adicionales (pestañas) de Base æpp abiertas, ciérrelas",
-  "blocks": "{n} blocks | {n} block | {n} blocks",
+  "minutes": "{n} minutes | {n} minute | {n} minutes",
+  "hours": "{n} hours | {n} hour | {n} hours",
+  "days": "{n} days | {n} day | {n} days",
 
   "add-to-home-screen": {
     "note": "Agregue esta aplicación a la pantalla de inicio",
@@ -423,7 +425,7 @@
 
   "name": {
     "title": "Nombres",
-    "expiration": "Ends in {n} blocks | Ends in {n} block | Ends in {n} blocks",
+    "expiration": "Ends in",
 
     "list": {
       "ending-soonest-note": "Auctions Ending Soonest",
@@ -509,6 +511,7 @@
       "commitment": "Compromiso",
       "name-salt": "Nombre salt",
       "name-id": "Nombre ID",
+      "name-fee": "Name fee",
       "pointer": "Puntero # {n}",
       "pointer-key": "puntero # {n} clave",
       "pointer-id": "Puntero # { n} ID",

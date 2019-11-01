@@ -23,7 +23,6 @@ export default {
   $border-width: rem(2px);
   $border-radius: rem(4px);
   height: rem(20px);
-  width: rem(45px);
   padding: rem(5px) 0;
   text-align: center;
   border: $border-width solid $color-primary;

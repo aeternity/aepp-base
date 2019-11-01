@@ -35,10 +35,11 @@
 
     <AeButton
       :disabled="busy || errors.any()"
+      :loader="busy"
       :form="_uid"
       fill="secondary"
     >
-      <AeLoader v-if="busy" /> {{ $t('next') }}
+      {{ $t('next') }}
     </AeButton>
 
     <template v-if="!busy && accountsToChoose.length">
@@ -60,13 +61,13 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import { MAX_NAME_TTL } from '../../lib/constants';
 import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import AeInputAccount from '../../components/AeInputAccount.vue';
 import AeButton from '../../components/AeButton.vue';
-import AeLoader from '../../components/AeLoader.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import { LeftMore } from '../../components/icons';
 
@@ -77,7 +78,6 @@ export default {
     AccountInline,
     AeInputAccount,
     AeButton,
-    AeLoader,
     ListItemAccount,
     LeftMore,
   },
@@ -132,9 +132,10 @@ export default {
       }
       this.busy = true;
       try {
-        await this.$store.state.sdk[
-          `aens${this.pointing ? 'Update' : 'Transfer'}`
-        ](this.nameEntry.nameHash, this.accountTo);
+        await this.$store.state.sdk[`aens${this.pointing ? 'Update' : 'Transfer'}`](
+          this.nameEntry.nameHash, this.accountTo,
+          this.pointing ? { nameTtl: MAX_NAME_TTL } : undefined,
+        );
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: this.pointing
@@ -162,19 +163,12 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/typography';
 
-.name-transfer {
-  .ae-button .ae-loader {
-    width: rem(24px);
-    vertical-align: middle;
-  }
-
-  .own-account {
-    margin-top: rem(20px);
-    padding-bottom: rem(20px);
-    border-bottom: rem(2px) solid $color-neutral-positive-1;
-    @extend %face-sans-s;
-    font-weight: 500;
-    color: $color-neutral-negative-1;
-  }
+.name-transfer .own-account {
+  margin-top: rem(20px);
+  padding-bottom: rem(20px);
+  border-bottom: rem(2px) solid $color-neutral-positive-1;
+  @extend %face-sans-s;
+  font-weight: 500;
+  color: $color-neutral-negative-1;
 }
 </style>

@@ -9,7 +9,9 @@
   "copied": "Copied",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "目前Base æpp只能在只在一个浏览器选项卡中打开的情况下运行. 请关闭所有运行的标签.",
-  "blocks": "{n} blocks | {n} block | {n} blocks",
+  "minutes": "{n} minutes | {n} minute | {n} minutes",
+  "hours": "{n} hours | {n} hour | {n} hours",
+  "days": "{n} days | {n} day | {n} days",
 
   "add-to-home-screen": {
     "note": "请添加这个app到主屏幕.",
@@ -423,7 +425,7 @@
 
   "name": {
     "title": "Names",
-    "expiration": "Ends in {n} blocks | Ends in {n} block | Ends in {n} blocks",
+    "expiration": "Ends in",
 
     "list": {
       "ending-soonest-note": "Auctions Ending Soonest",
@@ -509,6 +511,7 @@
       "commitment": "提交",
       "name-salt": "命名",
       "name-id": "名字ID",
+      "name-fee": "Name fee",
       "pointer": "Pointer #{n}",
       "pointer-key": "Pointer #{n} key",
       "pointer-id": "Pointer #{n} ID",

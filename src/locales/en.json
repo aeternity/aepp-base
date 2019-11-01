@@ -9,7 +9,9 @@
   "copied": "Copied",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "The Base æpp can currently work only when opened in a single browser tab. If you have any additional instances (tabs) of the Base æpp open, please close them.",
-  "blocks": "{n} blocks | {n} block | {n} blocks",
+  "minutes": "{n} minutes | {n} minute | {n} minutes",
+  "hours": "{n} hours | {n} hour | {n} hours",
+  "days": "{n} days | {n} day | {n} days",
 
   "add-to-home-screen": {
     "note": "Please add this app to home screen.",
@@ -423,7 +425,7 @@
 
   "name": {
     "title": "Names",
-    "expiration": "Ends in {n} blocks | Ends in {n} block | Ends in {n} blocks",
+    "expiration": "Ends in",
 
     "list": {
       "ending-soonest-note": "Auctions Ending Soonest",
@@ -509,6 +511,7 @@
       "commitment": "Commitment",
       "name-salt": "Name salt",
       "name-id": "Name ID",
+      "name-fee": "Name fee",
       "pointer": "Pointer #{n}",
       "pointer-key": "Pointer #{n} key",
       "pointer-id": "Pointer #{n} ID",

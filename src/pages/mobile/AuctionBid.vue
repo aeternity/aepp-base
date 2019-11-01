@@ -34,7 +34,6 @@
           name="name"
           :header="$t('name.new.name')"
           :placeholder="$t('name.new.name-placeholder')"
-          maxlength="16"
         />
         <AeInputAmountCurrency
           v-else
@@ -62,11 +61,12 @@
     <DetailsField
       v-if="expiration && topBlockHeight"
       :name="$t('name.bid.remaining-time')"
-      :value="$tc('blocks', expiration - topBlockHeight)"
+      :value="blocksToRelativeTime(expiration - topBlockHeight)"
     />
 
     <AeButton
       fill="secondary"
+      :loader="busy"
       :form="_uid"
       :disabled="errors.has('name') || !expiration || busy"
     >
@@ -80,6 +80,7 @@ import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
 import { MAGNITUDE } from '../../lib/constants';
+import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeInput from '../../components/AeInput.vue';
@@ -162,6 +163,7 @@ export default {
         this.busy = false;
       }
     },
+    blocksToRelativeTime,
   },
 };
 </script>
