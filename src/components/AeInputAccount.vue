@@ -2,7 +2,7 @@
   <AeTextareaFormatted
     v-remove-spaces-on-copy
     :value="value"
-    :placeholder="$t('transfer.send.to.address')"
+    :placeholder="$t('transfer.send.to.address-or-name')"
     class="ae-input-address"
     rows="3"
     monospace
@@ -15,7 +15,7 @@
     <AeIdenticon
       v-if="!$attrs.footer && !$slots.footer && value"
       slot="footer"
-      :address="value"
+      :address="address"
       size="s"
     />
 
@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { Crypto } from '@aeternity/aepp-sdk/es';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import AeTextareaFormatted from './AeTextareaFormatted.vue';
 import AeIdenticon from './AeIdenticon.vue';
@@ -101,6 +103,11 @@ export default {
     showAccountsDropdown: false,
     clipboardReadSupported: process.env.IS_CORDOVA || navigator.clipboard,
   }),
+  computed: mapState('names', {
+    address(state, { getAddress }) {
+      return getAddress(this.value);
+    },
+  }),
   subscriptions() {
     return !process.env.IS_MOBILE_DEVICE && {
       accounts: this.$store.state.observables.inactiveAccounts,
@@ -122,6 +129,8 @@ export default {
       return `${ADDRESS_PREFIX} ${res}`;
     },
     formatDisplayValue(value) {
+      const name = Crypto.isAddressValid(value) && this.$store.getters['names/get'](value, false);
+      if (name) return name;
       if (value.startsWith(ADDRESS_PREFIX)) return this.formatAddress(value);
       return value;
     },

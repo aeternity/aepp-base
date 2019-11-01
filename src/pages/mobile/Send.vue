@@ -27,7 +27,7 @@
       >
         <AeInputAccount
           v-model="accountTo"
-          v-validate="'required|address'"
+          v-validate="'required|account'"
           autofocus
           :error="errors.has('accountTo')"
           :footer="errors.first('accountTo')"
@@ -68,7 +68,7 @@
 
 <script>
 import { pick } from 'lodash-es';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
@@ -92,14 +92,21 @@ export default {
   data: () => ({
     accountTo: '',
   }),
-  computed: mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
+  computed: {
+    ...mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
+    ...mapState('names', {
+      accountToAddress(state, { getAddress }) {
+        return getAddress(this.accountTo);
+      },
+    }),
+  },
   subscriptions() {
     return pick(this.$store.state.observables, ['inactiveAccounts']);
   },
   methods: {
     async setAddress() {
       if (!await this.$validator.validateAll()) return;
-      if (this.activeAccount.address === this.accountTo) {
+      if (this.activeAccount.address === this.accountToAddress) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
           text: this.$t('transfer.send.to.confirm-sending-to-same-account'),
