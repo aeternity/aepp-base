@@ -243,6 +243,7 @@ export default {
           minFee: format(TxBuilder.calculateFee(
             0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
           )),
+          nameFee: txObject.nameFee && format(txObject.nameFee),
         },
       };
 

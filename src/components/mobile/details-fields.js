@@ -3,6 +3,7 @@ import { i18n } from '../../store/plugins/ui/languages';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';
 import DetailsField from './DetailsField.vue';
+import DetailsAmountCurrency from './DetailsAmountCurrency.vue';
 
 const genDetailsWrapper = (Component, valueFieldName) => (name, otherProps) => ({
   functional: true,
@@ -20,6 +21,7 @@ const genDetailsWrapper = (Component, valueFieldName) => (name, otherProps) => (
 export const genDetailsRawData = genDetailsWrapper(DetailsRawData, 'data');
 export const genDetailsAddress = genDetailsWrapper(DetailsAddress, 'address');
 export const genDetailsField = genDetailsWrapper(DetailsField, 'value');
+export const genDetailsAmountCurrency = genDetailsWrapper(DetailsAmountCurrency, 'amount');
 
 export const Payload = {
   functional: true,
@@ -52,6 +54,7 @@ export const NameEncoded = {
 
 export const NameSalt = genDetailsField(() => i18n.t('modal.confirm-transaction-sign.name-salt'));
 export const NameId = genDetailsRawData(() => i18n.t('modal.confirm-transaction-sign.name-id'));
+export const NameFee = genDetailsAmountCurrency(() => i18n.t('modal.confirm-transaction-sign.name-fee'));
 export const OwnerId = genDetailsAddress(() => i18n.t('name.details.owner'));
 export const CreatedAtHeight = genDetailsField(() => i18n.t('name.details.created-at-height'));
 export const ExpiresAtHeight = genDetailsField(() => i18n.t('name.details.expires-at-height'));

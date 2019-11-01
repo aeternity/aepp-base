@@ -511,6 +511,7 @@
       "commitment": "提交",
       "name-salt": "命名",
       "name-id": "名字ID",
+      "name-fee": "Name fee",
       "pointer": "Pointer #{n}",
       "pointer-key": "Pointer #{n} key",
       "pointer-id": "Pointer #{n} ID",
