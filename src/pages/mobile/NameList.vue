@@ -186,11 +186,11 @@ export default {
 
   .pagination {
     margin-top: rem(16px);
-    @extend %face-sans-s;
+    @extend %face-sans-base;
     text-align: center;
 
     span, a {
-      padding: 0 rem(2px);
+      padding: 0 rem(10px);
     }
 
     a {
