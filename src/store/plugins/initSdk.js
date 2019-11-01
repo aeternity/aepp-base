@@ -1,5 +1,5 @@
 import { get, isEqual } from 'lodash-es';
-import { handleUnknownError, isNotFoundError } from '../../lib/utils';
+import { handleUnknownError, isNotFoundError, isInternalServerError } from '../../lib/utils';
 import { fetchJson } from '../utils';
 import { i18n } from './ui/languages';
 
@@ -88,7 +88,7 @@ export default (store) => {
 
     let sdkActive = false;
     const errorHandler = (error) => {
-      if (sdkActive && !isNotFoundError(error)) {
+      if (sdkActive && !isNotFoundError(error) && !isInternalServerError(error)) {
         recreateSdk();
         sdkActive = false;
       }
