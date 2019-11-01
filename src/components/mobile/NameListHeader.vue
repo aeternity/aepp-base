@@ -4,7 +4,7 @@
       <em>{{ $t('name.title') }}</em>
     </Guide>
 
-    <div>
+    <ButtonGroup>
       <ButtonFlat :to="{ name: 'name-list', params: { view: 'ending-soonest' } }">
         <Clock />
       </ButtonFlat>
@@ -17,18 +17,19 @@
       <ButtonFlat :to="{ name: 'name-list-personal' }">
         <Contacts />
       </ButtonFlat>
-    </div>
+    </ButtonGroup>
   </div>
 </template>
 
 <script>
 import Guide from '../Guide.vue';
+import ButtonGroup from './ButtonGroup.vue';
 import ButtonFlat from './ButtonFlat.vue';
 import { Clock, ArrowChart, Contacts } from '../icons';
 
 export default {
   components: {
-    Guide, ButtonFlat, Clock, ArrowChart, Contacts,
+    Guide, ButtonGroup, ButtonFlat, Clock, ArrowChart, Contacts,
   },
 };
 </script>
