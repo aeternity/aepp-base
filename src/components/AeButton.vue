@@ -5,15 +5,17 @@
     class="ae-button"
     v-on="$listeners"
   >
+    <AeLoader v-if="loader" />
     <slot />
   </ButtonPlain>
 </template>
 
 <script>
 import ButtonPlain from './ButtonPlain.vue';
+import AeLoader from './AeLoader.vue';
 
 export default {
-  components: { ButtonPlain },
+  components: { ButtonPlain, AeLoader },
   props: {
     fill: {
       type: String,
@@ -35,6 +37,7 @@ export default {
       default: 'medium',
     },
     plain: Boolean,
+    loader: Boolean,
   },
 };
 </script>
@@ -118,6 +121,11 @@ export default {
     &.light {
       color: $color-neutral-maximum;
     }
+  }
+
+  .ae-loader {
+    width: rem(24px);
+    vertical-align: middle;
   }
 }
 </style>
