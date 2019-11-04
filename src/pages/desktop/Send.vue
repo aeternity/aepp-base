@@ -51,7 +51,7 @@
 
       <AeButton
         :disabled="errors.any() || busy"
-        :loader="busy"
+        :spinner="busy"
       >
         {{ $t('transfer.send.transfer') }}
       </AeButton>

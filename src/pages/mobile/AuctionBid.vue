@@ -66,7 +66,7 @@
 
     <AeButton
       fill="secondary"
-      :loader="busy"
+      :spinner="busy"
       :form="_uid"
       :disabled="errors.has('name') || !expiration || busy"
     >
