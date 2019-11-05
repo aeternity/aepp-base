@@ -2,7 +2,7 @@
 
 const currencies = {
   usd: {
-    name: 'US Dollar',
+    name: 'US dollar',
     symbol: '$',
     isCrypto: false,
   },
