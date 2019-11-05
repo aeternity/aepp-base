@@ -1,33 +1,35 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
+import { i18n } from './languages';
+
 const currencies = {
   usd: {
-    name: 'US dollar',
+    getName: () => i18n.t('currencies.usd'),
     symbol: '$',
     isCrypto: false,
   },
   eur: {
-    name: 'Euro',
+    getName: () => i18n.t('currencies.eur'),
     symbol: '€',
     isCrypto: false,
   },
   btc: {
-    name: 'Bitcoin',
+    getName: () => i18n.t('currencies.btc'),
     symbol: 'BTC',
     isCrypto: true,
   },
   gbp: {
-    name: 'Pound sterling',
+    getName: () => i18n.t('currencies.gbp'),
     symbol: '£',
     isCrypto: false,
   },
   aud: {
-    name: 'Australian dollar',
+    getName: () => i18n.t('currencies.aud'),
     symbol: '$',
     isCrypto: false,
   },
   cny: {
-    name: 'Renminbi',
+    getName: () => i18n.t('currencies.cny'),
     symbol: '¥',
     isCrypto: false,
   },
@@ -44,8 +46,8 @@ export default async (store) => {
     }, store.state.currencies),
     getters: {
       list: () => Object.entries(currencies)
-        .map(([code, { name, symbol, isCrypto }]) => ({
-          code, name, symbol, isCrypto,
+        .map(([code, { getName, symbol, isCrypto }]) => ({
+          code, name: getName(), symbol, isCrypto,
         })),
       active: ({ activeCode }, { list }) => list.find(({ code }) => code === activeCode),
     },
