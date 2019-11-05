@@ -16,6 +16,21 @@ const currencies = {
     symbol: 'BTC',
     isCrypto: true,
   },
+  gbp: {
+    name: 'Pound sterling',
+    symbol: '£',
+    isCrypto: false,
+  },
+  aud: {
+    name: 'Australian dollar',
+    symbol: '$',
+    isCrypto: false,
+  },
+  cny: {
+    name: 'Renminbi',
+    symbol: '¥',
+    isCrypto: false,
+  },
 };
 
 export default async (store) => {
