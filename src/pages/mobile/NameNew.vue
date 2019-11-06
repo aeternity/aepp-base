@@ -38,6 +38,7 @@
     <AeButton
       fill="secondary"
       :form="_uid"
+      :spinner="busy"
       :disabled="busy || errors.has('name') || error"
     >
       {{ $t('name.new.register') }}

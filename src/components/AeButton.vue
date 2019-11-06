@@ -6,7 +6,7 @@
     v-on="$listeners"
   >
     <AeSpinner v-if="spinner" />
-    <slot />
+    <slot v-else />
   </ButtonPlain>
 </template>
 
