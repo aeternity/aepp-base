@@ -24,6 +24,7 @@ Validator.extend('account', value => Crypto.isAddressValid(value));
 Validator.extend('max_value', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('max_value_currency', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('min_value', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
+Validator.extend('min_value_currency', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
 Validator.extend('min_value_exclusive', (value, [arg]) => BigNumber(value).isGreaterThan(arg));
 Validator.extend('mnemonic', value => validateMnemonic(value));
 Validator.extend('url_http', (value) => {
@@ -76,20 +77,25 @@ export default (store) => {
     ),
   );
 
+  const genMaxMinValueCurrencyMessageGenerator = isMax => (field, [amountAe]) => (
+    new ConvertibleToString(() => {
+      let amount = +amountAe;
+      if (store.state.currencies.swapped) {
+        store.state.observables.rate
+          .subscribe((rate) => { amount *= rate; })
+          .unsubscribe();
+      }
+      const approximateAmount = +amount.toPrecision(5);
+      const stringAmount = `${approximateAmount === amount ? '' : '~'}${approximateAmount}`;
+      return isMax
+        ? i18n.t('validation.max_value', [stringAmount])
+        : i18n.t('validation.min_value', [stringAmount]);
+    }));
+
   Validator.localize('en', {
     messages: {
-      max_value_currency: (field, [amountAe]) => new ConvertibleToString(() => {
-        let amount = +amountAe;
-        if (store.state.currencies.swapped) {
-          store.state.observables.rate
-            .subscribe((rate) => { amount *= rate; })
-            .unsubscribe();
-        }
-        const approximateAmount = +amount.toPrecision(5);
-        return i18n.t('validation.max_value', [
-          `${approximateAmount === amount ? '' : '~'}${approximateAmount}`,
-        ]);
-      }),
+      max_value_currency: genMaxMinValueCurrencyMessageGenerator(true),
+      min_value_currency: genMaxMinValueCurrencyMessageGenerator(false),
     },
   });
 };
