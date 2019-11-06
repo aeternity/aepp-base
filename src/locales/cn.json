@@ -13,6 +13,15 @@
   "hours": "{n} hours | {n} hour | {n} hours",
   "days": "{n} days | {n} day | {n} days",
 
+  "currencies": {
+    "usd": "US dollar",
+    "eur": "Euro",
+    "btc": "Bitcoin",
+    "gbp": "Pound sterling",
+    "aud": "Australian dollar",
+    "cny": "Chinese yuan"
+  },
+
   "add-to-home-screen": {
     "note": "请添加这个app到主屏幕.",
     "button": "Add",
