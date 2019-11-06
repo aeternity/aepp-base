@@ -13,7 +13,7 @@
     </div>
 
     <template slot="footer">
-      <AeButton :to="`${currentNetwork.explorerUrl}/#/tx/${transactionHash}`">
+      <AeButton :to="`${currentNetwork.explorerUrl}/transactions/${transactionHash}`">
         {{ $t('transfer.send.resolved.to-explorer') }}
       </AeButton>
       <AeButton
