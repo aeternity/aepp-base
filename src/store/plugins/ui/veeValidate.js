@@ -20,7 +20,6 @@ Validator.extend('min', min);
 Validator.extend('required', required);
 
 Validator.extend('address', value => Crypto.isAddressValid(value));
-Validator.extend('account', value => Crypto.isAddressValid(value));
 Validator.extend('max_value', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('max_value_currency', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('min_value', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
@@ -69,13 +68,14 @@ Validator.localize('en', {
 });
 
 export default (store) => {
-  Validator.extend(
-    'aens_name_unregistered',
-    throttle(
-      value => store.state.sdk.aensQuery(value).then(() => false, () => true),
-      300,
-    ),
+  const checkName = registered => throttle(
+    value => store.state.sdk.aensQuery(value).then(() => registered, () => !registered),
+    300,
   );
+  const checkNameRegistered = checkName(true);
+
+  Validator.extend('aens_name_unregistered', checkName(false));
+  Validator.extend('account', value => Crypto.isAddressValid(value) || checkNameRegistered(value));
 
   const genMaxMinValueCurrencyMessageGenerator = isMax => (field, [amountAe]) => (
     new ConvertibleToString(() => {

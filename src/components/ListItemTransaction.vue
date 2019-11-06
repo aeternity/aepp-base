@@ -3,7 +3,7 @@
     v-bind="$attrs"
     class="list-item-transaction"
     :class="{ pending }"
-    :title="peerName || formatAddress(peerId)"
+    :title="peerName || formatAddress(peerAddress)"
     :title-monospace="!peerName"
     :subtitle="pending
       ? $t('transfer.transaction.pending')
@@ -11,10 +11,10 @@
     subtitle-monospace
     v-on="$listeners"
   >
-    <template v-if="peerId">
+    <template v-if="peerAddress">
       <AeIdenticon
         slot="icon"
-        :address="peerId"
+        :address="peerAddress"
       />
     </template>
 
@@ -52,6 +52,9 @@ export default {
     peerName(state, { get }) {
       if (!this.peerId) return this.$t('transfer.transaction.type')[this.tx.type];
       return get(this.peerId);
+    },
+    peerAddress(state, { getAddress }) {
+      return this.peerId && getAddress(this.peerId);
     },
   }),
   methods: { formatAddress },

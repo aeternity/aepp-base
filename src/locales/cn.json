@@ -203,7 +203,7 @@
       "to": {
         "guide": "<primary>新转账</primary><br>从",
         "recipient": "账户",
-        "address": "ak_ …",
+        "address-or-name": "ak_ … or name.chain",
         "paste": "复制",
         "scan": "扫描",
         "scan-address": "Scan AE Address",

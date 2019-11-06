@@ -203,7 +203,7 @@
       "to": {
         "guide": "<primary>Новый перевод</primary><br />из <account />",
         "recipient": "Получатель",
-        "address": "ak_ …",
+        "address-or-name": "ak_ … или name.chain",
         "paste": "Вставить",
         "scan": "Сканировать",
         "scan-address": "Сканировать AE адрес",

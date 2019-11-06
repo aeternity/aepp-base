@@ -203,7 +203,7 @@
       "to": {
         "guide": "<primary>New Transfer</primary><br />from <account />",
         "recipient": "Recipient",
-        "address": "ak_ …",
+        "address-or-name": "ak_ … or name.chain",
         "paste": "Paste",
         "scan": "Scan",
         "scan-address": "Scan AE Address",
