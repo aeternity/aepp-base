@@ -31,7 +31,7 @@
         <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
 
-      <ButtonPlain :to="{ name: 'name-list' }">
+      <ButtonPlain :to="{ name: 'name-list-personal' }">
         <Contacts />
         <div>{{ $t('name.title') }}</div>
       </ButtonPlain>
