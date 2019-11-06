@@ -14,7 +14,10 @@
       <ButtonFlat :to="{ name: 'name-list', params: { view: 'max-bid' } }">
         <ArrowChart />
       </ButtonFlat>
-      <ButtonFlat :to="{ name: 'name-list-personal' }">
+      <ButtonFlat
+        :to="{ name: 'name-list-personal' }"
+        highlighted-when-exact-active
+      >
         <Contacts />
       </ButtonFlat>
     </ButtonGroup>

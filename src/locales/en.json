@@ -13,6 +13,15 @@
   "hours": "{n} hours | {n} hour | {n} hours",
   "days": "{n} days | {n} day | {n} days",
 
+  "currencies": {
+    "usd": "US dollar",
+    "eur": "Euro",
+    "btc": "Bitcoin",
+    "gbp": "Pound sterling",
+    "aud": "Australian dollar",
+    "cny": "Chinese yuan"
+  },
+
   "add-to-home-screen": {
     "note": "Please add this app to home screen.",
     "button": "Add",
@@ -194,7 +203,7 @@
       "to": {
         "guide": "<primary>New Transfer</primary><br />from <account />",
         "recipient": "Recipient",
-        "address": "ak_ …",
+        "address-or-name": "ak_ … or name.chain",
         "paste": "Paste",
         "scan": "Scan",
         "scan-address": "Scan AE Address",
@@ -434,7 +443,8 @@
       "personal-note": "Claim a name for your account!",
       "personal-explanation": "Tap the “+” button below to claim a name and associate it with one of your accounts.",
       "no-auctions": "There are no auctions matching these criteria.",
-      "registered": "Registered Names"
+      "registered": "Registered Names",
+      "active-bids": "Active Bids"
     },
 
     "details": {

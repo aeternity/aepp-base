@@ -13,6 +13,15 @@
   "hours": "{n} hours | {n} hour | {n} hours",
   "days": "{n} days | {n} day | {n} days",
 
+  "currencies": {
+    "usd": "US dollar",
+    "eur": "Euro",
+    "btc": "Bitcoin",
+    "gbp": "Pound sterling",
+    "aud": "Australian dollar",
+    "cny": "Chinese yuan"
+  },
+
   "add-to-home-screen": {
     "note": "Agregue esta aplicación a la pantalla de inicio",
     "button": "Agregar",
@@ -194,7 +203,7 @@
       "to": {
         "guide": "<primary>Nueva transferencia</primary><br /> desde <account />",
         "recipient": "Destinatario",
-        "address": "ak_ …",
+        "address-or-name": "ak_ … or name.chain",
         "paste": "Pegar",
         "scan": "Escanear",
         "scan-address": "Scan AE Address",
@@ -434,7 +443,8 @@
       "personal-note": "¡Reclama un nombre para tu cuenta!",
       "personal-explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
       "no-auctions": "There are no auctions matching these criteria.",
-      "registered": "Nombres registrados"
+      "registered": "Nombres registrados",
+      "active-bids": "Active Bids"
     },
 
     "details": {

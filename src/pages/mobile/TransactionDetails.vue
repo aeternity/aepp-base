@@ -89,7 +89,7 @@
     <AeButton
       slot="footer"
       :fill="transaction.received ? 'alternative' : 'primary'"
-      :to="`${currentNetwork.explorerUrl}/#/tx/${hash}`"
+      :to="`${currentNetwork.explorerUrl}/transactions/${hash}`"
     >
       {{ $t('transfer.transaction.details.to-explorer') }}
     </AeButton>

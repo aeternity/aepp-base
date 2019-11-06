@@ -1,6 +1,7 @@
 <template>
   <ButtonPlain
     class="button-flat"
+    :class="{ 'exact-active': highlightedWhenExactActive }"
     v-bind="$attrs"
     v-on="$listeners"
   >
@@ -13,6 +14,7 @@ import ButtonPlain from '../ButtonPlain.vue';
 
 export default {
   components: { ButtonPlain },
+  props: { highlightedWhenExactActive: Boolean },
 };
 </script>
 
@@ -40,7 +42,8 @@ export default {
     border-radius: 0 $border-radius $border-radius 0;
   }
 
-  &.router-link-active {
+  &.router-link-exact-active.exact-active,
+  &.router-link-active:not(.exact-active) {
     background-color: $color-primary;
     color: #fff;
   }

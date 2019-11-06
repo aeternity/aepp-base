@@ -238,7 +238,7 @@ export default [{
   props: true,
 }, {
   name: 'name-list-personal',
-  path: '/names/personal',
+  path: '/names',
   component: NameListPersonal,
   beforeEnter: ensureLoggedIn,
 }, {
@@ -278,12 +278,9 @@ export default [{
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'name-list',
-  path: '/names/:view?/:page?',
+  path: '/names/:view/:page?',
   component: NameList,
-  beforeEnter: mergeEnterHandlers(
-    ensureLoggedIn,
-    (to, from, next) => next(!to.params.view ? { name: 'name-list-personal' } : undefined),
-  ),
+  beforeEnter: ensureLoggedIn,
   props: ({ params: { view, page } }) => ({ view, page: page && +page }),
 }, {
   name: 'settings',

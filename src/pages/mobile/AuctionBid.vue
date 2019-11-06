@@ -41,10 +41,10 @@
           v-validate="{
             required: true,
             decimal: MAGNITUDE,
-            min_value_exclusive: highestBid ? highestBid.multipliedBy(1.05).toString() : 0,
+            min_value_currency: highestBid ? highestBid.multipliedBy(1.05).toString() : 0,
           }"
           :error="errors.has('amount')"
-          :footer="errors.first('amount') || ' '"
+          :footer="errors.first('amount') && errors.first('amount').toString() || ' '"
           autofocus
           name="amount"
         />
@@ -66,7 +66,7 @@
 
     <AeButton
       fill="secondary"
-      :loader="busy"
+      :spinner="busy"
       :form="_uid"
       :disabled="errors.has('name') || !expiration || busy"
     >

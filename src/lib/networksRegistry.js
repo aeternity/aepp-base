@@ -2,21 +2,17 @@ import { pick } from 'lodash-es';
 
 const getUrl = networkName => `https://node.${networkName}.aeternal.io`;
 const getMiddlewareUrl = networkName => `https://${networkName}.aeternal.io`;
-const getExplorerUrl = (networkName = '') => `https://${networkName}${networkName ? '.' : ''}explorer.aepps.com`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
   name,
   url: getUrl(pathName),
   middlewareUrl: getMiddlewareUrl(pathName),
-  explorerUrl: getExplorerUrl(pathName),
+  explorerUrl: getMiddlewareUrl(pathName),
   compilerUrl: 'https://compiler.aepps.com',
   ...options,
 });
 
-export const defaultNetwork = genNetwork('Lima-net', {
-  pathName: 'mainnet',
-  explorerUrl: getExplorerUrl(),
-});
+export const defaultNetwork = genNetwork('Lima-net', { pathName: 'mainnet' });
 
 const testNetwork = genNetwork('Testnet');
 

@@ -26,7 +26,7 @@
       </ButtonGroup>
     </template>
 
-    <AeLoader v-if="auctions === null" />
+    <AeSpinner v-if="auctions === null" />
     <h2 v-else-if="auctions.length === 0">
       {{ $t('name.list.no-auctions') }}
     </h2>
@@ -73,7 +73,7 @@ import MobilePage from '../../components/mobile/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import ButtonGroup from '../../components/mobile/ButtonGroup.vue';
 import ButtonFlat from '../../components/mobile/ButtonFlat.vue';
-import AeLoader from '../../components/AeLoader.vue';
+import AeSpinner from '../../components/AeSpinner.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemAuction from '../../components/mobile/ListItemAuction.vue';
 import { ArrowDouble } from '../../components/icons';
@@ -90,7 +90,7 @@ export default {
     NameListHeader,
     ButtonGroup,
     ButtonFlat,
-    AeLoader,
+    AeSpinner,
     AeCard,
     ListItemAuction,
     ArrowDouble,

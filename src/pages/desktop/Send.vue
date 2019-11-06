@@ -17,7 +17,7 @@
     <form @submit.prevent="send">
       <AeInputAccount
         v-model="accountTo"
-        v-validate="'required|address'"
+        v-validate="'required|account'"
         :error="errors.has('accountTo')"
         :footer="errors.first('accountTo')"
         autofocus
@@ -51,7 +51,7 @@
 
       <AeButton
         :disabled="errors.any() || busy"
-        :loader="busy"
+        :spinner="busy"
       >
         {{ $t('transfer.send.transfer') }}
       </AeButton>
@@ -62,6 +62,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
+import { mapState } from 'vuex';
 import SendAmountMixin from '../SendAmountMixin';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
@@ -93,10 +94,15 @@ export default {
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
+  computed: mapState('names', {
+    accountToAddress(state, { getAddress }) {
+      return getAddress(this.accountTo);
+    },
+  }),
   methods: {
     async send() {
       if (!await this.$validator.validateAll()) return;
-      if (this.activeAccount.address === this.accountTo) {
+      if (this.activeAccount.address === this.accountToAddress) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
           text: this.$t('transfer.send.to.confirm-sending-to-same-account'),

@@ -1,7 +1,7 @@
 <template>
   <svg
     viewBox="0 0 100 100"
-    class="ae-loader"
+    class="ae-spinner"
   >
     <defs>
       <radialGradient
@@ -34,7 +34,7 @@
 <style lang="scss" scoped>
 @import '../styles/functions';
 
-.ae-loader {
+.ae-spinner {
   width: rem(36px);
   animation: rotation 2s linear infinite;
 

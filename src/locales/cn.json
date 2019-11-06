@@ -13,6 +13,15 @@
   "hours": "{n} hours | {n} hour | {n} hours",
   "days": "{n} days | {n} day | {n} days",
 
+  "currencies": {
+    "usd": "US dollar",
+    "eur": "Euro",
+    "btc": "Bitcoin",
+    "gbp": "Pound sterling",
+    "aud": "Australian dollar",
+    "cny": "Chinese yuan"
+  },
+
   "add-to-home-screen": {
     "note": "请添加这个app到主屏幕.",
     "button": "Add",
@@ -194,7 +203,7 @@
       "to": {
         "guide": "<primary>新转账</primary><br>从",
         "recipient": "账户",
-        "address": "ak_ …",
+        "address-or-name": "ak_ … or name.chain",
         "paste": "复制",
         "scan": "扫描",
         "scan-address": "Scan AE Address",
@@ -434,7 +443,8 @@
       "personal-note": "为您的账户申请一个名称!",
       "personal-explanation": "点击“+”按钮来申请并与您的帐号关联.",
       "no-auctions": "There are no auctions matching these criteria.",
-      "registered": "注册名称"
+      "registered": "注册名称",
+      "active-bids": "Active Bids"
     },
 
     "details": {

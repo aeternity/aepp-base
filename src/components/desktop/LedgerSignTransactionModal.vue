@@ -5,7 +5,7 @@
   >
     <LedgerModalNanoS />
 
-    <AeLoader />
+    <AeSpinner />
 
     <ModalHeader>
       {{ $t('ledger.modal.sign-transaction') }}
@@ -15,14 +15,14 @@
 
 <script>
 import LedgerModal from './LedgerModal.vue';
-import AeLoader from '../AeLoader.vue';
+import AeSpinner from '../AeSpinner.vue';
 import LedgerModalNanoS from './LedgerModalNanoS.vue';
 import ModalHeader from './ModalHeader.vue';
 
 export default {
   components: {
     LedgerModal,
-    AeLoader,
+    AeSpinner,
     LedgerModalNanoS,
     ModalHeader,
   },
@@ -32,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/functions';
 
-.ledger-sign-transaction .ae-loader {
+.ledger-sign-transaction .ae-spinner {
   display: block;
   margin: rem(60px) auto;
 }

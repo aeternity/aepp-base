@@ -2,10 +2,10 @@
   <span
     v-copy-on-click="address"
     class="account-inline"
-    :class="{ address: !name }"
+    :class="{ address: !nameFromStore }"
   >
-    <AeIdenticon :address="address" />
-    {{ name ? name : formatAddress(address, 'short') }}
+    <AeIdenticon :address="addressFromStore" />
+    {{ nameFromStore ? nameFromStore : formatAddress(addressFromStore, 'short') }}
   </span>
 </template>
 
@@ -22,7 +22,10 @@ export default {
     address: { type: String, required: true },
   },
   computed: mapState('names', {
-    name(state, { get }) {
+    addressFromStore(state, { getAddress }) {
+      return getAddress(this.address);
+    },
+    nameFromStore(state, { get }) {
       return get(this.address);
     },
   }),

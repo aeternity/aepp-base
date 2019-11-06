@@ -40,7 +40,7 @@
       />
     </template>
 
-    <AeLoader v-if="transactions.status === 'loading'" />
+    <AeSpinner v-if="transactions.status === 'loading'" />
     <div
       v-if="['ended', 'error'].includes(transactions.status)"
       class="no-transactions"
@@ -61,7 +61,7 @@ import { mapGetters } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
-import AeLoader from '../../components/AeLoader.vue';
+import AeSpinner from '../../components/AeSpinner.vue';
 import ListItemTransaction from '../../components/ListItemTransaction.vue';
 
 export default {
@@ -69,7 +69,7 @@ export default {
     MobilePage,
     AccountInline,
     ButtonPlain,
-    AeLoader,
+    AeSpinner,
     ListItemTransaction,
   },
   props: {
