@@ -25,7 +25,7 @@
     </template>
 
     <template v-if="owned && owned.bids.length">
-      <h2>Active Bids</h2>
+      <h2>{{ $t('name.list.active-bids') }}</h2>
       <AeCard fill="maximum">
         <ListItemAccount
           v-for="bid in owned.bids"

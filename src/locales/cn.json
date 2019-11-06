@@ -443,7 +443,8 @@
       "personal-note": "为您的账户申请一个名称!",
       "personal-explanation": "点击“+”按钮来申请并与您的帐号关联.",
       "no-auctions": "There are no auctions matching these criteria.",
-      "registered": "注册名称"
+      "registered": "注册名称",
+      "active-bids": "Active Bids"
     },
 
     "details": {

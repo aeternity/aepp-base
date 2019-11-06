@@ -443,7 +443,8 @@
       "personal-note": "Claim a name for your account!",
       "personal-explanation": "Tap the “+” button below to claim a name and associate it with one of your accounts.",
       "no-auctions": "There are no auctions matching these criteria.",
-      "registered": "Registered Names"
+      "registered": "Registered Names",
+      "active-bids": "Active Bids"
     },
 
     "details": {
