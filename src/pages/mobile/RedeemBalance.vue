@@ -1,9 +1,9 @@
 <template>
   <div
     v-if="busy"
-    class="loader"
+    class="spinner"
   >
-    <AeLoader />
+    <AeSpinner />
   </div>
   <MobilePage
     v-else
@@ -39,7 +39,7 @@ import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { Ae, Transaction, Crypto } from '@aeternity/aepp-sdk/es';
 import { handleUnknownError } from '../../lib/utils';
-import AeLoader from '../../components/AeLoader.vue';
+import AeSpinner from '../../components/AeSpinner.vue';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
 import Balance from '../../components/Balance.vue';
@@ -49,7 +49,7 @@ import { MIN_SPEND_TX_FEE, MAGNITUDE } from '../../lib/constants';
 
 export default {
   components: {
-    AeLoader,
+    AeSpinner,
     MobilePage,
     Guide,
     Balance,
@@ -139,11 +139,11 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/typography';
 
-.loader {
+.spinner {
   flex-grow: 1;
   display: flex;
 
-  .ae-loader {
+  .ae-spinner {
     margin: auto;
   }
 }

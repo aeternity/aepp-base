@@ -1,16 +1,16 @@
 <template>
   <div class="send-confirm">
-    <AeLoader />
+    <AeSpinner />
   </div>
 </template>
 
 <script>
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../lib/constants';
-import AeLoader from '../../components/AeLoader.vue';
+import AeSpinner from '../../components/AeSpinner.vue';
 
 export default {
-  components: { AeLoader },
+  components: { AeSpinner },
   props: {
     to: {
       type: String,
@@ -55,7 +55,7 @@ export default {
   flex-grow: 1;
   display: flex;
 
-  .ae-loader {
+  .ae-spinner {
     margin: auto;
   }
 }

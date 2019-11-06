@@ -5,17 +5,17 @@
     class="ae-button"
     v-on="$listeners"
   >
-    <AeLoader v-if="loader" />
+    <AeSpinner v-if="spinner" />
     <slot />
   </ButtonPlain>
 </template>
 
 <script>
 import ButtonPlain from './ButtonPlain.vue';
-import AeLoader from './AeLoader.vue';
+import AeSpinner from './AeSpinner.vue';
 
 export default {
-  components: { ButtonPlain, AeLoader },
+  components: { ButtonPlain, AeSpinner },
   props: {
     fill: {
       type: String,
@@ -37,7 +37,7 @@ export default {
       default: 'medium',
     },
     plain: Boolean,
-    loader: Boolean,
+    spinner: Boolean,
   },
 };
 </script>
@@ -123,7 +123,7 @@ export default {
     }
   }
 
-  .ae-loader {
+  .ae-spinner {
     width: rem(24px);
     vertical-align: middle;
   }

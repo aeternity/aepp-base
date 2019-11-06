@@ -6,7 +6,7 @@
     :left-button-to="previousRoute || { name: 'name-list', params: { view: 'ending-soonest' } }"
     :title="name"
   >
-    <AeLoader v-if="bids === null" />
+    <AeSpinner v-if="bids === null" />
     <h2 v-else-if="bids.length === 0">
       {{ $t('name.details.auction-not-found') }}
     </h2>
@@ -45,7 +45,7 @@
 import { pick } from 'lodash-es';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import MobilePage from '../../components/mobile/Page.vue';
-import AeLoader from '../../components/AeLoader.vue';
+import AeSpinner from '../../components/AeSpinner.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemBid from '../../components/mobile/ListItemBid.vue';
 import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
@@ -53,7 +53,7 @@ import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
 export default {
   components: {
     MobilePage,
-    AeLoader,
+    AeSpinner,
     AeCard,
     ListItemBid,
     ButtonAddFixed,

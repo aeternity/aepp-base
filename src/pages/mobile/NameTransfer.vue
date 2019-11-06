@@ -35,7 +35,7 @@
 
     <AeButton
       :disabled="busy || errors.any()"
-      :loader="busy"
+      :spinner="busy"
       :form="_uid"
       fill="secondary"
     >

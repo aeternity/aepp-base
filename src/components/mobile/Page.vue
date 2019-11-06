@@ -178,7 +178,7 @@ export default {
           color: $color-neutral;
         }
 
-        .ae-loader {
+        .ae-spinner {
           display: block;
           margin: rem(60px) auto;
         }
