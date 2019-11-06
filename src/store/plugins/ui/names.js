@@ -92,7 +92,7 @@ export default (store) => {
           throw new Error(`Unknown id: ${id}`);
         }
       },
-      async fetchOwned({ rootState, commit }) {
+      async fetchOwned({ rootState, commit, dispatch }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         const [names, bids] = await Promise.all([
           (await Promise.all(rootState.accounts.list.map(({ address }) => Promise.all([
@@ -113,16 +113,20 @@ export default (store) => {
               }),
             sdk.middleware.getActiveNames({ owner: address }),
           ])))).flat(2),
-          (await Promise.all(rootState.accounts.list
-            .map(({ address }) => sdk.middleware.getNameAuctionsBidsbyAddress(address))))
+          Promise.all([
+            dispatch('getHeight'),
+            ...rootState.accounts.list
+              .map(({ address }) => sdk.middleware.getNameAuctionsBidsbyAddress(address)),
+          ]).then(([height, ...bidsByAddress]) => bidsByAddress
             .flat()
+            .filter(({ nameAuctionEntry }) => nameAuctionEntry.expiration > height)
             .filter(({ nameAuctionEntry, transaction }) => nameAuctionEntry
               .winningBid === transaction.tx.nameFee)
             .map(bid => update(
               bid,
               'transaction.tx.nameFee',
               v => BigNumber(v).shiftedBy(-MAGNITUDE),
-            )),
+            ))),
         ]);
         commit('setOwned', { names, bids });
       },
