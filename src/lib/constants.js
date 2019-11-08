@@ -32,3 +32,5 @@ export const MAX_REASONABLE_FEE_MICRO = toMicro(MAX_REASONABLE_FEE);
 export const AENS_DOMAIN = '.chain';
 export const MAX_AUCTION_NAME_LENGTH = 12 + AENS_DOMAIN.length;
 export const MAX_NAME_TTL = 50000;
+
+export const NAME_LIST_ROUTE_NAMES = ['name-list', 'auction-list', 'auction-list-character-length'];

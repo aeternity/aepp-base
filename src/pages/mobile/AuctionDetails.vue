@@ -3,7 +3,7 @@
     header-fill="light"
     fill="neutral"
     left-button-icon-name="back"
-    :left-button-to="nameListRouteParams"
+    :left-button-to="{ name: 'name-list' }"
     :title="name"
   >
     <AeSpinner v-if="bids === null" />
@@ -43,7 +43,6 @@
 
 <script>
 import { pick } from 'lodash-es';
-import { mapState } from 'vuex';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
@@ -67,9 +66,6 @@ export default {
     bids: null,
   }),
   computed: {
-    ...mapState({
-      nameListRouteParams: ({ mobile }) => mobile.nameListRouteParams,
-    }),
     currentBid() {
       if (!this.bids) return null;
       return this.bids.reduce((a, b) => (a.nameFee.isGreaterThan(b.nameFee) ? a : b));

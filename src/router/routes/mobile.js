@@ -1,4 +1,5 @@
 import { merge } from 'lodash-es';
+import { NAME_LIST_ROUTE_NAMES } from '../../lib/constants';
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
 import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
@@ -24,10 +25,10 @@ import SendAmount from '../../pages/mobile/SendAmount.vue';
 import SendConfirm from '../../pages/mobile/SendConfirm.vue';
 import TransactionList from '../../pages/mobile/TransactionList.vue';
 import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
-import NameList from '../../pages/mobile/NameList.vue';
+import AuctionList from '../../pages/mobile/AuctionList.vue';
 import AuctionDetails from '../../pages/mobile/AuctionDetails.vue';
 import AuctionBid from '../../pages/mobile/AuctionBid.vue';
-import NameListPersonal from '../../pages/mobile/NameListPersonal.vue';
+import NameList from '../../pages/mobile/NameList.vue';
 import NameDetails from '../../pages/mobile/NameDetails.vue';
 import NameNew from '../../pages/mobile/NameNew.vue';
 import NameTransfer from '../../pages/mobile/NameTransfer.vue';
@@ -216,9 +217,9 @@ export default [{
   component: RedeemBalance,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-list-character-length',
+  name: 'auction-list-character-length',
   path: '/names/character-length/:length?/:page?',
-  component: NameList,
+  component: AuctionList,
   beforeEnter: mergeEnterHandlers(
     ensureLoggedIn,
     (to, from, next) => next(
@@ -237,10 +238,18 @@ export default [{
   beforeEnter: ensureLoggedIn,
   props: true,
 }, {
-  name: 'name-list-personal',
+  name: 'name-list',
   path: '/names',
-  component: NameListPersonal,
-  beforeEnter: ensureLoggedIn,
+  component: NameList,
+  beforeEnter: mergeEnterHandlers(
+    ensureLoggedIn,
+    (to, from, next) => {
+      if (NAME_LIST_ROUTE_NAMES.includes(from.name)) return next(undefined);
+      const { nameListRouteParams: params } = store.state.mobile;
+      if (params && params.name === 'name-list') return next(undefined);
+      return next(params || undefined);
+    },
+  ),
 }, {
   name: 'name-details',
   path: '/names/personal/:name',
@@ -277,9 +286,9 @@ export default [{
   component: NameNew,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-list',
+  name: 'auction-list',
   path: '/names/:view/:page?',
-  component: NameList,
+  component: AuctionList,
   beforeEnter: ensureLoggedIn,
   props: ({ params: { view, page } }) => ({ view, page: page && +page }),
 }, {

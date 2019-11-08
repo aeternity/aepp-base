@@ -31,7 +31,7 @@
         <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
 
-      <ButtonPlain :to="nameListRouteParams">
+      <ButtonPlain :to="{ name: 'name-list' }">
         <Contacts />
         <div>{{ $t('name.title') }}</div>
       </ButtonPlain>
@@ -73,7 +73,6 @@ export default {
     ...mapGetters({ activeAccount: 'accounts/active' }),
     ...mapState({
       browserPath: ({ mobile }) => mobile.browserPath,
-      nameListRouteParams: ({ mobile }) => mobile.nameListRouteParams,
     }),
   },
   methods: {

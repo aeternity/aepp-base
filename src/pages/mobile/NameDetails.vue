@@ -3,7 +3,7 @@
     class="name-details"
     :title="$t('name.details.title')"
     left-button-icon-name="back"
-    :left-button-to="{ name: 'name-list-personal' }"
+    :left-button-to="{ name: 'name-list' }"
   >
     <DetailsList
       :object="details"

@@ -8,7 +8,7 @@ export default {
     followers: {},
     stepFraction: null,
     browserPath: { name: 'apps' },
-    nameListRouteParams: { name: 'name-list-personal' },
+    nameListRouteParams: null,
     readSecurityCourses: [],
     skipAddingToHomeScreen: false,
   },
