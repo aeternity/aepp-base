@@ -24,10 +24,10 @@ import SendAmount from '../../pages/mobile/SendAmount.vue';
 import SendConfirm from '../../pages/mobile/SendConfirm.vue';
 import TransactionList from '../../pages/mobile/TransactionList.vue';
 import TransactionDetails from '../../pages/mobile/TransactionDetails.vue';
-import NameList from '../../pages/mobile/NameList.vue';
+import AuctionList from '../../pages/mobile/AuctionList.vue';
 import AuctionDetails from '../../pages/mobile/AuctionDetails.vue';
 import AuctionBid from '../../pages/mobile/AuctionBid.vue';
-import NameListPersonal from '../../pages/mobile/NameListPersonal.vue';
+import NameList from '../../pages/mobile/NameList.vue';
 import NameDetails from '../../pages/mobile/NameDetails.vue';
 import NameNew from '../../pages/mobile/NameNew.vue';
 import NameTransfer from '../../pages/mobile/NameTransfer.vue';
@@ -218,7 +218,7 @@ export default [{
 }, {
   name: 'name-list-character-length',
   path: '/names/character-length/:length?/:page?',
-  component: NameList,
+  component: AuctionList,
   beforeEnter: mergeEnterHandlers(
     ensureLoggedIn,
     (to, from, next) => next(
@@ -239,7 +239,7 @@ export default [{
 }, {
   name: 'name-list-personal',
   path: '/names',
-  component: NameListPersonal,
+  component: NameList,
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'name-details',
@@ -279,7 +279,7 @@ export default [{
 }, {
   name: 'name-list',
   path: '/names/:view/:page?',
-  component: NameList,
+  component: AuctionList,
   beforeEnter: ensureLoggedIn,
   props: ({ params: { view, page } }) => ({ view, page: page && +page }),
 }, {
