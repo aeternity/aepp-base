@@ -1,4 +1,4 @@
-import browserPathTracker from './browserPathTracker';
+import pathTracker from './pathTracker';
 import connectionStatusTracker from './connectionStatusTracker';
 import desktopGuide from './desktopGuide';
 import languages from './languages';
@@ -21,7 +21,7 @@ export default store => [
   veeValidate,
   ...process.env.IS_MOBILE_DEVICE
     ? [
-      browserPathTracker,
+      pathTracker,
       notificationOnRemoteConnection,
       unlockWalletIfNotEncrypted,
     ]

@@ -3,7 +3,7 @@
     class="auction-bid"
     :header-fill="activeColor"
     right-button-icon-name="close"
-    :right-button-to="name ? { name: 'auction-details', params: { name } } : { name: 'name-list' }"
+    :right-button-to="nameListRouteParams"
     v-bind="amountStep && {
       leftButtonIconName: 'back',
       leftButtonTo: backTo,
@@ -78,7 +78,7 @@
 <script>
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import { MAGNITUDE } from '../../lib/constants';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -114,6 +114,9 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      nameListRouteParams: ({ mobile }) => mobile.nameListRouteParams,
+    }),
     ...mapGetters('accounts', ['activeColor']),
     backTo() {
       if (!this.name && !this.expiration) return { name: 'name-list' };
