@@ -1,4 +1,5 @@
 import { merge } from 'lodash-es';
+import { NAME_LIST_ROUTE_NAMES } from '../../lib/constants';
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
 import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
@@ -216,7 +217,7 @@ export default [{
   component: RedeemBalance,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-list-character-length',
+  name: 'auction-list-character-length',
   path: '/names/character-length/:length?/:page?',
   component: AuctionList,
   beforeEnter: mergeEnterHandlers(
@@ -237,10 +238,18 @@ export default [{
   beforeEnter: ensureLoggedIn,
   props: true,
 }, {
-  name: 'name-list-personal',
+  name: 'name-list',
   path: '/names',
   component: NameList,
-  beforeEnter: ensureLoggedIn,
+  beforeEnter: mergeEnterHandlers(
+    ensureLoggedIn,
+    (to, from, next) => {
+      if (NAME_LIST_ROUTE_NAMES.includes(from.name)) return next(undefined);
+      const { nameListRouteParams: params } = store.state.mobile;
+      if (params && params.name === 'name-list') return next(undefined);
+      return next(params || undefined);
+    },
+  ),
 }, {
   name: 'name-details',
   path: '/names/personal/:name',
@@ -277,7 +286,7 @@ export default [{
   component: NameNew,
   beforeEnter: ensureLoggedIn,
 }, {
-  name: 'name-list',
+  name: 'auction-list',
   path: '/names/:view/:page?',
   component: AuctionList,
   beforeEnter: ensureLoggedIn,

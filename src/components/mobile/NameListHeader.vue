@@ -5,17 +5,17 @@
     </Guide>
 
     <ButtonGroup>
-      <ButtonFlat :to="{ name: 'name-list', params: { view: 'ending-soonest' } }">
+      <ButtonFlat :to="{ name: 'auction-list', params: { view: 'ending-soonest' } }">
         <Clock />
       </ButtonFlat>
-      <ButtonFlat :to="{ name: 'name-list-character-length' }">
+      <ButtonFlat :to="{ name: 'auction-list-character-length' }">
         3-4…
       </ButtonFlat>
-      <ButtonFlat :to="{ name: 'name-list', params: { view: 'max-bid' } }">
+      <ButtonFlat :to="{ name: 'auction-list', params: { view: 'max-bid' } }">
         <ArrowChart />
       </ButtonFlat>
       <ButtonFlat
-        :to="{ name: 'name-list-personal' }"
+        :to="{ name: 'name-list' }"
         highlighted-when-exact-active
       >
         <Contacts />

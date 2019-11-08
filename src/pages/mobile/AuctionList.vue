@@ -19,7 +19,7 @@
         <ButtonFlat
           v-for="l in times(6, idx => idx + lineStartsWith)"
           :key="l"
-          :to="{ name: 'name-list-character-length', params: { length: l } }"
+          :to="{ name: 'auction-list-character-length', params: { length: l } }"
         >
           {{ l }}
         </ButtonFlat>
