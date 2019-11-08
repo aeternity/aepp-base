@@ -5,7 +5,7 @@
     <div class="wrapper">
       <ButtonPlain
         v-if="!$globals.DISABLED_BROWSER"
-        :to="browserPath || { name: 'apps' }"
+        :to="browserPath"
       >
         <Grid />
         <div>{{ $t('app.title') }}</div>
@@ -31,7 +31,7 @@
         <AeIdenticon :address="activeAccount.address" />
       </ButtonPlain>
 
-      <ButtonPlain :to="{ name: 'name-list-personal' }">
+      <ButtonPlain :to="nameListRouteParams">
         <Contacts />
         <div>{{ $t('name.title') }}</div>
       </ButtonPlain>
@@ -73,6 +73,7 @@ export default {
     ...mapGetters({ activeAccount: 'accounts/active' }),
     ...mapState({
       browserPath: ({ mobile }) => mobile.browserPath,
+      nameListRouteParams: ({ mobile }) => mobile.nameListRouteParams,
     }),
   },
   methods: {

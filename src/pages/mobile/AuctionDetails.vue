@@ -3,7 +3,7 @@
     header-fill="light"
     fill="neutral"
     left-button-icon-name="back"
-    :left-button-to="previousRoute || { name: 'name-list', params: { view: 'ending-soonest' } }"
+    :left-button-to="nameListRouteParams"
     :title="name"
   >
     <AeSpinner v-if="bids === null" />
@@ -43,6 +43,7 @@
 
 <script>
 import { pick } from 'lodash-es';
+import { mapState } from 'vuex';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
@@ -64,9 +65,11 @@ export default {
   data: () => ({
     expiration: 0,
     bids: null,
-    previousRoute: null,
   }),
   computed: {
+    ...mapState({
+      nameListRouteParams: ({ mobile }) => mobile.nameListRouteParams,
+    }),
     currentBid() {
       if (!this.bids) return null;
       return this.bids.reduce((a, b) => (a.nameFee.isGreaterThan(b.nameFee) ? a : b));
@@ -95,13 +98,6 @@ export default {
       this.bids = res.bids;
     },
     blocksToRelativeTime,
-  },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (!['login', 'auction-bid', 'auction-bid-amount'].includes(from.name)) {
-        vm.previousRoute = from.path; // eslint-disable-line no-param-reassign
-      }
-    });
   },
 };
 </script>

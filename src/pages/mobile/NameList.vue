@@ -190,7 +190,7 @@ export default {
     text-align: center;
 
     span, a {
-      padding: 0 rem(10px);
+      padding: 0 rem(5px);
     }
 
     a {
