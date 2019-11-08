@@ -7,7 +7,7 @@ export default {
   state: {
     followers: {},
     stepFraction: null,
-    browserPath: '',
+    browserPath: { name: 'apps' },
     nameListRouteParams: { name: 'name-list-personal' },
     readSecurityCourses: [],
     skipAddingToHomeScreen: false,

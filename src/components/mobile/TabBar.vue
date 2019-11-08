@@ -5,7 +5,7 @@
     <div class="wrapper">
       <ButtonPlain
         v-if="!$globals.DISABLED_BROWSER"
-        :to="browserPath || { name: 'apps' }"
+        :to="browserPath"
       >
         <Grid />
         <div>{{ $t('app.title') }}</div>
