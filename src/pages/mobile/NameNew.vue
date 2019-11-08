@@ -48,7 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { MAX_AUCTION_NAME_LENGTH } from '../../lib/constants';
+import { MAX_AUCTION_NAME_LENGTH, MAX_NAME_TTL } from '../../lib/constants';
 import { handleUnknownError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
@@ -99,6 +99,7 @@ export default {
           await this.$store.state.sdk.aensUpdate(
             (await this.$store.state.sdk.api.getNameEntryByName(this.name)).id,
             this.$store.getters['accounts/active'].address,
+            { nameTtl: MAX_NAME_TTL },
           );
         }
         this.$store.dispatch('modals/open', {
