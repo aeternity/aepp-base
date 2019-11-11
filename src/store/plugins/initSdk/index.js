@@ -1,7 +1,7 @@
 import { get, isEqual } from 'lodash-es';
-import { handleUnknownError, isNotFoundError, isInternalServerError } from '../../lib/utils';
-import { fetchJson } from '../utils';
-import { i18n } from './ui/languages';
+import { handleUnknownError, isNotFoundError, isInternalServerError } from '../../../lib/utils';
+import { fetchJson } from '../../utils';
+import { i18n } from '../ui/languages';
 
 export default (store) => {
   let recreateSdk;
@@ -16,7 +16,7 @@ export default (store) => {
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/contract'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
-      import(/* webpackChunkName: "sdk" */ './initSdk/PostMessageHandler'),
+      import(/* webpackChunkName: "sdk" */ './PostMessageHandler'),
     ])).map(module => module.default);
 
     class App {
