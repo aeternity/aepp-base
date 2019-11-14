@@ -8,7 +8,9 @@ import { throttle } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { validateMnemonic } from '@aeternity/bip39';
 import { i18n } from './languages';
-import { toUrl, isAensName, ConvertibleToString } from '../../../lib/utils';
+import {
+  toUrl, isAensName, ConvertibleToString, getAddressByNameEntry,
+} from '../../../lib/utils';
 import { getPublicKeyByResponseUrl } from '../../../lib/airGap';
 
 Vue.use(VeeValidate);
@@ -68,14 +70,27 @@ Validator.localize('en', {
 });
 
 export default (store) => {
-  const checkName = registered => throttle(
-    value => store.state.sdk.aensQuery(value).then(() => registered, () => !registered),
+  const NAME_STATES = {
+    REGISTERED: Symbol('name state: registered'),
+    REGISTERED_ADDRESS: Symbol('name state: registered and points to address'),
+    UNREGISTERED: Symbol('name state: unregistered'),
+  };
+
+  const checkName = expectedNameState => throttle(
+    value => store.state.sdk.aensQuery(value).then(
+      nameEntry => ({
+        [NAME_STATES.REGISTERED]: true,
+        [NAME_STATES.REGISTERED_ADDRESS]: !!getAddressByNameEntry(nameEntry),
+        [NAME_STATES.UNREGISTERED]: false,
+      }[expectedNameState]),
+      () => expectedNameState === NAME_STATES.UNREGISTERED,
+    ),
     300,
   );
-  const checkNameRegistered = checkName(true);
+  const checkNameRegisteredAddress = checkName(NAME_STATES.REGISTERED_ADDRESS);
 
-  Validator.extend('aens_name_unregistered', checkName(false));
-  Validator.extend('account', value => Crypto.isAddressValid(value) || checkNameRegistered(value));
+  Validator.extend('aens_name_unregistered', checkName(NAME_STATES.UNREGISTERED));
+  Validator.extend('account', value => Crypto.isAddressValid(value) || checkNameRegisteredAddress(value));
 
   const genMaxMinValueCurrencyMessageGenerator = isMax => (field, [amountAe]) => (
     new ConvertibleToString(() => {
