@@ -131,9 +131,9 @@ export default {
       }
       this.busy = true;
       try {
-        await this.$store.state.sdk[`aens${this.pointing ? 'Update' : 'Transfer'}`](
-          this.nameEntry.nameHash, this.accountTo,
-        );
+        await (this.pointing
+          ? this.$store.dispatch('names/updatePointer', { name: this.name, address: this.accountTo })
+          : this.$store.state.sdk.aensTransfer(this.nameEntry.nameHash, this.accountTo));
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: this.pointing

@@ -17,7 +17,7 @@ export default (store) => {
     },
     getters: {
       get: ({ names }, getters, { accounts: { list } }, rootGetters) => (id, local = true) => {
-        store.dispatch('names/fetch', id);
+        store.dispatch('names/fetch', { id });
         if (names[id].name) return names[id].name;
         if (local) {
           const account = list.find(a => a.address === id);
@@ -27,7 +27,7 @@ export default (store) => {
       },
       getAddress: ({ names }) => (id) => {
         if (Crypto.isAddressValid(id)) return id;
-        store.dispatch('names/fetch', id);
+        store.dispatch('names/fetch', { id });
         if (names[id].address) return names[id].address;
         return '';
       },
@@ -63,8 +63,8 @@ export default (store) => {
       },
       async fetch({
         rootState, state, commit, dispatch,
-      }, id) {
-        if (state.names[id]) return;
+      }, { id, force }) {
+        if (!force && state.names[id]) return;
         commit('set', { key: id });
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         if (id.startsWith('ak_')) {
@@ -140,6 +140,17 @@ export default (store) => {
             nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
           })),
         };
+      },
+      async updatePointer({
+        rootState: { sdk }, state, commit, dispatch,
+      }, { name, address }) {
+        const nameEntry = await sdk.api.getNameEntryByName(name);
+        await sdk.aensUpdate(nameEntry.id, address);
+        const prevAddr = getAddressByNameEntry(nameEntry);
+        if (prevAddr && state.names[prevAddr] && state.names[prevAddr].hash === nameEntry.id) {
+          commit('set', { address: prevAddr });
+        }
+        await dispatch('fetch', { id: name, force: true });
       },
     },
   });
