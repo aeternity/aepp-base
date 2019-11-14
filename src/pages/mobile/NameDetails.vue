@@ -60,6 +60,10 @@ export default {
       return owned && owned.names.find(({ name }) => name === this.name);
     },
   }),
+  async mounted() {
+    const id = setInterval(() => this.$store.dispatch('names/fetchOwned'), 3000);
+    this.$once('hook:destroyed', () => clearInterval(id));
+  },
 };
 </script>
 
