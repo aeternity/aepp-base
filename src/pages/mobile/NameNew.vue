@@ -49,7 +49,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { MAX_AUCTION_NAME_LENGTH } from '../../lib/constants';
-import { handleUnknownError } from '../../lib/utils';
+import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -72,6 +72,24 @@ export default {
       if (!await this.$validator.validateAll()) return;
       this.busy = true;
       let claimTxHash;
+
+      try {
+        await this.$store.state.sdk.middleware.getAuctionInfoByName(this.name);
+        await this.$store.dispatch('modals/open', {
+          name: 'confirm',
+          text: this.$t('name.new.confirm-bidding', { name: this.name }),
+        });
+        this.$router.push({ name: 'auction-bid-amount', params: { name: this.name } });
+        return;
+      } catch (e) {
+        if (e.message === 'Cancelled by user') {
+          this.busy = false;
+          return;
+        }
+        if (!isNotFoundError(e)) {
+          handleUnknownError(e);
+        }
+      }
 
       try {
         const { salt } = await this.$store.state.sdk.aensPreclaim(this.name);
