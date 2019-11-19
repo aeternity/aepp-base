@@ -77,208 +77,226 @@ export default {
     },
   } : {},
 
-  actions: process.env.IS_MOBILE_DEVICE ? {
-    logout: {
-      root: true,
-      handler: ({ commit }) => commit('logout'),
-    },
-
-    async discover({
-      state, getters, rootState: { sdk }, commit,
-    }) {
+  actions: {
+    async isAccountUsed({ rootState: { sdk } }, address) {
       const { api } = sdk.then ? await sdk : sdk;
-      let account;
-      do {
-        if (account) {
-          commit('accounts/add', { ...account, type: 'hd-wallet' }, { root: true });
-        }
-        account = getHdWalletAccount(state.wallet, getters.nextIdx);
-      } while (await api // eslint-disable-line no-await-in-loop
-        .getAccountByPubkey(account.address).then(() => true, () => false));
+      return api.getAccountByPubkey(address).then(() => true, () => false);
     },
 
-    handleUnlock: ({ state: { mnemonicBackedUp }, dispatch }, isCreate) => Promise.all([
-      dispatch('discover'),
-      (async () => {
-        if (isCreate) {
-          await dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
-        }
-        if (!mnemonicBackedUp) {
-          await dispatch('modals/open', { name: 'notificationMnemonicBackup' }, { root: true });
-        }
-      })(),
-    ]),
-
-    async createWallet({ commit, dispatch }, mnemonic) {
-      if (mnemonic) commit('markMnemonicAsBackedUp');
-      const newMnemonic = mnemonic || generateMnemonic();
-      commit('setMnemonic', newMnemonic);
-      commit('setEncryptedWallet', { mnemonic: newMnemonic });
-      commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
-      dispatch('create');
-      await dispatch('handleUnlock', true);
+    async checkPreviousAndCreate({ dispatch, rootGetters }) {
+      const { address } = rootGetters['accounts/getByType']('hd-wallet').pop();
+      if (!await dispatch('isAccountUsed', address)) {
+        await dispatch(
+          'modals/open',
+          { name: 'confirm', text: i18n.t('hd-wallet.new-account-warning') },
+          { root: true },
+        );
+      }
+      return dispatch('create');
     },
 
-    async setWalletPassword({ state: { wallet, mnemonic }, commit }, password) {
-      if (password) {
-        const salt = genRandomBuffer(16);
-        const newPasswordDerivedKey = await derivePasswordKey(password, salt);
-        commit('setPasswordDerivedKey', newPasswordDerivedKey);
-        const aes = new AES(newPasswordDerivedKey);
-        commit('setEncryptedWallet', {
-          ...mnemonic ? {
-            mnemonic: await aes.encrypt(Buffer.from(mnemonic)),
+    ...process.env.IS_MOBILE_DEVICE ? {
+      logout: {
+        root: true,
+        handler: ({ commit }) => commit('logout'),
+      },
+
+      async discover({
+        state, getters, commit, dispatch,
+      }) {
+        let account;
+        do {
+          if (account) {
+            commit('accounts/add', { ...account, type: 'hd-wallet' }, { root: true });
+          }
+          account = getHdWalletAccount(state.wallet, getters.nextIdx);
+          // eslint-disable-next-line no-await-in-loop
+        } while (await dispatch('isAccountUsed', account.address));
+      },
+
+      handleUnlock: ({ state: { mnemonicBackedUp }, dispatch }, isCreate) => Promise.all([
+        dispatch('discover'),
+        (async () => {
+          if (isCreate) {
+            await dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
+          }
+          if (!mnemonicBackedUp) {
+            await dispatch('modals/open', { name: 'notificationMnemonicBackup' }, { root: true });
+          }
+        })(),
+      ]),
+
+      async createWallet({ commit, dispatch }, mnemonic) {
+        if (mnemonic) commit('markMnemonicAsBackedUp');
+        const newMnemonic = mnemonic || generateMnemonic();
+        commit('setMnemonic', newMnemonic);
+        commit('setEncryptedWallet', { mnemonic: newMnemonic });
+        commit('setWallet', generateHdWallet(mnemonicToSeed(newMnemonic)));
+        dispatch('create');
+        await dispatch('handleUnlock', true);
+      },
+
+      async setWalletPassword({ state: { wallet, mnemonic }, commit }, password) {
+        if (password) {
+          const salt = genRandomBuffer(16);
+          const newPasswordDerivedKey = await derivePasswordKey(password, salt);
+          commit('setPasswordDerivedKey', newPasswordDerivedKey);
+          const aes = new AES(newPasswordDerivedKey);
+          commit('setEncryptedWallet', {
+            ...mnemonic ? {
+              mnemonic: await aes.encrypt(Buffer.from(mnemonic)),
+            } : {
+              privateKey: await aes.encrypt(wallet.privateKey),
+              chainCode: await aes.encrypt(wallet.chainCode),
+            },
+            mac: await aes.encrypt(new Uint8Array(2)),
+            salt,
+          });
+        } else {
+          commit('setPasswordDerivedKey', null);
+          commit('setEncryptedWallet', mnemonic ? { mnemonic } : wallet);
+        }
+      },
+
+      async changeWalletPassword({ getters, dispatch }, { password, newPassword } = {}) {
+        if (getters.isWalletEncrypted) {
+          if (password) await dispatch('deriveAndCheckPasswordKey', password);
+          else await dispatch('modals/open', { name: 'ensureKnowPassword' }, { root: true });
+        }
+        await dispatch('setWalletPassword', newPassword);
+      },
+
+      async deriveAndCheckPasswordKey({ state: { encryptedWallet } }, password) {
+        const passwordDerivedKey = await derivePasswordKey(password, encryptedWallet.salt);
+        const aes = new AES(passwordDerivedKey);
+        if (encryptedWallet.mnemonic) {
+          await aes.decrypt(encryptedWallet.mnemonic);
+        } else {
+          await aes.decrypt(encryptedWallet.privateKey);
+          await aes.decrypt(encryptedWallet.chainCode);
+        }
+        const mac = new Uint8Array(await aes.decrypt(encryptedWallet.mac));
+        if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Wrong password');
+        return passwordDerivedKey;
+      },
+
+      async unlockWallet({
+        state: { encryptedWallet }, getters: { isWalletEncrypted }, commit, dispatch,
+      }, password) {
+        let wallet;
+        if (isWalletEncrypted) {
+          const passwordDerivedKey = await dispatch('deriveAndCheckPasswordKey', password);
+          const aes = new AES(passwordDerivedKey);
+          commit('setPasswordDerivedKey', passwordDerivedKey);
+
+          wallet = encryptedWallet.mnemonic ? {
+            mnemonic: Buffer.from(await aes.decrypt(encryptedWallet.mnemonic)).toString(),
           } : {
+            privateKey: await aes.decrypt(encryptedWallet.privateKey),
+            chainCode: await aes.decrypt(encryptedWallet.chainCode),
+          };
+        } else wallet = encryptedWallet;
+        if (wallet.mnemonic) {
+          commit('setMnemonic', wallet.mnemonic);
+          wallet = generateHdWallet(mnemonicToSeed(wallet.mnemonic));
+        }
+        commit('setWallet', wallet);
+        await dispatch('handleUnlock');
+      },
+
+      async deleteMnemonic({ state: { passwordDerivedKey, encryptedWallet, wallet }, commit }) {
+        if (passwordDerivedKey) {
+          const aes = new AES(passwordDerivedKey);
+          commit('setEncryptedWallet', {
             privateKey: await aes.encrypt(wallet.privateKey),
             chainCode: await aes.encrypt(wallet.chainCode),
+            mac: await aes.encrypt(new Uint8Array(2)),
+            salt: encryptedWallet.salt,
+          });
+        } else {
+          commit('setEncryptedWallet', wallet);
+        }
+        commit('setMnemonic', '');
+      },
+
+      create({ state: { wallet }, getters: { nextIdx }, commit }) {
+        commit('accounts/add', {
+          ...getHdWalletAccount(wallet, nextIdx), active: true, type: 'hd-wallet',
+        }, { root: true });
+      },
+
+      signWithoutConfirmation({ rootGetters }, data) {
+        return Crypto.sign(data, rootGetters['accounts/active'].source.secretKey);
+      },
+
+      async confirmRawDataSigning({ dispatch }, data) {
+        await dispatch('modals/open', { name: 'confirmSign', data }, { root: true });
+        return data;
+      },
+
+      async confirmTxSigning({ dispatch }, txBinary) {
+        let txObject;
+        try {
+          txObject = TxBuilder.unpackTx(txBinary, true).tx;
+        } catch (e) {
+          return dispatch('confirmRawDataSigning', txBinary);
+        }
+
+        const SUPPORTED_TX_TYPES = [
+          TX_TYPE.spend, TX_TYPE.contractCreate, TX_TYPE.contractCall,
+          TX_TYPE.namePreClaim, TX_TYPE.nameClaim, TX_TYPE.nameUpdate, TX_TYPE.nameTransfer,
+        ];
+        if (!SUPPORTED_TX_TYPES.includes(OBJECT_ID_TX_TYPE[txObject.tag])) {
+          return dispatch('confirmRawDataSigning', txBinary);
+        }
+
+        const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
+        const confirmProps = {
+          name: 'confirmTransactionSign',
+          transaction: {
+            ...txObject,
+            amount: txObject.amount && format(txObject.amount),
+            fee: format(txObject.fee),
+            minFee: format(TxBuilder.calculateFee(
+              0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
+            )),
+            nameFee: txObject.nameFee && format(txObject.nameFee),
           },
-          mac: await aes.encrypt(new Uint8Array(2)),
-          salt,
-        });
-      } else {
-        commit('setPasswordDerivedKey', null);
-        commit('setEncryptedWallet', mnemonic ? { mnemonic } : wallet);
-      }
-    },
-
-    async changeWalletPassword({ getters, dispatch }, { password, newPassword } = {}) {
-      if (getters.isWalletEncrypted) {
-        if (password) await dispatch('deriveAndCheckPasswordKey', password);
-        else await dispatch('modals/open', { name: 'ensureKnowPassword' }, { root: true });
-      }
-      await dispatch('setWalletPassword', newPassword);
-    },
-
-    async deriveAndCheckPasswordKey({ state: { encryptedWallet } }, password) {
-      const passwordDerivedKey = await derivePasswordKey(password, encryptedWallet.salt);
-      const aes = new AES(passwordDerivedKey);
-      if (encryptedWallet.mnemonic) {
-        await aes.decrypt(encryptedWallet.mnemonic);
-      } else {
-        await aes.decrypt(encryptedWallet.privateKey);
-        await aes.decrypt(encryptedWallet.chainCode);
-      }
-      const mac = new Uint8Array(await aes.decrypt(encryptedWallet.mac));
-      if (mac.reduce((p, n) => p || n !== 0, false)) throw new Error('Wrong password');
-      return passwordDerivedKey;
-    },
-
-    async unlockWallet({
-      state: { encryptedWallet }, getters: { isWalletEncrypted }, commit, dispatch,
-    }, password) {
-      let wallet;
-      if (isWalletEncrypted) {
-        const passwordDerivedKey = await dispatch('deriveAndCheckPasswordKey', password);
-        const aes = new AES(passwordDerivedKey);
-        commit('setPasswordDerivedKey', passwordDerivedKey);
-
-        wallet = encryptedWallet.mnemonic ? {
-          mnemonic: Buffer.from(await aes.decrypt(encryptedWallet.mnemonic)).toString(),
-        } : {
-          privateKey: await aes.decrypt(encryptedWallet.privateKey),
-          chainCode: await aes.decrypt(encryptedWallet.chainCode),
         };
-      } else wallet = encryptedWallet;
-      if (wallet.mnemonic) {
-        commit('setMnemonic', wallet.mnemonic);
-        wallet = generateHdWallet(mnemonicToSeed(wallet.mnemonic));
-      }
-      commit('setWallet', wallet);
-      await dispatch('handleUnlock');
+
+        return TxBuilder.buildTx(
+          {
+            ...txObject,
+            fee: (await dispatch('modals/open', confirmProps, { root: true }))
+              .shiftedBy(MAGNITUDE),
+          },
+          OBJECT_ID_TX_TYPE[txObject.tag],
+          { vsn: txObject.VSN },
+        ).rlpEncoded;
+      },
+
+      async sign({ dispatch }, data) {
+        await dispatch('confirmRawDataSigning', data);
+        return dispatch('signWithoutConfirmation', data);
+      },
+
+      async signTransaction({ dispatch, rootState: { sdk } }, txBase64) {
+        const encodedTx = await dispatch(
+          'confirmTxSigning',
+          Crypto.decodeBase64Check(Crypto.assertedType(txBase64, 'tx')),
+        );
+        const signature = await dispatch(
+          'signWithoutConfirmation',
+          Buffer.concat([Buffer.from(sdk.getNetworkId()), encodedTx]),
+        );
+        return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, TX_TYPE.signed).tx;
+      },
+    } : {
+      create({ dispatch }) {
+        return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
+      },
+      sign: getDesktopRemoveSignAction('sign'),
+      signTransaction: getDesktopRemoveSignAction('signTransaction'),
     },
-
-    async deleteMnemonic({ state: { passwordDerivedKey, encryptedWallet, wallet }, commit }) {
-      if (passwordDerivedKey) {
-        const aes = new AES(passwordDerivedKey);
-        commit('setEncryptedWallet', {
-          privateKey: await aes.encrypt(wallet.privateKey),
-          chainCode: await aes.encrypt(wallet.chainCode),
-          mac: await aes.encrypt(new Uint8Array(2)),
-          salt: encryptedWallet.salt,
-        });
-      } else {
-        commit('setEncryptedWallet', wallet);
-      }
-      commit('setMnemonic', '');
-    },
-
-    create({ state: { wallet }, getters: { nextIdx }, commit }) {
-      commit('accounts/add', {
-        ...getHdWalletAccount(wallet, nextIdx), active: true, type: 'hd-wallet',
-      }, { root: true });
-    },
-
-    signWithoutConfirmation({ rootGetters }, data) {
-      return Crypto.sign(data, rootGetters['accounts/active'].source.secretKey);
-    },
-
-    async confirmRawDataSigning({ dispatch }, data) {
-      await dispatch('modals/open', { name: 'confirmSign', data }, { root: true });
-      return data;
-    },
-
-    async confirmTxSigning({ dispatch }, txBinary) {
-      let txObject;
-      try {
-        txObject = TxBuilder.unpackTx(txBinary, true).tx;
-      } catch (e) {
-        return dispatch('confirmRawDataSigning', txBinary);
-      }
-
-      const SUPPORTED_TX_TYPES = [
-        TX_TYPE.spend, TX_TYPE.contractCreate, TX_TYPE.contractCall,
-        TX_TYPE.namePreClaim, TX_TYPE.nameClaim, TX_TYPE.nameUpdate, TX_TYPE.nameTransfer,
-      ];
-      if (!SUPPORTED_TX_TYPES.includes(OBJECT_ID_TX_TYPE[txObject.tag])) {
-        return dispatch('confirmRawDataSigning', txBinary);
-      }
-
-      const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
-      const confirmProps = {
-        name: 'confirmTransactionSign',
-        transaction: {
-          ...txObject,
-          amount: txObject.amount && format(txObject.amount),
-          fee: format(txObject.fee),
-          minFee: format(TxBuilder.calculateFee(
-            0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
-          )),
-          nameFee: txObject.nameFee && format(txObject.nameFee),
-        },
-      };
-
-      return TxBuilder.buildTx(
-        {
-          ...txObject,
-          fee: (await dispatch('modals/open', confirmProps, { root: true }))
-            .shiftedBy(MAGNITUDE),
-        },
-        OBJECT_ID_TX_TYPE[txObject.tag],
-        { vsn: txObject.VSN },
-      ).rlpEncoded;
-    },
-
-    async sign({ dispatch }, data) {
-      await dispatch('confirmRawDataSigning', data);
-      return dispatch('signWithoutConfirmation', data);
-    },
-
-    async signTransaction({ dispatch, rootState: { sdk } }, txBase64) {
-      const encodedTx = await dispatch(
-        'confirmTxSigning',
-        Crypto.decodeBase64Check(Crypto.assertedType(txBase64, 'tx')),
-      );
-      const signature = await dispatch(
-        'signWithoutConfirmation',
-        Buffer.concat([Buffer.from(sdk.getNetworkId()), encodedTx]),
-      );
-      return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, TX_TYPE.signed).tx;
-    },
-  } : {
-    create({ dispatch }) {
-      return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
-    },
-    sign: getDesktopRemoveSignAction('sign'),
-    signTransaction: getDesktopRemoveSignAction('signTransaction'),
   },
 };

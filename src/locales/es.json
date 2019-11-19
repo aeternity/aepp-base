@@ -314,7 +314,8 @@
   },
 
   "hd-wallet": {
-    "account-name": "Cuenta"
+    "account-name": "Cuenta",
+    "new-account-warning": "You are going to create a new account despite that you haven't use the previous one. Are you sure?"
   },
 
   "air-gap": {
