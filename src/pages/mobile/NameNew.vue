@@ -96,10 +96,9 @@ export default {
         this.$store.dispatch('names/fetchOwned');
         await this.$store.state.sdk.poll(claimTxHash);
         if (MAX_AUCTION_NAME_LENGTH < this.name.length) {
-          await this.$store.state.sdk.aensUpdate(
-            (await this.$store.state.sdk.api.getNameEntryByName(this.name)).id,
-            this.$store.getters['accounts/active'].address,
-          );
+          await this.$store.dispatch('names/updatePointer', {
+            name: this.name, address: this.$store.getters['accounts/active'].address,
+          });
         }
         this.$store.dispatch('modals/open', {
           name: 'notification',
