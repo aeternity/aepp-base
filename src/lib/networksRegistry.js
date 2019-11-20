@@ -1,11 +1,10 @@
 import { pick } from 'lodash-es';
 
-const getUrl = networkName => `https://node.${networkName}.aeternal.io`;
 const getMiddlewareUrl = networkName => `https://${networkName}.aeternal.io`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
   name,
-  url: getUrl(pathName),
+  url: getMiddlewareUrl(pathName),
   middlewareUrl: getMiddlewareUrl(pathName),
   explorerUrl: getMiddlewareUrl(pathName),
   compilerUrl: 'https://compiler.aepps.com',
