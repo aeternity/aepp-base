@@ -676,6 +676,16 @@
     "logout-subtitle": "¡Hasta pronto!",
     "version": "Versión",
 
+    "info": {
+      "title": "Info",
+      "subtitle": "SDK, node, compiler versions",
+      "version": "Version",
+      "node-version": "Node version",
+      "compiler-version": "Compiler version",
+      "sdk-version": "SDK version",
+      "blocks-in-queue": "Blocks not synced yet"
+    },
+
     "mnemonic": {
       "title": "Frase de seguridad",
       "subtitle": "Asegure sus fondos",

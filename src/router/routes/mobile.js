@@ -33,6 +33,7 @@ import NameDetails from '../../pages/mobile/NameDetails.vue';
 import NameNew from '../../pages/mobile/NameNew.vue';
 import NameTransfer from '../../pages/mobile/NameTransfer.vue';
 import Settings from '../../pages/mobile/Settings.vue';
+import SettingsInfo from '../../pages/mobile/SettingsInfo.vue';
 import SettingsNetwork from '../../pages/mobile/SettingsNetwork.vue';
 import SettingsNetworkNew from '../../pages/mobile/SettingsNetworkNew.vue';
 import SettingsCurrency from '../../pages/mobile/SettingsCurrency.vue';
@@ -295,6 +296,11 @@ export default [{
   name: 'settings',
   path: '/settings',
   component: Settings,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'settings-info',
+  path: '/settings/info',
+  component: SettingsInfo,
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'settings-network',
