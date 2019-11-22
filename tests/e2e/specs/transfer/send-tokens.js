@@ -1,6 +1,6 @@
 describe('Transfer: Send tokens', () => {
   it('sends tokens', () => {
-    const testReceiverAddress = 'ak_DzELMKnSfJcfnCUZ2SbXUSxRmFYtGrWmMuKiCx68YKLH26kwc';
+    const testReceiverAddress = 'ak_22kbscYf1TbjcxXaZYCgFxbT6pASb9guJC8n7SviSvMC1cg53m';
     const testAmount = '0.0001';
 
     cy

@@ -6,7 +6,7 @@ describe('Transfer: Transaction history', () => {
       .get('.list-item')
       .contains('Transactions')
       .click()
-      .get('.list-item-transaction:not(.pending)', { timeout: 20000 })
+      .get('.list-item-transaction:not(.pending)', { timeout: 80000 })
       .should('length', 15)
       .get('.list-item-transaction:last')
       .click()
