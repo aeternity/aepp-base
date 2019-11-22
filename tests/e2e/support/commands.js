@@ -36,8 +36,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalF
           sdkUrl: 'https://node.testnet.aeternal.io',
           accounts: {
             list: [{
-              name: 'Main Account',
-              address: 'ak_2swhLkgBPeeADxVTAVCJnZLY5NZtCFiM93JxsEaMuC59euuFRQ',
+              address: 'ak_mUSniVx8jR3gCTTuXBLX4htTUvWJyWwxPYoEUeEVuS9KbUpT8',
               source: { type: 'hd-wallet', idx: 0 },
             }],
             hdWallet: {
@@ -45,15 +44,15 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalF
                 privateKey: {
                   type: 'Uint8Array',
                   data: [
-                    35, 89, 107, 163, 240, 13, 124, 66, 174, 5, 70, 165, 208, 105, 104, 251,
-                    224, 249, 105, 185, 28, 20, 178, 8, 138, 20, 195, 45, 192, 188, 151, 115,
+                    133, 221, 179, 85, 188, 4, 39, 75, 56, 154, 162, 199, 27, 149, 97, 231,
+                    20, 88, 102, 204, 181, 38, 18, 85, 206, 120, 73, 240, 71, 134, 92, 235,
                   ],
                 },
                 chainCode: {
                   type: 'Uint8Array',
                   data: [
-                    93, 146, 248, 228, 66, 136, 66, 34, 222, 246, 255, 233, 145, 141, 251, 6,
-                    125, 198, 138, 162, 215, 103, 155, 246, 132, 140, 154, 234, 89, 64, 209, 3,
+                    117, 7, 32, 197, 56, 211, 83, 3, 37, 112, 22, 232, 37, 26, 143, 108,
+                    175, 226, 168, 2, 187, 0, 150, 207, 159, 93, 31, 14, 56, 44, 74, 181,
                   ],
                 },
               },
