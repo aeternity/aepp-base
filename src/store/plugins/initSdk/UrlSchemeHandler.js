@@ -1,27 +1,42 @@
-export default ({
+import { times } from 'lodash-es';
+
+export default {
   init() {
     window.handleOpenURL = async (u) => {
       const url = new URL(u);
       const method = url.pathname;
       const callbackUrl = new URL(url.searchParams.get('callback'));
-      url.searchParams.delete('callback');
-      const params = [...url.searchParams.values()].map(p => JSON.parse(decodeURIComponent(p)));
+      const lastParamIdx = Math.max(
+        0,
+        ...Array.from(url.searchParams.keys())
+          .map(key => key.startsWith('param') && +key.replace('param', '')),
+      );
+      const params = times(
+        lastParamIdx + 1,
+        idx => JSON.parse(decodeURIComponent(url.searchParams.get(`param${idx}`))),
+      );
+      const reply = ({ result, error }) => {
+        const seraliseError = e => (e instanceof Error ? e.message : JSON.stringify(e));
+        callbackUrl.searchParams.set(
+          error ? 'error' : 'result',
+          error ? seraliseError(error) : JSON.stringify(result),
+        );
+        window.open(callbackUrl, process.env.IS_CORDOVA ? '_system' : undefined);
+      };
 
-      let result = 'denied';
-      if (['http:', 'https:'].includes(callbackUrl.protocol)
-        && ['address', 'sign', 'signTransaction'].includes(method)) {
-        try {
-          result = await this[method](...method === 'address'
-            ? [this.getApp(new URL(callbackUrl.origin).host)]
-            : params);
-        } catch (e) {
-          result = e;
-        }
+      if (!['http:', 'https:'].includes(callbackUrl.protocol)) {
+        reply({ error: new Error(`Unknown protocol: ${callbackUrl.protocol}`) });
+        return;
       }
-
-      const deeplinkUrl = new URL(callbackUrl);
-      deeplinkUrl.searchParams.set('result', JSON.stringify(result));
-      window.open(deeplinkUrl, '_system');
+      if (!['address', 'sign', 'signTransaction'].includes(method)) {
+        reply({ error: new Error(`Unknown method: ${method}`) });
+        return;
+      }
+      try {
+        reply({ result: await this[method](...params, this.getApp(callbackUrl.host)) });
+      } catch (error) {
+        reply({ error });
+      }
     };
   },
-});
+};
