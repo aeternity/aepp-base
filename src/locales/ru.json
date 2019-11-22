@@ -495,6 +495,7 @@
       "name": "Имя",
       "name-placeholder": "Имя.chain",
       "register": "Зарегистрировать",
+      "confirm-bidding": "Аукцион на имя {name} уже начался. Хотите сделать ставку?",
 
       "notification": {
         "claim-sent": "Запрос на имя {name} был успешно отправлен​​",

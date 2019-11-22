@@ -495,6 +495,7 @@
       "name": "名称",
       "name-placeholder": "Name.chain",
       "register": "注册",
+      "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
       "notification":{
         "claim-sent": "为{name} 的名称已成功发送",
