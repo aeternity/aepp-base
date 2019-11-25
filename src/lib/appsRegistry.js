@@ -1,6 +1,7 @@
 export { default as DEFAULT_ICON } from '../assets/icons/aepps/default.svg';
 
 export const aeternityAppsPaths = [
+  'governance.aeternity.com',
   'graffiti.aeternity.com',
   'token-migration.aepps.com',
   ...process.env.NODE_ENV === 'production' ? [] : [
