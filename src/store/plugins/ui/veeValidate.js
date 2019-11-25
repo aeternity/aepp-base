@@ -77,7 +77,7 @@ export default (store) => {
   };
 
   const checkName = expectedNameState => throttle(
-    value => store.state.sdk.aensQuery(value).then(
+    value => store.state.sdk.api.getNameEntryByName(value).then(
       nameEntry => ({
         [NAME_STATES.REGISTERED]: true,
         [NAME_STATES.REGISTERED_ADDRESS]: !!getAddressByNameEntry(nameEntry),
@@ -90,7 +90,7 @@ export default (store) => {
   const checkNameRegisteredAddress = checkName(NAME_STATES.REGISTERED_ADDRESS);
 
   Validator.extend('aens_name_unregistered', checkName(NAME_STATES.UNREGISTERED));
-  Validator.extend('account', value => Crypto.isAddressValid(value) || checkNameRegisteredAddress(value));
+  Validator.extend('account', value => Crypto.isAddressValid(value) || (isAensName(value) && checkNameRegisteredAddress(value)));
 
   const genMaxMinValueCurrencyMessageGenerator = isMax => (field, [amountAe]) => (
     new ConvertibleToString(() => {
