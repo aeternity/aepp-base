@@ -83,6 +83,9 @@ export default (store) => {
         }
         return store.getters['accounts/active'].address;
       },
+      async addressAndNetworkUrl(...args) {
+        return { address: await this.address(...args), network };
+      },
       sign: data => store.dispatch('accounts/sign', data),
       signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
       readQrCode: ({ title }) => store.dispatch('modals/open', {
@@ -105,7 +108,7 @@ export default (store) => {
       Ae.compose(
         ChainNode, Transaction, Contract, Aens, {
           methods,
-          deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share'] } },
+          deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share', 'addressAndNetworkUrl'] } },
         },
         PostMessageHandler, UrlSchemeHandler,
       )({
