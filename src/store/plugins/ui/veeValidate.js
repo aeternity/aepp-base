@@ -4,12 +4,12 @@ import {
   confirmed, decimal, excluded, min, required,
 } from 'vee-validate/dist/rules.esm';
 import BigNumber from 'bignumber.js';
-import { throttle } from 'lodash-es';
+import { debounce } from 'lodash-es';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { validateMnemonic } from '@aeternity/bip39';
 import { i18n } from './languages';
 import {
-  toUrl, isAensName, ConvertibleToString, getAddressByNameEntry,
+  toUrl, isAensName, ConvertibleToString, getAddressByNameEntry, isNotFoundError,
 } from '../../../lib/utils';
 import { getPublicKeyByResponseUrl } from '../../../lib/airGap';
 
@@ -76,17 +76,31 @@ export default (store) => {
     UNREGISTERED: Symbol('name state: unregistered'),
   };
 
-  const checkName = expectedNameState => throttle(
-    value => store.state.sdk.api.getNameEntryByName(value).then(
-      nameEntry => ({
-        [NAME_STATES.REGISTERED]: true,
-        [NAME_STATES.REGISTERED_ADDRESS]: !!getAddressByNameEntry(nameEntry),
-        [NAME_STATES.UNREGISTERED]: false,
-      }[expectedNameState]),
-      () => expectedNameState === NAME_STATES.UNREGISTERED,
-    ),
+  let lastPromiseCallback;
+  const checkNameDebounced = debounce(
+    async (name, expectedNameState) => {
+      try {
+        const nameEntry = await store.state.sdk.api.getNameEntryByName(name);
+        lastPromiseCallback.resolve(({
+          [NAME_STATES.REGISTERED]: true,
+          [NAME_STATES.REGISTERED_ADDRESS]: !!getAddressByNameEntry(nameEntry),
+          [NAME_STATES.UNREGISTERED]: false,
+        }[expectedNameState]));
+      } catch (error) {
+        if (!isNotFoundError(error)) lastPromiseCallback.reject(error);
+        else lastPromiseCallback.resolve(expectedNameState === NAME_STATES.UNREGISTERED);
+      }
+      lastPromiseCallback = null;
+    },
     300,
   );
+  const checkName = expectedNameState => name => new Promise((resolve, reject) => {
+    if (lastPromiseCallback) {
+      lastPromiseCallback.reject(new Error('Request will not be resolved due to another request made later.'));
+    }
+    lastPromiseCallback = { resolve, reject };
+    checkNameDebounced(name, expectedNameState);
+  });
   const checkNameRegisteredAddress = checkName(NAME_STATES.REGISTERED_ADDRESS);
 
   Validator.extend('aens_name_unregistered', checkName(NAME_STATES.UNREGISTERED));
