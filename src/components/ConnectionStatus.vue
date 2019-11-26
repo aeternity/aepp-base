@@ -9,9 +9,13 @@
 </template>
 
 <script>
+import { pick } from 'lodash-es';
 import { mapState } from 'vuex';
 
 export default {
+  subscriptions() {
+    return pick(this.$store.state.observables, ['middlewareStatus']);
+  },
   computed: mapState({
     message({ onLine, sdk }) {
       if (!onLine) return { text: this.$t('network.connection-status.offline') };
@@ -19,6 +23,13 @@ export default {
       if (sdk.then) return { text: this.$t('network.connection-status.connecting'), className: 'connecting' };
       if (process.env.NODE_ENV === 'production' && sdk.getNetworkId() !== 'ae_mainnet') {
         return { text: this.$t('network.connection-status.connected-to-testnet'), className: 'test-net' };
+      }
+      if (!this.middlewareStatus.OK) {
+        return {
+          text: this.$t('network.connection-status.blocks-to-sync',
+            { blocks: this.middlewareStatus.queueLength }),
+          className: 'connecting',
+        };
       }
       return null;
     },

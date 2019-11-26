@@ -558,7 +558,8 @@
       "offline": "您已离线，请检查您的网络连接。",
       "no-sdk": "我们无法连接到您选择的节点。",
       "connecting": "正在连接网络中...",
-      "connected-to-testnet": "您已连接到测试网。"
+      "connected-to-testnet": "您已连接到测试网。",
+      "blocks-to-sync": "Blocks to sync {blocks}."
     },
 
     "settings": {

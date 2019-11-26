@@ -79,13 +79,18 @@ export default (store) => {
     tx,
   });
 
-  const topBlockHeight$ = sdk$
+  const createSdkObservable = (func, def) => sdk$
     .pipe(
       switchMap(sdk => timer(0, 30000).pipe(map(() => sdk))),
-      switchMap(async sdk => (sdk ? (await sdk.topBlock()).height : 0)),
-      multicast(new BehaviorSubject(0)),
+      switchMap(async sdk => (sdk ? func(sdk) : def)),
+      multicast(new BehaviorSubject(def)),
       refCountDelay(1000),
     );
+  const topBlockHeight$ = createSdkObservable(async sdk => (await sdk.topBlock()).height, 0);
+  const middlewareStatus$ = createSdkObservable(
+    sdk => sdk.middleware.getMdwStatus(),
+    { OK: true, queueLength: 0 },
+  );
 
   const activeAccountAddress$ = watchAsObservable(
     (state, getters) => getters['accounts/active'].address, { immediate: true },
@@ -329,6 +334,7 @@ export default (store) => {
 
   store.state.observables = { // eslint-disable-line no-param-reassign
     topBlockHeight: topBlockHeight$,
+    middlewareStatus: middlewareStatus$,
     getTransaction,
     getTransactionList,
     activeAccount: watchAsObservable(

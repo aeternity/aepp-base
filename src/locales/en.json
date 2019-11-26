@@ -558,7 +558,8 @@
       "offline": "You are offline... Please check your connection.",
       "no-sdk": "We are unable to connect to the chosen node.",
       "connecting": "Connecting to the network...",
-      "connected-to-testnet": "You are connected to a testnet."
+      "connected-to-testnet": "You are connected to a testnet.",
+      "blocks-to-sync": "Blocks to sync {blocks}."
     },
 
     "settings": {

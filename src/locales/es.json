@@ -558,7 +558,8 @@
       "offline": "Estás desconectado... Comprueba tu conexión",
       "no-sdk": "No podemos conectarnos al nodo elegido",
       "connecting": "Conectando a la red...",
-      "connected-to-testnet": "Está conectado a una red de prueba"
+      "connected-to-testnet": "Está conectado a una red de prueba",
+      "blocks-to-sync": "Blocks to sync {blocks}."
     },
 
     "settings": {
