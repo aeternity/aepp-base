@@ -16,7 +16,7 @@ export default {
         idx => JSON.parse(decodeURIComponent(url.searchParams.get(`param${idx}`))),
       );
       const reply = ({ result, error }) => {
-        const seraliseError = e => (e instanceof Error ? e.message : JSON.stringify(e));
+        const seraliseError = e => (e instanceof Error ? e.message : e.toString());
         callbackUrl.searchParams.set(
           error ? 'error' : 'result',
           error ? seraliseError(error) : JSON.stringify(result),
@@ -28,7 +28,7 @@ export default {
         reply({ error: new Error(`Unknown protocol: ${callbackUrl.protocol}`) });
         return;
       }
-      if (!['address', 'sign', 'signTransaction'].includes(method)) {
+      if (!['address', 'sign', 'signTransaction', 'addressAndNetworkUrl'].includes(method)) {
         reply({ error: new Error(`Unknown method: ${method}`) });
         return;
       }
