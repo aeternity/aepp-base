@@ -677,6 +677,16 @@
     "logout-subtitle": "下次再见!",
     "version": "版本号",
 
+    "info": {
+      "title": "Info",
+      "subtitle": "SDK, node, compiler versions",
+      "version": "Version",
+      "node-version": "Node version",
+      "compiler-version": "Compiler version",
+      "sdk-version": "SDK version",
+      "blocks-in-queue": "Blocks not synced yet"
+    },
+
     "mnemonic": {
       "title": "备份助记词",
       "subtitle": "保护您的资金",

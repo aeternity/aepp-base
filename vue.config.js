@@ -1,6 +1,7 @@
 require('./scripts/label-icons');
 const path = require('path');
 const branch = require('./scripts/current-branch');
+const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package');
 
 const parseBool = val => (val ? JSON.parse(val) : false);
 
@@ -38,6 +39,7 @@ module.exports = {
     if (npm_package_version) {
       definitions['process.env.npm_package_version'] = JSON.stringify(npm_package_version);
     }
+    definitions['process.env.SDK_VERSION'] = JSON.stringify(sdkVersion);
 
     return [definitions];
   }).end()
