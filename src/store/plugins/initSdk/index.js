@@ -110,7 +110,7 @@ export default (store) => {
           methods,
           deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share', 'addressAndNetworkUrl'] } },
         },
-        PostMessageHandler, UrlSchemeHandler,
+        PostMessageHandler, ...process.env.UNFINISHED_FEATURES ? [UrlSchemeHandler] : [],
       )({
         url: network.url,
         internalUrl: network.url,
