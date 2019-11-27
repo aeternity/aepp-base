@@ -314,7 +314,8 @@
   },
 
   "hd-wallet": {
-    "account-name": "账户"
+    "account-name": "账户",
+    "new-account-warning": "You are going to create a new account despite that you haven't use the previous one. Are you sure?"
   },
 
   "air-gap": {
@@ -495,6 +496,7 @@
       "name": "名称",
       "name-placeholder": "Name.chain",
       "register": "注册",
+      "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
       "notification":{
         "claim-sent": "为{name} 的名称已成功发送",
@@ -557,7 +559,8 @@
       "offline": "您已离线，请检查您的网络连接。",
       "no-sdk": "我们无法连接到您选择的节点。",
       "connecting": "正在连接网络中...",
-      "connected-to-testnet": "您已连接到测试网。"
+      "connected-to-testnet": "您已连接到测试网。",
+      "blocks-to-sync": "Blocks to sync {blocks}."
     },
 
     "settings": {
@@ -673,6 +676,16 @@
     "logout": "登出",
     "logout-subtitle": "下次再见!",
     "version": "版本号",
+
+    "info": {
+      "title": "Info",
+      "subtitle": "SDK, node, compiler versions",
+      "version": "Version",
+      "node-version": "Node version",
+      "compiler-version": "Compiler version",
+      "sdk-version": "SDK version",
+      "blocks-in-queue": "Blocks not synced yet"
+    },
 
     "mnemonic": {
       "title": "备份助记词",

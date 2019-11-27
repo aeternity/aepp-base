@@ -61,7 +61,6 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { MAX_NAME_TTL } from '../../lib/constants';
 import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -132,10 +131,9 @@ export default {
       }
       this.busy = true;
       try {
-        await this.$store.state.sdk[`aens${this.pointing ? 'Update' : 'Transfer'}`](
-          this.nameEntry.nameHash, this.accountTo,
-          this.pointing ? { nameTtl: MAX_NAME_TTL } : undefined,
-        );
+        await (this.pointing
+          ? this.$store.dispatch('names/updatePointer', { name: this.name, address: this.accountTo })
+          : this.$store.state.sdk.aensTransfer(this.nameEntry.nameHash, this.accountTo));
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: this.pointing

@@ -314,7 +314,8 @@
   },
 
   "hd-wallet": {
-    "account-name": "Cuenta"
+    "account-name": "Cuenta",
+    "new-account-warning": "You are going to create a new account despite that you haven't use the previous one. Are you sure?"
   },
 
   "air-gap": {
@@ -495,6 +496,7 @@
       "name": "Nombre",
       "name-placeholder": "Name.chain",
       "register": "Registrarse",
+      "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
       "notification": {
         "claim-sent":"La solicitud de {name} nombre se envió correctamente",
@@ -557,7 +559,8 @@
       "offline": "Estás desconectado... Comprueba tu conexión",
       "no-sdk": "No podemos conectarnos al nodo elegido",
       "connecting": "Conectando a la red...",
-      "connected-to-testnet": "Está conectado a una red de prueba"
+      "connected-to-testnet": "Está conectado a una red de prueba",
+      "blocks-to-sync": "Blocks to sync {blocks}."
     },
 
     "settings": {
@@ -673,6 +676,16 @@
     "logout": "Cerrar sesión",
     "logout-subtitle": "¡Hasta pronto!",
     "version": "Versión",
+
+    "info": {
+      "title": "Info",
+      "subtitle": "SDK, node, compiler versions",
+      "version": "Version",
+      "node-version": "Node version",
+      "compiler-version": "Compiler version",
+      "sdk-version": "SDK version",
+      "blocks-in-queue": "Blocks not synced yet"
+    },
 
     "mnemonic": {
       "title": "Frase de seguridad",

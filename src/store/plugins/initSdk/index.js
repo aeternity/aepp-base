@@ -1,20 +1,23 @@
 import { get, isEqual } from 'lodash-es';
-import { handleUnknownError, isNotFoundError, isInternalServerError } from '../../lib/utils';
-import { fetchJson } from '../utils';
-import { i18n } from './ui/languages';
+import { handleUnknownError, isNotFoundError, isInternalServerError } from '../../../lib/utils';
+import { fetchJson } from '../../utils';
+import { i18n } from '../ui/languages';
 
 export default (store) => {
   let recreateSdk;
 
   const createSdk = async (network) => {
-    const [Ae, ChainNode, Transaction, Contract, Aens, Rpc, Swagger] = (await Promise.all([
+    const [
+      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler, UrlSchemeHandler,
+    ] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/tx/tx'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/contract'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/rpc/server'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
+      import(/* webpackChunkName: "sdk" */ './PostMessageHandler'),
+      import(/* webpackChunkName: "sdk" */ './UrlSchemeHandler'),
     ])).map(module => module.default);
 
     class App {
@@ -70,11 +73,18 @@ export default (store) => {
     const apps = {};
 
     const methods = {
+      getApp(host) {
+        if (!apps[host]) apps[host] = new App(host);
+        return apps[host];
+      },
       async address(...args) {
         if (args[args.length - 1] instanceof App) {
           await args[args.length - 1].ensureCurrentAccountAccess();
         }
         return store.getters['accounts/active'].address;
+      },
+      async addressAndNetworkUrl(...args) {
+        return { address: await this.address(...args), network };
       },
       sign: data => store.dispatch('accounts/sign', data),
       signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
@@ -96,26 +106,11 @@ export default (store) => {
     };
     const [sdk, middleware] = await Promise.all([
       Ae.compose(
-        ChainNode, Transaction, Contract, Aens, Rpc, {
-          init(options, { stamp }) {
-            const rpcMethods = [
-              ...stamp.compose.deepConfiguration.Ae.methods,
-              ...stamp.compose.deepConfiguration.Contract.methods,
-            ];
-            this.rpcMethods = {
-              ...rpcMethods
-                .map(m => [m, ({ params, origin }) => {
-                  const { host } = new URL(origin);
-                  const app = apps[host] || (apps[host] = new App(host));
-                  return Promise.resolve(this[m](...params, app));
-                }])
-                .reduce((p, [k, v]) => ({ ...p, [k]: v }), {}),
-              ...this.rpcMethods,
-            };
-          },
+        ChainNode, Transaction, Contract, Aens, {
           methods,
-          deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share'] } },
+          deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share', 'addressAndNetworkUrl'] } },
         },
+        PostMessageHandler, ...process.env.UNFINISHED_FEATURES ? [UrlSchemeHandler] : [],
       )({
         url: network.url,
         internalUrl: network.url,

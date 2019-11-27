@@ -104,7 +104,7 @@ export default {
   methods: {
     ...mapMutations('accounts', ['setActiveIdx']),
     ...mapActions({
-      createHdWalletAccount: 'accounts/hdWallet/create',
+      createHdWalletAccount: 'accounts/hdWallet/checkPreviousAndCreate',
       createAirGapAccount: 'accounts/airGap/create',
     }),
   },

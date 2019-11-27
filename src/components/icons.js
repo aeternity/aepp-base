@@ -32,6 +32,7 @@ export { default as Grid } from '../assets/icons/inline/grid.svg?icon-component'
 export { default as Headline } from '../assets/icons/inline/headline.svg?icon-component';
 export { default as Home } from '../assets/icons/inline/home.svg?icon-component';
 export { default as Info } from '../assets/icons/inline/info.svg?icon-component';
+export { default as InfoCircle } from '../assets/icons/inline/info-circle.svg?icon-component';
 export { default as Italic } from '../assets/icons/inline/italic.svg?icon-component';
 export { default as Key } from '../assets/icons/inline/key.svg?icon-component';
 export { default as LeftMore } from '../assets/icons/inline/left-more.svg?icon-component';

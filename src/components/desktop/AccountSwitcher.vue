@@ -74,7 +74,9 @@ export default {
     prefixedAmount,
     ...mapMutations({ setActiveIdx: 'accounts/setActiveIdx' }),
     createAccount() {
-      this.$store.dispatch(`accounts/${this.forLedger ? 'ledger' : 'hdWallet'}/create`);
+      this.$store.dispatch(
+        `accounts/${this.forLedger ? 'ledger/create' : 'hdWallet/checkPreviousAndCreate'}`,
+      );
     },
     isAccountToShow({ source: { type } }) {
       return this.forLedger ? type === 'ledger' : type !== 'ledger';

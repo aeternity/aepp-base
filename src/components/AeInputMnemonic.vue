@@ -8,6 +8,8 @@
     :format-emit-value="formatEmitMnemonic"
     v-bind="$attrs"
     :value="value"
+    autocorrect="off"
+    autocapitalize="off"
     v-on="$listeners"
   />
 </template>

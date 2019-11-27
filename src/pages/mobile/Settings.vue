@@ -41,7 +41,6 @@
         <LeftMore slot="right" />
       </ListItem>
       <ListItem
-        v-if="!$globals.DISABLED_BROWSER"
         :to="{ name: 'settings-app-list' }"
         :title="$t('app.settings.title')"
         :subtitle="$tc('app.settings.count', appsAccountAccessCount)"
@@ -90,6 +89,17 @@
       <ListItemSettingsLanguage :to="{ name: 'settings-language' }">
         <LeftMore />
       </ListItemSettingsLanguage>
+      <ListItem
+        :to="{ name: 'settings-info' }"
+        :title="$t('settings.info.title')"
+        :subtitle="$t('settings.info.subtitle')"
+        class="info"
+      >
+        <ListItemCircle slot="icon">
+          <Info />
+        </ListItemCircle>
+        <LeftMore slot="right" />
+      </ListItem>
     </AeCard>
 
     <template v-if="removableAccounts.length">
@@ -140,7 +150,7 @@ import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import SettingsVersion from '../../components/SettingsVersion.vue';
 import {
-  Network, Currency, LeftMore, Device, Grid, Key, Share, LockOpen, Shield,
+  Network, Currency, LeftMore, Device, Grid, Key, Share, LockOpen, Shield, Info,
 } from '../../components/icons';
 
 export default {
@@ -164,6 +174,7 @@ export default {
     Share,
     LockOpen,
     Shield,
+    Info,
   },
   computed: mapState({
     networkName: (state, { currentNetwork }) => currentNetwork.name,
@@ -198,7 +209,7 @@ export default {
       }
     }
 
-    &.app-list, &.currency {
+    &.app-list, &.currency, &.info {
       .list-item-circle {
         background-color: #f8963d;
       }

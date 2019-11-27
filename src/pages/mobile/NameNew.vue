@@ -48,8 +48,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { MAX_AUCTION_NAME_LENGTH, MAX_NAME_TTL } from '../../lib/constants';
-import { handleUnknownError } from '../../lib/utils';
+import { MAX_AUCTION_NAME_LENGTH } from '../../lib/constants';
+import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -74,6 +74,24 @@ export default {
       let claimTxHash;
 
       try {
+        await this.$store.state.sdk.middleware.getAuctionInfoByName(this.name);
+        await this.$store.dispatch('modals/open', {
+          name: 'confirm',
+          text: this.$t('name.new.confirm-bidding', { name: this.name }),
+        });
+        this.$router.push({ name: 'auction-bid-amount', params: { name: this.name } });
+        return;
+      } catch (e) {
+        if (e.message === 'Cancelled by user') {
+          this.busy = false;
+          return;
+        }
+        if (!isNotFoundError(e)) {
+          handleUnknownError(e);
+        }
+      }
+
+      try {
         const { salt } = await this.$store.state.sdk.aensPreclaim(this.name);
         claimTxHash = (
           await this.$store.state.sdk.aensClaim(this.name, salt, { waitMined: false })
@@ -96,11 +114,9 @@ export default {
         this.$store.dispatch('names/fetchOwned');
         await this.$store.state.sdk.poll(claimTxHash);
         if (MAX_AUCTION_NAME_LENGTH < this.name.length) {
-          await this.$store.state.sdk.aensUpdate(
-            (await this.$store.state.sdk.api.getNameEntryByName(this.name)).id,
-            this.$store.getters['accounts/active'].address,
-            { nameTtl: MAX_NAME_TTL },
-          );
+          await this.$store.dispatch('names/updatePointer', {
+            name: this.name, address: this.$store.getters['accounts/active'].address,
+          });
         }
         this.$store.dispatch('modals/open', {
           name: 'notification',

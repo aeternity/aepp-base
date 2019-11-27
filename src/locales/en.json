@@ -314,7 +314,8 @@
   },
 
   "hd-wallet": {
-    "account-name": "Account"
+    "account-name": "Account",
+    "new-account-warning": "You are going to create a new account despite that you haven't use the previous one. Are you sure?"
   },
 
   "air-gap": {
@@ -495,6 +496,7 @@
       "name": "Name",
       "name-placeholder": "Name.chain",
       "register": "Register",
+      "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
       "notification":{
         "claim-sent": "Claim for {name} name was successfully sent",
@@ -557,7 +559,8 @@
       "offline": "You are offline... Please check your connection.",
       "no-sdk": "We are unable to connect to the chosen node.",
       "connecting": "Connecting to the network...",
-      "connected-to-testnet": "You are connected to a testnet."
+      "connected-to-testnet": "You are connected to a testnet.",
+      "blocks-to-sync": "Blocks to sync {blocks}."
     },
 
     "settings": {
@@ -673,6 +676,16 @@
     "logout": "Logout",
     "logout-subtitle": "And see you soon!",
     "version": "Version",
+
+    "info": {
+      "title": "Info",
+      "subtitle": "SDK, node, compiler versions",
+      "version": "Version",
+      "node-version": "Node version",
+      "compiler-version": "Compiler version",
+      "sdk-version": "SDK version",
+      "blocks-in-queue": "Blocks not synced yet"
+    },
 
     "mnemonic": {
       "title": "Backup Recovery Phrase",
