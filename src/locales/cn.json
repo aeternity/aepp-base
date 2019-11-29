@@ -6,6 +6,7 @@
   "ok": "OK",
   "deny": "拒绝",
   "allow": "允许",
+  "im-sure": "I'm sure",
   "copied": "Copied",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "目前Base æpp只能在只在一个浏览器选项卡中打开的情况下运行. 请关闭所有运行的标签.",
@@ -315,7 +316,7 @@
 
   "hd-wallet": {
     "account-name": "账户",
-    "new-account-warning": "You are going to create a new account despite that you haven't use the previous one. Are you sure?"
+    "new-account-warning": "You are yet to use your current account. Are you sure you want to create a new one?"
   },
 
   "air-gap": {
