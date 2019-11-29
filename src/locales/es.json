@@ -683,6 +683,8 @@
       "version": "Version",
       "node-version": "Node version",
       "compiler-version": "Compiler version",
+      "compiler-url": "Compiler URL",
+      "middleware-url": "Middleware URL",
       "sdk-version": "SDK version",
       "blocks-in-queue": "Blocks not synced yet"
     },

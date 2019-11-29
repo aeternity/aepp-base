@@ -10,6 +10,7 @@
       <ListItem
         v-for="(field, idx) in infoFields"
         :key="idx"
+        :subtitle="!!field.subtitle ? field.subtitle : ''"
         :title="field.name"
       >
         <template slot="right">
@@ -22,6 +23,7 @@
 
 <script>
 import { pick } from 'lodash-es';
+import { mapGetters } from 'vuex';
 import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -40,6 +42,7 @@ export default {
     return pick(this.$store.state.observables, ['middlewareStatus']);
   },
   computed: {
+    ...mapGetters(['currentNetwork']),
     infoFields() {
       return [{
         name: this.$t('settings.info.version'),
@@ -51,8 +54,14 @@ export default {
         name: this.$t('settings.info.compiler-version'),
         value: this.compilerVersion,
       }, {
+        name: this.$t('settings.info.compiler-url'),
+        subtitle: this.currentNetwork.compilerUrl,
+      }, {
         name: this.$t('settings.info.sdk-version'),
         value: process.env.SDK_VERSION,
+      }, {
+        name: this.$t('settings.info.middleware-url'),
+        subtitle: this.currentNetwork.middlewareUrl,
       },
       ...this.middlewareStatus.OK ? [] : [{
         name: this.$t('settings.info.blocks-in-queue'),

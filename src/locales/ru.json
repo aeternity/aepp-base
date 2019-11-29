@@ -683,6 +683,8 @@
       "version": "Версия сборки",
       "node-version": "Версия узла",
       "compiler-version": "Версия компилятора",
+      "compiler-url": "Адрес компилятора",
+      "middleware-url": "Адрес middleware",
       "sdk-version": "Версия SDK",
       "blocks-in-queue": "Блоков не синхронизировано"
     },
