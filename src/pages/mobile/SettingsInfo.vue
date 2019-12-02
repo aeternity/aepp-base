@@ -10,7 +10,7 @@
       <ListItem
         v-for="(field, idx) in infoFields"
         :key="idx"
-        :subtitle="!!field.subtitle ? field.subtitle : ''"
+        :subtitle="field.subtitle || ''"
         :title="field.name"
       >
         <template slot="right">
