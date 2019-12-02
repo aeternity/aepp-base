@@ -88,7 +88,11 @@ export default {
       if (!await dispatch('isAccountUsed', address)) {
         await dispatch(
           'modals/open',
-          { name: 'confirm', text: i18n.t('hd-wallet.new-account-warning') },
+          {
+            name: 'confirm',
+            text: i18n.t('hd-wallet.new-account-warning'),
+            primaryButtonText: i18n.t('im-sure'),
+          },
           { root: true },
         );
       }

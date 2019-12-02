@@ -6,6 +6,7 @@
   "ok": "OK",
   "deny": "Denegar",
   "allow": "Permitir",
+  "im-sure": "I'm sure",
   "copied": "Copiado",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "Base æpp actualmente solo puede funcionar cuando se abre en una sola pestaña del navegador. Si tiene instancias adicionales (pestañas) de Base æpp abiertas, ciérrelas",
@@ -315,7 +316,7 @@
 
   "hd-wallet": {
     "account-name": "Cuenta",
-    "new-account-warning": "You are going to create a new account despite that you haven't use the previous one. Are you sure?"
+    "new-account-warning": "You are yet to use your current account. Are you sure you want to create a new one?"
   },
 
   "air-gap": {
