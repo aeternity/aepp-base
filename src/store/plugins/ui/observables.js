@@ -235,7 +235,7 @@ export default (store) => {
           address, mode: oldAddress === address && oldSdk === sdk ? mode : 'initial',
         })),
         filter(({ mode }) => mode === 'initial' || (lastValue && lastValue.status === '')),
-        switchMap(({ address, mode }) => timer(0, 30000)
+        switchMap(({ address, mode }) => timer(0, 5000)
           .pipe(map(idx => ({ address, mode: idx ? 'poll' : mode })))),
         switchMap(({ address, mode }) => new Observable(async (subscriber) => {
           try {
