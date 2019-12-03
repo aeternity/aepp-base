@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { mount, createLocalVue } from '@vue/test-utils';
 import AeInputAccount from '../AeInputAccount.vue';
+import { AENS_DOMAIN } from '../../lib/constants';
 
 Object.assign(Vue.prototype, {
   $globals: {
@@ -90,21 +91,63 @@ describe('AeInputAccount', () => {
     expect(textarea.element.value).toBe(testAddressFormatted);
   });
 
-  it('backspace can remove the whole value', () => {
+  it('removes the whole value with delete button', () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({
-      propsData: { value: 'ak_12' },
+      propsData: { value: `test${AENS_DOMAIN}` },
       listeners: { input: inputListener },
     });
 
     const textarea = wrapper.find('textarea');
     while (textarea.element.value) {
       const { value } = textarea.element;
-      textarea.element.value = value.slice(0, value.length - 1);
-      textarea.element.setSelectionRange(value.length - 1, value.length - 1);
+      textarea.element.value = value.slice(1, value.length);
+      textarea.element.setSelectionRange(0, 0);
       textarea.trigger('input');
       wrapper.setProps({ value: inputListener.mock.calls.pop()[0] });
+      if (value.length - AENS_DOMAIN.length === 1) {
+        expect(textarea.element.value.length).toBe(0);
+      }
       expect(textarea.element.value.length).toBeLessThan(value.length);
     }
+  });
+
+  it('cannot change the AENS_DOMAIN ', () => {
+    const inputListener = jest.fn();
+    const wrapper = mountComponent({
+      propsData: { value: `test${AENS_DOMAIN}` },
+      listeners: { input: inputListener },
+    });
+
+    const textarea = wrapper.find('textarea');
+    const { value } = textarea.element;
+    textarea.element.value = value.slice(0, value.length - 1);
+    textarea.trigger('input');
+    expect(textarea.element.value).toBe(value);
+    textarea.element.value = `${value.slice(0, value.length - 2)}a${value.slice(value.length - 2)}`;
+    textarea.trigger('input');
+    expect(textarea.element.value).toBe(value);
+    textarea.element.value = `${value}test`;
+    textarea.trigger('input');
+    expect(textarea.element.value).toBe(value);
+    textarea.element.value = value + AENS_DOMAIN;
+    textarea.trigger('input');
+    expect(textarea.element.value).toBe(value);
+  });
+
+  it('can remove AENS_DOMAIN, when address prefix inputted', () => {
+    const inputListener = jest.fn();
+    const initialInput = 'ak';
+    const wrapper = mountComponent({
+      propsData: { value: initialInput },
+      listeners: { input: inputListener },
+    });
+
+    const textarea = wrapper.find('textarea');
+    const { value } = textarea.element;
+    expect(value).toBe(initialInput + AENS_DOMAIN);
+    textarea.element.value = `${initialInput}_`;
+    textarea.trigger('input');
+    expect(textarea.element.value).toBe(`${initialInput}_`);
   });
 });

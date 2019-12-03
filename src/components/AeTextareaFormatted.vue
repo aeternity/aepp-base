@@ -21,6 +21,10 @@ export default {
     value: { type: String, default: '' },
     formatDisplayValue: { type: Function, required: true },
     formatEmitValue: { type: Function, default: a => a },
+    getNewCursor: {
+      type: Function,
+      default: (a, b) => this.formatDisplayValue(a.slice(0, b)).length,
+    },
   },
   data: () => ({
     emitValuePromise: null,
@@ -55,9 +59,6 @@ export default {
       } else {
         this.$emit('input', emitValue);
       }
-    },
-    getNewCursor(value, cursor) {
-      return this.formatDisplayValue(value.slice(0, cursor)).length;
     },
   },
 };

@@ -9,6 +9,7 @@
     submit-on-enter
     :format-display-value="formatDisplayValue"
     :format-emit-value="formatEmitValue"
+    :get-new-cursor="getNewCursor"
     v-bind="$attrs"
     v-on="$listeners"
   >
@@ -74,6 +75,7 @@ import AeToolbarButton from './AeToolbarButton.vue';
 import { Card, Paste, Camera } from './icons';
 import AePopover from './AePopover.vue';
 import ListItemAccount from './ListItemAccount.vue';
+import { AENS_DOMAIN } from '../lib/constants';
 
 const ADDRESS_PREFIX = 'ak_';
 const FORMATTED_ADDRESS_REGEXP = /^ak_[1-9A-HJ-NP-Za-km-z ]+$/;
@@ -131,12 +133,33 @@ export default {
     formatDisplayValue(value) {
       const name = Crypto.isAddressValid(value) && this.$store.getters['names/get'](value, false);
       if (name) return name;
+      const domainIndex = value.indexOf(AENS_DOMAIN);
+      if (value
+        && !value.startsWith(ADDRESS_PREFIX)
+        && !value.endsWith(AENS_DOMAIN)) {
+        if (domainIndex > 0) {
+          return value.slice(0, -(value.length - domainIndex - AENS_DOMAIN.length));
+        }
+        if (value.length > AENS_DOMAIN.length - 1) {
+          return this.value;
+        }
+        return value + AENS_DOMAIN;
+      }
+      if (value === AENS_DOMAIN
+        || (value.startsWith(ADDRESS_PREFIX) && value.endsWith(AENS_DOMAIN))
+        || (domainIndex > 0 && domainIndex + AENS_DOMAIN.length !== value.length)) {
+        return value.slice(0, -AENS_DOMAIN.length);
+      }
       if (value.startsWith(ADDRESS_PREFIX)) return this.formatAddress(value);
       return value;
     },
     formatEmitValue(value) {
       if (FORMATTED_ADDRESS_REGEXP.test(value)) return value.replace(/ /g, '');
       return value;
+    },
+    getNewCursor(value, cursor) {
+      if (this.formatDisplayValue(value).endsWith(AENS_DOMAIN)) return cursor;
+      return this.formatDisplayValue(value.slice(0, cursor)).length;
     },
     setValue(newValue) {
       this.$children[0].$el.querySelector('textarea').value = newValue;

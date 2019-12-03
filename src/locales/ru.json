@@ -204,7 +204,7 @@
       "to": {
         "guide": "<primary>Новый перевод</primary><br />из <account />",
         "recipient": "Получатель",
-        "address-or-name": "ak_ … или name.chain",
+        "address-or-name": "ak_ … или name",
         "paste": "Вставить",
         "scan": "Сканировать",
         "scan-address": "Сканировать AE адрес",
@@ -495,7 +495,7 @@
       "guide": "<primary>Запросить имя</primary> для <inlineAccount />",
       "unknown-error": "Неизвестная ошибка",
       "name": "Имя",
-      "name-placeholder": "Имя.chain",
+      "name-placeholder": "Имя",
       "register": "Зарегистрировать",
       "confirm-bidding": "Аукцион на имя {name} уже начался. Хотите сделать ставку?",
 

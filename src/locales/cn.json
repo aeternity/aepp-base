@@ -204,7 +204,7 @@
       "to": {
         "guide": "<primary>新转账</primary><br>从",
         "recipient": "账户",
-        "address-or-name": "ak_ … or name.chain",
+        "address-or-name": "ak_ … or name",
         "paste": "复制",
         "scan": "扫描",
         "scan-address": "Scan AE Address",
@@ -495,7 +495,7 @@
       "guide": "为 <inlineAccount /><primary>申请一个新名称</primary> ",
       "unknown-error": "未知错误",
       "name": "名称",
-      "name-placeholder": "Name.chain",
+      "name-placeholder": "Name",
       "register": "注册",
       "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 

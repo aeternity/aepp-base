@@ -204,7 +204,7 @@
       "to": {
         "guide": "<primary>Nueva transferencia</primary><br /> desde <account />",
         "recipient": "Destinatario",
-        "address-or-name": "ak_ … or name.chain",
+        "address-or-name": "ak_ … or name",
         "paste": "Pegar",
         "scan": "Escanear",
         "scan-address": "Scan AE Address",
@@ -495,7 +495,7 @@
       "guide": "<primary>Reclama un nombre</primary> para <inlineAccount />",
       "unknown-error": "Error desconocido",
       "name": "Nombre",
-      "name-placeholder": "Name.chain",
+      "name-placeholder": "Name",
       "register": "Registrarse",
       "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
