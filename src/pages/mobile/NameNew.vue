@@ -113,14 +113,18 @@ export default {
       try {
         this.$store.dispatch('names/fetchOwned');
         await this.$store.state.sdk.poll(claimTxHash);
-        if (MAX_AUCTION_NAME_LENGTH < this.name.length) {
+        const isAuction = MAX_AUCTION_NAME_LENGTH >= this.name.length;
+        if (!isAuction) {
           await this.$store.dispatch('names/updatePointer', {
             name: this.name, address: this.$store.getters['accounts/active'].address,
           });
         }
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: i18n.t('name.new.notification.registered', { name: this.name }),
+          text: i18n.t(
+            `name.new.notification.${isAuction ? 'bid' : 'registered'}`,
+            { name: this.name },
+          ),
         });
       } catch (e) {
         if (e.message === 'Rejected by user') return;
