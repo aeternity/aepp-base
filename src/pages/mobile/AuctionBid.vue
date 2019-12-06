@@ -88,6 +88,7 @@ import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
 import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
 import AeButton from '../../components/AeButton.vue';
+import { i18n } from '../../store/plugins/ui/languages';
 
 export default {
   components: {
@@ -158,6 +159,10 @@ export default {
         await this.$store.state.sdk.aensBid(
           name, BigNumber(this.amount).shiftedBy(MAGNITUDE),
         );
+        this.$store.dispatch('modals/open', {
+          name: 'notification',
+          text: i18n.t('name.new.notification.bid', { name }),
+        });
         this.$router.push({ name: 'auction-details', params: { name } });
       } finally {
         this.busy = false;

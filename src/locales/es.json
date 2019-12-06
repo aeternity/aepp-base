@@ -502,6 +502,7 @@
       "notification": {
         "claim-sent":"La solicitud de {name} nombre se envió correctamente",
         "registered": "{name} se registró correctamente",
+        "bid": "You bid on {name} successfully",
         "unknown-error": "{name} no se registró por un motivo desconocido"
       }
     }
