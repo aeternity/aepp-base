@@ -53,7 +53,7 @@ export default {
   computed: {
     ...mapGetters({ activeAccount: 'accounts/active' }),
     app() {
-      return this.$store.getters.getAppMetadata(this.appHost);
+      return this.$store.getters['appsMetadata/get'](this.appHost);
     },
   },
   methods: {
