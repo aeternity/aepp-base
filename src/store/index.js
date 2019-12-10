@@ -5,7 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
 import '../lib/storeErrorHandler';
-import rootModule from './modules/root'; // eslint-disable-line import/no-cycle
+import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import accountsModule from './modules/accounts';
@@ -26,8 +26,9 @@ const store = new Vuex.Store({
       state => state,
       ({
         migrations, sdkUrl, customNetworks,
-        apps, cachedAppManifests, peerId, languages, currencies,
+        apps, peerId, languages, currencies,
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
+        appsMetadata: { cachedManifests } = {},
         mobile: { readSecurityCourses, followers, skipAddingToHomeScreen } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
@@ -52,9 +53,9 @@ const store = new Vuex.Store({
           activeIdx,
           hdWallet: { encryptedWallet, mnemonicBackedUp },
         },
+        appsMetadata: { cachedManifests },
         apps,
         ...process.env.IS_MOBILE_DEVICE ? {
-          cachedAppManifests,
           mobile: {
             readSecurityCourses,
             followers: Object.entries(followers)

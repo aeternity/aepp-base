@@ -64,11 +64,11 @@ export default {
   data: () => ({ searchTerm: '' }),
   computed: {
     ...mapState({
-      aeternityApps: (state, { getAppMetadata }) => aeternityAppsPaths
-        .map(path => ({ ...getAppMetadata(path), path })),
-      bookmarkedApps: ({ apps }, { getAppMetadata }) => apps
+      aeternityApps: (state, getters) => aeternityAppsPaths
+        .map(path => ({ ...getters['appsMetadata/get'](path), path })),
+      bookmarkedApps: ({ apps }, getters) => apps
         .filter(({ bookmarked }) => bookmarked)
-        .map(app => ({ ...app, ...getAppMetadata(app.host) })),
+        .map(app => ({ ...app, ...getters['appsMetadata/get'](app.host) })),
     }),
     fuse() {
       return new Fuse(this.bookmarkedApps, {

@@ -30,8 +30,8 @@ import AppShortcut from '../../components/AppShortcut.vue';
 export default {
   components: { Guide, Note, AppShortcut },
   computed: mapState({
-    aeternityApps: (state, { getAppMetadata }) => aeternityAppsPaths
-      .map(path => ({ ...getAppMetadata(path), path })),
+    aeternityApps: (state, getters) => aeternityAppsPaths
+      .map(path => ({ ...getters['appsMetadata/get'](path), path })),
   }),
 };
 </script>

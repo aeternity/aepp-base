@@ -16,7 +16,7 @@ storiesOf('mobile ConfirmAccountAccessModal', module)
       modules: accountsModules,
       state: { mobile: {} },
       getters: {
-        getAppMetadata,
+        'appsMetadata/get': getAppMetadata,
       },
     }),
     template: `

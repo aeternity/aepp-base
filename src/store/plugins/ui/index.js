@@ -1,3 +1,4 @@
+import appsMetadata from './appsMetadata';
 import pathTracker from './pathTracker';
 import connectionStatusTracker from './connectionStatusTracker';
 import desktopGuide from './desktopGuide';
@@ -12,6 +13,7 @@ import unlockWalletIfNotEncrypted from './unlockWalletIfNotEncrypted';
 import veeValidate from './veeValidate';
 
 export default store => [
+  appsMetadata,
   connectionStatusTracker,
   languages,
   currencies,

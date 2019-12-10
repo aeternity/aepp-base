@@ -44,7 +44,7 @@ export default {
     LeftMore,
   },
   computed: mapState({
-    apps({ apps }, { getAppMetadata }) {
+    apps({ apps }, getters) {
       return apps
         .filter(app => get(app, 'permissions.accessToAccounts.length', 0))
         .map((app) => {
@@ -52,7 +52,7 @@ export default {
           return {
             icon: DEFAULT_ICON,
             ...app,
-            ...getAppMetadata(app.host),
+            ...getters['appsMetadata/get'](app.host),
             subtitle: this.$tc('app.settings.list.subtitle', c),
           };
         });
