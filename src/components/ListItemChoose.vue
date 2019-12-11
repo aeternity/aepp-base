@@ -63,7 +63,7 @@ export default {
     }
   }
 
-  /deep/ {
+  >>> {
     .content img {
       width: rem(40px);
     }

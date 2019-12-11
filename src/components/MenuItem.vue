@@ -32,7 +32,7 @@ export default {
     background-color: $color-neutral-positive-3;
   }
 
-  /deep/ .icon {
+  >>> .icon {
     height: rem(15px);
 
     &:first-child {

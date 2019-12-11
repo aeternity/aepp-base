@@ -48,7 +48,7 @@ export default {
 .alert-modal {
   @extend %face-sans-base;
 
-  /deep/ .modal-plain {
+  >>> .modal-plain {
     max-width: rem(375px);
     padding: rem(30px);
   }

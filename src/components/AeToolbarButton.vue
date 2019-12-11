@@ -34,7 +34,7 @@ export default {
     color: #000;
   }
 
-  /deep/ .icon {
+  >>> .icon {
     height: rem(14px);
     vertical-align: -.2em;
   }

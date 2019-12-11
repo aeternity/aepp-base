@@ -76,7 +76,7 @@ export default {
 @import '../../styles/typography';
 
 .sidebar {
-  /deep/ .modal {
+  >>> .modal {
     display: flex;
     flex-direction: column;
   }

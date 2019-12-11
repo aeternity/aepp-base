@@ -28,7 +28,7 @@ export default {
   flex-direction: column;
   min-height: 100%;
 
-  /deep/ .grayscale {
+  >>> .grayscale {
     filter: grayscale(100%);
   }
 }

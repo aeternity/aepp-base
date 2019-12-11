@@ -92,7 +92,7 @@ export default {
     margin: rem(32px) rem(16px) rem(8px) rem(16px);
   }
 
-  /deep/ .ae-toolbar {
+  >>> .ae-toolbar {
     text-align: right;
   }
 }

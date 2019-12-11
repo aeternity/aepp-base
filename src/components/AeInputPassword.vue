@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ae-input-password /deep/ input::-ms-reveal {
+.ae-input-password >>> input::-ms-reveal {
   display: none;
 }
 </style>

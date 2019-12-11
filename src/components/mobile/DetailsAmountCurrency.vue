@@ -32,7 +32,7 @@ export default {
 .details-amount-currency .balance {
   font-weight: inherit;
 
-  &, /deep/ .left {
+  &, >>> .left {
     color: inherit;
     font-size: inherit;
   }

@@ -75,7 +75,7 @@ export default {
     --color-primary: #{$color-neutral-negative-3};
     --color-secondary: #{$color-neutral-negative-1};
 
-    /deep/ .details-item:first-child {
+    >>> .details-item:first-child {
       border-top: none;
     }
   }
