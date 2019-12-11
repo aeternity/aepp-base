@@ -55,7 +55,7 @@ export default {
     background: $color-alternative-negative-2;
   }
 
-  >>> a {
+  ::v-deep a {
     color: inherit;
   }
 }

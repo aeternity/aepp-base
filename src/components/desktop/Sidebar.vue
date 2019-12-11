@@ -76,7 +76,7 @@ export default {
 @import '../../styles/typography';
 
 .sidebar {
-  >>> .modal {
+  ::v-deep .modal {
     display: flex;
     flex-direction: column;
   }

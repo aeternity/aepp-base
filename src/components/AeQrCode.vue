@@ -34,7 +34,7 @@ export default {
 .ae-qr-code {
   padding: rem(5px);
 
-  >>> svg {
+  ::v-deep svg {
     display: block;
   }
 }

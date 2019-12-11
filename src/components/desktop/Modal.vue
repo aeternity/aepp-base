@@ -52,7 +52,7 @@ export default {
 @import '../../styles/typography';
 
 .modal {
-  >>> .modal-plain {
+  ::v-deep .modal-plain {
     display: flex;
     flex-direction: column;
     width: rem(560px);

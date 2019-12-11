@@ -119,7 +119,7 @@ a, label {
       flex-grow: 1;
     }
 
-    >>> {
+    ::v-deep {
       img {
         width: rem(33px);
       }

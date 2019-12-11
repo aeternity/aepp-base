@@ -11,7 +11,7 @@
   text-align: center;
   padding: 10px;
 
-  >>> {
+  ::v-deep {
     .ae-app-icon {
       display: inline-block;
 

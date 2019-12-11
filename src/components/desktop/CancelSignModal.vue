@@ -33,7 +33,7 @@ export default {
 .cancel-sign-modal {
   text-align: center;
 
-  >>> .modal-plain {
+  ::v-deep .modal-plain {
     padding: rem(50px) rem(70px) rem(70px) rem(70px);
   }
 

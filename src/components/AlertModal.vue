@@ -48,7 +48,7 @@ export default {
 .alert-modal {
   @extend %face-sans-base;
 
-  >>> .modal-plain {
+  ::v-deep .modal-plain {
     max-width: rem(375px);
     padding: rem(30px);
   }

@@ -63,7 +63,7 @@ export default {
   --color-primary: #{$color-neutral-negative-3};
   --color-secondary: #{$color-neutral};
 
-  >>> .details-permission:first-child {
+  ::v-deep .details-permission:first-child {
     border-top: none;
   }
 }

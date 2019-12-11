@@ -47,7 +47,7 @@ export default {
 .security-course-modal {
   text-align: center;
 
-  >>> .modal-plain {
+  ::v-deep .modal-plain {
     max-width: rem(275px);
     padding: rem(50px) rem(30px) rem(10px) rem(30px);
   }

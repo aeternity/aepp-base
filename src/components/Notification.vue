@@ -57,7 +57,7 @@ export default {
     overflow-wrap: break-word;
     padding: rem(20px) rem(16px);
 
-    >>> .list-item {
+    ::v-deep .list-item {
       padding-left: 0;
       padding-right: 0;
 
@@ -73,7 +73,7 @@ export default {
     background-color: $color-neutral-positive-2;
     border-radius: 0 0 rem(8px) rem(8px);
 
-    >>> .ae-button {
+    ::v-deep .ae-button {
       flex-grow: 1;
       flex-basis: 0;
       height: rem(20px);

@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ledger-request-retry.ledger-modal >>> footer {
+.ledger-request-retry.ledger-modal ::v-deep footer {
   display: flex;
   justify-content: space-between;
 }

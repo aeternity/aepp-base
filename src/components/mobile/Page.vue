@@ -121,7 +121,7 @@ export default {
     margin: 0 auto;
     padding: 0 rem(48px);
 
-    >>> {
+    ::v-deep {
       .guide.has-icon {
         margin-left: rem(-36px);
       }
@@ -187,7 +187,7 @@ export default {
   }
 
   header {
-    .wrapper >>> {
+    .wrapper ::v-deep {
       .ae-input-wrapper:last-child,
       > .ae-card:last-child {
         margin-bottom: rem(-32px);
@@ -207,7 +207,7 @@ export default {
     flex-grow: 1;
     padding-bottom: rem(32px);
 
-    >>> {
+    ::v-deep {
       .ae-card:first-child {
         margin-top: rem(32px);
       }
@@ -222,7 +222,7 @@ export default {
       position: static;
     }
 
-    .wrapper >>> > {
+    .wrapper ::v-deep > {
       .ae-button:not(.plain),
       .ae-button-group {
         box-shadow: 0 0 16px $color-shadow-alpha-15;
