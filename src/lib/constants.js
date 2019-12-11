@@ -33,3 +33,10 @@ export const AENS_DOMAIN = '.chain';
 export const MAX_AUCTION_NAME_LENGTH = 12 + AENS_DOMAIN.length;
 
 export const NAME_LIST_ROUTE_NAMES = ['name-list', 'auction-list', 'auction-list-character-length'];
+
+export const PROTOCOLS_ALLOWED = [
+  'https:',
+  ...window.location.protocol === 'https:' ? [] : ['http:'],
+];
+export const PROTOCOL_DEFAULT = window.location.protocol === 'https:'
+  || process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
