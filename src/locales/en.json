@@ -6,6 +6,7 @@
   "ok": "OK",
   "deny": "Deny",
   "allow": "Allow",
+  "im-sure": "I'm sure",
   "copied": "Copied",
   "scan-qr-code": "Scan QR code",
   "guide-desktop": "The Base æpp can currently work only when opened in a single browser tab. If you have any additional instances (tabs) of the Base æpp open, please close them.",
@@ -315,7 +316,7 @@
 
   "hd-wallet": {
     "account-name": "Account",
-    "new-account-warning": "You are going to create a new account despite that you haven't use the previous one. Are you sure?"
+    "new-account-warning": "You are yet to use your current account. Are you sure you want to create a new one?"
   },
 
   "air-gap": {
@@ -501,6 +502,7 @@
       "notification":{
         "claim-sent": "Claim for {name} name was successfully sent",
         "registered": "{name} was successfully registered",
+        "bid": "You bid on {name} successfully",
         "unknown-error": "{name} was not registered for unknown reason"
       }
     }
@@ -683,6 +685,8 @@
       "version": "Version",
       "node-version": "Node version",
       "compiler-version": "Compiler version",
+      "compiler-url": "Compiler URL",
+      "middleware-url": "Middleware URL",
       "sdk-version": "SDK version",
       "blocks-in-queue": "Blocks not synced yet"
     },

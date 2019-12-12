@@ -1,13 +1,15 @@
 import Vue from 'vue';
-import '../__mocks__/crypto-api';
-import store from '../index';
-import manifestMozillaDocs from './manifestMozillaDocs.json';
-import manifestTwitter from './manifestTwitter.json';
+import Vuex from 'vuex';
+import appsMetadata from '../appsMetadata';
+import manifestMozillaDocs from './assets/manifestMozillaDocs.json';
+import manifestTwitter from './assets/manifestTwitter.json';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
+Vue.use(Vuex);
+const store = new Vuex.Store({ plugins: [appsMetadata] });
 
-describe('store', () => {
+describe('appsMetadata', () => {
   [{
     name: 'example from Mozilla docs',
     manifest: manifestMozillaDocs,
@@ -26,8 +28,8 @@ describe('store', () => {
     `returns app metadata for ${name}`,
     async () => {
       const host = 'example.com';
-      store.commit('setCachedAppManifest', { host, manifest });
-      expect(store.getters.getAppMetadata(host)).toEqual(metadata);
+      store.commit('appsMetadata/setCachedManifest', { host, manifest });
+      expect(store.getters['appsMetadata/get'](host)).toEqual(metadata);
     },
   ));
 });

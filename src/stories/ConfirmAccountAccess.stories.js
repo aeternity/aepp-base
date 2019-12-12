@@ -13,7 +13,7 @@ const base = {
   store: new Vuex.Store({
     modules: accountsModules,
     getters: {
-      getAppMetadata,
+      'appsMetadata/get': getAppMetadata,
     },
   }),
 };

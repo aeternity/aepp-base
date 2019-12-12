@@ -48,7 +48,7 @@ export default {
   },
   computed: mapState({
     accounts: ({ accounts: { list } }) => list,
-    app(state, { getApp, getAppMetadata }) {
+    app(state, { getApp, 'appsMetadata/get': getAppMetadata }) {
       return { ...getApp(this.appHost), ...getAppMetadata(this.appHost) };
     },
   }),
