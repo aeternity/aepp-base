@@ -94,40 +94,47 @@ export default (store) => {
       },
       async fetchOwned({ rootState, commit, dispatch }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-        const [names, bids] = await Promise.all([
-          (await Promise.all(rootState.accounts.list.map(({ address }) => Promise.all([
-            sdk.api.getPendingAccountTransactionsByPubkey(address)
-              .then(({ transactions }) => transactions
-                .filter(({ tx: { type } }) => type === 'NameClaimTx')
-                .map(({ tx, ...otherTx }) => ({
-                  ...otherTx,
-                  ...tx,
-                  pending: true,
-                  owner: tx.accountId,
-                })))
-              .catch((error) => {
-                if (!isAccountNotFoundError(error)) {
-                  handleUnknownError(error);
-                }
-                return [];
-              }),
+
+        const getPendingNameClaimTransactions = address => sdk.api
+          .getPendingAccountTransactionsByPubkey(address)
+          .then(
+            ({ transactions }) => transactions
+              .filter(({ tx: { type } }) => type === 'NameClaimTx')
+              .map(({ tx, ...otherTx }) => ({
+                ...otherTx,
+                ...tx,
+                pending: true,
+                owner: tx.accountId,
+              })),
+            (error) => {
+              if (!isAccountNotFoundError(error)) handleUnknownError(error);
+              return [];
+            },
+          );
+
+        const namesPromise = Promise.all(
+          rootState.accounts.list.map(({ address }) => Promise.all([
+            getPendingNameClaimTransactions(address),
             sdk.middleware.getActiveNames({ owner: address }),
-          ])))).flat(2),
-          Promise.all([
-            dispatch('getHeight'),
-            ...rootState.accounts.list
-              .map(({ address }) => sdk.middleware.getNameAuctionsBidsbyAddress(address)),
-          ]).then(([height, ...bidsByAddress]) => bidsByAddress
-            .flat()
-            .filter(({ nameAuctionEntry }) => nameAuctionEntry.expiration > height)
-            .filter(({ nameAuctionEntry, transaction }) => nameAuctionEntry
-              .winningBid === transaction.tx.nameFee)
-            .map(bid => update(
-              bid,
-              'transaction.tx.nameFee',
-              v => BigNumber(v).shiftedBy(-MAGNITUDE),
-            ))),
-        ]);
+          ])),
+        ).then(names => names.flat(2));
+
+        const bidsPromise = Promise.all([
+          dispatch('getHeight'),
+          ...rootState.accounts.list
+            .map(({ address }) => sdk.middleware.getNameAuctionsBidsbyAddress(address)),
+        ]).then(([height, ...bidsByAddress]) => bidsByAddress
+          .flat()
+          .filter(({ nameAuctionEntry }) => nameAuctionEntry.expiration > height)
+          .filter(({ nameAuctionEntry, transaction }) => nameAuctionEntry
+            .winningBid === transaction.tx.nameFee)
+          .map(bid => update(
+            bid,
+            'transaction.tx.nameFee',
+            v => BigNumber(v).shiftedBy(-MAGNITUDE),
+          )));
+
+        const [names, bids] = await Promise.all([namesPromise, bidsPromise]);
         commit('setOwned', { names, bids });
       },
       async fetchAuctionEntry({ rootState }, name) {
