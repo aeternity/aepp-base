@@ -2,6 +2,7 @@
   <ButtonPlain
     v-bind="$attrs"
     class="app-shortcut"
+    v-on="$listeners"
   >
     <img
       :src="icon"
