@@ -45,7 +45,8 @@ import Guide from '../../components/Guide.vue';
 import Balance from '../../components/Balance.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import { LeftMore } from '../../components/icons';
-import { MIN_SPEND_TX_FEE, MAGNITUDE } from '../../lib/constants';
+import { MAGNITUDE } from '../../lib/constants';
+import { MIN_SPEND_TX_FEE } from '../../lib/spendTxFees';
 
 export default {
   components: {

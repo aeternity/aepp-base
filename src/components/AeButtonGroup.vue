@@ -12,7 +12,7 @@
   border-radius: 32px;
   overflow: hidden;
 
-  /deep/ .ae-button {
+  ::v-deep .ae-button {
     min-width: 0;
     border-radius: 0;
     margin: 0;

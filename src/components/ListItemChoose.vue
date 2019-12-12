@@ -63,7 +63,7 @@ export default {
     }
   }
 
-  /deep/ {
+  ::v-deep {
     .content img {
       width: rem(40px);
     }

@@ -1,5 +1,3 @@
-import runMigrations from '../migrations';
-
 const KEY = 'vuex';
 
 const setState = state => localStorage.setItem(
@@ -35,7 +33,7 @@ export const resetState = () => {
 
 export default (reducerLoad, reducerSave) => (store) => {
   let resetting = false;
-  let lastEmitedState = reducerLoad(runMigrations(getState(), store));
+  let lastEmitedState = reducerLoad(getState(), store);
   store.commit('syncState', lastEmitedState);
 
   store.subscribe(({ type, payload }, state) => {

@@ -28,7 +28,7 @@ import { pick } from 'lodash-es';
 import { mapState, mapMutations } from 'vuex';
 import AeInputAmount from './AeInputAmount.vue';
 import AeToolbarButton from './AeToolbarButton.vue';
-import { MIN_SPEND_TX_FEE } from '../lib/constants';
+import { MIN_SPEND_TX_FEE } from '../lib/spendTxFees';
 import prefixedAmount from '../filters/prefixedAmount';
 
 export default {

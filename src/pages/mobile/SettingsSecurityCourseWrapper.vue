@@ -68,7 +68,7 @@ export default {
 @import '../../styles/typography';
 
 .settings-security-course-details.mobile-page {
-  /deep/ {
+  ::v-deep {
     .header-mobile {
       display: none;
     }

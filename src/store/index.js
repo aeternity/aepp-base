@@ -9,6 +9,7 @@ import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
 import accountsModule from './modules/accounts';
+import runMigrations from './migrations';
 import persistState from './plugins/persistState';
 import remoteConnection from './plugins/remoteConnection';
 import initSdk from './plugins/initSdk';
@@ -19,11 +20,11 @@ import syncLedgerAccounts from './plugins/syncLedgerAccounts';
 Vue.use(Vuex);
 Vue.use(VueRx);
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   plugins: [
     persistState(
-      state => state,
+      (state, store) => runMigrations(state, store),
       ({
         migrations, sdkUrl, customNetworks,
         apps, peerId, languages, currencies,
@@ -88,5 +89,3 @@ const store = new Vuex.Store({
 
   ...rootModule,
 });
-
-export default store;
