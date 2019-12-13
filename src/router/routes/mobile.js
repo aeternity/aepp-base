@@ -56,7 +56,6 @@ import SettingsPassword from '../../pages/mobile/SettingsPassword.vue';
 import SettingsPasswordSet from '../../pages/mobile/SettingsPasswordSet.vue';
 import SettingsLanguage from '../../pages/mobile/SettingsLanguage.vue';
 
-const Apps = () => import(/* webpackChunkName: "page-apps" */ '../../pages/mobile/Apps.vue');
 const RedeemBalance = () => import(/* webpackChunkName: "page-redeem" */ '../../pages/mobile/RedeemBalance.vue');
 
 const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
@@ -133,13 +132,9 @@ export default [{
   path: '/recover',
   component: Recover,
 }, {
-  name: 'apps',
-  path: '/browser',
-  component: Apps,
-  beforeEnter: ensureLoggedIn,
-}, {
   name: 'app-browser',
-  path: '/browser/*',
+  path: '/browser',
+  alias: '/browser/*',
   component: AppBrowser,
   beforeEnter: ensureLoggedIn,
 }, {
