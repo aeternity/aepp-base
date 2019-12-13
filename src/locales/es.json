@@ -134,7 +134,9 @@
       "featured-guide": "<primary>æpps destacados</primary>",
       "bookmarked-guide": "Mis æpps",
       "guide": "æpps <primary>explorador</primary> (beta)",
-      "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación"
+      "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación",
+      "by": "by",
+      "launch": "Launch"
     },
 
     "url-form-placeholder": "Ingrese la URL de æpp",

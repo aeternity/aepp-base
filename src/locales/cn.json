@@ -134,7 +134,9 @@
       "featured-guide": "<primary>精选</primary>",
       "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>浏览器</primary> (beta)",
-      "note": "将运行在æternity区块链上的æpps添加到这里"
+      "note": "将运行在æternity区块链上的æpps添加到这里",
+      "by": "by",
+      "launch": "Launch"
     },
 
     "url-form-placeholder": "输入链接",
