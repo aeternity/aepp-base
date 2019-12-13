@@ -18,6 +18,7 @@ export default store => store.registerModule('appsMetadata', {
       const manifest = cachedManifests[host] || {};
 
       const metadata = {
+        ...manifest,
         name: manifest.short_name || manifest.name || host,
       };
 
