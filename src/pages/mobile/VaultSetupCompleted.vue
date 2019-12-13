@@ -25,7 +25,7 @@
     <AeButton
       slot="footer"
       fill="alternative"
-      :to="{ name: 'apps' }"
+      :to="$globals.ROUTE_MOBILE_LOGGED_IN"
     >
       {{ $t('air-gap.setup.completed.finish') }}
     </AeButton>

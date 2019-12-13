@@ -3,7 +3,7 @@
     class="vault-setup-method"
     hide-tab-bar
     right-button-icon-name="close"
-    :right-button-to="{ name: 'apps' }"
+    :right-button-to="$globals.ROUTE_MOBILE_LOGGED_IN"
   >
     <template slot="title">
       {{ $t('air-gap.setup.title') }}

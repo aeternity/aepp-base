@@ -1,5 +1,5 @@
 import { merge } from 'lodash-es';
-import { NAME_LIST_ROUTE_NAMES } from '../../lib/constants';
+import { NAME_LIST_ROUTE_NAMES, ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
 import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
@@ -123,7 +123,7 @@ export default [{
       return;
     }
     if (store.getters.loggedIn) {
-      next({ name: 'transfer' });
+      next(ROUTE_MOBILE_LOGGED_IN);
       return;
     }
     next();
