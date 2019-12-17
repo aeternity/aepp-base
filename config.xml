@@ -34,10 +34,18 @@
         <edit-config file="*-Info.plist" mode="merge" target="UIUserInterfaceStyle">
             <string>Light</string>
         </edit-config>
+        <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
+            <array>
+                <string>applinks:base.aepps.com</string>
+            </array>
+        </config-file>
+
+        <config-file target="*-Release.plist" parent="com.apple.developer.associated-domains">
+            <array>
+                <string>applinks:base.aepps.com</string>
+            </array>
+        </config-file>
     </platform>
-    <universal-links>
-        <host event="handleDeeplinkUrl" name="base.aepps.com" scheme="https" />
-    </universal-links>
     <preference name="SplashScreen" value="screen" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <feature name="SplashScreen">
@@ -58,7 +66,15 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <plugin name="cordova-clipboard" spec="^1.3.0" />
+    <plugin name="ionic-plugin-deeplinks" spec="^1.0.20">
+        <variable name="URL_SCHEME" value="aepp-base" />
+        <variable name="DEEPLINK_SCHEME" value="http" />
+        <variable name="DEEPLINK_HOST" value="base.aepps.com" />
+        <variable name="ANDROID_PATH_PREFIX" value="/" />
+        <variable name="DEEPLINK_2_SCHEME" value="https" />
+        <variable name="DEEPLINK_2_HOST" value="base.aepps.com" />
+        <variable name="ANDROID_2_PATH_PREFIX" value="/" />
+    </plugin>
     <engine name="android" spec="^8.0.0" />
     <engine name="ios" spec="^5.0.0" />
-    <plugin name="cordova-universal-links-plugin" spec="https://github.com/walteram/cordova-universal-links-plugin" />
 </widget>

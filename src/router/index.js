@@ -42,8 +42,7 @@ export default (async () => {
           store.commit('setLoginTarget');
         }
         if (process.env.IS_CORDOVA) {
-          window.universalLinks.subscribe(
-            'handleDeeplinkUrl',
+          window.IonicDeeplink.onDeepLink(
             d => router.push((u => u.pathname + u.search)(new URL(d.url))),
           );
         }
