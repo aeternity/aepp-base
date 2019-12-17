@@ -35,6 +35,9 @@
             <string>Light</string>
         </edit-config>
     </platform>
+    <universal-links>
+        <host event="handleDeeplinkUrl" name="base.aepps.com" scheme="https" />
+    </universal-links>
     <preference name="SplashScreen" value="screen" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <feature name="SplashScreen">
@@ -57,4 +60,5 @@
     <plugin name="cordova-clipboard" spec="^1.3.0" />
     <engine name="android" spec="^8.0.0" />
     <engine name="ios" spec="^5.0.0" />
+    <plugin name="cordova-universal-links-plugin" spec="https://github.com/walteram/cordova-universal-links-plugin" />
 </widget>

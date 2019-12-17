@@ -1,5 +1,6 @@
 import { merge } from 'lodash-es';
 import { NAME_LIST_ROUTE_NAMES } from '../../lib/constants';
+import { runHandlersForDeeplink } from '../../lib/deeplinkHandlers';
 import { ensureLoggedIn } from '../utils';
 import store from '../../store/index';
 import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
@@ -410,4 +411,17 @@ export default [{
   path: '/settings/language',
   component: SettingsLanguage,
   beforeEnter: ensureLoggedIn,
+}, {
+  name: 'deeplink',
+  path: '/(airgap|address|addressAndNetworkUrl|sign|signTransaction)',
+  beforeEnter: mergeEnterHandlers(
+    ensureLoggedIn,
+    (to, from, next) => {
+      try {
+        runHandlersForDeeplink(to);
+      } finally {
+        next({ name: 'transfer' });
+      }
+    },
+  ),
 }];

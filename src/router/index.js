@@ -41,6 +41,12 @@ export default (async () => {
           router.push(store.state.loginTarget || { name: 'transfer' });
           store.commit('setLoginTarget');
         }
+        if (process.env.IS_CORDOVA) {
+          window.universalLinks.subscribe(
+            'handleDeeplinkUrl',
+            d => router.push((u => u.pathname + u.search)(new URL(d.url))),
+          );
+        }
       } else {
         const { fullPath } = router.currentRoute;
         router.replace({ name: process.env.IS_MOBILE_DEVICE ? 'intro' : 'apps' });
