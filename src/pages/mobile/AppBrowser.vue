@@ -9,7 +9,7 @@
       <ButtonPlain @click="toggleBookmarking">
         <Component :is="bookmarked ? 'BookmarkFull' : 'Bookmark'" />
       </ButtonPlain>
-      <ButtonPlain :to="{ name: 'apps' }">
+      <ButtonPlain :to="{ name: 'app-browser' }">
         <Home />
       </ButtonPlain>
       <ButtonPlain
@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     url() {
-      const path = this.$route.fullPath.replace('/browser/', '');
+      const path = this.$route.fullPath.replace(/\/browser\/?/, '') || process.env.VUE_APP_HOME_PAGE_URL;
       const url = new URL(/^\w+:\D+/.test(path) ? path : `${PROTOCOL_DEFAULT}//${path}`);
       if (!PROTOCOLS_ALLOWED.includes(url.protocol)) url.protocol = PROTOCOL_DEFAULT;
       return url.toString();

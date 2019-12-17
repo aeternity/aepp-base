@@ -94,6 +94,18 @@ export default (store) => {
       }),
       baseAppVersion: () => process.env.npm_package_version,
       share: options => store.dispatch('share', options),
+      bookmarkedApps(app) {
+        if (app.host !== new URL(process.env.VUE_APP_HOME_PAGE_URL).host) {
+          throw new Error('Access denied');
+        }
+        return store.state.apps
+          .filter(({ bookmarked }) => bookmarked)
+          .map(({ host }) => host);
+      },
+      navigate: (url) => {
+        store.dispatch('router/push', `/browser/${url}`);
+      },
+      languageCode: () => store.state.languages.activeCode,
     };
 
     let sdkActive = false;
@@ -108,7 +120,14 @@ export default (store) => {
       Ae.compose(
         ChainNode, Transaction, Contract, Aens, {
           methods,
-          deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share', 'addressAndNetworkUrl'] } },
+          deepConfiguration: {
+            Ae: {
+              methods: [
+                'readQrCode', 'baseAppVersion', 'share', 'addressAndNetworkUrl', 'bookmarkedApps',
+                'navigate', 'languageCode',
+              ],
+            },
+          },
         },
         PostMessageHandler, ...process.env.UNFINISHED_FEATURES ? [UrlSchemeHandler] : [],
       )({

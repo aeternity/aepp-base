@@ -121,10 +121,9 @@ export default {
         }
         this.$store.dispatch('modals/open', {
           name: 'notification',
-          text: i18n.t(
-            `name.new.notification.${isAuction ? 'bid' : 'registered'}`,
-            { name: this.name },
-          ),
+          text: isAuction
+            ? i18n.t('name.new.notification.bid', { name: this.name })
+            : i18n.t('name.new.notification.registered', { name: this.name }),
         });
       } catch (e) {
         if (e.message === 'Rejected by user') return;

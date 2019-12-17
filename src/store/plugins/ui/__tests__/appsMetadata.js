@@ -29,7 +29,10 @@ describe('appsMetadata', () => {
     async () => {
       const host = 'example.com';
       store.commit('appsMetadata/setCachedManifest', { host, manifest });
-      expect(store.getters['appsMetadata/get'](host)).toEqual(metadata);
+      expect(store.getters['appsMetadata/get'](host)).toEqual({
+        ...manifest,
+        ...metadata,
+      });
     },
   ));
 });
