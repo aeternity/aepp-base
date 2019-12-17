@@ -2,13 +2,14 @@ import { get, isEqual } from 'lodash-es';
 import { handleUnknownError, isNotFoundError, isInternalServerError } from '../../../lib/utils';
 import { fetchJson } from '../../utils';
 import { i18n } from '../ui/languages';
+import { registerDeeplinkHandler } from '../../../lib/deeplinkHandlers';
 
 export default (store) => {
   let recreateSdk;
 
   const createSdk = async (network) => {
     const [
-      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler, UrlSchemeHandler,
+      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler, DeeplinkHandler,
     ] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
@@ -17,7 +18,7 @@ export default (store) => {
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
       import(/* webpackChunkName: "sdk" */ './PostMessageHandler'),
-      import(/* webpackChunkName: "sdk" */ './UrlSchemeHandler'),
+      import(/* webpackChunkName: "sdk" */ './DeeplinkHandler'),
     ])).map(module => module.default);
 
     class App {
@@ -110,7 +111,7 @@ export default (store) => {
           methods,
           deepConfiguration: { Ae: { methods: ['readQrCode', 'baseAppVersion', 'share', 'addressAndNetworkUrl'] } },
         },
-        PostMessageHandler, ...process.env.UNFINISHED_FEATURES ? [UrlSchemeHandler] : [],
+        PostMessageHandler, DeeplinkHandler,
       )({
         url: network.url,
         internalUrl: network.url,
@@ -153,6 +154,15 @@ export default (store) => {
     ]);
     sdkActive = true;
     sdk.middleware = middleware.api;
+    registerDeeplinkHandler((d) => {
+      sdk.handleDeeplinkUrl.bind(sdk)(d);
+      if (process.env.IS_PWA) {
+        store.dispatch('modals/open', {
+          name: 'notification',
+          text: i18n.t('modal.deeplinks.return-to-browser'),
+        });
+      }
+    }, ['address', 'addressAndNetworkUrl', 'sign', 'signTransaction']);
     return sdk;
   };
 

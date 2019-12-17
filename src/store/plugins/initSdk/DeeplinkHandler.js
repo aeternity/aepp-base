@@ -1,19 +1,18 @@
 import { times } from 'lodash-es';
 
 export default {
-  init() {
-    window.handleOpenURL = async (u) => {
-      const url = new URL(u);
-      const method = url.pathname;
-      const callbackUrl = new URL(url.searchParams.get('callback'));
+  methods: {
+    async handleDeeplinkUrl(url) {
+      const method = url.path.replace('/', '');
+      const callbackUrl = new URL(url.query.callback);
       const lastParamIdx = Math.max(
         0,
-        ...Array.from(url.searchParams.keys())
+        ...Array.from(Object.keys(url.query))
           .map(key => key.startsWith('param') && +key.replace('param', '')),
       );
       const params = times(
-        lastParamIdx + 1,
-        idx => JSON.parse(decodeURIComponent(url.searchParams.get(`param${idx}`))),
+        lastParamIdx,
+        idx => JSON.parse(decodeURIComponent(url.query[`param${idx}`])),
       );
       const reply = ({ result, error }) => {
         const seraliseError = e => (e instanceof Error ? e.message : e.toString());
@@ -21,7 +20,7 @@ export default {
           error ? 'error' : 'result',
           error ? seraliseError(error) : JSON.stringify(result),
         );
-        window.open(callbackUrl, process.env.IS_CORDOVA ? '_system' : undefined);
+        window.open(callbackUrl, process.env.IS_CORDOVA ? '_system' : '_blank');
       };
 
       if (!['http:', 'https:'].includes(callbackUrl.protocol)) {
@@ -37,6 +36,6 @@ export default {
       } catch (error) {
         reply({ error });
       }
-    };
+    },
   },
 };

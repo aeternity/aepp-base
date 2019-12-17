@@ -547,6 +547,10 @@
       "initial-header": "学习如何使用 Base æpp",
       "highlighted-region": "醒目区域",
       "initial-content": "点击任何 {0} 来了解它的功能。"
+    },
+
+    "deeplinks": {
+      "return-to-browser": "Please return to your web browser."
     }
   },
 

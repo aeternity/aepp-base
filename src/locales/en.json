@@ -547,6 +547,10 @@
       "initial-header": "Learn how to use the Base æpp",
       "highlighted-region": "highlighted region",
       "initial-content": "Tap on any {0} to learn more about its functionality."
+    },
+
+    "deeplinks": {
+      "return-to-browser": "Please return to your web browser."
     }
   },
 
