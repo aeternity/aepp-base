@@ -3,6 +3,7 @@
 import { get, flatMap } from 'lodash-es';
 import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
+import { PROTOCOL_DEFAULT } from '../../../lib/constants';
 
 export default store => store.registerModule('appsMetadata', {
   namespaced: true,
@@ -33,7 +34,7 @@ export default store => store.registerModule('appsMetadata', {
         return i.side > 75 && i.side < p.side ? i : p;
       }, null);
       if (icon) {
-        metadata.icon = new URL(icon.src, `http://${host}`).toString();
+        metadata.icon = new URL(icon.src, `${PROTOCOL_DEFAULT}//${host}`).toString();
       }
 
       return metadata;
