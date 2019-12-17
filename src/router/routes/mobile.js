@@ -163,18 +163,17 @@ export default [{
   path: '/vault/sync-completed',
   component: VaultSetupCompleted,
   beforeEnter: ensureLoggedIn,
-}, ...process.env.IS_CORDOVA
-  ? [{
-    name: 'vault-setup-same-device',
-    path: '/vault/same-device',
-    component: VaultSetupSameDevice,
-    beforeEnter: ensureLoggedIn,
-  }, {
-    name: 'vault-setup-same-device-sync',
-    path: '/vault/same-device/sync',
-    component: VaultSetupSameDeviceSync,
-    beforeEnter: ensureLoggedIn,
-  }] : [], {
+}, {
+  name: 'vault-setup-same-device',
+  path: '/vault/same-device',
+  component: VaultSetupSameDevice,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'vault-setup-same-device-sync',
+  path: '/vault/same-device/sync',
+  component: VaultSetupSameDeviceSync,
+  beforeEnter: ensureLoggedIn,
+}, {
   name: 'transfer',
   path: '/transfer',
   component: Transfer,

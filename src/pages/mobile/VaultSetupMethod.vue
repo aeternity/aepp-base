@@ -36,7 +36,6 @@
       >
     </ListItemChoose>
     <ListItemChoose
-      v-if="$globals.IS_CORDOVA && $globals.IS_IOS"
       :title="$t('air-gap.setup.same-device.title')"
       :subtitle="$t('air-gap.setup.same-device.subtitle')"
       :active="!maximumSecure"

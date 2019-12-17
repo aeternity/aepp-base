@@ -5,6 +5,7 @@ import { getDesktopRemoveSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
 } from '../../../lib/airGap';
+import { KEY } from '../../../lib/deeplinkHandlers';
 import { i18n } from '../../plugins/ui/languages';
 
 const TRANSPORT_QR_CODE = 'qr-code';
@@ -47,19 +48,33 @@ export default {
 
     sign: () => Promise.reject(new Error('Not implemented yet')),
 
-    async signTransactionByDeepLink(store, requestUrl) {
-      window.startApp.set(
-        process.env.IS_IOS
-          ? requestUrl
-          : {
-            action: 'ACTION_VIEW',
-            uri: requestUrl,
-            flags: ['FLAG_ACTIVITY_NEW_TASK'],
-          },
-      ).start();
+    async signTransactionByDeepLink(_, requestUrl) {
+      if (process.env.IS_CORDOVA) {
+        window.startApp.set(
+          process.env.IS_IOS
+            ? requestUrl
+            : {
+              action: 'ACTION_VIEW',
+              uri: requestUrl,
+              flags: ['FLAG_ACTIVITY_NEW_TASK'],
+            },
+        ).start();
 
+        return new Promise((resolve) => {
+          window.handleOpenURL = url => resolve(url);
+        });
+      }
+      window.open(requestUrl);
       return new Promise((resolve) => {
-        window.handleOpenURL = url => resolve(url);
+        const storageHandler = () => {
+          const deeplink = localStorage.getItem(KEY);
+          if (deeplink) {
+            localStorage.removeItem(KEY);
+            window.removeEventListener('storage', storageHandler);
+            resolve(deeplink);
+          }
+        };
+        window.addEventListener('storage', storageHandler);
       });
     },
 
