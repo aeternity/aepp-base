@@ -27,7 +27,7 @@ export default new Vuex.Store({
       (state, store) => runMigrations(state, store),
       ({
         migrations, sdkUrl, customNetworks,
-        apps, peerId, languages, currencies,
+        apps, peerId, languages, currencies, names: { defaults } = {},
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
         appsMetadata: { cachedManifests } = {},
         mobile: { readSecurityCourses, followers, skipAddingToHomeScreen } = {},
@@ -38,6 +38,7 @@ export default new Vuex.Store({
         languages,
         currencies,
         sdkUrl,
+        names: { defaults },
         customNetworks,
         accounts: {
           list: list.map(({ address, source }) => {
