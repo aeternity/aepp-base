@@ -29,7 +29,7 @@
     >
       <AeButton
         fill="secondary"
-        :to="{ name: 'transfer' }"
+        :to="$globals.ROUTE_MOBILE_LOGGED_IN"
       >
         {{ $t('security-courses.settings.list.to-base-app') }}
       </AeButton>

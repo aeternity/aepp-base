@@ -132,10 +132,11 @@
 
     "list": {
       "featured-guide": "<primary>精选</primary>",
-      "browse-guide": "浏览",
       "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>浏览器</primary> (beta)",
-      "note": "将运行在æternity区块链上的æpps添加到这里"
+      "note": "将运行在æternity区块链上的æpps添加到这里",
+      "by": "by",
+      "launch": "Launch"
     },
 
     "url-form-placeholder": "输入链接",
@@ -455,6 +456,7 @@
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "set-default": "Set as a default name",
       "to-point": "Set name pointer",
       "to-transfer": "Transfer name",
       "to-transactions": "View in transactions",
@@ -516,6 +518,7 @@
 
     "confirm-transaction-sign": {
       "guide-spend": "<primary>完成转账</primary><br />从 <senderAddress /><br />到 <recipientAddress />",
+      "guide-name-bid": "<primary>Bid on name</primary><br />with <senderAddress />",
       "guide": "<primary>{title}</primary><br />by <senderAddress />",
       "payload": "Payload",
       "recipient-account": "收件人账户",

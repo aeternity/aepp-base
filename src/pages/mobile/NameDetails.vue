@@ -10,6 +10,13 @@
       :field-renderers="fieldRenderers"
     />
 
+    <AeButton
+      :disabled="isDefaultName || !address"
+      @click="setAsDefaultName"
+    >
+      {{ $t('name.details.set-default') }}
+    </AeButton>
+
     <AeButton :to="{ name: 'name-point', params: { name } }">
       {{ $t('name.details.to-point') }}
     </AeButton>
@@ -32,6 +39,7 @@ import DetailsList from '../../components/mobile/DetailsList.vue';
 import {
   Name, NameId, OwnerId, CreatedAtHeight, ExpiresAtHeight,
 } from '../../components/mobile/details-fields';
+import { getAddressByNameEntry } from '../../lib/utils';
 import DetailsNamePointers from '../../components/mobile/DetailsNamePointers.vue';
 import AeButton from '../../components/AeButton.vue';
 
@@ -55,14 +63,30 @@ export default {
       pointers: DetailsNamePointers,
     },
   }),
-  computed: mapState('names', {
-    details({ owned }) {
-      return owned && owned.names.find(({ name }) => name === this.name);
+  computed: {
+    address() {
+      return getAddressByNameEntry(this.details);
     },
-  }),
+    ...mapState('names', {
+      details({ owned }) {
+        return owned && owned.names.find(({ name }) => name === this.name);
+      },
+      isDefaultName(state, { getDefault }) {
+        return this.address && this.name === getDefault(this.address);
+      },
+    }),
+  },
   async mounted() {
     const id = setInterval(() => this.$store.dispatch('names/fetchOwned'), 3000);
     this.$once('hook:destroyed', () => clearInterval(id));
+  },
+  methods: {
+    setAsDefaultName() {
+      this.$store.dispatch('names/setDefault', {
+        name: this.name,
+        address: this.address,
+      });
+    },
   },
 };
 </script>
@@ -75,7 +99,7 @@ export default {
     --color-primary: #{$color-neutral-negative-3};
     --color-secondary: #{$color-neutral-negative-1};
 
-    /deep/ .details-item:first-child {
+    ::v-deep .details-item:first-child {
       border-top: none;
     }
   }

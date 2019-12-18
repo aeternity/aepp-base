@@ -6,12 +6,14 @@
         @new-url="reload"
       />
 
-      <ButtonPlain @click="toggleBookmarking">
-        <Component :is="bookmarked ? 'BookmarkFull' : 'Bookmark'" />
-      </ButtonPlain>
-      <ButtonPlain :to="{ name: 'apps' }">
-        <Home />
-      </ButtonPlain>
+      <template v-if="path">
+        <ButtonPlain @click="toggleBookmarking">
+          <Component :is="bookmarked ? 'BookmarkFull' : 'Bookmark'" />
+        </ButtonPlain>
+        <ButtonPlain :to="{ name: 'app-browser' }">
+          <Home />
+        </ButtonPlain>
+      </template>
       <ButtonPlain
         ref="menuButton"
         @click="showMenu = true"
@@ -49,6 +51,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { PROTOCOLS_ALLOWED, PROTOCOL_DEFAULT } from '../../lib/constants';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import {
@@ -58,13 +61,6 @@ import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
 import TabBar from '../../components/mobile/TabBar.vue';
-
-const ALLOWED_PROTOCOLS = [
-  'https:',
-  ...window.location.protocol === 'https:' ? [] : ['http:'],
-];
-const DEFAULT_PROTOCOL = window.location.protocol === 'https:'
-  || process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
 
 export default {
   components: {
@@ -88,10 +84,13 @@ export default {
     };
   },
   computed: {
+    path() {
+      return this.$route.fullPath.replace(/\/browser\/?/, '');
+    },
     url() {
-      const path = this.$route.fullPath.replace('/browser/', '');
-      const url = new URL(/^\w+:\D+/.test(path) ? path : `${DEFAULT_PROTOCOL}//${path}`);
-      if (!ALLOWED_PROTOCOLS.includes(url.protocol)) url.protocol = DEFAULT_PROTOCOL;
+      const path = this.path || process.env.VUE_APP_HOME_PAGE_URL;
+      const url = new URL(/^\w+:\D+/.test(path) ? path : `${PROTOCOL_DEFAULT}//${path}`);
+      if (!PROTOCOLS_ALLOWED.includes(url.protocol)) url.protocol = PROTOCOL_DEFAULT;
       return url.toString();
     },
     host() {

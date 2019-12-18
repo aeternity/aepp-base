@@ -62,7 +62,7 @@
       </div>
     </template>
 
-    <ButtonAddFixed :to="{ name: 'auction-bid' }" />
+    <ButtonAddFixed :to="{ name: 'name-new' }" />
   </MobilePage>
 </template>
 

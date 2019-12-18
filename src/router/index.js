@@ -1,4 +1,5 @@
 import Router from 'vue-router';
+import { ROUTE_MOBILE_LOGGED_IN } from '../lib/constants';
 import store from '../store';
 
 store.subscribe((mutation, state) => {
@@ -38,7 +39,7 @@ export default (async () => {
     (loggedIn) => {
       if (loggedIn) {
         if (process.env.IS_MOBILE_DEVICE || store.state.loginTarget) {
-          router.push(store.state.loginTarget || { name: 'transfer' });
+          router.push(store.state.loginTarget || ROUTE_MOBILE_LOGGED_IN);
           store.commit('setLoginTarget');
         }
       } else {

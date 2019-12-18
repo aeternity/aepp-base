@@ -149,7 +149,7 @@ export default {
 @import '../../styles/variables';
 
 .transaction-details {
-  /deep/ main {
+  ::v-deep main {
     margin-top: 0;
     padding-top: 0;
   }
@@ -170,7 +170,7 @@ export default {
         --color-primary: #{$color-primary};
       }
 
-      /deep/ .value {
+      ::v-deep .value {
         text-transform: uppercase;
       }
     }

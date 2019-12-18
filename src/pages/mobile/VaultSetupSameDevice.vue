@@ -5,7 +5,7 @@
     left-button-icon-name="back"
     right-button-icon-name="close"
     :left-button-to="{ name: 'vault-setup-method' }"
-    :right-button-to="{ name: 'apps' }"
+    :right-button-to="$globals.ROUTE_MOBILE_LOGGED_IN"
   >
     <template slot="title">
       {{ $t('air-gap.setup.title') }}

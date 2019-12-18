@@ -56,9 +56,8 @@ import AeInputAmount from '../AeInputAmount.vue';
 import AeInputRange from '../AeInputRange.vue';
 import LedgerModalNote from './LedgerModalNote.vue';
 import AeButton from '../AeButton.vue';
-import {
-  MAGNITUDE, MIN_SPEND_TX_FEE_MICRO, MAX_REASONABLE_FEE_MICRO, MAGNITUDE_MICRO,
-} from '../../lib/constants';
+import { MAGNITUDE, MAGNITUDE_MICRO } from '../../lib/constants';
+import { MIN_SPEND_TX_FEE_MICRO, MAX_REASONABLE_FEE_MICRO } from '../../lib/spendTxFees';
 
 export default {
   components: {

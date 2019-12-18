@@ -42,7 +42,10 @@
 </template>
 
 <script>
+import AeLink from './AeLink.vue';
+
 export default {
+  components: { AeLink },
   props: {
     to: { type: [Object, String], default: undefined },
     title: { type: String, default: undefined },
@@ -55,7 +58,7 @@ export default {
   computed: {
     renderAs() {
       if (this.inactive) return 'div';
-      if (this.to) return 'RouterLink';
+      if (this.to) return 'AeLink';
       return 'label';
     },
   },
@@ -119,7 +122,7 @@ a, label {
       flex-grow: 1;
     }
 
-    /deep/ {
+    ::v-deep {
       img {
         width: rem(33px);
       }

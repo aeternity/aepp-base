@@ -132,10 +132,11 @@
 
     "list": {
       "featured-guide": "<primary>æpps destacados</primary>",
-      "browse-guide": "Examinar æpps",
       "bookmarked-guide": "Mis æpps",
       "guide": "æpps <primary>explorador</primary> (beta)",
-      "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación"
+      "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación",
+      "by": "by",
+      "launch": "Launch"
     },
 
     "url-form-placeholder": "Ingrese la URL de æpp",
@@ -455,6 +456,7 @@
       "owner": "Owner",
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
+      "set-default": "Set as a default name",
       "to-point": "Set name pointer",
       "to-transfer": "Transfer name",
       "to-transactions": "View in transactions",
@@ -516,6 +518,7 @@
 
     "confirm-transaction-sign": {
       "guide-spend": "<primary>Complete su transferencia</primary><br /> de <senderAddress /><br /> a <recipientAddress />",
+      "guide-name-bid": "<primary>Bid on name</primary><br />with <senderAddress />",
       "guide": "<primary>{title}</primary><br /> por <senderAddress />",
       "payload": "Carga útil",
       "recipient-account": "Cuenta de destinatario",

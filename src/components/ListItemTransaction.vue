@@ -65,7 +65,7 @@ export default {
 @import '../styles/typography';
 
 .list-item-transaction {
-  &.pending /deep/ .label .subtitle {
+  &.pending ::v-deep .label .subtitle {
     text-transform: uppercase;
     color: $color-primary;
   }

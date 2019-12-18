@@ -26,7 +26,7 @@ export default {
 .confirm-account-access-modal {
   padding-bottom: rem(70px + 28px + 20px);
 
-  /deep/ .modal-plain {
+  ::v-deep .modal-plain {
     max-width: rem(315px);
   }
 
