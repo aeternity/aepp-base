@@ -518,6 +518,7 @@
 
     "confirm-transaction-sign": {
       "guide-spend": "<primary>Complete su transferencia</primary><br /> de <senderAddress /><br /> a <recipientAddress />",
+      "guide-name-bid": "<primary>Bid on name</primary><br />with <senderAddress />",
       "guide": "<primary>{title}</primary><br /> por <senderAddress />",
       "payload": "Carga útil",
       "recipient-account": "Cuenta de destinatario",

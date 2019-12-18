@@ -6,9 +6,7 @@
     @right-button-click="denyHandler"
   >
     <Guide
-      :template="txType === TX_TYPE.spend
-        ? $t('modal.confirm-transaction-sign.guide-spend')
-        : $t('modal.confirm-transaction-sign.guide', { title })"
+      :template="guideTemplate"
       fill="neutral"
     >
       <AeFraction
@@ -123,15 +121,21 @@ export default {
     txType() {
       return OBJECT_ID_TX_TYPE[this.transaction.tag];
     },
-    title() {
-      return {
-        [TX_TYPE.contractCreate]: this.$t('modal.confirm-transaction-sign.contract-create'),
-        [TX_TYPE.contractCall]: this.$t('modal.confirm-transaction-sign.contract-call'),
-        [TX_TYPE.namePreClaim]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
-        [TX_TYPE.nameClaim]: this.$t('modal.confirm-transaction-sign.name-claim'),
-        [TX_TYPE.nameUpdate]: this.$t('modal.confirm-transaction-sign.name-update'),
-        [TX_TYPE.nameTransfer]: this.$t('modal.confirm-transaction-sign.name-transfer'),
-      }[this.txType] || '';
+    guideTemplate() {
+      if (this.txType === TX_TYPE.spend) return this.$t('modal.confirm-transaction-sign.guide-spend');
+      if (this.txType === TX_TYPE.nameClaim && !+this.transaction.nameSalt) {
+        return this.$t('modal.confirm-transaction-sign.guide-name-bid');
+      }
+      return this.$t('modal.confirm-transaction-sign.guide', {
+        title: {
+          [TX_TYPE.contractCreate]: this.$t('modal.confirm-transaction-sign.contract-create'),
+          [TX_TYPE.contractCall]: this.$t('modal.confirm-transaction-sign.contract-call'),
+          [TX_TYPE.namePreClaim]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
+          [TX_TYPE.nameClaim]: this.$t('modal.confirm-transaction-sign.name-claim'),
+          [TX_TYPE.nameUpdate]: this.$t('modal.confirm-transaction-sign.name-update'),
+          [TX_TYPE.nameTransfer]: this.$t('modal.confirm-transaction-sign.name-transfer'),
+        }[this.txType] || '',
+      });
     },
     maxFee() {
       const recommendedMax = this.transaction.minFee.multipliedBy(10);
