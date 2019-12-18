@@ -518,6 +518,7 @@
 
     "confirm-transaction-sign": {
       "guide-spend": "<primary>完成转账</primary><br />从 <senderAddress /><br />到 <recipientAddress />",
+      "guide-name-bid": "<primary>Bid on name</primary><br />with <senderAddress />",
       "guide": "<primary>{title}</primary><br />by <senderAddress />",
       "payload": "Payload",
       "recipient-account": "收件人账户",

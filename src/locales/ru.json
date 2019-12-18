@@ -518,6 +518,7 @@
 
     "confirm-transaction-sign": {
       "guide-spend": "<primary>Завершить перевод</primary><br />из <senderAddress /><br />на <recipientAddress />",
+      "guide-name-bid": "<primary>Сделать ставку на имя</primary><br />с <senderAddress />",
       "guide": "<primary>{title}</primary><br />из <senderAddress />",
       "payload": "Полезная нагрузка",
       "recipient-account": "Аккаунт получателя",
