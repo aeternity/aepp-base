@@ -93,7 +93,7 @@ export default (store) => {
             commit('set', { address: id, name: names[0].name, hash: names[0].nameHash });
           }
         } else if (id.startsWith('nm_')) {
-          const { name: nameEntry } = await sdk.middleware.getNameByHash(id);
+          const { name: nameEntry } = await sdk.middleware.getNameForHash(id);
           commit('set', {
             address: getAddressByNameEntry(nameEntry),
             name: nameEntry.name,
@@ -157,7 +157,7 @@ export default (store) => {
       },
       async fetchAuctionEntry({ rootState }, name) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-        const { info, bids } = await sdk.middleware.getAuctionInfoByName(name);
+        const { info, bids } = await sdk.middleware.getAuctionInfo(name);
         return {
           ...info,
           bids: bids.map(({ tx }) => ({

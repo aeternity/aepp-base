@@ -74,7 +74,7 @@ export default {
       let claimTxHash;
 
       try {
-        await this.$store.state.sdk.middleware.getAuctionInfoByName(this.name);
+        await this.$store.state.sdk.middleware.getAuctionInfo(this.name);
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
           text: this.$t('name.new.confirm-bidding', { name: this.name }),
