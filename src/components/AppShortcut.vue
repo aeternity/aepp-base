@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { DEFAULT_ICON } from '../lib/appsRegistry';
+import DEFAULT_ICON from '../assets/icons/aepp-default.svg';
 import ButtonPlain from './ButtonPlain.vue';
 
 export default {
