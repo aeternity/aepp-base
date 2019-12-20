@@ -34,6 +34,12 @@ export default (async () => {
     && !store.state.mobile.skipAddingToHomeScreen
   ) await router.replace({ name: 'add-to-home-screen' });
 
+  if (process.env.IS_CORDOVA) {
+    window.IonicDeeplink.onDeepLink(
+      d => router.push((u => u.pathname + u.search)(new URL(d.url))),
+    );
+  }
+
   store.watch(
     (state, { loggedIn }) => loggedIn,
     (loggedIn) => {
