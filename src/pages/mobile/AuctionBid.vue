@@ -23,7 +23,7 @@
         :id="_uid"
         @submit.prevent="handleSubmit"
       >
-        <AeInput
+        <AeInputName
           v-if="!amountStep"
           v-model="internalName"
           v-validate="'required|aens_name|aens_name_unregistered'"
@@ -83,7 +83,7 @@ import { MAGNITUDE } from '../../lib/constants';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
-import AeInput from '../../components/AeInput.vue';
+import AeInputName from '../../components/AeInputName';
 import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
 import DetailsAmountCurrency from '../../components/mobile/DetailsAmountCurrency.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
@@ -94,7 +94,7 @@ export default {
   components: {
     MobilePage,
     Guide,
-    AeInput,
+    AeInputName,
     AeInputAmountCurrency,
     DetailsAmountCurrency,
     DetailsField,
