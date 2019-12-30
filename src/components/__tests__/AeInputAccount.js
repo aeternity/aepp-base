@@ -127,6 +127,12 @@ describe('AeInputAccount', () => {
       value: `${testName}${AENS_DOMAIN}`,
       displayed: testName,
     },
+  }, {
+    name: 'removes domain when switching to address mode',
+    input: {
+      value: `ak_${AENS_DOMAIN}`,
+      displayed: 'ak_',
+    },
   }].forEach(test => it(test.name, () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({

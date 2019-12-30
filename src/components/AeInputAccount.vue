@@ -65,6 +65,7 @@
 <script>
 import { mapState } from 'vuex';
 import { Crypto } from '@aeternity/aepp-sdk/es';
+import { AENS_DOMAIN } from '../lib/constants';
 import withFormatting from '../lib/withFormatting';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
 import { formatDisplayValueAndCursor } from './AeInputName';
@@ -98,9 +99,10 @@ const AeTextareaFormatted = withFormatting(AeTextarea, {
     const name = Crypto.isAddressValid(value) && this.$store.getters['names/get'](value, false);
     if (name) return { value: name, cursor: 0 };
     if (value.startsWith(ADDRESS_PREFIX)) {
+      const withoutChain = value.replace(new RegExp(`\\${AENS_DOMAIN}$`), '');
       return {
-        value: formatAddress(value),
-        cursor: formatAddress(value.slice(0, cursor)).length,
+        value: formatAddress(withoutChain),
+        cursor: formatAddress(withoutChain.slice(0, cursor)).length,
       };
     }
     return formatDisplayValueAndCursor({ value, cursor }, previousValue);
