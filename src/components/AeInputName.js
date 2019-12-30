@@ -9,10 +9,11 @@ export const formatDisplayValueAndCursor = ({ value, cursor }, previousValue) =>
   if (!value || value === AENS_DOMAIN) return { value: '', cursor: 0 };
   if (nameRegExp.test(value)) return { value, cursor };
   if (!previousValue) {
+    const cleared = value
+      .replace(new RegExp(`\\${AENS_DOMAIN}$`), '')
+      .replace(notNameCharsRegExp, '');
     return {
-      value: value
-        .replace(new RegExp(`\\${AENS_DOMAIN}$`), '')
-        .replace(notNameCharsRegExp, '') + AENS_DOMAIN,
+      value: cleared && cleared + AENS_DOMAIN,
       cursor,
     };
   }

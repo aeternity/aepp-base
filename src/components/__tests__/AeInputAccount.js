@@ -133,6 +133,13 @@ describe('AeInputAccount', () => {
       value: `ak_${AENS_DOMAIN}`,
       displayed: 'ak_',
     },
+  }, {
+    name: 'emits proper value when started with a wrong symbol',
+    input: {
+      value: '_',
+      displayed: '',
+      emmited: '',
+    },
   }].forEach(test => it(test.name, () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({
