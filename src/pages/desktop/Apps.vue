@@ -22,17 +22,25 @@
 
 <script>
 import { mapState } from 'vuex';
-import { aeternityAppsPaths } from '../../lib/appsRegistry';
+import { fetchJson } from '../../store/utils';
 import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
 import AppShortcut from '../../components/AppShortcut.vue';
 
 export default {
   components: { Guide, Note, AppShortcut },
+  data: () => ({ aeternityAppsPaths: [] }),
   computed: mapState({
-    aeternityApps: (state, getters) => aeternityAppsPaths
-      .map(path => ({ ...getters['appsMetadata/get'](path), path })),
+    aeternityApps(state, getters) {
+      return this.aeternityAppsPaths
+        .map(path => ({ ...getters['appsMetadata/get'](path), path }));
+    },
   }),
+  async mounted() {
+    this.aeternityAppsPaths = await fetchJson(
+      new URL('/apps.json', process.env.VUE_APP_HOME_PAGE_URL),
+    );
+  },
 };
 </script>
 
