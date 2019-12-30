@@ -147,14 +147,18 @@ describe('AeInputAccount', () => {
       ...test.value && { propsData: { value: test.value } },
     });
     const textarea = wrapper.find('textarea');
-    if (test.initialDisplayed) expect(textarea.element.value).toBe(test.initialDisplayed);
+    if (test.initialDisplayed !== undefined) {
+      expect(textarea.element.value).toBe(test.initialDisplayed);
+    }
     if (test.input) {
       textarea.element.value = test.input.value;
       const cursor = test.cursor || test.input.value.length;
       textarea.element.setSelectionRange(cursor, cursor);
       textarea.trigger('input');
       expect(wrapper.find('textarea').element.value).toBe(test.input.displayed);
-      if (test.input.emmited) expect(inputListener.mock.calls[0][0]).toEqual(test.input.emmited);
+      if (test.input.emmited !== undefined) {
+        expect(inputListener.mock.calls[0][0]).toEqual(test.input.emmited);
+      }
     }
   }));
 
