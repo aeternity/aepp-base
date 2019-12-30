@@ -19,7 +19,7 @@
         :id="_uid"
         @submit.prevent="handleSubmit"
       >
-        <AeInput
+        <AeInputName
           v-model="name"
           v-validate="'required|aens_name|aens_name_unregistered'"
           autofocus
@@ -53,7 +53,7 @@ import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
-import AeInput from '../../components/AeInput.vue';
+import AeInputName from '../../components/AeInputName';
 import AccountInline from '../../components/AccountInline.vue';
 import AeButton from '../../components/AeButton.vue';
 
@@ -61,7 +61,7 @@ export default {
   components: {
     MobilePage,
     Guide,
-    AeInput,
+    AeInputName,
     AccountInline,
     AeButton,
   },
