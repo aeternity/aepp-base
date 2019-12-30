@@ -90,7 +90,7 @@ export default (store) => {
   const middlewareStatus$ = createSdkObservable(
     sdk => sdk.middleware.getMdwStatus().catch((error) => {
       handleUnknownError(error);
-      return { OK: false, queueLength: NaN };
+      return { OK: false };
     }),
     { OK: true, queueLength: 0 },
   );

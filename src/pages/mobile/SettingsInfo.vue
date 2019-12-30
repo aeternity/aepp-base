@@ -55,13 +55,16 @@ export default {
         name: this.$t('settings.info.sdk-version'),
         value: process.env.SDK_VERSION,
       }, {
-        name: this.$t('settings.info.middleware-url'),
+        name: this.$t('settings.info.middleware.url'),
         subtitle: currentNetwork.middlewareUrl,
+      }, {
+        name: this.$t('settings.info.middleware.version'),
+        value: this.middlewareStatus.version,
       },
-      ...this.middlewareStatus.OK ? [] : [{
-        name: this.$t('settings.info.blocks-in-queue'),
+      ...this.middlewareStatus.queueLength ? [{
+        name: this.$t('settings.info.middleware.blocks-to-sync'),
         value: this.middlewareStatus.queueLength,
-      }]];
+      }] : []];
     },
   }),
 };

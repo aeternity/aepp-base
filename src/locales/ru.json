@@ -565,7 +565,10 @@
       "no-sdk": "Мы не можем подключиться к выбранному узлу.",
       "connecting": "Подключаемся к сети...",
       "connected-to-testnet": "Вы подключены к тестовой сети.",
-      "blocks-to-sync": "Блоков не синхронизировано {blocks}."
+      "middleware": {
+        "unavailable":  "Middleware недоступно, некоторые функции могут работать неправильно.",
+        "blocks-to-sync": "Блоков не синхронизировано {blocks}."
+      }
     },
 
     "settings": {
@@ -689,9 +692,12 @@
       "node-version": "Версия узла",
       "compiler-version": "Версия компилятора",
       "compiler-url": "Адрес компилятора",
-      "middleware-url": "Адрес middleware",
       "sdk-version": "Версия SDK",
-      "blocks-in-queue": "Блоков не синхронизировано"
+      "middleware": {
+        "url": "Адрес middleware",
+        "version": "Версия middleware",
+        "blocks-to-sync": "Блоков не синхронизировано"
+      }
     },
 
     "mnemonic": {
