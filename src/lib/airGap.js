@@ -3,7 +3,7 @@ import { Crypto } from '@aeternity/aepp-sdk/es';
 const AIR_GAP_VERSION = '1';
 const AIR_GAP_TYPE = '0';
 const AIR_GAP_PROTOCOL = 'ae';
-const AIR_GAP_CALLBACK = 'aepp-base://?d=';
+const AIR_GAP_CALLBACK = 'https://base.aepps.com/airgap?d=';
 const AIR_GAP_PAYLOAD_IDX = 3;
 const AIR_GAP_PUBLIC_KEY_IDX = 0;
 const AIR_GAP_SIGNED_TRANSACTION_IDX = 0;
