@@ -26,8 +26,12 @@ export default {
       }
       if (!this.middlewareStatus.OK) {
         return {
-          text: this.$t('network.connection-status.blocks-to-sync',
-            { blocks: this.middlewareStatus.queueLength }),
+          text: this.middlewareStatus.queueLength
+            ? this.$t(
+              'network.connection-status.middleware.blocks-to-sync',
+              { blocks: this.middlewareStatus.queueLength },
+            )
+            : this.$t('network.connection-status.middleware.unavailable'),
           className: 'connecting',
         };
       }
