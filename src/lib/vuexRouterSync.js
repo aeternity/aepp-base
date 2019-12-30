@@ -9,6 +9,7 @@ export default (store, router) => {
       go: (context, payload) => router.go(payload),
       back: (context, payload) => router.back(payload),
       forward: (context, payload) => router.forward(payload),
+      addRoutes: (context, payload) => router.addRoutes(payload),
     },
   });
 

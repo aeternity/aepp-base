@@ -24,7 +24,6 @@ export default (async () => {
       process.env.IS_MOBILE_DEVICE
         ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
         : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),
-      import('./routes/common'),
     ])).reduce((p, module) => [...p, ...module.default], []),
   });
 

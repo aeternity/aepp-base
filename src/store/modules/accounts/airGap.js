@@ -6,6 +6,7 @@ import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
 } from '../../../lib/airGap';
 import { i18n } from '../../plugins/ui/languages';
+import { receive } from '../../../lib/localStorageCall';
 
 const TRANSPORT_QR_CODE = 'qr-code';
 const TRANSPORT_DEEP_LINK = 'deep-link';
@@ -18,6 +19,16 @@ export default {
     getTypeVerbose: () => i18n.t('air-gap.account-name'),
     color: 'alternative',
   },
+
+  state: process.env.IS_MOBILE_DEVICE ? {
+    deepLinkCallback: null,
+  } : {},
+
+  mutations: process.env.IS_MOBILE_DEVICE ? {
+    setDeepLinkCallback(state, callback) {
+      state.deepLinkCallback = callback;
+    },
+  } : {},
 
   actions: process.env.IS_MOBILE_DEVICE ? {
     createByResponseUrl({ commit }, { responseUrl, transport = TRANSPORT_DEEP_LINK }) {
@@ -47,20 +58,22 @@ export default {
 
     sign: () => Promise.reject(new Error('Not implemented yet')),
 
-    async signTransactionByDeepLink(store, requestUrl) {
-      window.startApp.set(
-        process.env.IS_IOS
-          ? requestUrl
-          : {
-            action: 'ACTION_VIEW',
-            uri: requestUrl,
-            flags: ['FLAG_ACTIVITY_NEW_TASK'],
-          },
-      ).start();
-
-      return new Promise((resolve) => {
-        window.handleOpenURL = url => resolve(url);
-      });
+    signTransactionByDeepLink({ commit }, requestUrl) {
+      if (process.env.IS_CORDOVA) {
+        window.startApp.set(
+          process.env.IS_IOS
+            ? requestUrl
+            : {
+              action: 'ACTION_VIEW',
+              uri: requestUrl,
+              flags: ['FLAG_ACTIVITY_NEW_TASK'],
+            },
+        ).start();
+      } else {
+        window.open(requestUrl);
+      }
+      return process.env.IS_CORDOVA || process.env.IS_PWA
+        ? new Promise(resolve => commit('setDeepLinkCallback', resolve)) : receive();
     },
 
     async signTransactionByQrCode({ dispatch }, url) {
