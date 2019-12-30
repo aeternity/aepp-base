@@ -29,7 +29,6 @@ export default new Vuex.Store({
         migrations, sdkUrl, customNetworks,
         apps, peerId, languages, currencies, names: { defaults } = {},
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
-        appsMetadata: { cachedManifests } = {},
         mobile: { readSecurityCourses, followers, skipAddingToHomeScreen } = {},
         desktop: { showGuideOnStartup } = {},
       }) => ({
@@ -55,7 +54,6 @@ export default new Vuex.Store({
           activeIdx,
           hdWallet: { encryptedWallet, mnemonicBackedUp },
         },
-        appsMetadata: { cachedManifests },
         apps,
         ...process.env.IS_MOBILE_DEVICE ? {
           mobile: {

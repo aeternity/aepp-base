@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
-import { get, flatMap } from 'lodash-es';
+import { flatMap } from 'lodash-es';
 import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
 import { PROTOCOL_DEFAULT } from '../../../lib/constants';
@@ -9,14 +9,13 @@ export default store => store.registerModule('appsMetadata', {
   namespaced: true,
 
   state: {
-    cachedManifests: get(store.state, 'appsMetadata.cachedManifests', {}),
-    isManifestsFetching: {},
+    manifests: {},
   },
 
   getters: {
-    get: ({ cachedManifests }) => (host) => {
-      store.dispatch('appsMetadata/ensureManifestCached', host);
-      const manifest = cachedManifests[host] || {};
+    get: ({ manifests }) => (host) => {
+      store.dispatch('appsMetadata/ensureManifestFetched', host);
+      const manifest = manifests[host] || {};
 
       const metadata = {
         ...manifest,
@@ -42,11 +41,8 @@ export default store => store.registerModule('appsMetadata', {
   },
 
   mutations: {
-    setCachedManifest({ cachedManifests }, { host, manifest }) {
-      Vue.set(cachedManifests, host, manifest);
-    },
-    setManifestFetching({ isManifestsFetching }, { host, fetching }) {
-      Vue.set(isManifestsFetching, host, fetching);
+    setManifest({ manifests }, { host, manifest }) {
+      Vue.set(manifests, host, manifest);
     },
   },
 
@@ -70,30 +66,14 @@ export default store => store.registerModule('appsMetadata', {
 
       return JSON.parse(await fetchTextCors(manifestUrl));
     },
-    async ensureManifestCached(
-      { state: { cachedManifests, isManifestsFetching }, commit, dispatch }, host,
-    ) {
-      if (isManifestsFetching[host]) return;
-      const manifest = cachedManifests[host];
-      if (manifest && manifest.fetchedAt) {
-        const date = new Date(manifest.fetchedAt);
-        date.setDate(date.getDate() + 1);
-        if (date > new Date()) return;
-      }
-
-      commit('setManifestFetching', { host, fetching: true });
-      let newManifest;
+    async ensureManifestFetched({ state: { manifests }, commit, dispatch }, host) {
+      if (manifests[host]) return;
+      commit('setManifest', { host, manifest: {} });
       try {
-        newManifest = await dispatch('fetchManifest', host);
+        commit('setManifest', { host, manifest: await dispatch('fetchManifest', host) });
       } catch (error) {
-        newManifest = {};
         handleUnknownError(error);
       }
-      commit('setCachedManifest', {
-        host,
-        manifest: { ...newManifest, fetchedAt: new Date().toJSON() },
-      });
-      commit('setManifestFetching', { host, fetching: false });
     },
   },
 });
