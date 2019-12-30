@@ -1,6 +1,6 @@
 import { merge } from 'lodash-es';
 import { NAME_LIST_ROUTE_NAMES, ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
-import { ensureLoggedIn } from '../utils';
+import { ensureLoggedIn, mergeEnterHandlers } from '../utils';
 import store from '../../store/index';
 import AddToHomeScreenPrompt from '../../pages/mobile/AddToHomeScreenPrompt.vue';
 import Intro from '../../pages/mobile/Intro.vue';
@@ -57,15 +57,6 @@ import SettingsPasswordSet from '../../pages/mobile/SettingsPasswordSet.vue';
 import SettingsLanguage from '../../pages/mobile/SettingsLanguage.vue';
 
 const RedeemBalance = () => import(/* webpackChunkName: "page-redeem" */ '../../pages/mobile/RedeemBalance.vue');
-
-const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
-  handlers.reduce((nextRoute, handler) => {
-    if (nextRoute) return nextRoute;
-    let res;
-    handler(to, from, (r) => { res = r; });
-    return res;
-  }, undefined),
-);
 
 const checkStoreMnemonic = (to, from, next) => {
   if (!store.state.accounts.hdWallet.mnemonic) {

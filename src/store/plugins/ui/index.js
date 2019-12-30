@@ -11,6 +11,8 @@ import notificationOnRemoteConnection from './notificationOnRemoteConnection';
 import observables from './observables';
 import unlockWalletIfNotEncrypted from './unlockWalletIfNotEncrypted';
 import veeValidate from './veeValidate';
+import urlRequestHandler from './urlRequestHandler';
+import notFoundPage from './notFoundPage';
 
 export default store => [
   appsMetadata,
@@ -26,9 +28,11 @@ export default store => [
       pathTracker,
       notificationOnRemoteConnection,
       unlockWalletIfNotEncrypted,
+      urlRequestHandler,
     ]
     : [
       desktopGuide,
       ledgerConnection,
     ],
+  notFoundPage,
 ].forEach(plugin => plugin(store));
