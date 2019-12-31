@@ -70,7 +70,7 @@ export default {
             },
         ).start();
       } else {
-        window.open(requestUrl);
+        window.location.href = requestUrl;
       }
       return process.env.IS_CORDOVA || process.env.IS_PWA
         ? new Promise(resolve => commit('setDeepLinkCallback', resolve)) : receive();
