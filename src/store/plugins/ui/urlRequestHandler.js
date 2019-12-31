@@ -23,7 +23,11 @@ export default (store) => {
         error ? 'error' : 'result',
         error ? seraliseError(error) : JSON.stringify(result),
       );
-      window.open(callbackUrl, process.env.IS_CORDOVA ? '_system' : '_blank');
+      if (process.env.IS_CORDOVA) {
+        window.open(callbackUrl, '_system');
+      } else {
+        window.location.href = callbackUrl;
+      }
     };
 
     if (!['http:', 'https:'].includes(callbackUrl.protocol)) {
