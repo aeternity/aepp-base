@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.aeternity.base",
+      "sha256_cert_fingerprints": [
+        "9C:3D:17:92:24:A9:33:12:0E:0C:EE:34:D2:D5:19:54:81:BD:F6:3F:2F:79:6F:9F:CE:24:38:DE:F6:B4:5B:C4"
+      ]
+    }
+  }
+]

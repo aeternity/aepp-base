@@ -4,8 +4,6 @@
     :header="$t('recover.mnemonic')"
     rows="3"
     submit-on-enter
-    :format-display-value="formatDisplayMnemonic"
-    :format-emit-value="formatEmitMnemonic"
     v-bind="$attrs"
     :value="value"
     autocorrect="off"
@@ -15,19 +13,23 @@
 </template>
 
 <script>
-import AeTextareaFormatted from './AeTextareaFormatted.vue';
+import withFormatting from '../lib/withFormatting';
+import AeTextarea from './AeTextarea.vue';
 
 export default {
-  components: { AeTextareaFormatted },
+  components: {
+    AeTextareaFormatted: withFormatting(
+      AeTextarea, {
+        formatDisplayValue: value => value
+          .toLowerCase()
+          .replace(/\s+/g, ' ')
+          .replace(/[^a-z ]/g, ''),
+        formatEmitValue: mnemonic => mnemonic.trim(),
+      },
+    ),
+  },
   props: {
     value: { type: String, required: true },
-  },
-  methods: {
-    formatDisplayMnemonic: mnemonic => mnemonic
-      .toLowerCase()
-      .replace(/\s+/g, ' ')
-      .replace(/[^a-z ]/g, ''),
-    formatEmitMnemonic: mnemonic => mnemonic.trim(),
   },
 };
 </script>

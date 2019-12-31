@@ -565,7 +565,10 @@
       "no-sdk": "No podemos conectarnos al nodo elegido",
       "connecting": "Conectando a la red...",
       "connected-to-testnet": "Está conectado a una red de prueba",
-      "blocks-to-sync": "Blocks to sync {blocks}."
+      "middleware": {
+        "unavailable":  "Middleware is not available, some functionality may not work properly.",
+        "blocks-to-sync": "Blocks to sync {blocks}."
+      }
     },
 
     "settings": {
@@ -689,9 +692,12 @@
       "node-version": "Node version",
       "compiler-version": "Compiler version",
       "compiler-url": "Compiler URL",
-      "middleware-url": "Middleware URL",
       "sdk-version": "SDK version",
-      "blocks-in-queue": "Blocks not synced yet"
+      "middleware": {
+        "url": "Middleware URL",
+        "version": "Middleware version",
+        "blocks-to-sync": "Blocks not synced yet"
+      }
     },
 
     "mnemonic": {

@@ -88,7 +88,10 @@ export default (store) => {
     );
   const topBlockHeight$ = createSdkObservable(async sdk => (await sdk.topBlock()).height, 0);
   const middlewareStatus$ = createSdkObservable(
-    sdk => sdk.middleware.getMdwStatus(),
+    sdk => sdk.middleware.getMdwStatus().catch((error) => {
+      handleUnknownError(error);
+      return { OK: false };
+    }),
     { OK: true, queueLength: 0 },
   );
 

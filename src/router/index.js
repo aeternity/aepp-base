@@ -24,7 +24,6 @@ export default (async () => {
       process.env.IS_MOBILE_DEVICE
         ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
         : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),
-      import('./routes/common'),
     ])).reduce((p, module) => [...p, ...module.default], []),
   });
 
@@ -33,6 +32,12 @@ export default (async () => {
     && !process.env.IS_PWA && !process.env.IS_IOS
     && !store.state.mobile.skipAddingToHomeScreen
   ) await router.replace({ name: 'add-to-home-screen' });
+
+  if (process.env.IS_CORDOVA) {
+    window.IonicDeeplink.onDeepLink(
+      d => router.push((u => u.pathname + u.search)(new URL(d.url))),
+    );
+  }
 
   store.watch(
     (state, { loggedIn }) => loggedIn,

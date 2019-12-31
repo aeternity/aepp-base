@@ -8,7 +8,7 @@ export default (store) => {
 
   const createSdk = async (network) => {
     const [
-      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler, UrlSchemeHandler,
+      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler,
     ] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
@@ -17,7 +17,6 @@ export default (store) => {
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
       import(/* webpackChunkName: "sdk" */ './PostMessageHandler'),
-      import(/* webpackChunkName: "sdk" */ './UrlSchemeHandler'),
     ])).map(module => module.default);
 
     class App {
@@ -129,7 +128,7 @@ export default (store) => {
             },
           },
         },
-        PostMessageHandler, ...process.env.UNFINISHED_FEATURES ? [UrlSchemeHandler] : [],
+        PostMessageHandler,
       )({
         url: network.url,
         internalUrl: network.url,

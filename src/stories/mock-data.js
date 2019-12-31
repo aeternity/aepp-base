@@ -2,7 +2,7 @@ import { times } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { Crypto } from '@aeternity/aepp-sdk/es';
 import { MAGNITUDE } from '../lib/constants';
-import appIcon from '../assets/icons/aepps/default.svg';
+import appIcon from '../assets/icons/aepp-default.svg';
 
 export const address = 'ak_2swhLkgBPeeADxVTAVCJnZLY5NZtCFiM93JxsEaMuC59euuFRQ';
 export const contractAddress = 'ct_2ZkyFFLRwooiSEzZg9BVh43mKZJbxoUHNkEVhT336pM5vVfNQ1';

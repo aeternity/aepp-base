@@ -34,7 +34,7 @@ import MobilePage from '../../components/mobile/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
 import { LeftMore } from '../../components/icons';
-import { DEFAULT_ICON } from '../../lib/appsRegistry';
+import DEFAULT_ICON from '../../assets/icons/aepp-default.svg';
 
 export default {
   components: {
