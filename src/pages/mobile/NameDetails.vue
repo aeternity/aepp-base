@@ -17,6 +17,13 @@
       {{ $t('name.details.set-default') }}
     </AeButton>
 
+    <AeButton
+      :disabled="!address"
+      @click="extendName"
+    >
+      {{ $t('name.details.to-extend') }}
+    </AeButton>
+
     <AeButton :to="{ name: 'name-point', params: { name } }">
       {{ $t('name.details.to-point') }}
     </AeButton>
@@ -86,6 +93,18 @@ export default {
         name: this.name,
         address: this.address,
       });
+    },
+    async extendName() {
+      const initialAccountIdx = this.$store.state.accounts.activeIdx;
+      const requredAccountIdx = this.$store.state.accounts.list
+        .findIndex(({ address }) => address === this.details.owner);
+      if (initialAccountIdx !== requredAccountIdx) {
+        this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
+      }
+      await this.$store.dispatch('names/updatePointer', { name: this.name, address: this.address });
+      if (initialAccountIdx !== requredAccountIdx) {
+        this.$store.commit('accounts/setActiveIdx', initialAccountIdx);
+      }
     },
   },
 };

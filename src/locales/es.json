@@ -457,6 +457,7 @@
       "created-at-height": "Created at height",
       "expires-at-height": "Expires at height",
       "set-default": "Set as a default name",
+      "to-extend": "Extend name",
       "to-point": "Set name pointer",
       "to-transfer": "Transfer name",
       "to-transactions": "View in transactions",
