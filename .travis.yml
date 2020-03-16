@@ -24,7 +24,6 @@ matrix:
 
 cache:
   directories:
-    - node_modules
     - platforms
     - plugins
     - /home/travis/.cache/Cypress
