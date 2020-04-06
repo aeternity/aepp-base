@@ -38,7 +38,8 @@
   "sidebar": {
     "connect-account": "Conectar una cuenta para comenzar",
     "connected-account": "| Su cuenta conectada | Sus cuentas conectadas",
-    "base-app": "Base æpp",
+    "local": "Local",
+    "remote": "Remote",
     "ledger": "Ledger"
   },
 

@@ -38,7 +38,8 @@
   "sidebar": {
     "connect-account": "连接一个账户以开始",
     "connected-account": "| 连接的账户 | 连接的账户",
-    "base-app": "Base æpp",
+    "local": "Local",
+    "remote": "Remote",
     "ledger": "Ledger"
   },
 

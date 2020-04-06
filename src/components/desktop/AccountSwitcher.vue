@@ -36,6 +36,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import AccountTypeMixin from './AccountTypeMixin';
 import AeAccount from '../AeAccount.vue';
 import { Plus } from '../icons';
 import ListItem from '../ListItem.vue';
@@ -49,9 +50,7 @@ export default {
   components: {
     AeAccount, ListItem, ListItemCircle, Plus, ListItemAccount, AeRadio, Balance,
   },
-  props: {
-    forLedger: Boolean,
-  },
+  mixins: [AccountTypeMixin],
   subscriptions() {
     return {
       allAccounts: this.$store.state.observables.accounts,
@@ -74,12 +73,14 @@ export default {
     prefixedAmount,
     ...mapMutations({ setActiveIdx: 'accounts/setActiveIdx' }),
     createAccount() {
-      this.$store.dispatch(
-        `accounts/${this.forLedger ? 'ledger/create' : 'hdWallet/checkPreviousAndCreate'}`,
-      );
+      this.$store.dispatch(`accounts/${{
+        'hd-wallet-desktop': 'hdWallet/checkPreviousAndCreate',
+        'hd-wallet': 'hdWalletRemote/checkPreviousAndCreate',
+        ledger: 'ledger/create',
+      }[this.accountType]}`);
     },
     isAccountToShow({ source: { type } }) {
-      return this.forLedger ? type === 'ledger' : type !== 'ledger';
+      return type === this.accountType;
     },
   },
 };

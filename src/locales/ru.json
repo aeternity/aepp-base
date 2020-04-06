@@ -38,7 +38,8 @@
   "sidebar": {
     "connect-account": "Подключите аккаунт, чтобы начать",
     "connected-account": "| Ваш подключенный аккаунт | Ваши подключённые аккаунты",
-    "base-app": "Base æpp",
+    "local": "Локально",
+    "remote": "Удалённо",
     "ledger": "Ledger"
   },
 
