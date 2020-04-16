@@ -1,6 +1,6 @@
 import { pick } from 'lodash-es';
 
-const getMiddlewareUrl = networkName => `https://${networkName}.aeternal.io`;
+const getMiddlewareUrl = networkName => `https://${networkName}.aeternity.io`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
   name,
