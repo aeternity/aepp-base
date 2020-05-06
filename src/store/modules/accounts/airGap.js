@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
 
 import { Crypto } from '@aeternity/aepp-sdk/es';
-import { getDesktopRemoveSignAction } from './utils';
+import { getDesktopRemoteSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
 } from '../../../lib/airGap';
@@ -100,7 +100,7 @@ export default {
       ));
     },
   } : {
-    sign: getDesktopRemoveSignAction('sign'),
-    signTransaction: getDesktopRemoveSignAction('signTransaction'),
+    sign: getDesktopRemoteSignAction('sign'),
+    signTransaction: getDesktopRemoteSignAction('signTransaction'),
   },
 };

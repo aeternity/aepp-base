@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
 
-import { getDesktopRemoveSignAction } from './utils';
+import { getDesktopRemoteSignAction } from './utils';
 import { i18n } from '../../plugins/ui/languages';
 
 export default {
@@ -38,8 +38,8 @@ export default {
       return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
     },
     ...!process.env.IS_MOBILE_DEVICE && {
-      sign: getDesktopRemoveSignAction('sign'),
-      signTransaction: getDesktopRemoveSignAction('signTransaction'),
-    },
+      sign: getDesktopRemoteSignAction('sign'),
+      signTransaction: getDesktopRemoteSignAction('signTransaction'),
+  },
   },
 };
