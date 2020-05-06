@@ -631,7 +631,8 @@
         "guide": "Sign the transaction in the <primary>Base æpp</primary>",
         "note": "Open your Base æpp, check the transaction details and sign",
         "cancel": "Cancel Transaction"
-      }
+      },
+      "mobile-not-supported": "Use desktop to sign with this account"
     }
   },
 

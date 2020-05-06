@@ -631,7 +631,8 @@
         "guide": "Firme la transacción en el <primary>Base æpp</primary>",
         "note": "Abra su Base æpp, verifique los detalles de la transacción y firme",
         "cancel": "Cancelar transacción"
-      }
+      },
+      "mobile-not-supported": "Use desktop to sign with this account"
     }
   },
 

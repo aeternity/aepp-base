@@ -3,6 +3,14 @@
 import { getDesktopRemoteSignAction } from './utils';
 import { i18n } from '../../plugins/ui/languages';
 
+const signOnMobile = async ({ dispatch }) => {
+  await dispatch('modals/open', {
+    name: 'alert',
+    text: i18n.t('remote-connection.modal.mobile-not-supported'),
+  }, { root: true });
+  throw new Error('Not implemented yet');
+};
+
 export default {
   namespaced: true,
 
@@ -37,9 +45,12 @@ export default {
     create({ dispatch }) {
       return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
     },
-    ...!process.env.IS_MOBILE_DEVICE && {
+    ...process.env.IS_MOBILE_DEVICE ? {
+      sign: signOnMobile,
+      signTransaction: signOnMobile,
+    } : {
       sign: getDesktopRemoteSignAction('sign'),
       signTransaction: getDesktopRemoteSignAction('signTransaction'),
-  },
+    },
   },
 };
