@@ -1,6 +1,6 @@
 <template>
   <div class="connect-guide">
-    <template v-if="!forLedger">
+    <template v-if="accountType !== 'ledger'">
       <Guide
         :template="$t('remote-connection.connect-guide.title')"
         size="small"
@@ -76,6 +76,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import AccountTypeMixin from './AccountTypeMixin';
 import Guide from '../Guide.vue';
 import { AeQrCode } from '../async';
 import AeFraction from '../AeFraction.vue';
@@ -96,9 +97,7 @@ export default {
     ListItem,
     ListItemCircle,
   },
-  props: {
-    forLedger: Boolean,
-  },
+  mixins: [AccountTypeMixin],
   computed: mapState({
     peerId: ({ peerId }) => peerId,
     ledgerSupported: ({ desktop }) => desktop.ledgerSupported,

@@ -38,7 +38,8 @@
   "sidebar": {
     "connect-account": "Conectar una cuenta para comenzar",
     "connected-account": "| Su cuenta conectada | Sus cuentas conectadas",
-    "base-app": "Base æpp",
+    "local": "Local",
+    "remote": "Remote",
     "ledger": "Ledger"
   },
 
@@ -630,7 +631,8 @@
         "guide": "Firme la transacción en el <primary>Base æpp</primary>",
         "note": "Abra su Base æpp, verifique los detalles de la transacción y firme",
         "cancel": "Cancelar transacción"
-      }
+      },
+      "mobile-not-supported": "Use desktop to sign with this account"
     }
   },
 

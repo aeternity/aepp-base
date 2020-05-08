@@ -2,9 +2,12 @@
 
 import airGap from './airGap';
 import hdWallet from './hdWallet';
+import hdWalletRemote from './hdWalletRemote';
 import ledger from './ledger';
 
-const modules = { airGap, hdWallet, ledger };
+const modules = {
+  airGap, hdWallet, hdWalletRemote, ledger,
+};
 
 export default {
   namespaced: true,
