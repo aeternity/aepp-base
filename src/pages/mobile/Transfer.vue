@@ -50,18 +50,6 @@
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
-      :title="$t('transfer.migrated-balance.title')"
-      :subtitle="$t('transfer.migrated-balance.subtitle')"
-      border-dark
-      @click="open({ name: 'migratedBalance' })"
-    >
-      <img
-        slot="icon"
-        :src="glowingStarEmoji"
-      >
-      <LeftMore slot="right" />
-    </ListItem>
-    <ListItem
       :to="{ name: 'redeem' }"
       class="redeem-balance"
       :title="$t('transfer.redeem-balance.title')"
@@ -83,7 +71,6 @@ import { mapActions } from 'vuex';
 import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import mantelpieceClockEmoji from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
-import glowingStarEmoji from 'emoji-datasource-apple/img/apple/64/1f31f.png';
 import mobilePhoneWithAnArrowEmoji from 'emoji-datasource-apple/img/apple/64/1f4f2.png';
 import MobilePage from '../../components/mobile/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -103,7 +90,6 @@ export default {
     moneyWithWingsEmoji,
     manTippingHandEmoji,
     mantelpieceClockEmoji,
-    glowingStarEmoji,
     mobilePhoneWithAnArrowEmoji,
     tooltipsVisible: false,
   }),

@@ -299,13 +299,6 @@
       }
     },
 
-    "migrated-balance": {
-      "title": "Tokens in migration",
-      "subtitle": "Not shown as balance above",
-      "note": "are in migration now. They will be available after the next hardfork.",
-      "to-migrations": "See migrations"
-    },
-
     "redeem-balance": {
       "title": "Redeem Balance",
       "subtitle": "Scan QR code to redeem",
