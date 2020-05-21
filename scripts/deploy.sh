@@ -11,6 +11,7 @@ ssh-add /tmp/user-key
 
 DOMAIN=`echo $TRAVIS_BRANCH | tr '[:punct:]' '-'`
 rsync_stage () {
+  ssh -p 2022 root@z52da5wt.xyz mkdir -p /data/$APP_NAME/$DOMAIN/$2
   rsync -e "ssh -p 2022" -r --delete-after -v $1 root@z52da5wt.xyz:/data/$APP_NAME/$DOMAIN/$2
 }
 
