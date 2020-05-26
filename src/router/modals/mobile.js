@@ -2,7 +2,6 @@ import { registerModal } from '../../store/plugins/ui/modals';
 import { notificationOptions } from './utils';
 import AccountSwitcherModal from '../../components/mobile/AccountSwitcherModal.vue';
 import SecurityCourseModal from '../../components/mobile/SecurityCourseModal.vue';
-import MigratedBalanceModal from '../../components/mobile/MigratedBalanceModal.vue';
 import ConfirmAccountAccessModal from '../../components/mobile/ConfirmAccountAccessModal.vue';
 import ConfirmSignModal from '../../components/mobile/ConfirmSignModal.vue';
 import ConfirmTransactionSignModal from '../../components/mobile/ConfirmTransactionSignModal.vue';
@@ -15,7 +14,6 @@ import NotificationSpendSuccess from '../../components/NotificationSpendSuccess.
 export default () => {
   registerModal({ name: 'accountSwitcher', component: AccountSwitcherModal });
   registerModal({ name: 'proposeToOpenSecurityCourses', component: SecurityCourseModal, allowRedirect: true });
-  registerModal({ name: 'migratedBalance', component: MigratedBalanceModal });
   registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal });
   registerModal({ name: 'confirmSign', component: ConfirmSignModal, hidePage: true });
   registerModal({ name: 'confirmTransactionSign', component: ConfirmTransactionSignModal, hidePage: true });

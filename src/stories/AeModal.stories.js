@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import AeButton from '../components/AeButton.vue';
-import MigratedBalanceModal from '../components/mobile/MigratedBalanceModal.vue';
 import LedgerModal from '../components/desktop/LedgerModal.vue';
 import LedgerAddressConfirmModal from '../components/desktop/LedgerAddressConfirmModal.vue';
 import LedgerSignTransactionModal from '../components/desktop/LedgerSignTransactionModal.vue';
@@ -12,16 +11,6 @@ import ModalSpendSuccess from '../components/desktop/ModalSpendSuccess.vue';
 import { account, amount, transactionHash } from './mock-data';
 
 storiesOf('AeModal', module)
-  .add('MigratedBalanceModal', () => ({
-    components: { MigratedBalanceModal },
-    template: '<migrated-balance-modal :resolve="resolve" />',
-    methods: { resolve: action('resolve') },
-    store: new Vuex.Store({
-      getters: {
-        'accounts/active': () => account,
-      },
-    }),
-  }))
   .add('LedgerModal', () => ({
     components: { LedgerModal, AeButton },
     template: `
@@ -31,7 +20,7 @@ storiesOf('AeModal', module)
         @close="action"
       >
         Content
-        
+
         <ae-button
           slot="footer"
           size="small"

@@ -299,13 +299,6 @@
       }
     },
 
-    "migrated-balance": {
-      "title": "Tokens migrados",
-      "subtitle": "No se muestra como saldo arriba",
-      "note": "están en la migración ahora estarán disponibles después del próxima. Hardfork.",
-      "to-migrations": "Ver migraciones"
-    },
-
     "redeem-balance": {
       "title": "Redeem Balance",
       "subtitle": "Scan QR code to redeem",

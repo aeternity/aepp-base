@@ -299,13 +299,6 @@
       }
     },
 
-    "migrated-balance": {
-      "title": "迁移中的数量",
-      "subtitle": "未显示为上述余额",
-      "note": "正在迁移中。他们将在下一次硬分叉后可使用。",
-      "to-migrations": "查看迁移"
-    },
-
     "redeem-balance": {
       "title": "Redeem Balance",
       "subtitle": "Scan QR code to redeem",
