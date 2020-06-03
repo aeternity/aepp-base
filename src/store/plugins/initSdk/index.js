@@ -8,7 +8,8 @@ export default (store) => {
 
   const createSdk = async (network) => {
     const [
-      Ae, ChainNode, Transaction, Contract, Aens, Swagger, PostMessageHandler,
+      Ae, ChainNode, Transaction, Contract, Aens, Swagger, Node, WalletRPC,
+      PostMessageHandler,
     ] = (await Promise.all([
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
@@ -16,6 +17,8 @@ export default (store) => {
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/contract'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/node'),
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/rpc/wallet-rpc'),
       import(/* webpackChunkName: "sdk" */ './PostMessageHandler'),
     ])).map(module => module.default);
 
@@ -115,9 +118,10 @@ export default (store) => {
       }
       throw error;
     };
+    const acceptCb = (_, { accept }) => accept();
     const [sdk, middleware] = await Promise.all([
       Ae.compose(
-        ChainNode, Transaction, Contract, Aens, {
+        ChainNode, Transaction, Contract, Aens, WalletRPC, {
           methods,
           deepConfiguration: {
             Ae: {
@@ -130,9 +134,34 @@ export default (store) => {
         },
         PostMessageHandler,
       )({
-        url: network.url,
-        internalUrl: network.url,
+        nodes: [{
+          name: network.name,
+          instance: await Node({
+            url: network.url,
+            internalUrl: network.url,
+          }),
+        }],
         compilerUrl: network.compilerUrl,
+        name: 'Base Aepp',
+        onConnection: acceptCb,
+        async onSubscription(_, { accept }, origin) {
+          accept({
+            accounts: {
+              current: { [await this.address(this.getApp(origin))]: {} },
+              connected: {},
+            },
+          });
+        },
+        async onSign(_, { accept }) {
+          accept(null, {
+            onAccount: { sign: () => {}, address: () => {} },
+          });
+        },
+        onMessageSign: acceptCb,
+        onAskAccounts: acceptCb,
+        onDisconnect() {
+          this.getClients().clients.forEach(({ id }) => this.removeRpcClient(id));
+        },
         axiosConfig: { errorHandler },
       }),
       (async () => {
