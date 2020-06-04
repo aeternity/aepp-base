@@ -88,5 +88,11 @@ export default {
     setOnLine(state, onLine) {
       state.onLine = onLine;
     },
+    setSdkAccounts({ sdk }, list) {
+      sdk.accounts = list.reduce((p, { address }) => ({ ...p, [address]: {} }), {});
+    },
+    selectSdkAccount({ sdk }, address) {
+      sdk.selectAccount(address);
+    },
   },
 };
