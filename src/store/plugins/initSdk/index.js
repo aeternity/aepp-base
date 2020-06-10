@@ -145,10 +145,16 @@ export default (store) => {
         name: 'Base Aepp',
         onConnection: acceptCb,
         async onSubscription(_, { accept }, origin) {
+          const activeAccount = await this.address(this.getApp(origin));
           accept({
             accounts: {
-              current: { [await this.address(this.getApp(origin))]: {} },
-              connected: {},
+              current: { [activeAccount]: {} },
+              connected: {
+                ...store.state.accounts.list
+                  .reduce((p, { address }) => ({
+                    ...p, ...address !== activeAccount ? { [address]: {} } : {},
+                  }), {}),
+              },
             },
           });
         },
@@ -198,6 +204,7 @@ export default (store) => {
         })({ swag });
       })(),
     ]);
+    sdk.selectNode(network.name);
     sdkActive = true;
     sdk.middleware = middleware.api;
     return sdk;
@@ -227,5 +234,15 @@ export default (store) => {
       await recreateSdk();
     },
     { immediate: true },
+  );
+
+  store.watch(
+    ({ sdk, accounts: { list } }) => ({ sdk, list }),
+    ({ list }) => store.commit('setSdkAccounts', list),
+  );
+
+  store.watch(
+    (state, getters) => getters['accounts/active'] && getters['accounts/active'].address,
+    address => store.commit('selectSdkAccount', address),
   );
 };
