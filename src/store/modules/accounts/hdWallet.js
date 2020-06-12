@@ -273,10 +273,14 @@ export default {
       return TxBuilder.buildTx(
         {
           ...txObject,
-          ...type === 'hd-wallet' && {
-            fee: (await dispatch('modals/open', confirmProps, { root: true }))
-              .shiftedBy(MAGNITUDE),
-          },
+          fee: (type === 'hd-wallet'
+            ? await dispatch('modals/open', confirmProps, { root: true })
+            : await new Promise((resolve, reject) => (
+              window.confirm(Object.entries(confirmProps.transaction)
+                .reduce((s, [k, v]) => s + (v ? `${k}: ${v}\n` : ''), ''))
+                ? resolve(confirmProps.transaction.fee)
+                : reject(new Error('Rejected by user'))))
+          ).shiftedBy(MAGNITUDE),
         },
         OBJECT_ID_TX_TYPE[txObject.tag],
         { vsn: txObject.VSN },
