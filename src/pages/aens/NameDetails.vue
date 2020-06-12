@@ -32,14 +32,18 @@
       {{ $t('name.details.to-transfer') }}
     </AeButton>
 
-    <AeButton :to="{ name: 'transaction-details', params: { hash: details.txHash } }">
+    <AeButton
+      :to="$globals.IS_MOBILE_DEVICE ?
+        { name: 'transaction-details', params: { hash: details.txHash } }
+        : `${currentNetwork.explorerUrl}/transactions/${details.txHash}`"
+    >
       {{ $t('name.details.to-transactions') }}
     </AeButton>
   </Page>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import prefixedAmount from '../../filters/prefixedAmount';
 import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';
@@ -74,6 +78,7 @@ export default {
     address() {
       return getAddressByNameEntry(this.details);
     },
+    ...mapGetters(['currentNetwork']),
     ...mapState('names', {
       details({ owned }) {
         return owned && owned.names.find(({ name }) => name === this.name);

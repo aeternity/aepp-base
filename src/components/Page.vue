@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="fill"
+    :class="[fill, { desktop: !$globals.IS_MOBILE_DEVICE }]"
     class="page"
   >
     <PageHeader
@@ -32,7 +32,7 @@
       <div class="wrapper">
         <slot name="footer" />
       </div>
-      <TabBar v-if="!hideTabBar" />
+      <TabBar v-if="$globals.IS_MOBILE_DEVICE && !hideTabBar" />
     </footer>
   </div>
 </template>
@@ -232,6 +232,45 @@ export default {
         margin-bottom: rem(23px);
         margin-top: rem(23px);
       }
+    }
+  }
+
+  &.desktop {
+    &,
+    .page-header,
+    header {
+      background-color: $color-neutral-positive-2;
+    }
+
+    .page-header {
+      &.empty {
+        height: 0px;
+      }
+
+      &.shadow {
+        box-shadow: none;
+      }
+
+      ::v-deep .button-plain {
+        color: $color-neutral-negative-3;
+      }
+    }
+
+    header ::v-deep .guide.neutral .content {
+      em {
+        color: $color-primary;
+      }
+
+      &,
+      .account-inline {
+        color: $color-neutral-negative-3;
+      }
+    }
+
+    .wrapper .ae-button {
+      margin-top: rem(16px);
+      margin-left: rem(54px);
+      margin-right: rem(54px);
     }
   }
 }
