@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="name-details"
     :title="$t('name.details.title')"
     left-button-icon-name="back"
@@ -35,13 +35,13 @@
     <AeButton :to="{ name: 'transaction-details', params: { hash: details.txHash } }">
       {{ $t('name.details.to-transactions') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import prefixedAmount from '../../filters/prefixedAmount';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';
 import {
   Name, NameId, OwnerId, CreatedAtHeight, ExpiresAtHeight,
@@ -52,7 +52,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     DetailsList,
     AeButton,
   },

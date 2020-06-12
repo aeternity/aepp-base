@@ -1,9 +1,9 @@
 <template>
   <div
     :class="fill"
-    class="mobile-page"
+    class="page"
   >
-    <HeaderMobile
+    <PageHeader
       :fill="headerFill || fill"
       :shadow="!!headerFill && headerFill !== fill && !$slots.header"
       v-bind="$attrs"
@@ -11,7 +11,7 @@
       v-on="$listeners"
     >
       <slot name="title" />
-    </HeaderMobile>
+    </PageHeader>
 
     <header
       v-if="$slots.header"
@@ -38,11 +38,11 @@
 </template>
 
 <script>
-import HeaderMobile from './Header.vue';
-import TabBar from './TabBar.vue';
+import PageHeader from './PageHeader.vue';
+import TabBar from './mobile/TabBar.vue';
 
 export default {
-  components: { HeaderMobile, TabBar },
+  components: { PageHeader, TabBar },
   props: {
     headerFill: {
       type: String,
@@ -84,10 +84,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/mixins';
-@import '../../styles/typography';
+@import '../styles/mixins';
+@import '../styles/typography';
 
-.mobile-page {
+.page {
   flex-grow: 1;
   display: flex;
   flex-direction: column;

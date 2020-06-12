@@ -1,19 +1,19 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import MobileHeader from '../../components/mobile/Header.vue';
+import PageHeader from '../../components/PageHeader.vue';
 import { lorem } from '../mock-data';
 
 const base = {
-  components: { MobileHeader },
+  components: { PageHeader },
 };
 
-storiesOf('mobile Header', module)
+storiesOf('Header', module)
   .add('default', () => ({
     ...base,
     template: `
       <div style="margin: -8px">
-        <mobile-header
+        <page-header
           title="Test"
           fill="primary"
           left-button-icon-name="back"
@@ -35,7 +35,7 @@ storiesOf('mobile Header', module)
   .add('AirGap Setup', () => ({
     ...base,
     template: `
-      <mobile-header
+      <page-header
         title="AirGap Setup"
         style="margin: -8px"
         left-button-icon-name="back"

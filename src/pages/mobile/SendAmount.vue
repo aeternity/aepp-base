@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :left-button-to="{ name: 'send' }"
     :right-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
@@ -65,14 +65,14 @@
     >
       {{ $t('next') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { pick } from 'lodash-es';
 import { mapGetters } from 'vuex';
 import SendAmountMixin from '../SendAmountMixin';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AccountInline from '../../components/AccountInline.vue';
@@ -84,7 +84,7 @@ import { MAGNITUDE } from '../../lib/constants';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeFraction,
     AccountInline,

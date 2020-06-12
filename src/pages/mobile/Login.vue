@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :right-button-to="{ name: 'intro' }"
     right-button-icon-name="close"
     hide-tab-bar
@@ -53,12 +53,12 @@
     >
       {{ $t('login.button') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import wavingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f44b.png';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
 import PasswordPurpose from '../../components/mobile/PasswordPurpose.vue';
@@ -66,7 +66,7 @@ import AeInputPassword from '../../components/AeInputPassword.vue';
 
 export default {
   components: {
-    MobilePage, PasswordPurpose, AeInputPassword, AeButton, Guide,
+    Page, PasswordPurpose, AeInputPassword, AeButton, Guide,
   },
   data() {
     return {

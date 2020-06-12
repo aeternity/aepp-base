@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :right-button-to="{ name: 'name-details', params: { name } }"
     right-button-icon-name="close"
     :header-fill="activeColor"
@@ -56,13 +56,13 @@
         <LeftMore slot="right" />
       </ListItemAccount>
     </template>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex';
 import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import AeInputAccount from '../../components/AeInputAccount.vue';
@@ -72,7 +72,7 @@ import { LeftMore } from '../../components/icons';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AccountInline,
     AeInputAccount,

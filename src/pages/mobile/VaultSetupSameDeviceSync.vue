@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="vault-setup-same-device-sync"
     hide-tab-bar
     left-button-icon-name="back"
@@ -49,11 +49,11 @@
     >
       {{ $t('air-gap.setup.same-device.sync.button') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import Guide from '../../components/Guide.vue';
 import AeTextarea from '../../components/AeTextarea.vue';
@@ -61,7 +61,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, AeFraction, Guide, AeTextarea, AeButton,
+    Page, AeFraction, Guide, AeTextarea, AeButton,
   },
   data: () => ({ responseUrl: '' }),
   methods: {

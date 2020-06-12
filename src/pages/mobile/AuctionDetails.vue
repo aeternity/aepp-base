@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     header-fill="light"
     fill="neutral"
     left-button-icon-name="back"
@@ -38,13 +38,13 @@
     </template>
 
     <ButtonAddFixed :to="{ name: 'auction-bid', params: { name } }" />
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { pick } from 'lodash-es';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemBid from '../../components/mobile/ListItemBid.vue';
@@ -52,7 +52,7 @@ import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeSpinner,
     AeCard,
     ListItemBid,

@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     v-if="transaction"
     :header-fill="transaction.received ? 'alternative' : 'primary'"
     class="transaction-details"
@@ -93,14 +93,14 @@
     >
       {{ $t('transfer.transaction.details.to-explorer') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { pluck } from 'rxjs/operators';
 import prefixedAmount from '../../filters/prefixedAmount';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import DetailsField from '../../components/mobile/DetailsField.vue';
@@ -111,7 +111,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AccountInline,
     DetailsField,

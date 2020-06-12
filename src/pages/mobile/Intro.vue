@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="intro"
     fill="primary"
     hide-tab-bar
@@ -32,17 +32,17 @@
         {{ $t('intro.onboarding') }}
       </AeButton>
     </template>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
-  components: { MobilePage, AeButton, Guide },
+  components: { Page, AeButton, Guide },
   computed: mapState('accounts/hdWallet', ['encryptedWallet']),
   methods: mapActions('accounts/hdWallet', ['createWallet']),
 };
@@ -51,7 +51,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/functions';
 
-.intro.mobile-page {
+.intro.page {
   padding-bottom: env(safe-area-inset-bottom);
 
   hr {

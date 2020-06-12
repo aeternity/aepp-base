@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="vault-setup-method"
     hide-tab-bar
     right-button-icon-name="close"
@@ -55,13 +55,13 @@
     >
       {{ $t('next') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import mobilePhoneEmoji from 'emoji-datasource-apple/img/apple/64/1f4f1.png';
 import lockEmoji from 'emoji-datasource-apple/img/apple/64/1f512.png';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import ListItemChoose from '../../components/ListItemChoose.vue';
@@ -69,7 +69,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, AeButton, Guide, AeFraction, ListItemChoose,
+    Page, AeButton, Guide, AeFraction, ListItemChoose,
   },
   data: () => ({
     mobilePhoneEmoji,

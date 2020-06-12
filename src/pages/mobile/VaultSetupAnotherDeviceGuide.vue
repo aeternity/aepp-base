@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="vault-setup-another-device-guide"
     hide-tab-bar
     left-button-icon-name="back"
@@ -33,18 +33,18 @@
     >
       {{ $t('air-gap.link-vault') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, AeButton, Guide, AeFraction,
+    Page, AeButton, Guide, AeFraction,
   },
   methods: {
     async readValueFromQrCode() {

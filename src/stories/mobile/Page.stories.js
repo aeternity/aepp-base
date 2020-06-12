@@ -2,7 +2,7 @@
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import Vuex from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
 import { account, lorem } from '../mock-data';
 
@@ -23,10 +23,10 @@ const base = {
       'accounts/active': () => account,
     },
   }),
-  components: { MobilePage },
+  components: { Page },
   template: `
     <div style="${rootStyles}">
-      <mobile-page
+      <page
         title="Test"
         header-fill="primary"
         left-button-icon-name="back"
@@ -47,7 +47,7 @@ const base = {
           <strong>Footer</strong>
           {{ lorem.slice(0, 200) }}
         </template>
-      </mobile-page>
+      </page>
     </div>
   `,
   methods: {
@@ -59,17 +59,17 @@ const base = {
   },
 };
 
-storiesOf('mobile Page', module)
+storiesOf('Page', module)
   .add('default', () => ({
     ...base,
     data: () => ({ lorem: lorem[4] }),
   }))
   .add('input at header end', () => ({
     ...base,
-    components: { MobilePage, AeInputAmountCurrency },
+    components: { Page, AeInputAmountCurrency },
     template: `
       <div style="${rootStyles}">
-        <mobile-page
+        <page
           title="Test"
           header-fill="primary"
           left-button-icon-name="back"
@@ -89,7 +89,7 @@ storiesOf('mobile Page', module)
 
           <strong>Content</strong>
           {{ lorem }}
-        </mobile-page>
+        </page>
       </div>`,
     data: () => ({ lorem: lorem.join(' ') }),
   }))
