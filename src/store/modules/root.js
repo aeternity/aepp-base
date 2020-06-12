@@ -18,6 +18,7 @@ export default {
     apps: [],
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
     onLine: true,
+    nameListRouteParams: null,
   },
 
   getters: {
@@ -93,6 +94,9 @@ export default {
     },
     selectSdkAccount({ sdk }, address) {
       sdk.selectAccount(address);
+    },
+    setNameListRoute(state, nameListRouteParams) {
+      state.nameListRouteParams = nameListRouteParams;
     },
   },
 };
