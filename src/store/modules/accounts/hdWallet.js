@@ -270,17 +270,18 @@ export default {
         },
       };
 
+      const transactionDetails = JSON.stringify(confirmProps.transaction, null, 2);
+      if (type !== 'hd-wallet' && !window.confirm(transactionDetails)) {
+        throw new Error('Rejected by user');
+      }
+
       return TxBuilder.buildTx(
         {
           ...txObject,
-          fee: (type === 'hd-wallet'
-            ? await dispatch('modals/open', confirmProps, { root: true })
-            : await new Promise((resolve, reject) => (
-              window.confirm(Object.entries(confirmProps.transaction)
-                .reduce((s, [k, v]) => s + (v ? `${k}: ${v}\n` : ''), ''))
-                ? resolve(confirmProps.transaction.fee)
-                : reject(new Error('Rejected by user'))))
-          ).shiftedBy(MAGNITUDE),
+          ...type === 'hd-wallet' && {
+            fee: (await dispatch('modals/open', confirmProps, { root: true }))
+              .shiftedBy(MAGNITUDE),
+          },
         },
         OBJECT_ID_TX_TYPE[txObject.tag],
         { vsn: txObject.VSN },
