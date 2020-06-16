@@ -1,6 +1,7 @@
 <template>
-  <div
-    :class="[fill, { desktop: !$globals.IS_MOBILE_DEVICE }]"
+  <Component
+    :is="modal ? 'AeModal' : 'div'"
+    :class="[fill, { desktop: !$globals.IS_MOBILE_DEVICE }, { modal }]"
     class="page"
   >
     <PageHeader
@@ -34,15 +35,16 @@
       </div>
       <TabBar v-if="$globals.IS_MOBILE_DEVICE && !hideTabBar" />
     </footer>
-  </div>
+  </Component>
 </template>
 
 <script>
 import PageHeader from './PageHeader.vue';
 import TabBar from './mobile/TabBar.vue';
+import AeModal from './AeModal.vue';
 
 export default {
-  components: { PageHeader, TabBar },
+  components: { PageHeader, TabBar, AeModal },
   props: {
     headerFill: {
       type: String,
@@ -68,6 +70,7 @@ export default {
       default: 'light',
     },
     hideTabBar: Boolean,
+    modal: Boolean,
   },
   async mounted() {
     if (process.env.IS_CORDOVA && process.env.IS_IOS) {
@@ -92,7 +95,7 @@ export default {
   display: flex;
   flex-direction: column;
 
-  &,
+  &:not(.ae-modal),
   header {
     &.primary {
       background-color: $color-primary;
@@ -236,10 +239,25 @@ export default {
   }
 
   &.desktop {
-    &,
+    &:not(.ae-modal),
     .page-header,
     header {
       background-color: $color-neutral-positive-2;
+    }
+
+    &.ae-modal {
+      ::v-deep .modal-plain {
+        background-color: $color-primary;
+
+        .page-header {
+          background-color: $color-primary;
+          margin-top: rem(32px);
+
+          header {
+            display: none;
+          }
+        }
+      }
     }
 
     .page-header {

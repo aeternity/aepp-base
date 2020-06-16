@@ -2,7 +2,7 @@
   <div class="app-desktop">
     <div v-show="!hidePage">
       <HeaderDesktop />
-      <div class="page">
+      <div class="desktop-page">
         <RouterView />
       </div>
       <SidebarDesktop />
@@ -36,7 +36,7 @@ export default {
 
 <style scoped lang="scss">
 .app-desktop {
-  .page {
+  .desktop-page {
     max-width: 520px;
     margin-left: auto;
     margin-right: auto;
