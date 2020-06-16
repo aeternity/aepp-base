@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="auction-bid"
     :header-fill="activeColor"
     right-button-icon-name="close"
@@ -72,7 +72,7 @@
     >
       {{ $t('next') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
@@ -81,7 +81,7 @@ import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
 import { MAGNITUDE } from '../../lib/constants';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeInputName from '../../components/AeInputName';
 import AeInputAmountCurrency from '../../components/AeInputAmountCurrency.vue';
@@ -92,7 +92,7 @@ import { i18n } from '../../store/plugins/ui/languages';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeInputName,
     AeInputAmountCurrency,

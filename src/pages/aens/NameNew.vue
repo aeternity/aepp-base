@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :header-fill="activeColor"
     right-button-icon-name="close"
     :right-button-to="{ name: 'name-list' }"
@@ -43,7 +43,7 @@
     >
       {{ $t('name.new.register') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
@@ -51,7 +51,7 @@ import { mapGetters } from 'vuex';
 import { MAX_AUCTION_NAME_LENGTH } from '../../lib/constants';
 import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeInputName from '../../components/AeInputName';
 import AccountInline from '../../components/AccountInline.vue';
@@ -59,7 +59,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeInputName,
     AccountInline,

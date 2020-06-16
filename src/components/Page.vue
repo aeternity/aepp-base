@@ -1,9 +1,10 @@
 <template>
-  <div
-    :class="fill"
-    class="mobile-page"
+  <Component
+    :is="modal ? 'AeModal' : 'div'"
+    :class="[fill, { desktop: !$globals.IS_MOBILE_DEVICE }, { modal }]"
+    class="page"
   >
-    <HeaderMobile
+    <PageHeader
       :fill="headerFill || fill"
       :shadow="!!headerFill && headerFill !== fill && !$slots.header"
       v-bind="$attrs"
@@ -11,7 +12,7 @@
       v-on="$listeners"
     >
       <slot name="title" />
-    </HeaderMobile>
+    </PageHeader>
 
     <header
       v-if="$slots.header"
@@ -32,17 +33,18 @@
       <div class="wrapper">
         <slot name="footer" />
       </div>
-      <TabBar v-if="!hideTabBar" />
+      <TabBar v-if="$globals.IS_MOBILE_DEVICE && !hideTabBar" />
     </footer>
-  </div>
+  </Component>
 </template>
 
 <script>
-import HeaderMobile from './Header.vue';
-import TabBar from './TabBar.vue';
+import PageHeader from './PageHeader.vue';
+import TabBar from './mobile/TabBar.vue';
+import AeModal from './AeModal.vue';
 
 export default {
-  components: { HeaderMobile, TabBar },
+  components: { PageHeader, TabBar, AeModal },
   props: {
     headerFill: {
       type: String,
@@ -68,6 +70,7 @@ export default {
       default: 'light',
     },
     hideTabBar: Boolean,
+    modal: Boolean,
   },
   async mounted() {
     if (process.env.IS_CORDOVA && process.env.IS_IOS) {
@@ -84,15 +87,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/mixins';
-@import '../../styles/typography';
+@import '../styles/mixins';
+@import '../styles/typography';
 
-.mobile-page {
+.page {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 
-  &,
+  &:not(.ae-modal),
   header {
     &.primary {
       background-color: $color-primary;
@@ -232,6 +235,60 @@ export default {
         margin-bottom: rem(23px);
         margin-top: rem(23px);
       }
+    }
+  }
+
+  &.desktop {
+    &:not(.ae-modal),
+    .page-header,
+    header {
+      background-color: $color-neutral-positive-2;
+    }
+
+    &.ae-modal {
+      ::v-deep .modal-plain {
+        background-color: $color-primary;
+
+        .page-header {
+          background-color: $color-primary;
+          margin-top: rem(32px);
+
+          header {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .page-header {
+      &.empty {
+        height: 0px;
+      }
+
+      &.shadow {
+        box-shadow: none;
+      }
+
+      ::v-deep .button-plain {
+        color: $color-neutral-negative-3;
+      }
+    }
+
+    header ::v-deep .guide.neutral .content {
+      em {
+        color: $color-primary;
+      }
+
+      &,
+      .account-inline {
+        color: $color-neutral-negative-3;
+      }
+    }
+
+    .wrapper .ae-button {
+      margin-top: rem(16px);
+      margin-left: rem(54px);
+      margin-right: rem(54px);
     }
   }
 }

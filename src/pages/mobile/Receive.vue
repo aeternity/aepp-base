@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="receive"
     :left-button-to="{ name: 'transfer' }"
     left-button-icon-name="back"
@@ -44,7 +44,7 @@
         <Check />
       </ListItemCircle>
     </ListItem>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
@@ -52,7 +52,7 @@ import { mapGetters } from 'vuex';
 import writingHandEmoji from 'emoji-datasource-apple/img/apple/64/270d-fe0f.png';
 import envelopeEmoji from 'emoji-datasource-apple/img/apple/64/2709-fe0f.png';
 import copyOnClick from '../../directives/copyOnClick';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccountReverse from '../../components/mobile/AeAccountReverse.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -61,7 +61,7 @@ import { Check } from '../../components/icons';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeAccountReverse,
     ListItem,

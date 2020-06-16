@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="settings-app-details"
     :left-button-to="{ name: 'settings-app-list' }"
     left-button-icon-name="back"
@@ -24,12 +24,12 @@
         />
       </ListItemAccount>
     </AeCard>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import DetailsAccountAccessPermission from '../../components/mobile/DetailsAccountAccessPermission.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
@@ -37,7 +37,7 @@ import AeRadio from '../../components/AeRadio.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeCard,
     DetailsAccountAccessPermission,
     ListItemAccount,

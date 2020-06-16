@@ -1,5 +1,6 @@
 <template>
-  <MobilePage
+  <Page
+    :modal="!$globals.IS_MOBILE_DEVICE"
     fill="primary"
     hide-tab-bar
     right-button-icon-name="close"
@@ -54,13 +55,13 @@
         {{ $t('confirm') }}
       </AeButton>
     </AeButtonGroup>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
-import MobilePage from './Page.vue';
+import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
 import AccountInline from '../AccountInline.vue';
@@ -77,7 +78,7 @@ import AeButton from '../AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeFraction,
     AccountInline,
@@ -116,7 +117,7 @@ export default {
   },
   computed: {
     ...mapState({
-      stepFraction: state => state.mobile.stepFraction,
+      stepFraction: state => (process.env.IS_MOBILE_DEVICE ? state.mobile.stepFraction : null),
     }),
     txType() {
       return OBJECT_ID_TX_TYPE[this.transaction.tag];

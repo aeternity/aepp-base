@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="name-details"
     :title="$t('name.details.title')"
     left-button-icon-name="back"
@@ -32,16 +32,20 @@
       {{ $t('name.details.to-transfer') }}
     </AeButton>
 
-    <AeButton :to="{ name: 'transaction-details', params: { hash: details.txHash } }">
+    <AeButton
+      :to="$globals.IS_MOBILE_DEVICE ?
+        { name: 'transaction-details', params: { hash: details.txHash } }
+        : `${currentNetwork.explorerUrl}/transactions/${details.txHash}`"
+    >
       {{ $t('name.details.to-transactions') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import prefixedAmount from '../../filters/prefixedAmount';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';
 import {
   Name, NameId, OwnerId, CreatedAtHeight, ExpiresAtHeight,
@@ -52,7 +56,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     DetailsList,
     AeButton,
   },
@@ -74,6 +78,7 @@ export default {
     address() {
       return getAddressByNameEntry(this.details);
     },
+    ...mapGetters(['currentNetwork']),
     ...mapState('names', {
       details({ owned }) {
         return owned && owned.names.find(({ name }) => name === this.name);

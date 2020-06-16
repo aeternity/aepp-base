@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="vault-sign-modal"
     fill="alternative"
     hide-tab-bar
@@ -27,12 +27,12 @@
     >
       {{ $t('air-gap.modal.sign.done') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import MobilePage from './Page.vue';
+import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
 import { AeQrCode } from '../async';
@@ -40,7 +40,7 @@ import AeButton from '../AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeFraction,
     AeQrCode,

@@ -21,6 +21,7 @@ export default (async () => {
       return { x: 0, y: 0 };
     },
     routes: (await Promise.all([
+      import(/* webpackChunkName: "ui-common" */ './routes/common'),
       process.env.IS_MOBILE_DEVICE
         ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
         : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),

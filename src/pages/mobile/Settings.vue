@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="settings"
     fill="neutral"
   >
@@ -133,14 +133,14 @@
       <ListItemSettingsReset />
     </AeCard>
     <SettingsVersion />
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
 import { get } from 'lodash-es';
 import AeCard from '../../components/AeCard.vue';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import ListItem from '../../components/ListItem.vue';
 import ListItemCircle from '../../components/ListItemCircle.vue';
@@ -155,7 +155,7 @@ import {
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeCard,
     ListItem,

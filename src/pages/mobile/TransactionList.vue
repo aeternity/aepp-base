@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     header-fill="primary"
     class="transaction-list"
     :right-button-icon-name="$globals.DISABLED_BROWSER ? '' : 'close'"
@@ -51,14 +51,14 @@
           ? $t('transfer.transaction.list.loaded')
           : $t('transfer.transaction.list.no-transactions') }}
     </div>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { Subject } from 'rxjs';
 import { groupBy } from 'lodash-es';
 import { mapGetters } from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AccountInline from '../../components/AccountInline.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
@@ -66,7 +66,7 @@ import ListItemTransaction from '../../components/ListItemTransaction.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AccountInline,
     ButtonPlain,
     AeSpinner,
@@ -124,7 +124,7 @@ export default {
 @import '../../styles/typography';
 
 .transaction-list {
-  .header {
+  .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;

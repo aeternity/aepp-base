@@ -8,7 +8,6 @@ export default {
     followers: {},
     stepFraction: null,
     browserPath: { name: 'app-browser' },
-    nameListRouteParams: null,
     readSecurityCourses: [],
     skipAddingToHomeScreen: false,
   },
@@ -39,9 +38,6 @@ export default {
     },
     setBrowserPath(state, browserPath) {
       state.browserPath = browserPath;
-    },
-    setNameListRoute(state, nameListRouteParams) {
-      state.nameListRouteParams = nameListRouteParams;
     },
     markSecurityCourseAsRead(state, courseName) {
       if (state.readSecurityCourses.includes(courseName)) return;

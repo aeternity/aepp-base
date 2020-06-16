@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :right-button-to="{ name: 'transfer' }"
     right-button-icon-name="close"
     :header-fill="activeColor"
@@ -63,13 +63,13 @@
     >
       <LeftMore slot="right" />
     </ListItemAccount>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { pick } from 'lodash-es';
 import { mapGetters, mapState } from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AccountInline from '../../components/AccountInline.vue';
@@ -80,7 +80,7 @@ import { LeftMore } from '../../components/icons';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeFraction,
     AccountInline,

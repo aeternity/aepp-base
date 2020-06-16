@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="transfer"
     header-fill="neutral"
     :right-button-icon-name="`${tooltipsVisible ? 'close' : 'question'}-circle`"
@@ -62,7 +62,7 @@
       >
       <LeftMore slot="right" />
     </ListItem>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
@@ -72,7 +72,7 @@ import moneyWithWingsEmoji from 'emoji-datasource-apple/img/apple/64/1f4b8.png';
 import manTippingHandEmoji from 'emoji-datasource-apple/img/apple/64/1f481-200d-2642-fe0f.png';
 import mantelpieceClockEmoji from 'emoji-datasource-apple/img/apple/64/1f570-fe0f.png';
 import mobilePhoneWithAnArrowEmoji from 'emoji-datasource-apple/img/apple/64/1f4f2.png';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
 import { LeftMore } from '../../components/icons';
@@ -80,7 +80,7 @@ import ListItem from '../../components/ListItem.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeAccount,
     ListItem,

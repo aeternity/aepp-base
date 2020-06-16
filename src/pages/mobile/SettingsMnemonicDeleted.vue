@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :right-button-to="{ name: 'settings' }"
     right-button-icon-name="close"
     :title="$t('settings.mnemonic.title')"
@@ -14,17 +14,17 @@
     >
       {{ $t('settings.mnemonic.deleted.back') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, Guide, AeButton,
+    Page, Guide, AeButton,
   },
 };
 </script>

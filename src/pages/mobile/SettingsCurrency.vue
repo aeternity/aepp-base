@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="settings-currency"
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
@@ -23,12 +23,12 @@
         />
       </ListItem>
     </AeCard>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import CurrencySwitcher from '../../components/CurrencySwitcher.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -36,7 +36,7 @@ import AeRadio from '../../components/AeRadio.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeCard,
     CurrencySwitcher,
     ListItem,

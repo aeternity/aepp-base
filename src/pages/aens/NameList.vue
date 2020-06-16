@@ -1,5 +1,5 @@
 <template>
-  <MobilePage fill="neutral">
+  <Page fill="neutral">
     <NameListHeader />
 
     <h2>{{ $t('name.list.personal-note') }}</h2>
@@ -39,12 +39,12 @@
     </template>
 
     <ButtonAddFixed :to="{ name: 'name-new' }" />
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
@@ -53,7 +53,7 @@ import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     NameListHeader,
     AeCard,
     ListItemAccount,

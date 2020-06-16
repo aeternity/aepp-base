@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="vault-setup-same-device"
     hide-tab-bar
     left-button-icon-name="back"
@@ -39,11 +39,11 @@
         {{ $t('air-gap.setup.same-device.install.button') }}
       </AeButton>
     </template>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
@@ -51,7 +51,7 @@ import { INSTALL_URL } from '../../lib/airGap';
 
 export default {
   components: {
-    MobilePage, AeButton, Guide, AeFraction,
+    Page, AeButton, Guide, AeFraction,
   },
   data: () => ({ INSTALL_URL }),
 };

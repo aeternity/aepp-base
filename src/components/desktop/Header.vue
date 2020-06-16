@@ -40,7 +40,9 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { pluck, switchMap } from 'rxjs/operators';
-import { Grid, Receive, Settings } from '../icons';
+import {
+  Grid, Receive, Settings, Contacts,
+} from '../icons';
 import ButtonPlain from '../ButtonPlain.vue';
 import AeIdenticon from '../AeIdenticon.vue';
 import prefixedAmount from '../../filters/prefixedAmount';
@@ -78,6 +80,10 @@ export default {
         name: this.$t('transfer.receive.title'),
         routeName: 'receive',
         icon: Receive,
+      }, {
+        name: this.$t('name.title'),
+        routeName: 'name-list',
+        icon: Contacts,
       }, {
         name: this.$t('settings.title'),
         routeName: 'settings',
