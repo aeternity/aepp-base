@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     fill="neutral"
     class="auction-list"
   >
@@ -63,13 +63,13 @@
     </template>
 
     <ButtonAddFixed :to="{ name: 'name-new' }" />
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { pick, times } from 'lodash-es';
 import { AENS_DOMAIN } from '../../lib/constants';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import ButtonGroup from '../../components/mobile/ButtonGroup.vue';
 import ButtonFlat from '../../components/mobile/ButtonFlat.vue';
@@ -86,7 +86,7 @@ const VIEW_MAX_BID = 'max-bid';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     NameListHeader,
     ButtonGroup,
     ButtonFlat,

@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     class="settings-security-course-list"
     fill="neutral"
     :title="$t('security-courses.settings.title')"
@@ -37,7 +37,7 @@
         {{ $t('security-courses.settings.list.note') }}
       </Note>
     </template>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
@@ -45,13 +45,13 @@ import { mapState } from 'vuex';
 import lockEmoji from 'emoji-datasource-apple/img/apple/64/1f513.png';
 import getCourses from './settingsSecurityCourseList';
 import ListItemChoose from '../../components/ListItemChoose.vue';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeButton from '../../components/AeButton.vue';
 import Note from '../../components/Note.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     ListItemChoose,
     AeButton,
     Note,

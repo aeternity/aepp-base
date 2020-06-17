@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :left-button-to="{ name: 'settings-network' }"
     left-button-icon-name="back"
     :title="$t('network.settings.new.title')"
@@ -9,17 +9,17 @@
     <AeCard fill="maximum">
       <NetworkAdd :finally-to="{ name: 'settings-network' }" />
     </AeCard>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import NetworkAdd from '../../components/NetworkAdd.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeCard,
     NetworkAdd,
   },

@@ -38,7 +38,8 @@
   "sidebar": {
     "connect-account": "Connect an account to start",
     "connected-account": "| Your connected account | Your connected accounts",
-    "base-app": "Base æpp",
+    "local": "Local",
+    "remote": "Remote",
     "ledger": "Ledger"
   },
 
@@ -296,13 +297,6 @@
         "ChannelSettleTx": "Settle channel",
         "ChannelSnapshotSoloTx": "Solo snapshot channel"
       }
-    },
-
-    "migrated-balance": {
-      "title": "Tokens in migration",
-      "subtitle": "Not shown as balance above",
-      "note": "are in migration now. They will be available after the next hardfork.",
-      "to-migrations": "See migrations"
     },
 
     "redeem-balance": {
@@ -630,7 +624,8 @@
         "guide": "Sign the transaction in the <primary>Base æpp</primary>",
         "note": "Open your Base æpp, check the transaction details and sign",
         "cancel": "Cancel Transaction"
-      }
+      },
+      "mobile-not-supported": "Use desktop to sign with this account"
     }
   },
 

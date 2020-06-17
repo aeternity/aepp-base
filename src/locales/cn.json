@@ -38,7 +38,8 @@
   "sidebar": {
     "connect-account": "连接一个账户以开始",
     "connected-account": "| 连接的账户 | 连接的账户",
-    "base-app": "Base æpp",
+    "local": "Local",
+    "remote": "Remote",
     "ledger": "Ledger"
   },
 
@@ -296,13 +297,6 @@
         "ChannelSettleTx": "Settle channel",
         "ChannelSnapshotSoloTx": "Solo snapshot channel"
       }
-    },
-
-    "migrated-balance": {
-      "title": "迁移中的数量",
-      "subtitle": "未显示为上述余额",
-      "note": "正在迁移中。他们将在下一次硬分叉后可使用。",
-      "to-migrations": "查看迁移"
     },
 
     "redeem-balance": {
@@ -630,7 +624,8 @@
         "guide": "在Base æpp上 <primary>签署交易</primary>",
         "note": "打开你的Base æpp,检查交易细节并签署",
         "cancel": "取消交易"
-      }
+      },
+      "mobile-not-supported": "Use desktop to sign with this account"
     }
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :right-button-to="{ name: 'settings' }"
     right-button-icon-name="close"
     class="settings-mnemonic-confirmed"
@@ -26,18 +26,18 @@
         {{ $t('settings.mnemonic.confirmed.keep') }}
       </AeButton>
     </template>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, Guide, AeFraction, AeButton,
+    Page, Guide, AeFraction, AeButton,
   },
   methods: {
     async deleteMnemonic() {

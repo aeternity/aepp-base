@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :title="$t('settings.password.title')"
     :right-button-to="{ name: 'settings-password' }"
     right-button-icon-name="close"
@@ -71,13 +71,13 @@
     >
       {{ $t('confirm') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import keyEmoji from 'emoji-datasource-apple/img/apple/64/1f511.png';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import PasswordPurpose from '../../components/mobile/PasswordPurpose.vue';
 import AeInputPassword from '../../components/AeInputPassword.vue';
@@ -85,7 +85,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage, Guide, PasswordPurpose, AeInputPassword, AeButton,
+    Page, Guide, PasswordPurpose, AeInputPassword, AeButton,
   },
   data: () => ({
     password: '',

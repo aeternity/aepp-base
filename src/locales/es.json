@@ -38,7 +38,8 @@
   "sidebar": {
     "connect-account": "Conectar una cuenta para comenzar",
     "connected-account": "| Su cuenta conectada | Sus cuentas conectadas",
-    "base-app": "Base æpp",
+    "local": "Local",
+    "remote": "Remote",
     "ledger": "Ledger"
   },
 
@@ -296,13 +297,6 @@
         "ChannelSettleTx": "Settle channel",
         "ChannelSnapshotSoloTx": "Solo snapshot channel"
       }
-    },
-
-    "migrated-balance": {
-      "title": "Tokens migrados",
-      "subtitle": "No se muestra como saldo arriba",
-      "note": "están en la migración ahora estarán disponibles después del próxima. Hardfork.",
-      "to-migrations": "Ver migraciones"
     },
 
     "redeem-balance": {
@@ -630,7 +624,8 @@
         "guide": "Firme la transacción en el <primary>Base æpp</primary>",
         "note": "Abra su Base æpp, verifique los detalles de la transacción y firme",
         "cancel": "Cancelar transacción"
-      }
+      },
+      "mobile-not-supported": "Use desktop to sign with this account"
     }
   },
 

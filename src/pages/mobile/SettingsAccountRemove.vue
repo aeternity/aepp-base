@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     :title="account.name"
@@ -25,12 +25,12 @@
       v-bind="account"
       hide-name
     />
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import AeButton from '../../components/AeButton.vue';
@@ -38,7 +38,7 @@ import AeAccountReverse from '../../components/mobile/AeAccountReverse.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeCard,
     ListItemAccount,
     AeButton,

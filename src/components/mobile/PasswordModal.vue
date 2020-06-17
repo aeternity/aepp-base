@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     hide-tab-bar
     right-button-icon-name="close"
     @right-button-click="cancelHandler"
@@ -41,11 +41,11 @@
     >
       {{ $t('settings.password.modal.continue') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from './Page.vue';
+import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AeButton from '../AeButton.vue';
 import PasswordPurpose from './PasswordPurpose.vue';
@@ -53,7 +53,7 @@ import AeInputPassword from '../AeInputPassword.vue';
 
 export default {
   components: {
-    MobilePage, PasswordPurpose, AeInputPassword, AeButton, Guide,
+    Page, PasswordPurpose, AeInputPassword, AeButton, Guide,
   },
   props: {
     resolve: { type: Function, required: true },

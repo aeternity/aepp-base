@@ -1,5 +1,6 @@
 <template>
-  <MobilePage
+  <Page
+    :modal="!$globals.IS_MOBILE_DEVICE"
     fill="primary"
     hide-tab-bar
     right-button-icon-name="close"
@@ -34,12 +35,12 @@
         {{ $t('confirm') }}
       </AeButton>
     </AeButtonGroup>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import MobilePage from './Page.vue';
+import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AccountInline from '../AccountInline.vue';
 import DetailsRawData from './DetailsRawData.vue';
@@ -48,7 +49,7 @@ import AeButtonGroup from '../AeButtonGroup.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AccountInline,
     DetailsRawData,

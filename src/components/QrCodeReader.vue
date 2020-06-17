@@ -1,6 +1,6 @@
 <template>
   <div class="qr-code-reader">
-    <HeaderMobile
+    <PageHeader
       :title="title"
       fill="light"
       left-button-icon-name="back"
@@ -26,10 +26,10 @@
 <script>
 import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
 import { handleUnknownError } from '../lib/utils';
-import HeaderMobile from './mobile/Header.vue';
+import PageHeader from './PageHeader.vue';
 
 export default {
-  components: { HeaderMobile },
+  components: { PageHeader },
   props: {
     title: { type: String, required: true },
     resolve: { type: Function, required: true },

@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     :title="$t('network.settings.title')"
@@ -9,17 +9,17 @@
     <AeCard fill="maximum">
       <NetworkSwitcher :network-add-button-to="{ name: 'settings-network-new' }" />
     </AeCard>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import NetworkSwitcher from '../../components/NetworkSwitcher.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeCard,
     NetworkSwitcher,
   },

@@ -5,7 +5,7 @@
   >
     <AeSpinner />
   </div>
-  <MobilePage
+  <Page
     v-else
     header-fill="neutral"
     :right-button-to="{ name: 'transfer' }"
@@ -31,7 +31,7 @@
     >
       <LeftMore slot="right" />
     </ListItemAccount>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
@@ -40,7 +40,7 @@ import BigNumber from 'bignumber.js';
 import { Ae, Transaction, Crypto } from '@aeternity/aepp-sdk/es';
 import { handleUnknownError } from '../../lib/utils';
 import AeSpinner from '../../components/AeSpinner.vue';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import Balance from '../../components/Balance.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
@@ -51,7 +51,7 @@ import { MIN_SPEND_TX_FEE } from '../../lib/spendTxFees';
 export default {
   components: {
     AeSpinner,
-    MobilePage,
+    Page,
     Guide,
     Balance,
     ListItemAccount,

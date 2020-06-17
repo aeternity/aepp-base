@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :left-button-to="{ name: 'settings-mnemonic-show' }"
     left-button-icon-name="back"
     :right-button-to="{ name: 'settings' }"
@@ -63,14 +63,14 @@
     >
       {{ $t('confirm') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import crossedFingersEmoji from 'emoji-datasource-apple/img/apple/64/1f91e.png';
 import { mapState } from 'vuex';
 import { shuffle } from 'lodash-es';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeFraction from '../../components/AeFraction.vue';
 import ButtonMnemonicWord from '../../components/mobile/ButtonMnemonicWord.vue';
@@ -79,7 +79,7 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     Guide,
     AeFraction,
     ButtonMnemonicWord,

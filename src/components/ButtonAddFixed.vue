@@ -25,7 +25,7 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/functions';
 
-.mobile-page .wrapper > .button-add-fixed.ae-button.medium {
+.page .wrapper > .button-add-fixed.ae-button.medium {
   width: rem(56px);
   margin: 0;
 }

@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     :left-button-to="{ name: 'settings' }"
     left-button-icon-name="back"
     :title="$t('app.settings.title')"
@@ -24,13 +24,13 @@
         <LeftMore slot="right" />
       </ListItem>
     </AeCard>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { get } from 'lodash-es';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
 import { LeftMore } from '../../components/icons';
@@ -38,7 +38,7 @@ import DEFAULT_ICON from '../../assets/icons/aepp-default.svg';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeCard,
     ListItem,
     LeftMore,

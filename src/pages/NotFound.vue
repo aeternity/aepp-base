@@ -18,13 +18,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import MobilePage from '../components/mobile/Page.vue';
+import Page from '../components/Page.vue';
 import AeButton from '../components/AeButton.vue';
 
 export default {
   components: { AeButton },
   data: () => ({
-    wrapper: process.env.IS_MOBILE_DEVICE ? MobilePage : 'div',
+    wrapper: process.env.IS_MOBILE_DEVICE ? Page : 'div',
   }),
   computed: mapGetters(['loggedIn']),
 };

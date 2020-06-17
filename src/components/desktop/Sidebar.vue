@@ -19,14 +19,20 @@
 
       <div class="tabs">
         <ButtonPlain
-          :class="{ active: !ledgerTab }"
-          @click="ledgerTab = false"
+          :class="{ active: selectedTab === 'hd-wallet-desktop' }"
+          @click="selectedTab = 'hd-wallet-desktop'"
         >
-          {{ $t('sidebar.base-app') }}
+          {{ $t('sidebar.local') }}
         </ButtonPlain>
         <ButtonPlain
-          :class="{ active: ledgerTab }"
-          @click="ledgerTab = true"
+          :class="{ active: selectedTab === 'hd-wallet' }"
+          @click="selectedTab = 'hd-wallet'"
+        >
+          {{ $t('sidebar.remote') }}
+        </ButtonPlain>
+        <ButtonPlain
+          :class="{ active: selectedTab === 'ledger' }"
+          @click="selectedTab = 'ledger'"
         >
           {{ $t('sidebar.ledger') }}
         </ButtonPlain>
@@ -35,7 +41,7 @@
 
     <Component
       :is="currentTab"
-      :for-ledger="ledgerTab"
+      :account-type="selectedTab"
     />
   </SidebarModal>
 </template>
@@ -44,6 +50,7 @@
 import { uniq } from 'lodash-es';
 import { mapState, mapMutations } from 'vuex';
 import SidebarModal from './SidebarModal.vue';
+import CreateOrRecover from './CreateOrRecover.vue';
 import ConnectGuide from './ConnectGuide.vue';
 import AccountSwitcher from './AccountSwitcher.vue';
 import ButtonPlain from '../ButtonPlain.vue';
@@ -51,10 +58,10 @@ import { Close } from '../icons';
 
 export default {
   components: {
-    SidebarModal, ConnectGuide, AccountSwitcher, ButtonPlain, Close,
+    SidebarModal, CreateOrRecover, ConnectGuide, AccountSwitcher, ButtonPlain, Close,
   },
   data: () => ({
-    ledgerTab: false,
+    selectedTab: 'hd-wallet-desktop',
   }),
   computed: {
     ...mapState({
@@ -63,9 +70,14 @@ export default {
       accountTypes: ({ accounts: { list } }) => uniq(list.map(({ source: { type } }) => type)),
     }),
     currentTab() {
-      return (this.accountTypes.includes('ledger') && this.ledgerTab)
-        || (this.accountTypes.some(type => type !== 'ledger') && !this.ledgerTab)
-        ? 'account-switcher' : 'connect-guide';
+      return (this.accountTypes.includes('hd-wallet-desktop') && this.selectedTab === 'hd-wallet-desktop')
+        || (this.accountTypes.some(type => !['hd-wallet-desktop', 'ledger'].includes(type)) && this.selectedTab === 'hd-wallet')
+        || (this.accountTypes.includes('ledger') && this.selectedTab === 'ledger')
+        ? 'account-switcher' : {
+          'hd-wallet-desktop': 'create-or-recover',
+          'hd-wallet': 'connect-guide',
+          ledger: 'connect-guide',
+        }[this.selectedTab];
     },
   },
   methods: mapMutations(['toggleSidebar']),

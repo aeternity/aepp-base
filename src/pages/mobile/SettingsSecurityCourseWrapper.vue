@@ -1,5 +1,5 @@
 <template>
-  <MobilePage
+  <Page
     fill="neutral"
     class="settings-security-course-details"
     hide-tab-bar
@@ -31,17 +31,17 @@
     >
       {{ $t('security-courses.settings.details.to-list') }}
     </AeButton>
-  </MobilePage>
+  </Page>
 </template>
 
 <script>
 import getCourses from './settingsSecurityCourseList';
-import MobilePage from '../../components/mobile/Page.vue';
+import Page from '../../components/Page.vue';
 import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    MobilePage,
+    Page,
     AeButton,
   },
   props: {
@@ -67,9 +67,9 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/typography';
 
-.settings-security-course-details.mobile-page {
+.settings-security-course-details.page {
   ::v-deep {
-    .header-mobile {
+    .page-header {
       display: none;
     }
 

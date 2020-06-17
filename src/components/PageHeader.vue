@@ -1,6 +1,6 @@
 <template>
   <div
-    class="header-mobile"
+    class="page-header"
     :class="[fill, { shadow: shadow || (!empty && scrolled), empty }]"
   >
     <header :class="{ padded }">
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import ButtonPlain from '../ButtonPlain.vue';
+import ButtonPlain from './ButtonPlain.vue';
 import {
   Back, Close, CloseCircle, QuestionCircle,
-} from '../icons';
+} from './icons';
 
 const buttonColorType = {
   type: String,
@@ -89,10 +89,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
-@import '../../styles/variables';
+@import '../styles/typography';
+@import '../styles/variables';
 
-.header-mobile {
+.page-header {
   position: sticky;
   top: 0;
   padding-top: env(safe-area-inset-top);
