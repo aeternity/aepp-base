@@ -3,6 +3,8 @@ import { BrowserWindowMessageConnection } from '@aeternity/aepp-sdk/es/utils/aep
 
 const modals = {
   confirmAccountAccess: true,
+  confirmTransactionSign: true,
+  confirmSign: true,
 };
 
 export default (store) => {
@@ -24,10 +26,11 @@ export default (store) => {
     actions: {
       open(_, { name, ...props }) {
         if (!modals[name]) return Promise.reject(new Error(`Modal with name "${name}" not registered`));
-        const popupWindow = window.open('/', 'popup', 'width=330,height=480');
+        const popupWindow = window.open('/', 'popup', 'width=530,height=730');
         if (!popupWindow) return Promise.reject(new Error('Can\'t show popup window'));
+        popupWindow.modalName = name;
         return new Promise((resolve, reject) => {
-          popupWindow.props = { ...props, resolve, reject };
+          popupWindow.modalProps = { ...props, resolve, reject };
         });
       },
     },

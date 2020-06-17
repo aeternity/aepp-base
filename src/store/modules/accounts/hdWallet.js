@@ -234,9 +234,7 @@ export default {
     },
 
     async confirmRawDataSigning({ dispatch }, data) {
-      if (type === 'hd-wallet') {
-        await dispatch('modals/open', { name: 'confirmSign', data }, { root: true });
-      }
+      await dispatch('modals/open', { name: 'confirmSign', data }, { root: true });
       return data;
     },
 
