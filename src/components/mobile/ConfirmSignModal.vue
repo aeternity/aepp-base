@@ -1,5 +1,6 @@
 <template>
   <Page
+    :modal="!$globals.IS_MOBILE_DEVICE"
     fill="primary"
     hide-tab-bar
     right-button-icon-name="close"
