@@ -18,7 +18,7 @@ Vue.use(Vuex);
 [languages, initSdk, names, appsMetadata, observables, currencies].forEach(plugin => plugin(store));
 
 const unloadHandler = () => {
-  window.reject(new Error('Rejected by user'));
+  window.modalProps.reject(new Error('Rejected by user'));
 };
 
 window.addEventListener('beforeunload', unloadHandler);
