@@ -24,7 +24,7 @@
     "@aeternity/aepp-sdk": "^7.7.0",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
-    "@aeternity/ledger-app-api": "0.1.0",
+    "@aeternity/ledger-app-api": "0.2.1",
     "@download/blockies": "^1.0.3",
     "@ledgerhq/hw-transport-u2f": "^4.78.0",
     "@zxing/library": "^0.15.2",
