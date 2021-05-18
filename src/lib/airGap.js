@@ -1,4 +1,4 @@
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 
 const AIR_GAP_VERSION = '1';
 const AIR_GAP_TYPE = '0';

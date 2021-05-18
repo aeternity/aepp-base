@@ -1,5 +1,5 @@
 import { derivePathFromKey, getKeyPair } from '@aeternity/hd-wallet/src/hd-key';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 
 export const genRandomBuffer = (size) => {
   const key = new ArrayBuffer(size);

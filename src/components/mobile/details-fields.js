@@ -1,4 +1,4 @@
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { i18n } from '../../store/plugins/ui/languages';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';

@@ -2,8 +2,7 @@
 
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import Ae from '@aeternity/ledger-app-api';
-import { Crypto, TxBuilder } from '@aeternity/aepp-sdk/es';
-import { OBJECT_ID_TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
+import { Crypto, TxBuilder, SCHEMA } from '@aeternity/aepp-sdk';
 import { i18n } from '../../plugins/ui/languages';
 
 const signOnMobile = async ({ dispatch }) => {
@@ -92,7 +91,7 @@ export default {
 
       const txObject = TxBuilder.unpackTx(txBase64).tx;
       const stringTx = TxBuilder.buildTx(
-        txObject, OBJECT_ID_TX_TYPE[txObject.tag], { vsn: txObject.VSN },
+        txObject, SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag], { vsn: txObject.VSN },
       ).tx;
 
       const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));

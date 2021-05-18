@@ -3,8 +3,7 @@
 import { pick } from 'lodash-es';
 import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
-import { Crypto, TxBuilder } from '@aeternity/aepp-sdk/es';
-import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
+import { Crypto, TxBuilder, SCHEMA } from '@aeternity/aepp-sdk';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
@@ -247,10 +246,11 @@ export default {
       }
 
       const SUPPORTED_TX_TYPES = [
-        TX_TYPE.spend, TX_TYPE.contractCreate, TX_TYPE.contractCall,
-        TX_TYPE.namePreClaim, TX_TYPE.nameClaim, TX_TYPE.nameUpdate, TX_TYPE.nameTransfer,
+        SCHEMA.TX_TYPE.spend, SCHEMA.TX_TYPE.contractCreate, SCHEMA.TX_TYPE.contractCall,
+        SCHEMA.TX_TYPE.namePreClaim, SCHEMA.TX_TYPE.nameClaim, SCHEMA.TX_TYPE.nameUpdate,
+        SCHEMA.TX_TYPE.nameTransfer,
       ];
-      if (!SUPPORTED_TX_TYPES.includes(OBJECT_ID_TX_TYPE[txObject.tag])) {
+      if (!SUPPORTED_TX_TYPES.includes(SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag])) {
         return dispatch('confirmRawDataSigning', txBinary);
       }
 
@@ -262,7 +262,7 @@ export default {
           amount: txObject.amount && format(txObject.amount),
           fee: format(txObject.fee),
           minFee: format(TxBuilder.calculateFee(
-            0, OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
+            0, SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
           )),
           nameFee: txObject.nameFee && format(txObject.nameFee),
         },
@@ -274,7 +274,7 @@ export default {
           fee: (await dispatch('modals/open', confirmProps, { root: true }))
             .shiftedBy(MAGNITUDE),
         },
-        OBJECT_ID_TX_TYPE[txObject.tag],
+        SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag],
         { vsn: txObject.VSN },
       ).rlpEncoded;
     },
@@ -293,7 +293,7 @@ export default {
         'signWithoutConfirmation',
         Buffer.concat([Buffer.from(sdk.getNetworkId()), encodedTx]),
       );
-      return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, TX_TYPE.signed).tx;
+      return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, SCHEMA.TX_TYPE.signed).tx;
     },
   },
 };
