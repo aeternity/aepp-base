@@ -1,5 +1,3 @@
-import { pick } from 'lodash-es';
-
 const getMiddlewareUrl = networkName => `https://${networkName}.aeternity.io`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
@@ -21,6 +19,4 @@ export default Object.freeze((process.env.NODE_ENV === 'production' ? [
 ] : [
   testNetwork,
   defaultNetwork,
-  genNetwork('Unstable'),
-  genNetwork('Edgenet', pick(defaultNetwork, ['middlewareUrl'])),
 ]).map(Object.freeze));
