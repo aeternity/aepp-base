@@ -9,7 +9,7 @@ const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) =>
   ...options,
 });
 
-export const defaultNetwork = genNetwork('Lima-net', { pathName: 'mainnet' });
+export const defaultNetwork = genNetwork('Iris-net', { pathName: 'mainnet' });
 
 const testNetwork = genNetwork('Testnet');
 
