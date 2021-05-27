@@ -1,6 +1,6 @@
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { TxBuilder } from '@aeternity/aepp-sdk/es';
+import { TxBuilder } from '@aeternity/aepp-sdk';
 import { MAGNITUDE } from '../lib/constants';
 
 export default {

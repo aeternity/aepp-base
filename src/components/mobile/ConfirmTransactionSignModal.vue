@@ -60,7 +60,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { OBJECT_ID_TX_TYPE, TX_TYPE } from '@aeternity/aepp-sdk/es/tx/builder/schema';
+import { SCHEMA } from '@aeternity/aepp-sdk';
 import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       newFee: this.transaction.fee,
-      TX_TYPE,
+      TX_TYPE: SCHEMA.TX_TYPE,
       TX_FIELDS: {
         payload: Payload,
         recipientId: RecipientId,
@@ -120,21 +120,21 @@ export default {
       stepFraction: state => (process.env.IS_MOBILE_DEVICE ? state.mobile.stepFraction : null),
     }),
     txType() {
-      return OBJECT_ID_TX_TYPE[this.transaction.tag];
+      return SCHEMA.OBJECT_ID_TX_TYPE[this.transaction.tag];
     },
     guideTemplate() {
-      if (this.txType === TX_TYPE.spend) return this.$t('modal.confirm-transaction-sign.guide-spend');
-      if (this.txType === TX_TYPE.nameClaim && !+this.transaction.nameSalt) {
+      if (this.txType === SCHEMA.TX_TYPE.spend) return this.$t('modal.confirm-transaction-sign.guide-spend');
+      if (this.txType === SCHEMA.TX_TYPE.nameClaim && !+this.transaction.nameSalt) {
         return this.$t('modal.confirm-transaction-sign.guide-name-bid');
       }
       return this.$t('modal.confirm-transaction-sign.guide', {
         title: {
-          [TX_TYPE.contractCreate]: this.$t('modal.confirm-transaction-sign.contract-create'),
-          [TX_TYPE.contractCall]: this.$t('modal.confirm-transaction-sign.contract-call'),
-          [TX_TYPE.namePreClaim]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
-          [TX_TYPE.nameClaim]: this.$t('modal.confirm-transaction-sign.name-claim'),
-          [TX_TYPE.nameUpdate]: this.$t('modal.confirm-transaction-sign.name-update'),
-          [TX_TYPE.nameTransfer]: this.$t('modal.confirm-transaction-sign.name-transfer'),
+          [SCHEMA.TX_TYPE.contractCreate]: this.$t('modal.confirm-transaction-sign.contract-create'),
+          [SCHEMA.TX_TYPE.contractCall]: this.$t('modal.confirm-transaction-sign.contract-call'),
+          [SCHEMA.TX_TYPE.namePreClaim]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
+          [SCHEMA.TX_TYPE.nameClaim]: this.$t('modal.confirm-transaction-sign.name-claim'),
+          [SCHEMA.TX_TYPE.nameUpdate]: this.$t('modal.confirm-transaction-sign.name-update'),
+          [SCHEMA.TX_TYPE.nameTransfer]: this.$t('modal.confirm-transaction-sign.name-transfer'),
         }[this.txType] || '',
       });
     },

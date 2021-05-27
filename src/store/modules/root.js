@@ -64,14 +64,6 @@ export default {
     removeNetwork(state, networkIdx) {
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
     },
-    toggleAppBookmarking({ apps }, host) {
-      const app = getAppByHost(apps, host);
-      if (app) {
-        Vue.set(app, 'bookmarked', !app.bookmarked);
-        return;
-      }
-      apps.push({ host, bookmarked: true });
-    },
     toggleAccessToAccount({ apps }, { appHost, accountAddress }) {
       if (!getAppByHost(apps, appHost)) apps.push({ host: appHost });
       const app = getAppByHost(apps, appHost);

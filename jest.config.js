@@ -23,14 +23,14 @@ module.exports = {
     `node_modules/(?!(${packagesToTranspile.join('|')})/)`,
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
     '^.*\\.svg\\?icon-component$': '<rootDir>/config/jest/EmptySvg.vue',
   },
   snapshotSerializers: [
     'jest-serializer-vue',
   ],
   testMatch: [
-    '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)',
+    '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)',
+    '**/__tests__/*.(js|jsx|ts|tsx)',
   ],
   testURL: 'http://localhost/',
 };

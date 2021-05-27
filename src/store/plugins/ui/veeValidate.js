@@ -5,7 +5,7 @@ import {
 } from 'vee-validate/dist/rules.esm';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { validateMnemonic } from '@aeternity/bip39';
 import { i18n } from './languages';
 import {

@@ -1,6 +1,6 @@
 import { times } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { MAGNITUDE } from '../lib/constants';
 import appIcon from '../assets/icons/aepp-default.svg';
 

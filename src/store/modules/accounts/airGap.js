@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
 
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { getDesktopRemoteSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,

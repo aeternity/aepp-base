@@ -2,7 +2,7 @@
 import { update, get } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import Vue from 'vue';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
   handleUnknownError, isAccountNotFoundError, getAddressByNameEntry, isAensName,

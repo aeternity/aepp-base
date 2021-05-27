@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import { BrowserWindowMessageConnection } from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
 
 const modals = {
   confirmAccountAccess: true,
