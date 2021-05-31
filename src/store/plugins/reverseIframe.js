@@ -16,7 +16,6 @@ export default (store) => {
       const connection = BrowserWindowMessageConnection({ target: window.parent });
       sdk.addRpcClient(connection);
       sdk.shareWalletInfo(connection.sendMessage.bind(connection));
-      window.parent.postMessage({ jsonrpc: '2.0', method: 'ready' }, '*');
       unsubscribe();
     },
   );
