@@ -16,6 +16,7 @@ import initSdk from './plugins/initSdk';
 import registerServiceWorker from './plugins/registerServiceWorker';
 import reverseIframe from './plugins/reverseIframe';
 import syncLedgerAccounts from './plugins/syncLedgerAccounts';
+import unlockWalletIfNotEncrypted from './plugins/unlockWalletIfNotEncrypted';
 
 Vue.use(Vuex);
 Vue.use(VueRx);
@@ -69,6 +70,7 @@ export default new Vuex.Store({
       }),
     ),
     initSdk,
+    unlockWalletIfNotEncrypted,
     ...process.env.RUNNING_IN_POPUP ? [] : [
       remoteConnection,
       registerServiceWorker,

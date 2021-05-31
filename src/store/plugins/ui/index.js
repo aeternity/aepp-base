@@ -9,7 +9,6 @@ import modals from './modals';
 import names from './names';
 import notificationOnRemoteConnection from './notificationOnRemoteConnection';
 import observables from './observables';
-import unlockWalletIfNotEncrypted from './unlockWalletIfNotEncrypted';
 import veeValidate from './veeValidate';
 import urlRequestHandler from './urlRequestHandler';
 import notFoundPage from './notFoundPage';
@@ -27,7 +26,6 @@ export default store => [
     ? [
       pathTracker,
       notificationOnRemoteConnection,
-      unlockWalletIfNotEncrypted,
       urlRequestHandler,
     ]
     : [
