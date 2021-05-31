@@ -68,8 +68,8 @@ export default new Vuex.Store({
         },
       }),
     ),
+    initSdk,
     ...process.env.RUNNING_IN_POPUP ? [] : [
-      initSdk,
       remoteConnection,
       registerServiceWorker,
       reverseIframe,
