@@ -3,7 +3,7 @@
 ## How to get the Base æpp
 
 * [Google Play](https://play.google.com/store/apps/details?id=com.aeternity.base)
-* [App Store](https://apps.apple.com/ru/app/base-%C3%A6pp-wallet/id1458655724)
+* [App Store](https://apps.apple.com/app/base-æpp-wallet/id1458655724)
 * [Web version](https://base.aepps.com/)
 
 Also join our [Telegram channel](https://t.me/aeppbase) and our [Forum](https://forum.aeternity.com/t/base-aepp-wallet-we-would-like-your-feedback/3387).
