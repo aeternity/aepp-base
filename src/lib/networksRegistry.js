@@ -1,10 +1,11 @@
 const getMiddlewareUrl = networkName => `https://${networkName}.aeternity.io`;
+const getExplorerUrl = networkName => `https://explorer.${networkName}.aeternity.io`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
   name,
   url: getMiddlewareUrl(pathName),
   middlewareUrl: getMiddlewareUrl(pathName),
-  explorerUrl: getMiddlewareUrl(pathName),
+  explorerUrl: getExplorerUrl(pathName),
   compilerUrl: 'https://compiler.aepps.com',
   ...options,
 });
