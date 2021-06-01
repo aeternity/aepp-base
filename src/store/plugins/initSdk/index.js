@@ -1,26 +1,17 @@
 import { get, isEqual } from 'lodash-es';
-import { handleUnknownError, isNotFoundError, isInternalServerError } from '../../../lib/utils';
+import { handleUnknownError } from '../../../lib/utils';
 import { fetchJson } from '../../utils';
-import { i18n } from '../ui/languages';
 
 export default (store) => {
-  let recreateSdk;
-
   const createSdk = async (network) => {
-    const [
-      Ae, ChainNode, Transaction, Contract, Aens, Swagger, Node, WalletRPC,
-      PostMessageHandler,
-    ] = (await Promise.all([
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae'),
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/chain/node'),
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/tx/tx'),
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/contract'),
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/ae/aens'),
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/swagger'),
-      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/node'),
+    const [{
+      Ae, ChainNode, Transaction, Contract, Aens, genSwaggerClient, Node, SCHEMA,
+    }, {
+      default: WalletRPC,
+    }] = (await Promise.all([
+      import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk'),
       import(/* webpackChunkName: "sdk" */ '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/rpc/wallet-rpc'),
-      import(/* webpackChunkName: "sdk" */ './PostMessageHandler'),
-    ])).map(module => module.default);
+    ]));
 
     class App {
       constructor(host) {
@@ -85,55 +76,14 @@ export default (store) => {
         }
         return store.getters['accounts/active'].address;
       },
-      async addressAndNetworkUrl(...args) {
-        return { address: await this.address(...args), network };
-      },
       sign: data => store.dispatch('accounts/sign', data),
       signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
-      readQrCode: ({ title }) => store.dispatch('modals/open', {
-        name: 'readQrCode',
-        title: title || i18n.t('scan-qr-code'),
-      }),
-      baseAppVersion: () => process.env.npm_package_version,
-      share: options => store.dispatch('share', options),
-      bookmarkedApps(app) {
-        if (app.host !== new URL(process.env.VUE_APP_HOME_PAGE_URL).host) {
-          throw new Error('Access denied');
-        }
-        return store.state.apps
-          .filter(({ bookmarked }) => bookmarked)
-          .map(({ host }) => host);
-      },
-      navigate: (url) => {
-        store.dispatch('router/push', `/browser/${url}`);
-      },
-      languageCode: () => store.state.languages.activeCode,
     };
 
-    let sdkActive = false;
-    const errorHandler = (error) => {
-      if (sdkActive && !isNotFoundError(error) && !isInternalServerError(error)) {
-        recreateSdk();
-        sdkActive = false;
-      }
-      throw error;
-    };
     const acceptCb = (_, { accept }) => accept();
     const [sdk, middleware] = await Promise.all([
-      Ae.compose(
-        ChainNode, Transaction, Contract, Aens, WalletRPC, {
-          methods,
-          deepConfiguration: {
-            Ae: {
-              methods: [
-                'readQrCode', 'baseAppVersion', 'share', 'addressAndNetworkUrl', 'bookmarkedApps',
-                'navigate', 'languageCode',
-              ],
-            },
-          },
-        },
-        PostMessageHandler,
-      )({
+      Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
+        address: SCHEMA.DRY_RUN_ACCOUNT.pub,
         nodes: [{
           name: network.name,
           instance: await Node({
@@ -166,13 +116,13 @@ export default (store) => {
         onMessageSign: acceptCb,
         onAskAccounts: acceptCb,
         onDisconnect() {
-          this.getClients().clients.forEach(({ id }) => this.removeRpcClient(id));
+          Object.keys(this.rpcClients).forEach(id => this.removeRpcClient(id));
         },
-        axiosConfig: { errorHandler },
       }),
       (async () => {
-        const swag = await fetchJson(`${network.middlewareUrl}/middleware/api`);
-        Object.assign(swag.paths, {
+        const specUrl = `${network.middlewareUrl}/middleware/api`;
+        const spec = await fetchJson(specUrl);
+        Object.assign(spec.paths, {
           '/names/auctions/{name}/info': {
             get: {
               operationId: 'getAuctionInfoByName',
@@ -196,21 +146,15 @@ export default (store) => {
             },
           },
         });
-        return Swagger.compose({
-          methods: {
-            urlFor: path => network.middlewareUrl + path,
-            axiosError: () => errorHandler,
-          },
-        })({ swag });
+        return genSwaggerClient(specUrl, { spec });
       })(),
     ]);
     sdk.selectNode(network.name);
-    sdkActive = true;
     sdk.middleware = middleware.api;
     return sdk;
   };
 
-  recreateSdk = async () => {
+  const recreateSdk = async () => {
     const { currentNetwork } = store.getters;
     if (store.state.sdk && !store.state.sdk.then) store.state.sdk.destroyInstance();
     const sdkPromise = createSdk(currentNetwork);
@@ -237,8 +181,8 @@ export default (store) => {
   );
 
   store.watch(
-    ({ sdk, accounts: { list } }) => ({ sdk, list }),
-    ({ list }) => store.commit('setSdkAccounts', list),
+    ({ sdk, accounts: { list } }) => [sdk, list],
+    ([sdk, list]) => sdk && store.commit('setSdkAccounts', list),
   );
 
   store.watch(

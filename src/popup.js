@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js';
 import './ui-common';
 import store from './store';
 import languages, { i18n } from './store/plugins/ui/languages';
-import initSdk from './store/plugins/initSdk';
 import names from './store/plugins/ui/names';
 import appsMetadata from './store/plugins/ui/appsMetadata';
 import observables from './store/plugins/ui/observables';
@@ -15,10 +14,10 @@ import ConfirmSignModal from './components/mobile/ConfirmSignModal.vue';
 
 Vue.use(Vuex);
 
-[languages, initSdk, names, appsMetadata, observables, currencies].forEach(plugin => plugin(store));
+[languages, names, appsMetadata, observables, currencies].forEach(plugin => plugin(store));
 
 const unloadHandler = () => {
-  window.reject(new Error('Rejected by user'));
+  window.modalProps.reject(new Error('Rejected by user'));
 };
 
 window.addEventListener('beforeunload', unloadHandler);

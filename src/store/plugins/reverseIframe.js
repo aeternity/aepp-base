@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import { BrowserWindowMessageConnection } from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
 
 const modals = {
   confirmAccountAccess: true,
@@ -16,7 +16,6 @@ export default (store) => {
       const connection = BrowserWindowMessageConnection({ target: window.parent });
       sdk.addRpcClient(connection);
       sdk.shareWalletInfo(connection.sendMessage.bind(connection));
-      window.parent.postMessage({ jsonrpc: '2.0', method: 'ready' }, '*');
       unsubscribe();
     },
   );

@@ -7,9 +7,6 @@
       />
 
       <template v-if="path">
-        <ButtonPlain @click="toggleBookmarking">
-          <Component :is="bookmarked ? 'BookmarkFull' : 'Bookmark'" />
-        </ButtonPlain>
         <ButtonPlain :to="{ name: 'app-browser' }">
           <Home />
         </ButtonPlain>
@@ -50,14 +47,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { BrowserWindowMessageConnection } from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
 import { PROTOCOLS_ALLOWED, PROTOCOL_DEFAULT } from '../../lib/constants';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
-import {
-  Bookmark, BookmarkFull, Home, More, Reload,
-} from '../../components/icons';
+import { Home, More, Reload } from '../../components/icons';
 import Menu from '../../components/Menu.vue';
 import MenuItem from '../../components/MenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
@@ -67,8 +61,6 @@ export default {
   components: {
     UrlForm,
     ButtonPlain,
-    Bookmark,
-    BookmarkFull,
     Home,
     More,
     Reload,
@@ -97,11 +89,6 @@ export default {
     host() {
       return new URL(this.url).host;
     },
-    ...mapState({
-      bookmarked({ apps }) {
-        return apps.some(({ host, bookmarked }) => host === this.host && bookmarked);
-      },
-    }),
   },
   async mounted() {
     const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
@@ -118,7 +105,7 @@ export default {
     this.$once('hook:destroyed', () => {
       window.removeEventListener('blur', handler);
       clearInterval(shareWalletInfoInterval);
-      sdk.getClients().clients.forEach(({ id }) => sdk.removeRpcClient(id));
+      Object.keys(sdk.rpcClients).forEach(id => sdk.removeRpcClient(id));
     });
   },
   methods: {
@@ -126,9 +113,6 @@ export default {
       this.loading = true;
       this.$refs.iframe.src += '';
       this.$refs.iframe.focus();
-    },
-    toggleBookmarking() {
-      this.$store.commit('toggleAppBookmarking', this.host);
     },
   },
 };

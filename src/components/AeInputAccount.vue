@@ -64,7 +64,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { Crypto } from '@aeternity/aepp-sdk/es';
+import { Crypto } from '@aeternity/aepp-sdk';
 import { AENS_DOMAIN } from '../lib/constants';
 import withFormatting from '../lib/withFormatting';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';
