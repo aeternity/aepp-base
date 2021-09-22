@@ -43,6 +43,6 @@ workflows:
           filters:
             branches:
               only:
-                - add-circleci-config
+                - master
             tags:
               only: /^v.*$/
