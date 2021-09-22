@@ -5,9 +5,15 @@ executors:
     docker:
       - image: circleci/buildpack-deps:bionic
         user: root
-  
+
+references:
+  docker_parameters: &docker_parameters
+    DOCKERHUB_REPO:
+        type: string
+        
 commands:
   docker_build:
+    parameters: *docker_parameters
     steps:
       - checkout
       - setup_remote_docker:
@@ -20,11 +26,11 @@ commands:
             docker push << parameters.DOCKERHUB_REPO >>:${CIRCLE_TAG:-master}
 jobs:          
   docker_push_tag:
+    parameters: *docker_parameters
     executor: docker_builder
     steps:
       - docker_build:
           DOCKERHUB_REPO: << parameters.DOCKERHUB_REPO >>
-          VERSION_TAG: << parameters.VERSION_TAG >>
 
 workflows:
   version: 2
