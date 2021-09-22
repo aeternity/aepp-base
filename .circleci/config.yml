@@ -1,0 +1,42 @@
+version: 2.1
+
+executors:
+  docker_builder:
+    docker:
+      - image: circleci/buildpack-deps:bionic
+        user: root
+  
+commands:
+  docker_build:
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and push Docker image to DockerHub
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker build -t << parameters.DOCKERHUB_REPO >>:${CIRCLE_TAG:-master} -f nginx.Dockerfile .
+            docker push << parameters.DOCKERHUB_REPO >>:${CIRCLE_TAG:-master}
+jobs:          
+  docker_push_tag:
+    executor: docker_builder
+    steps:
+      - docker_build:
+          DOCKERHUB_REPO: << parameters.DOCKERHUB_REPO >>
+          VERSION_TAG: << parameters.VERSION_TAG >>
+
+workflows:
+  version: 2
+  build_push:
+    jobs:
+      - docker_push_tag:
+          name: docker_push_tag
+          DOCKERHUB_REPO: "aeternity/aepp-base"
+          context: ae-dockerhub
+          filters:
+            branches:
+              only:
+                - add-circleci-config
+            tags:
+              only: /^v.*$/
