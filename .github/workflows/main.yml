@@ -31,7 +31,7 @@ jobs:
           images: aeternity/aepp-base
           tags: |
             type=ref,event=tag
-            type=ref,event=pr
+            type=ref,event=push
             
       - name: Build and push Docker image
         id: build_push
@@ -39,4 +39,5 @@ jobs:
         with:
           context: .
           file: nginx.Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
