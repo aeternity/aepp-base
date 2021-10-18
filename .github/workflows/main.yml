@@ -31,8 +31,7 @@ jobs:
           images: aeternity/aepp-base
           tags: |
             type=ref,event=tag
-            type=ref,event=push
-            
+
       - name: Build and push Docker image
         id: build_push
         uses: docker/build-push-action@v2
