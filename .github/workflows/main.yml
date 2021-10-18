@@ -24,21 +24,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
-      - name: Build and push Docker image
-        id: gen_tags
-        run: |
-          if [[ $GITHUB_REF == 'refs/tags/'* ]]; then
-            TAGS='["aeternity/aepp-base:latest","aeternity/aepp-base:'${GITHUB_REF/refs\/tags\//}'"]'
-          else
-            TAGS='["aeternity/aepp-base:latest"]'
-          fi
-          echo '::set-output name=tags::'$TAGS
-
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: aeternity/aepp-base
+          tags: |
+            type=ref,event=tag
+            type=ref,event=pr
+            
       - name: Build and push Docker image
         id: build_push
         uses: docker/build-push-action@v2
         with:
           context: .
           file: nginx.Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ fromJson(steps.gen_tags.outputs.tags) }}
+          tags: ${{ steps.meta.outputs.tags }}
