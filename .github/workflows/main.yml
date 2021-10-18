@@ -2,11 +2,10 @@ name: Aepp-Base Build
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: 
+      - master
     tags:
       - 'v*'
-  pull_request: 
-    branches: [ master, develop ]
 
 jobs:
   main:
