@@ -81,14 +81,11 @@
     "vue-svg-loader": "^0.12.0",
     "vue-template-compiler": "^2.6.11"
   },
-  "engines": {
-    "node": ">= 10.15.1",
-    "npm": ">= 6.4.1"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "not dead",
+    "not ie 11"
   ],
   "sideEffects": [
     "./src/lib/setGlobalPolyfills.js",
