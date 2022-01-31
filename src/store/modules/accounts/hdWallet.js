@@ -254,16 +254,14 @@ export default {
         return dispatch('confirmRawDataSigning', txBinary);
       }
 
-      const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
+      const format = (value) => BigNumber(value).shiftedBy(-MAGNITUDE);
       const confirmProps = {
         name: 'confirmTransactionSign',
         transaction: {
           ...txObject,
           amount: txObject.amount && format(txObject.amount),
           fee: format(txObject.fee),
-          minFee: format(TxBuilder.calculateFee(
-            0, SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
-          )),
+          minFee: format(TxBuilder.calculateFee(0, SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject })),
           nameFee: txObject.nameFee && format(txObject.nameFee),
         },
       };

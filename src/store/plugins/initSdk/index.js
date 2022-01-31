@@ -19,9 +19,7 @@ export default (store) => {
       }
 
       async ensureCurrentAccountAccessPure() {
-        const accessToAccounts = get(
-          store.getters.getApp(this.host), 'permissions.accessToAccounts', [],
-        );
+        const accessToAccounts = get(store.getters.getApp(this.host), 'permissions.accessToAccounts', []);
         if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
         const promise = store.dispatch(
           'modals/open',
@@ -29,7 +27,7 @@ export default (store) => {
         );
         const unsubscribe = store.watch(
           (state, getters) => getters['accounts/active'].address,
-          address => accessToAccounts.includes(address) && promise.cancel(),
+          (address) => accessToAccounts.includes(address) && promise.cancel(),
         );
 
         try {
@@ -76,8 +74,8 @@ export default (store) => {
         }
         return store.getters['accounts/active'].address;
       },
-      sign: data => store.dispatch('accounts/sign', data),
-      signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
+      sign: (data) => store.dispatch('accounts/sign', data),
+      signTransaction: (txBase64) => store.dispatch('accounts/signTransaction', txBase64),
     };
 
     const acceptCb = (_, { accept }) => accept();
@@ -116,7 +114,7 @@ export default (store) => {
         onMessageSign: acceptCb,
         onAskAccounts: acceptCb,
         onDisconnect() {
-          Object.keys(this.rpcClients).forEach(id => this.removeRpcClient(id));
+          Object.keys(this.rpcClients).forEach((id) => this.removeRpcClient(id));
         },
       }),
       (async () => {
@@ -160,7 +158,7 @@ export default (store) => {
     const sdkPromise = createSdk(currentNetwork);
     const sdkThenable = { then: sdkPromise.then.bind(sdkPromise) };
     store.commit('setSdk', sdkThenable);
-    const sdk = await sdkThenable.then(s => s, (error) => {
+    const sdk = await sdkThenable.then((s) => s, (error) => {
       handleUnknownError(error);
       return null;
     });
@@ -187,6 +185,6 @@ export default (store) => {
 
   store.watch(
     (state, getters) => getters['accounts/active'] && getters['accounts/active'].address,
-    address => store.commit('selectSdkAccount', address),
+    (address) => store.commit('selectSdkAccount', address),
   );
 };

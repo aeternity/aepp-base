@@ -50,7 +50,7 @@ export default {
           switchMap(({ subtitleWinningBid, winningBid, expiration }) => (subtitleWinningBid
             ? convertAmount(() => BigNumber(winningBid).shiftedBy(-MAGNITUDE))
             : topBlockHeight.pipe(
-              map(value => `${this.$t('name.expiration')} ${blocksToRelativeTime(expiration - value)}`),
+              map((value) => `${this.$t('name.expiration')} ${blocksToRelativeTime(expiration - value)}`),
             ))),
         ),
     };

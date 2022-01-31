@@ -8,6 +8,6 @@ window.onerror = async function errorHandler() {
 
   const StoreLoadError = (await import('../pages/StoreLoadError.vue')).default;
   new Vue({
-    render: h => h(StoreLoadError),
+    render: (h) => h(StoreLoadError),
   }).$mount('#app');
 };

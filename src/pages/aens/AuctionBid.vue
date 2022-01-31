@@ -156,9 +156,7 @@ export default {
       }
       this.busy = true;
       try {
-        await this.$store.state.sdk.aensBid(
-          name, BigNumber(this.amount).shiftedBy(MAGNITUDE),
-        );
+        await this.$store.state.sdk.aensBid(name, BigNumber(this.amount).shiftedBy(MAGNITUDE));
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: i18n.t('name.new.notification.bid', { name }),

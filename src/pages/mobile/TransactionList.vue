@@ -75,7 +75,7 @@ export default {
   props: {
     direction: {
       type: String,
-      validator: value => ['', 'incoming', 'outgoing'].includes(value),
+      validator: (value) => ['', 'incoming', 'outgoing'].includes(value),
       default: '',
     },
   },
@@ -89,7 +89,7 @@ export default {
     spendTransactionsGroupedByDay() {
       return groupBy(
         this.transactions.list
-          .filter(t => (
+          .filter((t) => (
             (this.direction === 'incoming' && t.received)
             || (this.direction === 'outgoing' && !t.received)
             || this.direction === ''

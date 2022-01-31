@@ -15,7 +15,7 @@ export default {
     value: { type: [String, Number], default: '' },
     fill: {
       type: String,
-      validator: value => [
+      validator: (value) => [
         'primary',
         'light',
       ].includes(value),

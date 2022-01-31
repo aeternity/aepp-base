@@ -1,6 +1,6 @@
 const migrations = [];
 
-export const registerMigration = migration => migrations.push(migration);
+export const registerMigration = (migration) => migrations.push(migration);
 
 export default (state, store) => {
   let newState = state ? {

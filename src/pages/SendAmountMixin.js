@@ -36,20 +36,18 @@ export default {
       async ({ address, nonce, amount }) => {
         const sdk = this.$store.state.sdk.then
           ? await this.$store.state.sdk : this.$store.state.sdk;
-        const minFee = BigNumber(TxBuilder.calculateMinFee(
-          'spendTx', {
-            gas: sdk.Ae.defaults.gas,
-            params: {
-              ...sdk.Ae.defaults,
-              senderId: address,
-              recipientId: address,
-              amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
-              ttl: 0,
-              nonce: nonce + 1,
-              payload: '',
-            },
+        const minFee = BigNumber(TxBuilder.calculateMinFee('spendTx', {
+          gas: sdk.Ae.defaults.gas,
+          params: {
+            ...sdk.Ae.defaults,
+            senderId: address,
+            recipientId: address,
+            amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
+            ttl: 0,
+            nonce: nonce + 1,
+            payload: '',
           },
-        )).shiftedBy(-MAGNITUDE);
+        })).shiftedBy(-MAGNITUDE);
         if (!minFee.isEqualTo(this.minFee)) this.minFee = minFee;
       },
       { immediate: true },

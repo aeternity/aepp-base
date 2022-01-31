@@ -8,7 +8,8 @@
 // /* eslint-disable import/no-extraneous-dependencies, global-require */
 // const webpack = require('@cypress/webpack-preprocessor')
 
-module.exports = (on, config) => Object.assign({}, config, {
+module.exports = (on, config) => ({
+  ...config,
   fixturesFolder: 'tests/e2e/fixtures',
   integrationFolder: 'tests/e2e/specs',
   screenshotsFolder: 'tests/e2e/screenshots',

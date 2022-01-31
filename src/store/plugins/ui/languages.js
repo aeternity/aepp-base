@@ -95,7 +95,7 @@ export default (store) => {
 
   store.watch(
     ({ languages: { activeCode } }) => activeCode,
-    activeCode => fetchAndSetLocale(activeCode),
+    (activeCode) => fetchAndSetLocale(activeCode),
     { immediate: true },
   );
 };

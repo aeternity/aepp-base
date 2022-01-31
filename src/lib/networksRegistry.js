@@ -1,5 +1,5 @@
-const getMiddlewareUrl = networkName => `https://${networkName}.aeternity.io`;
-const getExplorerUrl = networkName => `https://explorer.${networkName}.aeternity.io`;
+const getMiddlewareUrl = (networkName) => `https://${networkName}.aeternity.io`;
+const getExplorerUrl = (networkName) => `https://explorer.${networkName}.aeternity.io`;
 
 const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
   name,

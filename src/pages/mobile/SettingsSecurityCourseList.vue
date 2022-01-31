@@ -61,7 +61,7 @@ export default {
   },
   data: () => ({ lockEmoji }),
   computed: mapState({
-    courses: ({ mobile: { readSecurityCourses } }) => getCourses().map(course => ({
+    courses: ({ mobile: { readSecurityCourses } }) => getCourses().map((course) => ({
       ...course,
       isRead: readSecurityCourses.includes(course.name),
     })),

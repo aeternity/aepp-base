@@ -90,9 +90,7 @@ export default {
       await dispatch('ensureCurrentAccountAvailable');
 
       const txObject = TxBuilder.unpackTx(txBase64).tx;
-      const stringTx = TxBuilder.buildTx(
-        txObject, SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag], { vsn: txObject.VSN },
-      ).tx;
+      const stringTx = TxBuilder.buildTx(txObject, SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag], { vsn: txObject.VSN }).tx;
 
       const binaryTx = Crypto.decodeBase64Check(Crypto.assertedType(stringTx, 'tx'));
       const signature = Buffer.from(await dispatch('request', {

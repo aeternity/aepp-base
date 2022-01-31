@@ -41,7 +41,7 @@ export default {
         .$watchAsObservable(({ nameFee }) => nameFee, { immediate: true })
         .pipe(
           pluck('newValue'),
-          switchMap(nameFee => this.$store.state.observables.convertAmount(() => nameFee)),
+          switchMap((nameFee) => this.$store.state.observables.convertAmount(() => nameFee)),
         ),
     };
   },

@@ -1,6 +1,6 @@
 const KEY = 'vuex';
 
-const setState = state => localStorage.setItem(
+const setState = (state) => localStorage.setItem(
   KEY,
   JSON.stringify(state, (key, value) => {
     if (value instanceof ArrayBuffer) {

@@ -62,7 +62,7 @@ export default {
       const padding = 5;
       this.anchorRects = this.tooltips
         .map(({ selector }) => document.querySelector(selector).getBoundingClientRect())
-        .map(rect => new DOMRect(
+        .map((rect) => new DOMRect(
           rect.left - padding,
           rect.top - padding,
           rect.width + padding * 2,

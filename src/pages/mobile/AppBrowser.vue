@@ -105,7 +105,7 @@ export default {
     this.$once('hook:destroyed', () => {
       window.removeEventListener('blur', handler);
       clearInterval(shareWalletInfoInterval);
-      Object.keys(sdk.rpcClients).forEach(id => sdk.removeRpcClient(id));
+      Object.keys(sdk.rpcClients).forEach((id) => sdk.removeRpcClient(id));
     });
   },
   methods: {

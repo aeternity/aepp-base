@@ -73,7 +73,7 @@ export default {
         window.location.href = requestUrl;
       }
       return process.env.IS_CORDOVA || process.env.IS_PWA
-        ? new Promise(resolve => commit('setDeepLinkCallback', resolve)) : receive();
+        ? new Promise((resolve) => commit('setDeepLinkCallback', resolve)) : receive();
     },
 
     async signTransactionByQrCode({ dispatch }, url) {

@@ -119,7 +119,7 @@ export default {
       if (p < pc) res.push({ text: p + 1, to: p + 1 });
       if (p < pc - 1) res.push({ text: p + 2, to: p + 2 });
       if (p < pc - 2) res.push({ text: 'last', to: pc });
-      return res.map(i => ({
+      return res.map((i) => ({
         ...i,
         to: i.to && ({
           name: this.$route.name,
@@ -133,7 +133,7 @@ export default {
   },
   async mounted() {
     this.$watch(
-      state => pick(state, ['view', 'page', 'length']),
+      (state) => pick(state, ['view', 'page', 'length']),
       ({ view, page, length }) => {
         this.fetchAuctions({
           page,

@@ -21,13 +21,13 @@ Validator.extend('excluded', excluded);
 Validator.extend('min', min);
 Validator.extend('required', required);
 
-Validator.extend('address', value => Crypto.isAddressValid(value));
+Validator.extend('address', (value) => Crypto.isAddressValid(value));
 Validator.extend('max_value', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('max_value_currency', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('min_value', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
 Validator.extend('min_value_currency', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
 Validator.extend('min_value_exclusive', (value, [arg]) => BigNumber(value).isGreaterThan(arg));
-Validator.extend('mnemonic', value => validateMnemonic(value));
+Validator.extend('mnemonic', (value) => validateMnemonic(value));
 Validator.extend('url_http', (value) => {
   try {
     const url = toUrl(value);
@@ -49,9 +49,7 @@ Validator.extend('aens_name', isAensName);
 Validator.localize('en', {
   messages: {
     confirmed: () => i18n.t('validation.confirmed'),
-    decimal: (field, [decimals = '*'] = []) => i18n.t(
-      'validation.decimal', [!decimals || decimals === '*' ? '' : decimals],
-    ),
+    decimal: (field, [decimals = '*'] = []) => i18n.t('validation.decimal', [!decimals || decimals === '*' ? '' : decimals]),
     excluded: () => i18n.t('validation.excluded'),
     min: (field, [length]) => i18n.t('validation.min', [length]),
     required: () => i18n.t('validation.required'),
@@ -94,7 +92,7 @@ export default (store) => {
     },
     300,
   );
-  const checkName = expectedNameState => name => new Promise((resolve, reject) => {
+  const checkName = (expectedNameState) => (name) => new Promise((resolve, reject) => {
     if (lastPromiseCallback) {
       lastPromiseCallback.reject(new Error('Request will not be resolved due to another request made later.'));
     }
@@ -104,9 +102,9 @@ export default (store) => {
   const checkNameRegisteredAddress = checkName(NAME_STATES.REGISTERED_ADDRESS);
 
   Validator.extend('aens_name_unregistered', checkName(NAME_STATES.UNREGISTERED));
-  Validator.extend('account', value => Crypto.isAddressValid(value) || (isAensName(value) && checkNameRegisteredAddress(value)));
+  Validator.extend('account', (value) => Crypto.isAddressValid(value) || (isAensName(value) && checkNameRegisteredAddress(value)));
 
-  const genMaxMinValueCurrencyMessageGenerator = isMax => (field, [amountAe]) => (
+  const genMaxMinValueCurrencyMessageGenerator = (isMax) => (field, [amountAe]) => (
     new ConvertibleToString(() => {
       let amount = +amountAe;
       if (store.state.currencies.swapped) {

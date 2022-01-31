@@ -50,7 +50,7 @@ export default {
   computed: {
     courses: getCourses,
     course() {
-      const idx = this.courses.findIndex(c => c.name === this.name) + 1;
+      const idx = this.courses.findIndex((c) => c.name === this.name) + 1;
       return {
         ...this.courses[idx - 1],
         idx,

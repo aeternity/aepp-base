@@ -13,7 +13,7 @@ import veeValidate from './veeValidate';
 import urlRequestHandler from './urlRequestHandler';
 import notFoundPage from './notFoundPage';
 
-export default store => [
+export default (store) => [
   appsMetadata,
   connectionStatusTracker,
   languages,
@@ -33,4 +33,4 @@ export default store => [
       ledgerConnection,
     ],
   notFoundPage,
-].forEach(plugin => plugin(store));
+].forEach((plugin) => plugin(store));

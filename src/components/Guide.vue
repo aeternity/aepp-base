@@ -29,7 +29,7 @@
 const renderNodeContent = (createElement, node, slots) => (!node.childNodes.length
   ? node.textContent
   : Array.from(node.childNodes)
-    .filter(n => [Node.ELEMENT_NODE, Node.TEXT_NODE].includes(n.nodeType))
+    .filter((n) => [Node.ELEMENT_NODE, Node.TEXT_NODE].includes(n.nodeType))
     .map((n) => {
       switch (n.tagName) {
         case 'primary':
@@ -69,7 +69,7 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: value => [
+      validator: (value) => [
         'primary',
         'alternative',
         'neutral',
@@ -78,7 +78,7 @@ export default {
     },
     size: {
       type: String,
-      validator: value => ['small', 'medium', 'big'].includes(value),
+      validator: (value) => ['small', 'medium', 'big'].includes(value),
       default: 'medium',
     },
     template: {

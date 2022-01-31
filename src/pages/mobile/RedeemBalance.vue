@@ -116,14 +116,12 @@ export default {
     async sendToAccount(accountTo) {
       this.busy = true;
       const { hash, tx: { amount } } = await (
-        await Ae.compose(
-          Transaction, {
-            methods: {
-              sign: data => Promise.resolve(Crypto.sign(data, this.keypair.privateKey)),
-              address: () => Promise.resolve(this.keypair.address),
-            },
+        await Ae.compose(Transaction, {
+          methods: {
+            sign: (data) => Promise.resolve(Crypto.sign(data, this.keypair.privateKey)),
+            address: () => Promise.resolve(this.keypair.address),
           },
-        )({ url: this.$store.state.sdkUrl })
+        })({ url: this.$store.state.sdkUrl })
       )
         .transferFunds(1, accountTo);
       this.$router.push({ name: 'transfer' });

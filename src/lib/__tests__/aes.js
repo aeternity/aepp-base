@@ -4,7 +4,7 @@ if (window.crypto && window.crypto.subtle) {
   throw new Error('This tests should be rewritten using provided Web Crypto API');
 }
 
-const getTestArray = length => Buffer.alloc(length).map((_, idx) => idx);
+const getTestArray = (length) => Buffer.alloc(length).map((_, idx) => idx);
 
 const testKey = getTestArray(16);
 const testData = getTestArray(24);
@@ -19,7 +19,7 @@ const unMockCryptMethod = () => {
   delete window.crypto;
 };
 
-const genCryptTest = methodName => () => {
+const genCryptTest = (methodName) => () => {
   mockCryptMethod(methodName);
   const aes = new AES(testKey);
   expect(aes[methodName](testData)).resolves.toBe(testResult);
@@ -31,7 +31,7 @@ const genCryptTest = methodName => () => {
   unMockCryptMethod();
 };
 
-const genCryptCounterTest = methodName => async () => {
+const genCryptCounterTest = (methodName) => async () => {
   mockCryptMethod(methodName);
   const aes = new AES(testKey);
   await aes[methodName](testData);

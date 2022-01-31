@@ -7,11 +7,11 @@ Vue.config.devtools = false;
 Vue.use(Vuex);
 
 registerMigration({
-  migrate: state => ({ ...state, test: 1 }),
+  migrate: (state) => ({ ...state, test: 1 }),
 });
 
 registerMigration({
-  migrate: state => ({ ...state, test: 2 }),
+  migrate: (state) => ({ ...state, test: 2 }),
 });
 
 describe('migration runner', () => {
@@ -51,7 +51,7 @@ describe('migration runner', () => {
     });
 
     registerMigration({
-      migrate: (state, store) => new Promise(r => setTimeout(() => {
+      migrate: (state, store) => new Promise((r) => setTimeout(() => {
         store.commit('setTest');
         r();
       })),
@@ -64,7 +64,7 @@ describe('migration runner', () => {
       test: 2, migrations: { 0: true, 1: true },
     });
 
-    await new Promise(resolve => testStore.subscribe(({ type }) => {
+    await new Promise((resolve) => testStore.subscribe(({ type }) => {
       if (type === 'markMigrationAsApplied') {
         expect(testStore.state).toEqual({
           test: 3, migrations: { 0: true, 1: true, 2: true },

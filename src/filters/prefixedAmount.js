@@ -7,11 +7,11 @@ const prefixes = [
   { name: 'Pico', magnitude: MAGNITUDE_PICO },
 ];
 
-const getNearestPrefix = exponent => prefixes.reduce((p, n) => (
+const getNearestPrefix = (exponent) => prefixes.reduce((p, n) => (
   Math.abs(n.magnitude - exponent) < Math.abs(p.magnitude - exponent) ? n : p));
 
-const getLowerBoundPrefix = exponent => prefixes
-  .find(p => p.magnitude <= exponent) || prefixes[prefixes.length - 1];
+const getLowerBoundPrefix = (exponent) => prefixes
+  .find((p) => p.magnitude <= exponent) || prefixes[prefixes.length - 1];
 
 export default (value) => {
   const { name, magnitude } = (value.e < 0 ? getNearestPrefix : getLowerBoundPrefix)(value.e);

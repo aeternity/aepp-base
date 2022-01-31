@@ -17,9 +17,7 @@ export default (store) => {
       owned: null,
     },
     getters: {
-      get: (
-        { names }, { getDefault }, { accounts: { list } }, rootGetters,
-      ) => (id, local = true) => {
+      get: ({ names }, { getDefault }, { accounts: { list } }, rootGetters) => (id, local = true) => {
         store.dispatch('names/fetch', { id });
         const defaultName = getDefault(id);
         const key = defaultName
@@ -32,7 +30,7 @@ export default (store) => {
           : id;
         if (names[key].name) return names[key].name;
         if (local) {
-          const account = list.find(a => a.address === id);
+          const account = list.find((a) => a.address === id);
           if (account) return rootGetters['accounts/getName'](account);
         }
         return '';
@@ -43,11 +41,11 @@ export default (store) => {
         if (names[id].address) return names[id].address;
         return '';
       },
-      getDefault: ({ defaults }, getters, { sdk }) => address => (
+      getDefault: ({ defaults }, getters, { sdk }) => (address) => (
         sdk.then ? undefined : defaults[`${address}-${sdk.getNetworkId()}`]
       ),
-      isPending: ({ owned }) => name => (
-        !!((owned && owned.names.find(t => t.name === name)) || {}).pending
+      isPending: ({ owned }) => (name) => (
+        !!((owned && owned.names.find((t) => t.name === name)) || {}).pending
       ),
     },
     mutations: {
@@ -56,8 +54,8 @@ export default (store) => {
       }) {
         const entry = { address, name, hash };
         [key, address, hash, name]
-          .filter(k => k)
-          .forEach(k => Vue.set(names, k, entry));
+          .filter((k) => k)
+          .forEach((k) => Vue.set(names, k, entry));
       },
       setOwned(state, owned) {
         state.owned = owned;
@@ -74,7 +72,7 @@ export default (store) => {
       async getHeight({ rootState }) {
         let subscription;
         const height = await new Promise((resolve) => {
-          subscription = rootState.observables.topBlockHeight.subscribe(h => h !== 0 && resolve(h));
+          subscription = rootState.observables.topBlockHeight.subscribe((h) => h !== 0 && resolve(h));
         });
         subscription.unsubscribe();
         return height;
@@ -113,7 +111,7 @@ export default (store) => {
       async fetchOwned({ rootState, commit, dispatch }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
 
-        const getPendingNameClaimTransactions = address => sdk.api
+        const getPendingNameClaimTransactions = (address) => sdk.api
           .getPendingAccountTransactionsByPubkey(address)
           .then(
             ({ transactions }) => transactions
@@ -135,7 +133,7 @@ export default (store) => {
             getPendingNameClaimTransactions(address),
             sdk.middleware.getActiveNames({ owner: address }),
           ])),
-        ).then(names => names.flat(2));
+        ).then((names) => names.flat(2));
 
         const bidsPromise = Promise.all([
           dispatch('getHeight'),
@@ -146,10 +144,10 @@ export default (store) => {
           .filter(({ nameAuctionEntry }) => nameAuctionEntry.expiration > height)
           .filter(({ nameAuctionEntry, transaction }) => nameAuctionEntry
             .winningBid === transaction.tx.nameFee)
-          .map(bid => update(
+          .map((bid) => update(
             bid,
             'transaction.tx.nameFee',
-            v => BigNumber(v).shiftedBy(-MAGNITUDE),
+            (v) => BigNumber(v).shiftedBy(-MAGNITUDE),
           )));
 
         const [names, bids] = await Promise.all([namesPromise, bidsPromise]);

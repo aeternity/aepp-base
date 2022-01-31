@@ -5,7 +5,7 @@ import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
 import { PROTOCOL_DEFAULT } from '../../../lib/constants';
 
-export default store => store.registerModule('appsMetadata', {
+export default (store) => store.registerModule('appsMetadata', {
   namespaced: true,
 
   state: {
@@ -24,7 +24,7 @@ export default store => store.registerModule('appsMetadata', {
 
       const icons = flatMap(
         manifest.icons || [],
-        ({ sizes = '', ...icon }) => sizes.split(' ').map(size => ({ ...icon, size })),
+        ({ sizes = '', ...icon }) => sizes.split(' ').map((size) => ({ ...icon, size })),
       )
         .map(({ size, ...icon }) => ({ ...icon, side: Math.max(...size.split('x')) }));
       const icon = icons.reduce((p, i) => {
@@ -48,7 +48,7 @@ export default store => store.registerModule('appsMetadata', {
 
   actions: {
     async fetchManifest(_, host) {
-      const fetchTextCors = async url => (
+      const fetchTextCors = async (url) => (
         await fetch(`https://cors-anywhere.herokuapp.com/${url}`)).text();
       let appUrl = new URL(`http://${host}`);
       if (appUrl.hostname === 'localhost') return {};

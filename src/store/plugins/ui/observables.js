@@ -26,10 +26,10 @@ export default (store) => {
     );
 
   const defaultAccountInfo = { balance: BigNumber(0), nonce: 0 };
-  const getAccountInfo = memoize(address => sdk$
+  const getAccountInfo = memoize((address) => sdk$
     .pipe(
-      switchMap(sdk => timer(0, 3000).pipe(map(() => sdk))),
-      switchMap(sdk => (sdk
+      switchMap((sdk) => timer(0, 3000).pipe(map(() => sdk))),
+      switchMap((sdk) => (sdk
         ? sdk.api.getAccountByPubkey(address).catch((error) => {
           if (!isAccountNotFoundError(error)) {
             handleUnknownError(error);
@@ -37,17 +37,17 @@ export default (store) => {
           return defaultAccountInfo;
         })
         : Promise.resolve(defaultAccountInfo))),
-      map(aci => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
+      map((aci) => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
       multicast(new BehaviorSubject(defaultAccountInfo)),
       refCountDelay(1000),
     ));
 
-  const getAccounts = accountsGetter => watchAsObservable(accountsGetter, { immediate: true })
+  const getAccounts = (accountsGetter) => watchAsObservable(accountsGetter, { immediate: true })
     .pipe(
       pluck('newValue'),
-      switchMap(acs => (acs.length
+      switchMap((acs) => (acs.length
         ? combineLatest(acs.map(({ address }) => getAccountInfo(address)))
-          .pipe(map(acis => acis.map((aci, idx) => ({ ...acs[idx], ...aci }))))
+          .pipe(map((acis) => acis.map((aci, idx) => ({ ...acs[idx], ...aci }))))
         : of([]))),
     );
 
@@ -81,23 +81,21 @@ export default (store) => {
 
   const createSdkObservable = (func, def) => sdk$
     .pipe(
-      switchMap(sdk => timer(0, 30000).pipe(map(() => sdk))),
-      switchMap(async sdk => (sdk ? func(sdk) : def)),
+      switchMap((sdk) => timer(0, 30000).pipe(map(() => sdk))),
+      switchMap(async (sdk) => (sdk ? func(sdk) : def)),
       multicast(new BehaviorSubject(def)),
       refCountDelay(1000),
     );
-  const topBlockHeight$ = createSdkObservable(async sdk => (await sdk.topBlock()).height, 0);
+  const topBlockHeight$ = createSdkObservable(async (sdk) => (await sdk.topBlock()).height, 0);
   const middlewareStatus$ = createSdkObservable(
-    sdk => sdk.middleware.getMdwStatus().catch((error) => {
+    (sdk) => sdk.middleware.getMdwStatus().catch((error) => {
       handleUnknownError(error);
       return { OK: false };
     }),
     { OK: true, queueLength: 0 },
   );
 
-  const activeAccountAddress$ = watchAsObservable(
-    (state, getters) => getters['accounts/active'].address, { immediate: true },
-  )
+  const activeAccountAddress$ = watchAsObservable((state, getters) => getters['accounts/active'].address, { immediate: true })
     .pipe(pluck('newValue'));
 
   const referenceCurrency = 'aeternity';
@@ -108,7 +106,7 @@ export default (store) => {
   )
     .pipe(
       pluck('newValue'),
-      switchMap(p => timer(0, 60000).pipe(map(() => p))),
+      switchMap((p) => timer(0, 60000).pipe(map(() => p))),
       switchMap(async (activeCode) => {
         const url = new URL('https://api.coingecko.com/api/v3/simple/price');
         url.searchParams.set('ids', referenceCurrency);
@@ -129,8 +127,8 @@ export default (store) => {
   )
     .pipe(
       pluck('newValue'),
-      switchMap(args => (args.swapped
-        ? rate$.pipe(map(rate => ({ ...args, amount: args.amount.multipliedBy(rate) })))
+      switchMap((args) => (args.swapped
+        ? rate$.pipe(map((rate) => ({ ...args, amount: args.amount.multipliedBy(rate) })))
         : Promise.resolve(args))),
       map(({ swapped, amount, active }) => currencyAmount(
         ...swapped ? [amount, active] : [prefixedAmount(amount), { symbol: 'AE' }],
@@ -147,12 +145,12 @@ export default (store) => {
 
   const registerTx = (tx) => { transactions[tx.hash] = tx; };
 
-  const addConvertedAmount = tx => (tx.tx.amount
+  const addConvertedAmount = (tx) => (tx.tx.amount
     ? convertAmount(() => tx.tx.amount)
-      .pipe(map(convertedAmount => ({ ...tx, convertedAmount })))
+      .pipe(map((convertedAmount) => ({ ...tx, convertedAmount })))
     : Promise.resolve(tx));
 
-  const getTransaction = transactionHash$ => combineLatest([
+  const getTransaction = (transactionHash$) => combineLatest([
     activeAccountAddress$, topBlockHeight$, transactionHash$, sdk$,
   ])
     .pipe(
@@ -172,7 +170,7 @@ export default (store) => {
           confirmationCount: height - tx.blockHeight,
         };
       }),
-      switchMap(tx => (tx ? addConvertedAmount(tx) : Promise.resolve(tx))),
+      switchMap((tx) => (tx ? addConvertedAmount(tx) : Promise.resolve(tx))),
     );
 
   const fetchMdwTransactions = async (address, limit, page) => {
@@ -190,7 +188,7 @@ export default (store) => {
     const txs = await Promise.all((
       await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
         .then(
-          r => r.transactions,
+          (r) => r.transactions,
           (error) => {
             if (!isAccountNotFoundError(error)) {
               handleUnknownError(error);
@@ -199,7 +197,7 @@ export default (store) => {
           },
         )
     )
-      .map(transaction => ({ ...transaction, pending: true }))
+      .map((transaction) => ({ ...transaction, pending: true }))
       .map(normalizeTransaction));
     txs.forEach(registerTx);
     return txs;
@@ -218,7 +216,7 @@ export default (store) => {
     return [
       ...txs.filter(({ pending }) => pending),
       ...minedTxs.slice(beginIdx, endIdx - beginIdx + 1),
-    ].map(tx => setTransactionFieldsRelatedToAddress(tx, address));
+    ].map((tx) => setTransactionFieldsRelatedToAddress(tx, address));
   };
 
   const getTransactionList = (loadMore$) => {
@@ -239,7 +237,7 @@ export default (store) => {
         })),
         filter(({ mode }) => mode === 'initial' || (lastValue && lastValue.status === '')),
         switchMap(({ address, mode }) => timer(0, 5000)
-          .pipe(map(idx => ({ address, mode: idx ? 'poll' : mode })))),
+          .pipe(map((idx) => ({ address, mode: idx ? 'poll' : mode })))),
         switchMap(({ address, mode }) => new Observable(async (subscriber) => {
           try {
             const next = (status = '') => {
@@ -316,11 +314,11 @@ export default (store) => {
           }
         })),
         switchMap(({ list, ...other }) => (list.length
-          ? combineLatest(list.map(addConvertedAmount)).pipe(map(txs => ({ list: txs, ...other })))
+          ? combineLatest(list.map(addConvertedAmount)).pipe(map((txs) => ({ list: txs, ...other })))
           : Promise.resolve({ list: [], ...other }))),
         startWith({
           list: getTransactionsByAddress(store.getters['accounts/active'].address)
-            .map(tx => ({
+            .map((tx) => ({
               ...tx,
               ...tx.tx.amount && {
                 convertedAmount: currencyAmount(prefixedAmount(tx.tx.amount), { symbol: 'AE' }),
@@ -346,8 +344,8 @@ export default (store) => {
     )
       .pipe(
         pluck('newValue'),
-        switchMap(acc => (acc
-          ? getAccountInfo(acc.address).pipe(map(acci => ({ ...acc, ...acci })))
+        switchMap((acc) => (acc
+          ? getAccountInfo(acc.address).pipe(map((acci) => ({ ...acc, ...acci })))
           : of(acc))),
       ),
     accounts: accounts$,
@@ -359,7 +357,7 @@ export default (store) => {
     ),
     getAccounts,
     totalBalance: accounts$.pipe(
-      map(acs => acs.reduce((prev, { balance }) => prev.plus(balance), BigNumber(0))),
+      map((acs) => acs.reduce((prev, { balance }) => prev.plus(balance), BigNumber(0))),
     ),
     rate: rate$,
     convertAmount,

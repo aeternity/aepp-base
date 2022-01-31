@@ -19,7 +19,7 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: value => [
+      validator: (value) => [
         'primary',
         'secondary',
         'alternative',
@@ -33,7 +33,7 @@ export default {
     },
     size: {
       type: String,
-      validator: value => ['small', 'medium'].includes(value),
+      validator: (value) => ['small', 'medium'].includes(value),
       default: 'medium',
     },
     plain: Boolean,
