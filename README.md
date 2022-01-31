@@ -52,12 +52,6 @@ npm run test:e2e
 
 # run all tests
 npm test
-
-# build a storybook
-npm run storybook:build
-
-# serve a storybook at http://localhost:6006
-npm run storybook:serve
 ```
 
 ## Contributing
