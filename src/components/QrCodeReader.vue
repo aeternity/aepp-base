@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
+import { BrowserQRCodeReader } from '@zxing/library/esm/browser/BrowserQRCodeReader';
 import { handleUnknownError } from '../lib/utils';
 import PageHeader from './PageHeader.vue';
 
@@ -93,7 +93,7 @@ export default {
           document.body.style.background = 'transparent';
           document.getElementById('app').style.background = 'transparent';
         })
-        : (await this.browserReader.decodeFromInputVideoDevice(
+        : (await this.browserReader.decodeOnceFromVideoDevice(
           undefined,
           this.$refs.qrCodeVideo,
         )).getText();
