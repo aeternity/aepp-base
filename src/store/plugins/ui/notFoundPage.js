@@ -1,10 +1,10 @@
 import NotFound from '../../../pages/NotFound.vue';
 
 export default (store) => store.dispatch(
-  'router/addRoutes',
-  [{
+  'router/addRoute',
+  {
     name: 'not-found',
     path: '*',
     component: NotFound,
-  }],
+  },
 );

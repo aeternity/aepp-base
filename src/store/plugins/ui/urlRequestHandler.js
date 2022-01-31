@@ -51,18 +51,15 @@ export default (store) => {
     }
   };
 
-  store.dispatch(
-    'router/addRoutes',
-    urlRequestMethods.map((methodName) => ({
-      name: methodName,
-      path: `/${methodName}`,
-      beforeEnter: mergeEnterHandlers(
-        ensureLoggedIn,
-        (to, from, next) => {
-          handleUrlRequest(to);
-          next(ROUTE_MOBILE_LOGGED_IN);
-        },
-      ),
-    })),
-  );
+  urlRequestMethods.forEach((methodName) => store.dispatch('router/addRoute', {
+    name: methodName,
+    path: `/${methodName}`,
+    beforeEnter: mergeEnterHandlers(
+      ensureLoggedIn,
+      (to, from, next) => {
+        handleUrlRequest(to);
+        next(ROUTE_MOBILE_LOGGED_IN);
+      },
+    ),
+  }));
 };
