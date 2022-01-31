@@ -71,7 +71,7 @@
     "eslint-plugin-vue-i18n": "^0.1.1",
     "eslint-plugin-vuejs-accessibility": "^1.1.1",
     "jest-canvas-mock": "^2.3.1",
-    "node-sass": "^6.0.1",
+    "sass": "^1.49.0",
     "sass-loader": "^10.2.1",
     "serve": "^13.0.2",
     "sharp": "^0.26.1",
