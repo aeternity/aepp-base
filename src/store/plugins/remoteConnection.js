@@ -113,7 +113,9 @@ export default (store) => {
         (followerId, request) => getRpcPeer(followerId).processMessage(request),
       );
 
-      const followers = await new Promise((resolve) => socket.emit('get-all-followers', resolve));
+      const followers = await new Promise((resolve) => {
+        socket.emit('get-all-followers', resolve);
+      });
       Object.entries(followers)
         .filter(([, v]) => v.connected === true)
         .forEach(([followerId]) => store.commit('followerConnected', followerId));

@@ -51,10 +51,12 @@ describe('migration runner', () => {
     });
 
     registerMigration({
-      migrate: (state, store) => new Promise((r) => setTimeout(() => {
-        store.commit('setTest');
-        r();
-      })),
+      migrate: (state, store) => new Promise((r) => {
+        setTimeout(() => {
+          store.commit('setTest');
+          r();
+        });
+      }),
     });
 
     const state = runMigrations(testStore.state, testStore);
@@ -64,13 +66,15 @@ describe('migration runner', () => {
       test: 2, migrations: { 0: true, 1: true },
     });
 
-    await new Promise((resolve) => testStore.subscribe(({ type }) => {
-      if (type === 'markMigrationAsApplied') {
-        expect(testStore.state).toEqual({
-          test: 3, migrations: { 0: true, 1: true, 2: true },
-        });
-        resolve();
-      }
-    }));
+    await new Promise((resolve) => {
+      testStore.subscribe(({ type }) => {
+        if (type === 'markMigrationAsApplied') {
+          expect(testStore.state).toEqual({
+            test: 3, migrations: { 0: true, 1: true, 2: true },
+          });
+          resolve();
+        }
+      });
+    });
   });
 });

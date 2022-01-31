@@ -35,6 +35,7 @@
     <iframe
       ref="iframe"
       :src="url"
+      :title="url"
       :scrolling="$globals.IS_IOS && 'no'"
       importance="high"
       sandbox="allow-scripts allow-same-origin allow-forms"

@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { get } from 'lodash-es';
 import { AENS_DOMAIN } from './constants';
 

@@ -33,12 +33,14 @@ export default (store) => {
         try {
           await Promise.race([
             promise,
-            new Promise((resolve, reject) => promise.finally(() => {
-              if (!promise.isCancelled()) return;
-              if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
-                resolve();
-              } else reject(new Error('Unexpected state'));
-            })),
+            new Promise((resolve, reject) => {
+              promise.finally(() => {
+                if (!promise.isCancelled()) return;
+                if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
+                  resolve();
+                } else reject(new Error('Unexpected state'));
+              });
+            }),
           ]);
         } finally {
           unsubscribe();

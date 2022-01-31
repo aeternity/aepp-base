@@ -12,6 +12,7 @@
       v-show="cameraAllowed"
       class="video-wrapper"
     >
+      <!-- eslint-disable-next-line vuejs-accessibility/media-has-caption -->
       <video ref="qrCodeVideo" />
     </div>
     <div
@@ -59,9 +60,11 @@ export default {
   },
   async mounted() {
     if (process.env.IS_CORDOVA) {
-      await new Promise((resolve, reject) => window.QRScanner
-        .prepare((error, status) => (!error && status.authorized
-          ? resolve() : reject(error || new Error('Denied to use the camera')))));
+      await new Promise((resolve, reject) => {
+        window.QRScanner
+          .prepare((error, status) => (!error && status.authorized
+            ? resolve() : reject(error || new Error('Denied to use the camera'))));
+      });
       this.cameraAllowed = true;
       return;
     }

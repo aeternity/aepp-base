@@ -1,7 +1,7 @@
 require('./scripts/label-icons');
 const path = require('path');
 const branch = require('./scripts/current-branch');
-const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package');
+const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
 const parseBool = (val) => (val ? JSON.parse(val) : false);
 

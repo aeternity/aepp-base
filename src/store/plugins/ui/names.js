@@ -17,7 +17,7 @@ export default (store) => {
       owned: null,
     },
     getters: {
-      get: ({ names }, { getDefault }, { accounts: { list } }, rootGetters) => (id, local = true) => {
+      get: ({ names }, { getDefault }, rootState, rootGetters) => (id, local = true) => {
         store.dispatch('names/fetch', { id });
         const defaultName = getDefault(id);
         const key = defaultName
@@ -30,7 +30,7 @@ export default (store) => {
           : id;
         if (names[key].name) return names[key].name;
         if (local) {
-          const account = list.find((a) => a.address === id);
+          const account = rootState.accounts.list.find((a) => a.address === id);
           if (account) return rootGetters['accounts/getName'](account);
         }
         return '';
@@ -72,7 +72,8 @@ export default (store) => {
       async getHeight({ rootState }) {
         let subscription;
         const height = await new Promise((resolve) => {
-          subscription = rootState.observables.topBlockHeight.subscribe((h) => h !== 0 && resolve(h));
+          subscription = rootState.observables
+            .topBlockHeight.subscribe((h) => h !== 0 && resolve(h));
         });
         subscription.unsubscribe();
         return height;

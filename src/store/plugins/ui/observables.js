@@ -314,7 +314,8 @@ export default (store) => {
           }
         })),
         switchMap(({ list, ...other }) => (list.length
-          ? combineLatest(list.map(addConvertedAmount)).pipe(map((txs) => ({ list: txs, ...other })))
+          ? combineLatest(list.map(addConvertedAmount))
+            .pipe(map((txs) => ({ list: txs, ...other })))
           : Promise.resolve({ list: [], ...other }))),
         startWith({
           list: getTransactionsByAddress(store.getters['accounts/active'].address)

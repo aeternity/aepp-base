@@ -36,6 +36,12 @@ module.exports = {
     'vue/v-on-function-call': 'error',
     'vue-i18n/no-dynamic-keys': 'error',
     'vue-i18n/no-unused-keys': 'error',
+    'vuejs-accessibility/click-events-have-key-events': 'off',
+    'vuejs-accessibility/label-has-for': 'off',
+    'vuejs-accessibility/form-control-has-label': 'off',
+    'vue/multi-word-component-names': 'off',
+    'vuejs-accessibility/no-autofocus': 'off',
+    'vuejs-accessibility/alt-text': 'off',
   },
   parserOptions: {
     parser: 'babel-eslint',
