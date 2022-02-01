@@ -6,7 +6,8 @@ node_modules
 /www
 /platforms
 /plugins
-/resources/*/
+/resources/*/*
+!/resources/android/icon-foreground.png
 
 # local env files
 .env.local

@@ -11,7 +11,7 @@
     "build:cordova": "IS_CORDOVA=true npm run build",
     "build:ios": "npm run build:cordova && cordova build ios",
     "build:android": "npm run build:cordova && cordova build android",
-    "gen:cordova-resources": "cordova-res",
+    "gen:cordova-resources": "cordova-res --icon-background-source '#f7296e'",
     "lint": "NODE_ENV=production vue-cli-service lint --no-fix",
     "test": "npm run lint && npm run test:unit && npm run test:e2e -- --headless",
     "test:e2e": "vue-cli-service test:e2e",
