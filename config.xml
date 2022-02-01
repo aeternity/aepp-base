@@ -11,6 +11,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="airgap-vault:*" />
     <access origin="*" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -28,11 +29,6 @@
         <allow-navigation href="*" />
         <preference name="UseSwiftLanguageVersion" value="5" />
         <preference name="DisallowOverscroll" value="true" />
-        <edit-config file="*-Info.plist" mode="merge" target="LSApplicationQueriesSchemes">
-            <array>
-                <string>airgap-vault</string>
-            </array>
-        </edit-config>
         <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
             <array>
                 <string>applinks:base.aepps.com</string>
