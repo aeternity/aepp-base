@@ -33,9 +33,6 @@
                 <string>airgap-vault</string>
             </array>
         </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="UIUserInterfaceStyle">
-            <string>Light</string>
-        </edit-config>
         <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
             <array>
                 <string>applinks:base.aepps.com</string>
