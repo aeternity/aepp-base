@@ -1,6 +1,6 @@
 import { get, isEqual } from 'lodash-es';
-import { handleUnknownError } from '../../../lib/utils';
-import { fetchJson } from '../../utils';
+import { handleUnknownError } from '../../lib/utils';
+import { fetchJson } from '../utils';
 
 export default (store) => {
   const createSdk = async (network) => {
