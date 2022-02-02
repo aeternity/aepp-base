@@ -119,7 +119,7 @@ export default (store) => {
         },
       }),
       (async () => {
-        const specUrl = `${network.middlewareUrl}/middleware/api`;
+        const specUrl = `${network.middlewareUrl.replace('mdw', 'middleware')}/api`;
         const spec = await fetchJson(specUrl);
         Object.assign(spec.paths, {
           '/names/auctions/{name}/info': {
@@ -148,7 +148,7 @@ export default (store) => {
         return genSwaggerClient(specUrl, { spec });
       })(),
       (async () => {
-        const specUrl = `${network.middlewareUrl}/mdw/swagger/swagger.json`;
+        const specUrl = `${network.middlewareUrl}/swagger/swagger.json`;
         const spec = await fetchJson(specUrl);
         spec.basePath = '/mdw/';
         delete spec.schemes;

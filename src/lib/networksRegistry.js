@@ -1,18 +1,18 @@
-const getMiddlewareUrl = (networkName) => `https://${networkName}.aeternity.io`;
-const getExplorerUrl = (networkName) => `https://explorer.${networkName}.aeternity.io`;
-
-const genNetwork = (name, { pathName = name.toLowerCase(), ...options } = {}) => ({
-  name,
-  url: getMiddlewareUrl(pathName),
-  middlewareUrl: getMiddlewareUrl(pathName),
-  explorerUrl: getExplorerUrl(pathName),
+export const defaultNetwork = {
+  name: 'Iris-net',
+  url: 'https://mainnet.aeternity.io',
+  middlewareUrl: 'https://mainnet.aeternity.io/mdw',
+  explorerUrl: 'https://explorer.aeternity.io',
   compilerUrl: 'https://compiler.aepps.com',
-  ...options,
-});
+};
 
-export const defaultNetwork = genNetwork('Iris-net', { pathName: 'mainnet' });
-
-const testNetwork = genNetwork('Testnet');
+const testNetwork = {
+  name: 'Testnet',
+  url: 'https://testnet.aeternity.io',
+  middlewareUrl: 'https://testnet.aeternity.io/mdw',
+  explorerUrl: 'https://explorer.testnet.aeternity.io',
+  compilerUrl: 'https://compiler.aepps.com',
+};
 
 export default Object.freeze((process.env.NODE_ENV === 'production' ? [
   defaultNetwork,
