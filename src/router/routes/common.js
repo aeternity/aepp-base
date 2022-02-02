@@ -17,7 +17,7 @@ export default [{
   beforeEnter: mergeEnterHandlers(
     ensureLoggedIn,
     (to, from, next) => next(
-      !to.params.length ? merge({}, to, { params: { length: 1 } }) : undefined,
+      !to.params.length ? merge({}, to, { params: { length: 6 } }) : undefined,
     ),
   ),
   props: ({ params: { length, page } }) => ({

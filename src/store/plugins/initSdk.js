@@ -157,7 +157,7 @@ export default (store) => {
     ]);
     sdk.selectNode(network.name);
     sdk.middleware = middleware.api;
-    sdk.middlewareNew = middlewareNew.api;
+    sdk.middlewareNew = middlewareNew;
     return sdk;
   };
 

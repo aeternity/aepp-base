@@ -7,7 +7,7 @@
   >
     <AeIdenticon
       slot="icon"
-      :address="winningBidder"
+      :address="info.lastBid.tx.accountId"
     />
     <slot
       v-for="slot in Object.keys($slots)"
@@ -29,10 +29,8 @@ export default {
   components: { ListItem, AeIdenticon },
   props: {
     name: { type: String, required: true },
-    winningBidder: { type: String, required: true },
-    winningBid: { type: String, required: true },
-    expiration: { type: Number, required: true },
-    subtitleWinningBid: Boolean,
+    info: { type: Object, required: true },
+    subtitleLastBid: Boolean,
   },
   subscriptions() {
     const { convertAmount, topBlockHeight } = this.$store.state.observables;
@@ -40,21 +38,18 @@ export default {
     return {
       subtitle: this
         .$watchAsObservable(
-          ({ subtitleWinningBid, winningBid, expiration }) => ({
-            subtitleWinningBid, ...subtitleWinningBid ? { winningBid } : { expiration },
-          }),
+          ({ subtitleLastBid, info }) => ({ subtitleLastBid, info }),
           { immediate: true },
         )
         .pipe(
           pluck('newValue'),
-          switchMap(({ subtitleWinningBid, winningBid, expiration }) => (subtitleWinningBid
-            ? convertAmount(() => BigNumber(winningBid).shiftedBy(-MAGNITUDE))
+          switchMap(({ subtitleLastBid, info }) => (subtitleLastBid
+            ? convertAmount(() => new BigNumber(info.lastBid.tx.nameFee).shiftedBy(-MAGNITUDE))
             : topBlockHeight.pipe(
-              map((value) => `${this.$t('name.expiration')} ${blocksToRelativeTime(expiration - value)}`),
+              map((value) => `${this.$t('name.expiration')} ${blocksToRelativeTime(info.auctionEnd - value)}`),
             ))),
         ),
     };
   },
 };
 </script>
-y

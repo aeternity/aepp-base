@@ -91,7 +91,7 @@ export default (store) => {
     0,
   );
   const middlewareStatus$ = createSdkObservable(
-    (sdk) => sdk.middlewareNew.getStatus().catch((error) => {
+    (sdk) => sdk.middlewareNew.api.getStatus().catch((error) => {
       handleUnknownError(error);
       return null;
     }),
