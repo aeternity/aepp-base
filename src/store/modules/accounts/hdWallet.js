@@ -3,7 +3,9 @@
 import { pick } from 'lodash-es';
 import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
-import { Crypto, TxBuilder, SCHEMA } from '@aeternity/aepp-sdk';
+import {
+  Crypto, TxBuilder, TxBuilderHelper, SCHEMA,
+} from '@aeternity/aepp-sdk';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
@@ -289,10 +291,7 @@ export default {
     },
 
     async signTransaction({ dispatch, rootState: { sdk } }, txBase64) {
-      const encodedTx = await dispatch(
-        'confirmTxSigning',
-        Crypto.decodeBase64Check(Crypto.assertedType(txBase64, 'tx')),
-      );
+      const encodedTx = await dispatch('confirmTxSigning', TxBuilderHelper.decode(txBase64, 'tx'));
       const signature = await dispatch(
         'signWithoutConfirmation',
         Buffer.concat([Buffer.from(sdk.getNetworkId()), encodedTx]),

@@ -5,7 +5,7 @@ import { fetchJson } from '../../utils';
 export default (store) => {
   const createSdk = async (network) => {
     const [{
-      Ae, ChainNode, Transaction, Contract, Aens, genSwaggerClient, Node, SCHEMA,
+      Ae, ChainNode, Transaction, Contract, Aens, genSwaggerClient, Node,
     }, {
       default: WalletRPC,
     }] = (await Promise.all([
@@ -83,7 +83,6 @@ export default (store) => {
     const acceptCb = (_, { accept }) => accept();
     const [sdk, middleware] = await Promise.all([
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
-        address: SCHEMA.DRY_RUN_ACCOUNT.pub,
         nodes: [{
           name: network.name,
           instance: await Node({

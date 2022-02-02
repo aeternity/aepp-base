@@ -37,7 +37,9 @@
 <script>
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { Ae, Transaction, Crypto } from '@aeternity/aepp-sdk';
+import {
+  Ae, Transaction, Crypto, TxBuilderHelper,
+} from '@aeternity/aepp-sdk';
 import { handleUnknownError } from '../../lib/utils';
 import AeSpinner from '../../components/AeSpinner.vue';
 import Page from '../../components/Page.vue';
@@ -100,7 +102,7 @@ export default {
         return;
       }
 
-      const address = Crypto.aeEncodeKey(Crypto.generateKeyPairFromSecret(privateKey).publicKey);
+      const address = TxBuilderHelper(Crypto.generateKeyPairFromSecret(privateKey).publicKey, 'ak');
       this.balance = BigNumber(await this.$store.state.sdk.getBalance(address))
         .shiftedBy(-MAGNITUDE);
       if (this.balance < MIN_SPEND_TX_FEE) {

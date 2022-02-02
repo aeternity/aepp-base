@@ -86,7 +86,10 @@ export default (store) => {
       multicast(new BehaviorSubject(def)),
       refCountDelay(1000),
     );
-  const topBlockHeight$ = createSdkObservable(async (sdk) => (await sdk.topBlock()).height, 0);
+  const topBlockHeight$ = createSdkObservable(
+    async (sdk) => (await sdk.api.getTopHeader()).height,
+    0,
+  );
   const middlewareStatus$ = createSdkObservable(
     (sdk) => sdk.middleware.getMdwStatus().catch((error) => {
       handleUnknownError(error);
