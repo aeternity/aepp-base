@@ -1,5 +1,6 @@
 <template>
   <span class="ae-fraction">
+    <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
     {{ numerator }}&frasl;{{ denominator }}
   </span>
 </template>

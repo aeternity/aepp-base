@@ -7,6 +7,7 @@
       :title="$t('settings.mnemonic.notification.title')"
       :subtitle="$t('settings.mnemonic.notification.subtitle')"
     >
+      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <ListItemCircle slot="icon">
         !
       </ListItemCircle>

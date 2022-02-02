@@ -8,6 +8,7 @@
       <ButtonFlat :to="{ name: 'auction-list', params: { view: 'ending-soonest' } }">
         <Clock />
       </ButtonFlat>
+      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <ButtonFlat :to="{ name: 'auction-list-character-length' }">
         3-4…
       </ButtonFlat>

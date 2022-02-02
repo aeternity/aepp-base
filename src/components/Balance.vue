@@ -5,6 +5,7 @@
     @click="swapCurrencies"
   >
     <span class="left">{{ prices[0] }}</span>
+    <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
     <small> ⇄ </small>
     <span class="right">{{ prices[1] }}</span>
   </span>

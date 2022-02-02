@@ -4,8 +4,8 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue-i18n/recommended',
     'plugin:vue/recommended',
+    'plugin:@intlify/vue-i18n/recommended',
     '@vue/airbnb',
   ],
   rules: {
@@ -34,8 +34,8 @@ module.exports = {
     'vue/space-infix-ops': 'error',
     'vue/space-unary-ops': 'error',
     'vue/v-on-function-call': 'error',
-    'vue-i18n/no-dynamic-keys': 'error',
-    'vue-i18n/no-unused-keys': 'error',
+    '@intlify/vue-i18n/no-dynamic-keys': 'error',
+    '@intlify/vue-i18n/no-unused-keys': 'error',
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/form-control-has-label': 'off',

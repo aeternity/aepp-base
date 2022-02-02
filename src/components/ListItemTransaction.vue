@@ -25,6 +25,7 @@
       <template v-if="tx.amount">
         <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ convertedAmount }}
       </template>
+      <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
       <small>{{ tx.fee | prefixedAmount }}&nbsp;AE</small>
     </div>
   </ListItem>
