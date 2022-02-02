@@ -50,7 +50,6 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.12",
     "@intlify/eslint-plugin-vue-i18n": "^1.2.0",
     "@vue/cli-plugin-babel": "^4.5.15",
     "@vue/cli-plugin-e2e-cypress": "^4.5.15",
@@ -84,8 +83,7 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead",
-    "not ie 11"
+    "not dead"
   ],
   "sideEffects": [
     "./src/lib/setGlobalPolyfills.js",
