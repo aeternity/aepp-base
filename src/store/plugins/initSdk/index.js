@@ -81,7 +81,7 @@ export default (store) => {
     };
 
     const acceptCb = (_, { accept }) => accept();
-    const [sdk, middleware] = await Promise.all([
+    const [sdk, middleware, middlewareNew] = await Promise.all([
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
         nodes: [{
           name: network.name,
@@ -147,9 +147,17 @@ export default (store) => {
         });
         return genSwaggerClient(specUrl, { spec });
       })(),
+      (async () => {
+        const specUrl = `${network.middlewareUrl}/mdw/swagger/swagger.json`;
+        const spec = await fetchJson(specUrl);
+        spec.basePath = '/mdw/';
+        delete spec.schemes;
+        return genSwaggerClient(specUrl, { spec });
+      })(),
     ]);
     sdk.selectNode(network.name);
     sdk.middleware = middleware.api;
+    sdk.middlewareNew = middlewareNew.api;
     return sdk;
   };
 

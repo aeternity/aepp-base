@@ -91,11 +91,11 @@ export default (store) => {
     0,
   );
   const middlewareStatus$ = createSdkObservable(
-    (sdk) => sdk.middleware.getMdwStatus().catch((error) => {
+    (sdk) => sdk.middlewareNew.getStatus().catch((error) => {
       handleUnknownError(error);
-      return { OK: false };
+      return null;
     }),
-    { OK: true, queueLength: 0 },
+    { loading: true },
   );
 
   const activeAccountAddress$ = watchAsObservable((state, getters) => getters['accounts/active'].address, { immediate: true })

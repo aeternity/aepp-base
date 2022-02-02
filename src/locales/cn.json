@@ -684,14 +684,20 @@
       "title": "Info",
       "subtitle": "SDK, node, compiler versions",
       "version": "Version",
-      "node-version": "Node version",
-      "compiler-version": "Compiler version",
-      "compiler-url": "Compiler URL",
+      "node": {
+        "url": "Node URL",
+        "version": "Node version",
+        "height": "Node height"
+      },
+      "compiler": {
+        "url": "Compiler URL",
+        "version": "Compiler version"
+      },
       "sdk-version": "SDK version",
       "middleware": {
         "url": "Middleware URL",
         "version": "Middleware version",
-        "blocks-to-sync": "Blocks not synced yet"
+        "height": "Middleware height"
       }
     },
 

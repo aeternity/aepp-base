@@ -24,14 +24,19 @@ export default {
       if (process.env.NODE_ENV === 'production' && sdk.getNetworkId() !== 'ae_mainnet') {
         return { text: this.$t('network.connection-status.connected-to-testnet'), className: 'test-net' };
       }
-      if (!this.middlewareStatus.OK) {
+      if (!this.middlewareStatus) {
         return {
-          text: this.middlewareStatus.queueLength
-            ? this.$t(
-              'network.connection-status.middleware.blocks-to-sync',
-              { blocks: this.middlewareStatus.queueLength },
-            )
-            : this.$t('network.connection-status.middleware.unavailable'),
+          text: this.$t('network.connection-status.middleware.unavailable'),
+          className: 'connecting',
+        };
+      }
+      if (this.middlewareStatus.loading) return null;
+      if (!this.middlewareStatus.mdwSynced) {
+        return {
+          text: this.$t(
+            'network.connection-status.middleware.blocks-to-sync',
+            { blocks: this.middlewareStatus.nodeHeight - this.middlewareStatus.mdwHeight },
+          ),
           className: 'connecting',
         };
       }

@@ -684,14 +684,20 @@
       "title": "О приложении",
       "subtitle": "Версии: SDK, узла, компилятора",
       "version": "Версия сборки",
-      "node-version": "Версия узла",
-      "compiler-version": "Версия компилятора",
-      "compiler-url": "Адрес компилятора",
+      "node": {
+        "url": "Адрес узла",
+        "version": "Версия узла",
+        "height": "Блоков синхронизировано"
+      },
+      "compiler": {
+        "url": "Адрес компилятора",
+        "version": "Версия компилятора"
+      },
       "sdk-version": "Версия SDK",
       "middleware": {
         "url": "Адрес middleware",
         "version": "Версия middleware",
-        "blocks-to-sync": "Блоков не синхронизировано"
+        "height": "Блоков синхронизировано"
       }
     },
 
