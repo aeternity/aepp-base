@@ -13,7 +13,7 @@
     <template v-else>
       <h2>
         {{ $t('name.expiration') }}
-        {{ blocksToRelativeTime(expiration - topBlockHeight) }}
+        {{ blocksToRelativeTime(auctionEnd - topBlockHeight) }}
       </h2>
 
       <h2>{{ $t('name.details.current-bid') }}</h2>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';
@@ -49,6 +50,7 @@ import AeSpinner from '../../components/AeSpinner.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemBid from '../../components/mobile/ListItemBid.vue';
 import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
+import { MAGNITUDE } from '../../lib/constants';
 
 export default {
   components: {
@@ -62,17 +64,15 @@ export default {
     name: { type: String, required: true },
   },
   data: () => ({
-    expiration: 0,
+    auctionEnd: 0,
     bids: null,
   }),
   computed: {
     currentBid() {
-      if (!this.bids) return null;
-      return this.bids.reduce((a, b) => (a.nameFee.isGreaterThan(b.nameFee) ? a : b));
+      return this.bids?.[0];
     },
     previousBids() {
-      if (!this.bids) return null;
-      return this.bids.filter((bid) => bid !== this.currentBid);
+      return this.bids?.slice(1);
     },
   },
   subscriptions() {
@@ -89,9 +89,17 @@ export default {
   },
   methods: {
     async updateAuctionEntry() {
-      const res = await this.$store.dispatch('names/fetchAuctionEntry', this.name);
-      this.expiration = res.expiration;
-      this.bids = res.bids;
+      const sdk = await Promise.resolve(this.$store.state.sdk);
+      const res = await sdk.middlewareNew.api.getNameById(this.name);
+      const { auctionEnd, bids } = res.auction || res.info;
+      this.auctionEnd = auctionEnd;
+      this.bids = await Promise.all(bids.map(async (txId) => {
+        const { tx } = await sdk.middlewareNew.api.getTxByIndex(txId);
+        return {
+          nameFee: new BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
+          accountId: tx.accountId,
+        };
+      }));
     },
     blocksToRelativeTime,
   },

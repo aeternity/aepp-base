@@ -154,17 +154,6 @@ export default (store) => {
         const [names, bids] = await Promise.all([namesPromise, bidsPromise]);
         commit('setOwned', { names, bids });
       },
-      async fetchAuctionEntry({ rootState }, name) {
-        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-        const { info, bids } = await sdk.middleware.getAuctionInfoByName(name);
-        return {
-          ...info,
-          bids: bids.map(({ tx }) => ({
-            ...tx,
-            nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-          })),
-        };
-      },
       setDefault({ rootState: { sdk }, commit }, { name, address }) {
         commit('setDefault', { name, address, networkId: sdk.getNetworkId() });
       },
