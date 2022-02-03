@@ -1,8 +1,8 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import { update, get } from 'lodash-es';
+import { get } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import Vue from 'vue';
-import { Crypto } from '@aeternity/aepp-sdk';
+import { Crypto, TxBuilderHelper } from '@aeternity/aepp-sdk';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
   handleUnknownError, isAccountNotFoundError, getAddressByNameEntry, isAensName,
@@ -78,38 +78,40 @@ export default (store) => {
         subscription.unsubscribe();
         return height;
       },
-      async fetch({
-        rootState, state, commit, dispatch,
-      }, { id, force }) {
+      async fetch({ rootState, state, commit }, { id, force }) {
         if (!force && state.names[id]) return;
         commit('set', { key: id });
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         if (id.startsWith('ak_')) {
-          const height = await dispatch('getHeight');
-          const names = (await sdk.middleware.getNameByAddress(id))
-            .filter(({ expiresAt }) => expiresAt > height);
-          if (names.length) {
-            commit('set', { address: id, name: names[0].name, hash: names[0].nameHash });
-          }
-        } else if (id.startsWith('nm_')) {
-          const { name: nameEntry } = await sdk.middleware.getNameByHash(id);
+          const nameEntry = (await sdk.middlewareNew.api.getPointeesById(id))
+            .active.account_pubkey?.[0];
+          if (!nameEntry) return;
           commit('set', {
-            address: getAddressByNameEntry(nameEntry),
+            address: id,
             name: nameEntry.name,
-            hash: nameEntry.nameHash,
+            hash: TxBuilderHelper.produceNameId(nameEntry.name),
           });
-        } else if (isAensName(id)) {
+          return;
+        }
+        if (id.startsWith('nm_')) {
+          const entry = await sdk.middlewareNew.api.getNameById(id);
+          if (!entry.active) return;
+          const { name, hash, info: { pointers } } = entry;
+          commit('set', { address: pointers?.accountPubkey, name, hash });
+          return;
+        }
+        if (isAensName(id)) {
           const nameEntry = await sdk.api.getNameEntryByName(id);
           commit('set', {
             address: getAddressByNameEntry(nameEntry),
             name: id,
             hash: nameEntry.id,
           });
-        } else {
-          throw new Error(`Unknown id: ${id}`);
+          return;
         }
+        throw new Error(`Unknown id: ${id}`);
       },
-      async fetchOwned({ rootState, commit, dispatch }) {
+      async fetchOwned({ rootState, commit }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
 
         const getPendingNameClaimTransactions = (address) => sdk.api
@@ -129,30 +131,23 @@ export default (store) => {
             },
           );
 
-        const namesPromise = Promise.all(
+        const names = (await Promise.all(
           rootState.accounts.list.map(({ address }) => Promise.all([
             getPendingNameClaimTransactions(address),
-            sdk.middleware.getActiveNames({ owner: address }),
+            sdk.middlewareNew.api.getOwnedBy(address)
+              .then(({ active, topBid }) => [active, topBid]),
           ])),
-        ).then((names) => names.flat(2));
+        )).flat(Infinity);
 
-        const bidsPromise = Promise.all([
-          dispatch('getHeight'),
-          ...rootState.accounts.list
-            .map(({ address }) => sdk.middleware.getNameAuctionsBidsbyAddress(address)),
-        ]).then(([height, ...bidsByAddress]) => bidsByAddress
-          .flat()
-          .filter(({ nameAuctionEntry }) => nameAuctionEntry.expiration > height)
-          .filter(({ nameAuctionEntry, transaction }) => nameAuctionEntry
-            .winningBid === transaction.tx.nameFee)
-          .map((bid) => update(
-            bid,
-            'transaction.tx.nameFee',
-            (v) => BigNumber(v).shiftedBy(-MAGNITUDE),
-          )));
-
-        const [names, bids] = await Promise.all([namesPromise, bidsPromise]);
-        commit('setOwned', { names, bids });
+        commit('setOwned', {
+          names: names.filter(({ status }) => status !== 'auction'),
+          bids: names.filter(({ status }) => status === 'auction')
+            .map((bid) => ({
+              ...bid,
+              nameFee: new BigNumber((bid.auction || bid.info).lastBid.tx.nameFee)
+                .shiftedBy(-MAGNITUDE),
+            })),
+        });
       },
       setDefault({ rootState: { sdk }, commit }, { name, address }) {
         commit('setDefault', { name, address, networkId: sdk.getNetworkId() });

@@ -32,11 +32,7 @@
       {{ $t('name.details.to-transfer') }}
     </AeButton>
 
-    <AeButton
-      :to="$globals.IS_MOBILE_DEVICE ?
-        { name: 'transaction-details', params: { hash: details.txHash } }
-        : `${currentNetwork.explorerUrl}/transactions/${details.txHash}`"
-    >
+    <AeButton @click="goToTransactionDetails">
       {{ $t('name.details.to-transactions') }}
     </AeButton>
   </Page>
@@ -110,6 +106,13 @@ export default {
       if (initialAccountIdx !== requredAccountIdx) {
         this.$store.commit('accounts/setActiveIdx', initialAccountIdx);
       }
+    },
+    async goToTransactionDetails() {
+      const { hash } = await this.$store.state.sdk.middlewareNew.api
+        .getTxByIndex(this.details.info.claims[0]);
+      await this.$router.push(this.$globals.IS_MOBILE_DEVICE
+        ? { name: 'transaction-details', params: { hash } }
+        : `${this.currentNetwork.explorerUrl}/transactions/${hash}`);
     },
   },
 };

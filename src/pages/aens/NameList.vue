@@ -9,15 +9,15 @@
       <h2>{{ $t('name.list.registered') }}</h2>
       <AeCard fill="maximum">
         <ListItemAccount
-          v-for="name in owned.names"
-          :key="name.name"
-          :address="name.owner"
-          :name="name.name"
-          :to="{ name: 'name-details', params: { name: name.name } }"
+          v-for="entry in owned.names"
+          :key="entry.name"
+          :address="entry.info.ownership.current"
+          :name="entry.name"
+          :to="{ name: 'name-details', params: { name: entry.name } }"
           subtitle="address"
         >
           <NamePending
-            v-if="name.pending"
+            v-if="entry.pending"
             slot="right"
           />
         </ListItemAccount>
@@ -29,11 +29,11 @@
       <AeCard fill="maximum">
         <ListItemAccount
           v-for="bid in owned.bids"
-          :key="bid.transaction.hash"
-          :name="bid.nameAuctionEntry.name"
-          :balance="bid.transaction.tx.nameFee"
-          :address="bid.transaction.tx.accountId"
-          :to="{ name: 'auction-details', params: { name: bid.nameAuctionEntry.name } }"
+          :key="bid.name"
+          :name="bid.name"
+          :balance="bid.nameFee"
+          :address="(bid.auction || bid.info).lastBid.tx.accountId"
+          :to="{ name: 'auction-details', params: { name: bid.name } }"
         />
       </AeCard>
     </template>

@@ -152,6 +152,8 @@ export default (store) => {
         const spec = await fetchJson(specUrl);
         spec.basePath = '/mdw/';
         delete spec.schemes;
+        spec.paths['/name/pointees/{id}'] = spec.paths['/names/pointees/{id}'];
+        delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
       })(),
     ]);
