@@ -81,7 +81,7 @@ export default (store) => {
     };
 
     const acceptCb = (_, { accept }) => accept();
-    const [sdk, middleware, middlewareNew] = await Promise.all([
+    const [sdk, middleware] = await Promise.all([
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
         nodes: [{
           name: network.name,
@@ -119,35 +119,6 @@ export default (store) => {
         },
       }),
       (async () => {
-        const specUrl = `${network.middlewareUrl.replace('mdw', 'middleware')}/api`;
-        const spec = await fetchJson(specUrl);
-        Object.assign(spec.paths, {
-          '/names/auctions/{name}/info': {
-            get: {
-              operationId: 'getAuctionInfoByName',
-              parameters: [{
-                in: 'path',
-                name: 'name',
-                required: true,
-                type: 'string',
-              }],
-            },
-          },
-          '/names/hash/{hash}': {
-            get: {
-              operationId: 'getNameByHash',
-              parameters: [{
-                in: 'path',
-                name: 'hash',
-                required: true,
-                type: 'string',
-              }],
-            },
-          },
-        });
-        return genSwaggerClient(specUrl, { spec });
-      })(),
-      (async () => {
         const specUrl = `${network.middlewareUrl}/swagger/swagger.json`;
         const spec = await fetchJson(specUrl);
         spec.basePath = '/mdw/';
@@ -158,8 +129,7 @@ export default (store) => {
       })(),
     ]);
     sdk.selectNode(network.name);
-    sdk.middleware = middleware.api;
-    sdk.middlewareNew = middlewareNew;
+    sdk.middleware = middleware;
     return sdk;
   };
 

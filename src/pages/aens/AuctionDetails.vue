@@ -90,11 +90,11 @@ export default {
   methods: {
     async updateAuctionEntry() {
       const sdk = await Promise.resolve(this.$store.state.sdk);
-      const res = await sdk.middlewareNew.api.getNameById(this.name);
+      const res = await sdk.middleware.api.getNameById(this.name);
       const { auctionEnd, bids } = res.auction || res.info;
       this.auctionEnd = auctionEnd;
       this.bids = await Promise.all(bids.map(async (txId) => {
-        const { tx } = await sdk.middlewareNew.api.getTxByIndex(txId);
+        const { tx } = await sdk.middleware.api.getTxByIndex(txId);
         return {
           nameFee: new BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
           accountId: tx.accountId,

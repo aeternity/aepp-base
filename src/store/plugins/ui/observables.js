@@ -88,7 +88,7 @@ export default (store) => {
     0,
   );
   const middlewareStatus$ = createSdkObservable(
-    (sdk) => sdk.middlewareNew.api.getStatus().catch((error) => {
+    (sdk) => sdk.middleware.api.getStatus().catch((error) => {
       handleUnknownError(error);
       return null;
     }),
@@ -177,10 +177,10 @@ export default (store) => {
   const fetchMdwTransactions = async ({ address, limit, next }) => {
     const nextUrl = store.getters.currentNetwork.middlewareUrl + next;
     const response = next
-      ? store.state.sdk.middlewareNew.responseInterceptor(
+      ? store.state.sdk.middleware.responseInterceptor(
         await Swagger.serializeRes(await fetch(nextUrl), nextUrl),
       ).body
-      : await store.state.sdk.middlewareNew.api
+      : await store.state.sdk.middleware.api
         .getTxsByDirection('backward', { account: address, limit });
     const data = response.data
       .map(({ microTime, ...tx }) => ({ ...tx, time: microTime }))

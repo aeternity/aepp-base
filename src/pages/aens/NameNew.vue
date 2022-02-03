@@ -74,7 +74,7 @@ export default {
       let claimTxHash;
 
       try {
-        const { status } = await this.$store.state.sdk.middlewareNew.api.getNameById(this.name);
+        const { status } = await this.$store.state.sdk.middleware.api.getNameById(this.name);
         if (status === 'auction') {
           await this.$store.dispatch('modals/open', {
             name: 'confirm',

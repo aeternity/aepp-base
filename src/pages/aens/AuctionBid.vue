@@ -137,7 +137,7 @@ export default {
           this.auctionEnd = 0;
           this.lastBid = null;
           const sdk = await Promise.resolve(this.$store.state.sdk);
-          const res = await sdk.middlewareNew.api.getNameById(name);
+          const res = await sdk.middleware.api.getNameById(name);
           if (res.status !== 'auction') throw new Error(`Unexpected name status: ${res.status}`);
           const { auctionEnd, lastBid } = res.auction || res.info;
           this.auctionEnd = auctionEnd;

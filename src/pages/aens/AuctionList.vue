@@ -154,13 +154,13 @@ export default {
   async mounted() {
     const { state: { sdk: sdkPromise }, getters: { currentNetwork } } = this.$store;
     const sdk = sdkPromise.then ? await sdkPromise : sdkPromise;
-    const res = await sdk.middlewareNew.api.getAllAuctions({ limit: 100 });
+    const res = await sdk.middleware.api.getAllAuctions({ limit: 100 });
     let { next } = res;
     this.allAuctions = res.data;
     // TODO: simplify UI or add additional options in getAllAuctions to query only necessary info
     while (next) {
       const url = currentNetwork.middlewareUrl + next;
-      const r = sdk.middlewareNew.responseInterceptor(
+      const r = sdk.middleware.responseInterceptor(
         // eslint-disable-next-line no-await-in-loop
         await Swagger.serializeRes(await fetch(url), url),
       ).body;

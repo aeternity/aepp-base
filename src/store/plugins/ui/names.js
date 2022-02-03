@@ -83,7 +83,7 @@ export default (store) => {
         commit('set', { key: id });
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         if (id.startsWith('ak_')) {
-          const nameEntry = (await sdk.middlewareNew.api.getPointeesById(id))
+          const nameEntry = (await sdk.middleware.api.getPointeesById(id))
             .active.account_pubkey?.[0];
           if (!nameEntry) return;
           commit('set', {
@@ -94,7 +94,7 @@ export default (store) => {
           return;
         }
         if (id.startsWith('nm_')) {
-          const entry = await sdk.middlewareNew.api.getNameById(id);
+          const entry = await sdk.middleware.api.getNameById(id);
           if (!entry.active) return;
           const { name, hash, info: { pointers } } = entry;
           commit('set', { address: pointers?.accountPubkey, name, hash });
@@ -134,7 +134,7 @@ export default (store) => {
         const names = (await Promise.all(
           rootState.accounts.list.map(({ address }) => Promise.all([
             getPendingNameClaimTransactions(address),
-            sdk.middlewareNew.api.getOwnedBy(address)
+            sdk.middleware.api.getOwnedBy(address)
               .then(({ active, topBid }) => [active, topBid]),
           ])),
         )).flat(Infinity);
