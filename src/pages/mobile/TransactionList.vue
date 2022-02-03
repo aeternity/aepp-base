@@ -115,7 +115,10 @@ export default {
     };
     window.addEventListener('scroll', checkLoadMore);
     this.$once('hook:destroyed', () => window.removeEventListener('scroll', checkLoadMore));
-    this.$watch(({ transactions, direction }) => [transactions, direction], checkLoadMore);
+    this.$watch(({ transactions, direction }) => [transactions, direction], ([transactions]) => {
+      if (transactions.status === 'ended') return;
+      checkLoadMore();
+    });
   },
 };
 </script>

@@ -1,12 +1,13 @@
 import {
-  Observable, BehaviorSubject, combineLatest, timer, of, concat,
+  Observable, BehaviorSubject, combineLatest, timer, of, concat, interval,
 } from 'rxjs';
 import {
-  multicast, pluck, switchMap, map, filter, pairwise, startWith, catchError,
+  multicast, pluck, switchMap, map, filter, startWith, catchError,
 } from 'rxjs/operators';
 import { refCountDelay } from 'rxjs-etc/operators';
 import { memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
+import Swagger from 'swagger-client';
 import { MAGNITUDE } from '../../../lib/constants';
 import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
 import { fetchJson } from '../../utils';
@@ -53,16 +54,12 @@ export default (store) => {
 
   const accounts$ = getAccounts(({ accounts: { list } }) => list);
 
-  const normalizeTransaction = async ({
+  const normalizeTransaction = ({
     blockHash, time, tx: { amount, fee, ...otherTx }, ...otherTransaction
   }) => ({
     ...otherTransaction,
     blockHash,
-    ...blockHash !== 'none' && {
-      time: new Date(
-        time || (await store.state.sdk.api.getMicroBlockHeaderByHash(blockHash)).time,
-      ),
-    },
+    ...time && { time: new Date(time) },
     tx: {
       ...otherTx,
       ...amount !== undefined && { amount: BigNumber(amount).shiftedBy(-MAGNITUDE) },
@@ -139,11 +136,11 @@ export default (store) => {
     );
 
   let transactions = {};
-  let transactionRangeForAddress = {};
+  let transactionsByAddress = {};
 
   sdk$.subscribe(() => {
     transactions = {};
-    transactionRangeForAddress = {};
+    transactionsByAddress = {};
   });
 
   const registerTx = (tx) => { transactions[tx.hash] = tx; };
@@ -163,10 +160,11 @@ export default (store) => {
           tx = transactions[hash];
         } else {
           if (!sdk) return null;
-          tx = await normalizeTransaction(
-            await sdk.api.getTransactionByHash(hash),
-          );
-          registerTx(tx);
+          tx = await sdk.api.getTransactionByHash(hash);
+          tx.pending = tx.blockHash === 'none';
+          tx.time = !tx.pending && (await sdk.api.getMicroBlockHeaderByHash(tx.blockHash)).time;
+          tx = normalizeTransaction(tx);
+          if (!tx.pending) registerTx(tx);
         }
         return {
           ...setTransactionFieldsRelatedToAddress(tx, address),
@@ -176,160 +174,133 @@ export default (store) => {
       switchMap((tx) => (tx ? addConvertedAmount(tx) : Promise.resolve(tx))),
     );
 
-  const fetchMdwTransactions = async (address, limit, page) => {
-    if (store.state.sdk.then) await store.state.sdk;
-    const txs = await Promise.all(
-      (await store.state.sdk.middleware.getTxByAccount(address, { limit, page }))
-        .map(normalizeTransaction),
-    );
-    txs.forEach(registerTx);
-    return txs;
+  const fetchMdwTransactions = async ({ address, limit, next }) => {
+    const nextUrl = store.getters.currentNetwork.middlewareUrl + next;
+    const response = next
+      ? store.state.sdk.middlewareNew.responseInterceptor(
+        await Swagger.serializeRes(await fetch(nextUrl), nextUrl),
+      ).body
+      : await store.state.sdk.middlewareNew.api
+        .getTxsByDirection('backward', { account: address, limit });
+    const data = response.data
+      .map(({ microTime, ...tx }) => ({ ...tx, time: microTime }))
+      .map(normalizeTransaction);
+    data.forEach(registerTx);
+    return { data, next: response.next };
   };
 
-  const fetchPendingTransactions = async (address) => {
-    if (store.state.sdk.then) await store.state.sdk;
-    const txs = await Promise.all((
-      await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
-        .then(
-          (r) => r.transactions,
-          (error) => {
-            if (!isAccountNotFoundError(error)) {
-              handleUnknownError(error);
-            }
-            return [];
-          },
-        )
-    )
-      .map((transaction) => ({ ...transaction, pending: true }))
-      .map(normalizeTransaction));
-    txs.forEach(registerTx);
-    return txs;
-  };
+  const fetchPendingTransactions = async (address) => (
+    await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
+      .then((r) => r.transactions)
+      .catch((error) => {
+        if (!isAccountNotFoundError(error)) {
+          handleUnknownError(error);
+        }
+        return [];
+      })
+  ).map((tx) => normalizeTransaction({ ...tx, pending: true }));
 
-  const getTransactionsByAddress = (address) => {
-    if (!transactionRangeForAddress[address]) return [];
-    const txs = Object.values(transactions)
-      .filter(({ tx }) => Object.values(tx).includes(address));
-    const minedTxs = txs
-      .filter(({ pending }) => !pending)
-      .sort((a, b) => b.time - a.time);
-    const { begin, end } = transactionRangeForAddress[address];
-    const beginIdx = minedTxs.findIndex(({ hash }) => hash === begin);
-    const endIdx = minedTxs.findIndex(({ hash }) => hash === end);
-    return [
-      ...txs.filter(({ pending }) => pending),
-      ...minedTxs.slice(beginIdx, endIdx - beginIdx + 1),
-    ].map((tx) => setTransactionFieldsRelatedToAddress(tx, address));
-  };
+  const voidWrapper = (f) => (...args) => { f(...args); };
 
   const getTransactionList = (loadMore$) => {
     const limit = 15;
-    let lastValue;
-    return concat(
-      of([]),
-      combineLatest([
-        concat(of('initial'), loadMore$.pipe(map(() => 'loadMore'))),
-        activeAccountAddress$,
-        sdk$,
-      ]),
-    )
+    let lastStatus = 'complete';
+    return combineLatest([
+      concat(
+        of('initial'),
+        loadMore$.pipe(
+          filter(() => ['complete', 'ended'].includes(lastStatus)),
+          map(() => 'loadMore'),
+        ),
+      ),
+      activeAccountAddress$,
+      sdk$.pipe(filter((sdk) => sdk)),
+    ])
       .pipe(
-        pairwise(),
-        map(([[, oldAddress, oldSdk], [mode, address, sdk]]) => ({
-          address, mode: oldAddress === address && oldSdk === sdk ? mode : 'initial',
-        })),
-        filter(({ mode }) => mode === 'initial' || (lastValue && lastValue.status === '')),
-        switchMap(({ address, mode }) => timer(0, 5000)
-          .pipe(map((idx) => ({ address, mode: idx ? 'poll' : mode })))),
-        switchMap(({ address, mode }) => new Observable(async (subscriber) => {
+        switchMap(([mode, address]) => concat(of(-1), interval(5000)).pipe(
+          map((idx) => idx + 1),
+          map((idx) => [idx ? 'poll' : mode, address]),
+        )),
+        switchMap(([mode, address]) => new Observable(voidWrapper(async (subscriber) => {
           try {
-            const next = (status = '') => {
-              lastValue = {
-                list: getTransactionsByAddress(address),
-                status: (transactionRangeForAddress[address] || {}).ended ? 'ended' : status,
-              };
-              subscriber.next(lastValue);
+            let txState = transactionsByAddress[address];
+            const emit = (status) => {
+              const { pending, list } = txState;
+              lastStatus = status;
+              subscriber.next({
+                list: pending.concat(list)
+                  .map((tx) => setTransactionFieldsRelatedToAddress(tx, address)),
+                status,
+              });
             };
 
             switch (mode) {
-              case 'initial': {
-                if (!transactionRangeForAddress[address]) {
-                  next('loading');
-                  const [txs] = await Promise.all([
-                    fetchMdwTransactions(address, limit, 1),
-                    fetchPendingTransactions(address),
-                  ]);
-                  transactionRangeForAddress[address] = {
-                    ...txs.length && {
-                      begin: txs[0].hash,
-                      end: txs[txs.length - 1].hash,
-                    },
-                    ended: txs.length !== limit,
-                  };
-                  next();
+              case 'initial':
+              case 'loadMore': {
+                const isNewState = !txState;
+                if (isNewState) txState = { pending: [], list: [] };
+                else if (!txState.next) {
+                  emit('ended');
                   break;
                 }
-              }
-              case 'poll': // eslint-disable-line no-fallthrough
+                emit('loading');
                 await Promise.all([
-                  fetchMdwTransactions(address, 1, 1).then(async ([tx]) => {
-                    if (!tx) return;
-                    const range = transactionRangeForAddress[address];
-                    const begin = tx.hash;
-                    let end = tx.hash;
-                    let t = tx;
-                    let p = 1;
-                    while (t && t.hash !== range.begin) {
-                      // eslint-disable-next-line no-await-in-loop
-                      [t] = await fetchMdwTransactions(address, 1, p += 1);
-                      if (t) end = t.hash;
-                    }
-                    Object.assign(range, { begin, end: range.end || end });
-                  }),
-                  fetchPendingTransactions(address),
+                  (async () => {
+                    if (!isNewState) return;
+                    txState.pending = await fetchPendingTransactions(address);
+                  })(),
+                  (async () => {
+                    if (mode === 'initial' && !isNewState) return;
+                    const txs = await fetchMdwTransactions(
+                      isNewState ? { address, limit } : { next: txState.next },
+                    );
+                    txState.list.push(...txs.data);
+                    txState.next = txs.next;
+                  })(),
                 ]);
-                next();
+                emit(txState.next ? 'complete' : 'ended');
                 break;
-              case 'loadMore': {
-                if (transactionRangeForAddress[address].ended) break;
-                next('loading');
-                const loadedCount = 1 + lastValue.list
-                  .findIndex(({ hash }) => transactionRangeForAddress[address].end === hash);
-                const txs = await fetchMdwTransactions(
-                  address,
-                  limit,
-                  Math.floor(loadedCount / limit) + 1,
-                );
-                Object.assign(transactionRangeForAddress[address], {
-                  end: txs[txs.length - 1].hash,
-                  ended: txs.length !== limit,
-                });
-                next();
+              }
+              case 'poll': {
+                const [pending, prepend] = await Promise.all([
+                  fetchPendingTransactions(address),
+                  (async () => {
+                    const { data, next: nextI } = await fetchMdwTransactions({ address, limit: 1 });
+                    const firstHash = txState.list[0]?.hash;
+                    if (firstHash === data[0]?.hash) return [];
+                    let next = nextI;
+                    while (next) {
+                      // eslint-disable-next-line no-await-in-loop
+                      const tx = await fetchMdwTransactions({ next });
+                      if (firstHash === tx.data[0].hash) return [];
+                      data.push(tx.data[0]);
+                      next = tx.next;
+                    }
+                    return data;
+                  })(),
+                ]);
+                txState.pending = pending;
+                txState.list.unshift(...prepend);
+                emit(lastStatus);
                 break;
               }
               default:
                 throw new Error(`Invalid mode: ${mode}`);
             }
+            transactionsByAddress[address] = txState;
 
             subscriber.complete();
           } catch (error) {
             subscriber.error(error);
           }
-        })),
-        switchMap(({ list, ...other }) => (list.length
-          ? combineLatest(list.map(addConvertedAmount))
-            .pipe(map((txs) => ({ list: txs, ...other })))
-          : Promise.resolve({ list: [], ...other }))),
-        startWith({
-          list: getTransactionsByAddress(store.getters['accounts/active'].address)
-            .map((tx) => ({
-              ...tx,
-              ...tx.tx.amount && {
-                convertedAmount: currencyAmount(prefixedAmount(tx.tx.amount), { symbol: 'AE' }),
-              },
-            })),
-          status: '',
-        }),
+        }))),
+        switchMap(({ list, status }) => (
+          list.length ? combineLatest(list.map(addConvertedAmount)) : of([])
+        ).pipe(
+          map((txs) => ({ list: txs, status })),
+          startWith({ list, status }),
+        )),
+        startWith({ list: [], status: 'loading' }),
         catchError((error) => {
           handleUnknownError(error);
           return of({ list: [], status: 'error' });

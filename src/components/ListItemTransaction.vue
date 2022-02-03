@@ -3,7 +3,7 @@
     v-bind="$attrs"
     class="list-item-transaction"
     :class="{ pending }"
-    :title="peerName || formatAddress(peerAddress)"
+    :title="peerName || peerAddress && formatAddress(peerAddress)"
     :title-monospace="!peerName"
     :subtitle="pending
       ? $t('transfer.transaction.pending')

@@ -6,6 +6,6 @@ export default (address, mode = 'full') => {
     case 'short':
       return `${chunks.slice(0, 2).join(' ')}···${address.slice(-3)}`;
     default:
-      throw new Error('Invalid length');
+      throw new Error(`Invalid mode: ${mode}`);
   }
 };
