@@ -144,7 +144,8 @@ export default (store) => {
           bids: names.filter(({ status }) => status === 'auction')
             .map((bid) => ({
               ...bid,
-              nameFee: new BigNumber((bid.auction || bid.info).lastBid.tx.nameFee)
+              // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/509
+              nameFee: new BigNumber((bid.auction ?? bid.info).lastBid.tx.nameFee)
                 .shiftedBy(-MAGNITUDE),
             })),
         });

@@ -27,6 +27,7 @@
     <template v-if="owned && owned.bids.length">
       <h2>{{ $t('name.list.active-bids') }}</h2>
       <AeCard fill="maximum">
+        <!-- TODO: remove `auction || info` after resolving https://github.com/aeternity/ae_mdw/issues/509 -->
         <ListItemAccount
           v-for="bid in owned.bids"
           :key="bid.name"

@@ -91,7 +91,8 @@ export default {
     async updateAuctionEntry() {
       const sdk = await Promise.resolve(this.$store.state.sdk);
       const res = await sdk.middleware.api.getNameById(this.name);
-      const { auctionEnd, bids } = res.auction || res.info;
+      // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/509
+      const { auctionEnd, bids } = res.auction ?? res.info;
       this.auctionEnd = auctionEnd;
       this.bids = await Promise.all(bids.map(async (txId) => {
         const { tx } = await sdk.middleware.api.getTxByIndex(txId);
