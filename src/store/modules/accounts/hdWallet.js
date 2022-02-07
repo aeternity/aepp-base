@@ -267,7 +267,7 @@ export default {
             TxBuilder.calculateFee(
               0,
               SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag],
-              { gas: txObject.gas, params: txObject },
+              { gas: txObject.gas, params: txObject, vsn: txObject.VSN },
             ),
           ),
           nameFee: txObject.nameFee && format(txObject.nameFee),
