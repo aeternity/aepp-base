@@ -123,7 +123,6 @@ export default (store) => {
                 ...otherTx,
                 ...tx,
                 pending: true,
-                owner: tx.accountId,
               })),
             (error) => {
               if (!isAccountNotFoundError(error)) handleUnknownError(error);

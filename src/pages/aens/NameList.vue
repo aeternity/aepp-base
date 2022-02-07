@@ -11,7 +11,7 @@
         <ListItemAccount
           v-for="entry in owned.names"
           :key="entry.name"
-          :address="entry.info.ownership.current"
+          :address="entry.accountId || entry.info.ownership.current"
           :name="entry.name"
           :to="{ name: 'name-details', params: { name: entry.name } }"
           subtitle="address"
