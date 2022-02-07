@@ -64,6 +64,7 @@
         <variable name="URL_SCHEME" value="aepp-base" />
         <variable name="DEEPLINK_HOST" value="base.aepps.com" />
     </plugin>
+    <plugin name="cordova-plugin-androidx-adapter" spec="^1.1.3" />
     <engine name="android" spec="^10.1.1" />
     <engine name="ios" spec="^6.2.0" />
 </widget>
