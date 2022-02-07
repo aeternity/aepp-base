@@ -77,7 +77,11 @@ export default {
     ...mapGetters(['currentNetwork']),
     ...mapState('names', {
       details({ owned }) {
-        return owned && owned.names.find(({ name }) => name === this.name);
+        const entry = owned && owned.names.find(({ name }) => name === this.name);
+        return {
+          ...entry,
+          owner: entry.accountId ?? entry.info.ownership.current,
+        };
       },
       isDefaultName(state, { getDefault }) {
         return this.address && this.name === getDefault(this.address);
@@ -98,7 +102,7 @@ export default {
     async extendName() {
       const initialAccountIdx = this.$store.state.accounts.activeIdx;
       const requredAccountIdx = this.$store.state.accounts.list
-        .findIndex(({ address }) => address === this.details.owner);
+        .findIndex(({ address }) => address === this.details.info.ownership.current);
       if (initialAccountIdx !== requredAccountIdx) {
         this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
       }
