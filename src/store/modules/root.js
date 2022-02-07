@@ -24,7 +24,7 @@ export default {
   getters: {
     networks: ({ customNetworks }) => [
       ...networksRegistry,
-      ...customNetworks.map(network => ({ ...defaultNetwork, ...network, custom: true })),
+      ...customNetworks.map((network) => ({ ...defaultNetwork, ...network, custom: true })),
     ],
     currentNetwork: ({ sdkUrl }, { networks }) => networks.find(({ url }) => url === sdkUrl) || {
       ...defaultNetwork,
@@ -71,7 +71,7 @@ export default {
         app,
         'permissions.accessToAccounts',
         (arr = []) => (arr.includes(accountAddress)
-          ? arr.filter(address => address !== accountAddress)
+          ? arr.filter((address) => address !== accountAddress)
           : [...arr, accountAddress]),
       );
     },

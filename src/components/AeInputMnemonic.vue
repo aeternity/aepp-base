@@ -18,15 +18,13 @@ import AeTextarea from './AeTextarea.vue';
 
 export default {
   components: {
-    AeTextareaFormatted: withFormatting(
-      AeTextarea, {
-        formatDisplayValue: value => value
-          .toLowerCase()
-          .replace(/\s+/g, ' ')
-          .replace(/[^a-z ]/g, ''),
-        formatEmitValue: mnemonic => mnemonic.trim(),
-      },
-    ),
+    AeTextareaFormatted: withFormatting(AeTextarea, {
+      formatDisplayValue: (value) => value
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .replace(/[^a-z ]/g, ''),
+      formatEmitValue: (mnemonic) => mnemonic.trim(),
+    }),
   },
   props: {
     value: { type: String, required: true },

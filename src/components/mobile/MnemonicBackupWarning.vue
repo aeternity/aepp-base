@@ -4,7 +4,7 @@
     <span
       v-if="!mnemonicBackedUp"
       class="warning-icon"
-    >
+    ><!-- eslint-disable-line @intlify/vue-i18n/no-raw-text -->
       !
     </span>
   </IconGroup>

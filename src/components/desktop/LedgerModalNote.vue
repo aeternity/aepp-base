@@ -12,7 +12,7 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: value => [
+      validator: (value) => [
         'neutral',
         'dark',
       ].includes(value),

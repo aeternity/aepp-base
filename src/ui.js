@@ -21,7 +21,7 @@ Vue.use(Router);
     store,
     router,
     i18n,
-    render: h => h(process.env.IS_MOBILE_DEVICE ? AppMobile : AppDesktop),
+    render: (h) => h(process.env.IS_MOBILE_DEVICE ? AppMobile : AppDesktop),
   }).$mount('#app');
 
   uiPlugin(store);

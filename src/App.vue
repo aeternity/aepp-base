@@ -19,6 +19,12 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: mapGetters('modals', ['opened', 'hidePage', 'grayscalePage']),
+  mounted() {
+    document.documentElement.style.setProperty(
+      '--height',
+      process.env.IS_CORDOVA && process.env.IS_IOS ? '100vh' : '100%',
+    );
+  },
 };
 </script>
 
@@ -36,8 +42,7 @@ export default {
 
 <style lang="scss">
 html, body {
-  height: 1px;
-  min-height: 100%;
+  height: var(--height);
 }
 
 body {

@@ -71,7 +71,7 @@ export default {
     }),
     currentTab() {
       return (this.accountTypes.includes('hd-wallet-desktop') && this.selectedTab === 'hd-wallet-desktop')
-        || (this.accountTypes.some(type => !['hd-wallet-desktop', 'ledger'].includes(type)) && this.selectedTab === 'hd-wallet')
+        || (this.accountTypes.some((type) => !['hd-wallet-desktop', 'ledger'].includes(type)) && this.selectedTab === 'hd-wallet')
         || (this.accountTypes.includes('ledger') && this.selectedTab === 'ledger')
         ? 'account-switcher' : {
           'hd-wallet-desktop': 'create-or-recover',

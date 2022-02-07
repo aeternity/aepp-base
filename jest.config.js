@@ -10,6 +10,7 @@ module.exports = {
   setupFiles: ['jest-canvas-mock'],
   moduleFileExtensions: [
     'js',
+    'mjs',
     'jsx',
     'json',
     'vue',
@@ -17,7 +18,7 @@ module.exports = {
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '.+\\.(css|styl|less|sass|scss|png|jpg|svg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.m?jsx?$': 'babel-jest',
   },
   transformIgnorePatterns: [
     `node_modules/(?!(${packagesToTranspile.join('|')})/)`,

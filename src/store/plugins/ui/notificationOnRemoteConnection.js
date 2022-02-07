@@ -1,6 +1,6 @@
 import { i18n } from './languages';
 
-export default store => store.subscribe(({ type, payload: followerId }, state) => {
+export default (store) => store.subscribe(({ type, payload: followerId }, state) => {
   if (type !== 'followerConnected') return;
   const follower = state.mobile.followers[followerId];
   if (follower.disconnectedAt) return;

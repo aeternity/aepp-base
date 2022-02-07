@@ -22,7 +22,14 @@ describe('AppBrowser', () => [{
     const wrapper = shallowMount(AppBrowser, {
       mocks: {
         $route: { fullPath: `/browser/${inputUrl}` },
-        $store: { state: { apps: [] } },
+        $store: {
+          state: {
+            apps: [],
+            sdk: {
+              addRpcClient: () => {},
+            },
+          },
+        },
         $globals: { IS_IOS: false },
         $t: () => 'locale-specific-text',
       },

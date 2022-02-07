@@ -32,7 +32,7 @@ export default {
     },
     mode: {
       type: String,
-      validator: value => ['full', 'three-columns', 'three-columns-short'].includes(value),
+      validator: (value) => ['full', 'three-columns', 'three-columns-short'].includes(value),
       default: 'full',
     },
     disableCopyOnClick: Boolean,

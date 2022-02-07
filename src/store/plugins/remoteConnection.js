@@ -52,13 +52,13 @@ export default (store) => {
 
     let processedState = cloneDeep(getStateForSync(store.state));
 
-    const broadcast = new RpcPeer(message => socket.emit('message-to-all', message), {
+    const broadcast = new RpcPeer((message) => socket.emit('message-to-all', message), {
       setState(state) {
         processedState = state;
         store.commit('syncState', cloneDeep(state));
       },
     });
-    socket.on('message', message => broadcast.processMessage(message));
+    socket.on('message', (message) => broadcast.processMessage(message));
 
     const broadcastState = (state) => {
       broadcast.notification('setState', state);
@@ -75,9 +75,7 @@ export default (store) => {
     }, { deep: true }));
 
     if (process.env.IS_MOBILE_DEVICE) {
-      const syncState = throttle(
-        () => broadcastState(getStateForSync(store.state)), 500,
-      );
+      const syncState = throttle(() => broadcastState(getStateForSync(store.state)), 500);
 
       closeCbs.push(store.subscribe(({ type, payload }) => {
         switch (type) {
@@ -94,8 +92,8 @@ export default (store) => {
         }
       }));
 
-      socket.on('follower-connected', followerId => store.commit('followerConnected', followerId));
-      socket.on('follower-disconnected', followerId => store.commit('followerDisconnected', followerId));
+      socket.on('follower-connected', (followerId) => store.commit('followerConnected', followerId));
+      socket.on('follower-disconnected', (followerId) => store.commit('followerDisconnected', followerId));
       socket.on('follower-removed', (followerId) => {
         const { name } = store.state.mobile.followers[followerId];
         store.dispatch('modals/open', {
@@ -105,32 +103,32 @@ export default (store) => {
         store.commit('followerRemoved', followerId);
       });
 
-      const getRpcPeer = memoize(followerId => new RpcPeer(
-        response => socket.emit('message-to-follower', followerId, response), {
-          createAccount: () => store.dispatch('accounts/hdWallet/create'),
-          sign: (...args) => store.state.sdk.sign(...args),
-          signTransaction: (...args) => store.state.sdk.signTransaction(...args),
-        },
-      ));
+      const getRpcPeer = memoize((followerId) => new RpcPeer((response) => socket.emit('message-to-follower', followerId, response), {
+        createAccount: () => store.dispatch('accounts/hdWallet/create'),
+        sign: (...args) => store.state.sdk.sign(...args),
+        signTransaction: (...args) => store.state.sdk.signTransaction(...args),
+      }));
       socket.on(
         'message-from-follower',
         (followerId, request) => getRpcPeer(followerId).processMessage(request),
       );
 
-      const followers = await new Promise(resolve => socket.emit('get-all-followers', resolve));
+      const followers = await new Promise((resolve) => {
+        socket.emit('get-all-followers', resolve);
+      });
       Object.entries(followers)
         .filter(([, v]) => v.connected === true)
         .forEach(([followerId]) => store.commit('followerConnected', followerId));
 
       Object.keys(store.state.mobile.followers)
-        .filter(v => !followers[v])
-        .forEach(followerId => socket.emit('add-follower', followerId));
+        .filter((v) => !followers[v])
+        .forEach((followerId) => socket.emit('add-follower', followerId));
     } else {
       socket.on('added-to-group', () => store.commit('setRemoteConnected', true));
       socket.on('removed-from-group', () => store.dispatch('reset'));
 
-      const leader = new RpcPeer(message => socket.emit('message-to-leader', message));
-      socket.on('message-from-leader', message => leader.processMessage(message));
+      const leader = new RpcPeer((message) => socket.emit('message-to-leader', message));
+      socket.on('message-from-leader', (message) => leader.processMessage(message));
 
       closeCbs.push(store.subscribeAction(({ type }) => {
         if (type !== 'reset') return;
@@ -149,7 +147,7 @@ export default (store) => {
       closeCbs.push(() => store.unregisterModule('remoteConnection'));
     }
 
-    return () => closeCbs.forEach(f => f());
+    return () => closeCbs.forEach((f) => f());
   };
 
   let closeCb;

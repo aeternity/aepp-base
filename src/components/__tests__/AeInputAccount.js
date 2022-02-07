@@ -24,7 +24,7 @@ const store = new Vuex.Store({
     },
   },
 });
-const mountComponent = options => mount(AeInputAccount, { localVue, store, ...options });
+const mountComponent = (options) => mount(AeInputAccount, { localVue, store, ...options });
 const testAddress = 'ak_12345678912345678912345678912345678912345678912345';
 const testAddressFormatted = 'ak_ 123 456 789 123 456 789 123 456 789 123 456 789 123 456 789 123 45';
 const testAddress51 = 'ak_xXRgaNBuFudv8QHVX52BYmfFyBEZDSWrdMWt2PNk8Mo2ZgHQ';
@@ -140,7 +140,7 @@ describe('AeInputAccount', () => {
       displayed: '',
       emmited: '',
     },
-  }].forEach(test => it(test.name, () => {
+  }].forEach((test) => it(test.name, () => {
     const inputListener = jest.fn();
     const wrapper = mountComponent({
       listeners: { input: inputListener },
@@ -166,30 +166,28 @@ describe('AeInputAccount', () => {
     { name: 'ak_12', backspace: true },
     { name: testName, backspace: true },
     { name: testName, backspace: false },
-  ].forEach(({ name, backspace }) => it(
-    `removes ${name} value with ${backspace ? 'backspace' : 'delete'} button`, () => {
-      const inputListener = jest.fn();
-      const wrapper = mountComponent({
-        propsData: { value: name },
-        listeners: { input: inputListener },
-      });
+  ].forEach(({ name, backspace }) => it(`removes ${name} value with ${backspace ? 'backspace' : 'delete'} button`, () => {
+    const inputListener = jest.fn();
+    const wrapper = mountComponent({
+      propsData: { value: name },
+      listeners: { input: inputListener },
+    });
 
-      const textarea = wrapper.find('textarea');
-      const cursor = backspace ? textarea.element.value.length : 0;
-      textarea.element.setSelectionRange(cursor, cursor);
-      let n = 0;
-      while (textarea.element.value) {
-        const { value } = textarea.element;
-        if (backspace) {
-          const c = textarea.element.selectionStart - 1;
-          textarea.element.value = value.slice(0, c) + value.slice(c + 1);
-          textarea.element.setSelectionRange(c, c);
-        } else textarea.element.value = value.slice(1);
-        textarea.trigger('input');
-        wrapper.setProps({ value: inputListener.mock.calls.pop()[0] });
-        expect(textarea.element.value.length).toBeLessThanOrEqual(value.length);
-        expect(n += 1).toBeLessThan(15);
-      }
-    },
-  ));
+    const textarea = wrapper.find('textarea');
+    const cursor = backspace ? textarea.element.value.length : 0;
+    textarea.element.setSelectionRange(cursor, cursor);
+    let n = 0;
+    while (textarea.element.value) {
+      const { value } = textarea.element;
+      if (backspace) {
+        const c = textarea.element.selectionStart - 1;
+        textarea.element.value = value.slice(0, c) + value.slice(c + 1);
+        textarea.element.setSelectionRange(c, c);
+      } else textarea.element.value = value.slice(1);
+      textarea.trigger('input');
+      wrapper.setProps({ value: inputListener.mock.calls.pop()[0] });
+      expect(textarea.element.value.length).toBeLessThanOrEqual(value.length);
+      expect(n += 1).toBeLessThan(15);
+    }
+  }));
 });

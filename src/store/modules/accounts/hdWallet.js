@@ -3,7 +3,9 @@
 import { pick } from 'lodash-es';
 import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
-import { Crypto, TxBuilder, SCHEMA } from '@aeternity/aepp-sdk';
+import {
+  Crypto, TxBuilder, TxBuilderHelper, SCHEMA,
+} from '@aeternity/aepp-sdk';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
@@ -254,16 +256,20 @@ export default {
         return dispatch('confirmRawDataSigning', txBinary);
       }
 
-      const format = value => BigNumber(value).shiftedBy(-MAGNITUDE);
+      const format = (value) => BigNumber(value).shiftedBy(-MAGNITUDE);
       const confirmProps = {
         name: 'confirmTransactionSign',
         transaction: {
           ...txObject,
           amount: txObject.amount && format(txObject.amount),
           fee: format(txObject.fee),
-          minFee: format(TxBuilder.calculateFee(
-            0, SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag], { gas: txObject.gas, params: txObject },
-          )),
+          minFee: format(
+            TxBuilder.calculateFee(
+              0,
+              SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag],
+              { gas: txObject.gas, params: txObject, vsn: txObject.VSN },
+            ),
+          ),
           nameFee: txObject.nameFee && format(txObject.nameFee),
         },
       };
@@ -285,10 +291,7 @@ export default {
     },
 
     async signTransaction({ dispatch, rootState: { sdk } }, txBase64) {
-      const encodedTx = await dispatch(
-        'confirmTxSigning',
-        Crypto.decodeBase64Check(Crypto.assertedType(txBase64, 'tx')),
-      );
+      const encodedTx = await dispatch('confirmTxSigning', TxBuilderHelper.decode(txBase64, 'tx'));
       const signature = await dispatch(
         'signWithoutConfirmation',
         Buffer.concat([Buffer.from(sdk.getNetworkId()), encodedTx]),

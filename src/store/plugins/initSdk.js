@@ -1,11 +1,11 @@
 import { get, isEqual } from 'lodash-es';
-import { handleUnknownError } from '../../../lib/utils';
-import { fetchJson } from '../../utils';
+import { handleUnknownError } from '../../lib/utils';
+import { fetchJson } from '../utils';
 
 export default (store) => {
   const createSdk = async (network) => {
     const [{
-      Ae, ChainNode, Transaction, Contract, Aens, genSwaggerClient, Node, SCHEMA,
+      Ae, ChainNode, Transaction, Contract, Aens, genSwaggerClient, Node,
     }, {
       default: WalletRPC,
     }] = (await Promise.all([
@@ -19,9 +19,7 @@ export default (store) => {
       }
 
       async ensureCurrentAccountAccessPure() {
-        const accessToAccounts = get(
-          store.getters.getApp(this.host), 'permissions.accessToAccounts', [],
-        );
+        const accessToAccounts = get(store.getters.getApp(this.host), 'permissions.accessToAccounts', []);
         if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
         const promise = store.dispatch(
           'modals/open',
@@ -29,18 +27,20 @@ export default (store) => {
         );
         const unsubscribe = store.watch(
           (state, getters) => getters['accounts/active'].address,
-          address => accessToAccounts.includes(address) && promise.cancel(),
+          (address) => accessToAccounts.includes(address) && promise.cancel(),
         );
 
         try {
           await Promise.race([
             promise,
-            new Promise((resolve, reject) => promise.finally(() => {
-              if (!promise.isCancelled()) return;
-              if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
-                resolve();
-              } else reject(new Error('Unexpected state'));
-            })),
+            new Promise((resolve, reject) => {
+              promise.finally(() => {
+                if (!promise.isCancelled()) return;
+                if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
+                  resolve();
+                } else reject(new Error('Unexpected state'));
+              });
+            }),
           ]);
         } finally {
           unsubscribe();
@@ -76,14 +76,13 @@ export default (store) => {
         }
         return store.getters['accounts/active'].address;
       },
-      sign: data => store.dispatch('accounts/sign', data),
-      signTransaction: txBase64 => store.dispatch('accounts/signTransaction', txBase64),
+      sign: (data) => store.dispatch('accounts/sign', data),
+      signTransaction: (txBase64) => store.dispatch('accounts/signTransaction', txBase64),
     };
 
     const acceptCb = (_, { accept }) => accept();
     const [sdk, middleware] = await Promise.all([
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
-        address: SCHEMA.DRY_RUN_ACCOUNT.pub,
         nodes: [{
           name: network.name,
           instance: await Node({
@@ -116,41 +115,26 @@ export default (store) => {
         onMessageSign: acceptCb,
         onAskAccounts: acceptCb,
         onDisconnect() {
-          Object.keys(this.rpcClients).forEach(id => this.removeRpcClient(id));
+          Object.keys(this.rpcClients).forEach((id) => this.removeRpcClient(id));
         },
       }),
       (async () => {
-        const specUrl = `${network.middlewareUrl}/middleware/api`;
+        const specUrl = `${network.middlewareUrl}/swagger/swagger.json`;
         const spec = await fetchJson(specUrl);
-        Object.assign(spec.paths, {
-          '/names/auctions/{name}/info': {
-            get: {
-              operationId: 'getAuctionInfoByName',
-              parameters: [{
-                in: 'path',
-                name: 'name',
-                required: true,
-                type: 'string',
-              }],
-            },
-          },
-          '/names/hash/{hash}': {
-            get: {
-              operationId: 'getNameByHash',
-              parameters: [{
-                in: 'path',
-                name: 'hash',
-                required: true,
-                type: 'string',
-              }],
-            },
-          },
-        });
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/503
+        if (/^https:\/\/(mainnet|testnet)\.aeternity\.io\/mdw$/.test(network.middlewareUrl)) {
+          spec.basePath = '/mdw/';
+        }
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/160
+        delete spec.schemes;
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/508
+        spec.paths['/name/pointees/{id}'] = spec.paths['/names/pointees/{id}'];
+        delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
       })(),
     ]);
     sdk.selectNode(network.name);
-    sdk.middleware = middleware.api;
+    sdk.middleware = middleware;
     return sdk;
   };
 
@@ -160,7 +144,7 @@ export default (store) => {
     const sdkPromise = createSdk(currentNetwork);
     const sdkThenable = { then: sdkPromise.then.bind(sdkPromise) };
     store.commit('setSdk', sdkThenable);
-    const sdk = await sdkThenable.then(s => s, (error) => {
+    const sdk = await sdkThenable.then((s) => s, (error) => {
       handleUnknownError(error);
       return null;
     });
@@ -187,6 +171,6 @@ export default (store) => {
 
   store.watch(
     (state, getters) => getters['accounts/active'] && getters['accounts/active'].address,
-    address => store.commit('selectSdkAccount', address),
+    (address) => store.commit('selectSdkAccount', address),
   );
 };

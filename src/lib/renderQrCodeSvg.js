@@ -1,6 +1,6 @@
-import { BrowserQRCodeSvgWriter } from '@zxing/library/esm5/browser/BrowserQRCodeSvgWriter';
-import ErrorCorrectionLevel from '@zxing/library/esm5/core/qrcode/decoder/ErrorCorrectionLevel';
-import Encoder from '@zxing/library/esm5/core/qrcode/encoder/Encoder';
+import { BrowserQRCodeSvgWriter } from '@zxing/library/esm/browser/BrowserQRCodeSvgWriter';
+import ErrorCorrectionLevel from '@zxing/library/esm/core/qrcode/decoder/ErrorCorrectionLevel';
+import Encoder from '@zxing/library/esm/core/qrcode/encoder/Encoder';
 
 class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
   FILL_COLOR = '#311b58'

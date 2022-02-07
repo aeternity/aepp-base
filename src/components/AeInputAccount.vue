@@ -164,7 +164,9 @@ export default {
     },
     async readValueFromClipboard() {
       this.setValue(await (process.env.IS_CORDOVA
-        ? new Promise((...args) => window.cordova.plugins.clipboard.paste(...args))
+        ? new Promise((...args) => {
+          window.cordova.plugins.clipboard.paste(...args);
+        })
         : navigator.clipboard.readText()));
     },
   },

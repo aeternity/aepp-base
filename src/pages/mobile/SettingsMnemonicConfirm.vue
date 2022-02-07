@@ -98,7 +98,7 @@ export default {
       return process.env.NODE_ENV === 'production' ? shuffle(words) : words;
     },
     selectedMnemonic() {
-      return this.selectedWordIds.map(idx => this.mnemonicPermutation[idx]).join(' ');
+      return this.selectedWordIds.map((idx) => this.mnemonicPermutation[idx]).join(' ');
     },
   },
   methods: {

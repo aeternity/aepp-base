@@ -22,7 +22,7 @@ export default (store) => {
         state.opened.push(modal);
       },
       closeByKey(state, key) {
-        const idx = state.opened.findIndex(modal => modal.key === key);
+        const idx = state.opened.findIndex((modal) => modal.key === key);
         state.opened.splice(idx, 1);
       },
     },

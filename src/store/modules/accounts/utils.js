@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export const getDesktopRemoteSignAction = methodName => ({ dispatch }, payload) => {
+export const getDesktopRemoteSignAction = (methodName) => ({ dispatch }, payload) => {
   const signPromise = dispatch(
     'remoteConnection/call',
     { name: methodName, args: [payload] },

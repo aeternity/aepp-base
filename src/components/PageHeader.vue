@@ -39,7 +39,7 @@ import {
 
 const buttonColorType = {
   type: String,
-  validator: value => ['primary', ''].includes(value),
+  validator: (value) => ['primary', ''].includes(value),
   default: '',
 };
 
@@ -57,7 +57,7 @@ export default {
     rightButtonColor: buttonColorType,
     fill: {
       type: String,
-      validator: value => [
+      validator: (value) => [
         'primary',
         'secondary',
         'alternative',

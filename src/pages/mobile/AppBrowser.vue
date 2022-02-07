@@ -35,6 +35,7 @@
     <iframe
       ref="iframe"
       :src="url"
+      :title="url"
       :scrolling="$globals.IS_IOS && 'no'"
       importance="high"
       sandbox="allow-scripts allow-same-origin allow-forms"
@@ -105,7 +106,7 @@ export default {
     this.$once('hook:destroyed', () => {
       window.removeEventListener('blur', handler);
       clearInterval(shareWalletInfoInterval);
-      Object.keys(sdk.rpcClients).forEach(id => sdk.removeRpcClient(id));
+      Object.keys(sdk.rpcClients).forEach((id) => sdk.removeRpcClient(id));
     });
   },
   methods: {

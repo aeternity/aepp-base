@@ -107,7 +107,7 @@ export default {
   mounted() {
     const initialAccountIdx = this.$store.state.accounts.activeIdx;
     const requredAccountIdx = this.$store.state.accounts.list
-      .findIndex(({ address }) => address === this.nameEntry.owner);
+      .findIndex(({ address }) => address === this.nameEntry.info.ownership.current);
     if (initialAccountIdx !== requredAccountIdx) {
       this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
       this.$once('hook:destroyed', () => this.$store

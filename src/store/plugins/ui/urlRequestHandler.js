@@ -11,14 +11,14 @@ export default (store) => {
     const lastParamIdx = Math.max(
       0,
       ...Array.from(Object.keys(url.query))
-        .map(key => key.startsWith('param') && +key.replace('param', '')),
+        .map((key) => key.startsWith('param') && +key.replace('param', '')),
     );
     const params = times(
       lastParamIdx,
-      idx => JSON.parse(decodeURIComponent(url.query[`param${idx}`])),
+      (idx) => JSON.parse(decodeURIComponent(url.query[`param${idx}`])),
     );
     const reply = ({ result, error }) => {
-      const seraliseError = e => (e instanceof Error ? e.message : e.toString());
+      const seraliseError = (e) => (e instanceof Error ? e.message : e.toString());
       callbackUrl.searchParams.set(
         error ? 'error' : 'result',
         error ? seraliseError(error) : JSON.stringify(result),
@@ -51,18 +51,15 @@ export default (store) => {
     }
   };
 
-  store.dispatch(
-    'router/addRoutes',
-    urlRequestMethods.map(methodName => ({
-      name: methodName,
-      path: `/${methodName}`,
-      beforeEnter: mergeEnterHandlers(
-        ensureLoggedIn,
-        (to, from, next) => {
-          handleUrlRequest(to);
-          next(ROUTE_MOBILE_LOGGED_IN);
-        },
-      ),
-    })),
-  );
+  urlRequestMethods.forEach((methodName) => store.dispatch('router/addRoute', {
+    name: methodName,
+    path: `/${methodName}`,
+    beforeEnter: mergeEnterHandlers(
+      ensureLoggedIn,
+      (to, from, next) => {
+        handleUrlRequest(to);
+        next(ROUTE_MOBILE_LOGGED_IN);
+      },
+    ),
+  }));
 };

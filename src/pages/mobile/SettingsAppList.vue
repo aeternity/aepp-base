@@ -46,7 +46,7 @@ export default {
   computed: mapState({
     apps({ apps }, getters) {
       return apps
-        .filter(app => get(app, 'permissions.accessToAccounts.length', 0))
+        .filter((app) => get(app, 'permissions.accessToAccounts.length', 0))
         .map((app) => {
           const c = app.permissions.accessToAccounts.length;
           return {

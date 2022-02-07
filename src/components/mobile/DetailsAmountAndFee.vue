@@ -14,6 +14,7 @@
         {{ $t('transfer.transaction.details.fee') }}
       </span>
       <span class="value">
+        <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
         {{ fee | prefixedAmount }} AE
       </span>
     </DetailsRow>

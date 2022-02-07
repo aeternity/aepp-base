@@ -3,6 +3,8 @@
 import { getDesktopRemoteSignAction } from './utils';
 import { i18n } from '../../plugins/ui/languages';
 
+const type = `hd-wallet${process.env.IS_MOBILE_DEVICE ? '-desktop' : ''}`;
+
 const signOnMobile = async ({ dispatch }) => {
   await dispatch('modals/open', {
     name: 'alert',
@@ -15,7 +17,7 @@ export default {
   namespaced: true,
 
   account: {
-    type: `hd-wallet${process.env.IS_MOBILE_DEVICE ? '-desktop' : ''}`,
+    type,
     getTypeVerbose: () => i18n.t('hd-wallet.account-name'),
     color: 'primary',
   },
@@ -26,7 +28,7 @@ export default {
       return api.getAccountByPubkey(address).then(() => true, () => false);
     },
 
-    async checkPreviousAndCreate({ type }, { dispatch, rootGetters }) {
+    async checkPreviousAndCreate({ dispatch, rootGetters }) {
       const { address } = rootGetters['accounts/getByType'](type).pop();
       if (!await dispatch('isAccountUsed', address)) {
         await dispatch(

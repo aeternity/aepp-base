@@ -36,7 +36,7 @@
           v-for="auction in auctions"
           :key="auction.name"
           v-bind="auction"
-          :subtitle-winning-bid="view === VIEW_MAX_BID"
+          :subtitle-last-bid="view === VIEW_MAX_BID"
           :to="{ name: 'auction-details', params: { name: auction.name } }"
         />
       </AeCard>
@@ -67,7 +67,8 @@
 </template>
 
 <script>
-import { pick, times } from 'lodash-es';
+import Swagger from 'swagger-client';
+import { times } from 'lodash-es';
 import { AENS_DOMAIN } from '../../lib/constants';
 import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
@@ -105,8 +106,7 @@ export default {
     VIEW_ENDING_SOONEST,
     VIEW_CHARACTER_LENGTH,
     VIEW_MAX_BID,
-    auctions: null,
-    pageCount: 0,
+    allAuctions: null,
   }),
   computed: {
     pagination() {
@@ -119,7 +119,7 @@ export default {
       if (p < pc) res.push({ text: p + 1, to: p + 1 });
       if (p < pc - 1) res.push({ text: p + 2, to: p + 2 });
       if (p < pc - 2) res.push({ text: 'last', to: pc });
-      return res.map(i => ({
+      return res.map((i) => ({
         ...i,
         to: i.to && ({
           name: this.$route.name,
@@ -127,41 +127,49 @@ export default {
         }),
       }));
     },
-  },
-  subscriptions() {
-    return pick(this.$store.state.observables, ['topBlockHeight']);
+    auctionsFiltered() {
+      if (!this.allAuctions) return null;
+      const all = [...this.allAuctions];
+      switch (this.view) {
+        case VIEW_ENDING_SOONEST:
+          return all.sort((a1, a2) => a1.info.auctionEnd - a2.info.auctionEnd);
+        case VIEW_CHARACTER_LENGTH:
+          return all.filter(({ name }) => name.length === this.length + AENS_DOMAIN.length);
+        case VIEW_MAX_BID:
+          return all.sort((a1, a2) => a2.info.lastBid.tx.nameFee - a1.info.lastBid.tx.nameFee);
+        default:
+          throw new Error(`Invalid view: ${this.view}`);
+      }
+    },
+    auctions() {
+      if (!this.auctionsFiltered) return null;
+      return this.auctionsFiltered
+        .slice((this.page - 1) * ITEMS_PER_PAGE, this.page * ITEMS_PER_PAGE);
+    },
+    pageCount() {
+      if (!this.auctionsFiltered) return 0;
+      return Math.ceil(this.auctionsFiltered.length / ITEMS_PER_PAGE);
+    },
   },
   async mounted() {
-    this.$watch(
-      state => pick(state, ['view', 'page', 'length']),
-      ({ view, page, length }) => {
-        this.fetchAuctions({
-          page,
-          ...{
-            [VIEW_ENDING_SOONEST]: { sort: 'expiration' },
-            [VIEW_CHARACTER_LENGTH]: { length },
-            [VIEW_MAX_BID]: { sort: 'max_bid' },
-          }[view] || (() => { throw new Error(`Invalid view: ${view}`); })(),
-        });
-      },
-      { immediate: true },
-    );
+    const { state: { sdk: sdkPromise }, getters: { currentNetwork } } = this.$store;
+    const sdk = sdkPromise.then ? await sdkPromise : sdkPromise;
+    const res = await sdk.middleware.api.getAllAuctions({ limit: 100 });
+    let { next } = res;
+    this.allAuctions = res.data;
+    // TODO: simplify UI or add additional options in getAllAuctions to query only necessary info
+    while (next) {
+      const url = currentNetwork.middlewareUrl + next;
+      const r = sdk.middleware.responseInterceptor(
+        // eslint-disable-next-line no-await-in-loop
+        await Swagger.serializeRes(await fetch(url), url),
+      ).body;
+      this.allAuctions.push(...r.data);
+      next = r.next;
+    }
   },
   methods: {
     times,
-    async fetchAuctions({ page, sort, length: lengthWithoutDomain }) {
-      const length = lengthWithoutDomain + AENS_DOMAIN.length;
-      this.auctions = null;
-      const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
-      const [auctions, { count }] = await Promise.all([
-        sdk.middleware.getActiveNameAuctions({
-          page, limit: ITEMS_PER_PAGE, sort, length,
-        }),
-        sdk.middleware.getActiveNameAuctionsCount({ length }),
-      ]);
-      this.auctions = auctions;
-      this.pageCount = Math.ceil(count / ITEMS_PER_PAGE);
-    },
   },
 };
 </script>

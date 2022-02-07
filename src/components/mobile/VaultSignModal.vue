@@ -52,7 +52,7 @@ export default {
     reject: { type: Function, required: true },
   },
   computed: mapState({
-    stepFraction: state => state.mobile.stepFraction,
+    stepFraction: (state) => state.mobile.stepFraction,
   }),
   methods: {
     closeHandler() {
