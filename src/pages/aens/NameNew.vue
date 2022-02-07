@@ -25,7 +25,7 @@
           autofocus
           autocomplete="off"
           :error="errors.has('name') || error"
-          :footer="errors.first('name') || (error ? t('name.new.unknown-error') : '')"
+          :footer="errors.first('name') || (error ? $t('name.new.unknown-error') : '')"
           :disabled="busy"
           name="name"
           :header="$t('name.new.name')"
