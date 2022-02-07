@@ -122,7 +122,9 @@ export default (store) => {
         const specUrl = `${network.middlewareUrl}/swagger/swagger.json`;
         const spec = await fetchJson(specUrl);
         // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/503
-        spec.basePath = '/mdw/';
+        if (/^https:\/\/(mainnet|testnet)\.aeternity\.io\/mdw$/.test(network.middlewareUrl)) {
+          spec.basePath = '/mdw/';
+        }
         // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/160
         delete spec.schemes;
         // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/508
