@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     ...mapState({
-      stepFraction: state => (process.env.IS_MOBILE_DEVICE ? state.mobile.stepFraction : null),
+      stepFraction: (state) => (process.env.IS_MOBILE_DEVICE ? state.mobile.stepFraction : null),
     }),
     txType() {
       return SCHEMA.OBJECT_ID_TX_TYPE[this.transaction.tag];

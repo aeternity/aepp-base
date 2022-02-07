@@ -40,10 +40,11 @@ export default async (store) => {
 
   store.registerModule('currencies', {
     namespaced: true,
-    state: Object.assign({
+    state: {
       activeCode: preferredCurrencyCode,
       swapped: false,
-    }, store.state.currencies),
+      ...store.state.currencies,
+    },
     getters: {
       list: () => Object.entries(currencies)
         .map(([code, { getName, symbol, isCrypto }]) => ({

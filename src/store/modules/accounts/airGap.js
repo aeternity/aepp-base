@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
 
-import { Crypto } from '@aeternity/aepp-sdk';
+import { TxBuilderHelper } from '@aeternity/aepp-sdk';
 import { getDesktopRemoteSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
@@ -33,7 +33,7 @@ export default {
   actions: process.env.IS_MOBILE_DEVICE ? {
     createByResponseUrl({ commit }, { responseUrl, transport = TRANSPORT_DEEP_LINK }) {
       const publicKey = getPublicKeyByResponseUrl(responseUrl);
-      const address = Crypto.aeEncodeKey(publicKey);
+      const address = TxBuilderHelper.encode(publicKey, 'ak');
       commit('accounts/add', {
         address,
         active: true,
@@ -73,7 +73,7 @@ export default {
         window.location.href = requestUrl;
       }
       return process.env.IS_CORDOVA || process.env.IS_PWA
-        ? new Promise(resolve => commit('setDeepLinkCallback', resolve)) : receive();
+        ? new Promise((resolve) => { commit('setDeepLinkCallback', resolve); }) : receive();
     },
 
     async signTransactionByQrCode({ dispatch }, url) {

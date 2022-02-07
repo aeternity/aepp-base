@@ -38,7 +38,7 @@ describe('Transfer: Send tokens', () => {
       .get('.notification-spend-success', { timeout: 24000 })
       .contains(testAmount)
       .get('@oldBalance')
-      .then(oldBalance => cy
+      .then((oldBalance) => cy
         .get('.ae-account .balance')
         .invoke('text')
         .should('not.equal', oldBalance));

@@ -8,6 +8,6 @@ const store = {
 export default store;
 
 export const mockStore = (newStore) => {
-  Object.keys(store).forEach(key => delete store[key]);
+  Object.keys(store).forEach((key) => delete store[key]);
   Object.assign(store, newStore);
 };

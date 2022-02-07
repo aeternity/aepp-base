@@ -33,8 +33,8 @@ import DetailsRow from './DetailsRow.vue';
 import AeInputRange from '../AeInputRange.vue';
 import { MAGNITUDE_MICRO } from '../../lib/constants';
 
-const toMicroString = value => value.shiftedBy(-MAGNITUDE_MICRO).toFixed();
-const toBigNumber = value => BigNumber(value).shiftedBy(MAGNITUDE_MICRO);
+const toMicroString = (value) => value.shiftedBy(-MAGNITUDE_MICRO).toFixed();
+const toBigNumber = (value) => BigNumber(value).shiftedBy(MAGNITUDE_MICRO);
 
 export default {
   components: {

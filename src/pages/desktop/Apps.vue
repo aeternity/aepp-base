@@ -33,7 +33,7 @@ export default {
   computed: mapState({
     aeternityApps(state, getters) {
       return this.aeternityAppsPaths
-        .map(path => ({ ...getters['appsMetadata/get'](path), path }));
+        .map((path) => ({ ...getters['appsMetadata/get'](path), path }));
     },
   }),
   async mounted() {

@@ -26,13 +26,14 @@
 
 Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalFn(
   url,
-  Object.assign({}, options, {
+  {
+    ...options,
     onBeforeLoad(contentWindow) {
       const { login, state } = options;
       /* eslint-disable no-param-reassign */
       contentWindow.localStorage.vuex = login || state ? JSON.stringify(Cypress._.merge(
         login && {
-          migrations: Cypress._.fromPairs(Cypress._.times(4, i => [i, true])),
+          migrations: Cypress._.fromPairs(Cypress._.times(4, (i) => [i, true])),
           sdkUrl: 'https://testnet.aeternal.io',
           accounts: {
             list: [{
@@ -67,7 +68,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalF
       /* eslint-enable no-param-reassign */
       if (options.onBeforeLoad) options.onBeforeLoad(contentWindow);
     },
-  }),
+  },
 ));
 
 Cypress.Commands.add('getState', () => JSON.parse(localStorage.vuex));

@@ -59,10 +59,9 @@ export default {
 
     async share(_, options) {
       await (process.env.IS_CORDOVA
-        ? new Promise(resolve => window.plugins.socialsharing.shareW3C(
-          options,
-          ({ app }) => app && resolve(),
-        ))
+        ? new Promise((resolve) => {
+          window.plugins.socialsharing.shareW3C(options, ({ app }) => app && resolve());
+        })
         : navigator.share(options));
     },
   },

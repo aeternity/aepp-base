@@ -30,12 +30,12 @@ const urlToPayload = (urlBroken, expectedMessageType) => {
 export const getPublicKeyByResponseUrl = (url) => {
   const [, , publicKey] = urlToPayload(url, 4);
   if (publicKey.length !== 64) throw new Error('Invalid public key length');
-  return publicKey.toString();
+  return Buffer.from(Buffer.from(publicKey).toString(), 'hex');
 };
 
 export const getSignedTransactionByResponseUrl = (url) => {
   const [, signedTx] = urlToPayload(url, 6);
-  return signedTx.toString();
+  return Buffer.from(signedTx).toString();
 };
 
 export const generateSignRequestUrl = (networkId, transaction, publicKey) => {

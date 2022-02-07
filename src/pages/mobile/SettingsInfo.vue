@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { pick, get } from 'lodash-es';
+import { pick } from 'lodash-es';
 import { mapState } from 'vuex';
 import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
@@ -35,7 +35,7 @@ export default {
     ListItem,
   },
   subscriptions() {
-    return pick(this.$store.state.observables, ['middlewareStatus']);
+    return pick(this.$store.state.observables, ['topBlockHeight', 'middlewareStatus']);
   },
   computed: mapState({
     infoFields({ sdk }, { currentNetwork }) {
@@ -43,28 +43,33 @@ export default {
         name: this.$t('settings.info.version'),
         value: process.env.npm_package_version,
       }, {
-        name: this.$t('settings.info.node-version'),
-        value: get(sdk, 'selectedNode.version'),
-      }, {
-        name: this.$t('settings.info.compiler-version'),
-        value: get(sdk, 'compilerVersion'),
-      }, {
-        name: this.$t('settings.info.compiler-url'),
-        subtitle: currentNetwork.compilerUrl,
-      }, {
         name: this.$t('settings.info.sdk-version'),
         value: process.env.SDK_VERSION,
+      }, {
+        name: this.$t('settings.info.node.url'),
+        subtitle: currentNetwork.url,
+      }, {
+        name: this.$t('settings.info.node.version'),
+        value: sdk?.selectedNode?.version,
+      }, {
+        name: this.$t('settings.info.node.height'),
+        value: this.topBlockHeight,
+      }, {
+        name: this.$t('settings.info.compiler.url'),
+        subtitle: currentNetwork.compilerUrl,
+      }, {
+        name: this.$t('settings.info.compiler.version'),
+        value: sdk?.compilerVersion,
       }, {
         name: this.$t('settings.info.middleware.url'),
         subtitle: currentNetwork.middlewareUrl,
       }, {
         name: this.$t('settings.info.middleware.version'),
-        value: this.middlewareStatus.version,
-      },
-      ...this.middlewareStatus.queueLength ? [{
-        name: this.$t('settings.info.middleware.blocks-to-sync'),
-        value: this.middlewareStatus.queueLength,
-      }] : []];
+        value: this.middlewareStatus?.mdwVersion,
+      }, {
+        name: this.$t('settings.info.middleware.height'),
+        value: this.middlewareStatus?.mdwHeight,
+      }];
     },
   }),
 };

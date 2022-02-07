@@ -91,7 +91,7 @@ export default {
     ...mapState('accounts', ['activeIdx']),
     ...mapState('names', {
       accountsWithNamePending(state, { get, isPending }) {
-        return this.accounts.map(account => ({
+        return this.accounts.map((account) => ({
           ...account,
           namePending: isPending(get(account.address)),
         }));

@@ -1,8 +1,8 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import { update, get } from 'lodash-es';
+import { get } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import Vue from 'vue';
-import { Crypto } from '@aeternity/aepp-sdk';
+import { Crypto, TxBuilderHelper } from '@aeternity/aepp-sdk';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
   handleUnknownError, isAccountNotFoundError, getAddressByNameEntry, isAensName,
@@ -17,9 +17,7 @@ export default (store) => {
       owned: null,
     },
     getters: {
-      get: (
-        { names }, { getDefault }, { accounts: { list } }, rootGetters,
-      ) => (id, local = true) => {
+      get: ({ names }, { getDefault }, rootState, rootGetters) => (id, local = true) => {
         store.dispatch('names/fetch', { id });
         const defaultName = getDefault(id);
         const key = defaultName
@@ -32,7 +30,7 @@ export default (store) => {
           : id;
         if (names[key].name) return names[key].name;
         if (local) {
-          const account = list.find(a => a.address === id);
+          const account = rootState.accounts.list.find((a) => a.address === id);
           if (account) return rootGetters['accounts/getName'](account);
         }
         return '';
@@ -43,11 +41,11 @@ export default (store) => {
         if (names[id].address) return names[id].address;
         return '';
       },
-      getDefault: ({ defaults }, getters, { sdk }) => address => (
+      getDefault: ({ defaults }, getters, { sdk }) => (address) => (
         sdk.then ? undefined : defaults[`${address}-${sdk.getNetworkId()}`]
       ),
-      isPending: ({ owned }) => name => (
-        !!((owned && owned.names.find(t => t.name === name)) || {}).pending
+      isPending: ({ owned }) => (name) => (
+        !!((owned && owned.names.find((t) => t.name === name)) || {}).pending
       ),
     },
     mutations: {
@@ -56,8 +54,8 @@ export default (store) => {
       }) {
         const entry = { address, name, hash };
         [key, address, hash, name]
-          .filter(k => k)
-          .forEach(k => Vue.set(names, k, entry));
+          .filter((k) => k)
+          .forEach((k) => Vue.set(names, k, entry));
       },
       setOwned(state, owned) {
         state.owned = owned;
@@ -74,46 +72,49 @@ export default (store) => {
       async getHeight({ rootState }) {
         let subscription;
         const height = await new Promise((resolve) => {
-          subscription = rootState.observables.topBlockHeight.subscribe(h => h !== 0 && resolve(h));
+          subscription = rootState.observables
+            .topBlockHeight.subscribe((h) => h !== 0 && resolve(h));
         });
         subscription.unsubscribe();
         return height;
       },
-      async fetch({
-        rootState, state, commit, dispatch,
-      }, { id, force }) {
+      async fetch({ rootState, state, commit }, { id, force }) {
         if (!force && state.names[id]) return;
         commit('set', { key: id });
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         if (id.startsWith('ak_')) {
-          const height = await dispatch('getHeight');
-          const names = (await sdk.middleware.getNameByAddress(id))
-            .filter(({ expiresAt }) => expiresAt > height);
-          if (names.length) {
-            commit('set', { address: id, name: names[0].name, hash: names[0].nameHash });
-          }
-        } else if (id.startsWith('nm_')) {
-          const { name: nameEntry } = await sdk.middleware.getNameByHash(id);
+          const nameEntry = (await sdk.middleware.api.getPointeesById(id))
+            .active.account_pubkey?.[0];
+          if (!nameEntry) return;
           commit('set', {
-            address: getAddressByNameEntry(nameEntry),
+            address: id,
             name: nameEntry.name,
-            hash: nameEntry.nameHash,
+            hash: TxBuilderHelper.produceNameId(nameEntry.name),
           });
-        } else if (isAensName(id)) {
+          return;
+        }
+        if (id.startsWith('nm_')) {
+          const entry = await sdk.middleware.api.getNameById(id);
+          if (!entry.active) return;
+          const { name, hash, info: { pointers } } = entry;
+          commit('set', { address: pointers?.accountPubkey, name, hash });
+          return;
+        }
+        if (isAensName(id)) {
           const nameEntry = await sdk.api.getNameEntryByName(id);
           commit('set', {
             address: getAddressByNameEntry(nameEntry),
             name: id,
             hash: nameEntry.id,
           });
-        } else {
-          throw new Error(`Unknown id: ${id}`);
+          return;
         }
+        throw new Error(`Unknown id: ${id}`);
       },
-      async fetchOwned({ rootState, commit, dispatch }) {
+      async fetchOwned({ rootState, commit }) {
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
 
-        const getPendingNameClaimTransactions = address => sdk.api
+        const getPendingNameClaimTransactions = (address) => sdk.api
           .getPendingAccountTransactionsByPubkey(address)
           .then(
             ({ transactions }) => transactions
@@ -122,7 +123,6 @@ export default (store) => {
                 ...otherTx,
                 ...tx,
                 pending: true,
-                owner: tx.accountId,
               })),
             (error) => {
               if (!isAccountNotFoundError(error)) handleUnknownError(error);
@@ -130,41 +130,24 @@ export default (store) => {
             },
           );
 
-        const namesPromise = Promise.all(
+        const names = (await Promise.all(
           rootState.accounts.list.map(({ address }) => Promise.all([
             getPendingNameClaimTransactions(address),
-            sdk.middleware.getActiveNames({ owner: address }),
+            sdk.middleware.api.getOwnedBy(address)
+              .then(({ active, topBid }) => [active, topBid]),
           ])),
-        ).then(names => names.flat(2));
+        )).flat(Infinity);
 
-        const bidsPromise = Promise.all([
-          dispatch('getHeight'),
-          ...rootState.accounts.list
-            .map(({ address }) => sdk.middleware.getNameAuctionsBidsbyAddress(address)),
-        ]).then(([height, ...bidsByAddress]) => bidsByAddress
-          .flat()
-          .filter(({ nameAuctionEntry }) => nameAuctionEntry.expiration > height)
-          .filter(({ nameAuctionEntry, transaction }) => nameAuctionEntry
-            .winningBid === transaction.tx.nameFee)
-          .map(bid => update(
-            bid,
-            'transaction.tx.nameFee',
-            v => BigNumber(v).shiftedBy(-MAGNITUDE),
-          )));
-
-        const [names, bids] = await Promise.all([namesPromise, bidsPromise]);
-        commit('setOwned', { names, bids });
-      },
-      async fetchAuctionEntry({ rootState }, name) {
-        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-        const { info, bids } = await sdk.middleware.getAuctionInfoByName(name);
-        return {
-          ...info,
-          bids: bids.map(({ tx }) => ({
-            ...tx,
-            nameFee: BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-          })),
-        };
+        commit('setOwned', {
+          names: names.filter(({ status }) => status !== 'auction'),
+          bids: names.filter(({ status }) => status === 'auction')
+            .map((bid) => ({
+              ...bid,
+              // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/509
+              nameFee: new BigNumber((bid.auction ?? bid.info).lastBid.tx.nameFee)
+                .shiftedBy(-MAGNITUDE),
+            })),
+        });
       },
       setDefault({ rootState: { sdk }, commit }, { name, address }) {
         commit('setDefault', { name, address, networkId: sdk.getNetworkId() });

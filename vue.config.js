@@ -1,9 +1,8 @@
-require('./scripts/label-icons');
 const path = require('path');
 const branch = require('./scripts/current-branch');
-const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package');
+const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
-const parseBool = val => (val ? JSON.parse(val) : false);
+const parseBool = (val) => (val ? JSON.parse(val) : false);
 
 // eslint-disable-next-line camelcase
 const { IS_MOBILE_DEVICE, IS_PWA, npm_package_version } = process.env;
@@ -15,8 +14,8 @@ module.exports = {
   publicPath: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   productionSourceMap: !IS_CORDOVA,
-  chainWebpack: config => config.plugin('define').tap((options) => {
-    const definitions = Object.assign({}, options[0]);
+  chainWebpack: (config) => config.plugin('define').tap((options) => {
+    const definitions = { ...options[0] };
 
     Object.entries(definitions['process.env']).forEach(([k, v]) => {
       definitions[`process.env.${k}`] = v;
@@ -76,6 +75,7 @@ module.exports = {
       noquotes: true,
       limit: 4096,
       name: 'img/[name].[hash:8].[ext]',
+      esModule: false,
     })
     .end()
     .use('svgo-loader')

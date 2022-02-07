@@ -181,7 +181,7 @@ export default {
     remoteConnectionsCount: ({ mobile }) => Object
       .entries(mobile.followers).filter(([, f]) => f.connected).length,
     appsAccountAccessCount: ({ apps }) => apps
-      .filter(app => get(app, 'permissions.accessToAccounts.length', 0)).length,
+      .filter((app) => get(app, 'permissions.accessToAccounts.length', 0)).length,
     mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
     removableAccounts: ({ accounts: { list } }) => list
       .map((account, idx) => ({ ...account, idx }))

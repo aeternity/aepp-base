@@ -1,6 +1,6 @@
 const KEY = 'local-storage-call';
 
-export const send = data => localStorage.setItem(KEY, data);
+export const send = (data) => localStorage.setItem(KEY, data);
 
 export const receive = () => new Promise((resolve) => {
   const storageHandler = ({ key }) => {

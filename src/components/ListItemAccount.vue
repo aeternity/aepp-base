@@ -56,7 +56,7 @@ export default {
         .$watchAsObservable(() => this.balance && this.subtitle === 'balance', { immediate: true })
         .pipe(
           pluck('newValue'),
-          switchMap(shouldSubscribe => (shouldSubscribe
+          switchMap((shouldSubscribe) => (shouldSubscribe
             ? this.$store.state.observables.convertAmount(() => this.balance)
             : Promise.resolve(''))),
         ),

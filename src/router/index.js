@@ -36,7 +36,7 @@ export default (async () => {
 
   if (process.env.IS_CORDOVA) {
     document.addEventListener('deviceready', () => window.IonicDeeplink
-      .onDeepLink(d => router.push((u => u.pathname + u.search)(new URL(d.url)))));
+      .onDeepLink((d) => router.push(((u) => u.pathname + u.search)(new URL(d.url)))));
   }
 
   store.watch(

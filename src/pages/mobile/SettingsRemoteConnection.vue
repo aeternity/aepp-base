@@ -50,7 +50,7 @@ export default {
   },
   computed: mapState({
     followers: ({ mobile: { followers } }) => Object.values(followers)
-      .map(f => ({
+      .map((f) => ({
         ...f,
         disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
       })),

@@ -1,4 +1,5 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
+/* eslint-disable import/no-import-module-exports */
 
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
@@ -95,7 +96,7 @@ export default (store) => {
 
   store.watch(
     ({ languages: { activeCode } }) => activeCode,
-    activeCode => fetchAndSetLocale(activeCode),
+    (activeCode) => fetchAndSetLocale(activeCode),
     { immediate: true },
   );
 };

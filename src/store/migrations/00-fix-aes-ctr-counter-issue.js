@@ -19,7 +19,7 @@ export default {
 
         const [chainCode, privateKey] = await Promise.all([
           encryptedHdWallet.chainCode, encryptedHdWallet.privateKey,
-        ].map(data => new AES(passwordDerivedKey).decrypt(data)));
+        ].map((data) => new AES(passwordDerivedKey).decrypt(data)));
 
         const aes = new AES(passwordDerivedKey);
         const reEncryptedHdWallet = {

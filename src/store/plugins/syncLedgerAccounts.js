@@ -10,7 +10,7 @@ export default (store) => {
       case 'syncState':
         if (!ledgerAccounts) return;
         ledgerAccounts.forEach(({ address, source }) => {
-          if (store.state.accounts.list.some(account => account.address === address)) return;
+          if (store.state.accounts.list.some((account) => account.address === address)) return;
           store.commit('accounts/add', { ...source, address });
         });
         ledgerAccounts = null;

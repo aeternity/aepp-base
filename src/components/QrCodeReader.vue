@@ -12,6 +12,7 @@
       v-show="cameraAllowed"
       class="video-wrapper"
     >
+      <!-- eslint-disable-next-line vuejs-accessibility/media-has-caption -->
       <video ref="qrCodeVideo" />
     </div>
     <div
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-import { BrowserQRCodeReader } from '@zxing/library/esm5/browser/BrowserQRCodeReader';
+import { BrowserQRCodeReader } from '@zxing/library/esm/browser/BrowserQRCodeReader';
 import { handleUnknownError } from '../lib/utils';
 import PageHeader from './PageHeader.vue';
 
@@ -59,9 +60,11 @@ export default {
   },
   async mounted() {
     if (process.env.IS_CORDOVA) {
-      await new Promise((resolve, reject) => window.QRScanner
-        .prepare((error, status) => (!error && status.authorized
-          ? resolve() : reject(error || new Error('Denied to use the camera')))));
+      await new Promise((resolve, reject) => {
+        window.QRScanner
+          .prepare((error, status) => (!error && status.authorized
+            ? resolve() : reject(error || new Error('Denied to use the camera'))));
+      });
       this.cameraAllowed = true;
       return;
     }
@@ -93,7 +96,7 @@ export default {
           document.body.style.background = 'transparent';
           document.getElementById('app').style.background = 'transparent';
         })
-        : (await this.browserReader.decodeFromInputVideoDevice(
+        : (await this.browserReader.decodeOnceFromVideoDevice(
           undefined,
           this.$refs.qrCodeVideo,
         )).getText();

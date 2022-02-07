@@ -1,3 +1,4 @@
+<!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <SettingsSecurityCourseWrapper name="intro">
     <template v-if="$i18n.locale === 'cn'">

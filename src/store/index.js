@@ -70,12 +70,12 @@ export default new Vuex.Store({
       }),
     ),
     initSdk,
-    unlockWalletIfNotEncrypted,
     ...process.env.RUNNING_IN_POPUP ? [] : [
       remoteConnection,
       registerServiceWorker,
       reverseIframe,
       ...process.env.IS_MOBILE_DEVICE ? [] : [syncLedgerAccounts],
+      ...process.env.RUNNING_IN_FRAME ? [unlockWalletIfNotEncrypted] : [],
     ],
   ],
 

@@ -1,4 +1,4 @@
-import { Crypto } from '@aeternity/aepp-sdk';
+import { TxBuilderHelper } from '@aeternity/aepp-sdk';
 import { i18n } from '../../store/plugins/ui/languages';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';
@@ -26,7 +26,7 @@ export const genDetailsAmountCurrency = genDetailsWrapper(DetailsAmountCurrency,
 export const Payload = {
   functional: true,
   render: (createElement, { props: { value } }) => {
-    const data = Crypto.decodeBase64Check(Crypto.assertedType(value, 'ba')).toString();
+    const data = TxBuilderHelper.decode(value, 'ba').toString();
     return data
       ? createElement(DetailsRawData, {
         attrs: { name: i18n.t('modal.confirm-transaction-sign.payload'), data },
@@ -47,7 +47,7 @@ export const NameEncoded = {
   render: (createElement, { props: { value } }) => createElement(DetailsField, {
     attrs: {
       name: i18n.t('name.details.name'),
-      value: Crypto.decodeBase58Check(Crypto.assertedType(value, 'nm')).toString(),
+      value: TxBuilderHelper.decode(value, 'nm').toString(),
     },
   }),
 };
