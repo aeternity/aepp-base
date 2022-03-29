@@ -2,7 +2,7 @@ name: Staging Aepp Base Pipeline
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop, gh-actions-build ]
     types: [ opened, synchronize, closed ]
 
 env:
