@@ -1,5 +1,4 @@
-name: Staging Aepp Base Pipeline
-
+name: Staging Aepp Base Pipeline Test
 on:
   pull_request:
     branches: [ master, develop ]
