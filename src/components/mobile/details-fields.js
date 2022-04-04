@@ -42,16 +42,6 @@ export const ContractId = genDetailsAddress(() => i18n.t('modal.confirm-transact
 export const CommitmentId = genDetailsRawData(() => i18n.t('modal.confirm-transaction-sign.commitment'));
 export const Name = genDetailsField(() => i18n.t('name.details.name'));
 
-export const NameEncoded = {
-  functional: true,
-  render: (createElement, { props: { value } }) => createElement(DetailsField, {
-    attrs: {
-      name: i18n.t('name.details.name'),
-      value: TxBuilderHelper.decode(value, 'nm').toString(),
-    },
-  }),
-};
-
 export const NameSalt = genDetailsField(() => i18n.t('modal.confirm-transaction-sign.name-salt'));
 export const NameId = genDetailsRawData(() => i18n.t('modal.confirm-transaction-sign.name-id'));
 export const NameFee = genDetailsAmountCurrency(() => i18n.t('modal.confirm-transaction-sign.name-fee'));

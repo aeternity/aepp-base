@@ -294,7 +294,7 @@ export default {
       const encodedTx = await dispatch('confirmTxSigning', TxBuilderHelper.decode(txBase64, 'tx'));
       const signature = await dispatch(
         'signWithoutConfirmation',
-        Buffer.concat([Buffer.from(sdk.getNetworkId()), encodedTx]),
+        Buffer.concat([Buffer.from(sdk.getNetworkId()), Buffer.from(encodedTx)]),
       );
       return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, SCHEMA.TX_TYPE.signed).tx;
     },
