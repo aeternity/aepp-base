@@ -13,7 +13,7 @@ env:
 jobs:
   main:
     runs-on: ubuntu-latest    
-    name: Web build docker
+    name: Staging Aepp Base Pipeline
     steps:
       - uses: actions/checkout@v2
         with:
