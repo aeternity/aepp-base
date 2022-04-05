@@ -70,7 +70,7 @@ import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsList from './DetailsList.vue';
 import {
   Payload, RecipientId, Code, CallData, ContractId,
-  CommitmentId, NameEncoded, NameSalt, NameId, NameFee,
+  CommitmentId, Name, NameSalt, NameId, NameFee,
 } from './details-fields';
 import DetailsNamePointers from './DetailsNamePointers.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
@@ -104,7 +104,7 @@ export default {
         callData: CallData,
         contractId: ContractId,
         commitmentId: CommitmentId,
-        name: NameEncoded,
+        name: Name,
         nameFee: NameFee,
         nameSalt: NameSalt,
         nameId: NameId,
