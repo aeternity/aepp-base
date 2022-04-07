@@ -1,6 +1,6 @@
-import TransportU2F from '@ledgerhq/hw-transport-u2f';
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 
 export default async (store) => {
-  const isSupported = await TransportU2F.isSupported();
+  const isSupported = await TransportWebUSB.isSupported();
   store.commit('setLedgerSupported', isSupported);
 };
