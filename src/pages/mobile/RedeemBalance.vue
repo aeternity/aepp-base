@@ -102,7 +102,7 @@ export default {
         return;
       }
 
-      const address = TxBuilderHelper(Crypto.generateKeyPairFromSecret(privateKey).publicKey, 'ak');
+      const address = TxBuilderHelper.encode(Crypto.generateKeyPairFromSecret(privateKey).publicKey, 'ak');
       this.balance = BigNumber(await this.$store.state.sdk.getBalance(address))
         .shiftedBy(-MAGNITUDE);
       if (this.balance < MIN_SPEND_TX_FEE) {
