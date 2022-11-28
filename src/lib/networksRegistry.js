@@ -1,4 +1,4 @@
-export const defaultNetwork = {
+const mainNetwork = {
   name: 'Iris-net',
   url: 'https://mainnet.aeternity.io',
   middlewareUrl: 'https://mainnet.aeternity.io/mdw',
@@ -14,10 +14,24 @@ const testNetwork = {
   compilerUrl: 'https://compiler.aepps.com',
 };
 
-export default Object.freeze((process.env.NODE_ENV === 'production' ? [
-  defaultNetwork,
+let networks = process.env.NODE_ENV === 'production' ? [
+  mainNetwork,
   testNetwork,
 ] : [
   testNetwork,
-  defaultNetwork,
-]).map(Object.freeze));
+  mainNetwork,
+];
+
+export const defaultNetwork = process.env.VUE_APP_NETWORK_NAME ? {
+  name: process.env.VUE_APP_NETWORK_NAME,
+  url: process.env.VUE_APP_NODE_URL,
+  middlewareUrl: process.env.VUE_APP_MDW_URL,
+  explorerUrl: process.env.VUE_APP_EXPLORER_URL,
+  compilerUrl: process.env.VUE_APP_COMPILER_URL,
+} : mainNetwork;
+
+if (process.env.VUE_APP_NETWORK_NAME) {
+  networks = [defaultNetwork];
+}
+
+export default Object.freeze(networks.map(Object.freeze));
