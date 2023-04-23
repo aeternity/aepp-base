@@ -11,7 +11,7 @@ export default {
   computed: {
     hasIcon() {
       return get(this.$slots.default, '[0].tag', '') === 'svg'
-        && get(this.$slots.default, '[0].data.class', []).join(' ').includes('icon');
+        && get(this.$slots.default, '[0].data.staticClass', '').includes('icon');
     },
   },
 };

@@ -20,8 +20,11 @@
           class="value"
         >
           {{ currentNetwork.name }}
-          <ButtonPlain @click="networkMode = 'switch'">
-            <LeftMore ref="networkIcon" />
+          <ButtonPlain
+            ref="networkButton"
+            @click="networkMode = 'switch'"
+          >
+            <LeftMore />
           </ButtonPlain>
         </div>
       </ListItem>
@@ -36,22 +39,26 @@
         </ListItemCircle>
         <ButtonPlain
           slot="right"
+          ref="currencyButton"
           @click="showCurrencySwitcher = true"
         >
-          <LeftMore ref="currencyIcon" />
+          <LeftMore />
         </ButtonPlain>
       </ListItem>
 
       <ListItemSettingsLanguage>
-        <ButtonPlain @click="showLanguageSwitcher = true">
-          <LeftMore ref="languageIcon" />
+        <ButtonPlain
+          ref="languageButton"
+          @click="showLanguageSwitcher = true"
+        >
+          <LeftMore />
         </ButtonPlain>
       </ListItemSettingsLanguage>
     </AeCard>
     <SettingsVersion />
 
     <AePopover
-      :anchor="networkMode ? $refs.networkIcon : null"
+      :anchor="networkMode ? $refs.networkButton : null"
       v-bind="popoverOrigin"
       @close="closeNetworkPopover"
     >
@@ -67,7 +74,7 @@
     </AePopover>
 
     <AePopover
-      :anchor="showCurrencySwitcher ? $refs.currencyIcon : null"
+      :anchor="showCurrencySwitcher ? $refs.currencyButton : null"
       v-bind="popoverOrigin"
       @close="showCurrencySwitcher = false"
     >
@@ -75,7 +82,7 @@
     </AePopover>
 
     <AePopover
-      :anchor="showLanguageSwitcher ? $refs.languageIcon : null"
+      :anchor="showLanguageSwitcher ? $refs.languageButton : null"
       v-bind="popoverOrigin"
       @close="showLanguageSwitcher = false"
     >

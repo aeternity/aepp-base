@@ -1,4 +1,5 @@
 const path = require('path');
+const addClassesToSVGElement = require('svgo/plugins/addClassesToSVGElement').fn;
 const branch = require('./scripts/current-branch');
 const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
@@ -21,23 +22,24 @@ module.exports = {
         oneOf: [{
           resourceQuery: /icon-component/,
           use: [{
-            loader: 'babel-loader',
-            options: { configFile: false, presets: ['@babel/preset-env'] },
+            loader: 'vue-loader',
           }, {
-            loader: 'vue-svg-loader',
+            loader: path.resolve('config/webpack/vue-svg-loader.js'),
+          }, {
+            loader: 'svgo-loader',
             options: {
-              svgo: {
-                plugins: [{
-                  addClassesToSVGElement: {
-                    type: 'full',
-                    fn(data, options, extra) {
-                      const svg = data.content[0];
-                      svg.class.add('icon', path.basename(extra.path, '.svg'));
-                      return data;
-                    },
+              plugins: [
+                'preset-default',
+                { name: 'addClassesToSVGElement', params: { className: ['icon'] } },
+                {
+                  name: 'addFilenameToClasses',
+                  type: 'visitor',
+                  fn(root, params, extra) {
+                    const className = path.basename(extra.path, '.svg');
+                    return addClassesToSVGElement(root, { className });
                   },
-                }],
-              },
+                },
+              ],
             },
           }],
         }, {
