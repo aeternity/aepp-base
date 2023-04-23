@@ -1,7 +1,10 @@
-/* global workbox clients */
+/* global clients */
 /* eslint no-restricted-globals: 0 */
+
+import { precacheAndRoute } from 'workbox-precaching';
+
 // eslint-disable-next-line no-underscore-dangle
-workbox.precaching.precacheAndRoute(self.__precacheManifest);
+precacheAndRoute(self.__WB_MANIFEST);
 
 self.addEventListener('push', (event) => {
   const title = 'Remote device requests to sign a transaction';

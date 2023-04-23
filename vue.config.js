@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const addClassesToSVGElement = require('svgo/plugins/addClassesToSVGElement').fn;
 const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
@@ -11,9 +12,19 @@ module.exports = {
   productionSourceMap: !process.env.VUE_APP_CORDOVA,
   lintOnSave: false,
   configureWebpack: {
+    resolve: {
+      fallback: {
+        stream: require.resolve('stream-browserify'),
+        buffer: require.resolve('buffer/'),
+      },
+    },
+    plugins: [
+      new webpack.ProvidePlugin({ Buffer: ['buffer', 'Buffer'] }),
+    ],
     module: {
       rules: [{
         test: /\.(svg)(\?.*)?$/,
+        type: 'javascript/auto',
         oneOf: [{
           resourceQuery: /icon-component/,
           use: [{
@@ -60,14 +71,17 @@ module.exports = {
       ENV_MOBILE_DEVICE: !!process.env.VUE_APP_CORDOVA || 'window.navigator.userAgent.includes(\'Mobi\')',
     }]);
 
-    config.module.rule('svg').uses.clear();
+    config.module.rules.delete('svg');
 
-    if (process.env.VUE_APP_CORDOVA) config.plugins.delete('pwa');
+    if (process.env.VUE_APP_CORDOVA) {
+      config.plugins.delete('pwa');
+      config.plugins.delete('workbox');
+    }
   },
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      swSrc: 'src/service-worker.js',
+      swSrc: './src/service-worker.js',
     },
     name: 'Base æpp',
     manifestPath: 'default.webmanifest',
