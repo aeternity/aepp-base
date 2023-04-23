@@ -33,7 +33,7 @@ npm run build
 npm run build -- --report
 
 # generate resources for cordova
-npm run gen:cordova-resource
+npm run gen:cordova-resources
 
 # build for cordova
 npm run build:cordova
