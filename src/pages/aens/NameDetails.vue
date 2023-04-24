@@ -114,7 +114,7 @@ export default {
     async goToTransactionDetails() {
       const { hash } = await this.$store.state.sdk.middleware.api
         .getTxByIndex(this.details.info.claims[0]);
-      await this.$router.push(this.$globals.IS_MOBILE_DEVICE
+      await this.$router.push(ENV_MOBILE_DEVICE
         ? { name: 'transaction-details', params: { hash } }
         : `${this.currentNetwork.explorerUrl}/transactions/${hash}`);
     },

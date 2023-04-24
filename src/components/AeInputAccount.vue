@@ -17,8 +17,8 @@
       size="s"
     />
 
-    <template :slot="$globals.IS_MOBILE_DEVICE ? 'default-bottom-right' : 'footer-right'">
-      <template v-if="!$globals.IS_MOBILE_DEVICE">
+    <template :slot="$globals.ENV_MOBILE_DEVICE ? 'default-bottom-right' : 'footer-right'">
+      <template v-if="!$globals.ENV_MOBILE_DEVICE">
         <AeToolbarButton
           v-if="accounts.length"
           ref="accounts-button"
@@ -49,14 +49,14 @@
         @click="readValueFromClipboard"
       >
         <Paste />
-        {{ $globals.IS_MOBILE_DEVICE ? $t('transfer.send.to.paste') : '' }}
+        {{ $globals.ENV_MOBILE_DEVICE ? $t('transfer.send.to.paste') : '' }}
       </AeToolbarButton>
       <AeToolbarButton
         type="button"
         @click="readValueFromQrCode"
       >
         <Camera />
-        {{ $globals.IS_MOBILE_DEVICE ? $t('transfer.send.to.scan') : '' }}
+        {{ $globals.ENV_MOBILE_DEVICE ? $t('transfer.send.to.scan') : '' }}
       </AeToolbarButton>
     </template>
   </AeTextareaFormatted>
@@ -143,7 +143,7 @@ export default {
     },
   }),
   subscriptions() {
-    return !process.env.IS_MOBILE_DEVICE && {
+    return !ENV_MOBILE_DEVICE && {
       accounts: this.$store.state.observables.inactiveAccounts,
     };
   },

@@ -7,7 +7,7 @@ const packagesToTranspile = [
 ];
 
 module.exports = {
-  setupFiles: ['jest-canvas-mock'],
+  setupFiles: ['jest-canvas-mock', '<rootDir>/config/jest/globals.js'],
   moduleFileExtensions: [
     'js',
     'mjs',

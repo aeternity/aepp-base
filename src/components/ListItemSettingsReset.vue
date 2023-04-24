@@ -1,9 +1,9 @@
 <template>
   <ListItem
-    :title="$globals.IS_MOBILE_DEVICE
+    :title="$globals.ENV_MOBILE_DEVICE
       ? $t('settings.reset.title')
       : $t('settings.reset.title-desktop')"
-    :subtitle="$globals.IS_MOBILE_DEVICE
+    :subtitle="$globals.ENV_MOBILE_DEVICE
       ? $t('settings.reset.subtitle')
       : $t('settings.reset.subtitle-desktop')"
     @click="reset"
@@ -25,7 +25,7 @@ export default {
     async reset() {
       await this.$store.dispatch('modals/open', {
         name: 'confirm',
-        text: process.env.IS_MOBILE_DEVICE
+        text: ENV_MOBILE_DEVICE
           ? this.$t('settings.reset.confirm')
           : this.$t('settings.reset.confirm-desktop'),
         primaryButtonText: this.$t('settings.reset.button'),

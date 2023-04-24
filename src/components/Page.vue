@@ -1,7 +1,7 @@
 <template>
   <Component
     :is="modal ? 'AeModal' : 'div'"
-    :class="[fill, { desktop: !$globals.IS_MOBILE_DEVICE }, { modal }]"
+    :class="[fill, { desktop: !$globals.ENV_MOBILE_DEVICE }, { modal }]"
     class="page"
   >
     <PageHeader
@@ -33,7 +33,7 @@
       <div class="wrapper">
         <slot name="footer" />
       </div>
-      <TabBar v-if="$globals.IS_MOBILE_DEVICE && !hideTabBar" />
+      <TabBar v-if="$globals.ENV_MOBILE_DEVICE && !hideTabBar" />
     </footer>
   </Component>
 </template>
@@ -42,6 +42,7 @@
 import PageHeader from './PageHeader.vue';
 import TabBar from './mobile/TabBar.vue';
 import AeModal from './AeModal.vue';
+import { IS_IOS } from '../lib/constants';
 
 export default {
   components: { PageHeader, TabBar, AeModal },
@@ -73,7 +74,7 @@ export default {
     modal: Boolean,
   },
   async mounted() {
-    if (process.env.VUE_APP_CORDOVA && process.env.IS_IOS) {
+    if (process.env.VUE_APP_CORDOVA && IS_IOS) {
       await new Promise((resolve) => {
         document.addEventListener('deviceready', resolve);
       });

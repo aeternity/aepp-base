@@ -1,6 +1,6 @@
 <template>
   <AeButton
-    :class="{ mobile: $globals.IS_MOBILE_DEVICE }"
+    :class="{ mobile: $globals.ENV_MOBILE_DEVICE }"
     fill="primary"
     class="button-add-fixed"
     :to="to"

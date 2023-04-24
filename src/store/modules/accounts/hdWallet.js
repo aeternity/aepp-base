@@ -14,7 +14,7 @@ import {
 import AES from '../../../lib/aes';
 import { i18n } from '../../plugins/ui/languages';
 
-const type = `hd-wallet${process.env.IS_MOBILE_DEVICE ? '' : '-desktop'}`;
+const type = `hd-wallet${ENV_MOBILE_DEVICE ? '' : '-desktop'}`;
 
 export default {
   namespaced: true,

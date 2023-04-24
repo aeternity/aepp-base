@@ -4,6 +4,7 @@ import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Ae from '@aeternity/ledger-app-api';
 import { TxBuilder, SCHEMA } from '@aeternity/aepp-sdk';
 import { i18n } from '../../plugins/ui/languages';
+import { RUNNING_IN_FRAME } from '../../../lib/constants';
 
 const signOnMobile = async ({ dispatch }) => {
   await dispatch('modals/open', {
@@ -22,21 +23,21 @@ export default {
     color: 'dark',
   },
 
-  getters: process.env.IS_MOBILE_DEVICE ? {} : {
+  getters: ENV_MOBILE_DEVICE ? {} : {
     nextIdx: (state, getters, rootState, rootGetters) => Math.max(
       ...rootGetters['accounts/getByType']('ledger').map(({ source: { idx } }) => idx),
       -1,
     ) + 1,
   },
 
-  actions: process.env.IS_MOBILE_DEVICE ? {
+  actions: ENV_MOBILE_DEVICE ? {
     sign: signOnMobile,
     signTransaction: signOnMobile,
   } : {
     async request({ dispatch }, { name, args }) {
       const transport = await TransportWebUSB.create();
       const ledgerAppApi = new Ae(transport);
-      if (process.env.RUNNING_IN_FRAME) return ledgerAppApi[name](...args);
+      if (RUNNING_IN_FRAME) return ledgerAppApi[name](...args);
       const modalName = { signTransaction: 'ledgerSignTransaction' }[name] || 'ledgerRequest';
       let result;
       let error;
@@ -85,7 +86,7 @@ export default {
       const account = rootGetters['accounts/active'];
       const address = await dispatch('request', { name: 'getAddress', args: [account.source.idx] });
       if (account.address !== address) {
-        if (!process.env.RUNNING_IN_FRAME) {
+        if (!RUNNING_IN_FRAME) {
           dispatch('modals/open', { name: 'ledgerAccountNotFound' }, { root: true });
         }
         throw new Error('Account not found');

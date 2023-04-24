@@ -7,7 +7,7 @@
     {{ $t('not-found.note') }}
 
     <AeButton
-      v-if="!loggedIn && $globals.IS_MOBILE_DEVICE"
+      v-if="!loggedIn && $globals.ENV_MOBILE_DEVICE"
       slot="footer"
       :to="{ name: 'intro' }"
     >
@@ -24,7 +24,7 @@ import AeButton from '../components/AeButton.vue';
 export default {
   components: { AeButton },
   data: () => ({
-    wrapper: process.env.IS_MOBILE_DEVICE ? Page : 'div',
+    wrapper: ENV_MOBILE_DEVICE ? Page : 'div',
   }),
   computed: mapGetters(['loggedIn']),
 };

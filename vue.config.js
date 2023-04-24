@@ -2,10 +2,6 @@ const path = require('path');
 const addClassesToSVGElement = require('svgo/plugins/addClassesToSVGElement').fn;
 const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
-const parseBool = (val) => (val ? JSON.parse(val) : false);
-
-const { IS_MOBILE_DEVICE, IS_PWA } = process.env;
-
 process.env.VUE_APP_VERSION = process.env.npm_package_version;
 process.env.VUE_APP_SDK_VERSION = sdkVersion;
 
@@ -58,24 +54,11 @@ module.exports = {
     },
   },
   chainWebpack(config) {
-    config.plugin('define').tap((options) => {
-      const definitions = { ...options[0] };
-
-      Object.entries(definitions['process.env']).forEach(([k, v]) => {
-        definitions[`process.env.${k}`] = v;
-      });
-      delete definitions['process.env'];
-
-      if (process.env.VUE_APP_CORDOVA || IS_MOBILE_DEVICE) {
-        definitions['process.env.IS_MOBILE_DEVICE'] = process.env.VUE_APP_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
-      }
-
-      if (IS_PWA) {
-        definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA);
-      }
-
-      return [definitions];
-    });
+    config.plugin('define').tap(([definitions]) => [{
+      ...definitions,
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent#Mobile_Tablet_or_Desktop
+      ENV_MOBILE_DEVICE: !!process.env.VUE_APP_CORDOVA || 'window.navigator.userAgent.includes(\'Mobi\')',
+    }]);
 
     config.module.rule('svg').uses.clear();
   },

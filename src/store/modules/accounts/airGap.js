@@ -5,6 +5,7 @@ import { getDesktopRemoteSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
 } from '../../../lib/airGap';
+import { IS_IOS, IS_PWA } from '../../../lib/constants';
 import { i18n } from '../../plugins/ui/languages';
 import { receive } from '../../../lib/localStorageCall';
 
@@ -20,17 +21,17 @@ export default {
     color: 'alternative',
   },
 
-  state: process.env.IS_MOBILE_DEVICE ? {
+  state: ENV_MOBILE_DEVICE ? {
     deepLinkCallback: null,
   } : {},
 
-  mutations: process.env.IS_MOBILE_DEVICE ? {
+  mutations: ENV_MOBILE_DEVICE ? {
     setDeepLinkCallback(state, callback) {
       state.deepLinkCallback = callback;
     },
   } : {},
 
-  actions: process.env.IS_MOBILE_DEVICE ? {
+  actions: ENV_MOBILE_DEVICE ? {
     createByResponseUrl({ commit }, { responseUrl, transport = TRANSPORT_DEEP_LINK }) {
       const publicKey = getPublicKeyByResponseUrl(responseUrl);
       const address = TxBuilderHelper.encode(publicKey, 'ak');
@@ -61,7 +62,7 @@ export default {
     signTransactionByDeepLink({ commit }, requestUrl) {
       if (process.env.VUE_APP_CORDOVA) {
         window.startApp.set(
-          process.env.IS_IOS
+          IS_IOS
             ? requestUrl
             : {
               action: 'ACTION_VIEW',
@@ -72,7 +73,7 @@ export default {
       } else {
         window.location.href = requestUrl;
       }
-      return process.env.VUE_APP_CORDOVA || process.env.IS_PWA
+      return process.env.VUE_APP_CORDOVA || IS_PWA
         ? new Promise((resolve) => { commit('setDeepLinkCallback', resolve); }) : receive();
     },
 
