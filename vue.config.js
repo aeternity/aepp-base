@@ -15,6 +15,7 @@ module.exports = {
   publicPath: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   productionSourceMap: !IS_CORDOVA,
+  lintOnSave: false,
   configureWebpack: {
     module: {
       rules: [{
