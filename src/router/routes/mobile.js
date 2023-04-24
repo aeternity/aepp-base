@@ -320,7 +320,7 @@ export default [{
     ensureLoggedIn,
     (to, from, next) => {
       const url = window.location.origin + to.fullPath;
-      if (process.env.IS_CORDOVA || process.env.IS_PWA) {
+      if (process.env.VUE_APP_CORDOVA || process.env.IS_PWA) {
         store.state.accounts.airGap.deepLinkCallback(url);
         store.commit('airGap/setDeepLinkCallback');
         next(false);

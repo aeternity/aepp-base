@@ -7,7 +7,7 @@
 <script>
 export default {
   data: () => ({
-    version: process.env.npm_package_version,
+    version: process.env.VUE_APP_VERSION,
   }),
 };
 </script>

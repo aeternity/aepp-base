@@ -73,7 +73,7 @@ export default {
     modal: Boolean,
   },
   async mounted() {
-    if (process.env.IS_CORDOVA && process.env.IS_IOS) {
+    if (process.env.VUE_APP_CORDOVA && process.env.IS_IOS) {
       await new Promise((resolve) => {
         document.addEventListener('deviceready', resolve);
       });

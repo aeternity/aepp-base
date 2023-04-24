@@ -135,7 +135,7 @@ export default {
   },
   data: () => ({
     showAccountsDropdown: false,
-    clipboardReadSupported: process.env.IS_CORDOVA || navigator.clipboard,
+    clipboardReadSupported: process.env.VUE_APP_CORDOVA || navigator.clipboard,
   }),
   computed: mapState('names', {
     address(state, { getAddress }) {
@@ -163,7 +163,7 @@ export default {
       }));
     },
     async readValueFromClipboard() {
-      this.setValue(await (process.env.IS_CORDOVA
+      this.setValue(await (process.env.VUE_APP_CORDOVA
         ? new Promise((...args) => {
           window.cordova.plugins.clipboard.paste(...args);
         })

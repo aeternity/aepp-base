@@ -4,14 +4,15 @@ const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/pack
 
 const parseBool = (val) => (val ? JSON.parse(val) : false);
 
-// eslint-disable-next-line camelcase
-const { IS_MOBILE_DEVICE, IS_PWA, npm_package_version } = process.env;
-const IS_CORDOVA = parseBool(process.env.IS_CORDOVA);
+const { IS_MOBILE_DEVICE, IS_PWA } = process.env;
+
+process.env.VUE_APP_VERSION = process.env.npm_package_version;
+process.env.VUE_APP_SDK_VERSION = sdkVersion;
 
 module.exports = {
-  publicPath: IS_CORDOVA ? './' : '/',
-  outputDir: IS_CORDOVA ? 'www' : 'dist',
-  productionSourceMap: !IS_CORDOVA,
+  publicPath: process.env.VUE_APP_CORDOVA ? './' : '/',
+  outputDir: process.env.VUE_APP_CORDOVA ? 'www' : 'dist',
+  productionSourceMap: !process.env.VUE_APP_CORDOVA,
   lintOnSave: false,
   configureWebpack: {
     module: {
@@ -65,21 +66,13 @@ module.exports = {
       });
       delete definitions['process.env'];
 
-      definitions['process.env.IS_CORDOVA'] = IS_CORDOVA;
-
-      if (IS_CORDOVA || IS_MOBILE_DEVICE) {
-        definitions['process.env.IS_MOBILE_DEVICE'] = IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
+      if (process.env.VUE_APP_CORDOVA || IS_MOBILE_DEVICE) {
+        definitions['process.env.IS_MOBILE_DEVICE'] = process.env.VUE_APP_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
       }
 
       if (IS_PWA) {
         definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA);
       }
-
-      // eslint-disable-next-line camelcase
-      if (npm_package_version) {
-        definitions['process.env.npm_package_version'] = JSON.stringify(npm_package_version);
-      }
-      definitions['process.env.SDK_VERSION'] = JSON.stringify(sdkVersion);
 
       return [definitions];
     });

@@ -21,6 +21,6 @@ Object.assign(process.env, {
 
 Object.assign(process.env, {
   ...process.env.DISABLED_BROWSER === undefined && {
-    DISABLED_BROWSER: process.env.IS_CORDOVA && process.env.IS_IOS,
+    DISABLED_BROWSER: process.env.VUE_APP_CORDOVA && process.env.IS_IOS,
   },
 });

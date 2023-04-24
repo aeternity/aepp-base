@@ -41,10 +41,10 @@ export default {
     infoFields({ sdk }, { currentNetwork }) {
       return [{
         name: this.$t('settings.info.version'),
-        value: process.env.npm_package_version,
+        value: process.env.VUE_APP_VERSION,
       }, {
         name: this.$t('settings.info.sdk-version'),
-        value: process.env.SDK_VERSION,
+        value: process.env.VUE_APP_SDK_VERSION,
       }, {
         name: this.$t('settings.info.node.url'),
         subtitle: currentNetwork.url,

@@ -59,7 +59,7 @@ export default {
     sign: () => Promise.reject(new Error('Not implemented yet')),
 
     signTransactionByDeepLink({ commit }, requestUrl) {
-      if (process.env.IS_CORDOVA) {
+      if (process.env.VUE_APP_CORDOVA) {
         window.startApp.set(
           process.env.IS_IOS
             ? requestUrl
@@ -72,7 +72,7 @@ export default {
       } else {
         window.location.href = requestUrl;
       }
-      return process.env.IS_CORDOVA || process.env.IS_PWA
+      return process.env.VUE_APP_CORDOVA || process.env.IS_PWA
         ? new Promise((resolve) => { commit('setDeepLinkCallback', resolve); }) : receive();
     },
 

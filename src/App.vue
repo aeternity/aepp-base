@@ -22,7 +22,7 @@ export default {
   mounted() {
     document.documentElement.style.setProperty(
       '--height',
-      process.env.IS_CORDOVA && process.env.IS_IOS ? '100vh' : '100%',
+      process.env.VUE_APP_CORDOVA && process.env.IS_IOS ? '100vh' : '100%',
     );
   },
 };

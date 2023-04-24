@@ -28,7 +28,7 @@ const getState = () => JSON.parse(
 
 export const resetState = () => {
   localStorage.removeItem(KEY);
-  window.location = process.env.IS_CORDOVA ? './index.html' : '/';
+  window.location = process.env.VUE_APP_CORDOVA ? './index.html' : '/';
 };
 
 export default (reducerLoad, reducerSave) => (store) => {

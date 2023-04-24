@@ -13,7 +13,7 @@ store.subscribe((mutation, state) => {
 
 export default (async () => {
   const router = new Router({
-    mode: process.env.IS_CORDOVA ? 'hash' : 'history',
+    mode: process.env.VUE_APP_CORDOVA ? 'hash' : 'history',
     scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {
         return savedPosition;
@@ -29,12 +29,12 @@ export default (async () => {
   });
 
   if (
-    process.env.IS_MOBILE_DEVICE && !process.env.IS_CORDOVA
+    process.env.IS_MOBILE_DEVICE && !process.env.VUE_APP_CORDOVA
     && !process.env.IS_PWA && !process.env.IS_IOS
     && !store.state.mobile.skipAddingToHomeScreen
   ) await router.replace({ name: 'add-to-home-screen' });
 
-  if (process.env.IS_CORDOVA) {
+  if (process.env.VUE_APP_CORDOVA) {
     document.addEventListener('deviceready', () => window.IonicDeeplink
       .onDeepLink((d) => router.push(((u) => u.pathname + u.search)(new URL(d.url)))));
   }
