@@ -61,6 +61,8 @@ module.exports = {
     }]);
 
     config.module.rule('svg').uses.clear();
+
+    if (process.env.VUE_APP_CORDOVA) config.plugins.delete('pwa');
   },
   pwa: {
     workboxPluginMode: 'InjectManifest',
