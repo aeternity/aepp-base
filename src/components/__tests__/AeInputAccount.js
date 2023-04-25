@@ -6,7 +6,7 @@ import { AENS_DOMAIN } from '../../lib/constants';
 
 Object.assign(Vue.prototype, {
   $globals: {
-    IS_MOBILE_DEVICE: true,
+    ENV_MOBILE_DEVICE: true,
   },
   $t: () => 'locale-specific-text',
 });

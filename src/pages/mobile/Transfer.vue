@@ -77,6 +77,7 @@ import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
 import { LeftMore } from '../../components/icons';
 import ListItem from '../../components/ListItem.vue';
+import { DISABLED_BROWSER } from '../../lib/constants';
 
 export default {
   components: {
@@ -105,7 +106,7 @@ export default {
         tooltips: [{
           selector: '.transfer .ae-account .ae-identicon',
           ...this.$t('transfer.tooltips.identicon'),
-        }, ...!process.env.DISABLED_BROWSER ? [{
+        }, ...!DISABLED_BROWSER ? [{
           selector: '.transfer .tab-bar .button-plain',
           ...this.$t('transfer.tooltips.browser'),
         }] : [], {

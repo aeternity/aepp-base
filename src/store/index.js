@@ -5,6 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRx from 'vue-rx';
 import '../lib/storeErrorHandler';
+import { RUNNING_IN_POPUP, RUNNING_IN_FRAME } from '../lib/constants';
 import rootModule from './modules/root';
 import desktopModule from './modules/desktop';
 import mobileModule from './modules/mobile';
@@ -56,7 +57,7 @@ export default new Vuex.Store({
           hdWallet: { encryptedWallet, mnemonicBackedUp },
         },
         apps,
-        ...process.env.IS_MOBILE_DEVICE ? {
+        ...ENV_MOBILE_DEVICE ? {
           mobile: {
             readSecurityCourses,
             followers: Object.entries(followers)
@@ -70,18 +71,18 @@ export default new Vuex.Store({
       }),
     ),
     initSdk,
-    ...process.env.RUNNING_IN_POPUP ? [] : [
+    ...RUNNING_IN_POPUP ? [] : [
       remoteConnection,
       registerServiceWorker,
       reverseIframe,
-      ...process.env.IS_MOBILE_DEVICE ? [] : [syncLedgerAccounts],
-      ...process.env.RUNNING_IN_FRAME ? [unlockWalletIfNotEncrypted] : [],
+      ...ENV_MOBILE_DEVICE ? [] : [syncLedgerAccounts],
+      ...RUNNING_IN_FRAME ? [unlockWalletIfNotEncrypted] : [],
     ],
   ],
 
   modules: {
-    ...process.env.RUNNING_IN_POPUP ? {} : {
-      ...process.env.IS_MOBILE_DEVICE
+    ...RUNNING_IN_POPUP ? {} : {
+      ...ENV_MOBILE_DEVICE
         ? { mobile: mobileModule }
         : { desktop: desktopModule },
     },

@@ -1,7 +1,7 @@
 import { register } from 'register-service-worker';
 
 export default (store) => {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' && !process.env.VUE_APP_CORDOVA) {
     register(`${process.env.BASE_URL}service-worker.js`, {
       registered(registration) {
         store.commit('setServiceWorkerRegistration', registration);

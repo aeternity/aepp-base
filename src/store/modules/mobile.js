@@ -58,7 +58,7 @@ export default {
     },
 
     async share(_, options) {
-      await (process.env.IS_CORDOVA
+      await (process.env.VUE_APP_CORDOVA
         ? new Promise((resolve) => {
           window.plugins.socialsharing.shareW3C(options, ({ app }) => app && resolve());
         })

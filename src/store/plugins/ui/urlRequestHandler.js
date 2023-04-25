@@ -23,7 +23,7 @@ export default (store) => {
         error ? 'error' : 'result',
         error ? seraliseError(error) : JSON.stringify(result),
       );
-      if (process.env.IS_CORDOVA) {
+      if (process.env.VUE_APP_CORDOVA) {
         window.open(callbackUrl, '_system');
       } else {
         window.location.href = callbackUrl;

@@ -23,7 +23,7 @@ export default (store) => [
   names,
   observables,
   veeValidate,
-  ...process.env.IS_MOBILE_DEVICE
+  ...ENV_MOBILE_DEVICE
     ? [
       pathTracker,
       notificationOnRemoteConnection,

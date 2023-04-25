@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Base æpp</title>
 
-    <% if (!process.env.IS_CORDOVA) { %>
+    <% if (!process.env.VUE_APP_CORDOVA) { %>
     <link rel="shortcut icon" href="<%= BASE_URL %>favicons/favicon.ico">
     <% } %>
 
@@ -36,7 +36,7 @@
           + '</p>';
       }
     </script>
-    <% if (process.env.IS_CORDOVA) { %>
+    <% if (process.env.VUE_APP_CORDOVA) { %>
     <script type="text/javascript" src="cordova.js"></script>
     <% } %>
   </body>

@@ -3,7 +3,7 @@ import AES from '../../lib/aes';
 
 export default {
   migrate(state, store) {
-    if (!process.env.IS_MOBILE_DEVICE) return state;
+    if (!ENV_MOBILE_DEVICE) return state;
 
     return new Promise((resolve) => {
       const unsubscribe = store.subscribeAction(async ({ type, payload: password }) => {

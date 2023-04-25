@@ -4,7 +4,7 @@ import store from '../store';
 export const ensureLoggedIn = (to, from, next) => {
   if (!store.getters.loggedIn) {
     store.commit('setLoginTarget', to.fullPath);
-    if (process.env.IS_MOBILE_DEVICE) {
+    if (ENV_MOBILE_DEVICE) {
       next({ name: store.state.accounts.hdWallet.encryptedWallet ? 'login' : 'intro' });
     } else {
       if (from.name) next(false);

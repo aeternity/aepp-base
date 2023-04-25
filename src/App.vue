@@ -16,13 +16,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { IS_IOS } from './lib/constants';
 
 export default {
   computed: mapGetters('modals', ['opened', 'hidePage', 'grayscalePage']),
   mounted() {
     document.documentElement.style.setProperty(
       '--height',
-      process.env.IS_CORDOVA && process.env.IS_IOS ? '100vh' : '100%',
+      process.env.VUE_APP_CORDOVA && IS_IOS ? '100vh' : '100%',
     );
   },
 };

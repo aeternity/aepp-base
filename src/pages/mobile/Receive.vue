@@ -73,7 +73,7 @@ export default {
     return {
       writingHandEmoji,
       envelopeEmoji,
-      sharingSupported: navigator.share || process.env.IS_CORDOVA,
+      sharingSupported: navigator.share || process.env.VUE_APP_CORDOVA,
       sharedChecked: false,
     };
   },

@@ -44,7 +44,7 @@ export default (store) => {
 
   const open = async () => {
     const query = { key: store.state.peerId };
-    if (process.env.IS_MOBILE_DEVICE) {
+    if (ENV_MOBILE_DEVICE) {
       query.pushApiSubscription = await getPushApiSubscription();
     }
     const socket = (await io())(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
@@ -68,13 +68,13 @@ export default (store) => {
     closeCbs.push(store.watch(getStateForSync, (state) => {
       if (
         isEqual(state, processedState) || (
-          process.env.IS_MOBILE_DEVICE
+          ENV_MOBILE_DEVICE
           && !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return;
       broadcastState(state);
     }, { deep: true }));
 
-    if (process.env.IS_MOBILE_DEVICE) {
+    if (ENV_MOBILE_DEVICE) {
       const syncState = throttle(() => broadcastState(getStateForSync(store.state)), 500);
 
       closeCbs.push(store.subscribe(({ type, payload }) => {
@@ -152,7 +152,7 @@ export default (store) => {
 
   let closeCb;
   store.watch(
-    process.env.IS_MOBILE_DEVICE
+    ENV_MOBILE_DEVICE
       ? ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length
       : () => true,
     async (isConnectionNecessary) => {
