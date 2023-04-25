@@ -1,4 +1,5 @@
 const path = require('path');
+const addClassesToSVGElement = require('svgo/plugins/addClassesToSVGElement').fn;
 const branch = require('./scripts/current-branch');
 const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
@@ -14,73 +15,82 @@ module.exports = {
   publicPath: IS_CORDOVA ? './' : '/',
   outputDir: IS_CORDOVA ? 'www' : 'dist',
   productionSourceMap: !IS_CORDOVA,
-  chainWebpack: (config) => config.plugin('define').tap((options) => {
-    const definitions = { ...options[0] };
-
-    Object.entries(definitions['process.env']).forEach(([k, v]) => {
-      definitions[`process.env.${k}`] = v;
-    });
-    delete definitions['process.env'];
-
-    definitions['process.env.IS_CORDOVA'] = IS_CORDOVA;
-    definitions['process.env.IS_MASTER'] = IS_MASTER;
-    definitions['process.env.UNFINISHED_FEATURES'] = UNFINISHED_FEATURES;
-
-    if (IS_CORDOVA || IS_MOBILE_DEVICE) {
-      definitions['process.env.IS_MOBILE_DEVICE'] = IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
-    }
-
-    if (IS_PWA) {
-      definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA);
-    }
-
-    // eslint-disable-next-line camelcase
-    if (npm_package_version) {
-      definitions['process.env.npm_package_version'] = JSON.stringify(npm_package_version);
-    }
-    definitions['process.env.SDK_VERSION'] = JSON.stringify(sdkVersion);
-
-    return [definitions];
-  }).end()
-    .module.rule('svg')
-    .uses.clear().end()
-    .oneOf('icon-component')
-    .resourceQuery(/icon-component/)
-    .use('babel-loader')
-    .loader('babel-loader')
-    .options({ configFile: false, presets: ['@babel/preset-env'] })
-    .end()
-    .use('vue-svg-loader')
-    .loader('vue-svg-loader')
-    .options({
-      svgo: {
-        plugins: [{
-          addClassesToSVGElement: {
-            type: 'full',
-            fn(data, options, extra) {
-              const svg = data.content[0];
-              svg.class.add('icon', path.basename(extra.path, '.svg'));
-              return data;
+  lintOnSave: false,
+  configureWebpack: {
+    module: {
+      rules: [{
+        test: /\.(svg)(\?.*)?$/,
+        oneOf: [{
+          resourceQuery: /icon-component/,
+          use: [{
+            loader: 'vue-loader',
+          }, {
+            loader: path.resolve('config/webpack/vue-svg-loader.js'),
+          }, {
+            loader: 'svgo-loader',
+            options: {
+              plugins: [
+                'preset-default',
+                { name: 'addClassesToSVGElement', params: { className: ['icon'] } },
+                {
+                  name: 'addFilenameToClasses',
+                  type: 'visitor',
+                  fn(root, params, extra) {
+                    const className = path.basename(extra.path, '.svg');
+                    return addClassesToSVGElement(root, { className });
+                  },
+                },
+              ],
             },
-          },
+          }],
+        }, {
+          use: [{
+            loader: 'svg-url-loader',
+            options: {
+              noquotes: true,
+              limit: 4096,
+              name: 'img/[name].[hash:8].[ext]',
+              esModule: false,
+            },
+          }, {
+            loader: 'svgo-loader',
+          }],
         }],
-      },
-    })
-    .end()
-    .end()
-    .oneOf('default')
-    .use('svg-url-loader')
-    .loader('svg-url-loader')
-    .options({
-      noquotes: true,
-      limit: 4096,
-      name: 'img/[name].[hash:8].[ext]',
-      esModule: false,
-    })
-    .end()
-    .use('svgo-loader')
-    .loader('svgo-loader')
-    .end(),
+      }],
+    },
+  },
+  chainWebpack(config) {
+    config.plugin('define').tap((options) => {
+      const definitions = { ...options[0] };
+
+      Object.entries(definitions['process.env']).forEach(([k, v]) => {
+        definitions[`process.env.${k}`] = v;
+      });
+      delete definitions['process.env'];
+
+      definitions['process.env.IS_CORDOVA'] = IS_CORDOVA;
+      definitions['process.env.IS_MASTER'] = IS_MASTER;
+      definitions['process.env.UNFINISHED_FEATURES'] = UNFINISHED_FEATURES;
+
+      if (IS_CORDOVA || IS_MOBILE_DEVICE) {
+        definitions['process.env.IS_MOBILE_DEVICE'] = IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
+      }
+
+      if (IS_PWA) {
+        definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA);
+      }
+
+      // eslint-disable-next-line camelcase
+      if (npm_package_version) {
+        definitions['process.env.npm_package_version'] = JSON.stringify(npm_package_version);
+      }
+      definitions['process.env.SDK_VERSION'] = JSON.stringify(sdkVersion);
+
+      return [definitions];
+    });
+
+    config.module.rule('svg').uses.clear();
+  },
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
