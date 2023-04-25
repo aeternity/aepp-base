@@ -51,7 +51,7 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@intlify/eslint-plugin-vue-i18n": "^1.4.1",
+    "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
     "@vue/cli-plugin-babel": "^4.5.19",
     "@vue/cli-plugin-e2e-cypress": "^4.5.19",
     "@vue/cli-plugin-eslint": "^4.5.19",
