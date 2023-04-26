@@ -15,9 +15,10 @@ jobs:
     runs-on: ubuntu-latest    
     name: Staging Aepp Base Pipeline
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       
       - name: Set up Docker Buildx
         id: buildx
@@ -50,8 +51,6 @@ jobs:
         with:
           images: aeternity/aepp-base
           tags: |
-            type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'master') }}
-            type=ref,event=tag
             type=ref,event=pr
       
       - name: Get commit sha on PR Sync
@@ -89,6 +88,12 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       
+      - name: Chekc the initial PR deployment status before make a PR Sync.
+        if: github.event_name == 'pull_request' && github.event.action == 'synchronize'
+        uses: aeternity/ae-github-actions/deploy-status@v7
+        with:
+          url: https://pr-${{ env.PR_NUMBER }}-${{ env.APP }}.${{ env.ENV }}.aepps.com
+          
       - name: Staging PR Sync
         if: github.event_name == 'pull_request' && github.event.action == 'synchronize'
         uses: aeternity/ae-github-actions/argocd-pr-sync@v4

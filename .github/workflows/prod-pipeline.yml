@@ -30,10 +30,7 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        # Use the action from the master, as we've seen some inconsistencies with @v1
-        # Issue: https://github.com/docker/build-push-action/issues/286
         uses: docker/setup-buildx-action@master
-        # Only worked for us with this option on �‍♂️
         with:
           install: true
 
@@ -41,7 +38,6 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          # Key is named differently to avoid collision
           key: ${{ runner.os }}-${{ env.ENV }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-${{ env.ENV }}-buildx
@@ -78,9 +74,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
-          # Note the mode=max here
-          # More: https://github.com/moby/buildkit#--export-cache-options
-          # And: https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
       - name: Move cache
