@@ -83,7 +83,7 @@
     "svgo": "^2.8.0",
     "svgo-loader": "^3.0.3",
     "vue-cli-plugin-i18n": "^2.3.2",
-    "vue-i18n-extract": "1.0.3",
+    "vue-i18n-extract": "1.2.3",
     "vue-template-compiler": "^2.7.14",
     "webpack": "^5.80.0"
   },
