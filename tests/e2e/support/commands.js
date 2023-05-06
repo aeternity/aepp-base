@@ -61,6 +61,11 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalF
             },
           },
         },
+        {
+          mobile: {
+            skipAddingToHomeScreen: true,
+          },
+        },
         state,
       )) : null;
       const promise = new Promise(() => {});

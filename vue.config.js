@@ -84,7 +84,7 @@ module.exports = {
       swSrc: './src/service-worker.js',
     },
     name: 'Base æpp',
-    manifestPath: 'default.webmanifest',
+    manifestPath: 'site.webmanifest',
     iconPaths: {
       favicon32: 'favicons/favicon-32x32.png',
       favicon16: 'favicons/favicon-16x16.png',
