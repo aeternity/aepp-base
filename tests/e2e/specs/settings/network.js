@@ -48,7 +48,7 @@ describe('Settings: Network', () => {
       .getState()
       .then(({ sdkUrl, customNetworks }) => {
         expect(sdkUrl).equal(testNetwork.url);
-        expect(customNetworks).include(testNetwork);
+        expect(customNetworks).to.deep.include(testNetwork);
       });
   });
 });
