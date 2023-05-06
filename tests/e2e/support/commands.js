@@ -33,8 +33,8 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalF
       /* eslint-disable no-param-reassign */
       contentWindow.localStorage.vuex = login || state ? JSON.stringify(Cypress._.merge(
         login && {
-          migrations: Cypress._.fromPairs(Cypress._.times(4, (i) => [i, true])),
-          sdkUrl: 'https://testnet.aeternal.io',
+          migrations: Object.fromEntries(Cypress._.times(6, (i) => [i, true])),
+          sdkUrl: 'https://testnet.aeternity.io',
           accounts: {
             list: [{
               address: 'ak_mUSniVx8jR3gCTTuXBLX4htTUvWJyWwxPYoEUeEVuS9KbUpT8',
