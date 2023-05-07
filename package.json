@@ -41,6 +41,7 @@
     "socket.io-client": "^2.5.0",
     "stream-browserify": "^3.0.0",
     "swagger-client": "^3.18.4",
+    "util": "^0.12.5",
     "vee-validate": "^2.2.15",
     "vue": "^2.7.14",
     "vue-clickaway": "^2.2.2",
