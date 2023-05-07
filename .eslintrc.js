@@ -47,7 +47,7 @@ module.exports = {
     'vuejs-accessibility/alt-text': 'off',
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: '@babel/eslint-parser',
   },
   overrides: [{
     files: '**/__tests__/*',

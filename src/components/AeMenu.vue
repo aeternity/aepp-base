@@ -1,6 +1,6 @@
 <template>
   <AePopover
-    class="menu"
+    class="ae-menu"
     v-bind="$attrs"
     v-on="$listeners"
     @click.native="$emit('close')"
@@ -20,7 +20,7 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/functions';
 
-.menu {
+.ae-menu {
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 rem(16px) rgba(#1B4479, 0.15);

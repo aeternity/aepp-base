@@ -27,18 +27,18 @@
       {{ $t('network.settings.new.title') }}
     </ListItemButton>
 
-    <Menu
+    <AeMenu
       v-if="menuForNetworkIdx !== -1"
       :anchor="$refs[`button-${menuForNetworkIdx}`][0]"
       @close="menuForNetworkIdx = -1"
     >
-      <MenuItem v-copy-on-click="networks[menuForNetworkIdx].url">
+      <AeMenuItem v-copy-on-click="networks[menuForNetworkIdx].url">
         <Copy />{{ $t('network.settings.list.copy-link') }}
-      </MenuItem>
-      <MenuItem @click="removeNetwork">
+      </AeMenuItem>
+      <AeMenuItem @click="removeNetwork">
         <Close />{{ $t('network.settings.list.remove') }}
-      </MenuItem>
-    </Menu>
+      </AeMenuItem>
+    </AeMenu>
   </div>
 </template>
 
@@ -49,8 +49,8 @@ import ListItem from './ListItem.vue';
 import ListItemButton from './ListItemButton.vue';
 import { More, Copy, Close } from './icons';
 import AeRadio from './AeRadio.vue';
-import Menu from './Menu.vue';
-import MenuItem from './MenuItem.vue';
+import AeMenu from './AeMenu.vue';
+import AeMenuItem from './AeMenuItem.vue';
 
 export default {
   components: {
@@ -58,8 +58,8 @@ export default {
     ListItemButton,
     More,
     AeRadio,
-    Menu,
-    MenuItem,
+    AeMenu,
+    AeMenuItem,
     Copy,
     Close,
   },

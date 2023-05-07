@@ -3,9 +3,9 @@ import ErrorCorrectionLevel from '@zxing/library/esm/core/qrcode/decoder/ErrorCo
 import Encoder from '@zxing/library/esm/core/qrcode/encoder/Encoder';
 
 class QRCodeFancySvgWriter extends BrowserQRCodeSvgWriter {
-  FILL_COLOR = '#311b58'
+  FILL_COLOR = '#311b58';
 
-  POSITION_SIDE = 7
+  POSITION_SIDE = 7;
 
   renderResult(code, width, height, quietZone) {
     const input = code.getMatrix();

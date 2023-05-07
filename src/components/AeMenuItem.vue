@@ -1,6 +1,6 @@
 <template>
   <ButtonPlain
-    class="menu-item"
+    class="ae-menu-item"
     v-bind="$attrs"
     v-on="$listeners"
   >
@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/typography';
 
-.menu-item {
+.ae-menu-item {
   height: rem(36px);
   padding: 0 rem(16px);
   @extend %face-sans-s;
