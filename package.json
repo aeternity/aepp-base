@@ -70,7 +70,7 @@
     "cordova-android": "^10.1.2",
     "cordova-ios": "^6.2.0",
     "cordova-res": "^0.15.4",
-    "cypress": "^9.7.0",
+    "cypress": "^12.10.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.7.1",
     "eslint-plugin-vuejs-accessibility": "^1.2.0",
