@@ -51,9 +51,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .settings-password.page .list-item-button {
-  color: $color-primary;
+  color: variables.$color-primary;
 }
 </style>

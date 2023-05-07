@@ -107,51 +107,52 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .connect-guide {
-  margin: rem(40px) rem(40px);
+  margin: functions.rem(40px) functions.rem(40px);
 
   .guide .icon-wrapper {
     display: inline-block;
-    width: rem(23px);
-    height: rem(23px);
-    line-height: rem(23px);
-    border-radius: rem(5px);
+    width: functions.rem(23px);
+    height: functions.rem(23px);
+    line-height: functions.rem(23px);
+    border-radius: functions.rem(5px);
     font-size: 0;
     text-align: center;
     vertical-align: middle;
-    color: $color-neutral-positive-2;
+    color: variables.$color-neutral-positive-2;
 
     &.settings {
-      background-color: $color-neutral-minimum;
+      background-color: variables.$color-neutral-minimum;
     }
 
     &.device {
-      background-color: $color-alternative;
+      background-color: variables.$color-alternative;
     }
 
     .icon {
-      height: rem(15px);
+      height: functions.rem(15px);
     }
   }
 
   .ae-qr-code {
-    width: rem(216px);
-    margin: rem(40px) auto;
+    width: functions.rem(216px);
+    margin: functions.rem(40px) auto;
   }
 
   .no-ledger-support {
     text-align: center;
 
     img {
-      margin-top: rem(60px);
-      margin-bottom: rem(20px);
+      margin-top: functions.rem(60px);
+      margin-bottom: functions.rem(20px);
     }
 
     .guide {
       display: block;
-      margin-bottom: rem(10px);
+      margin-bottom: functions.rem(10px);
     }
   }
 }

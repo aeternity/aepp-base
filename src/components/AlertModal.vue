@@ -43,23 +43,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .alert-modal {
   @extend %face-sans-base;
 
   ::v-deep .modal-plain {
-    max-width: rem(375px);
-    padding: rem(30px);
+    max-width: functions.rem(375px);
+    padding: functions.rem(30px);
   }
 
   .ae-button-group {
-    margin: rem(20px) auto 0 auto;
-    min-width: rem(210px);
+    margin: functions.rem(20px) auto 0 auto;
+    min-width: functions.rem(210px);
 
     .ae-button {
       flex-basis: 0;
-      padding: 0 rem(20px);
+      padding: 0 functions.rem(20px);
     }
   }
 }

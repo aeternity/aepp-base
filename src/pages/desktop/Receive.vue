@@ -65,12 +65,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .receive {
   .ae-card {
-    margin: 0 rem(-15px);
-    padding: rem(60px);
+    margin: 0 functions.rem(-15px);
+    padding: functions.rem(60px);
 
     .ae-qr-code, .ae-address-panel, .ae-button {
       margin-left: auto;
@@ -78,8 +79,8 @@ export default {
     }
 
     .ae-qr-code {
-      width: rem(216px);
-      margin-bottom: rem(50px);
+      width: functions.rem(216px);
+      margin-bottom: functions.rem(50px);
 
       &.inactive {
         opacity: 0.2;
@@ -87,17 +88,17 @@ export default {
     }
 
     .ae-address-panel {
-      margin-bottom: rem(50px);
+      margin-bottom: functions.rem(50px);
     }
 
     .ae-button {
       display: block;
-      width: rem(310px);
+      width: functions.rem(310px);
     }
 
     .ae-button.connect-an-account {
-      margin-top: rem(12px);
-      color: $color-neutral-minimum;
+      margin-top: functions.rem(12px);
+      color: variables.$color-neutral-minimum;
     }
   }
 }

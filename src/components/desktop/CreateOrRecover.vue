@@ -55,9 +55,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .create-or-restore {
-  margin: rem(40px) rem(40px);
+  margin: functions.rem(40px) functions.rem(40px);
 }
 </style>

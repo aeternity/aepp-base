@@ -23,20 +23,22 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .ledger-modal-note {
-  margin-left: rem(70px);
-  margin-right: rem(70px);
+  margin-left: functions.rem(70px);
+  margin-right: functions.rem(70px);
   @extend %face-sans-s;
   text-align: center;
 
   &.neutral {
-    color: $color-neutral-negative-1;
+    color: variables.$color-neutral-negative-1;
   }
 
   &.dark {
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
   }
 }
 </style>

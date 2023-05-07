@@ -18,15 +18,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .list-item-circle {
   border-radius: 50%;
-  height: rem(32px);
-  line-height: rem(32px);
-  width: rem(32px);
-  background-color: $color-primary;
-  box-shadow: 0 0 rem(16px) $color-shadow-alpha-15;
+  height: functions.rem(32px);
+  line-height: functions.rem(32px);
+  width: functions.rem(32px);
+  background-color: variables.$color-primary;
+  box-shadow: 0 0 functions.rem(16px) variables.$color-shadow-alpha-15;
   text-align: center;
   color: #fff;
 
@@ -35,7 +36,7 @@ export default {
   }
 
   .icon {
-    height: rem(15px);
+    height: functions.rem(15px);
   }
 }
 </style>

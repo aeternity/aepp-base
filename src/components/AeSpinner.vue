@@ -32,10 +32,11 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .ae-spinner {
-  width: rem(36px);
+  width: functions.rem(36px);
   animation: rotation 2s linear infinite;
 
   @keyframes rotation {
@@ -45,11 +46,11 @@
   }
 
   .stop-start {
-    stop-color: rgba($color-primary, 0);
+    stop-color: rgba(variables.$color-primary, 0);
   }
 
   .stop-end {
-    stop-color: $color-primary;
+    stop-color: variables.$color-primary;
   }
 }
 </style>

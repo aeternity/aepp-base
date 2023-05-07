@@ -1,61 +1,62 @@
-@import 'functions';
+@use 'variables';
+@use 'functions';
 
 %face-sans-l {
-  font-family: $font-sans;
-  font-size: rem(23px);
-  letter-spacing: em(-0.32px);
-  line-height: rem(28px);
+  font-family: variables.$font-sans;
+  font-size: functions.rem(23px);
+  letter-spacing: functions.em(-0.32px);
+  line-height: functions.rem(28px);
 }
 
 %face-sans-base {
-  font-family: $font-sans;
-  font-size: rem(17px);
-  line-height: rem(24px);
+  font-family: variables.$font-sans;
+  font-size: functions.rem(17px);
+  line-height: functions.rem(24px);
 }
 
 %face-sans-s {
-  font-family: $font-sans;
-  font-size: rem(15px);
-  line-height: rem(20px);
+  font-family: variables.$font-sans;
+  font-size: functions.rem(15px);
+  line-height: functions.rem(20px);
 }
 
 %face-sans-xs {
-  font-family: $font-sans;
-  font-size: rem(13px);
-  letter-spacing: em(0.32px);
-  line-height: rem(16px);
+  font-family: variables.$font-sans;
+  font-size: functions.rem(13px);
+  letter-spacing: functions.em(0.32px);
+  line-height: functions.rem(16px);
 }
 
 %face-mono-xl {
-  font-family: $font-mono;
-  font-size: rem(52px);
-  letter-spacing: em(-0.8px);
-  line-height: rem(48px);
+  font-family: variables.$font-mono;
+  font-size: functions.rem(52px);
+  letter-spacing: functions.em(-0.8px);
+  line-height: functions.rem(48px);
 }
 
 %face-mono-base {
-  font-family: $font-mono;
-  font-size: rem(17px);
-  line-height: rem(24px);
+  font-family: variables.$font-mono;
+  font-size: functions.rem(17px);
+  line-height: functions.rem(24px);
 }
 
 %face-mono-s {
-  font-family: $font-mono;
-  font-size: rem(15px);
-  line-height: rem(20px);
+  font-family: variables.$font-mono;
+  font-size: functions.rem(15px);
+  line-height: functions.rem(20px);
 }
 
 %face-mono-xs {
-  font-family: $font-mono;
-  font-size: rem(13px);
-  letter-spacing: em(0.32px);
-  line-height: rem(16px);
+  font-family: variables.$font-mono;
+  font-size: functions.rem(13px);
+  letter-spacing: functions.em(0.32px);
+  line-height: functions.rem(16px);
 }
 
 %face-uppercase-xs {
-  font-family: $font-sans;
-  font-size: rem(11px);
-  letter-spacing: em(1.6px);
-  line-height: rem(12px);
+  font-family: variables.$font-sans;
+  font-size: functions.rem(11px);
+  letter-spacing: functions.em(1.6px);
+  line-height: functions.rem(12px);
   text-transform: uppercase;
 }

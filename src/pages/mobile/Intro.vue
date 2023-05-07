@@ -49,16 +49,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .intro.page {
   padding-bottom: env(safe-area-inset-bottom);
 
   hr {
-    margin: 0 rem(-16px);
+    margin: 0 functions.rem(-16px);
     height: 2px;
     border: none;
-    background-color: $color-primary-negative-1;
+    background-color: variables.$color-primary-negative-1;
   }
 
   .ae-button.medium.plain:last-child {

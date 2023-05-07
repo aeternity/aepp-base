@@ -54,7 +54,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .ae-input-amount .unit-amount {
   display: flex;
@@ -67,7 +69,7 @@ export default {
   input,
   label {
     @extend %face-mono-xl;
-    margin: 0 0 rem(16px) 0;
+    margin: 0 0 functions.rem(16px) 0;
     font-weight: 300;
   }
 
@@ -79,14 +81,14 @@ export default {
     outline: none;
     -moz-appearance: textfield;
     text-align: center;
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
 
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
     }
 
     &::placeholder {
-      color: $color-neutral;
+      color: variables.$color-neutral;
     }
 
     &::-webkit-input-placeholder {

@@ -18,13 +18,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/functions';
 
 .ae-menu {
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 rem(16px) rgba(#1B4479, 0.15);
-  padding: rem(12px) 0;
+  box-shadow: 0 0 functions.rem(16px) rgba(#1B4479, 0.15);
+  padding: functions.rem(12px) 0;
   min-width: auto;
 }
 </style>

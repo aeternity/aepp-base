@@ -55,14 +55,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
-@import '../copied';
+@use '../../styles/functions';
+@use '../../styles/typography';
+@use '../copied';
 
 .modal-spend-success {
   text-align: center;
 
   .modal-header {
-    margin-top: rem(20px);
+    margin-top: functions.rem(20px);
   }
 
   .note {
@@ -71,7 +72,7 @@ export default {
 
   .ae-button {
     display: block;
-    max-width: rem(310px);
+    max-width: functions.rem(310px);
     margin-left: auto;
     margin-right: auto;
 

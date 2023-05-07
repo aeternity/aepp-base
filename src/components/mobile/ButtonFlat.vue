@@ -19,19 +19,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .button-flat {
-  $border-width: rem(2px);
-  $border-radius: rem(4px);
-  height: rem(20px);
-  padding: rem(5px) 0;
+  $border-width: functions.rem(2px);
+  $border-radius: functions.rem(4px);
+  height: functions.rem(20px);
+  padding: functions.rem(5px) 0;
   text-align: center;
-  border: $border-width solid $color-primary;
+  border: $border-width solid variables.$color-primary;
   border-left-width: 0;
   @extend %face-sans-s;
   font-weight: 500;
-  color: $color-primary;
+  color: variables.$color-primary;
 
   &:first-child {
     border-left-width: $border-width;
@@ -44,7 +46,7 @@ export default {
 
   &.router-link-exact-active.exact-active,
   &.router-link-active:not(.exact-active) {
-    background-color: $color-primary;
+    background-color: variables.$color-primary;
     color: #fff;
   }
 }

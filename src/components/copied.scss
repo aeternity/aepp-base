@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@use '../styles/variables';
 
 %copied {
   position: relative;
@@ -9,8 +9,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: $color-neutral-negative-3;
-    background: rgba($color-neutral-positive-1, 0.9);
+    color: variables.$color-neutral-negative-3;
+    background: rgba(variables.$color-neutral-positive-1, 0.9);
     position: absolute;
     top: 0;
     right: 0;

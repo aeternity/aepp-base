@@ -5,7 +5,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .step {
   text-align: center;
@@ -16,7 +16,7 @@
       display: inline-block;
 
       &.base {
-        background-color: $color-primary;
+        background-color: variables.$color-primary;
       }
     }
 
@@ -31,7 +31,7 @@
 
     p {
       line-height: 1.44;
-      color: $color-neutral;
+      color: variables.$color-neutral;
 
       &.small {
         font-size: 10px;

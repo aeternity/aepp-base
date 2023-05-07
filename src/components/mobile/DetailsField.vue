@@ -37,23 +37,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .details-field .details-row {
   @extend %face-sans-xs;
 
   &.not-last {
-    margin-bottom: rem(8px);
+    margin-bottom: functions.rem(8px);
   }
 
   .name {
     font-weight: 500;
-    color: var(--color-secondary, rgba($color-neutral-maximum, 0.66846));
+    color: var(--color-secondary, rgba(variables.$color-neutral-maximum, 0.66846));
   }
 
   .value {
     font-weight: 600;
-    color: var(--color-primary, $color-neutral-maximum);
+    color: var(--color-primary, variables.$color-neutral-maximum);
 
     &.monospace {
       @extend %face-mono-xs;

@@ -117,11 +117,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .send-amount .details-item {
-  --color-primary: #{$color-neutral-negative-1};
-  --color-secondary: #{$color-neutral-negative-1};
+  --color-primary: #{variables.$color-neutral-negative-1};
+  --color-secondary: #{variables.$color-neutral-negative-1};
 
   &:first-child {
     border-top: none;

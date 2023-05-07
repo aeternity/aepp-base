@@ -28,33 +28,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .ae-radio {
   input {
     display: none;
 
     &:checked + div {
-      background-color: $color-primary;
+      background-color: variables.$color-primary;
       border: none;
     }
   }
 
   > div {
     box-sizing: border-box;
-    width: rem(24px);
-    height: rem(24px);
-    line-height: rem(24px);
-    background-color: $color-neutral-maximum;
-    border: 2px solid $color-neutral-positive-1;
+    width: functions.rem(24px);
+    height: functions.rem(24px);
+    line-height: functions.rem(24px);
+    background-color: variables.$color-neutral-maximum;
+    border: 2px solid variables.$color-neutral-positive-1;
     border-radius: 50%;
-    box-shadow: 0 0 rem(4px) $color-shadow-alpha-15;
+    box-shadow: 0 0 functions.rem(4px) variables.$color-shadow-alpha-15;
     transition: background-color 300ms;
     text-align: center;
     font-size: 0;
 
     .icon {
-      height: rem(14px);
+      height: functions.rem(14px);
       color: #fff;
     }
   }

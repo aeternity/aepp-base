@@ -21,9 +21,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .modal-mobile {
-  background-color: rgba($color-neutral-positive-2, 0.8);
+  background-color: rgba(variables.$color-neutral-positive-2, 0.8);
 }
 </style>

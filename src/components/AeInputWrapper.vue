@@ -88,46 +88,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .ae-input-wrapper {
   overflow: hidden;
-  border-radius: rem(4px);
-  background: $color-neutral-positive-3;
-  margin-bottom: rem(16px);
+  border-radius: functions.rem(4px);
+  background: variables.$color-neutral-positive-3;
+  margin-bottom: functions.rem(16px);
 
   &.error,
   &.focus {
     transition-property: border, border-radius;
-    transition-duration: $base-transition-time;
+    transition-duration: variables.$base-transition-time;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-left: 2px solid;
 
     label,
     main {
-      transition: margin-left $base-transition-time;
-      margin-left: rem(14px);
+      transition: margin-left variables.$base-transition-time;
+      margin-left: functions.rem(14px);
     }
 
     .ae-toolbar {
-      transition: padding-left $base-transition-time;
-      padding-left: rem(14px);
+      transition: padding-left variables.$base-transition-time;
+      padding-left: functions.rem(14px);
     }
   }
 
   &.error:not(.focus) {
-    background-color: $color-primary-positive-3;
+    background-color: variables.$color-primary-positive-3;
 
     .ae-toolbar.footer {
-      background-color: $color-primary-positive-1;
+      background-color: variables.$color-primary-positive-1;
       color: #fff;
     }
   }
 
   $states: (
-    error: $color-error,
-    focus: $color-focus,
+    error: variables.$color-error,
+    focus: variables.$color-focus,
   );
 
   @each $state-name, $state-color in $states {
@@ -143,14 +145,14 @@ export default {
 
   label,
   main {
-    margin: 0 rem(16px);
+    margin: 0 functions.rem(16px);
   }
 
   label {
-    color: $color-neutral-negative-1;
+    color: variables.$color-neutral-negative-1;
 
     span:last-child {
-      color: $color-neutral-negative-3;
+      color: variables.$color-neutral-negative-3;
     }
   }
 
@@ -159,7 +161,7 @@ export default {
     display: flex;
     justify-content: space-between;
     @extend %face-sans-xs;
-    line-height: rem(32px);
+    line-height: functions.rem(32px);
 
     &.default-bottom {
       justify-content: flex-end;

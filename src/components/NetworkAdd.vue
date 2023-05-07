@@ -82,17 +82,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/functions';
 
 .network-add {
-  padding: 0 rem(20px);
+  padding: 0 functions.rem(20px);
 
   .guide {
-    margin-top: rem(27px);
+    margin-top: functions.rem(27px);
   }
 
   .ae-input + .ae-button {
-    margin-top: rem(32px);
+    margin-top: functions.rem(32px);
   }
 
   .ae-button {

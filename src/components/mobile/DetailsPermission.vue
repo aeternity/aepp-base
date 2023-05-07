@@ -24,18 +24,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/typography';
 
 .details-permission {
   @extend %face-sans-s;
 
   .name {
     font-weight: 500;
-    color: var(--color-primary, $color-neutral-maximum);
+    color: var(--color-primary, variables.$color-neutral-maximum);
   }
 
   .description {
-    color: var(--color-secondary, rgba($color-neutral-maximum, 0.66846));
+    color: var(--color-secondary, rgba(variables.$color-neutral-maximum, 0.66846));
   }
 }
 </style>

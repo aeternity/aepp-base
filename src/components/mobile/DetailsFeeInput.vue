@@ -53,11 +53,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .details-fee-input {
   .turtle-rabbit {
-    margin: rem(23px) 0 rem(6px) 0;
+    margin: functions.rem(23px) 0 functions.rem(6px) 0;
   }
 }
 </style>

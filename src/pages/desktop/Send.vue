@@ -130,13 +130,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .send {
   .ae-input-wrapper {
-    margin-bottom: rem(42px);
+    margin-bottom: functions.rem(42px);
     background: #fff;
-    box-shadow: 0 0 rem(8px) rgba(27, 68, 121, 0.1);
+    box-shadow: 0 0 functions.rem(8px) rgba(27, 68, 121, 0.1);
   }
 
   .ae-input-wrapper + .details-item {
@@ -145,13 +146,13 @@ export default {
   }
 
   .details-item {
-    --color-primary: #{$color-neutral-negative-1};
-    --color-secondary: #{$color-neutral-negative-1};
+    --color-primary: #{variables.$color-neutral-negative-1};
+    --color-secondary: #{variables.$color-neutral-negative-1};
   }
 
   .ae-button {
     display: block;
-    margin-top: rem(53px);
+    margin-top: functions.rem(53px);
     margin-left: auto;
     margin-right: auto;
   }

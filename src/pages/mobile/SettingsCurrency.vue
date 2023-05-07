@@ -48,9 +48,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .settings-currency .use-as-main {
-  margin-top: rem(20px);
+  margin-top: functions.rem(20px);
 }
 </style>

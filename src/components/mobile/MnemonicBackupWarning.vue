@@ -21,17 +21,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .warning-icon {
   border-radius: 50%;
-  width: rem(14px);
-  height: rem(14px);
-  background-color: $color-primary;
+  width: functions.rem(14px);
+  height: functions.rem(14px);
+  background-color: variables.$color-primary;
   color: #fff;
-  font-family: $font-sans;
-  font-size: rem(12px);
-  line-height: rem(14px);
+  font-family: variables.$font-sans;
+  font-size: functions.rem(12px);
+  line-height: functions.rem(14px);
   text-align: center;
   font-weight: 600;
 }

@@ -1,5 +1,5 @@
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 div[class*='vault-setup'] .page-header .ae-fraction {
-  color: $color-alternative;
+  color: variables.$color-alternative;
 }

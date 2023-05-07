@@ -120,7 +120,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .app-browser {
   flex-grow: 1;
@@ -130,22 +131,22 @@ export default {
   header {
     display: flex;
     padding-top: env(safe-area-inset-top);
-    height: rem(54px);
-    line-height: rem(54px);
-    box-shadow: inset 0 0 rem(8px) rgba(#1B4479, 0.1);
+    height: functions.rem(54px);
+    line-height: functions.rem(54px);
+    box-shadow: inset 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
 
     .url-form {
       flex-grow: 1;
     }
 
     .button-plain {
-      padding: 0 rem(14px);
-      color: $color-neutral-negative-3;
+      padding: 0 functions.rem(14px);
+      color: variables.$color-neutral-negative-3;
     }
   }
 
   .progress-fake {
-    margin-top: rem(-2px);
+    margin-top: functions.rem(-2px);
   }
 
   iframe {

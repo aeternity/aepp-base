@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style type="scss">
-@import '~normalize.css';
+@use '~normalize.css';
 
 html, body {
   height: 1px;

@@ -1,7 +1,7 @@
-@import '../styles/functions';
+@use '../styles/functions';
 
 svg.icon {
-  height: rem(20px);
+  height: functions.rem(20px);
   vertical-align: middle;
   fill: currentColor;
 }

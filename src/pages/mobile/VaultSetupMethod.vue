@@ -80,10 +80,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
-@import 'VaultSetup';
+@use '../../styles/functions';
+@use 'VaultSetup';
 
 .vault-setup-method .guide {
-  margin-bottom: rem(79px);
+  margin-bottom: functions.rem(79px);
 }
 </style>

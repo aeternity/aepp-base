@@ -13,12 +13,14 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .settings-version {
-  margin: rem(24px) 0;
+  margin: functions.rem(24px) 0;
   @extend %face-sans-s;
-  color: $color-neutral-negative-1;
+  color: variables.$color-neutral-negative-1;
   text-align: center;
 }
 </style>
