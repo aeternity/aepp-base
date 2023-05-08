@@ -71,6 +71,10 @@ module.exports = {
       ENV_MOBILE_DEVICE: !!process.env.VUE_APP_CORDOVA || 'window.navigator.userAgent.includes(\'Mobi\')',
     }]);
 
+    if (config.plugins.has('extract-css')) {
+      config.plugin('extract-css').tap(([definitions]) => [{ ...definitions, ignoreOrder: true }]);
+    }
+
     config.module.rules.delete('svg');
 
     if (process.env.VUE_APP_CORDOVA) {
