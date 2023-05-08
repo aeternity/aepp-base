@@ -1,24 +1,15 @@
-FROM node:18-alpine as aepp-aepp-base-build
-WORKDIR /app
-RUN apk add make g++ python3 git
+FROM node:14-alpine
 
-ADD package*.json ./
-# TODO: remove --legacy-peer-deps after updating dependencies
-RUN npm ci --legacy-peer-deps
+ENV NODE_ENV=production
+ENV NODE_PATH=/usr/local/lib/node_modules
 
-COPY . .
+COPY backend/package.json .
+RUN npm install
 
-ARG VUE_APP_NETWORK_NAME
-ARG VUE_APP_NODE_URL
-ARG VUE_APP_MDW_URL
-ARG VUE_APP_EXPLORER_URL
-ARG VUE_APP_COMPILER_URL
-ARG VUE_APP_BACKEND_URL
+COPY backend/src/main.js .
+COPY backend/src/send-push-notification.js .
+COPY backend/src/server.js .
 
-# TODO: remove legacy openssl after updating @vue/cli
-RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
+CMD ["node", "main.js"]
 
-FROM nginx:1.24-alpine
-COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=aepp-aepp-base-build /app/dist /usr/share/nginx/html
+EXPOSE 80
