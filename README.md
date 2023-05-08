@@ -1,91 +1,38 @@
-# Base æpp [![Build Status](https://api.travis-ci.org/aeternity/aepp-base.svg?branch=develop)](https://travis-ci.org/aeternity/aepp-base/branches)
+# testcab/cors-anywhere
 
-## How to get the Base æpp
+[![docker build automated](https://img.shields.io/docker/cloud/automated/testcab/cors-anywhere.svg)](https://hub.docker.com/r/testcab/cors-anywhere "testcab/cors-anywhere")
+[![](https://images.microbadger.com/badges/image/testcab/cors-anywhere.svg)](https://microbadger.com/images/testcab/cors-anywhere "testcab/cors-anywhere")
 
-* [Google Play](https://play.google.com/store/apps/details?id=com.aeternity.base)
-* [App Store](https://apps.apple.com/app/base-æpp-wallet/id1458655724)
-* [Web version](https://base.aepps.com/)
+The docker image for [cors-anywhere](https://github.com/Rob--W/cors-anywhere).
 
-Also join our [Telegram channel](https://t.me/aeppbase) and our [Forum](https://forum.aeternity.com/t/base-aepp-wallet-we-would-like-your-feedback/3387).
 
-## Build Setup
+### Run
 
-```bash
-# install dependencies
-npm install
-
-# serve with hot reload at http://localhost:8080/
-npm run serve
-
-# serve with hot reload at https://localhost:8080/
-npm run serve -- --https
-
-# run on android emulator or device
-npm run serve:android
-
-# run on ios emulator
-npm run serve:ios
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build -- --report
-
-# generate resources for cordova
-npm run gen:cordova-resources
-
-# build for cordova
-npm run build:cordova
-
-# build an app file
-npm run build:ios
-
-# build an apk file
-npm run build:android
-
-# run unit tests
-npm run test:unit
-
-# run e2e tests
-npm run test:e2e
-
-# run all tests
-npm test
+```
+docker run --rm testcab/cors-anywhere
 ```
 
-## Contributing
 
-We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workflow [this is also helpful](https://gist.github.com/JamesMGreene/cdd0ac49f90c987e45ac).
-* Development of features happens in branches made from **develop** called feature/<the-feature> like feature/show-token-balance.
-* When development is finished a pull request to **develop** is created. At least one person has to review the PR and when everything is fine the PR gets merged.
-* The develop branch gets deployed to the [stage environment](https://stage-identity.aepps.com) by travis.
-* To make a new release create a release branch called release/vX.X.X, also bump the version number in package.json in this branch.
-* Create a PR to master which then also has to be accepted.
-* Create a tag for this version and push the tag.
-* Also merge back the changes (like the version bump) into develop.
-* The master branch has to be deployed to the [production environment](https://base.aepps.com/) manually.
+### Supported tags and respective `Dockerfile` links
 
-## Deployment
+* [`0.4.4`, `latest`](https://github.com/testcab/docker-cors-anywhere/blob/master/Dockerfile)
+* [`0.4.3`](https://github.com/testcab/docker-cors-anywhere/blob/0.4.3/Dockerfile)
 
-We have a stage (develop) and a production (master) branch and environments where these branches will be deployed to.
-* [stage environment](https://stage-identity.aepps.com)
-* [production environment](https://base.aepps.com/)
 
-### stage
-* Is used to see changes to the code in effect in a "real" environment without the fear of breaking the production environment.
+### Envirionment Variables
 
-### production
-* Is the production environment, code lives in the "master" branch.
+Env  | Default | Description
+---- | ------- | -----------
+PORT | 8080    | Server listening port
+KEY  |         | Content or filename of TLS Key
+CERT |         | Content or filename of TLS Certificate
+CORSANYWHERE_BLACKLIST | | If set, requests whose origin is listed are blocked.<br>Comma separated. Example: `https://abuse.example.com,http://abuse.example.com`
+CORSANYWHERE_WHITELIST | | If set, requests whose origin is not listed are blocked.<br>If this list is empty, all origins are allowed.<br>Comma separated. Example: `https://good.example.com,http://good.example.com`
+CORSANYWHERE_RATELIMIT | | Format: `<max requests per period> <period in minutes> <non-ratelimited hosts>`<br>For example, to blacklist abuse.example.com and rate-limit everything to 50 requests per 3 minutes, except for my.example.com and my2.example.com (which may be unlimited), use:<br>`50 3 my.example.com my2.example.com`
 
-### other branches
-* Every branch is auto-deployed on https://`branch-name`.origin.aepps.com/, with each `/`, `.` symbol in a branch name replaced by `-`.
 
-### unsigned .apk and .app file
-* Find `aetenity.app.tar.gz` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest) or download corresponding
-version from a branch https://`branch-name`.origin.aepps.com/aetenity.app.tar.gz
-* Find `aeternity.apk` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest) or download corresponding
-version from a branch https://`branch-name`.origin.aepps.com/aeternity.apk
+## LICENSE
 
-### bundle analyzer report
-* Get bundle analyzer report on each domain by adding /report.html. Example [https://stage-identity.aepps.com/report.html](https://stage-identity.aepps.com/report.html).
+This repository is licensed under [MIT](LICENSE).
+
+[cors-anywhere](https://github.com/Rob--W/cors-anywhere#license) is `Copyright (C) 2013 - 2016 Rob Wu rob@robwu.nl`
