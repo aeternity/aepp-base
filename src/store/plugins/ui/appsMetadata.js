@@ -48,12 +48,13 @@ export default (store) => store.registerModule('appsMetadata', {
 
   actions: {
     async fetchManifest(_, host) {
-      const fetchText = async (url) => (await fetch(url)).text();
-      let appUrl = new URL(`http://${host}`);
+      const fetchTextCors = async (url) => (
+        await fetch(`${process.env.VUE_APP_CORS_ANYWHERE_URL}/${url}`)).text();
+      let appUrl = new URL(`https://${host}`);
       if (appUrl.hostname === 'localhost') return {};
 
       const parser = new DOMParser();
-      const document = parser.parseFromString(await fetchText(appUrl), 'text/html');
+      const document = parser.parseFromString(await fetchTextCors(appUrl), 'text/html');
 
       const base = document.querySelector('base');
       if (base) appUrl = new URL(base.getAttribute('href'), appUrl);
@@ -63,7 +64,7 @@ export default (store) => store.registerModule('appsMetadata', {
         appUrl,
       );
 
-      return JSON.parse(await fetchText(manifestUrl));
+      return JSON.parse(await fetchTextCors(manifestUrl));
     },
     async ensureManifestFetched({ state: { manifests }, commit, dispatch }, host) {
       if (manifests[host]) return;
