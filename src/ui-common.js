@@ -3,7 +3,6 @@ import 'normalize.css';
 import 'focus-visible';
 import './styles/fullscreen-message.scss';
 import './components/icon.scss';
-import './lib/switchWebmanifest';
 import { IS_IOS, DISABLED_BROWSER, ROUTE_MOBILE_LOGGED_IN } from './lib/constants';
 
 Vue.prototype.$globals = {

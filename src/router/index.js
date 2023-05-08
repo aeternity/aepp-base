@@ -1,5 +1,5 @@
 import Router from 'vue-router';
-import { IS_PWA, IS_IOS, ROUTE_MOBILE_LOGGED_IN } from '../lib/constants';
+import { IS_PWA, ROUTE_MOBILE_LOGGED_IN } from '../lib/constants';
 import store from '../store';
 
 store.subscribe((mutation, state) => {
@@ -29,8 +29,7 @@ export default (async () => {
   });
 
   if (
-    ENV_MOBILE_DEVICE && !process.env.VUE_APP_CORDOVA
-    && !IS_PWA && !IS_IOS
+    ENV_MOBILE_DEVICE && !process.env.VUE_APP_CORDOVA && !IS_PWA
     && !store.state.mobile.skipAddingToHomeScreen
   ) await router.replace({ name: 'add-to-home-screen' });
 
