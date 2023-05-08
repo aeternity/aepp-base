@@ -16,7 +16,7 @@
     <main>
       <slot
         :id="_uid"
-        :setFocus="f => focus = f"
+        :set-focus="f => focus = f"
       />
     </main>
     <AeToolbar

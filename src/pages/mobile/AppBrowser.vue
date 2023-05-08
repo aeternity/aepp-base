@@ -19,16 +19,16 @@
       </ButtonPlain>
     </header>
 
-    <Menu
+    <AeMenu
       :anchor="showMenu ? $refs.menuButton : null"
       :anchor-origin="{ vertical: 'top', horizontal: 'right' }"
       :transform-origin="{ vertical: 'top', horizontal: 'right' }"
       @close="showMenu = false"
     >
-      <MenuItem @click="reload">
+      <AeMenuItem @click="reload">
         <Reload /> {{ $t('app.browser.refresh') }}
-      </MenuItem>
-    </Menu>
+      </AeMenuItem>
+    </AeMenu>
 
     <ProgressFake v-if="loading" />
 
@@ -53,8 +53,8 @@ import { PROTOCOLS_ALLOWED, PROTOCOL_DEFAULT } from '../../lib/constants';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import { Home, More, Reload } from '../../components/icons';
-import Menu from '../../components/Menu.vue';
-import MenuItem from '../../components/MenuItem.vue';
+import AeMenu from '../../components/AeMenu.vue';
+import AeMenuItem from '../../components/AeMenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
 import TabBar from '../../components/mobile/TabBar.vue';
 
@@ -65,8 +65,8 @@ export default {
     Home,
     More,
     Reload,
-    Menu,
-    MenuItem,
+    AeMenu,
+    AeMenuItem,
     ProgressFake,
     TabBar,
   },
