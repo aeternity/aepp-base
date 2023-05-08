@@ -133,7 +133,7 @@
     "list": {
       "featured-guide": "<primary>Избранное</primary>",
       "bookmarked-guide": "Закладки",
-      "guide": "æpps <primary>браузер</primary> (бета)",
+      "guide": "æpps <primary>браузер</primary>",
       "note": "æpps, работающие в блокчейне æternity, будут добавлены ниже.",
       "by": "автор",
       "launch": "Запустить"
@@ -142,8 +142,6 @@
     "url-form-placeholder": "Введите URL",
 
     "browser": {
-      "refresh": "Обновить",
-
       "confirm-account-access": {
         "guide": "<app /><br />запрашивает доступ к<br /><account />",
 

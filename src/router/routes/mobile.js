@@ -1,4 +1,4 @@
-import { DISABLED_BROWSER, IS_PWA, ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
+import { IS_PWA, ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
 import { send } from '../../lib/localStorageCall';
 import { ensureLoggedIn, mergeEnterHandlers } from '../utils';
 import store from '../../store/index';
@@ -12,6 +12,7 @@ import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue'
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
+import AppDetails from '../../pages/mobile/AppDetails.vue';
 import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
 import VaultSetupAnotherDeviceGuide from '../../pages/mobile/VaultSetupAnotherDeviceGuide.vue';
@@ -118,8 +119,12 @@ export default [{
 }, {
   name: 'app-browser',
   path: '/browser',
-  alias: '/browser/*',
   component: AppBrowser,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'app-details',
+  path: '/browser/*',
+  component: AppDetails,
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'vault-setup-method',
@@ -180,13 +185,13 @@ export default [{
   props: true,
 }, {
   name: 'transaction-list',
-  path: `${DISABLED_BROWSER ? '' : '/transfer'}/transactions/:direction?`,
+  path: '/transfer/transactions/:direction?',
   component: TransactionList,
   beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'transaction-details',
-  path: `${DISABLED_BROWSER ? '' : '/transfer'}/transactions/details/:hash`,
+  path: '/transfer/transactions/details/:hash',
   component: TransactionDetails,
   beforeEnter: ensureLoggedIn,
   props: true,

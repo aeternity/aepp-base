@@ -3,7 +3,6 @@
 import { flatMap } from 'lodash-es';
 import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
-import { PROTOCOL_DEFAULT } from '../../../lib/constants';
 
 export default (store) => store.registerModule('appsMetadata', {
   namespaced: true,
@@ -20,6 +19,8 @@ export default (store) => store.registerModule('appsMetadata', {
       const metadata = {
         ...manifest,
         name: manifest.short_name || manifest.name || host,
+        url: `https://${host}`,
+        host,
       };
 
       const icons = flatMap(
@@ -33,7 +34,7 @@ export default (store) => store.registerModule('appsMetadata', {
         return i.side > 75 && i.side < p.side ? i : p;
       }, null);
       if (icon) {
-        metadata.icon = new URL(icon.src, `${PROTOCOL_DEFAULT}//${host}`).toString();
+        metadata.icon = new URL(icon.src, `https://${host}`).toString();
       }
 
       return metadata;
@@ -59,12 +60,27 @@ export default (store) => store.registerModule('appsMetadata', {
       const base = document.querySelector('base');
       if (base) appUrl = new URL(base.getAttribute('href'), appUrl);
 
-      const manifestUrl = new URL(
-        document.querySelector('link[rel=manifest]').getAttribute('href'),
-        appUrl,
-      );
+      const manifestPath = document.querySelector('link[rel=manifest]')?.getAttribute('href');
+      if (manifestPath != null) {
+        const manifestUrl = new URL(manifestPath, appUrl);
+        return JSON.parse(await fetchTextCors(manifestUrl));
+      }
 
-      return JSON.parse(await fetchTextCors(manifestUrl));
+      const iconPath = document.querySelector('link[rel=icon]')?.getAttribute('href');
+      if (iconPath != null) {
+        const name = document.querySelector('title').innerText;
+        const [shortName, description] = name.split(' - ');
+        return {
+          name,
+          short_name: shortName,
+          description,
+          icons: [{
+            src: new URL(iconPath, appUrl),
+          }],
+        };
+      }
+
+      return {};
     },
     async ensureManifestFetched({ state: { manifests }, commit, dispatch }, host) {
       if (manifests[host]) return;

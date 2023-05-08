@@ -40,7 +40,6 @@
 
 <script>
 import AeButton from '../../components/AeButton.vue';
-import { DISABLED_BROWSER } from '../../lib/constants';
 
 export default {
   components: { AeButton },
@@ -48,7 +47,7 @@ export default {
     stepRouteNames: [
       'onboarding',
       'onboarding-send',
-      ...DISABLED_BROWSER ? [] : ['onboarding-aepps'],
+      'onboarding-aepps',
       'onboarding-subaccounts',
     ],
   }),

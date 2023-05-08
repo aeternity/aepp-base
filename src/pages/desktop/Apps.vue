@@ -1,5 +1,21 @@
 <template>
   <div class="apps">
+    <template v-if="bookmarkedApps.length">
+      <Guide
+        :template="$t('app.list.bookmarked-guide')"
+        size="big"
+      />
+
+      <div class="shortcuts">
+        <AppShortcut
+          v-for="app in bookmarkedApps"
+          :key="app.host"
+          v-bind="app"
+          :to="app.url"
+        />
+      </div>
+    </template>
+
     <Guide
       :template="$t('app.list.guide')"
       size="big"
@@ -11,10 +27,10 @@
 
     <div class="shortcuts">
       <AppShortcut
-        v-for="(app, idx) in aeternityApps"
-        :key="idx"
+        v-for="app in aeternityApps"
+        :key="app.host"
         v-bind="app"
-        :to="`https://${app.path}`"
+        :to="app.url"
       />
     </div>
   </div>
@@ -22,25 +38,21 @@
 
 <script>
 import { mapState } from 'vuex';
-import { fetchJson } from '../../store/utils';
 import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
 import AppShortcut from '../../components/AppShortcut.vue';
+import aeternityApps from '../../lib/aeternity-apps.json';
 
 export default {
   components: { Guide, Note, AppShortcut },
-  data: () => ({ aeternityAppsPaths: [] }),
   computed: mapState({
-    aeternityApps(state, getters) {
-      return this.aeternityAppsPaths
-        .map((path) => ({ ...getters['appsMetadata/get'](path), path }));
-    },
+    bookmarkedApps: ({ apps }, getters) => apps
+      // TODO: check why host is a URL
+      .map(({ host }) => new URL(host).host)
+      .map((host) => getters['appsMetadata/get'](host)),
+    aeternityApps: (state, getters) => aeternityApps
+      .map((path) => getters['appsMetadata/get'](path)),
   }),
-  async mounted() {
-    this.aeternityAppsPaths = await fetchJson(
-      new URL('/apps.json', process.env.VUE_APP_HOME_PAGE_URL),
-    );
-  },
 };
 </script>
 
@@ -49,10 +61,12 @@ export default {
 
 .apps {
   .shortcuts {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 
     .app-shortcut {
       margin-right: functions.rem(95px);
+      margin-bottom: functions.rem(32px);
     }
   }
 }
