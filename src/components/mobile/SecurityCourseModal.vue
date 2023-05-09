@@ -8,12 +8,14 @@
     <div class="buttons">
       <AeButton
         fill="alternative"
+        data-cy="security-course"
         @click="openSecurityCourse"
       >
         {{ $t('security-courses.modal.to-security-course-1') }}
       </AeButton>
       <AeButton
         plain
+        data-cy="skip"
         @click="resolve"
       >
         {{ $t('security-courses.modal.skip') }}

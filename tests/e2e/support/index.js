@@ -13,6 +13,8 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+import '@frsource/cypress-plugin-visual-regression-diff';
+
 // Import commands.js using ES2015 syntax:
 import './commands';
 

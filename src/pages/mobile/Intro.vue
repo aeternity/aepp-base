@@ -10,15 +10,18 @@
     />
 
     <template slot="footer">
+      <!-- TODO: login state seems to be inaccessible -->
       <AeButton
         :to="{ name: encryptedWallet ? 'login' : 'recover' }"
         fill="secondary"
+        :data-cy="encryptedWallet ? 'login' : 'recover'"
       >
         {{ encryptedWallet ? $t('intro.login') : $t('intro.recover') }}
       </AeButton>
       <AeButton
         fill="light"
         plain
+        data-cy="create"
         @click="() => createWallet()"
       >
         {{ $t('intro.create-account') }}
@@ -28,6 +31,7 @@
         :to="{ name: 'onboarding' }"
         fill="light"
         plain
+        data-cy="onboarding"
       >
         {{ $t('intro.onboarding') }}
       </AeButton>

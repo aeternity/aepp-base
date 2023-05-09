@@ -3,11 +3,13 @@ on: [pull_request]
 jobs:
   main:
     runs-on: ubuntu-latest
+    env:
+      CYPRESS_PLUGIN_VISUAL_REGRESSION_UPDATE_IMAGES: ${{contains(github.event.head_commit.message, ' [update screenshots]')}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v2
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v3
         with:
           # TODO: update to 18 after updating cypress
           node-version: 16.x
@@ -17,3 +19,8 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci --legacy-peer-deps # TODO: remove --legacy-peer-deps after updating dependencies
       - run: npm test
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        if: ${{env.CYPRESS_PLUGIN_VISUAL_REGRESSION_UPDATE_IMAGES}}
+        with:
+          commit_message: "chore: update e2e screenshots"
+          file_pattern: 'tests/e2e/*.png'

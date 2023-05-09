@@ -30,6 +30,7 @@
         :to="{ name: isLastStep ? 'intro' : stepRouteNames[currentStepIdx + 1] }"
         size="small"
         plain
+        data-cy="next"
       >
         {{ isLastStep ? $t('onboarding.start') : $t('next') }}
       </AeButton>
