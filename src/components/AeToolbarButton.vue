@@ -19,23 +19,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .ae-toolbar-button {
-  margin-left: rem(20px);
-  font-family: $font-sans;
-  font-size: rem(11px);
+  margin-left: functions.rem(20px);
+  font-family: variables.$font-sans;
+  font-size: functions.rem(11px);
   font-weight: 500;
-  letter-spacing: rem(1.1px);
+  letter-spacing: functions.rem(1.1px);
   text-transform: uppercase;
-  color: $color-neutral-negative-1;
+  color: variables.$color-neutral-negative-1;
 
   &.active {
     color: #000;
   }
 
   ::v-deep .icon {
-    height: rem(14px);
+    height: functions.rem(14px);
     vertical-align: -.2em;
   }
 }

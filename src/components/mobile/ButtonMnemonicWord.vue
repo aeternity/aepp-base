@@ -22,28 +22,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .button-mnemonic-word {
-  padding: rem(2px) rem(7px) rem(6px) rem(7px);
-  height: rem(28px);
-  background: $color-neutral-positive-2;
-  border: 2px solid $color-neutral-positive-2;
-  border-radius: rem(4px);
-  margin-right: rem(4px);
-  margin-bottom: rem(4px);
+  padding: functions.rem(2px) functions.rem(7px) functions.rem(6px) functions.rem(7px);
+  height: functions.rem(28px);
+  background: variables.$color-neutral-positive-2;
+  border: 2px solid variables.$color-neutral-positive-2;
+  border-radius: functions.rem(4px);
+  margin-right: functions.rem(4px);
+  margin-bottom: functions.rem(4px);
   @extend %face-mono-s;
-  color: $color-neutral-negative-3;
+  color: variables.$color-neutral-negative-3;
 
   &[disabled] {
     background: #fff;
-    border-color: $color-neutral-positive-3;
+    border-color: variables.$color-neutral-positive-3;
     cursor: not-allowed;
-    color: $color-neutral-positive-1;
+    color: variables.$color-neutral-positive-1;
   }
 
   .icon {
-    height: rem(12px);
+    height: functions.rem(12px);
   }
 }
 </style>

@@ -6,21 +6,21 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/functions';
 
 .progress {
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: rem(2px);
+  height: functions.rem(2px);
   border: none;
-  color: $color-magenta;
+  color: variables.$color-magenta;
 
   @each $name in (
     '',
     '::-webkit-progress-bar',
   ) {
     &#{$name} {
-      background-color: $color-neutral-positive-1;
+      background-color: variables.$color-neutral-positive-1;
     }
   }
 
@@ -29,7 +29,7 @@
     -moz-progress-bar,
   ) {
     &::#{$name} {
-      background-color: $color-magenta;
+      background-color: variables.$color-magenta;
     }
   }
 }

@@ -89,8 +89,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
-@import '../styles/variables';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .page-header {
   position: sticky;
@@ -102,65 +103,65 @@ export default {
     position: static;
 
     header {
-      height: rem(24px);
+      height: functions.rem(24px);
     }
   }
 
   &.primary {
-    background-color: $color-primary;
+    background-color: variables.$color-primary;
     color: #fff;
   }
 
   &.secondary {
-    background-color: $color-secondary;
+    background-color: variables.$color-secondary;
     color: #fff;
   }
 
   &.alternative {
-    background-color: $color-alternative;
+    background-color: variables.$color-alternative;
     color: #fff;
   }
 
   &.dark {
-    background-color: $color-neutral-minimum;
+    background-color: variables.$color-neutral-minimum;
     color: #fff;
   }
 
   &.neutral {
-    background-color: $color-neutral-positive-2;
-    color: $color-neutral-negative-3;
+    background-color: variables.$color-neutral-positive-2;
+    color: variables.$color-neutral-negative-3;
   }
 
   &.light {
-    background-color: $color-neutral-maximum;
-    color: $color-neutral-negative-3;
+    background-color: variables.$color-neutral-maximum;
+    color: variables.$color-neutral-negative-3;
   }
 
   &.shadow {
-    box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.1);
+    box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
   }
 
   header {
     display: flex;
-    height: rem(54px);
+    height: functions.rem(54px);
     margin: 0 auto;
-    line-height: rem(54px);
+    line-height: functions.rem(54px);
     @extend %face-sans-base;
     font-weight: 500;
 
     &.padded {
-      max-width: $screen-phone;
+      max-width: variables.$screen-phone;
     }
 
     .button-plain {
       color: inherit;
 
       &.primary {
-        color: $color-primary-negative-1;
+        color: variables.$color-primary-negative-1;
       }
     }
 
-    $button-width: rem(48px);
+    $button-width: functions.rem(48px);
 
     .left, .right {
       width: $button-width;

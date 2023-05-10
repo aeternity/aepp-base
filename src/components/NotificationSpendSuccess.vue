@@ -64,12 +64,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables';
-@import 'copied';
+@use '../styles/variables';
+@use 'copied';
 
 .notification-spend-success {
   .list-item-circle {
-    background-color: $color-alternative;
+    background-color: variables.$color-alternative;
   }
 
   .ae-button.v-copied {

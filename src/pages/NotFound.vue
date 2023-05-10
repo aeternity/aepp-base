@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/typography';
 
 .not-found {
   @extend %face-sans-l;

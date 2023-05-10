@@ -54,14 +54,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .details-amount-and-fee .details-row {
-  color: var(--color-secondary, rgba($color-neutral-maximum, 0.66846));
+  color: var(--color-secondary, rgba(variables.$color-neutral-maximum, 0.66846));
   font-weight: 500;
 
   & + .details-row {
-    margin-top: rem(8px);
+    margin-top: functions.rem(8px);
   }
 
   .name {
@@ -75,8 +77,8 @@ export default {
 
   &.transfer-total {
     align-items: baseline;
-    margin-top: rem(20px);
-    color: var(--color-primary, $color-neutral-maximum);
+    margin-top: functions.rem(20px);
+    color: var(--color-primary, variables.$color-neutral-maximum);
   }
 }
 </style>

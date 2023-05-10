@@ -54,24 +54,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
-@import 'copied';
+@use '../styles/functions';
+@use '../styles/typography';
+@use 'copied';
 
 .ae-address {
   $char-width: 11px;
-  $chunk-width-rem: rem(3 * $char-width);
+  $chunk-width-rem: functions.rem(3 * $char-width);
 
   display: grid;
   grid-template-columns: repeat(auto-fill, $chunk-width-rem);
-  grid-column-gap: rem($char-width);
+  grid-column-gap: functions.rem($char-width);
   justify-content: space-between;
   @extend %face-mono-base;
-  letter-spacing: rem(1.5px);
+  letter-spacing: functions.rem(1.5px);
 
   &.three-columns, &.three-columns-short {
     grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: rem(12px);
-    letter-spacing: rem(1.9px);
+    grid-column-gap: functions.rem(12px);
+    letter-spacing: functions.rem(1.9px);
     font-weight: 500;
   }
 

@@ -66,23 +66,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .tooltip {
   position: fixed;
   left: 0;
   right: 0;
-  padding: 0 rem(32px);
+  padding: 0 functions.rem(32px);
 
   .content {
     position: relative;
-    max-width: $screen-phone - 96;
+    max-width: variables.$screen-phone - 96;
     margin: 0 auto;
-    padding: rem(16px);
-    border-radius: rem(8px);
-    background-color: $color-neutral-negative-3;
-    box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.1);
-    color: $color-neutral-positive-1;
+    padding: functions.rem(16px);
+    border-radius: functions.rem(8px);
+    background-color: variables.$color-neutral-negative-3;
+    box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+    color: variables.$color-neutral-positive-1;
 
     &, h1 {
       @extend %face-sans-base;
@@ -109,13 +111,13 @@ export default {
       &.above {
         top: -$arrow-size * 2;
         border-bottom-width: $arrow-size;
-        border-bottom-color: $color-neutral-negative-3;
+        border-bottom-color: variables.$color-neutral-negative-3;
       }
 
       &.below {
         bottom: -$arrow-size * 2;
         border-top-width: $arrow-size;
-        border-top-color: $color-neutral-negative-3;
+        border-top-color: variables.$color-neutral-negative-3;
       }
     }
   }

@@ -193,13 +193,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .settings {
   .list-item {
     &.network, &.mnemonic {
       .list-item-circle {
-        background-color: $color-secondary;
+        background-color: variables.$color-secondary;
       }
     }
 
@@ -216,12 +216,12 @@ export default {
     }
 
     &.courses .list-item-circle {
-      background-color: $color-alternative;
+      background-color: variables.$color-alternative;
     }
 
     &.logout .list-item-circle {
       transform: rotate(90deg);
-      background-color: $color-secondary;
+      background-color: variables.$color-secondary;
     }
   }
 }

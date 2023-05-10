@@ -23,22 +23,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/functions';
 
 .page .wrapper > .button-add-fixed.ae-button.medium {
-  width: rem(56px);
+  width: functions.rem(56px);
   margin: 0;
 }
 
 .button-add-fixed {
   position: fixed;
-  right: rem(31px);
-  bottom: rem(34px);
-  box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.1);
+  right: functions.rem(31px);
+  bottom: functions.rem(34px);
+  box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
 
   &.mobile {
-    right: rem(23px);
-    bottom: rem(82px);
+    right: functions.rem(23px);
+    bottom: functions.rem(82px);
     bottom: calc(#{rem(82px)} + env(safe-area-inset-bottom));
   }
 }

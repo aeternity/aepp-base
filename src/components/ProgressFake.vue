@@ -5,16 +5,17 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .progress-fake {
-  height: rem(2px);
-  background-color: $color-neutral-positive-1;
+  height: functions.rem(2px);
+  background-color: variables.$color-neutral-positive-1;
 
   &::before {
     content: '';
     display: block;
-    background-color: $color-magenta;
+    background-color: variables.$color-magenta;
     transition: width 60s cubic-bezier(.05, .95, .05, .95);
     width: 80%;
     height: 100%;

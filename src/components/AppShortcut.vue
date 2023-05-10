@@ -26,19 +26,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .app-shortcut {
   width: 80px;
   @extend %face-sans-s;
   font-weight: 500;
-  color: $color-neutral-negative-3;
+  color: variables.$color-neutral-negative-3;
   overflow-wrap: break-word;
 
   img {
-    width: rem(75px);
-    height: rem(75px);
-    border-radius: rem(18px);
+    width: functions.rem(75px);
+    height: functions.rem(75px);
+    border-radius: functions.rem(18px);
     box-shadow: 0 0 16px rgba(0, 33, 87, 0.15);
     margin-bottom: 5px;
   }

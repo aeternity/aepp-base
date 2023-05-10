@@ -70,15 +70,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .settings-security-course-list {
   .list-item-choose:first-child {
-    margin-top: rem(40px);
+    margin-top: functions.rem(40px);
   }
 
   .ae-button {
-    margin-bottom: rem(20px);
+    margin-bottom: functions.rem(20px);
   }
 
   .note {

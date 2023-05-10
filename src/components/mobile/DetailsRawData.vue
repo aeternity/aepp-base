@@ -27,11 +27,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/typography';
 
 .details-field code {
   @extend %face-mono-base;
-  color: var(--color-primary, $color-neutral-maximum);
+  color: var(--color-primary, variables.$color-neutral-maximum);
   overflow-wrap: break-word;
 }
 </style>

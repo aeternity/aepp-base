@@ -45,14 +45,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .apps {
   .shortcuts {
     display: flex;
 
     .app-shortcut {
-      margin-right: rem(95px);
+      margin-right: functions.rem(95px);
     }
   }
 }

@@ -73,13 +73,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/typography';
 
 .settings-mnemonic-show.page {
   .mnemonic {
     @extend %face-mono-s;
     line-height: 1.67;
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
   }
 
   .progress {
@@ -89,7 +90,7 @@ export default {
     }
 
     height: 7px;
-    background: $color-primary;
+    background: variables.$color-primary;
     position: fixed;
     bottom: 0;
     left: 0;

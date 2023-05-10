@@ -66,29 +66,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 a, label {
   .list-item:hover {
-    background-color: $color-neutral-positive-3;
+    background-color: variables.$color-neutral-positive-3;
   }
 }
 
 .list-item {
   display: block;
-  padding: 0 rem(16px);
+  padding: 0 functions.rem(16px);
   text-decoration: none;
-  color: $color-neutral-negative-3;
+  color: variables.$color-neutral-negative-3;
 
   .content {
     display: flex;
     align-items: center;
-    height: rem(68px);
+    height: functions.rem(68px);
     @extend %face-sans-s;
     font-weight: 500;
 
     &.has-icon .label {
-      margin-left: rem(12px);
+      margin-left: functions.rem(12px);
     }
 
     .label {
@@ -96,10 +98,10 @@ a, label {
       @extend %face-sans-s;
       white-space: nowrap;
       font-weight: 500;
-      color: $color-neutral-negative-3;
+      color: variables.$color-neutral-negative-3;
 
       &.has-content-after {
-        margin-right: rem(4px);
+        margin-right: functions.rem(4px);
       }
 
       &, .title, .subtitle {
@@ -107,14 +109,14 @@ a, label {
         text-overflow: ellipsis;
 
         &.monospace {
-          font-family: $font-mono;
+          font-family: variables.$font-mono;
         }
       }
 
       .subtitle {
         @extend %face-sans-xs;
         letter-spacing: normal;
-        color: $color-neutral-negative-1;
+        color: variables.$color-neutral-negative-1;
       }
     }
 
@@ -124,7 +126,7 @@ a, label {
 
     ::v-deep {
       img {
-        width: rem(33px);
+        width: functions.rem(33px);
       }
 
       > * {
@@ -136,10 +138,10 @@ a, label {
   & + .list-item {
     &, &:visited {
       .content {
-        border-top: 2px solid $color-neutral-positive-2;
+        border-top: 2px solid variables.$color-neutral-positive-2;
 
         &.border-dark {
-          border-top-color: $color-neutral-positive-1;
+          border-top-color: variables.$color-neutral-positive-1;
         }
       }
     }

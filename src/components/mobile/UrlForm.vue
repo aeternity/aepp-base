@@ -40,20 +40,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .url-form {
   input {
     width: 100%;
-    padding: rem(16px);
+    padding: functions.rem(16px);
     box-sizing: border-box;
     border: none;
     background: transparent;
     @extend %face-sans-base;
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
 
     &::placeholder {
-      color: $color-neutral;
+      color: variables.$color-neutral;
     }
 
     &:focus {

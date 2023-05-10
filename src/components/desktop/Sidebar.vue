@@ -85,7 +85,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .sidebar {
   ::v-deep .modal {
@@ -94,20 +96,20 @@ export default {
   }
 
   header {
-    background-color: $color-neutral-positive-2;
+    background-color: variables.$color-neutral-positive-2;
 
     h1 {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       margin: 0;
-      padding: rem(25px) rem(40px);
+      padding: functions.rem(25px) functions.rem(40px);
       @extend %face-sans-l;
       font-weight: 500;
 
       .icon {
         display: block;
-        margin-top: rem(5px);
+        margin-top: functions.rem(5px);
       }
     }
 
@@ -116,18 +118,18 @@ export default {
       justify-content: center;
 
       .button-plain {
-        width: rem(150px);
-        padding-bottom: rem(1px);
-        border-bottom: rem(1px) solid $color-neutral-positive-1;
+        width: functions.rem(150px);
+        padding-bottom: functions.rem(1px);
+        border-bottom: functions.rem(1px) solid variables.$color-neutral-positive-1;
         @extend %face-uppercase-xs;
         font-weight: bold;
-        letter-spacing: rem(0.2px);
-        line-height: rem(38px);
+        letter-spacing: functions.rem(0.2px);
+        line-height: functions.rem(38px);
 
         &.active {
           padding-bottom: 0;
-          border-bottom: rem(2px) solid $color-primary;
-          color: $color-primary;
+          border-bottom: functions.rem(2px) solid variables.$color-primary;
+          color: variables.$color-primary;
         }
       }
     }

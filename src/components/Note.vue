@@ -5,12 +5,14 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .note {
-  margin-bottom: rem(50px);
+  margin-bottom: functions.rem(50px);
   @extend %face-sans-xs;
   line-height: 1.46;
-  color: $color-neutral-minimum;
+  color: variables.$color-neutral-minimum;
 }
 </style>

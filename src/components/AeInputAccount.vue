@@ -174,10 +174,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/functions';
 
 .ae-input-address .ae-identicon {
-  height: rem(20px);
+  height: functions.rem(20px);
   vertical-align: -.4em;
 }
 </style>

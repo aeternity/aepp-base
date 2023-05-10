@@ -81,7 +81,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .tooltips-modal {
   display: flex;
@@ -92,8 +93,8 @@ export default {
   left: 0;
 
   .selection {
-    border: rem(1px) solid rgba($color-secondary, 0.5);
-    background-color: rgba($color-secondary, 0.3);
+    border: functions.rem(1px) solid rgba(variables.$color-secondary, 0.5);
+    background-color: rgba(variables.$color-secondary, 0.3);
   }
 
   div.selection {

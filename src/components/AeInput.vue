@@ -36,21 +36,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .ae-input input {
   display: block;
   width: 100%;
-  margin: rem(1px) 0 rem(7px) 0;
+  margin: functions.rem(1px) 0 functions.rem(7px) 0;
   padding: 0;
   background: transparent;
   border: none;
   outline: none;
   @extend %face-sans-base;
-  color: $color-neutral-negative-3;
+  color: variables.$color-neutral-negative-3;
 
   &::placeholder {
-    color: $color-neutral-negative-1;
+    color: variables.$color-neutral-negative-1;
   }
 }
 </style>

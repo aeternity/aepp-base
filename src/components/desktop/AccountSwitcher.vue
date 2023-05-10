@@ -87,7 +87,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .account-switcher {
   flex-grow: 1;
@@ -95,23 +96,23 @@ export default {
   flex-direction: column;
 
   header {
-    background-color: $color-neutral-positive-2;
-    padding: rem(60px) rem(40px);
-    margin-bottom: rem(90px);
+    background-color: variables.$color-neutral-positive-2;
+    padding: functions.rem(60px) functions.rem(40px);
+    margin-bottom: functions.rem(90px);
 
     .ae-account {
-      margin-bottom: rem(-90px);
+      margin-bottom: functions.rem(-90px);
     }
   }
 
   main {
     flex-grow: 1;
-    padding: 0 rem(40px);
+    padding: 0 functions.rem(40px);
   }
 
   .balance {
-    padding: 0 rem(50px);
-    border-top: rem(2px) solid $color-neutral-positive-2;
+    padding: 0 functions.rem(50px);
+    border-top: functions.rem(2px) solid variables.$color-neutral-positive-2;
     line-height: 50px;
     text-align: right;
   }

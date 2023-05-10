@@ -49,34 +49,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .modal {
   ::v-deep .modal-plain {
     display: flex;
     flex-direction: column;
-    width: rem(560px);
-    height: rem(500px);
+    width: functions.rem(560px);
+    height: functions.rem(500px);
   }
 
   header {
     display: flex;
     justify-content: space-between;
-    padding: rem(25px) rem(30px);
-    background-color: $color-neutral-positive-2;
+    padding: functions.rem(25px) functions.rem(30px);
+    background-color: variables.$color-neutral-positive-2;
     @extend %face-sans-base;
     font-weight: 500;
 
     * {
-      width: rem(24px);
+      width: functions.rem(24px);
     }
 
     > :first-child {
-      height: rem(24px);
+      height: functions.rem(24px);
     }
 
     .button-plain .icon {
-      height: rem(22px);
+      height: functions.rem(22px);
     }
   }
 
@@ -85,7 +87,7 @@ export default {
   }
 
   footer {
-    margin: rem(25px) rem(30px);
+    margin: functions.rem(25px) functions.rem(30px);
   }
 }
 </style>

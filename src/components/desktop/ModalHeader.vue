@@ -5,12 +5,13 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/typography';
 
 .modal-header {
   @extend %face-sans-l;
   font-weight: 500;
-  color: $color-neutral-minimum;
+  color: variables.$color-neutral-minimum;
   text-align: center;
 }
 </style>

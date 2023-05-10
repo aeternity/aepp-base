@@ -45,19 +45,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .ae-textarea textarea {
   display: block;
   width: 100%;
-  margin: rem(10px) 0 rem(14px) 0;
+  margin: functions.rem(10px) 0 functions.rem(14px) 0;
   padding: 0;
   background: transparent;
   border: none;
   outline: none;
   resize: none;
   @extend %face-sans-base;
-  color: $color-neutral-negative-1;
+  color: variables.$color-neutral-negative-1;
 
   &.monospace {
     @extend %face-mono-base;
@@ -65,7 +67,7 @@ export default {
   }
 
   &::placeholder {
-    color: $color-neutral;
+    color: variables.$color-neutral;
     font-weight: normal;
   }
 }

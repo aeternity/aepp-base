@@ -88,17 +88,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .tab-bar {
-  background-color: $color-neutral-minimum;
+  background-color: variables.$color-neutral-minimum;
   padding-bottom: env(safe-area-inset-bottom);
 
   .wrapper {
     display: flex;
     justify-content: space-around;
     align-items: stretch;
-    max-width: $screen-phone;
+    max-width: variables.$screen-phone;
     margin: 0 auto;
     padding: 10px;
 
@@ -107,16 +108,16 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: rem(52px);
-      font-family: $font-sans;
+      width: functions.rem(52px);
+      font-family: variables.$font-sans;
       font-size: 11px;
       font-weight: 500;
       line-height: 1.45;
       letter-spacing: 0.2px;
-      color: $color-neutral-negative-1;
+      color: variables.$color-neutral-negative-1;
 
       &:disabled {
-        color: $color-neutral-negative-3;
+        color: variables.$color-neutral-negative-3;
       }
 
       div {
@@ -127,7 +128,7 @@ export default {
         width: 42px;
         height: 42px;
         border: 2px solid #000;
-        box-shadow: 0 0 0 2px $color-primary;
+        box-shadow: 0 0 0 2px variables.$color-primary;
         margin: 2px;
         vertical-align: middle;
       }

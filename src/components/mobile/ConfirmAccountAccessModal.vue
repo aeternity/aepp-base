@@ -21,13 +21,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .confirm-account-access-modal {
-  padding-bottom: rem(70px + 28px + 20px);
+  padding-bottom: functions.rem(70px + 28px + 20px);
 
   ::v-deep .modal-plain {
-    max-width: rem(315px);
+    max-width: functions.rem(315px);
   }
 
   .tab-bar {

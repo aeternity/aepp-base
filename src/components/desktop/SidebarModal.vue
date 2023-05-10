@@ -20,10 +20,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .sidebar-modal.overlay {
-  $width: rem(390px);
+  $width: functions.rem(390px);
 
   .modal {
     position: fixed;
@@ -45,7 +46,7 @@ export default {
   }
 
   &.v-enter, &.v-leave-to {
-    background-color: rgba($color-neutral-minimum, 0);
+    background-color: rgba(variables.$color-neutral-minimum, 0);
 
     .modal {
       right: -$width;

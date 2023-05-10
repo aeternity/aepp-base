@@ -43,59 +43,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .ae-button {
-  margin: rem(3px);
+  margin: functions.rem(3px);
   @extend %face-sans-xs;
-  letter-spacing: rem(1.3px);
+  letter-spacing: functions.rem(1.3px);
   font-weight: bold;
   text-transform: uppercase;
 
   &.primary {
-    background-color: $color-primary;
+    background-color: variables.$color-primary;
     color: #fff;
   }
 
   &.secondary {
-    background-color: $color-secondary;
+    background-color: variables.$color-secondary;
     color: #fff;
   }
 
   &.alternative {
-    background-color: $color-alternative;
+    background-color: variables.$color-alternative;
     color: #fff;
   }
 
   &.dark {
-    background-color: $color-neutral-minimum;
+    background-color: variables.$color-neutral-minimum;
     color: #fff;
   }
 
   &.light {
-    background-color: $color-neutral-maximum;
+    background-color: variables.$color-neutral-maximum;
     color: #000;
   }
 
   &.medium {
-    min-width: rem(311px);
-    height: rem(56px);
-    border-radius: rem(32px);
-    line-height: rem(56px);
+    min-width: functions.rem(311px);
+    height: functions.rem(56px);
+    border-radius: functions.rem(32px);
+    line-height: functions.rem(56px);
     text-align: center;
   }
 
   &[disabled] {
     &.primary {
-      background-color: $color-primary-positive-3;
+      background-color: variables.$color-primary-positive-3;
     }
 
     &.secondary {
-      background-color: $color-neutral-positive-1;
+      background-color: variables.$color-neutral-positive-1;
     }
 
     &.alternative {
-      background-color: $color-alternative-positive-3;
+      background-color: variables.$color-alternative-positive-3;
     }
   }
 
@@ -103,28 +105,28 @@ export default {
     background-color: transparent;
 
     &.primary {
-      color: $color-primary;
+      color: variables.$color-primary;
     }
 
     &.secondary {
-      color: $color-secondary;
+      color: variables.$color-secondary;
     }
 
     &.alternative {
-      color: $color-alternative;
+      color: variables.$color-alternative;
     }
 
     &.dark {
-      color: $color-neutral-minimum;
+      color: variables.$color-neutral-minimum;
     }
 
     &.light {
-      color: $color-neutral-maximum;
+      color: variables.$color-neutral-maximum;
     }
   }
 
   .ae-spinner {
-    width: rem(24px);
+    width: functions.rem(24px);
     vertical-align: middle;
   }
 }

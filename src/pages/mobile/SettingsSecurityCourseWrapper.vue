@@ -65,7 +65,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .settings-security-course-details.page {
   ::v-deep {
@@ -74,7 +76,7 @@ export default {
     }
 
     header {
-      background: var(--title-image) no-repeat, $color-alternative;
+      background: var(--title-image) no-repeat, variables.$color-alternative;
     }
 
     main .wrapper {
@@ -89,22 +91,22 @@ export default {
       }
 
       h2 {
-        margin-top: rem(16px);
+        margin-top: functions.rem(16px);
         font-weight: 700;
 
         &.important {
-          color: $color-primary;
+          color: variables.$color-primary;
         }
       }
 
       ul {
-        margin-top: rem(19px);
-        padding-left: rem(25px);
+        margin-top: functions.rem(19px);
+        padding-left: functions.rem(25px);
         list-style: none;
         position: relative;
 
         &.long-items li:not(:first-child) {
-          padding-top: rem(24px);
+          padding-top: functions.rem(24px);
         }
 
         li:before {
@@ -116,10 +118,10 @@ export default {
       }
 
       .ae-button.medium {
-        margin: rem(18px) 0;
+        margin: functions.rem(18px) 0;
 
         &:first-of-type {
-          margin-top: rem(32px);
+          margin-top: functions.rem(32px);
         }
 
         &:last-child {
@@ -131,19 +133,19 @@ export default {
 
   header {
     h1, p {
-      margin: rem(10px) 0;
+      margin: functions.rem(10px) 0;
       color: #fff;
     }
 
     h1 {
-      margin-top: rem(160px);
+      margin-top: functions.rem(160px);
       @extend %face-sans-base;
-      font-size: rem(30px);
+      font-size: functions.rem(30px);
       font-weight: 600;
     }
 
     p {
-      margin-bottom: rem(30px);
+      margin-bottom: functions.rem(30px);
       @extend %face-sans-s;
     }
   }

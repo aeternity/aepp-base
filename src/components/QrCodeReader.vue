@@ -117,7 +117,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .qr-code-reader {
   display: flex;
@@ -127,7 +128,7 @@ export default {
 
   .permission-denied {
     text-align: center;
-    padding: 0 rem(20px);
+    padding: 0 functions.rem(20px);
     margin: auto;
     @extend %face-sans-base;
   }

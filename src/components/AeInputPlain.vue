@@ -18,26 +18,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/typography';
 
 .ae-input-plain {
-  transition: border-color $base-transition-time;
-  width: rem(150px);
+  transition: border-color variables.$base-transition-time;
+  width: functions.rem(150px);
   padding: 0;
   border: none;
-  border-bottom: rem(1px) solid transparent;
+  border-bottom: functions.rem(1px) solid transparent;
   background: none;
   @extend %face-sans-base;
 
   &.neutral {
-    color: $color-neutral-negative-2;
+    color: variables.$color-neutral-negative-2;
 
     &::placeholder {
-      color: $color-neutral;
+      color: variables.$color-neutral;
     }
 
     &:focus {
-      border-color: $color-neutral;
+      border-color: variables.$color-neutral;
     }
   }
 
@@ -45,11 +46,11 @@ export default {
     color: #fff;
 
     &::placeholder {
-      color: $color-neutral-positive-1;
+      color: variables.$color-neutral-positive-1;
     }
 
     &:focus {
-      border-color: $color-neutral-positive-1;
+      border-color: variables.$color-neutral-positive-1;
     }
   }
 }
