@@ -98,12 +98,11 @@ export default (store) => {
           accept({
             accounts: {
               current: { [activeAccount]: {} },
-              connected: {
-                ...store.state.accounts.list
-                  .reduce((p, { address }) => ({
-                    ...p, ...address !== activeAccount ? { [address]: {} } : {},
-                  }), {}),
-              },
+              connected: Object.fromEntries(
+                store.state.accounts.list
+                  .filter(({ address }) => address !== activeAccount)
+                  .map(({ address }) => [address, {}]),
+              ),
             },
           });
         },

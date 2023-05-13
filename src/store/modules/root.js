@@ -82,7 +82,7 @@ export default {
       state.onLine = onLine;
     },
     setSdkAccounts({ sdk }, list) {
-      sdk.accounts = list.reduce((p, { address }) => ({ ...p, [address]: {} }), {});
+      sdk.accounts = Object.fromEntries(list.map(({ address }) => [address, {}]));
     },
     selectSdkAccount({ sdk }, address) {
       sdk.selectAccount(address);

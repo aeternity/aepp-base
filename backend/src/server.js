@@ -59,13 +59,12 @@ export default (port) => {
         }
       });
 
-      socket.on('get-all-followers', (fn) => fn(Object.entries(leaderKeys)
-        .filter(([, v]) => v === key)
-        .map(([k]) => k)
-        .reduce((p, followerId) => ({
-          ...p,
-          [followerId]: { connected: !!io.sockets.sockets[followerId] },
-        }), {})));
+      socket.on('get-all-followers', (fn) => {
+        const entries = Object.entries(leaderKeys)
+          .filter(([, v]) => v === key)
+          .map(([followerId]) => [followerId, { connected: !!io.sockets.sockets[followerId] }]);
+        fn(Object.fromEntries(entries));
+      });
 
       socket.on('message-to-follower', (fKey, message) => socket
         .to(fKey).emit('message-from-leader', message));
