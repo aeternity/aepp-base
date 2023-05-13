@@ -47,7 +47,7 @@ export default (store) => {
     if (ENV_MOBILE_DEVICE) {
       query.pushApiSubscription = await getPushApiSubscription();
     }
-    const socket = (await io())(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
+    const socket = (await io())(process.env.VUE_APP_BACKEND_URL, { query });
     const closeCbs = [socket.close.bind(socket)];
 
     let processedState = cloneDeep(getStateForSync(store.state));

@@ -15,5 +15,9 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+        working-directory: 'backend'
+      - run: npm test
+        working-directory: 'backend'
       - run: npm ci --legacy-peer-deps # TODO: remove --legacy-peer-deps after updating dependencies
       - run: npm test

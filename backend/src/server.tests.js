@@ -1,7 +1,9 @@
-import { describe, it, beforeEach, afterEach } from 'mocha';
+import {
+  describe, it, beforeEach, afterEach,
+} from 'mocha';
 import { expect } from 'chai';
 import socketIoClient from 'socket.io-client';
-import createServer from './server';
+import createServer from './server.js';
 
 const PORT = 5428;
 const SERVER_URL = `http://localhost:${PORT}`;
@@ -26,13 +28,16 @@ beforeEach(() => {
 });
 
 afterEach(async () => {
-  sockets.forEach(s => s.close());
+  sockets.forEach((s) => s.close());
   sockets.length = 0;
-  await new Promise(resolve => server.close(resolve));
+  await new Promise((resolve) => {
+    server.close(resolve);
+  });
 });
 
-const getEvent = (socket, eventName) =>
-  new Promise(resolve => socket.once(eventName, (...args) => resolve(args)));
+const getEvent = (socket, eventName) => new Promise((resolve) => {
+  socket.once(eventName, (...args) => resolve(args));
+});
 
 it('can\'t connect without key', async () => {
   const socket = io();
