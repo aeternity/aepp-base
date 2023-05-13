@@ -1,0 +1,41 @@
+{
+  "name": "aepp-base-remote-connection-backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "rimraf dist && babel src -d dist --ignore tests.js",
+    "dev": "nodemon src/main.js --exec babel-node --inspect",
+    "lint": "eslint src",
+    "mocha": "mocha --require babel-register \"src/*.tests.js\" --inspect",
+    "test": "npm run lint && npm run mocha",
+    "start": "npm run build && node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aeternity/aepp-base-remote-connection-backend.git"
+  },
+  "author": "Denis Davidyuk <denis_davidyuk@hotmail.com>",
+  "private": true,
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aeternity/aepp-base-remote-connection-backend/issues"
+  },
+  "homepage": "https://github.com/aeternity/aepp-base-remote-connection-backend#readme",
+  "dependencies": {
+    "socket.io": "^2.5.0",
+    "web-push": "^3.3.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "mocha": "^5.1.0",
+    "nodemon": "^1.17.3",
+    "rimraf": "^2.6.2",
+    "socket.io-client": "^2.1.0"
+  }
+}
