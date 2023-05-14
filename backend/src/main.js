@@ -1,3 +1,4 @@
 import createServer from './server.js';
 
-createServer(process.env.PORT ?? 8079);
+// eslint-disable-next-line no-console
+createServer(process.env.PORT ?? 8079, console.log);

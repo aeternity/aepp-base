@@ -1,7 +1,7 @@
 import Server from 'socket.io';
 import sendPushNotification from './send-push-notification.js';
 
-export default (port) => {
+export default (port, log = () => {}) => {
   const io = Server(port);
 
   const getGroupName = (leaderKey) => `${leaderKey}-group`;
@@ -28,8 +28,14 @@ export default (port) => {
       .emit('message', message));
 
     if (pushApiSubscription) {
-      (leaderMessages[key] || []).forEach((messageToLeader) => socket
+      leaderMessages[key] ??= [];
+      leaderMessages[key].forEach((messageToLeader) => socket
         .emit('message-from-follower', messageToLeader.key, messageToLeader.message));
+      log([
+        `Connected leader with key ${key}`,
+        `push api ${pushApiSubscription.slice(0, 30)}`,
+        `sent ${leaderMessages[key].length} offline messages`,
+      ].join(', '));
       delete leaderMessages[key];
 
       const groupName = getGroupName(key);
@@ -48,6 +54,7 @@ export default (port) => {
           fSocket.emit('added-to-group');
           socket.emit('follower-connected', fKey);
         }
+        log(`Follower ${fKey} added to ${groupName}`);
       });
 
       socket.on('remove-follower', async (fKey) => {
@@ -57,6 +64,7 @@ export default (port) => {
           fSocket.leave(groupName);
           fSocket.emit('removed-from-group');
         }
+        log(`Follower ${fKey} removed from ${groupName}`);
       });
 
       socket.on('get-all-followers', (fn) => {
@@ -69,13 +77,18 @@ export default (port) => {
       socket.on('message-to-follower', (fKey, message) => socket
         .to(fKey).emit('message-from-leader', message));
 
-      socket.on('disconnect', () => socket.to(getGroupName(key)).emit('leader-disconnected'));
+      socket.on('disconnect', () => {
+        socket.to(getGroupName(key)).emit('leader-disconnected');
+        log(`Disconnected leader with key ${key}`);
+      });
     } else {
       if (leaderKeys[key]) {
-        socket.join(getGroupName(leaderKeys[key]));
+        const groupName = getGroupName(leaderKeys[key]);
+        socket.join(groupName);
         socket.emit('added-to-group');
         socket.to(leaderKeys[key]).emit('follower-connected', key);
-      }
+        log(`Connected follower with key ${key}, added to group ${groupName}`);
+      } else log(`Connected follower with key ${key}, no group`);
 
       socket.on('message-to-leader', async (message) => {
         const lKey = leaderKeys[key];
@@ -83,7 +96,12 @@ export default (port) => {
         if (!io.sockets.sockets[lKey]) {
           leaderMessages[lKey] = leaderMessages[lKey] || [];
           leaderMessages[lKey].push({ key, message });
-          await sendPushNotification(leaderPushApiSubscriptions[lKey]);
+          try {
+            await sendPushNotification(leaderPushApiSubscriptions[lKey]);
+            log(`Push notification sent to ${lKey}`);
+          } catch (error) {
+            log(`Failed to send push notification to ${lKey}: ${error.message}`);
+          }
         }
 
         socket.to(lKey).emit('message-from-follower', key, message);
@@ -100,11 +118,28 @@ export default (port) => {
           .emit('removed-from-group');
         socket.to(leaderKey).emit('follower-removed', key);
         delete leaderKeys[key];
+        log(`Follower ${key} left ${getGroupName(leaderKey)}`);
       });
 
-      socket.on('disconnect', () => socket.to(leaderKeys[key]).emit('follower-disconnected', key));
+      socket.on('disconnect', () => {
+        socket.to(leaderKeys[key]).emit('follower-disconnected', key);
+        log(`Disconnected follower with key ${key}`);
+      });
     }
   });
+
+  log(`Listening on ${port} port`);
+
+  const interval = setInterval(() => {
+    const leaders = Object.keys(leaderPushApiSubscriptions).length;
+    const followers = Object.keys(leaderKeys).length;
+    log(`Connected ${io.engine.clientsCount} clients, recorded ${leaders} leaders, ${followers} followers`);
+  }, 20000);
+  const ioClose = io.close;
+  io.close = function closeHandler(...args) {
+    clearInterval(interval);
+    return ioClose.call(this, ...args);
+  };
 
   return io;
 };
