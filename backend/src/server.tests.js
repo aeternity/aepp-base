@@ -14,10 +14,10 @@ const MESSAGE = 'test-message';
 let server;
 const sockets = [];
 
-const io = (query) => {
+const io = (auth) => {
   const socket = socketIoClient(SERVER_URL, {
     transports: ['websocket'],
-    query,
+    auth,
   });
   sockets.push(socket);
   return socket;
@@ -41,15 +41,15 @@ const getEvent = (socket, eventName) => new Promise((resolve) => {
 
 it('can\'t connect without key', async () => {
   const socket = io();
-  const [message] = await getEvent(socket, 'error');
-  expect(message).to.be.equal('Key is missed');
+  const [error] = await getEvent(socket, 'connect_error');
+  expect(error.message).to.be.equal('Key is missed');
 });
 
 it('can\'t connect with the same key', async () => {
   io({ key: TEST_KEY });
   const socket = io({ key: TEST_KEY });
-  const [message] = await getEvent(socket, 'error');
-  expect(message).to.be.equal(`Already connected with this key: ${TEST_KEY}`);
+  const [error] = await getEvent(socket, 'connect_error');
+  expect(error.message).to.be.equal(`Already connected with this key: ${TEST_KEY}`);
 });
 
 const leaderWithOneFollower = async () => {

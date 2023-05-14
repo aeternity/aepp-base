@@ -47,13 +47,13 @@ export default (store) => {
   };
 
   const open = async () => {
-    const query = { key: store.state.peerId };
+    const auth = { key: store.state.peerId };
     if (ENV_MOBILE_DEVICE) {
       // push api is not available on iOS https://caniuse.com/push-api
-      query.pushApiSubscription = IS_IOS || process.env.VUE_APP_CORDOVA
+      auth.pushApiSubscription = IS_IOS || process.env.VUE_APP_CORDOVA
         ? 'not-available' : await getPushApiSubscription();
     }
-    const socket = (await io())(process.env.VUE_APP_BACKEND_URL, { query });
+    const socket = (await io())(process.env.VUE_APP_BACKEND_URL, { auth });
     const closeCbs = [socket.close.bind(socket)];
 
     let processedState = cloneDeep(getStateForSync(store.state));

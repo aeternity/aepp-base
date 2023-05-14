@@ -1,27 +1,30 @@
-import Server from 'socket.io';
+import { Server } from 'socket.io';
 import sendPushNotification from './send-push-notification.js';
 
 export default (port, log = () => {}) => {
-  const io = Server(port);
+  const io = new Server(port, {
+    cors: { origin: '*' },
+  });
 
   const getGroupName = (leaderKey) => `${leaderKey}-group`;
   const leaderKeys = {};
   const leaderPushApiSubscriptions = {};
   const leaderMessages = {};
 
-  // eslint-disable-next-line no-underscore-dangle
-  io.engine.generateId = (req) => req._query.key || 'invalid-id';
-
   io.sockets.use((socket, next) => {
-    const { key } = socket.handshake.query;
+    const { key } = socket.handshake.auth;
     if (!key) next(new Error('Key is missed'));
-    else if (io.sockets.sockets[key]) {
+    else if (io.sockets.sockets.get(key)) {
       next(new Error(`Already connected with this key: ${key}`));
-    } else next();
+    } else {
+      // based on https://github.com/socketio/socket.io/discussions/4190#discussioncomment-1719254
+      socket.id = key; // eslint-disable-line no-param-reassign
+      next();
+    }
   });
 
   io.on('connection', (socket) => {
-    const { key, pushApiSubscription } = socket.handshake.query;
+    const { key, pushApiSubscription } = socket.handshake.auth;
 
     socket.on('message-to-all', (message) => socket
       .to(getGroupName(pushApiSubscription ? key : leaderKeys[key]))
@@ -48,7 +51,7 @@ export default (port, log = () => {}) => {
           return;
         }
         leaderKeys[fKey] = key;
-        const fSocket = io.sockets.sockets[fKey];
+        const fSocket = io.sockets.sockets.get(fKey);
         if (fSocket) {
           fSocket.join(groupName);
           fSocket.emit('added-to-group');
@@ -59,7 +62,7 @@ export default (port, log = () => {}) => {
 
       socket.on('remove-follower', async (fKey) => {
         delete leaderKeys[fKey];
-        const fSocket = io.sockets.sockets[fKey];
+        const fSocket = io.sockets.sockets.get(fKey);
         if (fSocket) {
           fSocket.leave(groupName);
           fSocket.emit('removed-from-group');
@@ -70,7 +73,7 @@ export default (port, log = () => {}) => {
       socket.on('get-all-followers', (fn) => {
         const entries = Object.entries(leaderKeys)
           .filter(([, v]) => v === key)
-          .map(([followerId]) => [followerId, { connected: !!io.sockets.sockets[followerId] }]);
+          .map(([followerId]) => [followerId, { connected: io.sockets.sockets.has(followerId) }]);
         fn(Object.fromEntries(entries));
       });
 
@@ -93,7 +96,7 @@ export default (port, log = () => {}) => {
       socket.on('message-to-leader', async (message) => {
         const lKey = leaderKeys[key];
 
-        if (!io.sockets.sockets[lKey]) {
+        if (!io.sockets.sockets.get(lKey)) {
           leaderMessages[lKey] = leaderMessages[lKey] || [];
           leaderMessages[lKey].push({ key, message });
           try {
@@ -113,9 +116,8 @@ export default (port, log = () => {}) => {
           socket.emit('exception', 'Not in a group');
           return;
         }
-        socket
-          .leave(getGroupName(leaderKey))
-          .emit('removed-from-group');
+        socket.leave(getGroupName(leaderKey));
+        socket.emit('removed-from-group');
         socket.to(leaderKey).emit('follower-removed', key);
         delete leaderKeys[key];
         log(`Follower ${key} left ${getGroupName(leaderKey)}`);
