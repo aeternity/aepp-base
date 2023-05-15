@@ -77,3 +77,11 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalF
 ));
 
 Cypress.Commands.add('getState', () => JSON.parse(localStorage.vuex));
+
+Cypress.Commands.overwrite('matchImage', (originalFn, ...args) => {
+  cy.get('body').then(($body) => {
+    if ($body.find('.connection-status.connecting').length === 0) return;
+    cy.get('.connection-status.test-net').should('be.visible');
+  });
+  originalFn(...args);
+});
