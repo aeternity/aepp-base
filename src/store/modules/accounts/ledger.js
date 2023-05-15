@@ -2,7 +2,7 @@
 
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Ae from '@aeternity/ledger-app-api';
-import { TxBuilder, SCHEMA } from '@aeternity/aepp-sdk';
+import { buildTx, decode, Tag } from '@aeternity/aepp-sdk-next';
 import { i18n } from '../../plugins/ui/languages';
 import { RUNNING_IN_FRAME } from '../../../lib/constants';
 
@@ -95,26 +95,19 @@ export default {
 
     sign: () => Promise.reject(new Error('Not implemented yet')),
 
-    async signTransaction({ rootGetters, dispatch, rootState: { sdk } }, txBase64) {
+    async signTransaction({ rootGetters, dispatch, rootState: { sdk } }, encodedTx) {
       await dispatch('ensureCurrentAccountAvailable');
 
-      const txObject = TxBuilder.unpackTx(txBase64).tx;
-      const binaryTx = TxBuilder.buildTx(
-        txObject,
-        SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag],
-        { vsn: txObject.VSN },
-      ).rlpEncoded;
-
-      const signature = Buffer.from(await dispatch('request', {
+      const signatureHex = await dispatch('request', {
         name: 'signTransaction',
         args: [
           rootGetters['accounts/active'].source.idx,
-          binaryTx,
+          decode(encodedTx),
           sdk.getNetworkId(),
         ],
-      }), 'hex');
-      return TxBuilder
-        .buildTx({ encodedTx: binaryTx, signatures: [signature] }, SCHEMA.TX_TYPE.signed).tx;
+      });
+      const signature = Buffer.from(signatureHex, 'hex');
+      return buildTx({ tag: Tag.SignedTx, encodedTx, signatures: [signature] });
     },
   },
 };

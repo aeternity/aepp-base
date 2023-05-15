@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
 
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { encode, Encoding } from '@aeternity/aepp-sdk-next';
 import { getDesktopRemoteSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl, getSignedTransactionByResponseUrl, generateSignRequestUrl,
@@ -34,7 +34,7 @@ export default {
   actions: ENV_MOBILE_DEVICE ? {
     createByResponseUrl({ commit }, { responseUrl, transport = TRANSPORT_DEEP_LINK }) {
       const publicKey = getPublicKeyByResponseUrl(responseUrl);
-      const address = TxBuilderHelper.encode(publicKey, 'ak');
+      const address = encode(publicKey, Encoding.AccountAddress);
       commit('accounts/add', {
         address,
         active: true,

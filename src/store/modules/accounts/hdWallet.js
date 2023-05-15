@@ -285,7 +285,8 @@ export default {
       return dispatch('signWithoutConfirmation', data);
     },
 
-    async signTransaction({ dispatch, rootState: { sdk } }, txBase64) {
+    async signTransaction({ dispatch, rootState }, txBase64) {
+      const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
       const encodedTx = await dispatch('confirmTxSigning', txBase64);
       const signature = await dispatch(
         'signWithoutConfirmation',
