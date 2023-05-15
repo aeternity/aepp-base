@@ -41,7 +41,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   margin-top: functions.rem(10px);
-  margin-top: calc(#{rem(10px)} + env(safe-area-inset-top));
+  margin-top: calc(#{functions.rem(10px)} + env(safe-area-inset-top));
   border-radius: functions.rem(8px);
   background-color: variables.$color-neutral-maximum;
   box-shadow: 0 0 functions.rem(100px) functions.rem(30px) rgba(146, 156, 166, 0.4);

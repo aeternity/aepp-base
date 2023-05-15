@@ -21,12 +21,14 @@
     <AeButton
       v-if="course.nextRouteName"
       fill="alternative"
+      data-cy="next"
       :to="{ name: course.nextRouteName, params: $route.params }"
     >
       {{ $tc('security-courses.settings.details.to-next', course.idx + 1) }}
     </AeButton>
     <AeButton
       plain
+      data-cy="skip"
       :to="{ name: 'settings-security-course-list', params: $route.params }"
     >
       {{ $t('security-courses.settings.details.to-list') }}

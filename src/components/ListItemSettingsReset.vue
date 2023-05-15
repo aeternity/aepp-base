@@ -6,6 +6,7 @@
     :subtitle="$globals.ENV_MOBILE_DEVICE
       ? $t('settings.reset.subtitle')
       : $t('settings.reset.subtitle-desktop')"
+    data-cy="reset"
     @click="reset"
   >
     <ListItemCircle slot="icon">

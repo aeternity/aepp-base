@@ -39,7 +39,7 @@ export default {
   &.mobile {
     right: functions.rem(23px);
     bottom: functions.rem(82px);
-    bottom: calc(#{rem(82px)} + env(safe-area-inset-bottom));
+    bottom: calc(#{functions.rem(82px)} + env(safe-area-inset-bottom));
   }
 }
 </style>

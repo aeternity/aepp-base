@@ -170,7 +170,7 @@ export default {
   .date {
     position: sticky;
     top: functions.rem(54px);
-    top: calc(env(safe-area-inset-top) + #{rem(54px)});
+    top: calc(env(safe-area-inset-top) + #{functions.rem(54px)});
     margin-top: functions.rem(2px);
     height: functions.rem(44px);
     @extend %face-uppercase-xs;
