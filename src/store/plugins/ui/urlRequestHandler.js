@@ -29,7 +29,10 @@ export default (store) => {
       }
     };
 
-    if (!['http:', 'https:'].includes(callbackUrl.protocol)) {
+    if (
+      !['http:', 'https:'].includes(callbackUrl.protocol)
+      && !callbackUrl.href.startsWith('about:blank')
+    ) {
       reply({ error: new Error(`Unknown protocol: ${callbackUrl.protocol}`) });
       return;
     }
