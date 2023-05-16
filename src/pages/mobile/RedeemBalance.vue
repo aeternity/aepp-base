@@ -101,7 +101,8 @@ export default {
       }
 
       const account = new MemoryAccount(privateKey);
-      this.balance = BigNumber(await this.$store.state.sdk.getBalance(account.address))
+      const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
+      this.balance = BigNumber(await sdk.getBalance(account.address))
         .shiftedBy(-MAGNITUDE);
       if (this.balance < MIN_SPEND_TX_FEE) {
         await this.$store.dispatch('modals/open', {

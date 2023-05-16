@@ -1,3 +1,5 @@
+import { aeSdk } from '../../utils';
+
 describe('Transfer', () => {
   it('opens initial page, check tooltips', () => {
     cy
@@ -29,13 +31,52 @@ describe('Transfer', () => {
     cy.get('[data-copy-on-click="ak_mUSniVx8jR3gCTTuXBLX4htTUvWJyWwxPYoEUeEVuS9KbUpT8"]');
   });
 
-  it('opens redeem', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/transfer/redeem', { login: true });
-    cy.matchImage({ screenshotConfig: { blackout: ['video'] } });
-    // TODO: ensure redeem scanning works
-    cy.get('.button-plain.left').click();
-    cy.location('pathname').should('eq', '/transfer');
+  describe('redeem', () => {
+    it('opens', () => {
+      cy.task('changeVideoSource', 'default.y4m');
+      cy
+        .viewport('iphone-se2')
+        .visit('/transfer/redeem', { login: true });
+      cy.matchImage({ screenshotConfig: { blackout: ['video'] } });
+      cy.get('.button-plain.left').click();
+      cy.location('pathname').should('eq', '/transfer');
+    });
+
+    if (Cypress.browser.family === 'chromium' && Cypress.browser.name !== 'electron') {
+      const inviteAddress = 'ak_neAVPRwddGLRBHa7eFrL5V6zUrqngqofcv484qKbnDnMKk6S8';
+
+      it('scans invalid qr code, empty invite', () => {
+        cy.task('changeVideoSource', 'address.y4m');
+        cy
+          .viewport('iphone-se2')
+          .visit('/transfer/redeem', { login: true });
+
+        cy.get('.modal-mobile .modal-plain:contains("QR code is wrong")').should('be.visible');
+        cy.matchImage();
+
+        cy.task('changeVideoSource', 'aepp-base-invite.y4m');
+        cy.get('.modal-mobile button').click();
+
+        cy.get('.modal-mobile .modal-plain:contains("no tokens")').should('be.visible');
+        cy.matchImage();
+      });
+
+      it('scans invite', () => {
+        cy.task('changeVideoSource', 'aepp-base-invite.y4m');
+        cy.wrap(aeSdk.spend(1e15, inviteAddress), { timeout: 10000 });
+        cy
+          .viewport('iphone-se2')
+          .visit('/transfer/redeem', { login: true });
+
+        cy.get('.page.redeem-balance').should('be.visible');
+        cy.matchImage();
+
+        cy.get('.list-item').first().click();
+
+        cy.get('.notification-spend-success', { timeout: 10000 }).should('be.visible');
+        cy.matchImage();
+        cy.wrap(aeSdk.getBalance(inviteAddress)).should('equal', '0');
+      });
+    }
   });
 });
