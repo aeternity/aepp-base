@@ -14,7 +14,9 @@ export default (store) => {
     });
 
     if (navigator.serviceWorker) {
+      const { controller } = navigator.serviceWorker;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (controller == null) return;
         window.location.reload();
       });
     }
