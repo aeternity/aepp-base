@@ -85,10 +85,7 @@ export default (store) => {
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
         nodes: [{
           name: network.name,
-          instance: await Node({
-            url: network.url,
-            internalUrl: network.url,
-          }),
+          instance: await Node({ url: network.url }),
         }],
         compilerUrl: network.compilerUrl,
         name: 'Base Aepp',
