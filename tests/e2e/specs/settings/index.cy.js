@@ -20,7 +20,7 @@ describe('Settings', () => {
     cy.get('.overlay').should('not.exist');
     cy.get('[data-cy="reset"]').click();
     cy.get('.ae-button.primary').click();
-    cy.location('pathname').should('eq', '/add-to-home-screen');
+    cy.get('.note').should('be.visible'); // reloaded to desktop
   });
 
   [

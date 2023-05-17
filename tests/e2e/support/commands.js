@@ -24,12 +24,13 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalFn(
+Cypress.Commands.overwrite('visit', (originalFn, url, {
+  isDesktop, login, state, ...options
+} = {}) => originalFn(
   url,
   {
     ...options,
     onBeforeLoad(contentWindow) {
-      const { login, state } = options;
       /* eslint-disable no-param-reassign */
       contentWindow.localStorage.vuex = login || state ? JSON.stringify(Cypress._.merge(
         login && {
@@ -70,6 +71,11 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options = {}) => originalF
       )) : null;
       const promise = new Promise(() => {});
       contentWindow.navigator.serviceWorker.register = () => promise;
+      if (!isDesktop) {
+        Object.defineProperty(contentWindow.navigator, 'userAgent', {
+          value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1',
+        });
+      }
       /* eslint-enable no-param-reassign */
       if (options.onBeforeLoad) options.onBeforeLoad(contentWindow);
     },
