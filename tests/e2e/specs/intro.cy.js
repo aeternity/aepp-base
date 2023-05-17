@@ -6,7 +6,7 @@ function openRoot() {
     .click();
 }
 
-describe.only('Create or recover account', () => {
+describe('Create or recover account', () => {
   it('creates new account, goes to security courses', () => {
     cy
       .viewport('iphone-se2')
@@ -69,7 +69,7 @@ describe('Onboarding', () => {
       cy.matchImage();
     }
 
-    cy.get('[data-cy="back"]').click();
+    cy.get('[data-cy="next"]').click();
     cy.location('pathname').should('eq', '/');
   });
 
