@@ -1,16 +1,19 @@
 import { register } from 'register-service-worker';
 
 export default (store) => {
+  let promise = Promise.resolve(null);
+
   if (process.env.NODE_ENV === 'production' && !process.env.VUE_APP_CORDOVA) {
-    register(`${process.env.BASE_URL}service-worker.js`, {
-      registered(registration) {
-        store.commit('setServiceWorkerRegistration', registration);
-      },
-      async updated(registration) {
-        if (await store.dispatch('modals/open', { name: 'shouldApplyUpdate' })) {
-          registration.waiting.postMessage({ action: 'skipWaiting' });
-        }
-      },
+    promise = new Promise((resolve, reject) => {
+      register(`${process.env.BASE_URL}service-worker.js`, {
+        registered: (registration) => resolve(registration),
+        error: (error) => reject(error),
+        async updated(registration) {
+          if (await store.dispatch('modals/open', { name: 'shouldApplyUpdate' })) {
+            registration.waiting.postMessage({ action: 'skipWaiting' });
+          }
+        },
+      });
     });
 
     if (navigator.serviceWorker) {
@@ -21,4 +24,10 @@ export default (store) => {
       });
     }
   }
+
+  store.registerModule('serviceWorker', {
+    actions: {
+      getServiceWorkerRegistration: () => promise,
+    },
+  });
 };

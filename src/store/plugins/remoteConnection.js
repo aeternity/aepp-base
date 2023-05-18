@@ -31,10 +31,13 @@ const getStateForSync = ({
 
 export default (store) => {
   const getPushApiSubscription = async () => {
-    const { serviceWorkerRegistration } = store.state;
+    // push api is not available on iOS https://caniuse.com/push-api
+    if (IS_IOS) return 'not-available';
     try {
-      const subscription = await serviceWorkerRegistration.pushManager.getSubscription()
-        || await serviceWorkerRegistration.pushManager.subscribe({
+      const swReg = await store.dispatch('getServiceWorkerRegistration');
+      if (swReg == null) return 'not-available';
+      const subscription = await swReg.pushManager.getSubscription()
+        || await swReg.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: Buffer.from(process.env.VUE_APP_VAPID_PUBLIC_KEY, 'base64'),
         });
@@ -49,9 +52,7 @@ export default (store) => {
   const open = async () => {
     const auth = { key: store.state.peerId };
     if (ENV_MOBILE_DEVICE) {
-      // push api is not available on iOS https://caniuse.com/push-api
-      auth.pushApiSubscription = IS_IOS || process.env.VUE_APP_CORDOVA
-        ? 'not-available' : await getPushApiSubscription();
+      auth.pushApiSubscription = await getPushApiSubscription();
     }
     const socket = (await io())(process.env.VUE_APP_BACKEND_URL, { auth });
     const closeCbs = [socket.close.bind(socket)];
