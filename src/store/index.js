@@ -60,9 +60,11 @@ export default new Vuex.Store({
         ...ENV_MOBILE_DEVICE ? {
           mobile: {
             readSecurityCourses,
-            followers: Object.entries(followers)
-              .reduce((p, [k, { id, name, disconnectedAt }]) => (
-                { ...p, [k]: { id, name, disconnectedAt } }), {}),
+            followers: Object.fromEntries(
+              Object.entries(followers)
+                // this is needed to remove extra fields
+                .map(([k, { id, name, disconnectedAt }]) => ([k, { id, name, disconnectedAt }])),
+            ),
             skipAddingToHomeScreen,
           },
         } : {

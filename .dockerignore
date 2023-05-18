@@ -1,1 +1,11 @@
-.gitignore
+*
+
+!package*
+!config
+!public
+!src
+!.env
+!.postcssrc.js
+!babel.config.js
+!vue.config.js
+!docker/nginx

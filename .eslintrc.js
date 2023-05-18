@@ -6,6 +6,7 @@ module.exports = {
   globals: {
     ENV_MOBILE_DEVICE: true,
   },
+  ignorePatterns: ['dist', 'www'],
   extends: [
     'plugin:vue/recommended',
     'plugin:@intlify/vue-i18n/recommended',
@@ -53,6 +54,12 @@ module.exports = {
     files: '**/__tests__/*',
     env: {
       jest: true,
+    },
+  }, {
+    files: 'backend/**',
+    rules: {
+      'import/no-extraneous-dependencies': ['error', { packageDir: 'backend' }],
+      'import/extensions': ['error', 'ignorePackages'],
     },
   }],
   settings: {

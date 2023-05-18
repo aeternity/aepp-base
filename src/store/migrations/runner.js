@@ -7,7 +7,7 @@ export default (state, store) => {
     migrations: {},
     ...state,
   } : {
-    migrations: migrations.reduce((p, m, id) => ({ ...p, [id]: true }), {}),
+    migrations: Object.fromEntries(migrations.map((m, id) => [id, true])),
   };
 
   const asyncMigrations = [];

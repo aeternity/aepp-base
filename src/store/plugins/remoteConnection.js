@@ -2,6 +2,8 @@ import {
   pick, cloneDeep, isEqual, throttle, memoize,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
+import { IS_IOS } from '../../lib/constants';
+import { handleUnknownError } from '../../lib/utils';
 
 const io = async () => (await import(/* webpackChunkName: "socket-io" */ 'socket.io-client')).default;
 
@@ -38,16 +40,20 @@ export default (store) => {
         });
       return JSON.stringify(subscription);
     } catch (e) {
-      return 'not-available';
+      if (e.message === 'Registration failed - permission denied') return 'not-allowed';
+      handleUnknownError(e);
+      return 'errored';
     }
   };
 
   const open = async () => {
-    const query = { key: store.state.peerId };
+    const auth = { key: store.state.peerId };
     if (ENV_MOBILE_DEVICE) {
-      query.pushApiSubscription = await getPushApiSubscription();
+      // push api is not available on iOS https://caniuse.com/push-api
+      auth.pushApiSubscription = IS_IOS || process.env.VUE_APP_CORDOVA
+        ? 'not-available' : await getPushApiSubscription();
     }
-    const socket = (await io())(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
+    const socket = (await io())(process.env.VUE_APP_BACKEND_URL, { auth });
     const closeCbs = [socket.close.bind(socket)];
 
     let processedState = cloneDeep(getStateForSync(store.state));
