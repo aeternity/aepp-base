@@ -19,6 +19,5 @@ ARG VUE_APP_BACKEND_URL
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
 FROM nginx:1.24-alpine
-COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY --from=aepp-aepp-base-build /app/dist /usr/share/nginx/html
