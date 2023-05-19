@@ -40,6 +40,7 @@ export const fetchAndSetLocale = async (languageCode) => {
     i18n.setLocaleMessage(languageCode, messages);
   }
   i18n.locale = languageCode;
+  document.documentElement.setAttribute('lang', languageCode);
 };
 
 export const preferredLocale = (() => {
