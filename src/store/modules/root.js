@@ -13,7 +13,6 @@ export default {
     loginTarget: '',
     sdkUrl: networksRegistry[0].url,
     sdk: null,
-    serviceWorkerRegistration: null,
     customNetworks: [],
     apps: [],
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
@@ -74,9 +73,6 @@ export default {
           ? arr.filter((address) => address !== accountAddress)
           : [...arr, accountAddress]),
       );
-    },
-    setServiceWorkerRegistration(state, serviceWorkerRegistration) {
-      state.serviceWorkerRegistration = serviceWorkerRegistration;
     },
     setOnLine(state, onLine) {
       state.onLine = onLine;
