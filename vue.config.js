@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const addClassesToSVGElement = require('svgo/plugins/addClassesToSVGElement').fn;
+const PreloadPlugin = require('@vue/preload-webpack-plugin');
 const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
 process.env.VUE_APP_VERSION = process.env.npm_package_version;
@@ -82,6 +83,12 @@ module.exports = {
       config.plugins.delete('pwa');
       config.plugins.delete('workbox');
     }
+
+    // TODO: remove after fixing https://github.com/vuejs/vue-cli/issues/7206
+    config.plugin('prefetch').after('html').use(PreloadPlugin, [{
+      rel: 'prefetch',
+      include: 'asyncChunks',
+    }]);
   },
   pwa: {
     workboxPluginMode: 'InjectManifest',
