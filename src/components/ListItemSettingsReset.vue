@@ -7,7 +7,7 @@
       ? $t('settings.reset.subtitle')
       : $t('settings.reset.subtitle-desktop')"
     data-cy="reset"
-    @click="reset"
+    @click="resetConfirm"
   >
     <ListItemCircle slot="icon">
       <SignOut />
@@ -19,20 +19,10 @@
 import ListItem from './ListItem.vue';
 import ListItemCircle from './ListItemCircle.vue';
 import { SignOut } from './icons';
+import { resetConfirm } from '../lib/methods';
 
 export default {
   components: { ListItem, ListItemCircle, SignOut },
-  methods: {
-    async reset() {
-      await this.$store.dispatch('modals/open', {
-        name: 'confirm',
-        text: ENV_MOBILE_DEVICE
-          ? this.$t('settings.reset.confirm')
-          : this.$t('settings.reset.confirm-desktop'),
-        primaryButtonText: this.$t('settings.reset.button'),
-      });
-      this.$store.dispatch('reset');
-    },
-  },
+  methods: { resetConfirm },
 };
 </script>

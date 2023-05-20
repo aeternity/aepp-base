@@ -21,10 +21,10 @@
       <AeButton
         fill="light"
         plain
-        data-cy="create"
-        @click="() => createWallet()"
+        :data-cy="encryptedWallet ? 'reset' : 'create'"
+        @click="() => encryptedWallet ? resetConfirm() : createWallet()"
       >
-        {{ $t('intro.create-account') }}
+        {{ encryptedWallet ? $t('settings.reset.title') : $t('intro.create-account') }}
       </AeButton>
       <hr>
       <AeButton
@@ -44,11 +44,15 @@ import { mapState, mapActions } from 'vuex';
 import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
 import AeButton from '../../components/AeButton.vue';
+import { resetConfirm } from '../../lib/methods';
 
 export default {
   components: { Page, AeButton, Guide },
   computed: mapState('accounts/hdWallet', ['encryptedWallet']),
-  methods: mapActions('accounts/hdWallet', ['createWallet']),
+  methods: {
+    ...mapActions('accounts/hdWallet', ['createWallet']),
+    resetConfirm,
+  },
 };
 </script>
 

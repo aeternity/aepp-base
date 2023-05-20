@@ -84,10 +84,21 @@ Cypress.Commands.overwrite('visit', (originalFn, url, {
 
 Cypress.Commands.add('getState', () => JSON.parse(localStorage.vuex));
 
+Cypress.Commands.add('stubCryptoRandom', () => {
+  cy.window().then((win) => {
+    cy.stub(win.crypto, 'getRandomValues').callsFake((uint8Array) => {
+      for (let i = 0; i < uint8Array.length; i += 1) {
+        uint8Array[i] = i; // eslint-disable-line no-param-reassign
+      }
+      return uint8Array;
+    });
+  });
+});
+
 Cypress.Commands.overwrite('matchImage', (originalFn, ...args) => {
   cy.get('body').then(($body) => {
     if ($body.find('.connection-status.connecting').length === 0) return;
-    cy.get('.connection-status.test-net').should('be.visible');
+    cy.get('.connection-status.connecting').should('not.exist');
   });
   originalFn(...args);
 });

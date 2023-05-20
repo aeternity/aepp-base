@@ -1,0 +1,150 @@
+{
+  "migrations": {
+    "0": true,
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true
+  },
+  "peerId": "EecRNs8PmyiN75IBOI6+",
+  "languages": {
+    "activeCode": "en"
+  },
+  "currencies": {
+    "activeCode": "eur",
+    "swapped": false
+  },
+  "sdkUrl": "https://mainnet.aeternity.io",
+  "names": {
+    "defaults": {}
+  },
+  "customNetworks": [],
+  "accounts": {
+    "list": [
+      {
+        "address": "ak_oXPEaapaDF7R1QcUuvaDDEeanMAVWFSq8TLAaUxdSKpSgUyqY",
+        "source": {
+          "type": "hd-wallet",
+          "idx": 0
+        }
+      }
+    ],
+    "activeIdx": 0,
+    "hdWallet": {
+      "encryptedWallet": {
+        "privateKey": {
+          "type": "ArrayBuffer",
+          "data": [
+            30,
+            126,
+            2,
+            64,
+            198,
+            92,
+            68,
+            71,
+            219,
+            197,
+            96,
+            190,
+            253,
+            57,
+            148,
+            173,
+            147,
+            6,
+            190,
+            82,
+            237,
+            100,
+            225,
+            25,
+            57,
+            241,
+            188,
+            114,
+            34,
+            248,
+            214,
+            131
+          ]
+        },
+        "chainCode": {
+          "type": "ArrayBuffer",
+          "data": [
+            70,
+            193,
+            125,
+            109,
+            187,
+            234,
+            74,
+            117,
+            202,
+            151,
+            69,
+            233,
+            55,
+            96,
+            190,
+            216,
+            162,
+            30,
+            62,
+            70,
+            70,
+            164,
+            249,
+            203,
+            140,
+            112,
+            228,
+            75,
+            121,
+            155,
+            4,
+            253
+          ]
+        },
+        "mac": {
+          "type": "ArrayBuffer",
+          "data": [
+            165,
+            113
+          ]
+        },
+        "salt": {
+          "type": "ArrayBuffer",
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      },
+      "mnemonicBackedUp": true
+    }
+  },
+  "apps": [],
+  "mobile": {
+    "readSecurityCourses": [
+      "intro"
+    ],
+    "followers": {},
+    "skipAddingToHomeScreen": true
+  }
+}
