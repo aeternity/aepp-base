@@ -13,10 +13,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body > noscript > p.fullscreen-error-message,
+      body > p.fullscreen-error-message {
+        margin: 0 auto;
+        padding-top: 30vh;
+        padding-left: 20px;
+        padding-right: 20px;
+        max-width: 400px;
+        font: 23px/28px 'Inter', sans-serif;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
     <noscript>
-      <p class="fullscreen-message">
+      <p class="fullscreen-error-message">
         Base æpp doesn't work without JavaScript enabled.
         Please enable it to continue.
       </p>
@@ -32,7 +44,7 @@
           return;
         }
 
-        document.body.innerHTML = '<p class="fullscreen-message">'
+        document.body.innerHTML = '<p class="fullscreen-error-message">'
           + 'Base app has failed to run in this browser.'
           + '</p>';
       }

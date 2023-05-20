@@ -1,3 +1,4 @@
+import 'normalize.css';
 import Vue from 'vue';
 import './lib/setGlobalPolyfills';
 import store from './store';
