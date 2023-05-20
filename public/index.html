@@ -12,9 +12,12 @@
 
     <meta name="description" content="The æternity blockchain wallet allows users to store, send, and receive æternity coins. The wallet also features an æpps (applications running on the æternity blockchain) browser.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <% googleFontsUrl = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap' %>
+    <link rel="preload" href="<%= googleFontsUrl %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="<%= googleFontsUrl %>"></noscript>
     <style>
       body > noscript > p.fullscreen-error-message,
       body > p.fullscreen-error-message {
