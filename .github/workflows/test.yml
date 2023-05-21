@@ -19,9 +19,13 @@ jobs:
       - run: npm test
         working-directory: 'backend'
       - run: npm ci --legacy-peer-deps # TODO: remove --legacy-peer-deps after updating dependencies
+      - run: docker-compose up -d compiler
+      - run: perl -i -pe 's/https:\/\/compiler\.aepps\.com/http:\/\/localhost:3078/g' src/lib/networksRegistry.js
       - run: npm test
       - uses: stefanzweifel/git-auto-commit-action@v4
         if: failure()
         with:
           commit_message: "fixme: update e2e screenshots"
           file_pattern: 'tests/e2e/*.png'
+      - run: docker-compose logs
+        if: always()
