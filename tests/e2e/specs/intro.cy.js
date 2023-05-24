@@ -1,3 +1,6 @@
+const stateCreatedMnemonic = require('../fixtures/state-created-mnemonic-not-backup.json');
+const stateRecovered = require('../fixtures/state-recovered.json');
+
 function openRoot() {
   cy
     .viewport('iphone-se2')
@@ -16,6 +19,7 @@ describe('Create or recover account', () => {
     cy.get('[data-cy="skip"]').click();
     cy.matchImage();
 
+    cy.stubCryptoRandom();
     cy.get('[data-cy="create"]').click();
     cy.get('.security-course-modal > .modal-plain').should('be.visible');
     cy.matchImage({ screenshotConfig: { blackout: ['.ae-identicon'] } });
@@ -29,6 +33,9 @@ describe('Create or recover account', () => {
     cy.get('[data-cy="skip"]').click();
     cy.matchImage();
     cy.location('pathname').should('eq', '/settings/security-courses');
+    cy.getState().then((state) => {
+      expect(state).to.be.eql({ ...stateCreatedMnemonic, peerId: state.peerId });
+    });
   });
 
   it('recovers an account, goes to transfer', () => {
@@ -40,7 +47,7 @@ describe('Create or recover account', () => {
     cy.location('pathname').should('eq', '/');
     cy.get('[data-cy="recover"]').click();
 
-    cy.get('textarea').type('eye quarter chapter suit cruel scrub verify stuff volume control learn dust');
+    cy.get('textarea').type('abandon amount liar amount expire adjust cage candy arch gather drum buyer');
     cy.get('.ae-button').click();
     cy.get('.security-course-modal > .modal-plain').should('be.visible');
     cy.matchImage();
@@ -48,6 +55,9 @@ describe('Create or recover account', () => {
     cy.get('[data-cy="skip"]').click();
     cy.location('pathname').should('eq', '/transfer');
     cy.matchImage();
+    cy.getState().then((state) => {
+      expect(state).to.be.eql({ ...stateRecovered, peerId: state.peerId });
+    });
   });
 });
 
@@ -60,11 +70,13 @@ describe('Onboarding', () => {
     openRoot();
 
     cy.get('[data-cy="onboarding"]').click();
+    cy.get('img').then(($el) => $el.get(0).complete).should('equal', true);
     cy.matchImage();
 
     cy.get('.ae-button[href="/"]');
     for (let i = 0; i < 3; i += 1) {
       cy.get('[data-cy="next"]').click();
+      cy.get('img').then(($el) => $el.get(0).complete).should('equal', true);
       ensureAnimationOver();
       cy.matchImage();
     }

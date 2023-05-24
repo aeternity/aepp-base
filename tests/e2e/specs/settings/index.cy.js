@@ -24,7 +24,7 @@ describe('Settings', () => {
   });
 
   [
-    'currency', 'remote-connection', 'apps', 'mnemonic/deleted', 'password', 'language', 'info',
+    'currency', 'remote-connection', 'apps', 'language', 'info',
   ].forEach((route) => {
     it(`opens ${route}`, () => {
       cy

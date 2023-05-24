@@ -46,10 +46,8 @@ export default (async () => {
           router.push(store.state.loginTarget || ROUTE_MOBILE_LOGGED_IN);
           store.commit('setLoginTarget');
         }
-      } else {
-        const { fullPath } = router.currentRoute;
-        router.replace({ name: ENV_MOBILE_DEVICE ? 'intro' : 'apps' });
-        router.replace(fullPath);
+      } else if (!ENV_MOBILE_DEVICE) {
+        router.replace({ name: 'apps' });
       }
     },
   );
