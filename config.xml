@@ -16,7 +16,7 @@
     <platform name="android">
         <allow-intent href="market:*" />
         <preference name="SplashMaintainAspectRatio" value="true" />
-        <preference name="HeaderColor" value="#f7296e" />
+        <preference name="HeaderColor" value="#ff0d6a" />
         <preference name="AndroidInsecureFileModeEnabled" value="true" />
         <preference name="StatusBarOverlaysWebView" value="false" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
