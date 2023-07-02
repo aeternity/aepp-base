@@ -12,6 +12,7 @@ import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue'
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
+import SignTransaction from '../../pages/mobile/SignTransaction.vue';
 import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
 import VaultSetupAnotherDeviceGuide from '../../pages/mobile/VaultSetupAnotherDeviceGuide.vue';
@@ -120,6 +121,11 @@ export default [{
   path: '/browser',
   alias: '/browser/*',
   component: AppBrowser,
+  beforeEnter: ensureLoggedIn,
+}, {
+  name: 'sign-transaction',
+  path: '/sign-transaction',
+  component: SignTransaction,
   beforeEnter: ensureLoggedIn,
 }, {
   name: 'vault-setup-method',

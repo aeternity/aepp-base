@@ -40,6 +40,9 @@ Cypress.Commands.overwrite('visit', (originalFn, url, {
             list: [{
               address: 'ak_mUSniVx8jR3gCTTuXBLX4htTUvWJyWwxPYoEUeEVuS9KbUpT8',
               source: { type: 'hd-wallet', idx: 0 },
+            }, {
+              address: 'ak_22kbscYf1TbjcxXaZYCgFxbT6pASb9guJC8n7SviSvMC1cg53m',
+              source: { type: 'hd-wallet', idx: 1 },
             }],
             hdWallet: {
               encryptedWallet: {

@@ -1,5 +1,5 @@
 import { derivePathFromKey, getKeyPair } from '@aeternity/hd-wallet/src/hd-key';
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { encode, Encoding } from '@aeternity/aepp-sdk-next';
 
 export const genRandomBuffer = (size) => {
   const key = new ArrayBuffer(size);
@@ -38,6 +38,6 @@ export const getHdWalletAccount = (wallet, accountIdx) => {
   return {
     ...keyPair,
     idx: accountIdx,
-    address: TxBuilderHelper.encode(keyPair.publicKey, 'ak'),
+    address: encode(keyPair.publicKey, Encoding.AccountAddress),
   };
 };

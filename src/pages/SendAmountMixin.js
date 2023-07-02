@@ -1,7 +1,7 @@
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { TxBuilder } from '@aeternity/aepp-sdk';
 import { MAGNITUDE } from '../lib/constants';
+import { calculateMinSpendTxFee } from '../lib/spendTxFees';
 
 export default {
   data: () => ({
@@ -32,22 +32,13 @@ export default {
   },
   mounted() {
     this.$watch(
-      ({ activeAccount: { address, nonce }, amount }) => ({ address, nonce, amount }),
-      async ({ address, nonce, amount }) => {
-        const sdk = this.$store.state.sdk.then
-          ? await this.$store.state.sdk : this.$store.state.sdk;
-        const minFee = BigNumber(TxBuilder.calculateMinFee('spendTx', {
-          gas: sdk.Ae.defaults.gas,
-          params: {
-            ...sdk.Ae.defaults,
-            senderId: address,
-            recipientId: address,
-            amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
-            ttl: 0,
-            nonce: nonce + 1,
-            payload: '',
-          },
-        })).shiftedBy(-MAGNITUDE);
+      ({ activeAccount: { nonce }, amount }) => ({ nonce, amount }),
+      async ({ nonce, amount }) => {
+        const minFeeString = calculateMinSpendTxFee({
+          amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
+          nonce: nonce + 1,
+        });
+        const minFee = BigNumber(minFeeString).shiftedBy(-MAGNITUDE);
         if (!minFee.isEqualTo(this.minFee)) this.minFee = minFee;
       },
       { immediate: true },

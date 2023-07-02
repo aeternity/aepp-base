@@ -37,9 +37,7 @@
 <script>
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import {
-  Ae, Transaction, Crypto, TxBuilderHelper,
-} from '@aeternity/aepp-sdk';
+import { MemoryAccount, Node, transferFunds } from '@aeternity/aepp-sdk-next';
 import { handleUnknownError } from '../../lib/utils';
 import AeSpinner from '../../components/AeSpinner.vue';
 import Page from '../../components/Page.vue';
@@ -60,7 +58,7 @@ export default {
     LeftMore,
   },
   data: () => ({
-    keypair: null,
+    inviteAccount: null,
     balance: 0,
     busy: true,
   }),
@@ -68,7 +66,7 @@ export default {
     return pick(this.$store.state.observables, ['accounts']);
   },
   async mounted() {
-    while (!this.keypair) {
+    while (!this.inviteAccount) {
       try {
         await this.readQrCode(); // eslint-disable-line no-await-in-loop
       } catch (error) {
@@ -102,8 +100,8 @@ export default {
         return;
       }
 
-      const address = TxBuilderHelper.encode(Crypto.generateKeyPairFromSecret(privateKey).publicKey, 'ak');
-      this.balance = BigNumber(await this.$store.state.sdk.getBalance(address))
+      const account = new MemoryAccount(privateKey);
+      this.balance = BigNumber(await this.$store.state.sdk.getBalance(account.address))
         .shiftedBy(-MAGNITUDE);
       if (this.balance < MIN_SPEND_TX_FEE) {
         await this.$store.dispatch('modals/open', {
@@ -113,19 +111,14 @@ export default {
         return;
       }
 
-      this.keypair = { address, privateKey };
+      this.inviteAccount = account;
     },
     async sendToAccount(accountTo) {
       this.busy = true;
-      const { hash, tx: { amount } } = await (
-        await Ae.compose(Transaction, {
-          methods: {
-            sign: (data) => Promise.resolve(Crypto.sign(data, this.keypair.privateKey)),
-            address: () => Promise.resolve(this.keypair.address),
-          },
-        })({ url: this.$store.state.sdkUrl })
-      )
-        .transferFunds(1, accountTo);
+      const { hash, tx: { amount } } = await transferFunds(1, accountTo, {
+        onAccount: this.inviteAccount,
+        onNode: new Node(this.$store.state.sdkUrl),
+      });
       this.$router.push({ name: 'transfer' });
       this.$store.dispatch('modals/open', {
         name: 'spendSuccess',

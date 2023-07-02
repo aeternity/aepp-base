@@ -682,16 +682,12 @@
 
     "info": {
       "title": "Info",
-      "subtitle": "SDK, node, compiler versions",
+      "subtitle": "SDK, node, middleware versions",
       "version": "Version",
       "node": {
         "url": "Node URL",
         "version": "Node version",
         "height": "Node height"
-      },
-      "compiler": {
-        "url": "Compiler URL",
-        "version": "Compiler version"
       },
       "sdk-version": "SDK version",
       "middleware": {

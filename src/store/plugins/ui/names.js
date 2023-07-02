@@ -2,7 +2,7 @@
 import { get } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import Vue from 'vue';
-import { Crypto, TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { isAddressValid, produceNameId } from '@aeternity/aepp-sdk-next';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
   handleUnknownError, isAccountNotFoundError, getAddressByNameEntry, isAensName,
@@ -36,7 +36,7 @@ export default (store) => {
         return '';
       },
       getAddress: ({ names }) => (id) => {
-        if (Crypto.isAddressValid(id)) return id;
+        if (isAddressValid(id)) return id;
         store.dispatch('names/fetch', { id });
         if (names[id].address) return names[id].address;
         return '';
@@ -89,7 +89,7 @@ export default (store) => {
           commit('set', {
             address: id,
             name: nameEntry.name,
-            hash: TxBuilderHelper.produceNameId(nameEntry.name),
+            hash: produceNameId(nameEntry.name),
           });
           return;
         }
