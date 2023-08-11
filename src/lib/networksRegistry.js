@@ -14,24 +14,21 @@ const testNetwork = {
   compilerUrl: 'https://compiler.aepps.com',
 };
 
-let networks = process.env.NODE_ENV === 'production' ? [
-  mainNetwork,
-  testNetwork,
-] : [
-  testNetwork,
-  mainNetwork,
-];
-
-export const defaultNetwork = process.env.VUE_APP_NETWORK_NAME ? {
+const envNetwork = {
   name: process.env.VUE_APP_NETWORK_NAME,
   url: process.env.VUE_APP_NODE_URL,
-  middlewareUrl: process.env.VUE_APP_MDW_URL,
+  middlewareUrl: process.env.VUE_APP_MIDDLEWARE_URL,
   explorerUrl: process.env.VUE_APP_EXPLORER_URL,
   compilerUrl: process.env.VUE_APP_COMPILER_URL,
-} : mainNetwork;
+};
 
-if (process.env.VUE_APP_NETWORK_NAME) {
-  networks = [defaultNetwork];
-}
+const networks = (() => {
+  if (!['', '$VUE_APP_NETWORK_NAME'].includes(window.overrideNetwork.name)) {
+    return [window.overrideNetwork];
+  }
+  if (envNetwork.name) return [envNetwork];
+  if (process.env.NODE_ENV === 'production') return [mainNetwork, testNetwork];
+  return [testNetwork, mainNetwork];
+})();
 
 export default Object.freeze(networks.map(Object.freeze));

@@ -2,7 +2,7 @@
 
 import Vue from 'vue';
 import { update, mergeWith } from 'lodash-es';
-import networksRegistry, { defaultNetwork } from '../../lib/networksRegistry';
+import networksRegistry from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
 const getAppByHost = (apps, appHost) => apps.find(({ host }) => host === appHost);
@@ -23,10 +23,10 @@ export default {
   getters: {
     networks: ({ customNetworks }) => [
       ...networksRegistry,
-      ...customNetworks.map((network) => ({ ...defaultNetwork, ...network, custom: true })),
+      ...customNetworks.map((network) => ({ ...networksRegistry[0], ...network, custom: true })),
     ],
     currentNetwork: ({ sdkUrl }, { networks }) => networks.find(({ url }) => url === sdkUrl) || {
-      ...defaultNetwork,
+      ...networksRegistry[0],
       name: sdkUrl,
       url: sdkUrl,
     },

@@ -13,6 +13,16 @@
     <meta name="description" content="The æternity blockchain wallet allows users to store, send, and receive æternity coins. The wallet also features an æpps (applications running on the æternity blockchain) browser.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 
+    <script>
+      window.overrideNetwork = {
+        name: '$VUE_APP_NETWORK_NAME',
+        url: '$VUE_APP_NODE_URL',
+        middlewareUrl: '$VUE_APP_MIDDLEWARE_URL',
+        explorerUrl: '$VUE_APP_EXPLORER_URL',
+        compilerUrl: '$VUE_APP_COMPILER_URL',
+      };
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <% googleFontsUrl = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap' %>

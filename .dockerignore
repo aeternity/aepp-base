@@ -8,4 +8,4 @@
 !.postcssrc.js
 !babel.config.js
 !vue.config.js
-!docker/nginx.conf
+!docker
