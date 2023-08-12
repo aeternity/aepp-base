@@ -27,6 +27,8 @@ RUN npm ci --omit=dev
 COPY backend/src src
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
-COPY docker/run-backend.sh /docker-entrypoint.d
+COPY docker/entrypoint.sh /aepp-base-entrypoint.sh
 
 COPY --from=aepp-aepp-base-build /app/dist /usr/share/nginx/html
+
+CMD ["/aepp-base-entrypoint.sh"]
