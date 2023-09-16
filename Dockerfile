@@ -8,8 +8,6 @@ RUN npm ci --legacy-peer-deps
 
 COPY . .
 
-ARG VUE_APP_BACKEND_URL
-
 # TODO: remove legacy openssl after updating @vue/cli
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 

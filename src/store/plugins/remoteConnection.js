@@ -54,7 +54,9 @@ export default (store) => {
     if (ENV_MOBILE_DEVICE) {
       auth.pushApiSubscription = await getPushApiSubscription();
     }
-    const socket = (await io())(process.env.VUE_APP_BACKEND_URL, { auth });
+    const backendUrl = ['', '$VUE_APP_BACKEND_URL'].includes(window.overrideBackendUrl)
+      ? process.env.VUE_APP_BACKEND_URL : window.overrideBackendUrl;
+    const socket = (await io())(backendUrl, { auth });
     const closeCbs = [socket.close.bind(socket)];
 
     let processedState = cloneDeep(getStateForSync(store.state));
