@@ -8,16 +8,11 @@ RUN npm ci --legacy-peer-deps
 
 COPY . .
 
-ARG VUE_APP_NETWORK_NAME
-ARG VUE_APP_NODE_URL
-ARG VUE_APP_MDW_URL
-ARG VUE_APP_EXPLORER_URL
-ARG VUE_APP_COMPILER_URL
-ARG VUE_APP_BACKEND_URL
-
 # TODO: remove legacy openssl after updating @vue/cli
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
 FROM nginx:1.24-alpine
 COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/override-env.sh /docker-entrypoint.d
 COPY --from=aepp-aepp-base-build /app/dist /usr/share/nginx/html
+RUN cp /usr/share/nginx/html/index.html /usr/share/nginx/html/index.template.html
