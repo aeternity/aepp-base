@@ -1,0 +1,19 @@
+name: release
+
+on:
+  push:
+    tags: [ v* ]
+
+jobs:
+  publish:
+    uses: aeternity/github-actions/.github/workflows/_publish-docker.yml@v1.1.1
+    needs: [ validate ]
+    secrets: inherit
+  deploy:
+    uses: aeternity/github-actions/.github/workflows/_deploy-gitops.yml@v1.1.1
+    needs: [publish]
+    secrets: inherit
+    with:
+      DEPLOY_ENV: prd
+      DEPLOY_APP: ${{ github.event.repository.name }}
+      DEPLOY_TAG: ${{ github.ref_name }}
