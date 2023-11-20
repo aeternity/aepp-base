@@ -70,13 +70,13 @@ describe('Onboarding', () => {
     openRoot();
 
     cy.get('[data-cy="onboarding"]').click();
-    cy.get('img').then(($el) => $el.get(0).complete).should('equal', true);
+    cy.get('img').should(($img) => expect($img[0].naturalWidth).to.be.greaterThan(0));
     cy.matchImage();
 
     cy.get('.ae-button[href="/"]');
     for (let i = 0; i < 3; i += 1) {
       cy.get('[data-cy="next"]').click();
-      cy.get('img').then(($el) => $el.get(0).complete).should('equal', true);
+      cy.get('img').should(($img) => expect($img[0].naturalWidth).to.be.greaterThan(0));
       ensureAnimationOver();
       cy.matchImage();
     }
