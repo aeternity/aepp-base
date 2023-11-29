@@ -71,6 +71,7 @@ describe('Onboarding', () => {
 
     cy.get('[data-cy="onboarding"]').click();
     cy.get('img').should(($img) => expect($img[0].naturalWidth).to.be.greaterThan(0));
+    ensureAnimationOver();
     cy.matchImage();
 
     cy.get('.ae-button[href="/"]');
