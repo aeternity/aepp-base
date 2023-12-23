@@ -8,4 +8,4 @@ COPY src src
 EXPOSE 80
 ENV PORT=80
 
-CMD [ "npm", "start" ]
+CMD [ "node", "src/main.js" ]

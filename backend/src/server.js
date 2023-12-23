@@ -139,6 +139,7 @@ export default (port, log = () => {}) => {
   }, 20000);
   const ioClose = io.close;
   io.close = function closeHandler(...args) {
+    log('Stopping server');
     clearInterval(interval);
     return ioClose.call(this, ...args);
   };
