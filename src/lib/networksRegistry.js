@@ -2,7 +2,7 @@ const mainNetwork = {
   name: 'Iris-net',
   url: 'https://mainnet.aeternity.io',
   middlewareUrl: 'https://mainnet.aeternity.io/mdw',
-  explorerUrl: 'https://explorer.aeternity.io',
+  explorerUrl: 'https://aescan.io',
   compilerUrl: 'https://compiler.aepps.com',
 };
 
@@ -10,7 +10,7 @@ const testNetwork = {
   name: 'Testnet',
   url: 'https://testnet.aeternity.io',
   middlewareUrl: 'https://testnet.aeternity.io/mdw',
-  explorerUrl: 'https://explorer.testnet.aeternity.io',
+  explorerUrl: 'https://testnet.aescan.io',
   compilerUrl: 'https://compiler.aepps.com',
 };
 
