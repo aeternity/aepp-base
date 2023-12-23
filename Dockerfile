@@ -9,7 +9,7 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 
 # TODO: remove legacy openssl after updating @vue/cli
-RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
+RUN NODE_OPTIONS=--openssl-legacy-provider npm run build -- --report
 
 FROM nginx:1.24-alpine
 COPY docker/nginx.conf /etc/nginx/nginx.conf
