@@ -3,7 +3,6 @@ const mainNetwork = {
   url: 'https://mainnet.aeternity.io',
   middlewareUrl: 'https://mainnet.aeternity.io/mdw',
   explorerUrl: 'https://aescan.io',
-  compilerUrl: 'https://compiler.aepps.com',
 };
 
 const testNetwork = {
@@ -11,7 +10,6 @@ const testNetwork = {
   url: 'https://testnet.aeternity.io',
   middlewareUrl: 'https://testnet.aeternity.io/mdw',
   explorerUrl: 'https://testnet.aescan.io',
-  compilerUrl: 'https://compiler.aepps.com',
 };
 
 const envNetwork = {
@@ -19,7 +17,6 @@ const envNetwork = {
   url: process.env.VUE_APP_NODE_URL,
   middlewareUrl: process.env.VUE_APP_MIDDLEWARE_URL,
   explorerUrl: process.env.VUE_APP_EXPLORER_URL,
-  compilerUrl: process.env.VUE_APP_COMPILER_URL,
 };
 
 const networks = (() => {
