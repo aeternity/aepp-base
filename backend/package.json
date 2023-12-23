@@ -10,12 +10,12 @@
   "private": true,
   "license": "ISC",
   "dependencies": {
-    "socket.io": "^4.6.1",
-    "web-push": "^3.6.1"
+    "socket.io": "^4.7.2",
+    "web-push": "^3.6.6"
   },
   "devDependencies": {
-    "chai": "^4.3.7",
+    "chai": "^4.3.10",
     "mocha": "^10.2.0",
-    "socket.io-client": "^4.6.1"
+    "socket.io-client": "^4.7.2"
   }
 }
