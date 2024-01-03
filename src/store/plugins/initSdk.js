@@ -87,7 +87,6 @@ export default (store) => {
           name: network.name,
           instance: await Node({ url: network.url }),
         }],
-        compilerUrl: network.compilerUrl,
         name: 'Base Aepp',
         onConnection: acceptCb,
         async onSubscription(_, { accept }, origin) {

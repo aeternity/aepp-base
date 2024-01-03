@@ -55,12 +55,6 @@ export default {
         name: this.$t('settings.info.node.height'),
         value: this.topBlockHeight,
       }, {
-        name: this.$t('settings.info.compiler.url'),
-        subtitle: currentNetwork.compilerUrl,
-      }, {
-        name: this.$t('settings.info.compiler.version'),
-        value: sdk?.compilerVersion,
-      }, {
         name: this.$t('settings.info.middleware.url'),
         subtitle: currentNetwork.middlewareUrl,
       }, {

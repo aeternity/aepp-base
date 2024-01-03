@@ -11,7 +11,3 @@ services:
     image: aepp-base-backend
     build: backend
     ports: ["3079:80"]
-  compiler:
-    image: aeternity/aesophia_http:v6.1.0
-    hostname: compiler
-    ports: ["3078:3080"]
