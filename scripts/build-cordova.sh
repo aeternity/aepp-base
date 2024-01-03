@@ -2,7 +2,6 @@
 set -e
 
 npm run build:cordova
-npm run gen:cordova-resources
 
 if [[ $TRAVIS_OS_NAME == "osx" ]]; then
   npx cordova build ios
