@@ -7,8 +7,6 @@ __image_snapshots_local__
 /www
 /platforms
 /plugins
-/resources/*/*
-!/resources/android/icon-foreground.png
 
 # local env files
 .env.local
