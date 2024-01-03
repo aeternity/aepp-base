@@ -38,11 +38,13 @@ export default {
   overflow-wrap: break-word;
 
   img {
+    display: block;
     width: functions.rem(75px);
     height: functions.rem(75px);
     border-radius: functions.rem(18px);
     box-shadow: 0 0 16px rgba(0, 33, 87, 0.15);
     margin-bottom: 5px;
+    background-color: variables.$color-neutral-maximum;
   }
 }
 </style>

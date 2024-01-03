@@ -133,7 +133,7 @@
     "list": {
       "featured-guide": "<primary>Featured</primary>",
       "bookmarked-guide": "Bookmarks",
-      "guide": "æpps <primary>browser</primary> (beta)",
+      "guide": "æpps <primary>browser</primary>",
       "note": "æpps running on the æternity blockchain will be added below.",
       "by": "by",
       "launch": "Launch"
@@ -142,8 +142,6 @@
     "url-form-placeholder": "Enter URL",
 
     "browser": {
-      "refresh": "Refresh",
-
       "confirm-account-access": {
         "guide": "<app /><br />requests access to<br /><account />",
 

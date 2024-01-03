@@ -15,13 +15,17 @@ describe('appsMetadata', () => {
     manifest: manifestMozillaDocs,
     metadata: {
       name: 'HackerWeb',
-      icon: 'http://example.com/icon/hd_hi.ico',
+      host: 'example.com',
+      url: 'https://example.com',
+      icon: 'https://example.com/icon/hd_hi.ico',
     },
   }, {
     name: 'Twitter',
     manifest: manifestTwitter,
     metadata: {
       name: 'Twitter',
+      host: 'example.com',
+      url: 'https://example.com',
       icon: 'https://abs.twimg.com/responsive-web/web/icon-default.604e2486a34a2f6e.png',
     },
   }].forEach(({ name, manifest, metadata }) => it(

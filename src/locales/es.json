@@ -133,7 +133,7 @@
     "list": {
       "featured-guide": "<primary>æpps destacados</primary>",
       "bookmarked-guide": "Mis æpps",
-      "guide": "æpps <primary>explorador</primary> (beta)",
+      "guide": "æpps <primary>explorador</primary>",
       "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación",
       "by": "by",
       "launch": "Launch"
@@ -142,8 +142,6 @@
     "url-form-placeholder": "Ingrese la URL de æpp",
 
     "browser": {
-      "refresh": "Actualizar",
-
       "confirm-account-access": {
         "guide": "<app /><br /> solicita acceso a <br /> <account />",
 

@@ -7,7 +7,6 @@ export default {
   state: {
     followers: {},
     stepFraction: null,
-    browserPath: { name: 'app-browser' },
     readSecurityCourses: [],
     skipAddingToHomeScreen: false,
   },
@@ -35,9 +34,6 @@ export default {
     },
     setStepFraction(state, stepFraction = null) {
       state.stepFraction = stepFraction;
-    },
-    setBrowserPath(state, browserPath) {
-      state.browserPath = browserPath;
     },
     markSecurityCourseAsRead(state, courseName) {
       if (state.readSecurityCourses.includes(courseName)) return;
