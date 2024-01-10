@@ -1,6 +1,5 @@
 import { times } from 'lodash-es';
 import { ensureLoggedIn, mergeEnterHandlers } from '../../../router/utils';
-import { ROUTE_MOBILE_LOGGED_IN } from '../../../lib/constants';
 
 const urlRequestMethods = ['address', 'addressAndNetworkUrl', 'sign', 'signTransaction'];
 
@@ -58,7 +57,7 @@ export default (store) => {
       ensureLoggedIn,
       (to, from, next) => {
         handleUrlRequest(to);
-        next(ROUTE_MOBILE_LOGGED_IN);
+        next(false);
       },
     ),
   }));
