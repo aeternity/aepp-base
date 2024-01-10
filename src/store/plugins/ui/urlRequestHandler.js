@@ -8,12 +8,12 @@ export default (store) => {
     const method = url.path.replace('/', '');
     const callbackUrl = new URL(url.query.callback);
     const lastParamIdx = Math.max(
-      0,
+      -1,
       ...Array.from(Object.keys(url.query))
         .map((key) => key.startsWith('param') && +key.replace('param', '')),
     );
     const params = times(
-      lastParamIdx,
+      lastParamIdx + 1,
       (idx) => JSON.parse(decodeURIComponent(url.query[`param${idx}`])),
     );
     const reply = ({ result, error }) => {
