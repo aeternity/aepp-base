@@ -156,7 +156,11 @@ export default (store) => {
         rootState: { sdk }, state, commit, dispatch,
       }, { name, address }) {
         const nameEntry = await sdk.api.getNameEntryByName(name);
-        await sdk.aensUpdate(name, [address]);
+        await sdk.aensUpdate(
+          name,
+          address ? { account_pubkey: address } : {},
+          { extendPointers: true },
+        );
         const prevAddr = getAddressByNameEntry(nameEntry);
         if (prevAddr && state.names[prevAddr] && state.names[prevAddr].hash === nameEntry.id) {
           commit('set', { address: prevAddr });

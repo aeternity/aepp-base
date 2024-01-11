@@ -17,10 +17,7 @@
       {{ $t('name.details.set-default') }}
     </AeButton>
 
-    <AeButton
-      :disabled="!address"
-      @click="extendName"
-    >
+    <AeButton @click="extendName">
       {{ $t('name.details.to-extend') }}
     </AeButton>
 
