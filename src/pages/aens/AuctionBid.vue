@@ -139,8 +139,7 @@ export default {
           const sdk = await Promise.resolve(this.$store.state.sdk);
           const res = await sdk.middleware.api.getNameById(name);
           if (res.status !== 'auction') throw new Error(`Unexpected name status: ${res.status}`);
-          // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/509
-          const { auctionEnd, lastBid } = res.auction ?? res.info;
+          const { auctionEnd, lastBid } = res.info;
           this.auctionEnd = auctionEnd;
           this.lastBid = new BigNumber(lastBid.tx.nameFee).shiftedBy(-MAGNITUDE);
         })();

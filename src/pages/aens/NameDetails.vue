@@ -6,7 +6,7 @@
     :left-button-to="{ name: 'name-list' }"
   >
     <DetailsList
-      :object="details"
+      :object="{ ...details, nameHash }"
       :field-renderers="fieldRenderers"
     />
 
@@ -17,10 +17,7 @@
       {{ $t('name.details.set-default') }}
     </AeButton>
 
-    <AeButton
-      :disabled="!address"
-      @click="extendName"
-    >
+    <AeButton @click="extendName">
       {{ $t('name.details.to-extend') }}
     </AeButton>
 
@@ -40,6 +37,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import { TxBuilderHelper } from '@aeternity/aepp-sdk';
 import prefixedAmount from '../../filters/prefixedAmount';
 import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';
@@ -65,7 +63,7 @@ export default {
       name: Name,
       nameHash: NameId,
       owner: OwnerId,
-      createdAtHeight: CreatedAtHeight,
+      createdAt: CreatedAtHeight,
       expiresAt: ExpiresAtHeight,
       pointers: DetailsNamePointers,
     },
@@ -77,16 +75,15 @@ export default {
     ...mapGetters(['currentNetwork']),
     ...mapState('names', {
       details({ owned }) {
-        const entry = owned && owned.names.find(({ name }) => name === this.name);
-        return {
-          ...entry,
-          owner: entry.accountId ?? entry.info.ownership.current,
-        };
+        return owned?.names.find(({ name }) => name === this.name);
       },
       isDefaultName(state, { getDefault }) {
         return this.address && this.name === getDefault(this.address);
       },
     }),
+    nameHash() {
+      return TxBuilderHelper.produceNameId(this.name);
+    },
   },
   async mounted() {
     const id = setInterval(() => this.$store.dispatch('names/fetchOwned'), 3000);
@@ -101,19 +98,19 @@ export default {
     },
     async extendName() {
       const initialAccountIdx = this.$store.state.accounts.activeIdx;
-      const requredAccountIdx = this.$store.state.accounts.list
-        .findIndex(({ address }) => address === this.details.info.ownership.current);
-      if (initialAccountIdx !== requredAccountIdx) {
-        this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
+      const requiredAccountIdx = this.$store.state.accounts.list
+        .findIndex(({ address }) => address === this.details.owner);
+      if (initialAccountIdx !== requiredAccountIdx) {
+        this.$store.commit('accounts/setActiveIdx', requiredAccountIdx);
       }
       await this.$store.dispatch('names/updatePointer', { name: this.name, address: this.address });
-      if (initialAccountIdx !== requredAccountIdx) {
+      if (initialAccountIdx !== requiredAccountIdx) {
         this.$store.commit('accounts/setActiveIdx', initialAccountIdx);
       }
     },
     async goToTransactionDetails() {
       const { hash } = await this.$store.state.sdk.middleware.api
-        .getTxByIndex(this.details.info.claims[0]);
+        .getTxByIndex(this.details.createdAtTxIdx);
       await this.$router.push(ENV_MOBILE_DEVICE
         ? { name: 'transaction-details', params: { hash } }
         : `${this.currentNetwork.explorerUrl}/transactions/${hash}`);
