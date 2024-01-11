@@ -114,15 +114,15 @@ export default (store) => {
         },
       }),
       (async () => {
-        const specUrl = `${network.middlewareUrl}/swagger/swagger.json`;
+        const specUrl = `${network.middlewareUrl}/api`;
         const spec = await fetchJson(specUrl);
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/503
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1670
         if (/^https:\/\/(mainnet|testnet)\.aeternity\.io\/mdw$/.test(network.middlewareUrl)) {
           spec.basePath = '/mdw/';
         }
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/160
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1668
         delete spec.schemes;
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/508
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1669
         spec.paths['/name/pointees/{id}'] = spec.paths['/names/pointees/{id}'];
         delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
