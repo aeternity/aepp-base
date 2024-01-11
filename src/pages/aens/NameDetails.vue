@@ -101,13 +101,13 @@ export default {
     },
     async extendName() {
       const initialAccountIdx = this.$store.state.accounts.activeIdx;
-      const requredAccountIdx = this.$store.state.accounts.list
+      const requiredAccountIdx = this.$store.state.accounts.list
         .findIndex(({ address }) => address === this.details.info.ownership.current);
-      if (initialAccountIdx !== requredAccountIdx) {
-        this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
+      if (initialAccountIdx !== requiredAccountIdx) {
+        this.$store.commit('accounts/setActiveIdx', requiredAccountIdx);
       }
       await this.$store.dispatch('names/updatePointer', { name: this.name, address: this.address });
-      if (initialAccountIdx !== requredAccountIdx) {
+      if (initialAccountIdx !== requiredAccountIdx) {
         this.$store.commit('accounts/setActiveIdx', initialAccountIdx);
       }
     },
