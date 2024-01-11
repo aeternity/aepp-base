@@ -81,7 +81,7 @@ export default (store) => {
     };
 
     const acceptCb = (_, { accept }) => accept();
-    const [sdk, middleware] = await Promise.all([
+    const [sdk, middleware, middleware2] = await Promise.all([
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
         nodes: [{
           name: network.name,
@@ -127,9 +127,11 @@ export default (store) => {
         delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
       })(),
+      genSwaggerClient(`${network.middlewareUrl}/v2/api`),
     ]);
     sdk.selectNode(network.name);
     sdk.middleware = middleware;
+    sdk.middleware2 = middleware2;
     return sdk;
   };
 

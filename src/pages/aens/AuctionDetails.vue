@@ -44,6 +44,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
+import { TxBuilderHelper } from '@aeternity/aepp-sdk';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
@@ -90,15 +91,17 @@ export default {
   methods: {
     async updateAuctionEntry() {
       const sdk = await Promise.resolve(this.$store.state.sdk);
-      const { info: { auctionEnd, bids } } = await sdk.middleware.api.getNameById(this.name);
+      const { info: { auctionEnd } } = await sdk.middleware.api.getNameById(this.name);
       this.auctionEnd = auctionEnd;
-      this.bids = await Promise.all(bids.map(async (txId) => {
-        const { tx } = await sdk.middleware.api.getTxByIndex(txId);
-        return {
-          nameFee: new BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-          accountId: tx.accountId,
-        };
-      }));
+      const nameId = TxBuilderHelper.produceNameId(this.name);
+      // TODO: show more than 100 bids
+      this.bids = (await sdk.middleware2.api.getAccountActivities(nameId, { limit: 100 })).data
+        .filter(({ type }) => type === 'NameClaimEvent')
+        .filter(({ payload: { sourceTxType } }) => sourceTxType === 'NameClaimTx')
+        .map(({ payload: { tx: { accountId, nameFee } } }) => ({
+          nameFee: new BigNumber(nameFee).shiftedBy(-MAGNITUDE),
+          accountId,
+        }));
     },
     blocksToRelativeTime,
   },
