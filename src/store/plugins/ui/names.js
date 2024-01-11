@@ -45,7 +45,7 @@ export default (store) => {
         sdk.then ? undefined : defaults[`${address}-${sdk.getNetworkId()}`]
       ),
       isPending: ({ owned }) => (name) => (
-        !!((owned && owned.names.find((t) => t.name === name)) || {}).pending
+        !!((owned && owned.names.find((t) => t.name === name)) || {}).status === 'pending'
       ),
     },
     mutations: {
@@ -119,10 +119,12 @@ export default (store) => {
           .then(
             ({ transactions }) => transactions
               .filter(({ tx: { type } }) => type === 'NameClaimTx')
-              .map(({ tx, ...otherTx }) => ({
-                ...otherTx,
-                ...tx,
-                pending: true,
+              .map(({ tx }) => ({
+                name: tx.name,
+                owner: address,
+                pointers: [],
+                status: 'pending',
+                nameFee: new BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
               })),
             (error) => {
               if (!isAccountNotFoundError(error)) handleUnknownError(error);
@@ -130,23 +132,51 @@ export default (store) => {
             },
           );
 
+        /**
+         * Name object structure
+         * @property {string} name - name ending with .chain
+         * @property {string} owner - address
+         * @property {array} pointers - array of objects with key and value
+         * @property {number | undefined} createdAt - block height
+         * @property {number | undefined} createdAtTxIdx - transaction index
+         * @property {number | undefined} expiresAt - block height
+         * @property {'auction' | 'name' | 'pending'} status
+         * @property {BigNumber | undefined} nameFee
+         */
         const names = (await Promise.all(
           rootState.accounts.list.map(({ address }) => Promise.all([
             getPendingNameClaimTransactions(address),
             sdk.middleware.api.getNamesOwnedBy(address)
-              .then(({ active, topBid }) => [active, topBid]),
+              .then(({ active, topBid }) => [
+                ...active.map(({ name, info }) => ({
+                  name,
+                  owner: address,
+                  pointers: Object.entries(info.pointers).map(([key, id]) => ({
+                    // TODO: find a better wrapper for mdw api
+                    key: key === 'accountPubkey' ? 'account_pubkey' : key,
+                    id,
+                  })),
+                  createdAt: info.activeFrom,
+                  createdAtTxIdx: info.claims[0],
+                  expiresAt: info.expireHeight,
+                  status: 'name',
+                })),
+                ...topBid.map(({ name, info }) => ({
+                  name,
+                  owner: address,
+                  pointers: [],
+                  createdAt: info.lastBid.blockHeight,
+                  createdAtTxIdx: info.lastBid.txIndex,
+                  status: 'auction',
+                  nameFee: new BigNumber(info.lastBid.tx.nameFee).shiftedBy(-MAGNITUDE),
+                })),
+              ]),
           ])),
-        )).flat(Infinity);
+        )).flat(2);
 
         commit('setOwned', {
           names: names.filter(({ status }) => status !== 'auction'),
-          bids: names.filter(({ status }) => status === 'auction')
-            .map((bid) => ({
-              ...bid,
-              // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/509
-              nameFee: new BigNumber((bid.auction ?? bid.info).lastBid.tx.nameFee)
-                .shiftedBy(-MAGNITUDE),
-            })),
+          bids: names.filter(({ status }) => status === 'auction'),
         });
       },
       setDefault({ rootState: { sdk }, commit }, { name, address }) {
