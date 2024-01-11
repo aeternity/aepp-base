@@ -54,6 +54,7 @@
     "workbox-precaching": "^7.0.0"
   },
   "devDependencies": {
+    "@aeternity/aepp-sdk-next": "npm:@aeternity/aepp-sdk@^13.2.2",
     "@babel/eslint-parser": "^7.23.3",
     "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10",
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
