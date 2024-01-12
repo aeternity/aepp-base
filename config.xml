@@ -53,6 +53,7 @@
         <allow-navigation href="*" />
         <preference name="UseSwiftLanguageVersion" value="5" />
         <preference name="DisallowOverscroll" value="true" />
+        <preference name="AllowBackForwardNavigationGestures" value="true" />
         <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
             <array>
                 <string>applinks:base.aepps.com</string>
