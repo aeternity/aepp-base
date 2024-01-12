@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="AeppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:statusBarColor">#ff0d6a</item>
+    <item name="android:navigationBarColor">#001833</item>
+  </style>
+</resources>

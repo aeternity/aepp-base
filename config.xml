@@ -35,6 +35,8 @@
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
         <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/splash/icon.png" />
         <preference name="AndroidWindowSplashScreenBackground" value="#ff0d6a" />
+        <preference name="AndroidPostSplashScreenTheme" value="@style/AeppBaseTheme" />
+        <resource-file src="resources/values/styles.xml" target="app/src/main/res/values/styles.xml" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
