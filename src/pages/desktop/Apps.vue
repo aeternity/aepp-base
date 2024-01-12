@@ -37,9 +37,7 @@ export default {
     },
   }),
   async mounted() {
-    this.aeternityAppsPaths = await fetchJson(
-      new URL('/apps.json', process.env.VUE_APP_HOME_PAGE_URL),
-    );
+    this.aeternityAppsPaths = await fetchJson(`${process.env.VUE_APP_HOME_PAGE_URL}/apps.json`);
   },
 };
 </script>
