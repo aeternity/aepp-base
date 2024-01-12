@@ -119,7 +119,7 @@
     <preference name="StatusBarBackgroundColor" value="#ff0d6a" />
     <plugin name="cordova-plugin-splashscreen" spec="^6.0.0" />
     <plugin name="cordova-plugin-network-information" spec="^3.0.0" />
-    <plugin name="cordova-plugin-qrscanner" spec="^3.0.1" />
+    <plugin name="cordova-plugin-qrscanner-11" spec="^3.0.5" />
     <plugin name="cordova-plugin-inappbrowser" spec="^5.0.0" />
     <plugin name="com.lampa.startapp" spec="^6.1.6" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^6.0.3" />
