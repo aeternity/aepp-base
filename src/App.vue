@@ -45,4 +45,10 @@ export default {
 html, body {
   height: var(--height);
 }
+
+// cordova-plugin-qrscanner makes webview transparent on android, but doesn't reverts it
+// because of this, some elements on other pages looks different
+body {
+  background: #fff;
+}
 </style>
