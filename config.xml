@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.aeternity.base" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.aeternity.base" version="1.0.3" android-versionCode="10005" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Base æpp</name>
     <author href="https://aeternity.com">
         aeternity developers
@@ -15,8 +15,6 @@
     <access origin="*" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <preference name="SplashMaintainAspectRatio" value="true" />
-        <preference name="HeaderColor" value="#ff0d6a" />
         <preference name="AndroidInsecureFileModeEnabled" value="true" />
         <preference name="StatusBarOverlaysWebView" value="false" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
@@ -35,18 +33,10 @@
         <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" />
         <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
-        <splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
-        <splash density="land-mdpi" src="resources/android/splash/drawable-land-mdpi-screen.png" />
-        <splash density="land-hdpi" src="resources/android/splash/drawable-land-hdpi-screen.png" />
-        <splash density="land-xhdpi" src="resources/android/splash/drawable-land-xhdpi-screen.png" />
-        <splash density="land-xxhdpi" src="resources/android/splash/drawable-land-xxhdpi-screen.png" />
-        <splash density="land-xxxhdpi" src="resources/android/splash/drawable-land-xxxhdpi-screen.png" />
-        <splash density="port-ldpi" src="resources/android/splash/drawable-port-ldpi-screen.png" />
-        <splash density="port-mdpi" src="resources/android/splash/drawable-port-mdpi-screen.png" />
-        <splash density="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png" />
-        <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
-        <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
-        <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/splash/icon.png" />
+        <preference name="AndroidWindowSplashScreenBackground" value="#ff0d6a" />
+        <preference name="AndroidPostSplashScreenTheme" value="@style/AeppBaseTheme" />
+        <resource-file src="resources/values/styles.xml" target="app/src/main/res/values/styles.xml" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -54,6 +44,7 @@
         <allow-navigation href="*" />
         <preference name="UseSwiftLanguageVersion" value="5" />
         <preference name="DisallowOverscroll" value="true" />
+        <preference name="AllowBackForwardNavigationGestures" value="true" />
         <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
             <array>
                 <string>applinks:base.aepps.com</string>
@@ -64,11 +55,6 @@
                 <string>applinks:base.aepps.com</string>
             </array>
         </config-file>
-        <preference name="WKWebViewOnly" value="true" />
-        <feature name="CDVWKWebViewEngine">
-            <param name="ios-package" value="CDVWKWebViewEngine" />
-        </feature>
-        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
         <icon height="20" src="resources/ios/icon/icon-20.png" width="20" />
@@ -117,26 +103,18 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <preference name="SplashScreen" value="screen" />
-    <preference name="ShowSplashScreenSpinner" value="false" />
-    <feature name="SplashScreen">
-        <param name="onload" value="true" />
-    </feature>
     <preference name="StatusBarBackgroundColor" value="#ff0d6a" />
-    <plugin name="cordova-plugin-splashscreen" spec="^6.0.0" />
     <plugin name="cordova-plugin-network-information" spec="^3.0.0" />
-    <plugin name="cordova-plugin-qrscanner" spec="^3.0.1" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^5.0.0" />
+    <plugin name="cordova-plugin-qrscanner-11" spec="^3.0.5" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^6.0.0" />
     <plugin name="com.lampa.startapp" spec="^6.1.6" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="^6.0.3" />
-    <plugin name="cordova-plugin-statusbar" spec="^3.0.0" />
-    <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="^6.0.4" />
+    <plugin name="cordova-plugin-statusbar" spec="^4.0.0" />
     <plugin name="cordova-clipboard" spec="^1.3.0" />
-    <plugin name="ionic-plugin-deeplinks" spec="^1.0.24">
+    <plugin name="ionic-plugin-deeplinks" spec="github:dmz86/ionic-plugin-deeplinks#38863961554f66e6e242579a9d07b5af3ad23969">
         <variable name="URL_SCHEME" value="aepp-base" />
         <variable name="DEEPLINK_HOST" value="base.aepps.com" />
     </plugin>
-    <plugin name="cordova-plugin-androidx-adapter" spec="^1.1.3" />
-    <engine name="android" spec="^10.1.1" />
-    <engine name="ios" spec="^6.2.0" />
+    <engine name="android" spec="^12.0.1" />
+    <engine name="ios" spec="^7.0.1" />
 </widget>
