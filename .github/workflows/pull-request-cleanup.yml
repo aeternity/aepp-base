@@ -2,7 +2,7 @@ name: pull-request-cleanup
 
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [ master, develop ]
     types: [ closed ]
 
 jobs:
