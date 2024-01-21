@@ -1,4 +1,4 @@
-FROM node:18-alpine as aepp-aepp-base-build
+FROM node:20-alpine as aepp-aepp-base-build
 WORKDIR /app
 RUN apk add make g++ python3 git
 
@@ -7,6 +7,9 @@ ADD package*.json ./
 RUN npm ci --legacy-peer-deps
 
 COPY . .
+
+ARG REVISION
+ENV VUE_APP_REVISION $REVISION
 
 # TODO: remove legacy openssl after updating @vue/cli
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build -- --report
