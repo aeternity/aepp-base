@@ -1,8 +1,28 @@
+import http from 'http';
 import { Server } from 'socket.io';
 import sendPushNotification from './send-push-notification.js';
+import pkg from '../package.json' with { type: 'json' };
 
 export default (port, log = () => {}) => {
-  const io = new Server(port, {
+  let getStats;
+
+  const server = http.createServer((request, response) => {
+    if (request.url === '/version' && request.method === 'GET') {
+      response.setHeader('Content-Type', 'application/json');
+      const json = JSON.stringify({
+        version: pkg.version,
+        revision: process.env.REVISION || 'local',
+        ...getStats(),
+      }, null, 2);
+      response.write(json);
+      response.end();
+      return;
+    }
+    response.writeHead(404);
+    response.end();
+  });
+
+  const io = new Server(server, {
     cors: { origin: '*' },
   });
 
@@ -10,6 +30,13 @@ export default (port, log = () => {}) => {
   const leaderKeys = {};
   const leaderPushApiSubscriptions = {};
   const leaderMessages = {};
+
+  getStats = () => {
+    const clients = io.engine.clientsCount;
+    const leaders = Object.keys(leaderPushApiSubscriptions).length;
+    const followers = Object.keys(leaderKeys).length;
+    return { clients, leaders, followers };
+  };
 
   io.sockets.use((socket, next) => {
     const { key } = socket.handshake.auth;
@@ -130,12 +157,13 @@ export default (port, log = () => {}) => {
     }
   });
 
-  log(`Listening on ${port} port`);
+  server.listen(port, () => {
+    log(`Listening on ${port} port`);
+  });
 
   const interval = setInterval(() => {
-    const leaders = Object.keys(leaderPushApiSubscriptions).length;
-    const followers = Object.keys(leaderKeys).length;
-    log(`Connected ${io.engine.clientsCount} clients, recorded ${leaders} leaders, ${followers} followers`);
+    const s = getStats();
+    log(`Connected ${s.clients} clients, recorded ${s.leaders} leaders, ${s.followers} followers`);
   }, 20000);
   const ioClose = io.close;
   io.close = function closeHandler(...args) {

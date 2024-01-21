@@ -7,5 +7,6 @@ module.exports = {
       module: 'bluebird',
       method: 'coroutine',
     }],
+    ['@babel/plugin-syntax-import-attributes'],
   ],
 };
