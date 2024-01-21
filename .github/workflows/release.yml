@@ -9,6 +9,8 @@ jobs:
     uses: aeternity/github-actions/.github/workflows/_publish-docker.yml@v2.1.0
     needs: [ validate ]
     secrets: inherit
+    with:
+      BUILD_ARGS: REVISION=${{ github.sha }}
   deploy:
     uses: aeternity/github-actions/.github/workflows/_deploy-gitops.yml@v2.1.0
     needs: [publish]

@@ -2,9 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 const addClassesToSVGElement = require('svgo/plugins/addClassesToSVGElement').fn;
 const PreloadPlugin = require('@vue/preload-webpack-plugin');
+const childProcess = require('child_process');
 const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
 process.env.VUE_APP_VERSION = process.env.npm_package_version;
+process.env.VUE_APP_REVISION ||= childProcess
+  .execSync('git rev-parse HEAD || echo local').toString().trim();
 process.env.VUE_APP_SDK_VERSION = sdkVersion;
 
 module.exports = {

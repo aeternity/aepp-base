@@ -13,6 +13,7 @@ jobs:
     secrets: inherit
     with:
       DOCKERHUB_REPO: "aeternitybot/${{ github.event.repository.name }}"
+      BUILD_ARGS: REVISION=${{ github.sha }}
   deploy:
     uses: aeternity/github-actions/.github/workflows/_deploy-gitops.yml@v2.1.0
     needs: [publish]
