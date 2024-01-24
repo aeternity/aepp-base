@@ -10,7 +10,7 @@
     v-else
     class="ae-link"
     :href="to"
-    :target="isLinkOnSameHost ? '_self' : '_blank'"
+    :target="target"
     @click="clickHandler"
   >
     <slot />
@@ -32,12 +32,14 @@ export default {
     useRouterLink() {
       return this.$options.components.RouterLink && this.isLinkOnSameHost;
     },
+    target() {
+      return this.isLinkOnSameHost ? '_self' : '_blank';
+    },
   },
   methods: {
     clickHandler(event) {
-      const { target, href } = event.target;
-      if (process.env.VUE_APP_CORDOVA && target === '_blank') {
-        cordova.InAppBrowser.open(href, '_system');
+      if (process.env.VUE_APP_CORDOVA && this.target === '_blank') {
+        cordova.InAppBrowser.open(this.to, '_system');
         event.preventDefault();
       }
     },
