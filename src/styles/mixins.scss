@@ -1,13 +1,13 @@
-@import 'variables';
+@use 'variables';
 
 @mixin phone {
-  @media (max-width: $screen-phone - 1px) {
+  @media (max-width: variables.$screen-phone - 1px) {
     @content;
   }
 }
 
 @mixin abovePhone {
-  @media (min-width: $screen-phone) {
+  @media (min-width: variables.$screen-phone) {
     @content;
   }
 }

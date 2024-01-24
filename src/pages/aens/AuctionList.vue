@@ -175,38 +175,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .auction-list {
   .button-group {
     overflow-x: auto;
-    margin-bottom: rem(30px);
+    margin-bottom: functions.rem(30px);
     white-space: nowrap;
 
     + .length-selector {
-      margin-top: rem(-15px);
+      margin-top: functions.rem(-15px);
     }
 
     .button-flat {
-      width: rem(35px);
+      width: functions.rem(35px);
     }
   }
 
   .pagination {
-    margin-top: rem(16px);
+    margin-top: functions.rem(16px);
     @extend %face-sans-base;
     text-align: center;
 
     span, a {
-      padding: 0 rem(5px);
+      padding: 0 functions.rem(5px);
     }
 
     a {
       text-decoration: none;
-      color: $color-neutral;
+      color: variables.$color-neutral;
 
       .icon {
-        height: rem(7px);
+        height: functions.rem(7px);
 
         &.first {
           transform: rotate(180deg);

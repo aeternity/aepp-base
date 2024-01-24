@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import { get } from 'lodash-es';
 import AeCard from '../../components/AeCard.vue';
 import Page from '../../components/Page.vue';
@@ -188,18 +188,23 @@ export default {
       .filter(({ source: { type } }) => type !== 'hd-wallet'),
     isWalletEncrypted: (state, getters) => getters['accounts/hdWallet/isWalletEncrypted'],
   }),
-  methods: mapActions(['logout']),
+  methods: {
+    async logout() {
+      await this.$store.dispatch('logout');
+      await this.$router.push({ name: 'login' });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .settings {
   .list-item {
     &.network, &.mnemonic {
       .list-item-circle {
-        background-color: $color-secondary;
+        background-color: variables.$color-secondary;
       }
     }
 
@@ -216,12 +221,12 @@ export default {
     }
 
     &.courses .list-item-circle {
-      background-color: $color-alternative;
+      background-color: variables.$color-alternative;
     }
 
     &.logout .list-item-circle {
       transform: rotate(90deg);
-      background-color: $color-secondary;
+      background-color: variables.$color-secondary;
     }
   }
 }

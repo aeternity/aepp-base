@@ -1,4 +1,6 @@
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .onboarding-page {
   margin: auto 0;
@@ -24,21 +26,21 @@
 
   .guide {
     display: block;
-    min-height: rem(133px);
+    min-height: functions.rem(133px);
     margin-bottom: 0;
-    margin-left: rem(20px);
-    margin-right: rem(20px);
+    margin-left: functions.rem(20px);
+    margin-right: functions.rem(20px);
 
     .note {
-      margin-top: rem(5px);
+      margin-top: functions.rem(5px);
       @extend %face-sans-base;
       font-weight: 500;
-      color: $color-neutral-negative-2;
+      color: variables.$color-neutral-negative-2;
     }
   }
 
   img {
-    margin-bottom: rem(30px);
+    margin-bottom: functions.rem(30px);
     height: 300px;
   }
 }

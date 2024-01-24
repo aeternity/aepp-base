@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
 import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import { RUNNING_IN_FRAME } from '../../lib/constants';
 
 const modals = {
   confirmAccountAccess: true,
@@ -8,7 +9,7 @@ const modals = {
 };
 
 export default (store) => {
-  if (!process.env.RUNNING_IN_FRAME) return;
+  if (!RUNNING_IN_FRAME) return;
   const unsubscribe = store.watch(
     ({ sdk }, getters) => [sdk && !sdk.then && getters['accounts/active'], sdk],
     ([ready, sdk]) => {

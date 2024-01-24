@@ -26,19 +26,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .list-item-choose {
   position: relative;
-  margin-bottom: rem(8px);
+  margin-bottom: functions.rem(8px);
   overflow: hidden;
-  border-radius: rem(4px);
-  background-color: $color-neutral-positive-3;
+  border-radius: functions.rem(4px);
+  background-color: variables.$color-neutral-positive-3;
   filter: grayscale(100%);
 
   &.active {
-    background-color: $color-neutral-maximum;
-    box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.15);
+    background-color: variables.$color-neutral-maximum;
+    box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.15);
     filter: none;
   }
 
@@ -47,25 +49,25 @@ export default {
       content: '';
       position: absolute;
       right: 0;
-      border-width: rem(32px) 0 0 rem(32px);
+      border-width: functions.rem(32px) 0 0 functions.rem(32px);
       border-style: solid;
-      border-color: $color-alternative transparent;
+      border-color: variables.$color-alternative transparent;
     }
 
     &::after {
       content: '✓';
       position: absolute;
       top: 0;
-      right: rem(3px);
+      right: functions.rem(3px);
       @extend %face-sans-s;
       font-weight: 500;
-      color: $color-neutral-maximum;
+      color: variables.$color-neutral-maximum;
     }
   }
 
   ::v-deep {
     .content img {
-      width: rem(40px);
+      width: functions.rem(40px);
     }
 
     & + .list-item .content {

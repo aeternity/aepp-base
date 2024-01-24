@@ -16,13 +16,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { IS_IOS } from './lib/constants';
 
 export default {
   computed: mapGetters('modals', ['opened', 'hidePage', 'grayscalePage']),
   mounted() {
     document.documentElement.style.setProperty(
       '--height',
-      process.env.IS_CORDOVA && process.env.IS_IOS ? '100vh' : '100%',
+      process.env.VUE_APP_CORDOVA && IS_IOS ? '100vh' : '100%',
     );
   },
 };
@@ -45,8 +46,9 @@ html, body {
   height: var(--height);
 }
 
+// cordova-plugin-qrscanner makes webview transparent on android, but doesn't reverts it
+// because of this, some elements on other pages looks different
 body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: #fff;
 }
 </style>

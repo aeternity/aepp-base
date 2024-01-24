@@ -45,24 +45,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .ae-account-reverse {
   main {
     display: flex;
     align-items: center;
-    padding: rem(12px);
+    padding: functions.rem(12px);
 
     .ae-qr-code {
       flex-grow: 1;
-      background-color: $color-neutral-maximum;
-      margin-right: rem(12px);
+      background-color: variables.$color-neutral-maximum;
+      margin-right: functions.rem(12px);
     }
 
     @media (max-width: 320px) {
       .ae-address {
-        font-size: rem(15px);
-        line-height: rem(20px);
+        font-size: functions.rem(15px);
+        line-height: functions.rem(20px);
         letter-spacing: normal;
       }
     }

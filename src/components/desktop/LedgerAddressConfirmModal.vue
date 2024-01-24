@@ -41,11 +41,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .ledger-address-confirm {
   .ae-address-panel {
-    margin: rem(60px) auto;
+    margin: functions.rem(60px) auto;
   }
 }
 </style>

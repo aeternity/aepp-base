@@ -124,7 +124,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .transaction-list {
   .page-header {
@@ -134,49 +136,49 @@ export default {
   }
 
   .tabs, .date {
-    margin-left: rem(-48px);
-    margin-right: rem(-48px);
-    padding-left: rem(48px);
+    margin-left: functions.rem(-48px);
+    margin-right: functions.rem(-48px);
+    padding-left: functions.rem(48px);
   }
 
   .tabs {
     box-shadow: 0 4px 2px -2px rgba(27, 68, 121, 0.1);
 
     .button-plain {
-      margin-right: rem(16px);
+      margin-right: functions.rem(16px);
       @extend %face-sans-s;
       font-weight: 500;
-      letter-spacing: rem(0.2px);
-      line-height: rem(46px);
-      color: $color-neutral-negative-3;
+      letter-spacing: functions.rem(0.2px);
+      line-height: functions.rem(46px);
+      color: variables.$color-neutral-negative-3;
 
       &.router-link-exact-active {
         padding-bottom: 0;
-        border-bottom: rem(2px) solid $color-primary;
+        border-bottom: functions.rem(2px) solid variables.$color-primary;
       }
     }
   }
 
   .no-transactions {
-    margin-top: rem(10px);
+    margin-top: functions.rem(10px);
     @extend %face-sans-base;
     text-align: center;
     font-weight: 500;
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
   }
 
   .date {
     position: sticky;
-    top: rem(54px);
-    top: calc(env(safe-area-inset-top) + #{rem(54px)});
-    margin-top: rem(2px);
-    height: rem(44px);
+    top: functions.rem(54px);
+    top: calc(env(safe-area-inset-top) + #{functions.rem(54px)});
+    margin-top: functions.rem(2px);
+    height: functions.rem(44px);
     @extend %face-uppercase-xs;
     font-weight: 500;
-    line-height: rem(44px);
+    line-height: functions.rem(44px);
     vertical-align: middle;
-    color: $color-neutral-negative-1;
-    background-color: $color-neutral-positive-3;
+    color: variables.$color-neutral-negative-1;
+    background-color: variables.$color-neutral-positive-3;
   }
 }
 </style>

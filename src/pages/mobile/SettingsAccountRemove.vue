@@ -66,9 +66,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .settings-account-remove .ae-account-reverse {
-  margin-top: rem(20px);
+  margin-top: functions.rem(20px);
 }
 </style>

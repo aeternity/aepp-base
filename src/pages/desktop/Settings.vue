@@ -20,8 +20,11 @@
           class="value"
         >
           {{ currentNetwork.name }}
-          <ButtonPlain @click="networkMode = 'switch'">
-            <LeftMore ref="networkIcon" />
+          <ButtonPlain
+            ref="networkButton"
+            @click="networkMode = 'switch'"
+          >
+            <LeftMore />
           </ButtonPlain>
         </div>
       </ListItem>
@@ -36,22 +39,26 @@
         </ListItemCircle>
         <ButtonPlain
           slot="right"
+          ref="currencyButton"
           @click="showCurrencySwitcher = true"
         >
-          <LeftMore ref="currencyIcon" />
+          <LeftMore />
         </ButtonPlain>
       </ListItem>
 
       <ListItemSettingsLanguage>
-        <ButtonPlain @click="showLanguageSwitcher = true">
-          <LeftMore ref="languageIcon" />
+        <ButtonPlain
+          ref="languageButton"
+          @click="showLanguageSwitcher = true"
+        >
+          <LeftMore />
         </ButtonPlain>
       </ListItemSettingsLanguage>
     </AeCard>
     <SettingsVersion />
 
     <AePopover
-      :anchor="networkMode ? $refs.networkIcon : null"
+      :anchor="networkMode ? $refs.networkButton : null"
       v-bind="popoverOrigin"
       @close="closeNetworkPopover"
     >
@@ -67,7 +74,7 @@
     </AePopover>
 
     <AePopover
-      :anchor="showCurrencySwitcher ? $refs.currencyIcon : null"
+      :anchor="showCurrencySwitcher ? $refs.currencyButton : null"
       v-bind="popoverOrigin"
       @close="showCurrencySwitcher = false"
     >
@@ -75,7 +82,7 @@
     </AePopover>
 
     <AePopover
-      :anchor="showLanguageSwitcher ? $refs.languageIcon : null"
+      :anchor="showLanguageSwitcher ? $refs.languageButton : null"
       v-bind="popoverOrigin"
       @close="showLanguageSwitcher = false"
     >
@@ -145,15 +152,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .settings {
   .ae-card {
-    margin: 0 rem(-15px);
+    margin: 0 functions.rem(-15px);
 
     .list-item {
       &.network .list-item-circle {
-        background-color: $color-secondary;
+        background-color: variables.$color-secondary;
       }
 
       &.currency .list-item-circle {
@@ -162,11 +171,11 @@ export default {
 
       .value {
         @extend %face-sans-xs;
-        color: $color-neutral-negative-1;
+        color: variables.$color-neutral-negative-1;
       }
 
       .button-plain {
-        margin-left: rem(10px);
+        margin-left: functions.rem(10px);
 
         .icon {
           transform: rotate(90deg);

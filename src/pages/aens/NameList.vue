@@ -11,13 +11,13 @@
         <ListItemAccount
           v-for="entry in owned.names"
           :key="entry.name"
-          :address="entry.accountId || entry.info.ownership.current"
+          :address="entry.owner"
           :name="entry.name"
           :to="{ name: 'name-details', params: { name: entry.name } }"
           subtitle="address"
         >
           <NamePending
-            v-if="entry.pending"
+            v-if="entry.status === 'pending'"
             slot="right"
           />
         </ListItemAccount>
@@ -27,13 +27,12 @@
     <template v-if="owned && owned.bids.length">
       <h2>{{ $t('name.list.active-bids') }}</h2>
       <AeCard fill="maximum">
-        <!-- TODO: remove `auction || info` after resolving https://github.com/aeternity/ae_mdw/issues/509 -->
         <ListItemAccount
           v-for="bid in owned.bids"
           :key="bid.name"
           :name="bid.name"
           :balance="bid.nameFee"
-          :address="(bid.auction || bid.info).lastBid.tx.accountId"
+          :address="bid.owner"
           :to="{ name: 'auction-details', params: { name: bid.name } }"
         />
       </AeCard>

@@ -36,7 +36,7 @@ export default {
   methods: {
     clickHandler(event) {
       const { target, href } = event.target;
-      if (process.env.IS_CORDOVA && target === '_blank') {
+      if (process.env.VUE_APP_CORDOVA && target === '_blank') {
         cordova.InAppBrowser.open(href, '_system');
         event.preventDefault();
       }

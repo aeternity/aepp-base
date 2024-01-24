@@ -54,10 +54,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
-@import 'VaultSetup';
+@use '../../styles/functions';
+@use 'VaultSetup';
 
 .vault-setup-another-device .guide {
-  margin-bottom: rem(41px);
+  margin-bottom: functions.rem(41px);
 }
 </style>

@@ -73,7 +73,7 @@ export default {
     return {
       writingHandEmoji,
       envelopeEmoji,
-      sharingSupported: navigator.share || process.env.IS_CORDOVA,
+      sharingSupported: navigator.share || process.env.VUE_APP_CORDOVA,
       sharedChecked: false,
     };
   },
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .receive .list-item {
   &.copy:not(.v-copied) .list-item-circle {
@@ -97,7 +97,7 @@ export default {
   }
 
   .list-item-circle {
-    background-color: $color-alternative;
+    background-color: variables.$color-alternative;
   }
 }
 </style>

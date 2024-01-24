@@ -1,10 +1,10 @@
 @use 'sass:math';
-@import 'variables';
+@use 'variables';
 
 @function em($px) {
-  @return math.div($px, $base-font-size) * 1em;
+  @return math.div($px, variables.$base-font-size) * 1em;
 }
 
 @function rem($px) {
-  @return math.div($px, $base-font-size) * 1rem;
+  @return math.div($px, variables.$base-font-size) * 1rem;
 }

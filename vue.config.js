@@ -1,102 +1,175 @@
 const path = require('path');
-const branch = require('./scripts/current-branch');
+const webpack = require('webpack');
+const addClassesToSVGElement = require('svgo/plugins/addClassesToSVGElement').fn;
+const PreloadPlugin = require('@vue/preload-webpack-plugin');
+const childProcess = require('child_process');
 const { version: sdkVersion } = require('./node_modules/@aeternity/aepp-sdk/package.json');
 
-const parseBool = (val) => (val ? JSON.parse(val) : false);
-
-// eslint-disable-next-line camelcase
-const { IS_MOBILE_DEVICE, IS_PWA, npm_package_version } = process.env;
-const IS_CORDOVA = parseBool(process.env.IS_CORDOVA);
-const IS_MASTER = branch === 'master';
-const UNFINISHED_FEATURES = parseBool(process.env.UNFINISHED_FEATURES);
+process.env.VUE_APP_VERSION = process.env.npm_package_version;
+process.env.VUE_APP_REVISION ||= childProcess
+  .execSync('git rev-parse HEAD || echo local').toString().trim();
+process.env.VUE_APP_SDK_VERSION = sdkVersion;
 
 module.exports = {
-  publicPath: IS_CORDOVA ? './' : '/',
-  outputDir: IS_CORDOVA ? 'www' : 'dist',
-  productionSourceMap: !IS_CORDOVA,
-  chainWebpack: (config) => config.plugin('define').tap((options) => {
-    const definitions = { ...options[0] };
-
-    Object.entries(definitions['process.env']).forEach(([k, v]) => {
-      definitions[`process.env.${k}`] = v;
-    });
-    delete definitions['process.env'];
-
-    definitions['process.env.IS_CORDOVA'] = IS_CORDOVA;
-    definitions['process.env.IS_MASTER'] = IS_MASTER;
-    definitions['process.env.UNFINISHED_FEATURES'] = UNFINISHED_FEATURES;
-
-    if (IS_CORDOVA || IS_MOBILE_DEVICE) {
-      definitions['process.env.IS_MOBILE_DEVICE'] = IS_CORDOVA || parseBool(process.env.IS_MOBILE_DEVICE);
-    }
-
-    if (IS_PWA) {
-      definitions['process.env.IS_PWA'] = parseBool(process.env.IS_PWA);
-    }
-
-    // eslint-disable-next-line camelcase
-    if (npm_package_version) {
-      definitions['process.env.npm_package_version'] = JSON.stringify(npm_package_version);
-    }
-    definitions['process.env.SDK_VERSION'] = JSON.stringify(sdkVersion);
-
-    return [definitions];
-  }).end()
-    .module.rule('svg')
-    .uses.clear().end()
-    .oneOf('icon-component')
-    .resourceQuery(/icon-component/)
-    .use('babel-loader')
-    .loader('babel-loader')
-    .options({ configFile: false, presets: ['@babel/preset-env'] })
-    .end()
-    .use('vue-svg-loader')
-    .loader('vue-svg-loader')
-    .options({
-      svgo: {
-        plugins: [{
-          addClassesToSVGElement: {
-            type: 'full',
-            fn(data, options, extra) {
-              const svg = data.content[0];
-              svg.class.add('icon', path.basename(extra.path, '.svg'));
-              return data;
-            },
-          },
-        }],
+  publicPath: process.env.VUE_APP_CORDOVA ? './' : '/',
+  outputDir: process.env.VUE_APP_CORDOVA ? 'www' : 'dist',
+  productionSourceMap: !process.env.VUE_APP_CORDOVA,
+  lintOnSave: false,
+  configureWebpack: {
+    resolve: {
+      fallback: {
+        stream: require.resolve('stream-browserify'),
+        buffer: require.resolve('buffer/'),
+        util: require.resolve('util/'),
       },
-    })
-    .end()
-    .end()
-    .oneOf('default')
-    .use('svg-url-loader')
-    .loader('svg-url-loader')
-    .options({
-      noquotes: true,
-      limit: 4096,
-      name: 'img/[name].[hash:8].[ext]',
-      esModule: false,
-    })
-    .end()
-    .use('svgo-loader')
-    .loader('svgo-loader')
-    .end(),
+    },
+    plugins: [
+      new webpack.ProvidePlugin({ Buffer: ['buffer', 'Buffer'] }),
+    ],
+    module: {
+      rules: [{
+        test: /\.(svg)(\?.*)?$/,
+        type: 'javascript/auto',
+        oneOf: [{
+          resourceQuery: /icon-component/,
+          use: [{
+            loader: 'vue-loader',
+          }, {
+            loader: path.resolve('config/webpack/vue-svg-loader.js'),
+          }, {
+            loader: 'svgo-loader',
+            options: {
+              plugins: [
+                'preset-default',
+                { name: 'addClassesToSVGElement', params: { className: ['icon'] } },
+                {
+                  name: 'addFilenameToClasses',
+                  type: 'visitor',
+                  fn(root, params, extra) {
+                    const className = path.basename(extra.path, '.svg');
+                    return addClassesToSVGElement(root, { className });
+                  },
+                },
+              ],
+            },
+          }],
+        }, {
+          use: [{
+            loader: 'svg-url-loader',
+            options: {
+              noquotes: true,
+              limit: 4096,
+              name: 'img/[name].[hash:8].[ext]',
+              esModule: false,
+            },
+          }, {
+            loader: 'svgo-loader',
+          }],
+        }],
+      }],
+    },
+  },
+  chainWebpack(config) {
+    config.plugin('define').tap(([definitions]) => [{
+      ...definitions,
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent#Mobile_Tablet_or_Desktop
+      ENV_MOBILE_DEVICE: !!process.env.VUE_APP_CORDOVA || 'window.navigator.userAgent.includes(\'Mobi\')',
+    }]);
+
+    if (config.plugins.has('extract-css')) {
+      config.plugin('extract-css').tap(([definitions]) => [{ ...definitions, ignoreOrder: true }]);
+    }
+
+    config.module.rules.delete('svg');
+
+    if (process.env.VUE_APP_CORDOVA) {
+      config.plugins.delete('pwa');
+      config.plugins.delete('workbox');
+    }
+
+    // TODO: remove after fixing https://github.com/vuejs/vue-cli/issues/7206
+    config.plugin('prefetch').after('html').use(PreloadPlugin, [{
+      rel: 'prefetch',
+      include: 'asyncChunks',
+    }]);
+  },
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      swSrc: 'src/service-worker.js',
+      swSrc: './src/service-worker.js',
     },
-    name: 'Base æpp',
-    manifestPath: 'default.webmanifest',
+    name: 'Base æpp Wallet',
+    manifestOptions: {
+      short_name: 'Base æpp',
+      description: 'The æternity blockchain wallet allows users to store, send, and receive æternity coins. The wallet also features an æpps (applications running on the æternity blockchain) browser.',
+      categories: ['finance'],
+      aeternity_network_ids: ['ae_mainnet', 'ae_uat'],
+      author: 'æternity',
+      author_url: 'https://github.com/aetrnity',
+      prefer_related_applications: true,
+      related_applications: [{
+        platform: 'play',
+        url: 'https://play.google.com/store/apps/details?id=com.aeternity.base',
+        id: 'com.aeternity.base',
+      }, {
+        platform: 'itunes',
+        url: 'https://apps.apple.com/app/base-æpp-wallet/id1458655724',
+      }],
+      icons: [{
+        src: '/icon-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      }, {
+        src: '/icon-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      }, {
+        src: '/icon-maskable-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      }, {
+        src: '/icon.svg',
+        sizes: 'any',
+        type: 'image/svg+xml',
+      }],
+      background_color: '#ff0d6a',
+      id: '/',
+      start_url: '/',
+      protocol_handlers: [
+        { protocol: 'web+aeternity', url: '/%s' },
+        { protocol: 'web+aeppbase', url: '/%s' },
+      ],
+      shortcuts: [{
+        name: 'Show QR code',
+        url: '/transfer/receive',
+        description: 'Show QR code to get AE',
+        icons: [{
+          src: '/icon-receive.png',
+          sizes: '96x96',
+          type: 'image/png',
+        }],
+      }, {
+        name: 'æpp browser',
+        url: '/browser',
+        icons: [{
+          src: '/icon-grid.png',
+          sizes: '96x96',
+          type: 'image/png',
+        }],
+      }],
+    },
     iconPaths: {
-      favicon32: 'favicons/favicon-32x32.png',
-      favicon16: 'favicons/favicon-16x16.png',
-      appleTouchIcon: 'favicons/apple-touch-icon.png',
-      maskIcon: 'favicons/safari-pinned-tab.svg',
-      msTileImage: 'favicons/mstile-150x150.png',
+      favicon32: null,
+      favicon16: null,
+      appleTouchIcon: null,
+      maskIcon: null,
+      msTileImage: null,
+      faviconSVG: null,
     },
-    themeColor: '#f7296e',
-    msTileColor: '#f7296e',
+    themeColor: '#ff0d6a',
+    msTileColor: '#ff0d6a',
+    appleMobileWebAppCapable: 'yes',
   },
   transpileDependencies: ['@aeternity/hd-wallet', '@download/blockies'],
   pluginOptions: {

@@ -63,12 +63,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .vault-sign-modal .ae-qr-code {
   margin-left: auto;
   margin-right: auto;
-  margin-top: rem(60px);
-  background-color: $color-neutral-maximum;
+  margin-top: functions.rem(60px);
+  background-color: variables.$color-neutral-maximum;
 }
 </style>

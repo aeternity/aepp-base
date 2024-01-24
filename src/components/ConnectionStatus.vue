@@ -46,18 +46,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .connection-status {
-  padding: rem(6px);
+  padding: functions.rem(6px);
   @extend %face-sans-xs;
   color: #fff;
   text-align: center;
-  background-color: $color-primary;
+  background-color: variables.$color-primary;
 
   &.test-net,
   &.connecting {
-    background-color: $color-secondary;
+    background-color: variables.$color-secondary;
   }
 }
 </style>

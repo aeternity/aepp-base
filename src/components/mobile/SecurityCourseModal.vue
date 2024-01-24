@@ -8,12 +8,14 @@
     <div class="buttons">
       <AeButton
         fill="alternative"
+        data-cy="security-course"
         @click="openSecurityCourse"
       >
         {{ $t('security-courses.modal.to-security-course-1') }}
       </AeButton>
       <AeButton
         plain
+        data-cy="skip"
         @click="resolve"
       >
         {{ $t('security-courses.modal.skip') }}
@@ -42,29 +44,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .security-course-modal {
   text-align: center;
 
   ::v-deep .modal-plain {
-    max-width: rem(275px);
-    padding: rem(50px) rem(30px) rem(10px) rem(30px);
+    max-width: functions.rem(275px);
+    padding: functions.rem(50px) functions.rem(30px) functions.rem(10px) functions.rem(30px);
   }
 
   .guide {
-    margin-bottom: rem(5px);
+    margin-bottom: functions.rem(5px);
   }
 
   .note {
     @extend %face-sans-base;
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
   }
 
   .buttons {
     display: flex;
     flex-direction: column;
-    margin-top: rem(20px);
+    margin-top: functions.rem(20px);
 
     .ae-button {
       min-width: 0;

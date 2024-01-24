@@ -14,16 +14,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .name-pending {
-  $size: rem(24px);
+  $size: functions.rem(24px);
   width: $size;
   height: $size;
   line-height: $size;
 
   .icon {
-    height: rem(14px);
+    height: functions.rem(14px);
   }
 }
 </style>

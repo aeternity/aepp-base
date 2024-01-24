@@ -30,6 +30,7 @@
         :to="{ name: isLastStep ? 'intro' : stepRouteNames[currentStepIdx + 1] }"
         size="small"
         plain
+        data-cy="next"
       >
         {{ isLastStep ? $t('onboarding.start') : $t('next') }}
       </AeButton>
@@ -39,6 +40,7 @@
 
 <script>
 import AeButton from '../../components/AeButton.vue';
+import { DISABLED_BROWSER } from '../../lib/constants';
 
 export default {
   components: { AeButton },
@@ -46,7 +48,7 @@ export default {
     stepRouteNames: [
       'onboarding',
       'onboarding-send',
-      ...process.env.DISABLED_BROWSER ? [] : ['onboarding-aepps'],
+      ...DISABLED_BROWSER ? [] : ['onboarding-aepps'],
       'onboarding-subaccounts',
     ],
   }),
@@ -62,24 +64,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .onboarding {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background: $color-neutral-positive-2;
+  background: variables.$color-neutral-positive-2;
 
   footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 rem(48px);
+    padding: 0 functions.rem(48px);
     padding-bottom: env(safe-area-inset-bottom);
 
     .ae-button {
-      margin-bottom: rem(23px);
-      margin-top: rem(23px);
+      margin-bottom: functions.rem(23px);
+      margin-top: functions.rem(23px);
     }
 
     .step-dots {
@@ -93,14 +96,14 @@ export default {
 
       a {
         display: inline-block;
-        width: rem(10px);
-        height: rem(10px);
-        margin: rem(5px);
-        background-color: $color-neutral-positive-1;
+        width: functions.rem(10px);
+        height: functions.rem(10px);
+        margin: functions.rem(5px);
+        background-color: variables.$color-neutral-positive-1;
         border-radius: 50%;
 
         &.active {
-          background-color: $color-primary;
+          background-color: variables.$color-primary;
           position: relative;
           z-index: 1;
         }

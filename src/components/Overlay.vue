@@ -18,18 +18,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .overlay {
   position: fixed;
   display: flex;
-  padding: rem(20px);
+  padding: functions.rem(20px);
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba($color-neutral-minimum, 0.7);
+  background-color: rgba(variables.$color-neutral-minimum, 0.7);
   overflow: auto;
 }
 </style>

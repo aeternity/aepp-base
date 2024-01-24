@@ -8,6 +8,7 @@
     <AeButton
       fill="light"
       plain
+      data-cy="skip"
       @click="skipAddingToHomeScreen"
     >
       {{ $t('add-to-home-screen.skip') }}

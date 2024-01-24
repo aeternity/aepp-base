@@ -1,5 +1,5 @@
 export default class AES {
-  BLOCK_SIZE = 16
+  BLOCK_SIZE = 16;
 
   constructor(key) {
     this.algorithm = {

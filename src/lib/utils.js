@@ -36,5 +36,6 @@ export class DOMRect {
   get bottom() { return this.top + this.height; }
 }
 
+// name entry returned by node, not middleware
 export const getAddressByNameEntry = (nameEntry) => ((nameEntry.pointers
   && nameEntry.pointers.find(({ key }) => key === 'account_pubkey')) || {}).id;

@@ -33,38 +33,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/typography';
 
 .ae-card {
   @extend %face-sans-base;
   border-radius: 8px;
-  background: $color-neutral-positive-3;
-  color: $color-neutral;
-  box-shadow: 0 0 16px $color-shadow-alpha-15;
+  background: variables.$color-neutral-positive-3;
+  color: variables.$color-neutral;
+  box-shadow: 0 0 16px variables.$color-shadow-alpha-15;
   overflow: hidden;
 
   &.primary {
-    background: $color-primary;
-    color: $color-primary-negative-3;
+    background: variables.$color-primary;
+    color: variables.$color-primary-negative-3;
   }
 
   &.secondary {
-    background: $color-secondary;
-    color: $color-secondary-negative-3;
+    background: variables.$color-secondary;
+    color: variables.$color-secondary-negative-3;
   }
 
   &.dark {
-    background: $color-neutral-negative-3;
+    background: variables.$color-neutral-negative-3;
     color: #fff;
   }
 
   &.alternative {
-    background: $color-alternative;
-    color: $color-alternative-negative-3;
+    background: variables.$color-alternative;
+    color: variables.$color-alternative-negative-3;
   }
 
   &.maximum {
-    background: $color-neutral-maximum;
+    background: variables.$color-neutral-maximum;
   }
 }
 </style>

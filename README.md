@@ -1,4 +1,4 @@
-# Base æpp [![Build Status](https://api.travis-ci.org/aeternity/aepp-base.svg?branch=develop)](https://travis-ci.org/aeternity/aepp-base/branches)
+# Base æpp
 
 ## How to get the Base æpp
 
@@ -32,9 +32,6 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build -- --report
 
-# generate resources for cordova
-npm run gen:cordova-resource
-
 # build for cordova
 npm run build:cordova
 
@@ -59,7 +56,7 @@ npm test
 We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workflow [this is also helpful](https://gist.github.com/JamesMGreene/cdd0ac49f90c987e45ac).
 * Development of features happens in branches made from **develop** called feature/<the-feature> like feature/show-token-balance.
 * When development is finished a pull request to **develop** is created. At least one person has to review the PR and when everything is fine the PR gets merged.
-* The develop branch gets deployed to the [stage environment](https://stage-identity.aepps.com) by travis.
+* The develop branch gets deployed to the [stage environment](https://base.stg.aepps.com) by travis.
 * To make a new release create a release branch called release/vX.X.X, also bump the version number in package.json in this branch.
 * Create a PR to master which then also has to be accepted.
 * Create a tag for this version and push the tag.
@@ -69,8 +66,8 @@ We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workfl
 ## Deployment
 
 We have a stage (develop) and a production (master) branch and environments where these branches will be deployed to.
-* [stage environment](https://stage-identity.aepps.com)
-* [production environment](https://base.aepps.com/)
+* [stage environment](https://base.stg.aepps.com)
+* [production environment](https://base.aepps.com)
 
 ### stage
 * Is used to see changes to the code in effect in a "real" environment without the fear of breaking the production environment.
@@ -79,13 +76,11 @@ We have a stage (develop) and a production (master) branch and environments wher
 * Is the production environment, code lives in the "master" branch.
 
 ### other branches
-* Every branch is auto-deployed on https://`branch-name`.origin.aepps.com/, with each `/`, `.` symbol in a branch name replaced by `-`.
+* Every branch is auto-deployed on `https://pr-<id>-base.stg.aepps.com/`, where `<id>` is a number of PR.
 
 ### unsigned .apk and .app file
-* Find `aetenity.app.tar.gz` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest) or download corresponding
-version from a branch https://`branch-name`.origin.aepps.com/aetenity.app.tar.gz
-* Find `aeternity.apk` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest) or download corresponding
-version from a branch https://`branch-name`.origin.aepps.com/aeternity.apk
+* Find `aetenity.app.tar.gz` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest)
+* Find `aeternity.apk` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest)
 
 ### bundle analyzer report
-* Get bundle analyzer report on each domain by adding /report.html. Example [https://stage-identity.aepps.com/report.html](https://stage-identity.aepps.com/report.html).
+* Get bundle analyzer report on each domain by adding /report.html. Example [https://base.stg.aepps.com/report.html](https://base.stg.aepps.com/report.html).

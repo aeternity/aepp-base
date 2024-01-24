@@ -49,9 +49,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .settings-mnemonic-confirmed .ae-button {
-  margin-top: rem(12px);
+  margin-top: functions.rem(12px);
 }
 </style>

@@ -138,7 +138,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/typography';
 
 .spinner {
   flex-grow: 1;

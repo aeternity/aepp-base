@@ -1,7 +1,7 @@
 <template>
   <Component
     :is="modal ? 'AeModal' : 'div'"
-    :class="[fill, { desktop: !$globals.IS_MOBILE_DEVICE }, { modal }]"
+    :class="[fill, { desktop: !$globals.ENV_MOBILE_DEVICE }, { modal }]"
     class="page"
   >
     <PageHeader
@@ -33,7 +33,7 @@
       <div class="wrapper">
         <slot name="footer" />
       </div>
-      <TabBar v-if="$globals.IS_MOBILE_DEVICE && !hideTabBar" />
+      <TabBar v-if="$globals.ENV_MOBILE_DEVICE && !hideTabBar" />
     </footer>
   </Component>
 </template>
@@ -42,6 +42,7 @@
 import PageHeader from './PageHeader.vue';
 import TabBar from './mobile/TabBar.vue';
 import AeModal from './AeModal.vue';
+import { IS_IOS } from '../lib/constants';
 
 export default {
   components: { PageHeader, TabBar, AeModal },
@@ -73,7 +74,7 @@ export default {
     modal: Boolean,
   },
   async mounted() {
-    if (process.env.IS_CORDOVA && process.env.IS_IOS) {
+    if (process.env.VUE_APP_CORDOVA && IS_IOS) {
       await new Promise((resolve) => {
         document.addEventListener('deviceready', resolve);
       });
@@ -89,8 +90,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/mixins';
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/mixins';
+@use '../styles/typography';
 
 .page {
   flex-grow: 1;
@@ -100,35 +103,35 @@ export default {
   &:not(.ae-modal),
   header {
     &.primary {
-      background-color: $color-primary;
+      background-color: variables.$color-primary;
     }
 
     &.alternative {
-      background-color: $color-alternative;
+      background-color: variables.$color-alternative;
     }
 
     &.neutral {
-      background-color: $color-neutral-positive-2;
+      background-color: variables.$color-neutral-positive-2;
     }
 
     &.dark {
-      background-color: $color-neutral-minimum;
+      background-color: variables.$color-neutral-minimum;
     }
 
     &.light {
-      background-color: $color-neutral-maximum;
+      background-color: variables.$color-neutral-maximum;
     }
   }
 
   .wrapper {
-    max-width: $screen-phone;
+    max-width: variables.$screen-phone;
     box-sizing: border-box;
     margin: 0 auto;
-    padding: 0 rem(48px);
+    padding: 0 functions.rem(48px);
 
     ::v-deep {
       .guide.has-icon {
-        margin-left: rem(-36px);
+        margin-left: functions.rem(-36px);
       }
 
       > .ae-button.medium {
@@ -139,22 +142,22 @@ export default {
 
       > .ae-button.medium,
       > .ae-button-group {
-        margin-left: rem(-16px);
-        margin-right: rem(-16px);
+        margin-left: functions.rem(-16px);
+        margin-right: functions.rem(-16px);
 
         &:last-child {
-          margin-bottom: rem(32px);
+          margin-bottom: functions.rem(32px);
         }
       }
 
       .ae-input-wrapper {
-        margin-left: rem(-16px);
-        margin-right: rem(-16px);
+        margin-left: functions.rem(-16px);
+        margin-right: functions.rem(-16px);
       }
 
       > .ae-card {
-        margin-left: rem(-16px);
-        margin-right: rem(-16px);
+        margin-left: functions.rem(-16px);
+        margin-right: functions.rem(-16px);
 
         .ae-input-wrapper {
           margin-left: 0;
@@ -163,8 +166,8 @@ export default {
       }
 
       > .list-item {
-        margin-left: rem(-16px);
-        margin-right: rem(-16px);
+        margin-left: functions.rem(-16px);
+        margin-right: functions.rem(-16px);
       }
 
       > {
@@ -173,19 +176,19 @@ export default {
         }
 
         h2 {
-          margin-top: rem(30px);
+          margin-top: functions.rem(30px);
           font-weight: 500;
-          color: $color-neutral-negative-3;
+          color: variables.$color-neutral-negative-3;
         }
 
         p {
-          margin-top: rem(15px);
-          color: $color-neutral;
+          margin-top: functions.rem(15px);
+          color: variables.$color-neutral;
         }
 
         .ae-spinner {
           display: block;
-          margin: rem(60px) auto;
+          margin: functions.rem(60px) auto;
         }
       }
     }
@@ -195,26 +198,26 @@ export default {
     .wrapper ::v-deep {
       .ae-input-wrapper:last-child,
       > .ae-card:last-child {
-        margin-bottom: rem(-32px);
+        margin-bottom: functions.rem(-32px);
       }
     }
 
     & + * {
-      margin-top: rem(32px);
+      margin-top: functions.rem(32px);
     }
   }
 
   header + main {
-    padding-top: rem(16px);
+    padding-top: functions.rem(16px);
   }
 
   main {
     flex-grow: 1;
-    padding-bottom: rem(32px);
+    padding-bottom: functions.rem(32px);
 
     ::v-deep {
       .ae-card:first-child {
-        margin-top: rem(32px);
+        margin-top: functions.rem(32px);
       }
     }
   }
@@ -230,12 +233,12 @@ export default {
     .wrapper ::v-deep > {
       .ae-button:not(.plain),
       .ae-button-group {
-        box-shadow: 0 0 16px $color-shadow-alpha-15;
+        box-shadow: 0 0 16px variables.$color-shadow-alpha-15;
       }
 
       .ae-button:not(.medium) {
-        margin-bottom: rem(23px);
-        margin-top: rem(23px);
+        margin-bottom: functions.rem(23px);
+        margin-top: functions.rem(23px);
       }
     }
   }
@@ -244,16 +247,16 @@ export default {
     &:not(.ae-modal),
     .page-header,
     header {
-      background-color: $color-neutral-positive-2;
+      background-color: variables.$color-neutral-positive-2;
     }
 
     &.ae-modal {
       ::v-deep .modal-plain {
-        background-color: $color-primary;
+        background-color: variables.$color-primary;
 
         .page-header {
-          background-color: $color-primary;
-          margin-top: rem(32px);
+          background-color: variables.$color-primary;
+          margin-top: functions.rem(32px);
 
           header {
             display: none;
@@ -272,25 +275,25 @@ export default {
       }
 
       ::v-deep .button-plain {
-        color: $color-neutral-negative-3;
+        color: variables.$color-neutral-negative-3;
       }
     }
 
     header ::v-deep .guide.neutral .content {
       em {
-        color: $color-primary;
+        color: variables.$color-primary;
       }
 
       &,
       .account-inline {
-        color: $color-neutral-negative-3;
+        color: variables.$color-neutral-negative-3;
       }
     }
 
     .wrapper .ae-button {
-      margin-top: rem(16px);
-      margin-left: rem(54px);
-      margin-right: rem(54px);
+      margin-top: functions.rem(16px);
+      margin-left: functions.rem(54px);
+      margin-right: functions.rem(54px);
     }
   }
 }

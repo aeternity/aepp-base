@@ -91,18 +91,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .transaction-fee {
   .ae-input-amount {
-    margin: rem(60px) auto;
-    width: rem(311px);
+    margin: functions.rem(60px) auto;
+    width: functions.rem(311px);
   }
 
   .ae-input-range {
     display: block;
-    margin: rem(40px) auto;
-    width: rem(279px);
+    margin: functions.rem(40px) auto;
+    width: functions.rem(279px);
   }
 
   .ae-button {

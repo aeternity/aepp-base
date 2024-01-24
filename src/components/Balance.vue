@@ -45,17 +45,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .balance {
   @extend %face-mono-base;
   font-weight: normal;
   line-height: normal;
-  color: $color-neutral-negative-3;
+  color: variables.$color-neutral-negative-3;
 
   .left {
-    color: $color-neutral-negative-1;
-    font-size: rem(13px);
+    color: variables.$color-neutral-negative-1;
+    font-size: functions.rem(13px);
   }
 
   &.invert {

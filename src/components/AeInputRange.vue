@@ -26,7 +26,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .ae-input-range {
   -webkit-appearance: none;
@@ -36,20 +37,20 @@ export default {
 
   $colors: (
     primary: (
-      track-color: $color-neutral-positive-1,
-      progress-color: $color-primary,
-      thumb-color: $color-primary,
+      track-color: variables.$color-neutral-positive-1,
+      progress-color: variables.$color-primary,
+      thumb-color: variables.$color-primary,
     ),
     light: (
       track-color: rgba(#fff, 0.66846),
-      progress-color: $color-neutral-maximum,
-      thumb-color: $color-neutral-maximum,
+      progress-color: variables.$color-neutral-maximum,
+      thumb-color: variables.$color-neutral-maximum,
     ),
   );
 
   @mixin range-track($background-color) {
     width: 100%;
-    height: rem(2px);
+    height: functions.rem(2px);
     background: $background-color;
   }
 
@@ -74,11 +75,11 @@ export default {
 
       @each $name in -webkit-slider-thumb -moz-range-thumb -ms-thumb {
         &::#{$name} {
-          height: rem(15px);
-          width: rem(15px);
-          border-radius: rem(48px);
+          height: functions.rem(15px);
+          width: functions.rem(15px);
+          border-radius: functions.rem(48px);
           background: map-get($colors, thumb-color);
-          box-shadow: 0 0 rem(8px) $color-shadow-alpha-15;
+          box-shadow: 0 0 functions.rem(8px) variables.$color-shadow-alpha-15;
           cursor: pointer;
         }
       }
@@ -91,7 +92,7 @@ export default {
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    margin-top: rem(-6px);
+    margin-top: functions.rem(-6px);
     border: none;
   }
 

@@ -96,15 +96,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .guide {
   display: flex;
-  margin-bottom: rem(27px);
+  margin-bottom: functions.rem(27px);
 
   &.small {
     @extend %face-sans-base;
-    margin-bottom: rem(20px);
+    margin-bottom: functions.rem(20px);
   }
 
   &.medium {
@@ -112,16 +114,16 @@ export default {
   }
 
   &.big {
-    font-family: $font-sans;
-    font-size: rem(30px);
-    line-height: rem(39px);
-    margin-bottom: rem(15px);
+    font-family: variables.$font-sans;
+    font-size: functions.rem(30px);
+    line-height: functions.rem(39px);
+    margin-bottom: functions.rem(15px);
   }
 
   > .icon {
     flex-shrink: 0;
-    width: rem(30px);
-    padding-left: rem(6px);
+    width: functions.rem(30px);
+    padding-left: functions.rem(6px);
   }
 
   .content {
@@ -129,7 +131,7 @@ export default {
     letter-spacing: -0.5px;
 
     img {
-      width: rem(23px);
+      width: functions.rem(23px);
     }
 
     img, .ae-identicon {
@@ -145,12 +147,12 @@ export default {
     }
 
     mark {
-      color: $color-secondary;
+      color: variables.$color-secondary;
       background: none;
     }
 
     strong {
-      color: $color-alternative;
+      color: variables.$color-alternative;
     }
 
     p {
@@ -161,21 +163,21 @@ export default {
 
   &.primary {
     > .icon {
-      color: $color-primary;
+      color: variables.$color-primary;
     }
 
     .content {
-      color: $color-neutral-negative-3;
+      color: variables.$color-neutral-negative-3;
 
       em {
-        color: $color-primary;
+        color: variables.$color-primary;
       }
     }
   }
 
   &.neutral {
     > .icon {
-      color: $color-neutral-maximum;
+      color: variables.$color-neutral-maximum;
     }
 
     .content {
@@ -183,21 +185,21 @@ export default {
 
       em,
       .account-inline {
-        color: $color-neutral-maximum;
+        color: variables.$color-neutral-maximum;
       }
     }
   }
 
   &.alternative {
     > .icon {
-      color: $color-alternative;
+      color: variables.$color-alternative;
     }
 
     .content {
-      color: $color-neutral-negative-3;
+      color: variables.$color-neutral-negative-3;
 
       em {
-        color: $color-alternative-negative-1;
+        color: variables.$color-alternative-negative-1;
       }
     }
   }

@@ -146,7 +146,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .transaction-details {
   ::v-deep main {
@@ -155,7 +155,7 @@ export default {
   }
 
   .guide .balance {
-    font-family: $font-mono;
+    font-family: variables.$font-mono;
   }
 
   .details-item {
@@ -164,10 +164,10 @@ export default {
     }
 
     &.status {
-      --color-primary: #{$color-alternative};
+      --color-primary: #{variables.$color-alternative};
 
       &.pending {
-        --color-primary: #{$color-primary};
+        --color-primary: #{variables.$color-primary};
       }
 
       ::v-deep .value {
@@ -175,8 +175,8 @@ export default {
       }
     }
 
-    --color-primary: #{$color-neutral-negative-3};
-    --color-secondary: #{$color-neutral-negative-1};
+    --color-primary: #{variables.$color-neutral-negative-3};
+    --color-secondary: #{variables.$color-neutral-negative-1};
   }
 }
 </style>

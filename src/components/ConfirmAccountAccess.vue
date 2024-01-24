@@ -68,20 +68,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/variables';
+@use '../styles/functions';
 
 .confirm-account-access {
-  padding: rem(32px);
+  padding: functions.rem(32px);
 
   .details-account-access-permission {
-    --color-primary: #{$color-neutral-negative-3};
-    --color-secondary: #{$color-neutral};
+    --color-primary: #{variables.$color-neutral-negative-3};
+    --color-secondary: #{variables.$color-neutral};
   }
 
   .ae-button-group {
-    margin-left: rem(-16px);
-    margin-top: rem(16px);
-    margin-right: rem(-16px);
+    margin-left: functions.rem(-16px);
+    margin-top: functions.rem(16px);
+    margin-right: functions.rem(-16px);
   }
 }
 </style>

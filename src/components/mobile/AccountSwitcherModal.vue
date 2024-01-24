@@ -112,14 +112,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
-@import '../../styles/mixins';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/mixins';
 
 .account-switcher-modal {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-end;
-  background-color: rgba($color-neutral-positive-2, 0.8);
+  background-color: rgba(variables.$color-neutral-positive-2, 0.8);
   padding: 0;
 
   &.fade-enter-active {
@@ -137,41 +138,41 @@ export default {
   }
 
   .ae-card {
-    max-width: rem($screen-phone - 32px * 2);
-    margin: rem(100px) rem(32px) 0 rem(32px);
+    max-width: functions.rem(variables.$screen-phone - 32px * 2);
+    margin: functions.rem(100px) functions.rem(32px) 0 functions.rem(32px);
     overflow-y: auto;
 
-    @include abovePhone {
+    @include mixins.abovePhone {
       width: 100%;
       align-self: center;
     }
 
     .name-pending {
-      margin-right: rem(8px);
+      margin-right: functions.rem(8px);
     }
 
     .list-item.vault-new .list-item-circle {
-      background-color: $color-alternative;
+      background-color: variables.$color-alternative;
     }
 
     .balance {
       position: sticky;
       bottom: 0;
-      background-color: $color-neutral-maximum;
+      background-color: variables.$color-neutral-maximum;
       display: block;
-      margin: 0 rem(14px);
-      padding: rem(5px) rem(2px);
-      border-top: 2px solid $color-neutral-positive-2;
+      margin: 0 functions.rem(14px);
+      padding: functions.rem(5px) functions.rem(2px);
+      border-top: 2px solid variables.$color-neutral-positive-2;
       text-align: right;
     }
   }
 
   .arrow {
     align-self: center;
-    margin-bottom: rem(10px);
-    border: solid rem(12px) transparent;
+    margin-bottom: functions.rem(10px);
+    border: solid functions.rem(12px) transparent;
     border-bottom-width: 0;
-    border-top-color: $color-neutral-maximum;
+    border-top-color: variables.$color-neutral-maximum;
     z-index: 1;
   }
 }

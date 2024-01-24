@@ -51,11 +51,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .notification-mnemonic-backup .list-item-circle {
   @extend %face-sans-l;
-  line-height: rem(32px);
-  background-color: $color-primary;
+  line-height: functions.rem(32px);
+  background-color: variables.$color-primary;
 }
 </style>

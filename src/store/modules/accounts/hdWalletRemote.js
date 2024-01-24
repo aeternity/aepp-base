@@ -3,7 +3,7 @@
 import { getDesktopRemoteSignAction } from './utils';
 import { i18n } from '../../plugins/ui/languages';
 
-const type = `hd-wallet${process.env.IS_MOBILE_DEVICE ? '-desktop' : ''}`;
+const type = `hd-wallet${ENV_MOBILE_DEVICE ? '-desktop' : ''}`;
 
 const signOnMobile = async ({ dispatch }) => {
   await dispatch('modals/open', {
@@ -47,7 +47,7 @@ export default {
     create({ dispatch }) {
       return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
     },
-    ...process.env.IS_MOBILE_DEVICE ? {
+    ...ENV_MOBILE_DEVICE ? {
       sign: signOnMobile,
       signTransaction: signOnMobile,
     } : {

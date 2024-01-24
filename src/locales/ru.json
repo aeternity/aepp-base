@@ -682,16 +682,12 @@
 
     "info": {
       "title": "О приложении",
-      "subtitle": "Версии: SDK, узла, компилятора",
+      "subtitle": "Версии: SDK, узла, middleware",
       "version": "Версия сборки",
       "node": {
         "url": "Адрес узла",
         "version": "Версия узла",
         "height": "Блоков синхронизировано"
-      },
-      "compiler": {
-        "url": "Адрес компилятора",
-        "version": "Версия компилятора"
       },
       "sdk-version": "Версия SDK",
       "middleware": {

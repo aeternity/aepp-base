@@ -2,6 +2,8 @@ import {
   pick, cloneDeep, isEqual, throttle, memoize,
 } from 'lodash-es';
 import RpcPeer from '../../lib/rpc';
+import { IS_IOS } from '../../lib/constants';
+import { handleUnknownError } from '../../lib/utils';
 
 const io = async () => (await import(/* webpackChunkName: "socket-io" */ 'socket.io-client')).default;
 
@@ -29,25 +31,32 @@ const getStateForSync = ({
 
 export default (store) => {
   const getPushApiSubscription = async () => {
-    const { serviceWorkerRegistration } = store.state;
+    // push api is not available on iOS https://caniuse.com/push-api
+    if (IS_IOS) return 'not-available';
     try {
-      const subscription = await serviceWorkerRegistration.pushManager.getSubscription()
-        || await serviceWorkerRegistration.pushManager.subscribe({
+      const swReg = await store.dispatch('getServiceWorkerRegistration');
+      if (swReg == null) return 'not-available';
+      const subscription = await swReg.pushManager.getSubscription()
+        || await swReg.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: Buffer.from(process.env.VUE_APP_VAPID_PUBLIC_KEY, 'base64'),
         });
       return JSON.stringify(subscription);
     } catch (e) {
-      return 'not-available';
+      if (e.message === 'Registration failed - permission denied') return 'not-allowed';
+      handleUnknownError(e);
+      return 'errored';
     }
   };
 
   const open = async () => {
-    const query = { key: store.state.peerId };
-    if (process.env.IS_MOBILE_DEVICE) {
-      query.pushApiSubscription = await getPushApiSubscription();
+    const auth = { key: store.state.peerId };
+    if (ENV_MOBILE_DEVICE) {
+      auth.pushApiSubscription = await getPushApiSubscription();
     }
-    const socket = (await io())(process.env.VUE_APP_REMOTE_CONNECTION_BACKEND_URL, { query });
+    const backendUrl = ['', '$VUE_APP_BACKEND_URL'].includes(window.overrideBackendUrl)
+      ? process.env.VUE_APP_BACKEND_URL : window.overrideBackendUrl;
+    const socket = (await io())(backendUrl, { auth });
     const closeCbs = [socket.close.bind(socket)];
 
     let processedState = cloneDeep(getStateForSync(store.state));
@@ -68,13 +77,13 @@ export default (store) => {
     closeCbs.push(store.watch(getStateForSync, (state) => {
       if (
         isEqual(state, processedState) || (
-          process.env.IS_MOBILE_DEVICE
+          ENV_MOBILE_DEVICE
           && !Object.values(store.state.mobile.followers).some(({ connected }) => connected))
       ) return;
       broadcastState(state);
     }, { deep: true }));
 
-    if (process.env.IS_MOBILE_DEVICE) {
+    if (ENV_MOBILE_DEVICE) {
       const syncState = throttle(() => broadcastState(getStateForSync(store.state)), 500);
 
       closeCbs.push(store.subscribe(({ type, payload }) => {
@@ -152,7 +161,7 @@ export default (store) => {
 
   let closeCb;
   store.watch(
-    process.env.IS_MOBILE_DEVICE
+    ENV_MOBILE_DEVICE
       ? ({ mobile: { followers } }, { loggedIn }) => loggedIn && Object.keys(followers).length
       : () => true,
     async (isConnectionNecessary) => {

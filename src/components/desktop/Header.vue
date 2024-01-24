@@ -99,7 +99,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .header {
   display: flex;
@@ -107,7 +109,7 @@ export default {
   align-items: center;
   background: #fff;
   margin-bottom: 50px;
-  border-bottom: 1px solid $color-neutral-positive-1;
+  border-bottom: 1px solid variables.$color-neutral-positive-1;
 
   .logo, .active-account {
     width: 220px;
@@ -118,20 +120,20 @@ export default {
   }
 
   .logo {
-    margin-left: rem(30px);
+    margin-left: functions.rem(30px);
     text-decoration: none;
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
     @extend %face-sans-base;
     font-weight: 500;
 
     img {
-      width: rem(32px);
-      height: rem(32px);
-      margin-right: rem(12px);
-      padding: rem(5px);
-      border-radius: rem(5px);
+      width: functions.rem(32px);
+      height: functions.rem(32px);
+      margin-right: functions.rem(12px);
+      padding: functions.rem(5px);
+      border-radius: functions.rem(5px);
       box-sizing: border-box;
-      background: $color-primary;
+      background: variables.$color-primary;
       vertical-align: middle;
     }
   }
@@ -141,34 +143,34 @@ export default {
 
     a {
       display: block;
-      margin: 0 rem(15px);
-      padding: 0 rem(5px);
+      margin: 0 functions.rem(15px);
+      padding: 0 functions.rem(5px);
       @extend %face-uppercase-xs;
-      color: $color-neutral-negative-2;
+      color: variables.$color-neutral-negative-2;
       text-decoration: none;
       font-weight: bold;
-      height: rem(80px);
-      line-height: rem(80px);
+      height: functions.rem(80px);
+      line-height: functions.rem(80px);
 
       .icon.send {
         transform: rotate(180deg);
       }
 
       &.router-link-exact-active {
-        border-bottom: rem(2px) solid $color-primary;
+        border-bottom: functions.rem(2px) solid variables.$color-primary;
       }
     }
   }
 
   .active-account {
-    margin-right: rem(30px);
+    margin-right: functions.rem(30px);
     display: flex;
     justify-content: flex-end;
     align-items: center;
 
     &.empty {
       .details .balance {
-        font-size: rem(10px);
+        font-size: functions.rem(10px);
       }
 
       .ae-identicon {
@@ -179,22 +181,22 @@ export default {
     }
 
     .details {
-      margin-right: rem(20px);
+      margin-right: functions.rem(20px);
       @extend %face-sans-xs;
       font-weight: 500;
-      color: $color-neutral-negative-3;
+      color: variables.$color-neutral-negative-3;
       text-align: right;
 
       .balance {
-        color: $color-neutral;
+        color: variables.$color-neutral;
       }
     }
 
     .ae-identicon {
-      width: rem(26px);
-      height: rem(26px);
-      border: rem(2px) solid transparent;
-      box-shadow: 0 0 0 2px $color-primary;
+      width: functions.rem(26px);
+      height: functions.rem(26px);
+      border: functions.rem(2px) solid transparent;
+      box-shadow: 0 0 0 2px variables.$color-primary;
     }
   }
 }

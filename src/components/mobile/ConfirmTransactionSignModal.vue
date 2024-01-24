@@ -1,6 +1,6 @@
 <template>
   <Page
-    :modal="!$globals.IS_MOBILE_DEVICE"
+    :modal="!$globals.ENV_MOBILE_DEVICE"
     fill="primary"
     hide-tab-bar
     right-button-icon-name="close"
@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     ...mapState({
-      stepFraction: (state) => (process.env.IS_MOBILE_DEVICE ? state.mobile.stepFraction : null),
+      stepFraction: (state) => (ENV_MOBILE_DEVICE ? state.mobile.stepFraction : null),
     }),
     txType() {
       return SCHEMA.OBJECT_ID_TX_TYPE[this.transaction.tag];

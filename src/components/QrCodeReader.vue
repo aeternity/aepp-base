@@ -38,7 +38,7 @@ export default {
   },
   data: () => ({
     cameraAllowed: false,
-    browserReader: !process.env.IS_CORDOVA && new BrowserQRCodeReader(),
+    browserReader: !process.env.VUE_APP_CORDOVA && new BrowserQRCodeReader(),
   }),
   watch: {
     async cameraAllowed(value) {
@@ -59,7 +59,7 @@ export default {
     },
   },
   async mounted() {
-    if (process.env.IS_CORDOVA) {
+    if (process.env.VUE_APP_CORDOVA) {
       await new Promise((resolve, reject) => {
         window.QRScanner
           .prepare((error, status) => (!error && status.authorized
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async scan() {
-      return process.env.IS_CORDOVA
+      return process.env.VUE_APP_CORDOVA
         ? new Promise((resolve, reject) => {
           window.QRScanner.scan((error, text) => (!error && text ? resolve(text) : reject(error)));
           window.QRScanner.show();
@@ -102,7 +102,7 @@ export default {
         )).getText();
     },
     stopReading() {
-      if (process.env.IS_CORDOVA) {
+      if (process.env.VUE_APP_CORDOVA) {
         document.body.style.background = '';
         document.getElementById('app').style.background = '';
         window.QRScanner.destroy();
@@ -117,7 +117,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .qr-code-reader {
   display: flex;
@@ -127,7 +128,7 @@ export default {
 
   .permission-denied {
     text-align: center;
-    padding: 0 rem(20px);
+    padding: 0 functions.rem(20px);
     margin: auto;
     @extend %face-sans-base;
   }

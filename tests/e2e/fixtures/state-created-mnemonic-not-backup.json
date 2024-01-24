@@ -1,0 +1,49 @@
+{
+  "migrations": {
+    "0": true,
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true
+  },
+  "peerId": "EecRNs8PmyiN75IBOI6+",
+  "languages": {
+    "activeCode": "en"
+  },
+  "currencies": {
+    "activeCode": "eur",
+    "swapped": false
+  },
+  "sdkUrl": "https://mainnet.aeternity.io",
+  "names": {
+    "defaults": {}
+  },
+  "customNetworks": [],
+  "accounts": {
+    "list": [
+      {
+        "address": "ak_oXPEaapaDF7R1QcUuvaDDEeanMAVWFSq8TLAaUxdSKpSgUyqY",
+        "source": {
+          "type": "hd-wallet",
+          "idx": 0
+        }
+      }
+    ],
+    "activeIdx": 0,
+    "hdWallet": {
+      "encryptedWallet": {
+        "mnemonic": "abandon amount liar amount expire adjust cage candy arch gather drum buyer"
+      },
+      "mnemonicBackedUp": false
+    }
+  },
+  "apps": [],
+  "mobile": {
+    "readSecurityCourses": [
+      "intro"
+    ],
+    "followers": {},
+    "skipAddingToHomeScreen": true
+  }
+}

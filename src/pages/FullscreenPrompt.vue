@@ -29,23 +29,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .fullscreen-prompt {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding: rem(16px);
-  background-color: $color-primary;
+  padding: functions.rem(16px);
+  background-color: variables.$color-primary;
 
   div {
-    max-width: rem(250px);
+    max-width: functions.rem(250px);
     margin: auto;
     text-align: center;
 
     p {
       @extend %face-sans-l;
-      color: $color-neutral-maximum;
+      color: variables.$color-neutral-maximum;
     }
 
     .ae-button {

@@ -81,16 +81,12 @@ export default (store) => {
     };
 
     const acceptCb = (_, { accept }) => accept();
-    const [sdk, middleware] = await Promise.all([
+    const [sdk, middleware, middleware2] = await Promise.all([
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
         nodes: [{
           name: network.name,
-          instance: await Node({
-            url: network.url,
-            internalUrl: network.url,
-          }),
+          instance: await Node({ url: network.url }),
         }],
-        compilerUrl: network.compilerUrl,
         name: 'Base Aepp',
         onConnection: acceptCb,
         async onSubscription(_, { accept }, origin) {
@@ -98,12 +94,11 @@ export default (store) => {
           accept({
             accounts: {
               current: { [activeAccount]: {} },
-              connected: {
-                ...store.state.accounts.list
-                  .reduce((p, { address }) => ({
-                    ...p, ...address !== activeAccount ? { [address]: {} } : {},
-                  }), {}),
-              },
+              connected: Object.fromEntries(
+                store.state.accounts.list
+                  .filter(({ address }) => address !== activeAccount)
+                  .map(({ address }) => [address, {}]),
+              ),
             },
           });
         },
@@ -119,22 +114,24 @@ export default (store) => {
         },
       }),
       (async () => {
-        const specUrl = `${network.middlewareUrl}/swagger/swagger.json`;
+        const specUrl = `${network.middlewareUrl}/api`;
         const spec = await fetchJson(specUrl);
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/503
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1670
         if (/^https:\/\/(mainnet|testnet)\.aeternity\.io\/mdw$/.test(network.middlewareUrl)) {
           spec.basePath = '/mdw/';
         }
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/160
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1668
         delete spec.schemes;
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/508
+        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1669
         spec.paths['/name/pointees/{id}'] = spec.paths['/names/pointees/{id}'];
         delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
       })(),
+      genSwaggerClient(`${network.middlewareUrl}/v2/api`),
     ]);
     sdk.selectNode(network.name);
     sdk.middleware = middleware;
+    sdk.middleware2 = middleware2;
     return sdk;
   };
 

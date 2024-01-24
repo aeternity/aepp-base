@@ -107,7 +107,7 @@ export default {
   mounted() {
     const initialAccountIdx = this.$store.state.accounts.activeIdx;
     const requredAccountIdx = this.$store.state.accounts.list
-      .findIndex(({ address }) => address === this.nameEntry.info.ownership.current);
+      .findIndex(({ address }) => address === this.nameEntry.owner);
     if (initialAccountIdx !== requredAccountIdx) {
       this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
       this.$once('hook:destroyed', () => this.$store
@@ -159,14 +159,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .name-transfer .own-account {
-  margin-top: rem(20px);
-  padding-bottom: rem(20px);
-  border-bottom: rem(2px) solid $color-neutral-positive-1;
+  margin-top: functions.rem(20px);
+  padding-bottom: functions.rem(20px);
+  border-bottom: functions.rem(2px) solid variables.$color-neutral-positive-1;
   @extend %face-sans-s;
   font-weight: 500;
-  color: $color-neutral-negative-1;
+  color: variables.$color-neutral-negative-1;
 }
 </style>

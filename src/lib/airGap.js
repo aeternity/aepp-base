@@ -1,5 +1,13 @@
-import { Crypto } from '@aeternity/aepp-sdk';
+import { TxBuilderHelper } from '@aeternity/aepp-sdk';
 import { decode, encode } from 'rlp';
+
+function encodeBase58Check(data) {
+  return TxBuilderHelper.encode(data, 'cm').slice(3);
+}
+
+function decodeBase58Check(encodedData) {
+  return TxBuilderHelper.decode(`cm_${encodedData}`, 'cm');
+}
 
 const AIR_GAP_VERSION = '2';
 const AIR_GAP_TYPE = '0';
@@ -9,7 +17,7 @@ const AIR_GAP_CALLBACK = 'https://base.aepps.com/airgap?d=';
 const urlToPayload = (urlBroken, expectedMessageType) => {
   // TODO: Remove after releasing https://github.com/airgap-it/airgap-vault/pull/64
   const url = urlBroken.replace('airgap-wallet://?d=com/airgap?d=', AIR_GAP_CALLBACK);
-  const raw = decode(Crypto.decodeBase58Check(new URL(url).searchParams.get('d')));
+  const raw = decode(decodeBase58Check(new URL(url).searchParams.get('d')));
   const version = raw[0].toString();
   if (version !== AIR_GAP_VERSION) throw new Error(`Unsupported AirGap protocol version: ${version}`);
   const type = raw[1].toString();
@@ -61,7 +69,7 @@ export const generateSignRequestUrl = (networkId, transaction, publicKey) => {
   ];
 
   const url = new URL('airgap-vault://');
-  url.searchParams.set('d', Crypto.encodeBase58Check(encode(rlp)));
+  url.searchParams.set('d', encodeBase58Check(encode(rlp)));
   return url.toString();
 };
 

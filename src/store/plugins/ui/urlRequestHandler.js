@@ -1,6 +1,5 @@
 import { times } from 'lodash-es';
 import { ensureLoggedIn, mergeEnterHandlers } from '../../../router/utils';
-import { ROUTE_MOBILE_LOGGED_IN } from '../../../lib/constants';
 
 const urlRequestMethods = ['address', 'addressAndNetworkUrl', 'sign', 'signTransaction'];
 
@@ -9,12 +8,12 @@ export default (store) => {
     const method = url.path.replace('/', '');
     const callbackUrl = new URL(url.query.callback);
     const lastParamIdx = Math.max(
-      0,
+      -1,
       ...Array.from(Object.keys(url.query))
         .map((key) => key.startsWith('param') && +key.replace('param', '')),
     );
     const params = times(
-      lastParamIdx,
+      lastParamIdx + 1,
       (idx) => JSON.parse(decodeURIComponent(url.query[`param${idx}`])),
     );
     const reply = ({ result, error }) => {
@@ -23,14 +22,17 @@ export default (store) => {
         error ? 'error' : 'result',
         error ? seraliseError(error) : JSON.stringify(result),
       );
-      if (process.env.IS_CORDOVA) {
+      if (process.env.VUE_APP_CORDOVA) {
         window.open(callbackUrl, '_system');
       } else {
         window.location.href = callbackUrl;
       }
     };
 
-    if (!['http:', 'https:'].includes(callbackUrl.protocol)) {
+    if (
+      !['http:', 'https:'].includes(callbackUrl.protocol)
+      && !callbackUrl.href.startsWith('about:blank')
+    ) {
       reply({ error: new Error(`Unknown protocol: ${callbackUrl.protocol}`) });
       return;
     }
@@ -58,7 +60,7 @@ export default (store) => {
       ensureLoggedIn,
       (to, from, next) => {
         handleUrlRequest(to);
-        next(ROUTE_MOBILE_LOGGED_IN);
+        next(false);
       },
     ),
   }));

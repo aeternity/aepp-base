@@ -1,7 +1,8 @@
+import 'normalize.css';
 import Vue from 'vue';
 import './lib/setGlobalPolyfills';
-import './lib/initEnv';
 import store from './store';
+import { RUNNING_IN_POPUP, RUNNING_IN_FRAME } from './lib/constants';
 
 Vue.config.productionTip = false;
 
@@ -10,6 +11,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 /* eslint-disable no-unused-expressions */
-if (process.env.RUNNING_IN_POPUP) import(/* webpackChunkName: "popup" */ './popup');
-else if (!process.env.RUNNING_IN_FRAME) import(/* webpackChunkName: "ui" */ './ui');
+if (RUNNING_IN_POPUP) import(/* webpackChunkName: "popup" */ './popup');
+else if (!RUNNING_IN_FRAME) import(/* webpackChunkName: "ui" */ './ui');
 /* eslint-enable no-unused-expressions */

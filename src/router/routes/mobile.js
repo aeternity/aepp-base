@@ -1,4 +1,4 @@
-import { ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
+import { DISABLED_BROWSER, IS_PWA, ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
 import { send } from '../../lib/localStorageCall';
 import { ensureLoggedIn, mergeEnterHandlers } from '../utils';
 import store from '../../store/index';
@@ -180,13 +180,13 @@ export default [{
   props: true,
 }, {
   name: 'transaction-list',
-  path: `${process.env.DISABLED_BROWSER ? '' : '/transfer'}/transactions/:direction?`,
+  path: `${DISABLED_BROWSER ? '' : '/transfer'}/transactions/:direction?`,
   component: TransactionList,
   beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'transaction-details',
-  path: `${process.env.DISABLED_BROWSER ? '' : '/transfer'}/transactions/details/:hash`,
+  path: `${DISABLED_BROWSER ? '' : '/transfer'}/transactions/details/:hash`,
   component: TransactionDetails,
   beforeEnter: ensureLoggedIn,
   props: true,
@@ -320,7 +320,7 @@ export default [{
     ensureLoggedIn,
     (to, from, next) => {
       const url = window.location.origin + to.fullPath;
-      if (process.env.IS_CORDOVA || process.env.IS_PWA) {
+      if (process.env.VUE_APP_CORDOVA || IS_PWA) {
         store.state.accounts.airGap.deepLinkCallback(url);
         store.commit('airGap/setDeepLinkCallback');
         next(false);

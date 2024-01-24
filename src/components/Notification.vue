@@ -28,21 +28,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .notification {
   position: fixed;
   top: 0;
-  left: rem(10px);
-  right: rem(10px);
-  max-width: rem(520px);
+  left: functions.rem(10px);
+  right: functions.rem(10px);
+  max-width: functions.rem(520px);
   margin-left: auto;
   margin-right: auto;
-  margin-top: rem(10px);
-  margin-top: calc(#{rem(10px)} + env(safe-area-inset-top));
-  border-radius: rem(8px);
-  background-color: $color-neutral-maximum;
-  box-shadow: 0 0 rem(100px) rem(30px) rgba(146, 156, 166, 0.4);
+  margin-top: functions.rem(10px);
+  margin-top: calc(#{functions.rem(10px)} + env(safe-area-inset-top));
+  border-radius: functions.rem(8px);
+  background-color: variables.$color-neutral-maximum;
+  box-shadow: 0 0 functions.rem(100px) functions.rem(30px) rgba(146, 156, 166, 0.4);
   @extend %face-sans-base;
 
   &.fade-enter-active, &.fade-leave-active {
@@ -55,36 +57,36 @@ export default {
 
   .content {
     overflow-wrap: break-word;
-    padding: rem(20px) rem(16px);
+    padding: functions.rem(20px) functions.rem(16px);
 
     ::v-deep .list-item {
       padding-left: 0;
       padding-right: 0;
 
       .content {
-        height: rem(40px);
+        height: functions.rem(40px);
       }
     }
   }
 
   footer {
     display: flex;
-    padding: rem(8px) 0;
-    background-color: $color-neutral-positive-2;
-    border-radius: 0 0 rem(8px) rem(8px);
+    padding: functions.rem(8px) 0;
+    background-color: variables.$color-neutral-positive-2;
+    border-radius: 0 0 functions.rem(8px) functions.rem(8px);
 
     ::v-deep .ae-button {
       flex-grow: 1;
       flex-basis: 0;
-      height: rem(20px);
-      line-height: rem(20px);
-      font-size: rem(11px);
+      height: functions.rem(20px);
+      line-height: functions.rem(20px);
+      font-size: functions.rem(11px);
       font-weight: 500;
-      letter-spacing: rem(1.1px);
-      color: $color-neutral-negative-3;
+      letter-spacing: functions.rem(1.1px);
+      color: variables.$color-neutral-negative-3;
 
       & + .ae-button {
-        border-left: rem(1px) solid $color-neutral-positive-1;
+        border-left: functions.rem(1px) solid variables.$color-neutral-positive-1;
       }
     }
   }

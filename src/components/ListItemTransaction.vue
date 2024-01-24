@@ -63,36 +63,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .list-item-transaction {
   &.pending ::v-deep .label .subtitle {
     text-transform: uppercase;
-    color: $color-primary;
+    color: variables.$color-primary;
   }
 
   .balance-change {
     @extend %face-mono-xs;
     font-weight: bold;
-    color: $color-neutral-negative-3;
+    color: variables.$color-neutral-negative-3;
     text-align: right;
 
     .plus:after {
-      color: $color-alternative;
+      color: variables.$color-alternative;
       content: '+';
     }
 
     .minus:after {
-      color: $color-primary;
+      color: variables.$color-primary;
       content: '—';
     }
 
     small {
       display: block;
       @extend %face-sans-xs;
-      font-size: rem(11px);
+      font-size: functions.rem(11px);
       font-weight: normal;
-      color: $color-neutral-negative-1;
+      color: variables.$color-neutral-negative-1;
     }
   }
 }

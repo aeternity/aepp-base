@@ -29,22 +29,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/typography';
+@use '../../styles/variables';
+@use '../../styles/functions';
+@use '../../styles/typography';
 
 .ae-address-panel {
-  width: rem(400px);
-  background-color: $color-neutral-positive-3;
-  padding: rem(10px) rem(18px);
-  border-radius: rem(4px);
+  width: functions.rem(400px);
+  background-color: variables.$color-neutral-positive-3;
+  padding: functions.rem(10px) functions.rem(18px);
+  border-radius: functions.rem(4px);
 
   .title {
-    margin-bottom: rem(8px);
+    margin-bottom: functions.rem(8px);
     @extend %face-sans-xs;
-    color: $color-focus;
+    color: variables.$color-focus;
   }
 
   .ae-address {
-    color: $color-neutral-negative-1;
+    color: variables.$color-neutral-negative-1;
   }
 }
 </style>

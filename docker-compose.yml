@@ -1,0 +1,13 @@
+version: '3'
+services:
+  frontend:
+    image: aepp-base
+    build:
+      context: .
+    ports: ["3080:80"]
+    environment:
+      - VUE_APP_BACKEND_URL=http://localhost:3079
+  backend:
+    image: aepp-base-backend
+    build: backend
+    ports: ["3079:80"]

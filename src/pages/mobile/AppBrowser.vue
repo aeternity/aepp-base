@@ -19,16 +19,16 @@
       </ButtonPlain>
     </header>
 
-    <Menu
+    <AeMenu
       :anchor="showMenu ? $refs.menuButton : null"
       :anchor-origin="{ vertical: 'top', horizontal: 'right' }"
       :transform-origin="{ vertical: 'top', horizontal: 'right' }"
       @close="showMenu = false"
     >
-      <MenuItem @click="reload">
+      <AeMenuItem @click="reload">
         <Reload /> {{ $t('app.browser.refresh') }}
-      </MenuItem>
-    </Menu>
+      </AeMenuItem>
+    </AeMenu>
 
     <ProgressFake v-if="loading" />
 
@@ -53,8 +53,8 @@ import { PROTOCOLS_ALLOWED, PROTOCOL_DEFAULT } from '../../lib/constants';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
 import { Home, More, Reload } from '../../components/icons';
-import Menu from '../../components/Menu.vue';
-import MenuItem from '../../components/MenuItem.vue';
+import AeMenu from '../../components/AeMenu.vue';
+import AeMenuItem from '../../components/AeMenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
 import TabBar from '../../components/mobile/TabBar.vue';
 
@@ -65,8 +65,8 @@ export default {
     Home,
     More,
     Reload,
-    Menu,
-    MenuItem,
+    AeMenu,
+    AeMenuItem,
     ProgressFake,
     TabBar,
   },
@@ -120,7 +120,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/variables';
+@use '../../styles/functions';
 
 .app-browser {
   flex-grow: 1;
@@ -130,22 +131,22 @@ export default {
   header {
     display: flex;
     padding-top: env(safe-area-inset-top);
-    height: rem(54px);
-    line-height: rem(54px);
-    box-shadow: inset 0 0 rem(8px) rgba(#1B4479, 0.1);
+    height: functions.rem(54px);
+    line-height: functions.rem(54px);
+    box-shadow: inset 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
 
     .url-form {
       flex-grow: 1;
     }
 
     .button-plain {
-      padding: 0 rem(14px);
-      color: $color-neutral-negative-3;
+      padding: 0 functions.rem(14px);
+      color: variables.$color-neutral-negative-3;
     }
   }
 
   .progress-fake {
-    margin-top: rem(-2px);
+    margin-top: functions.rem(-2px);
   }
 
   iframe {

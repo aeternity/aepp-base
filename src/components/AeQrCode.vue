@@ -29,10 +29,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/functions';
 
 .ae-qr-code {
-  padding: rem(5px);
+  padding: functions.rem(5px);
 
   ::v-deep svg {
     display: block;

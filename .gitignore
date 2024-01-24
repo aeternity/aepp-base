@@ -1,13 +1,12 @@
 .DS_Store
 node_modules
 /dist
+__image_snapshots_local__
 
 # Cordova files
 /www
 /platforms
 /plugins
-/resources/*/*
-!/resources/android/icon-foreground.png
 
 # local env files
 .env.local

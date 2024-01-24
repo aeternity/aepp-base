@@ -19,27 +19,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/typography';
+@use '../styles/variables';
+@use '../styles/functions';
+@use '../styles/typography';
 
 .list-item-button {
   display: block;
   box-sizing: border-box;
   width: 100%;
-  height: rem(44px);
-  padding: 0 rem(16px);
+  height: functions.rem(44px);
+  padding: 0 functions.rem(16px);
   @extend %face-uppercase-xs;
-  line-height: rem(44px);
+  line-height: functions.rem(44px);
   letter-spacing: 1.1px;
   text-align: center;
   font-weight: 500;
-  color: $color-neutral-negative-1;
+  color: variables.$color-neutral-negative-1;
 
   &:hover {
-    background-color: $color-neutral-positive-3;
+    background-color: variables.$color-neutral-positive-3;
   }
 }
 
 .list-item + .list-item-button .content {
-  border-top: 2px solid $color-neutral-positive-2;
+  border-top: 2px solid variables.$color-neutral-positive-2;
 }
 </style>

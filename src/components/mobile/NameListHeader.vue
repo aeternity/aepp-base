@@ -39,9 +39,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .name-list-header {
-  margin-bottom: rem(30px);
+  margin-bottom: functions.rem(30px);
 }
 </style>

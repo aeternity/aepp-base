@@ -49,7 +49,7 @@ export default (store) => store.registerModule('appsMetadata', {
   actions: {
     async fetchManifest(_, host) {
       const fetchText = async (url) => (await fetch(url)).text();
-      let appUrl = new URL(`http://${host}`);
+      let appUrl = new URL(`https://${host}`);
       if (appUrl.hostname === 'localhost') return {};
 
       const parser = new DOMParser();

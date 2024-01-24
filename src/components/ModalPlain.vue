@@ -10,12 +10,12 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/functions';
+@use '../styles/functions';
 
 .modal-plain {
   margin: auto;
-  border-radius: rem(8px);
-  box-shadow: 0 0 rem(8px) rgba(#1B4479, 0.1);
+  border-radius: functions.rem(8px);
+  box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
   background: #fff;
   overflow: hidden;
 

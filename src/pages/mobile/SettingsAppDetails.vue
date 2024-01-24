@@ -57,11 +57,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@use '../../styles/variables';
 
 .settings-app-details .details-account-access-permission {
-  --color-primary: #{$color-neutral-negative-3};
-  --color-secondary: #{$color-neutral};
+  --color-primary: #{variables.$color-neutral-negative-3};
+  --color-secondary: #{variables.$color-neutral};
 
   ::v-deep .details-permission:first-child {
     border-top: none;

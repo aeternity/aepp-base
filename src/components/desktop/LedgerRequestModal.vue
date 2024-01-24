@@ -30,10 +30,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/functions';
+@use '../../styles/functions';
 
 .ledger-request .ae-spinner {
   display: block;
-  margin: rem(60px) auto;
+  margin: functions.rem(60px) auto;
 }
 </style>
