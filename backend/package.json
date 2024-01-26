@@ -1,6 +1,6 @@
 {
   "name": "aepp-base-backend",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "scripts": {
     "test": "mocha 'src/*.tests.js'",
     "start": "node src/main.js"
