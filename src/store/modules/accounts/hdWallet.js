@@ -4,8 +4,8 @@ import { pick } from 'lodash-es';
 import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
 import {
-  Crypto, TxBuilder, TxBuilderHelper, SCHEMA,
-} from '@aeternity/aepp-sdk';
+  buildTx, unpackTx, Tag, encode, decode, Encoding, sign,
+} from '@aeternity/aepp-sdk-next';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
@@ -231,7 +231,7 @@ export default {
     },
 
     signWithoutConfirmation({ rootGetters }, data) {
-      return Crypto.sign(data, rootGetters['accounts/active'].source.secretKey);
+      return sign(data, rootGetters['accounts/active'].source.secretKey);
     },
 
     async confirmRawDataSigning({ dispatch }, data) {
@@ -239,21 +239,26 @@ export default {
       return data;
     },
 
-    async confirmTxSigning({ dispatch }, txBinary) {
+    async confirmTxSigning({ dispatch }, txEncoded) {
       let txObject;
       try {
-        txObject = TxBuilder.unpackTx(txBinary, true).tx;
+        txObject = unpackTx(txEncoded);
       } catch (e) {
-        return dispatch('confirmRawDataSigning', txBinary);
+        return encode(
+          await dispatch('confirmRawDataSigning', decode(txEncoded)),
+          Encoding.Transaction,
+        );
       }
 
-      const SUPPORTED_TX_TYPES = [
-        SCHEMA.TX_TYPE.spend, SCHEMA.TX_TYPE.contractCreate, SCHEMA.TX_TYPE.contractCall,
-        SCHEMA.TX_TYPE.namePreClaim, SCHEMA.TX_TYPE.nameClaim, SCHEMA.TX_TYPE.nameUpdate,
-        SCHEMA.TX_TYPE.nameTransfer,
+      const SupportedTags = [
+        Tag.SpendTx, Tag.ContractCreateTx, Tag.ContractCallTx, Tag.NamePreclaimTx, Tag.NameClaimTx,
+        Tag.NameUpdateTx, Tag.NameTransferTx,
       ];
-      if (!SUPPORTED_TX_TYPES.includes(SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag])) {
-        return dispatch('confirmRawDataSigning', txBinary);
+      if (!SupportedTags.includes(txObject.tag)) {
+        return encode(
+          await dispatch('confirmRawDataSigning', decode(txEncoded)),
+          Encoding.Transaction,
+        );
       }
 
       const format = (value) => BigNumber(value).shiftedBy(-MAGNITUDE);
@@ -263,26 +268,16 @@ export default {
           ...txObject,
           amount: txObject.amount && format(txObject.amount),
           fee: format(txObject.fee),
-          minFee: format(
-            TxBuilder.calculateFee(
-              0,
-              SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag],
-              { gas: txObject.gas, params: txObject, vsn: txObject.VSN },
-            ),
-          ),
+          minFee: format(unpackTx(buildTx({ ...txObject, fee: undefined })).fee),
           nameFee: txObject.nameFee && format(txObject.nameFee),
         },
       };
 
-      return TxBuilder.buildTx(
-        {
-          ...txObject,
-          fee: (await dispatch('modals/open', confirmProps, { root: true }))
-            .shiftedBy(MAGNITUDE),
-        },
-        SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag],
-        { vsn: txObject.VSN },
-      ).rlpEncoded;
+      return buildTx({
+        ...txObject,
+        fee: (await dispatch('modals/open', confirmProps, { root: true }))
+          .shiftedBy(MAGNITUDE),
+      });
     },
 
     async sign({ dispatch }, data) {
@@ -291,12 +286,12 @@ export default {
     },
 
     async signTransaction({ dispatch, rootState: { sdk } }, txBase64) {
-      const encodedTx = await dispatch('confirmTxSigning', TxBuilderHelper.decode(txBase64, 'tx'));
+      const encodedTx = await dispatch('confirmTxSigning', txBase64);
       const signature = await dispatch(
         'signWithoutConfirmation',
-        Buffer.concat([Buffer.from(sdk.getNetworkId()), Buffer.from(encodedTx)]),
+        Buffer.concat([Buffer.from(sdk.getNetworkId()), decode(encodedTx)]),
       );
-      return TxBuilder.buildTx({ encodedTx, signatures: [signature] }, SCHEMA.TX_TYPE.signed).tx;
+      return buildTx({ tag: Tag.SignedTx, encodedTx, signatures: [signature] });
     },
   },
 };

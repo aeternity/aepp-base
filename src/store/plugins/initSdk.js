@@ -85,7 +85,7 @@ export default (store) => {
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
         nodes: [{
           name: network.name,
-          instance: await Node({ url: network.url }),
+          instance: await Node({ url: network.url, ignoreVersion: true }),
         }],
         name: 'Base Aepp',
         onConnection: acceptCb,
@@ -127,8 +127,19 @@ export default (store) => {
         delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
       })(),
-      genSwaggerClient(`${network.middlewareUrl}/v2/api`),
+      // TODO: replace with `genSwaggerClient(`${network.middlewareUrl}/v2/api`)`
+      // after removing next.aeternity.io
+      (async () => {
+        const specUrl = `${network.middlewareUrl}/v2/api`;
+        const spec = await fetchJson(specUrl);
+        if (network.middlewareUrl === 'https://next.aeternity.io:8443') {
+          spec.servers[0].url = spec.servers[0].url.replace('/mdw', '');
+        }
+        return genSwaggerClient(specUrl, { spec });
+      })(),
     ]);
+    // TODO: remove after updating sdk
+    sdk.Ae.defaults.verify = false;
     sdk.selectNode(network.name);
     sdk.middleware = middleware;
     sdk.middleware2 = middleware2;
