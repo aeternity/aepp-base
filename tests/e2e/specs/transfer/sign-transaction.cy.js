@@ -11,7 +11,7 @@ describe('Sign transaction', () => {
   const recipientId = 'ak_2iBPH7HUz3cSDVEUWiHg76MZJ6tZooVNBmmxcgVK6VV8KAE688';
   const name = 'test123test.chain';
   const nameId = 'nm_2sFnPHi5ziAqhdApSpRBsYdomCahtmk3YGNZKYUTtUNpVSMccC';
-  const nameFee = '1000000000000000000000';
+  const nameFee = '10000000000000000000';
   const contractId = 'ct_TCQVoset7Y4qEyV5tgEAJAqa2Foz8J1EXqoGpq3fB6dWH5roe';
   const pointers = [
     { key: 'account_pubkey', id: accountId },
