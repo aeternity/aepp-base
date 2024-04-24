@@ -1,6 +1,6 @@
 {
   "name": "aepp-base",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "Sascha Hanse <shanse@posteo.de>",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@aeternity/aepp-sdk": "^11.0.1",
+    "@aeternity/aepp-sdk-next": "npm:@aeternity/aepp-sdk@^13.3.2",
     "@aeternity/bip39": "^0.1.0",
     "@aeternity/hd-wallet": "^0.2.0",
     "@aeternity/ledger-app-api": "^0.2.2",
@@ -54,7 +55,6 @@
     "workbox-precaching": "^7.0.0"
   },
   "devDependencies": {
-    "@aeternity/aepp-sdk-next": "npm:@aeternity/aepp-sdk@^13.2.2",
     "@babel/eslint-parser": "^7.23.3",
     "@babel/plugin-syntax-import-attributes": "^7.23.3",
     "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10",
