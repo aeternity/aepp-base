@@ -27,5 +27,3 @@ export const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MS
 export const RUNNING_IN_FRAME = window.parent !== window;
 
 export const RUNNING_IN_POPUP = !!window.opener && window.name === 'popup';
-
-export const DISABLED_BROWSER = process.env.VUE_APP_CORDOVA && IS_IOS;

@@ -37,7 +37,6 @@
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
-      v-if="!$globals.DISABLED_BROWSER"
       :to="{ name: 'transaction-list' }"
       :title="$t('transfer.transaction.title')"
       :subtitle="$t('transfer.transaction.subtitle')"
@@ -77,7 +76,6 @@ import Guide from '../../components/Guide.vue';
 import AeAccount from '../../components/AeAccount.vue';
 import { LeftMore } from '../../components/icons';
 import ListItem from '../../components/ListItem.vue';
-import { DISABLED_BROWSER } from '../../lib/constants';
 
 export default {
   components: {
@@ -106,10 +104,10 @@ export default {
         tooltips: [{
           selector: '.transfer .ae-account .ae-identicon',
           ...this.$t('transfer.tooltips.identicon'),
-        }, ...!DISABLED_BROWSER ? [{
+        }, {
           selector: '.transfer .tab-bar .button-plain',
           ...this.$t('transfer.tooltips.browser'),
-        }] : [], {
+        }, {
           selector: '.transfer .tab-bar .button-plain:nth-child(3)',
           ...this.$t('transfer.tooltips.account-switcher'),
         }, {

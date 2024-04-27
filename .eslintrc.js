@@ -6,7 +6,7 @@ module.exports = {
   globals: {
     ENV_MOBILE_DEVICE: true,
   },
-  ignorePatterns: ['dist', 'www'],
+  ignorePatterns: ['dist', 'platforms', 'plugins', 'www'],
   extends: [
     'plugin:vue/recommended',
     'plugin:@intlify/vue-i18n/recommended',

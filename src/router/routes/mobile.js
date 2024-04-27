@@ -1,4 +1,4 @@
-import { DISABLED_BROWSER, IS_PWA, ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
+import { IS_PWA, ROUTE_MOBILE_LOGGED_IN } from '../../lib/constants';
 import { send } from '../../lib/localStorageCall';
 import { ensureLoggedIn, mergeEnterHandlers } from '../utils';
 import store from '../../store/index';
@@ -180,13 +180,13 @@ export default [{
   props: true,
 }, {
   name: 'transaction-list',
-  path: `${DISABLED_BROWSER ? '' : '/transfer'}/transactions/:direction?`,
+  path: '/transfer/transactions/:direction?',
   component: TransactionList,
   beforeEnter: ensureLoggedIn,
   props: true,
 }, {
   name: 'transaction-details',
-  path: `${DISABLED_BROWSER ? '' : '/transfer'}/transactions/details/:hash`,
+  path: '/transfer/transactions/details/:hash',
   component: TransactionDetails,
   beforeEnter: ensureLoggedIn,
   props: true,
