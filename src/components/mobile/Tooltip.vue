@@ -45,7 +45,7 @@ export default {
 
       return this.showBelow
         ? { top: `${bottom + arrowSize}px` }
-        : { bottom: `${document.documentElement.clientHeight - top + arrowSize}px` };
+        : { bottom: `${this.$parent.$el.clientHeight - top + arrowSize}px` };
     },
     arrowStyle() {
       if (!this.anchorRect || !this.isMounted) return {};

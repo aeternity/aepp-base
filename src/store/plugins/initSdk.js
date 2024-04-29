@@ -140,6 +140,17 @@ export default (store) => {
     ]);
     // TODO: remove after updating sdk
     sdk.Ae.defaults.verify = false;
+
+    // backported fix https://github.com/aeternity/aepp-sdk-js/pull/1980
+    const { getWalletInfo } = sdk;
+    sdk.getWalletInfo = () => {
+      const { origin, ...info } = getWalletInfo.call(sdk);
+      return {
+        ...info,
+        origin: 'file://' === info.origin ? '*' : info.origin,
+      };
+    }
+
     sdk.selectNode(network.name);
     sdk.middleware = middleware;
     sdk.middleware2 = middleware2;

@@ -36,7 +36,6 @@
       ref="iframe"
       :src="url"
       :title="url"
-      :scrolling="$globals.IS_IOS && 'no'"
       importance="high"
       sandbox="allow-scripts allow-same-origin allow-forms allow-modals"
       allow="camera; microphone"
@@ -151,7 +150,6 @@ export default {
 
   iframe {
     flex-grow: 1;
-    width: 100vw;
     border: none;
   }
 }
