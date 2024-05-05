@@ -37,7 +37,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { produceNameId } from '@aeternity/aepp-sdk-next';
 import prefixedAmount from '../../filters/prefixedAmount';
 import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';
@@ -82,7 +82,7 @@ export default {
       },
     }),
     nameHash() {
-      return TxBuilderHelper.produceNameId(this.name);
+      return produceNameId(this.name);
     },
   },
   async mounted() {

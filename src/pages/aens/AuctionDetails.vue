@@ -44,7 +44,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { produceNameId } from '@aeternity/aepp-sdk-next';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
@@ -93,7 +93,7 @@ export default {
       const sdk = await Promise.resolve(this.$store.state.sdk);
       const { info: { auctionEnd } } = await sdk.middleware.api.getNameById(this.name);
       this.auctionEnd = auctionEnd;
-      const nameId = TxBuilderHelper.produceNameId(this.name);
+      const nameId = produceNameId(this.name);
       // TODO: show more than 100 bids
       this.bids = (await sdk.middleware2.api.getAccountActivities(nameId, { limit: 100 })).data
         .filter(({ type }) => type === 'NameClaimEvent')
