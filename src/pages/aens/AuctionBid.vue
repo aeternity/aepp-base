@@ -41,7 +41,7 @@
           v-validate="{
             required: true,
             decimal: MAGNITUDE,
-            min_value_currency: lastBid ? lastBid.multipliedBy(1.05).toString() : 0,
+            min_value_currency: highestBid ? highestBid.multipliedBy(1.05).toString() : 0,
           }"
           :error="errors.has('amount')"
           :footer="errors.first('amount') && errors.first('amount').toString() || ' '"
@@ -52,23 +52,23 @@
     </template>
 
     <DetailsAmountCurrency
-      v-if="lastBid"
+      v-if="highestBid"
       short
       :name="$t('name.bid.highest-bid')"
-      :amount="lastBid"
+      :amount="highestBid"
     />
 
     <DetailsField
-      v-if="auctionEnd && topBlockHeight"
+      v-if="endsAt && topBlockHeight"
       :name="$t('name.bid.remaining-time')"
-      :value="blocksToRelativeTime(auctionEnd - topBlockHeight)"
+      :value="blocksToRelativeTime(endsAt - topBlockHeight)"
     />
 
     <AeButton
       fill="secondary"
       :spinner="busy"
       :form="_uid"
-      :disabled="errors.has('name') || !auctionEnd || busy"
+      :disabled="errors.has('name') || !endsAt || busy"
     >
       {{ $t('next') }}
     </AeButton>
@@ -108,8 +108,8 @@ export default {
     return {
       busy: false,
       internalName: this.name,
-      lastBid: null,
-      auctionEnd: 0,
+      highestBid: null,
+      endsAt: 0,
       amount: '',
       MAGNITUDE,
     };
@@ -117,10 +117,10 @@ export default {
   computed: {
     ...mapGetters('accounts', ['activeColor']),
     backTo() {
-      if (!this.name && !this.auctionEnd) return { name: 'name-list' };
+      if (!this.name && !this.endsAt) return { name: 'name-list' };
       return {
         name: 'auction-bid',
-        params: { name: this.auctionEnd ? this.internalName : this.name },
+        params: { name: this.endsAt ? this.internalName : this.name },
       };
     },
   },
@@ -134,14 +134,11 @@ export default {
       (name) => {
         if (promise) promise.cancel();
         promise = (async () => {
-          this.auctionEnd = 0;
-          this.lastBid = null;
-          const sdk = await Promise.resolve(this.$store.state.sdk);
-          const res = await sdk.middleware.api.getNameById(name);
-          if (res.status !== 'auction') throw new Error(`Unexpected name status: ${res.status}`);
-          const { auctionEnd, lastBid } = res.info;
-          this.auctionEnd = auctionEnd;
-          this.lastBid = new BigNumber(lastBid.tx.nameFee).shiftedBy(-MAGNITUDE);
+          this.endsAt = 0;
+          this.highestBid = null;
+          const { endsAt, highestBid } = await this.$store.getters.node.getAuctionEntryByName(name);
+          this.endsAt = endsAt;
+          this.highestBid = new BigNumber(highestBid).shiftedBy(-MAGNITUDE);
         })();
       },
       { immediate: true },

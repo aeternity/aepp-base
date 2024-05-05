@@ -74,15 +74,13 @@ export default {
       let claimTxHash;
 
       try {
-        const { status } = await this.$store.state.sdk.middleware.api.getNameById(this.name);
-        if (status === 'auction') {
-          await this.$store.dispatch('modals/open', {
-            name: 'confirm',
-            text: this.$t('name.new.confirm-bidding', { name: this.name }),
-          });
-          this.$router.push({ name: 'auction-bid-amount', params: { name: this.name } });
-          return;
-        }
+        await this.$store.getters.node.getAuctionEntryByName(this.name);
+        await this.$store.dispatch('modals/open', {
+          name: 'confirm',
+          text: this.$t('name.new.confirm-bidding', { name: this.name }),
+        });
+        this.$router.push({ name: 'auction-bid-amount', params: { name: this.name } });
+        return;
       } catch (e) {
         if (e.message === 'Cancelled by user') {
           this.busy = false;
