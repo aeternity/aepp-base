@@ -35,7 +35,7 @@ const currencies = {
   },
 };
 
-export default async (store) => {
+export default (store) => {
   const preferredCurrencyCode = 'eur';
 
   store.registerModule('currencies', {
