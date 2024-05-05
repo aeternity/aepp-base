@@ -14,7 +14,7 @@ export default (store) => {
     state: {
       names: {},
       defaults: get(store.state, 'names.defaults', {}),
-      owned: null,
+      owned: [],
     },
     getters: {
       get: ({ names }, { getDefault }, rootState, rootGetters) => (id, local = true) => {
@@ -45,7 +45,7 @@ export default (store) => {
         sdk.then ? undefined : defaults[`${address}-${sdk.getNetworkId()}`]
       ),
       isPending: ({ owned }) => (name) => (
-        !!((owned && owned.names.find((t) => t.name === name)) || {}).status === 'pending'
+        !!((owned.find((t) => t.name === name)) || {}).status === 'pending'
       ),
     },
     mutations: {
@@ -65,7 +65,7 @@ export default (store) => {
       },
       reset(state) {
         state.names = {};
-        state.owned = null;
+        state.owned = [];
       },
     },
     actions: {
@@ -83,7 +83,7 @@ export default (store) => {
         commit('set', { key: id });
         const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         if (id.startsWith('ak_')) {
-          const nameEntry = (await sdk.middleware.api.getNamePointees(id))
+          const nameEntry = (await sdk.middleware2.api.getNamePointees(id))
             .active.accountPubkey?.[0];
           if (!nameEntry) return;
           commit('set', {
@@ -94,7 +94,7 @@ export default (store) => {
           return;
         }
         if (id.startsWith('nm_')) {
-          const entry = await sdk.middleware.api.getNameById(id);
+          const entry = await sdk.middleware2.api.getName(id);
           if (!entry.active) return;
           const { name, hash, info: { pointers } } = entry;
           commit('set', { address: pointers?.accountPubkey, name, hash });
@@ -146,38 +146,24 @@ export default (store) => {
         const names = (await Promise.all(
           rootState.accounts.list.map(({ address }) => Promise.all([
             getPendingNameClaimTransactions(address),
-            sdk.middleware.api.getNamesOwnedBy(address)
-              .then(({ active, topBid }) => [
-                ...active.map(({ name, info }) => ({
-                  name,
-                  owner: address,
-                  pointers: Object.entries(info.pointers).map(([key, id]) => ({
-                    // TODO: find a better wrapper for mdw api
-                    key: key === 'accountPubkey' ? 'account_pubkey' : key,
-                    id,
-                  })),
-                  createdAt: info.activeFrom,
-                  createdAtTxIdx: info.claims[0],
-                  expiresAt: info.expireHeight,
-                  status: 'name',
+            sdk.middleware2.api.getNames({ owned_by: address, limit: 100, state: 'active' })
+              .then(({ data }) => data.map(({ name, info }) => ({
+                name,
+                owner: address,
+                pointers: Object.entries(info.pointers).map(([key, id]) => ({
+                  // TODO: find a better wrapper for mdw api
+                  key: key === 'accountPubkey' ? 'account_pubkey' : key,
+                  id,
                 })),
-                ...topBid.map(({ name, info }) => ({
-                  name,
-                  owner: address,
-                  pointers: [],
-                  createdAt: info.lastBid.blockHeight,
-                  createdAtTxIdx: info.lastBid.txIndex,
-                  status: 'auction',
-                  nameFee: new BigNumber(info.lastBid.tx.nameFee).shiftedBy(-MAGNITUDE),
-                })),
-              ]),
+                createdAt: info.activeFrom,
+                createdAtTxIdx: info.claims[0],
+                expiresAt: info.expireHeight,
+                status: 'name',
+              }))),
           ])),
         )).flat(2);
 
-        commit('setOwned', {
-          names: names.filter(({ status }) => status !== 'auction'),
-          bids: names.filter(({ status }) => status === 'auction'),
-        });
+        commit('setOwned', names);
       },
       setDefault({ rootState: { sdk }, commit }, { name, address }) {
         commit('setDefault', { name, address, networkId: sdk.getNetworkId() });

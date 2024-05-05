@@ -75,7 +75,7 @@ export default {
     ...mapGetters(['currentNetwork']),
     ...mapState('names', {
       details({ owned }) {
-        return owned?.names.find(({ name }) => name === this.name);
+        return owned.find(({ name }) => name === this.name);
       },
       isDefaultName(state, { getDefault }) {
         return this.address && this.name === getDefault(this.address);
@@ -109,8 +109,8 @@ export default {
       }
     },
     async goToTransactionDetails() {
-      const { hash } = await this.$store.state.sdk.middleware.api
-        .getTxByIndex(this.details.createdAtTxIdx);
+      const { hash } = await this.$store.state.sdk.middleware2.api
+        .getTx(this.details.createdAtTxIdx);
       await this.$router.push(ENV_MOBILE_DEVICE
         ? { name: 'transaction-details', params: { hash } }
         : `${this.currentNetwork.explorerUrl}/transactions/${hash}`);

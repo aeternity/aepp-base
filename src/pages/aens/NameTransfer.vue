@@ -88,7 +88,7 @@ export default {
   computed: {
     ...mapState('names', {
       nameEntry({ owned }) {
-        return owned && owned.names.find(({ name }) => name === this.name);
+        return owned.find(({ name }) => name === this.name);
       },
     }),
     ...mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
