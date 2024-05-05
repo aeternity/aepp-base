@@ -127,16 +127,7 @@ export default (store) => {
         delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
       })(),
-      // TODO: replace with `genSwaggerClient(`${network.middlewareUrl}/v2/api`)`
-      // after removing next.aeternity.io
-      (async () => {
-        const specUrl = `${network.middlewareUrl}/v2/api`;
-        const spec = await fetchJson(specUrl);
-        if (network.middlewareUrl === 'https://next.aeternity.io:8443') {
-          spec.servers[0].url = spec.servers[0].url.replace('/mdw', '');
-        }
-        return genSwaggerClient(specUrl, { spec });
-      })(),
+      genSwaggerClient(`${network.middlewareUrl}/v2/api`),
     ]);
     // TODO: remove after updating sdk
     sdk.Ae.defaults.verify = false;
