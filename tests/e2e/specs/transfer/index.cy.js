@@ -28,7 +28,7 @@ describe('Transfer', () => {
       .viewport('iphone-se2')
       .visit('/transfer/receive', { login: true });
     cy.matchImage();
-    cy.get('[data-copy-on-click="ak_mUSniVx8jR3gCTTuXBLX4htTUvWJyWwxPYoEUeEVuS9KbUpT8"]');
+    cy.get('[data-copy-on-click="ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t"]');
   });
 
   describe('redeem', () => {

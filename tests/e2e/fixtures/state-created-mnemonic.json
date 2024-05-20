@@ -15,7 +15,7 @@
     "activeCode": "eur",
     "swapped": false
   },
-  "sdkUrl": "https://mainnet.aeternity.io",
+  "sdkUrl": "http://localhost:3013",
   "names": {
     "defaults": {}
   },

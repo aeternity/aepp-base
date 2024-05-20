@@ -1,6 +1,6 @@
 describe('Transfer: Send coins', () => {
-  const account1 = 'ak_mUSniVx8jR3gCTTuXBLX4htTUvWJyWwxPYoEUeEVuS9KbUpT8';
-  const account2 = 'ak_22kbscYf1TbjcxXaZYCgFxbT6pASb9guJC8n7SviSvMC1cg53m';
+  const account1 = 'ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t';
+  const account2 = 'ak_DNRWW4KcJyHed5b8fNizFkVb6zqykC6eFQokWgsBJLLyKdaiC';
 
   it('sends coins', () => {
     const testAmount = '0.0001';

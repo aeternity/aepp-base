@@ -6,6 +6,7 @@ const { defineConfig } = require('cypress');
 const { initPlugin } = require('@frsource/cypress-plugin-visual-regression-diff/plugins');
 
 module.exports = defineConfig({
+  chromeWebSecurity: false,
   video: false,
   fixturesFolder: 'tests/e2e/fixtures',
   screenshotsFolder: 'tests/e2e/screenshots',

@@ -41,7 +41,7 @@ describe('Settings mnemonic', () => {
     cy.get('.notification-mnemonic-backup').invoke('remove');
     cy.matchImage();
 
-    for (let i = 0; i < 12; i += 1) {
+    for (let i = 11; i >= 0; i -= 1) {
       cy.get('.button-mnemonic-word').eq(i).click();
     }
     cy.get('.ae-button').click();
