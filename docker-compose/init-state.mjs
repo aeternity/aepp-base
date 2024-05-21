@@ -37,7 +37,7 @@ const account2 = new MemoryAccount(secretKey2);
 
 await aeSdk.spend(200e18, account1.address);
 await aeSdk.spend(100e18, account2.address);
-console.log('Accounts ready');
+console.log('Wallet 1 ready');
 
 await (async function prepareTransactionHistory() {
   for (let i = 0; i < 15; i += 1) {
@@ -63,4 +63,13 @@ await (async function prepareNames() {
     'raw': encode(Buffer.from('test'), Encoding.Bytearray),
   }, { onAccount: account2 });
   console.log('Names ready');
+})();
+
+await (async function wallet2() {
+  const seed = mnemonicToSeed('sun dish cousin double youth year path fix away pig spring upset');
+  const wallet = generateSaveHDWalletFromSeed(seed, '');
+  const [{ publicKey }, { publicKey: publicKey2 }] = getSaveHDWalletAccounts(wallet, '', 2);
+  await aeSdk.spend(100e18, publicKey);
+  await aeSdk.spend(100e18, publicKey2);
+  console.log('Wallet 2 ready');
 })();
