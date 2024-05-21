@@ -68,8 +68,10 @@ await (async function prepareNames() {
 await (async function wallet2() {
   const seed = mnemonicToSeed('sun dish cousin double youth year path fix away pig spring upset');
   const wallet = generateSaveHDWalletFromSeed(seed, '');
-  const [{ publicKey }, { publicKey: publicKey2 }] = getSaveHDWalletAccounts(wallet, '', 2);
-  await aeSdk.spend(100e18, publicKey);
+  const [{ secretKey }, { publicKey: publicKey2 }] = getSaveHDWalletAccounts(wallet, '', 2);
+  const acc = new MemoryAccount(secretKey);
+  await aeSdk.spend(100e18, acc.address);
   await aeSdk.spend(100e18, publicKey2);
+  await aeSdk.aensClaim('investigation.chain', 0, { onAccount: acc });
   console.log('Wallet 2 ready');
 })();
