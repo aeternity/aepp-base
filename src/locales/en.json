@@ -476,8 +476,8 @@
       "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
 
       "notification":{
-        "succeed": "{name} was successfully transfered",
-        "failed": "{name} was not transfered for unknown reason"
+        "succeed": "{name} was successfully transferred",
+        "failed": "{name} was not transferred for unknown reason"
       }
     },
 
