@@ -1,13 +1,13 @@
+import { isNameValid } from '@aeternity/aepp-sdk-next';
 import withFormatting from '../lib/withFormatting';
 import { AENS_DOMAIN } from '../lib/constants';
 import AeInput from './AeInput.vue';
 
-const nameRegExp = new RegExp(`^[a-zA-Z0-9]+\\${AENS_DOMAIN}$`);
-const notNameCharsRegExp = /[^a-zA-Z0-9]/g;
+const notNameCharsRegExp = /[^\p{General_Category=Letter}0-9-]/gu;
 
 export const formatDisplayValueAndCursor = ({ value, cursor }, previousValue) => {
   if (!value || value === AENS_DOMAIN) return { value: '', cursor: 0 };
-  if (nameRegExp.test(value)) return { value, cursor };
+  if (isNameValid(value)) return { value, cursor };
   if (!previousValue) {
     const cleared = value
       .replace(new RegExp(`\\${AENS_DOMAIN}$`), '')
@@ -17,7 +17,7 @@ export const formatDisplayValueAndCursor = ({ value, cursor }, previousValue) =>
       cursor,
     };
   }
-  if (nameRegExp.test(value + AENS_DOMAIN) && !value.endsWith(AENS_DOMAIN.slice(1))) {
+  if (isNameValid(value + AENS_DOMAIN) && !value.endsWith(AENS_DOMAIN.slice(1))) {
     return { value: value + AENS_DOMAIN, cursor };
   }
   return {
