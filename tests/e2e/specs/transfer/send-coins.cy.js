@@ -8,7 +8,7 @@ describe('Transfer: Send coins', () => {
     cy
       .viewport('iphone-se2')
       .visit('/transfer', { login: true })
-      .get('.ae-account .balance', { timeout: 10000 })
+      .get('.ae-account .balance')
       .invoke('text')
       .should('not.match', /\s0\s/)
       .as('oldBalance');
@@ -28,7 +28,7 @@ describe('Transfer: Send coins', () => {
     cy.matchImage();
     button.click();
 
-    cy.get('.notification-spend-success', { timeout: 24000 })
+    cy.get('.notification-spend-success')
       .contains(testAmount)
       .get('@oldBalance')
       .then((oldBalance) => cy
@@ -47,7 +47,7 @@ describe('Transfer: Send coins', () => {
     cy.location('pathname').should('contain', `/transfer/send/${account1}/`);
     cy.get('button').contains('Confirm').click();
 
-    cy.get('.notification-spend-success', { timeout: 24000 }).should('be.visible');
+    cy.get('.notification-spend-success').should('be.visible');
     cy.get('.ae-account .balance').invoke('text').should('match', /\s0\s/);
   });
 });
