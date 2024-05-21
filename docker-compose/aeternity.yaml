@@ -14,7 +14,7 @@ chain:
     "1": 0
     "6": 1
   genesis_accounts:
-    ak_21A27UVVt3hDkBE5J7rhhqnH5YNb4Y1dqo4PnSybrH85pnWo7E: 10000000000000000000000
+    ak_21A27UVVt3hDkBE5J7rhhqnH5YNb4Y1dqo4PnSybrH85pnWo7E: 1000000000000000000000000
 
 # TODO: remove after solving https://github.com/aeternity/ae_mdw/issues/1760
 fork_management:

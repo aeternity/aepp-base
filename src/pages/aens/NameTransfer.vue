@@ -93,7 +93,9 @@ export default {
     }),
     ...mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
     currentAccountAddress() {
-      return this.pointing ? getAddressByNameEntry(this.nameEntry) : this.activeAccount.address;
+      return this.pointing
+        ? this.nameEntry && getAddressByNameEntry(this.nameEntry)
+        : this.activeAccount.address;
     },
   },
   subscriptions() {
@@ -106,10 +108,10 @@ export default {
   },
   mounted() {
     const initialAccountIdx = this.$store.state.accounts.activeIdx;
-    const requredAccountIdx = this.$store.state.accounts.list
+    const requiredAccountIdx = this.$store.state.accounts.list
       .findIndex(({ address }) => address === this.nameEntry.owner);
-    if (initialAccountIdx !== requredAccountIdx) {
-      this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
+    if (initialAccountIdx !== requiredAccountIdx) {
+      this.$store.commit('accounts/setActiveIdx', requiredAccountIdx);
       this.$once('hook:destroyed', () => this.$store
         .commit('accounts/setActiveIdx', initialAccountIdx));
     }
