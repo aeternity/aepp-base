@@ -7,7 +7,7 @@ describe('Settings: Network', () => {
 
   it('can be opened, changes network, adds custom network', () => {
     cy
-      .viewport('iphone-5')
+      .viewport('iphone-se2')
       .visit('/settings', {
         login: true,
         state: {
