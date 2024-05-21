@@ -61,6 +61,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import { defer } from 'lodash-es';
 import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
 import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -107,16 +108,33 @@ export default {
     };
   },
   mounted() {
-    const initialAccountIdx = this.$store.state.accounts.activeIdx;
-    const requiredAccountIdx = this.$store.state.accounts.list
-      .findIndex(({ address }) => address === this.nameEntry.owner);
-    if (initialAccountIdx !== requiredAccountIdx) {
+    this.$store.dispatch('names/fetchOwned');
+    this.selectNameOwner();
+  },
+  methods: {
+    async ensureNameFetched() {
+      await new Promise((resolve) => {
+        const unwatch = this.$watch(
+          ({ nameEntry }) => nameEntry?.owner,
+          (owner) => defer((o) => {
+            if (o == null) return;
+            unwatch();
+            resolve();
+          }, owner),
+          { immediate: true },
+        );
+      });
+    },
+    async selectNameOwner() {
+      const initialAccountIdx = this.$store.state.accounts.activeIdx;
+      await this.ensureNameFetched();
+      const requiredAccountIdx = this.$store.state.accounts.list
+        .findIndex(({ address }) => address === this.nameEntry.owner);
+      if (initialAccountIdx === requiredAccountIdx) return;
       this.$store.commit('accounts/setActiveIdx', requiredAccountIdx);
       this.$once('hook:destroyed', () => this.$store
         .commit('accounts/setActiveIdx', initialAccountIdx));
-    }
-  },
-  methods: {
+    },
     transferToAccount(address) {
       this.accountTo = address;
       this.transfer();
@@ -132,6 +150,7 @@ export default {
         });
       }
       this.busy = true;
+      await this.ensureNameFetched();
       try {
         await (this.pointing
           ? this.$store.dispatch('names/updatePointer', { name: this.name, address: this.accountTo })

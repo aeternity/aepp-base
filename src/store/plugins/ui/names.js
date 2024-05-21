@@ -81,7 +81,7 @@ export default (store) => {
       async fetch({ rootState, state, commit }, { id, force }) {
         if (!force && state.names[id]) return;
         commit('set', { key: id });
-        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
+        const sdk = await Promise.resolve(rootState.sdk);
         if (id.startsWith('ak_')) {
           const nameEntry = (await sdk.middleware2.api.getNamePointees(id))
             .active.accountPubkey?.[0];
@@ -112,7 +112,7 @@ export default (store) => {
         throw new Error(`Unknown id: ${id}`);
       },
       async fetchOwned({ rootState, commit }) {
-        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
+        const sdk = await Promise.resolve(rootState.sdk);
 
         const getPendingNameClaimTransactions = (address) => sdk.api
           .getPendingAccountTransactionsByPubkey(address)
@@ -169,8 +169,9 @@ export default (store) => {
         commit('setDefault', { name, address, networkId: sdk.getNetworkId() });
       },
       async updatePointer({
-        rootState: { sdk }, state, commit, dispatch,
+        rootState, state, commit, dispatch,
       }, { name, address }) {
+        const sdk = await Promise.resolve(rootState.sdk);
         const nameEntry = await sdk.api.getNameEntryByName(name);
         await sdk.aensUpdate(
           name,
