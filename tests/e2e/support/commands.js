@@ -35,13 +35,12 @@ Cypress.Commands.overwrite('visit', (originalFn, url, {
       contentWindow.localStorage.vuex = login || state ? JSON.stringify(Cypress._.merge(
         login && {
           migrations: Object.fromEntries(Cypress._.times(6, (i) => [i, true])),
-          sdkUrl: 'https://testnet.aeternity.io',
           accounts: {
             list: [{
-              address: 'ak_mUSniVx8jR3gCTTuXBLX4htTUvWJyWwxPYoEUeEVuS9KbUpT8',
+              address: 'ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t',
               source: { type: 'hd-wallet', idx: 0 },
             }, {
-              address: 'ak_22kbscYf1TbjcxXaZYCgFxbT6pASb9guJC8n7SviSvMC1cg53m',
+              address: 'ak_DNRWW4KcJyHed5b8fNizFkVb6zqykC6eFQokWgsBJLLyKdaiC',
               source: { type: 'hd-wallet', idx: 1 },
             }],
             hdWallet: {
@@ -49,15 +48,15 @@ Cypress.Commands.overwrite('visit', (originalFn, url, {
                 privateKey: {
                   type: 'Uint8Array',
                   data: [
-                    133, 221, 179, 85, 188, 4, 39, 75, 56, 154, 162, 199, 27, 149, 97, 231,
-                    20, 88, 102, 204, 181, 38, 18, 85, 206, 120, 73, 240, 71, 134, 92, 235,
+                    68, 182, 66, 150, 5, 164, 0, 122, 49, 168, 211, 214, 215, 21, 209, 252,
+                    2, 87, 156, 34, 80, 47, 210, 39, 41, 57, 114, 132, 76, 133, 95, 152,
                   ],
                 },
                 chainCode: {
                   type: 'Uint8Array',
                   data: [
-                    117, 7, 32, 197, 56, 211, 83, 3, 37, 112, 22, 232, 37, 26, 143, 108,
-                    175, 226, 168, 2, 187, 0, 150, 207, 159, 93, 31, 14, 56, 44, 74, 181,
+                    239, 237, 223, 34, 108, 6, 11, 247, 234, 38, 22, 33, 129, 121, 252, 96,
+                    45, 95, 234, 210, 221, 187, 26, 114, 144, 126, 68, 68, 154, 133, 75, 225,
                   ],
                 },
               },
@@ -105,3 +104,7 @@ Cypress.Commands.overwrite('matchImage', (originalFn, ...args) => {
   });
   originalFn(...args);
 });
+
+Cypress.Commands.add('getIframeBody', () => (
+  cy.get('iframe').its('0.contentDocument.body').should('not.be.empty').then(cy.wrap)
+));

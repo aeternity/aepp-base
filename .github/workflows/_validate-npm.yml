@@ -15,11 +15,13 @@ jobs:
     - run: npm test
       working-directory: 'backend'
     - run: npm ci --legacy-peer-deps # TODO: remove --legacy-peer-deps after updating dependencies
+    - run: docker compose up middleware -d --wait
+    - run: ./docker-compose/init-state.mjs
     - run: npm test
     - uses: stefanzweifel/git-auto-commit-action@v5
       if: failure()
       with:
         commit_message: "fixme: update e2e screenshots"
         file_pattern: 'tests/e2e/*.png'
-    - run: docker-compose logs
+    - run: docker compose logs
       if: always()

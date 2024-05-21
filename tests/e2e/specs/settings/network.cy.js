@@ -8,7 +8,15 @@ describe('Settings: Network', () => {
   it('can be opened, changes network, adds custom network', () => {
     cy
       .viewport('iphone-5')
-      .visit('/settings', { login: true })
+      .visit('/settings', {
+        login: true,
+        state: {
+          customNetworks: [{
+            name: 'Testnet',
+            url: 'https://testnet.aeternity.io',
+          }],
+        },
+      })
       .get('.list-item.network')
       .click()
       .url()

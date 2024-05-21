@@ -127,7 +127,15 @@ export default (store) => {
         delete spec.paths['/names/pointees/{id}'];
         return genSwaggerClient(specUrl, { spec });
       })(),
-      genSwaggerClient(`${network.middlewareUrl}/v2/api`),
+      (async () => {
+        const specUrl = `${network.middlewareUrl}/v2/api`;
+        const spec = await fetchJson(specUrl);
+        // TODO: remove after solving https://github.com/aeternity/ae_mdw/issues/1759
+        if (network.middlewareUrl === 'http://localhost:4000') {
+          spec.servers[0].url = spec.servers[0].url.replace('/mdw', '');
+        }
+        return genSwaggerClient(specUrl, { spec });
+      })(),
     ]);
     // TODO: remove after updating sdk
     sdk.Ae.defaults.verify = false;

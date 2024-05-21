@@ -164,7 +164,7 @@ export default (port, log = () => {}) => {
   const interval = setInterval(() => {
     const s = getStats();
     log(`Connected ${s.clients} clients, recorded ${s.leaders} leaders, ${s.followers} followers`);
-  }, 20000);
+  }, 300000);
   const ioClose = io.close;
   io.close = function closeHandler(...args) {
     log('Stopping server');
