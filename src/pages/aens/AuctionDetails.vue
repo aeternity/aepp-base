@@ -13,7 +13,7 @@
     <template v-else>
       <h2>
         {{ $t('name.expiration') }}
-        {{ blocksToRelativeTime(auctionEnd - topBlockHeight) }}
+        {{ blocksToRelativeTime(endsAt - topBlockHeight) }}
       </h2>
 
       <h2>{{ $t('name.details.current-bid') }}</h2>
@@ -44,7 +44,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { produceNameId } from '@aeternity/aepp-sdk-next';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
@@ -65,7 +65,7 @@ export default {
     name: { type: String, required: true },
   },
   data: () => ({
-    auctionEnd: 0,
+    endsAt: 0,
     bids: null,
   }),
   computed: {
@@ -90,10 +90,10 @@ export default {
   },
   methods: {
     async updateAuctionEntry() {
+      const { endsAt } = await this.$store.getters.node.getAuctionEntryByName(this.name);
+      this.endsAt = endsAt;
+      const nameId = produceNameId(this.name);
       const sdk = await Promise.resolve(this.$store.state.sdk);
-      const { info: { auctionEnd } } = await sdk.middleware.api.getNameById(this.name);
-      this.auctionEnd = auctionEnd;
-      const nameId = TxBuilderHelper.produceNameId(this.name);
       // TODO: show more than 100 bids
       this.bids = (await sdk.middleware2.api.getAccountActivities(nameId, { limit: 100 })).data
         .filter(({ type }) => type === 'NameClaimEvent')

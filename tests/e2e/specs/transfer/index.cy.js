@@ -63,7 +63,7 @@ describe('Transfer', () => {
 
       it('scans invite', () => {
         cy.task('changeVideoSource', 'aepp-base-invite.y4m');
-        cy.wrap(aeSdk.spend(1e15, inviteAddress), { timeout: 10000 });
+        cy.wrap(aeSdk.spend(1e15, inviteAddress));
         cy
           .viewport('iphone-se2')
           .visit('/transfer/redeem', { login: true });
@@ -73,7 +73,7 @@ describe('Transfer', () => {
 
         cy.get('.list-item').first().click();
 
-        cy.get('.notification-spend-success', { timeout: 10000 }).should('be.visible');
+        cy.get('.notification-spend-success').should('be.visible');
         cy.matchImage();
         cy.wrap(aeSdk.getBalance(inviteAddress)).should('equal', '0');
       });

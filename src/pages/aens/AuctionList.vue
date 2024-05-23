@@ -67,9 +67,9 @@
 </template>
 
 <script>
-import Swagger from 'swagger-client';
 import { times } from 'lodash-es';
 import { AENS_DOMAIN } from '../../lib/constants';
+import { fetchAuctions } from '../../lib/methods';
 import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import ButtonGroup from '../../components/mobile/ButtonGroup.vue';
@@ -152,24 +152,16 @@ export default {
     },
   },
   async mounted() {
-    const { state: { sdk: sdkPromise }, getters: { currentNetwork } } = this.$store;
-    const sdk = sdkPromise.then ? await sdkPromise : sdkPromise;
-    const res = await sdk.middleware.api.getAllAuctions({ limit: 100 });
-    let { next } = res;
-    this.allAuctions = res.data;
-    // TODO: simplify UI or add additional options in getAllAuctions to query only necessary info
-    while (next) {
-      const url = currentNetwork.middlewareUrl + next;
-      const r = sdk.middleware.responseInterceptor(
-        // eslint-disable-next-line no-await-in-loop
-        await Swagger.serializeRes(await fetch(url), url),
-      ).body;
-      this.allAuctions.push(...r.data);
-      next = r.next;
-    }
+    // TODO: simplify UI or add additional options in getNamesAuctions to query only necessary info
+    await this.fetchAuctions((auctions) => {
+      if (!auctions) return;
+      this.allAuctions ??= [];
+      this.allAuctions.push(...auctions);
+    });
   },
   methods: {
     times,
+    fetchAuctions,
   },
 };
 </script>

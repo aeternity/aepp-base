@@ -3,6 +3,7 @@
 import { execSync } from 'child_process';
 import {
   Node, AeSdk, MemoryAccount, generateSaveHDWalletFromSeed, getSaveHDWalletAccounts,
+  encode, Encoding,
 } from '@aeternity/aepp-sdk-next';
 import { mnemonicToSeed } from '@aeternity/bip39';
 
@@ -30,13 +31,47 @@ const aeSdk = new AeSdk({
 
 const seed = mnemonicToSeed('cross cat upper state flame wire inner betray almost party agree endorse');
 const wallet = generateSaveHDWalletFromSeed(seed, '');
-const [{ publicKey, secretKey }] = getSaveHDWalletAccounts(wallet, '', 1);
+const [{ secretKey }, { secretKey: secretKey2 }] = getSaveHDWalletAccounts(wallet, '', 2);
+const account1 = new MemoryAccount(secretKey);
+const account2 = new MemoryAccount(secretKey2);
 
-await aeSdk.spend(1e20, publicKey);
+await aeSdk.spend(200e18, account1.address);
+await aeSdk.spend(100e18, account2.address);
+console.log('Wallet 1 ready');
 
 await (async function prepareTransactionHistory() {
-  const onAccount = new MemoryAccount(secretKey);
   for (let i = 0; i < 15; i += 1) {
-    await aeSdk.spend(1e14, aeSdk.address, { onAccount });
+    await aeSdk.spend(0.0001e18, aeSdk.address, { onAccount: account1 });
   }
+  console.log('Transaction history ready');
+})();
+
+await (async function prepareNames() {
+  await aeSdk.aensClaim('engine.chain', 0);
+  await aeSdk.aensBid('engine.chain', 60e18, { onAccount: account1 });
+  await aeSdk.aensBid('engine.chain', 65e18);
+  await aeSdk.aensClaim('visual.chain', 0);
+  await aeSdk.aensBid('visual.chain', 60e18, { onAccount: account1 });
+  await aeSdk.aensClaim('inspector.chain', 0);
+  await aeSdk.aensClaim('мир.chain', 0);
+  await aeSdk.aensClaim('understanding.chain', 0, { onAccount: account1 });
+  await aeSdk.aensClaim('entertainment.chain', 0, { onAccount: account2 });
+  await aeSdk.aensUpdate('entertainment.chain', {
+    'account_pubkey': account2.address,
+    'contract_pubkey': account1.address.replace('ak_', 'ct_'),
+    'second account': account1.address,
+    'raw': encode(Buffer.from('test'), Encoding.Bytearray),
+  }, { onAccount: account2 });
+  console.log('Names ready');
+})();
+
+await (async function wallet2() {
+  const seed = mnemonicToSeed('sun dish cousin double youth year path fix away pig spring upset');
+  const wallet = generateSaveHDWalletFromSeed(seed, '');
+  const [{ secretKey }, { publicKey: publicKey2 }] = getSaveHDWalletAccounts(wallet, '', 2);
+  const acc = new MemoryAccount(secretKey);
+  await aeSdk.spend(100e18, acc.address);
+  await aeSdk.spend(100e18, publicKey2);
+  await aeSdk.aensClaim('investigation.chain', 0, { onAccount: acc });
+  console.log('Wallet 2 ready');
 })();

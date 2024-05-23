@@ -2,6 +2,7 @@
 
 import Vue from 'vue';
 import { update, mergeWith } from 'lodash-es';
+import { Node } from '@aeternity/aepp-sdk-next';
 import networksRegistry from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
@@ -31,6 +32,7 @@ export default {
       url: sdkUrl,
     },
     getApp: ({ apps }) => getAppByHost.bind(null, apps),
+    node: (_, { currentNetwork }) => new Node(currentNetwork.url),
   },
 
   mutations: {

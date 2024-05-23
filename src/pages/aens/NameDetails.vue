@@ -37,7 +37,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { produceNameId } from '@aeternity/aepp-sdk-next';
 import prefixedAmount from '../../filters/prefixedAmount';
 import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';
@@ -75,14 +75,14 @@ export default {
     ...mapGetters(['currentNetwork']),
     ...mapState('names', {
       details({ owned }) {
-        return owned?.names.find(({ name }) => name === this.name);
+        return owned.find(({ name }) => name === this.name);
       },
       isDefaultName(state, { getDefault }) {
         return this.address && this.name === getDefault(this.address);
       },
     }),
     nameHash() {
-      return TxBuilderHelper.produceNameId(this.name);
+      return produceNameId(this.name);
     },
   },
   async mounted() {
@@ -109,8 +109,8 @@ export default {
       }
     },
     async goToTransactionDetails() {
-      const { hash } = await this.$store.state.sdk.middleware.api
-        .getTxByIndex(this.details.createdAtTxIdx);
+      const { hash } = await this.$store.state.sdk.middleware2.api
+        .getTx(this.details.createdAtTxIdx);
       await this.$router.push(ENV_MOBILE_DEVICE
         ? { name: 'transaction-details', params: { hash } }
         : `${this.currentNetwork.explorerUrl}/transactions/${hash}`);

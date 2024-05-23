@@ -93,9 +93,7 @@ export default (store) => {
     300,
   );
   const checkName = (expectedNameState) => (name) => new Promise((resolve, reject) => {
-    if (lastPromiseCallback) {
-      lastPromiseCallback.reject(new Error('Request will not be resolved due to another request made later.'));
-    }
+    if (lastPromiseCallback) lastPromiseCallback.resolve(false);
     lastPromiseCallback = { resolve, reject };
     checkNameDebounced(name, expectedNameState);
   });

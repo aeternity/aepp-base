@@ -47,28 +47,28 @@ describe('AeInputAccount', () => {
     input: {
       value: 'test',
       displayed: testName,
-      emmited: testName,
+      emitted: testName,
     },
   }, {
     name: 'removes non-base58 symbols in addresses',
     input: {
       value: 'ak_019AHIJNOPZaklmzяя',
       displayed: 'ak_ 19A HJN PZa kmz',
-      emmited: 'ak_19AHJNPZakmz',
+      emitted: 'ak_19AHJNPZakmz',
     },
   }, {
     name: 'removes unknown symbols in names',
     input: {
-      value: 'ka_019AHIJNOPZaklmzяя.ch',
-      displayed: 'ka019AHIJNOPZaklmzch.chain',
-      emmited: 'ka019AHIJNOPZaklmzch.chain',
+      value: 'ka_019AHIJNOPZaklmzяя-#$.ch',
+      displayed: 'ka019AHIJNOPZaklmzяя-ch.chain',
+      emitted: 'ka019AHIJNOPZaklmzяя-ch.chain',
     },
   }, {
     name: 'removes unknown symbols in names preserving AENS domain',
     input: {
-      value: 'ka_019AHIJNOPZaklmzяя.chain',
-      displayed: 'ka019AHIJNOPZaklmz.chain',
-      emmited: 'ka019AHIJNOPZaklmz.chain',
+      value: 'ka_019AHIJNOPZaklmzяя-#$.chain',
+      displayed: 'ka019AHIJNOPZaklmzяя-.chain',
+      emitted: 'ka019AHIJNOPZaklmzяя-.chain',
     },
   }, {
     name: 'emits input event contains address without space symbols',
@@ -76,7 +76,7 @@ describe('AeInputAccount', () => {
       value: testAddress,
       cursor: 10,
       displayed: testAddressFormatted,
-      emmited: testAddress,
+      emitted: testAddress,
     },
   }, {
     name: 'limits address length',
@@ -84,7 +84,7 @@ describe('AeInputAccount', () => {
       value: `${testAddressFormatted}test`,
       cursor: 25,
       displayed: testAddressFormatted,
-      emmited: testAddress,
+      emitted: testAddress,
     },
   }, {
     name: 'can paste a name ending with domain without dot',
@@ -138,7 +138,7 @@ describe('AeInputAccount', () => {
     input: {
       value: '_',
       displayed: '',
-      emmited: '',
+      emitted: '',
     },
   }].forEach((test) => it(test.name, () => {
     const inputListener = jest.fn();
@@ -156,8 +156,8 @@ describe('AeInputAccount', () => {
       textarea.element.setSelectionRange(cursor, cursor);
       textarea.trigger('input');
       expect(wrapper.find('textarea').element.value).toBe(test.input.displayed);
-      if (test.input.emmited !== undefined) {
-        expect(inputListener.mock.calls[0][0]).toEqual(test.input.emmited);
+      if (test.input.emitted !== undefined) {
+        expect(inputListener.mock.calls[0][0]).toEqual(test.input.emitted);
       }
     }
   }));

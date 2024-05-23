@@ -37,24 +37,34 @@ Cypress.Commands.overwrite('visit', (originalFn, url, {
           migrations: Object.fromEntries(Cypress._.times(6, (i) => [i, true])),
           accounts: {
             list: [{
-              address: 'ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t',
+              address: login === 'wallet-2'
+                ? 'ak_s7gnBTaTm9n5iTFNVSnMBZMhrrBB42Q3BwpTdjoMuXhWyD5bN'
+                : 'ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t',
               source: { type: 'hd-wallet', idx: 0 },
             }, {
-              address: 'ak_DNRWW4KcJyHed5b8fNizFkVb6zqykC6eFQokWgsBJLLyKdaiC',
+              address: login === 'wallet-2'
+                ? 'ak_25sDUczTzeuBdWyx1Mvu7yYEhXA8BCJCXB3Gpqf2QHFGBHD7x1'
+                : 'ak_DNRWW4KcJyHed5b8fNizFkVb6zqykC6eFQokWgsBJLLyKdaiC',
               source: { type: 'hd-wallet', idx: 1 },
             }],
             hdWallet: {
               encryptedWallet: {
                 privateKey: {
                   type: 'Uint8Array',
-                  data: [
+                  data: login === 'wallet-2' ? [
+                    164, 149, 84, 122, 149, 196, 223, 138, 199, 181, 109, 213, 57, 88, 2, 8,
+                    121, 252, 27, 191, 76, 128, 160, 221, 22, 203, 246, 35, 229, 27, 123, 103,
+                  ] : [
                     68, 182, 66, 150, 5, 164, 0, 122, 49, 168, 211, 214, 215, 21, 209, 252,
                     2, 87, 156, 34, 80, 47, 210, 39, 41, 57, 114, 132, 76, 133, 95, 152,
                   ],
                 },
                 chainCode: {
                   type: 'Uint8Array',
-                  data: [
+                  data: login === 'wallet-2' ? [
+                    42, 13, 63, 81, 84, 2, 206, 219, 11, 177, 177, 44, 192, 40, 41, 217,
+                    110, 46, 91, 134, 140, 180, 191, 115, 6, 101, 65, 65, 46, 209, 132, 189,
+                  ] : [
                     239, 237, 223, 34, 108, 6, 11, 247, 234, 38, 22, 33, 129, 121, 252, 96,
                     45, 95, 234, 210, 221, 187, 26, 114, 144, 126, 68, 68, 154, 133, 75, 225,
                   ],

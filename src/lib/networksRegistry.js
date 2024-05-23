@@ -1,12 +1,12 @@
 const mainNetwork = {
-  name: `${Date.now() < 1715072400000 ? 'Iris' : 'Ceres'}-net`,
+  name: 'Ceres-net',
   url: 'https://mainnet.aeternity.io',
   middlewareUrl: 'https://mainnet.aeternity.io/mdw',
   explorerUrl: 'https://aescan.io',
 };
 
 const testNetwork = {
-  name: `Testnet${Date.now() < 1713947400000 ? ' (Iris)' : ''}`,
+  name: 'Testnet',
   url: 'https://testnet.aeternity.io',
   middlewareUrl: 'https://testnet.aeternity.io/mdw',
   explorerUrl: 'https://testnet.aescan.io',

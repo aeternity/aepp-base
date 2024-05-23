@@ -81,7 +81,7 @@ export default (store) => {
     };
 
     const acceptCb = (_, { accept }) => accept();
-    const [sdk, middleware, middleware2] = await Promise.all([
+    const [sdk, middleware2] = await Promise.all([
       Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
         nodes: [{
           name: network.name,
@@ -114,22 +114,9 @@ export default (store) => {
         },
       }),
       (async () => {
-        const specUrl = `${network.middlewareUrl}/api`;
-        const spec = await fetchJson(specUrl);
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1670
-        if (/^https:\/\/(mainnet|testnet)\.aeternity\.io\/mdw$/.test(network.middlewareUrl)) {
-          spec.basePath = '/mdw/';
-        }
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1668
-        delete spec.schemes;
-        // TODO: remove after resolving https://github.com/aeternity/ae_mdw/issues/1669
-        spec.paths['/name/pointees/{id}'] = spec.paths['/names/pointees/{id}'];
-        delete spec.paths['/names/pointees/{id}'];
-        return genSwaggerClient(specUrl, { spec });
-      })(),
-      (async () => {
         const specUrl = `${network.middlewareUrl}/v2/api`;
         const spec = await fetchJson(specUrl);
+        spec.paths['/status'].parameters ??= []; // bug in @aeternity/aepp-sdk@11.0.1
         // TODO: remove after solving https://github.com/aeternity/ae_mdw/issues/1759
         if (network.middlewareUrl === 'http://localhost:4000') {
           spec.servers[0].url = spec.servers[0].url.replace('/mdw', '');
@@ -151,7 +138,6 @@ export default (store) => {
     }
 
     sdk.selectNode(network.name);
-    sdk.middleware = middleware;
     sdk.middleware2 = middleware2;
     return sdk;
   };
