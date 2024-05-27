@@ -112,7 +112,10 @@ describe('leader interface', () => {
 
   it('get all followers', async () => {
     const [, leader] = await leaderWithOneFollower();
-    leader.emit('get-all-followers', expect({ [FOLLOWER_KEY]: { connected: true } }).to.be.equal);
+    const fs = await new Promise((resolve) => {
+      leader.emit('get-all-followers', resolve);
+    });
+    expect({ [FOLLOWER_KEY]: { connected: true } }).to.be.eql(fs);
   });
 });
 
