@@ -1,5 +1,3 @@
-import Swagger from 'swagger-client';
-
 export async function resetConfirm() {
   await this.$store.dispatch('modals/open', {
     name: 'confirm',
@@ -12,17 +10,12 @@ export async function resetConfirm() {
 }
 
 export async function fetchAuctions(handler) {
-  const { state: { sdk: sdkPromise }, getters: { currentNetwork } } = this.$store;
-  const sdk = await Promise.resolve(sdkPromise);
-  const res = await sdk.middleware2.api.getNamesAuctions({ limit: 100 });
+  const { middleware } = this.$store.getters;
+  const res = await middleware.getNamesAuctions({ limit: 100 });
   let { next } = res;
   handler(res.data);
   while (next) {
-    const url = currentNetwork.middlewareUrl + next;
-    const r = sdk.middleware2.responseInterceptor(
-      // eslint-disable-next-line no-await-in-loop
-      await Swagger.serializeRes(await fetch(url), url),
-    ).body;
+    const r = middleware.getNamesAuctions({ overridePath: next });
     handler(r.data);
     next = r.next;
   }

@@ -81,49 +81,37 @@ export default (store) => {
     };
 
     const acceptCb = (_, { accept }) => accept();
-    const [sdk, middleware2] = await Promise.all([
-      Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
-        nodes: [{
-          name: network.name,
-          instance: await Node({ url: network.url, ignoreVersion: true }),
-        }],
-        name: 'Base Aepp',
-        onConnection: acceptCb,
-        async onSubscription(_, { accept }, origin) {
-          const activeAccount = await this.address(this.getApp(origin));
-          accept({
-            accounts: {
-              current: { [activeAccount]: {} },
-              connected: Object.fromEntries(
-                store.state.accounts.list
-                  .filter(({ address }) => address !== activeAccount)
-                  .map(({ address }) => [address, {}]),
-              ),
-            },
-          });
-        },
-        async onSign(_, { accept }) {
-          accept(null, {
-            onAccount: { sign: () => {}, address: () => {} },
-          });
-        },
-        onMessageSign: acceptCb,
-        onAskAccounts: acceptCb,
-        onDisconnect() {
-          Object.keys(this.rpcClients).forEach((id) => this.removeRpcClient(id));
-        },
-      }),
-      (async () => {
-        const specUrl = `${network.middlewareUrl}/v2/api`;
-        const spec = await fetchJson(specUrl);
-        spec.paths['/status'].parameters ??= []; // bug in @aeternity/aepp-sdk@11.0.1
-        // TODO: remove after solving https://github.com/aeternity/ae_mdw/issues/1759
-        if (network.middlewareUrl === 'http://localhost:4000') {
-          spec.servers[0].url = spec.servers[0].url.replace('/mdw', '');
-        }
-        return genSwaggerClient(specUrl, { spec });
-      })(),
-    ]);
+    const sdk = await Ae.compose(ChainNode, Transaction, Contract, Aens, WalletRPC, { methods })({
+      nodes: [{
+        name: network.name,
+        instance: await Node({ url: network.url, ignoreVersion: true }),
+      }],
+      name: 'Base Aepp',
+      onConnection: acceptCb,
+      async onSubscription(_, { accept }, origin) {
+        const activeAccount = await this.address(this.getApp(origin));
+        accept({
+          accounts: {
+            current: { [activeAccount]: {} },
+            connected: Object.fromEntries(
+              store.state.accounts.list
+                .filter(({ address }) => address !== activeAccount)
+                .map(({ address }) => [address, {}]),
+            ),
+          },
+        });
+      },
+      async onSign(_, { accept }) {
+        accept(null, {
+          onAccount: { sign: () => {}, address: () => {} },
+        });
+      },
+      onMessageSign: acceptCb,
+      onAskAccounts: acceptCb,
+      onDisconnect() {
+        Object.keys(this.rpcClients).forEach((id) => this.removeRpcClient(id));
+      },
+    });
     // TODO: remove after updating sdk
     sdk.Ae.defaults.verify = false;
 
@@ -138,7 +126,6 @@ export default (store) => {
     }
 
     sdk.selectNode(network.name);
-    sdk.middleware2 = middleware2;
     return sdk;
   };
 

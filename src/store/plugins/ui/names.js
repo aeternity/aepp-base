@@ -78,13 +78,11 @@ export default (store) => {
         subscription.unsubscribe();
         return height;
       },
-      async fetch({ rootState, state, commit }, { id, force }) {
+      async fetch({ rootGetters: { node, middleware }, state, commit }, { id, force }) {
         if (!force && state.names[id]) return;
         commit('set', { key: id });
-        const sdk = await Promise.resolve(rootState.sdk);
         if (id.startsWith('ak_')) {
-          const nameEntry = (await sdk.middleware2.api.getNamePointees(id))
-            .active.accountPubkey?.[0];
+          const nameEntry = (await middleware.getNamePointees(id)).active.accountPubkey?.[0];
           if (!nameEntry) return;
           commit('set', {
             address: id,
@@ -94,14 +92,14 @@ export default (store) => {
           return;
         }
         if (id.startsWith('nm_')) {
-          const entry = await sdk.middleware2.api.getName(id);
+          const entry = await middleware.getName(id);
           if (!entry.active) return;
           const { name, hash, info: { pointers } } = entry;
           commit('set', { address: pointers?.accountPubkey, name, hash });
           return;
         }
         if (isAensName(id)) {
-          const nameEntry = await sdk.api.getNameEntryByName(id);
+          const nameEntry = await node.getNameEntryByName(id);
           commit('set', {
             address: getAddressByNameEntry(nameEntry),
             name: id,
@@ -111,10 +109,8 @@ export default (store) => {
         }
         throw new Error(`Unknown id: ${id}`);
       },
-      async fetchOwned({ rootState, commit }) {
-        const sdk = await Promise.resolve(rootState.sdk);
-
-        const getPendingNameClaimTransactions = (address) => sdk.api
+      async fetchOwned({ rootState, rootGetters: { node, middleware }, commit }) {
+        const getPendingNameClaimTransactions = (address) => node
           .getPendingAccountTransactionsByPubkey(address)
           .then(
             ({ transactions }) => transactions
@@ -146,12 +142,12 @@ export default (store) => {
         const names = (await Promise.all(
           rootState.accounts.list.map(({ address }) => Promise.all([
             getPendingNameClaimTransactions(address),
-            sdk.middleware2.api.getNames({ owned_by: address, limit: 100, state: 'active' })
+            middleware.getNames({ ownedBy: address, limit: 100, state: 'active' })
               .then(({ data }) => data.map(({ name, info }) => ({
                 name,
                 owner: address,
                 pointers: Object.entries(info.pointers).map(([key, id]) => ({
-                  // TODO: find a better wrapper for mdw api
+                  // TODO: remove with `mapKeysDeep`
                   key: key === 'accountPubkey' ? 'account_pubkey' : key,
                   id,
                 })),

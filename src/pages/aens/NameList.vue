@@ -78,7 +78,6 @@ export default {
   methods: {
     fetchAuctions,
     async fetchUserAuctions() {
-      const sdk = await Promise.resolve(this.$store.state.sdk);
       const addresses = this.$store.state.accounts.list.map(({ address }) => address);
       const [auctions, ...claims] = await Promise.all([
         new Promise((resolve) => {
@@ -88,10 +87,9 @@ export default {
             else acc.push(...arr);
           });
         }),
-        ...addresses.map((account) => sdk
-          .middleware2.api.getTxs({
-            direction: 'backward', account, limit: 100, type: 'name_claim',
-          })),
+        ...addresses.map((account) => this.$store.getters.middleware.getTxs({
+          direction: 'backward', account, limit: 100, type: ['name_claim'],
+        })),
       ]);
       const claimIdxs = claims.map(({ data }) => data).flat(1).map(({ txIndex }) => txIndex);
       this.auctions = auctions

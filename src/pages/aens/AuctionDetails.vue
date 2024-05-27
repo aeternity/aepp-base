@@ -89,19 +89,23 @@ export default {
     );
   },
   methods: {
-    async updateAuctionEntry() {
-      const { endsAt } = await this.$store.getters.node.getAuctionEntryByName(this.name);
-      this.endsAt = endsAt;
-      const nameId = produceNameId(this.name);
-      const sdk = await Promise.resolve(this.$store.state.sdk);
-      // TODO: show more than 100 bids
-      this.bids = (await sdk.middleware2.api.getAccountActivities(nameId, { limit: 100 })).data
+    async updateEndsAt() {
+      this.endsAt = (await this.$store.getters.node.getAuctionEntryByName(this.name)).endsAt;
+    },
+    async updateBids() {
+      const { data } = await this.$store.getters.middleware
+        // TODO: show more than 100 bids
+        .getAccountActivities(produceNameId(this.name), { limit: 100 });
+      this.bids = data
         .filter(({ type }) => type === 'NameClaimEvent')
         .filter(({ payload: { sourceTxType } }) => sourceTxType === 'NameClaimTx')
         .map(({ payload: { tx: { accountId, nameFee } } }) => ({
           nameFee: new BigNumber(nameFee).shiftedBy(-MAGNITUDE),
           accountId,
         }));
+    },
+    async updateAuctionEntry() {
+      await Promise.all([this.updateEndsAt(), this.updateBids()]);
     },
     blocksToRelativeTime,
   },
