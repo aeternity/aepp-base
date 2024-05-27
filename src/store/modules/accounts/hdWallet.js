@@ -80,9 +80,8 @@ export default {
   },
 
   actions: {
-    async isAccountUsed({ rootState: { sdk } }, address) {
-      const { api } = sdk.then ? await sdk : sdk;
-      return api.getAccountByPubkey(address).then(() => true, () => false);
+    async isAccountUsed({ rootGetters: { node } }, address) {
+      return node.getAccountByPubkey(address).then(() => true, () => false);
     },
 
     async checkPreviousAndCreate({ dispatch, rootGetters }) {

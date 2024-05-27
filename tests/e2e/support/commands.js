@@ -24,6 +24,8 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+// wallet-empty: cool fruit obvious since project earth bread second cereal slender escape zone
+
 Cypress.Commands.overwrite('visit', (originalFn, url, {
   isDesktop, login, state, ...options
 } = {}) => originalFn(
@@ -37,34 +39,48 @@ Cypress.Commands.overwrite('visit', (originalFn, url, {
           migrations: Object.fromEntries(Cypress._.times(6, (i) => [i, true])),
           accounts: {
             list: [{
-              address: login === 'wallet-2'
-                ? 'ak_s7gnBTaTm9n5iTFNVSnMBZMhrrBB42Q3BwpTdjoMuXhWyD5bN'
-                : 'ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t',
+              address: {
+                'wallet-2': 'ak_s7gnBTaTm9n5iTFNVSnMBZMhrrBB42Q3BwpTdjoMuXhWyD5bN',
+                'wallet-empty': 'ak_2ujJ8N4GdKapdE2a7aEy4Da3pfPdV7EtJdaA7BUpJ8uqgkQdEB',
+              }[login] || 'ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t',
               source: { type: 'hd-wallet', idx: 0 },
             }, {
-              address: login === 'wallet-2'
-                ? 'ak_25sDUczTzeuBdWyx1Mvu7yYEhXA8BCJCXB3Gpqf2QHFGBHD7x1'
-                : 'ak_DNRWW4KcJyHed5b8fNizFkVb6zqykC6eFQokWgsBJLLyKdaiC',
+              address: {
+                'wallet-2': 'ak_25sDUczTzeuBdWyx1Mvu7yYEhXA8BCJCXB3Gpqf2QHFGBHD7x1',
+                'wallet-empty': 'ak_2Mz7EqTRdmGfns7fvLYfLFLoKyXj8jbfHbfwERfwFZgoZs4Z3T',
+              }[login] || 'ak_DNRWW4KcJyHed5b8fNizFkVb6zqykC6eFQokWgsBJLLyKdaiC',
               source: { type: 'hd-wallet', idx: 1 },
             }],
             hdWallet: {
               encryptedWallet: {
                 privateKey: {
                   type: 'Uint8Array',
-                  data: login === 'wallet-2' ? [
-                    164, 149, 84, 122, 149, 196, 223, 138, 199, 181, 109, 213, 57, 88, 2, 8,
-                    121, 252, 27, 191, 76, 128, 160, 221, 22, 203, 246, 35, 229, 27, 123, 103,
-                  ] : [
+                  data: {
+                    'wallet-2': [
+                      164, 149, 84, 122, 149, 196, 223, 138, 199, 181, 109, 213, 57, 88, 2, 8,
+                      121, 252, 27, 191, 76, 128, 160, 221, 22, 203, 246, 35, 229, 27, 123, 103,
+                    ],
+                    'wallet-empty': [
+                      79, 241, 192, 71, 206, 58, 206, 111, 90, 91, 25, 192, 36, 116, 216, 106,
+                      169, 147, 123, 249, 98, 36, 103, 218, 218, 185, 212, 154, 132, 81, 47, 81,
+                    ],
+                  }[login] || [
                     68, 182, 66, 150, 5, 164, 0, 122, 49, 168, 211, 214, 215, 21, 209, 252,
                     2, 87, 156, 34, 80, 47, 210, 39, 41, 57, 114, 132, 76, 133, 95, 152,
                   ],
                 },
                 chainCode: {
                   type: 'Uint8Array',
-                  data: login === 'wallet-2' ? [
-                    42, 13, 63, 81, 84, 2, 206, 219, 11, 177, 177, 44, 192, 40, 41, 217,
-                    110, 46, 91, 134, 140, 180, 191, 115, 6, 101, 65, 65, 46, 209, 132, 189,
-                  ] : [
+                  data: {
+                    'wallet-2': [
+                      42, 13, 63, 81, 84, 2, 206, 219, 11, 177, 177, 44, 192, 40, 41, 217,
+                      110, 46, 91, 134, 140, 180, 191, 115, 6, 101, 65, 65, 46, 209, 132, 189,
+                    ],
+                    'wallet-empty': [
+                      38, 36, 63, 103, 245, 78, 22, 185, 23, 255, 210, 194, 42, 6, 160, 112,
+                      72, 80, 146, 122, 226, 151, 217, 254, 41, 32, 78, 114, 224, 209, 215, 217,
+                    ],
+                  }[login] || [
                     239, 237, 223, 34, 108, 6, 11, 247, 234, 38, 22, 33, 129, 121, 252, 96,
                     45, 95, 234, 210, 221, 187, 26, 114, 144, 126, 68, 68, 154, 133, 75, 225,
                   ],
