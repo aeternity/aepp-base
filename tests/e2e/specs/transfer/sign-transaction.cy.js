@@ -111,7 +111,7 @@ describe('Sign transaction', () => {
     url.searchParams.append('callback', 'about:blank');
     cy
       .viewport('iphone-se2')
-      .visit(url.href.replace('http://localhost', ''), { login: true });
+      .visit(url.href.replace('http://localhost', ''), { login: 'wallet-empty' });
     cy.get('button').contains('Confirm').click();
     const skipButton = cy.get('.modal-plain .ae-button.primary');
     cy.matchImage();

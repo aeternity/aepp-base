@@ -78,7 +78,7 @@ export default (store) => {
   const checkNameDebounced = debounce(
     async (name, expectedNameState) => {
       try {
-        const nameEntry = await store.state.sdk.api.getNameEntryByName(name);
+        const nameEntry = await store.getters.node.getNameEntryByName(name);
         lastPromiseCallback.resolve(({
           [NAME_STATES.REGISTERED]: true,
           [NAME_STATES.REGISTERED_ADDRESS]: !!getAddressByNameEntry(nameEntry),

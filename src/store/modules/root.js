@@ -1,10 +1,36 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import { update, mergeWith } from 'lodash-es';
-import { Node } from '@aeternity/aepp-sdk-next';
+import {
+  update, mergeWith, isPlainObject, camelCase,
+} from 'lodash-es';
+import { Node, _Middleware } from '@aeternity/aepp-sdk-next';
 import networksRegistry from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
+
+class Middleware extends _Middleware {
+  async sendOperationRequest(args, spec) {
+    // TODO: remove after fixing https://github.com/aeternity/aepp-sdk-js/issues/1986
+    if (args.options?.limit) this.limit = args.options?.limit;
+    const res = await super.sendOperationRequest(
+      args,
+      args.options?.overridePath ? { ...spec, path: args.options.overridePath } : spec,
+    );
+    delete this.limit;
+
+    // TODO: remove after fixing https://github.com/aeternity/aepp-sdk-js/issues/1985
+    function mapKeysDeep(object, handler) {
+      if (Array.isArray(object)) return object.map((el) => mapKeysDeep(el, handler));
+      if (isPlainObject(object)) {
+        const entries = Object.entries(object)
+          .map(([key, value]) => [handler(key), mapKeysDeep(value, handler)]);
+        return Object.fromEntries(entries);
+      }
+      return object;
+    }
+    return mapKeysDeep(res, camelCase);
+  }
+}
 
 const getAppByHost = (apps, appHost) => apps.find(({ host }) => host === appHost);
 
@@ -33,6 +59,7 @@ export default {
     },
     getApp: ({ apps }) => getAppByHost.bind(null, apps),
     node: (_, { currentNetwork }) => new Node(currentNetwork.url),
+    middleware: (_, { currentNetwork }) => new Middleware(currentNetwork.middlewareUrl),
   },
 
   mutations: {

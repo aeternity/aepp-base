@@ -13,8 +13,10 @@ export const isNotFoundError = (error) => error.statusCode === 404;
 
 export const isInternalServerError = (error) => [500, 503].includes(error.statusCode);
 
-export const isAccountNotFoundError = (error) => isNotFoundError(error)
-  && get(error, 'response.body.reason') === 'Account not found';
+export const isAccountNotFoundError = (error) => isNotFoundError(error) && (
+  get(error, 'response.body.reason') === 'Account not found'
+  || error.message.includes('Account not found')
+);
 
 export class ConvertibleToString {
   constructor(toString) {

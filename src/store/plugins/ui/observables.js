@@ -7,7 +7,6 @@ import {
 import { refCountDelay } from 'rxjs-etc/operators';
 import { memoize } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import Swagger from 'swagger-client';
 import { MAGNITUDE } from '../../../lib/constants';
 import { handleUnknownError, isAccountNotFoundError } from '../../../lib/utils';
 import { fetchJson } from '../../utils';
@@ -21,23 +20,19 @@ export default (store) => {
     options,
   );
 
-  const sdk$ = watchAsObservable(({ sdk }) => (sdk && sdk.then ? null : sdk), { immediate: true })
-    .pipe(
-      pluck('newValue'),
-    );
+  const node$ = watchAsObservable((state, { node }) => node, { immediate: true })
+    .pipe(pluck('newValue'));
 
   const defaultAccountInfo = { balance: BigNumber(0), nonce: 0 };
-  const getAccountInfo = memoize((address) => sdk$
+  const getAccountInfo = memoize((address) => node$
     .pipe(
-      switchMap((sdk) => timer(0, 3000).pipe(map(() => sdk))),
-      switchMap((sdk) => (sdk
-        ? sdk.api.getAccountByPubkey(address).catch((error) => {
-          if (!isAccountNotFoundError(error)) {
-            handleUnknownError(error);
-          }
-          return defaultAccountInfo;
-        })
-        : Promise.resolve(defaultAccountInfo))),
+      switchMap((node) => timer(0, 3000).pipe(map(() => node))),
+      switchMap((node) => node.getAccountByPubkey(address).catch((error) => {
+        if (!isAccountNotFoundError(error)) {
+          handleUnknownError(error);
+        }
+        return defaultAccountInfo;
+      })),
       map((aci) => ({ ...aci, balance: BigNumber(aci.balance).shiftedBy(-MAGNITUDE) })),
       multicast(new BehaviorSubject(defaultAccountInfo)),
       refCountDelay(1000),
@@ -76,23 +71,29 @@ export default (store) => {
     tx,
   });
 
-  const createSdkObservable = (func, def) => sdk$
+  const createNodeObservable = (func, def) => node$
     .pipe(
-      switchMap((sdk) => timer(0, 30000).pipe(map(() => sdk))),
-      switchMap(async (sdk) => (sdk ? func(sdk) : def)),
+      switchMap((node) => timer(0, 30000).pipe(map(() => node))),
+      switchMap(async (node) => func(node)),
       multicast(new BehaviorSubject(def)),
       refCountDelay(1000),
     );
-  const topBlockHeight$ = createSdkObservable(
-    async (sdk) => (await sdk.api.getTopHeader()).height,
+  const topBlockHeight$ = createNodeObservable(
+    async (node) => (await node.getTopHeader()).height,
     0,
   );
-  const middlewareStatus$ = createSdkObservable(
-    (sdk) => sdk.middleware2.api.getStatus().catch((error) => {
+  const middlewareStatus$ = watchAsObservable(
+    (state, { middleware }) => middleware,
+    { immediate: true },
+  ).pipe(
+    pluck('newValue'),
+    switchMap((mdw) => timer(0, 30000).pipe(map(() => mdw))),
+    switchMap(async (mdw) => mdw.getStatus().catch((error) => {
       handleUnknownError(error);
       return null;
-    }),
-    { loading: true },
+    })),
+    multicast(new BehaviorSubject({ loading: true })),
+    refCountDelay(1000),
   );
 
   const activeAccountAddress$ = watchAsObservable((state, getters) => getters['accounts/active'].address, { immediate: true })
@@ -138,7 +139,7 @@ export default (store) => {
   let transactions = {};
   let transactionsByAddress = {};
 
-  sdk$.subscribe(() => {
+  node$.subscribe(() => {
     transactions = {};
     transactionsByAddress = {};
   });
@@ -151,18 +152,17 @@ export default (store) => {
     : Promise.resolve(tx));
 
   const getTransaction = (transactionHash$) => combineLatest([
-    activeAccountAddress$, topBlockHeight$, transactionHash$, sdk$,
+    activeAccountAddress$, topBlockHeight$, transactionHash$, node$,
   ])
     .pipe(
-      switchMap(async ([address, height, hash, sdk]) => {
+      switchMap(async ([address, height, hash, node]) => {
         let tx;
         if (transactions[hash]) {
           tx = transactions[hash];
         } else {
-          if (!sdk) return null;
-          tx = await sdk.api.getTransactionByHash(hash);
+          tx = await node.getTransactionByHash(hash);
           tx.pending = tx.blockHash === 'none';
-          tx.time = !tx.pending && (await sdk.api.getMicroBlockHeaderByHash(tx.blockHash)).time;
+          tx.time = !tx.pending && (await node.getMicroBlockHeaderByHash(tx.blockHash)).time;
           tx = normalizeTransaction(tx);
           if (!tx.pending) registerTx(tx);
         }
@@ -175,13 +175,9 @@ export default (store) => {
     );
 
   const fetchMdwTransactions = async ({ address, limit, next }) => {
-    const nextUrl = store.getters.currentNetwork.middlewareUrl + next;
-    const response = next
-      ? store.state.sdk.middleware2.responseInterceptor(
-        await Swagger.serializeRes(await fetch(nextUrl), nextUrl),
-      ).body
-      : await store.state.sdk.middleware2.api
-        .getTxs({ direction: 'backward', account: address, limit });
+    const response = await store.getters.middleware.getTxs(
+      next ? { overridePath: next } : { direction: 'backward', account: address, limit },
+    );
     const data = response.data
       .map(({ microTime, ...tx }) => ({ ...tx, time: microTime }))
       .map(normalizeTransaction);
@@ -190,7 +186,7 @@ export default (store) => {
   };
 
   const fetchPendingTransactions = async (address) => (
-    await store.state.sdk.api.getPendingAccountTransactionsByPubkey(address)
+    await store.getters.node.getPendingAccountTransactionsByPubkey(address)
       .then((r) => r.transactions)
       .catch((error) => {
         if (!isAccountNotFoundError(error)) {
@@ -214,7 +210,7 @@ export default (store) => {
         ),
       ),
       activeAccountAddress$,
-      sdk$.pipe(filter((sdk) => sdk)),
+      node$,
     ])
       .pipe(
         switchMap(([mode, address]) => concat(of(-1), interval(5000)).pipe(
