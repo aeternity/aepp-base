@@ -7,7 +7,7 @@ on:
 
 jobs:
   rollback:
-    uses: aeternity/github-actions/.github/workflows/_rollback-gitops.yml@v2.1.0
+    uses: aeternity/github-actions/.github/workflows/_rollback-gitops.yml@v2.3.1
     secrets: inherit
     with:
       DEPLOY_ENV: stg
@@ -15,8 +15,11 @@ jobs:
       DEPLOY_VERSION: "pr-${{ github.event.number }}"
       DEPLOY_SUBDOMAIN: "pr-${{ github.event.number }}-base"
   delete-tag:
-    uses: aeternity/github-actions/.github/workflows/_delete-tag-docker.yml@v2.1.0
+    uses: aeternity/github-actions/.github/workflows/_delete-tag-ecr.yml@v2.3.1
     secrets: inherit
     with:
-      DOCKERHUB_REPO: "aeternitybot/${{ github.event.repository.name }}"
       DOCKERHUB_TAG: "pr-${{ github.event.number }}"
+  cleanup:
+    uses: aeternity/github-actions/.github/workflows/_cleanup-ecr.yml@v2.3.1
+    needs: [ delete-tag ]
+    secrets: inherit
