@@ -3,7 +3,8 @@ describe('Names', () => {
     cy
       .viewport('iphone-se2')
       .visit('/names', { login: true })
-      .get('.list-item').should('be.visible');
+      .get('.list-item').should('length', 4)
+      .should('be.visible');
     cy.matchImage();
 
     cy.get('[href="/names/ending-soonest"]').should('be.visible');
