@@ -113,7 +113,7 @@ describe('Sign transaction', () => {
       .viewport('iphone-se2')
       .visit(url.href.replace('http://localhost', ''), { login: 'wallet-empty' });
     cy.get('button').contains('Confirm').click();
-    const skipButton = cy.get('.modal-plain .ae-button.primary');
+    const skipButton = cy.get('.modal-plain .ae-button.primary').should('be.visible');
     cy.matchImage();
     skipButton.click();
 
