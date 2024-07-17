@@ -1,7 +1,7 @@
 services:
   middleware:
   # TODO: use upstream after merging https://github.com/aeternity/ae_mdw/issues/1758
-    image: davidyuk/temp:mdw-dev-mode
+    image: davidyuk/temp:mdw-dev-mode-1.81.0
     ports: [4000:4000, 4001:4001, 3013:3013, 3313:3313]
     volumes:
       - ./docker-compose/aeternity.yaml:/home/aeternity/aeternity.yaml
