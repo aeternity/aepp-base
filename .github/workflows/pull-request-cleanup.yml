@@ -18,7 +18,7 @@ jobs:
     uses: aeternity/github-actions/.github/workflows/_delete-tag-ecr.yml@v2.3.1
     secrets: inherit
     with:
-      DOCKERHUB_TAG: "pr-${{ github.event.number }}"
+      TAG: "pr-${{ github.event.number }}"
   cleanup:
     uses: aeternity/github-actions/.github/workflows/_cleanup-ecr.yml@v2.3.1
     needs: [ delete-tag ]
