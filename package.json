@@ -43,7 +43,7 @@
     "swagger-client": "~3.19.7",
     "util": "^0.12.5",
     "vee-validate": "^2.2.15",
-    "vue": "^2.7.16",
+    "vue": "^3.0.0",
     "vue-clickaway": "^2.2.2",
     "vue-focus": "^2.1.0",
     "vue-hoc": "^0.4.7",
