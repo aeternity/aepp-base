@@ -8,7 +8,6 @@ export default {
     let data;
     do {
       if (data) {
-        // eslint-disable-next-line no-await-in-loop
         await this.$store.dispatch('modals/open', {
           name: 'alert',
           text: this.$t('remote-connection.settings.new.wrong-qr-code'),
@@ -16,7 +15,6 @@ export default {
       }
 
       try {
-        // eslint-disable-next-line no-await-in-loop
         data = await this.$store.dispatch('modals/open', {
           name: 'readQrCode',
           title: this.$t('remote-connection.settings.new.title'),

@@ -12,13 +12,13 @@ jobs:
     with:
       DEPLOY_ENV: stg
       DEPLOY_APP: ${{ github.event.repository.name }}
-      DEPLOY_VERSION: 'pr-${{ github.event.number }}'
-      DEPLOY_SUBDOMAIN: 'pr-${{ github.event.number }}-base'
+      DEPLOY_VERSION: pr-${{ github.event.number }}
+      DEPLOY_SUBDOMAIN: pr-${{ github.event.number }}-base
   delete-tag:
     uses: aeternity/github-actions/.github/workflows/_delete-tag-ecr.yml@v2.3.1
     secrets: inherit
     with:
-      TAG: 'pr-${{ github.event.number }}'
+      TAG: pr-${{ github.event.number }}
   cleanup:
     uses: aeternity/github-actions/.github/workflows/_cleanup-ecr.yml@v2.3.1
     needs: [delete-tag]

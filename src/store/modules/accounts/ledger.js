@@ -55,7 +55,6 @@ export default {
             do {
               if (signal?.aborted) throw new Error('Request aborted');
               if (error) {
-                // eslint-disable-next-line no-await-in-loop
                 await dispatch(
                   'modals/open',
                   { name: 'retryLedgerRequest', signal },
@@ -69,7 +68,7 @@ export default {
                 { root: true },
               ).catch(swallowModalAborted);
               try {
-                result = await ledgerAppApi[name](...args); // eslint-disable-line no-await-in-loop
+                result = await ledgerAppApi[name](...args);
                 error = false;
               } catch (err) {
                 error = true;

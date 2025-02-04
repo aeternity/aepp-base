@@ -20,5 +20,5 @@ jobs:
     with:
       DEPLOY_ENV: stg
       DEPLOY_APP: ${{ github.event.repository.name }}
-      DEPLOY_VERSION: 'pr-${{ github.event.number }}'
-      DEPLOY_SUBDOMAIN: 'pr-${{ github.event.number }}-base'
+      DEPLOY_VERSION: pr-${{ github.event.number }}
+      DEPLOY_SUBDOMAIN: pr-${{ github.event.number }}-base

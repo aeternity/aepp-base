@@ -1,6 +1,5 @@
 import store from '../store';
 
-// eslint-disable-next-line import/prefer-default-export
 export const ensureLoggedIn = (to, from, next) => {
   if (!store.getters.loggedIn) {
     store.commit('setLoginTarget', to.fullPath);

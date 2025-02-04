@@ -62,7 +62,7 @@ export default {
   async mounted() {
     while (!this.inviteAccount) {
       try {
-        await this.readQrCode(); // eslint-disable-line no-await-in-loop
+        await this.readQrCode();
       } catch (error) {
         this.$router.push({ name: 'transfer' });
         if (error.message !== 'Cancelled by user') handleUnknownError(error);

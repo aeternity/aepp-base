@@ -1,7 +1,6 @@
 import { RUNNING_IN_FRAME } from '../../../lib/constants';
 import { swallowModalAborted } from '../../plugins/ui/modals';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getDesktopRemoteSignAction =
   (methodName, payloadField) =>
   ({ dispatch }, payload) => {

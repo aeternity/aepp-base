@@ -7,7 +7,7 @@ module.exports = {
     ENV_MOBILE_DEVICE: true,
   },
   ignorePatterns: ['dist', 'platforms', 'plugins', 'www'],
-  extends: ['plugin:vue/recommended', 'plugin:@intlify/vue-i18n/recommended', '@vue/airbnb'],
+  extends: ['plugin:vue/recommended', 'plugin:@intlify/vue-i18n/recommended'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -43,6 +43,10 @@ module.exports = {
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/form-control-has-label': 'off',
     'vue/multi-word-component-names': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/html-self-closing': 'off',
+    'vue/html-indent': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
     'vuejs-accessibility/no-autofocus': 'off',
     'vuejs-accessibility/alt-text': 'off',
   },
@@ -54,13 +58,6 @@ module.exports = {
       files: '**/__tests__/*',
       env: {
         jest: true,
-      },
-    },
-    {
-      files: 'backend/**',
-      rules: {
-        'import/no-extraneous-dependencies': ['error', { packageDir: 'backend' }],
-        'import/extensions': ['error', 'ignorePackages'],
       },
     },
   ],

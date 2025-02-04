@@ -1,6 +1,5 @@
 import { AeSdk, Node, MemoryAccount } from '@aeternity/aepp-sdk-next';
 
-// eslint-disable-next-line import/prefer-default-export
 export const aeSdk = new AeSdk({
   nodes: [
     {

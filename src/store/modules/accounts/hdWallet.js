@@ -113,7 +113,6 @@ export default {
           commit('accounts/add', { ...account, type }, { root: true });
         }
         account = getHdWalletAccount(state.wallet, getters.nextIdx);
-        // eslint-disable-next-line no-await-in-loop
       } while (await dispatch('isAccountUsed', account.address));
     },
 

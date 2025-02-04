@@ -5,7 +5,7 @@
       :subtitle="$t('settings.mnemonic.notification.subtitle')"
     >
       <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-      <ListItemCircle slot="icon"> ! </ListItemCircle>
+      <ListItemCircle slot="icon">!</ListItemCircle>
     </ListItem>
 
     <template slot="footer">

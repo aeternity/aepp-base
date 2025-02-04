@@ -13,9 +13,9 @@ jobs:
           node-version: 20.x
           cache: npm
       - run: npm ci
-        working-directory: 'backend'
+        working-directory: backend
       - run: npm test
-        working-directory: 'backend'
+        working-directory: backend
       - run: npm ci --legacy-peer-deps # TODO: remove --legacy-peer-deps after updating dependencies
       - run: docker compose up middleware -d --wait --quiet-pull
       - run: ./docker-compose/init-state.mjs
@@ -24,6 +24,6 @@ jobs:
         if: failure()
         with:
           commit_message: 'fixme: update e2e screenshots'
-          file_pattern: 'tests/e2e/*.png'
+          file_pattern: tests/e2e/*.png
       - run: docker compose logs
         if: always()

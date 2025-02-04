@@ -1,8 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const { defineConfig } = require('cypress');
-// TODO: remove after fixing https://github.com/import-js/eslint-plugin-import/issues/1810
-// eslint-disable-next-line import/no-unresolved
 const { initPlugin } = require('@frsource/cypress-plugin-visual-regression-diff/plugins');
 
 module.exports = defineConfig({
