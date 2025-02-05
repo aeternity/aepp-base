@@ -17,30 +17,23 @@ export default (store) => {
         this.host = host;
       }
 
-      async ensureCurrentAccountAccessPure() {
+      async #ensureCurrentAccountAccessPure() {
         const accessToAccounts = get(store.getters.getApp(this.host), 'permissions.accessToAccounts', []);
         if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
-        const promise = store.dispatch(
-          'modals/open',
-          { name: 'confirmAccountAccess', appHost: this.host },
-        );
-        const unsubscribe = store.watch(
-          (state, getters) => getters['accounts/active'].address,
-          (address) => accessToAccounts.includes(address) && promise.cancel(),
-        );
 
+        const controller = new AbortController();
+        const unsubscribe = store.watch(
+          (_state, getters) => getters['accounts/active'].address,
+          (address) => accessToAccounts.includes(address) && controller.abort(),
+        );
         try {
-          await Promise.race([
-            promise,
-            new Promise((resolve, reject) => {
-              promise.finally(() => {
-                if (!promise.isCancelled()) return;
-                if (accessToAccounts.includes(store.getters['accounts/active'].address)) {
-                  resolve();
-                } else reject(new Error('Unexpected state'));
-              });
-            }),
-          ]);
+          await store.dispatch(
+            'modals/open',
+            { name: 'confirmAccountAccess', signal: controller.signal, appHost: this.host },
+          );
+        } catch (error) {
+          if (error.message === 'Modal aborted') return;
+          throw error;
         } finally {
           unsubscribe();
         }
@@ -52,12 +45,9 @@ export default (store) => {
       }
 
       ensureCurrentAccountAccess() {
-        if (!this.accountAccessPromise) {
-          this.accountAccessPromise = this.ensureCurrentAccountAccessPure();
-          this.accountAccessPromise.finally(() => {
-            delete this.accountAccessPromise;
-          });
-        }
+        this.accountAccessPromise ??= this.#ensureCurrentAccountAccessPure().finally(() => {
+          delete this.accountAccessPromise;
+        });
         return this.accountAccessPromise;
       }
     }
@@ -75,8 +65,8 @@ export default (store) => {
         }
         return store.getters['accounts/active'].address;
       },
-      sign: (data) => store.dispatch('accounts/sign', data),
-      signTransaction: (txBase64) => store.dispatch('accounts/signTransaction', txBase64),
+      sign: (data, { signal }) => store.dispatch('accounts/sign', { data, signal }),
+      signTransaction: (transaction, { signal }) => store.dispatch('accounts/signTransaction', { transaction, signal }),
     };
 
     const acceptCb = (_, { accept }) => accept();

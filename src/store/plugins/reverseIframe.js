@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
 import { RUNNING_IN_FRAME } from '../../lib/constants';
 

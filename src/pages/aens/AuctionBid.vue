@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { pick } from 'lodash-es';
+import { pick, debounce } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
 import { MAGNITUDE } from '../../lib/constants';
@@ -127,22 +127,16 @@ export default {
   subscriptions() {
     return pick(this.$store.state.observables, ['topBlockHeight']);
   },
-  mounted() {
-    let promise;
-    this.$watch(
-      ({ internalName }) => internalName,
-      (name) => {
-        if (promise) promise.cancel();
-        promise = (async () => {
-          this.endsAt = 0;
-          this.highestBid = null;
-          const { endsAt, highestBid } = await this.$store.getters.node.getAuctionEntryByName(name);
-          this.endsAt = endsAt;
-          this.highestBid = new BigNumber(highestBid).shiftedBy(-MAGNITUDE);
-        })();
-      },
-      { immediate: true },
-    );
+  async mounted() {
+    const fetchDetails = async (name) => {
+      this.endsAt = 0;
+      this.highestBid = null;
+      const { endsAt, highestBid } = await this.$store.getters.node.getAuctionEntryByName(name);
+      this.endsAt = endsAt;
+      this.highestBid = new BigNumber(highestBid).shiftedBy(-MAGNITUDE);
+    };
+    this.$watch(({ internalName }) => internalName, debounce(fetchDetails, 300));
+    await fetchDetails(this.internalName);
   },
   methods: {
     async handleSubmit() {

@@ -50,8 +50,8 @@ export default {
       sign: signOnMobile,
       signTransaction: signOnMobile,
     } : {
-      sign: getDesktopRemoteSignAction('sign'),
-      signTransaction: getDesktopRemoteSignAction('signTransaction'),
+      sign: getDesktopRemoteSignAction('sign', 'data'),
+      signTransaction: getDesktopRemoteSignAction('signTransaction', 'transaction'),
     },
   },
 };

@@ -77,31 +77,28 @@ export default {
         ? new Promise((resolve) => { commit('setDeepLinkCallback', resolve); }) : receive();
     },
 
-    async signTransactionByQrCode({ dispatch }, url) {
-      await dispatch('modals/open', { name: 'vaultSign', url }, { root: true });
+    async signTransactionByQrCode({ dispatch }, { url, signal }) {
+      await dispatch('modals/open', { name: 'vaultSign', url, signal }, { root: true });
       return dispatch(
         'modals/open',
-        { title: i18n.t('air-gap.scan-signed-transaction'), name: 'readQrCode' },
+        { title: i18n.t('air-gap.scan-signed-transaction'), name: 'readQrCode', signal },
         { root: true },
       );
     },
 
-    async signTransaction({ rootState: { sdk }, rootGetters, dispatch }, transaction) {
+    async signTransaction({ rootState: { sdk }, rootGetters, dispatch }, { transaction, signal }) {
       const requestUrl = generateSignRequestUrl(
         sdk.getNetworkId(),
         transaction,
         rootGetters['accounts/active'].source.publicKey,
       );
-
-      return getSignedTransactionByResponseUrl(await dispatch(
-        rootGetters['accounts/active'].source.transport === TRANSPORT_DEEP_LINK
-          ? 'signTransactionByDeepLink'
-          : 'signTransactionByQrCode',
-        requestUrl,
-      ));
+      const responseUrl = rootGetters['accounts/active'].source.transport === TRANSPORT_DEEP_LINK
+        ? await dispatch('signTransactionByDeepLink', requestUrl)
+        : await dispatch('signTransactionByQrCode', { url: requestUrl, signal });
+      return getSignedTransactionByResponseUrl(responseUrl);
     },
   } : {
-    sign: getDesktopRemoteSignAction('sign'),
-    signTransaction: getDesktopRemoteSignAction('signTransaction'),
+    sign: getDesktopRemoteSignAction('sign', 'data'),
+    signTransaction: getDesktopRemoteSignAction('signTransaction', 'transaction'),
   },
 };
