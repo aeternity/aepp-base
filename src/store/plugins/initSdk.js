@@ -154,13 +154,26 @@ export default (store) => {
     { immediate: true },
   );
 
+  let syncAccountsPromise = Promise.resolve();
+
   store.watch(
     ({ sdk, accounts: { list } }) => [sdk, list],
-    ([sdk, list]) => sdk && store.commit('setSdkAccounts', list),
+    async ([sdk, list]) => {
+      syncAccountsPromise = (async () => {
+        if (sdk == null) return;
+        if (sdk.then) await sdk.then;
+        store.commit('setSdkAccounts', list);
+      })();
+      await syncAccountsPromise;
+    },
   );
 
   store.watch(
-    (state, getters) => getters['accounts/active'] && getters['accounts/active'].address,
-    (address) => store.commit('selectSdkAccount', address),
+    (_state, getters) => getters['accounts/active']?.address,
+    async (address) => {
+      if (store.state.sdk.then) await store.state.sdk;
+      await syncAccountsPromise;
+      store.commit('selectSdkAccount', address);
+    },
   );
 };
