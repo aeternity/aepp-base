@@ -57,7 +57,9 @@ export default {
       dispatch('router/push', { name: 'vault-setup-method' }, { root: true });
     },
 
-    sign: () => Promise.reject(new Error('Not implemented yet')),
+    sign: () => {
+      throw new Error('Not implemented yet');
+    },
 
     signTransactionByDeepLink({ commit }, requestUrl) {
       if (process.env.VUE_APP_CORDOVA) {

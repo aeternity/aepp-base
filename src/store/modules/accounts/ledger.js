@@ -99,7 +99,9 @@ export default {
       }
     },
 
-    sign: () => Promise.reject(new Error('Not implemented yet')),
+    sign: () => {
+      throw new Error('Not implemented yet');
+    },
 
     async signTransaction({ rootGetters, dispatch, rootState: { sdk } }, { transaction, signal }) {
       await dispatch('ensureCurrentAccountAvailable');

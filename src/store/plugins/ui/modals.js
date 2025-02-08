@@ -38,7 +38,7 @@ export default (store) => {
     },
     actions: {
       open({ commit }, { name, signal, allowRedirect, ...props }) {
-        if (!modals[name]) return Promise.reject(new Error(`Modal with name "${name}" not registered`));
+        if (!modals[name]) throw new Error(`Modal with name "${name}" not registered`);
         const key = Symbol(`modal-${name}-${Date.now() % 1e4}`);
         let abort;
         return new Promise((resolve, reject) => {

@@ -33,10 +33,10 @@ export default class RpcPeer {
       const controller = this.#responseControllers[message.id];
       if (!controller) {
         this.#send({ id: message.id, error: 'Can\'t cancel request: its abort controller not found' });
-        return Promise.resolve();
+        return undefined;
       }
       controller.abort();
-      return Promise.resolve();
+      return undefined;
     }
     return [NOTIFICATION, REQUEST].includes(message.type)
       ? this.#processRequestMessage(message)
