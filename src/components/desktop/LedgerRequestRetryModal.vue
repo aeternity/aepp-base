@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     handleCancel() {
-      this.reject(new Error('Canceled by user'));
+      this.reject(new Error('Cancelled by user'));
     },
   },
 };
