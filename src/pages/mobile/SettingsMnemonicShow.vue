@@ -9,15 +9,8 @@
     hide-tab-bar
   >
     <Guide :template="$t('settings.mnemonic.show.guide')">
-      <AeFraction
-        slot="icon"
-        numerator="2"
-        denominator="4"
-      />
-      <img
-        slot="keyEmoji"
-        :src="keyEmoji"
-      >
+      <AeFraction slot="icon" numerator="2" denominator="4" />
+      <img slot="keyEmoji" :src="keyEmoji" />
     </Guide>
     <p class="mnemonic">
       {{ mnemonic }}
@@ -50,7 +43,10 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, AeButton, Guide, AeFraction,
+    Page,
+    AeButton,
+    Guide,
+    AeFraction,
   },
   data: () => ({
     readingPaused: false,
@@ -85,8 +81,12 @@ export default {
 
   .progress {
     @keyframes increase-width {
-      from { width: 0; }
-      to { width: 100%; }
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
     }
 
     height: 7px;

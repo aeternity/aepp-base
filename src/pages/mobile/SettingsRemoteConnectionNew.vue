@@ -31,8 +31,9 @@ export default {
 
     this.$store.commit('addFollower', {
       id: data.toString('base64'),
-      name: prompt(this.$t('remote-connection.settings.new.prompt-name'))
-        || this.$t('remote-connection.settings.new.default-name'),
+      name:
+        prompt(this.$t('remote-connection.settings.new.prompt-name')) ||
+        this.$t('remote-connection.settings.new.default-name'),
     });
     this.$router.push({ name: 'settings-remote-connection' });
   },

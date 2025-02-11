@@ -1,9 +1,6 @@
 <template>
   <div class="apps">
-    <Guide
-      :template="$t('app.list.guide')"
-      size="big"
-    />
+    <Guide :template="$t('app.list.guide')" size="big" />
 
     <Note>
       {{ $t('app.list.note') }}
@@ -32,8 +29,10 @@ export default {
   data: () => ({ aeternityAppsPaths: [] }),
   computed: mapState({
     aeternityApps(state, getters) {
-      return this.aeternityAppsPaths
-        .map((path) => ({ ...getters['appsMetadata/get'](path), path }));
+      return this.aeternityAppsPaths.map((path) => ({
+        ...getters['appsMetadata/get'](path),
+        path,
+      }));
     },
   }),
   async mounted() {

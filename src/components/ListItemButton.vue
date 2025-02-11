@@ -1,9 +1,5 @@
 <template>
-  <ButtonPlain
-    v-bind="$attrs"
-    class="list-item-button"
-    v-on="$listeners"
-  >
+  <ButtonPlain v-bind="$attrs" class="list-item-button" v-on="$listeners">
     <div class="content">
       <slot />
     </div>

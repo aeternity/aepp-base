@@ -25,7 +25,8 @@ const networks = (() => {
   }
   if (envNetwork.name) return [envNetwork];
   return process.env.NODE_ENV === 'production'
-    ? [mainNetwork, testNetwork] : [testNetwork, mainNetwork];
+    ? [mainNetwork, testNetwork]
+    : [testNetwork, mainNetwork];
 })();
 
 export default Object.freeze(networks.map(Object.freeze));

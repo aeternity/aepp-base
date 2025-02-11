@@ -24,7 +24,8 @@ export default {
 <style type="scss">
 @use '~normalize.css';
 
-html, body {
+html,
+body {
   height: 1px;
   min-height: 100%;
 }

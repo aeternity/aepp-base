@@ -1,25 +1,14 @@
 <template>
   <div class="confirm-account-access">
     <Guide :template="$t('app.browser.confirm-account-access.guide')">
-      <template slot="app">
-        <img
-          v-if="app.icon"
-          :src="app.icon"
-        > {{ app.name }}
-      </template>
-      <AccountInline
-        slot="account"
-        :address="activeAccount.address"
-      />
+      <template slot="app"> <img v-if="app.icon" :src="app.icon" /> {{ app.name }} </template>
+      <AccountInline slot="account" :address="activeAccount.address" />
     </Guide>
 
     <DetailsAccountAccessPermission :app-name="app.name" />
 
     <AeButtonGroup>
-      <AeButton
-        fill="secondary"
-        @click="denyHandler"
-      >
+      <AeButton fill="secondary" @click="denyHandler">
         {{ $t('deny') }}
       </AeButton>
       <AeButton @click="allowHandler">

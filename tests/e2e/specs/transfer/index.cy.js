@@ -2,9 +2,7 @@ import { aeSdk } from '../../utils';
 
 describe('Transfer', () => {
   it('opens initial page, check tooltips', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/transfer', { login: true });
+    cy.viewport('iphone-se2').visit('/transfer', { login: true });
     cy.matchImage();
     cy.get('[href="/transfer/receive"]');
     cy.get('[href="/transfer/redeem"]');
@@ -24,9 +22,7 @@ describe('Transfer', () => {
   });
 
   it('opens receive', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/transfer/receive', { login: true });
+    cy.viewport('iphone-se2').visit('/transfer/receive', { login: true });
     cy.matchImage();
     cy.get('[data-copy-on-click="ak_8eAGBq1jP4dLsmnmgnSzRBxSh5SU1AVsgbCwSQcXZVwwB6c1t"]');
   });
@@ -34,9 +30,7 @@ describe('Transfer', () => {
   describe('redeem', () => {
     it('opens', () => {
       cy.task('changeVideoSource', 'default.y4m');
-      cy
-        .viewport('iphone-se2')
-        .visit('/transfer/redeem', { login: true });
+      cy.viewport('iphone-se2').visit('/transfer/redeem', { login: true });
       cy.matchImage({ screenshotConfig: { blackout: ['video'] } });
       cy.get('.button-plain.left').click();
       cy.location('pathname').should('eq', '/transfer');
@@ -47,9 +41,7 @@ describe('Transfer', () => {
 
       it('scans invalid qr code, empty invite', () => {
         cy.task('changeVideoSource', 'address.y4m');
-        cy
-          .viewport('iphone-se2')
-          .visit('/transfer/redeem', { login: true });
+        cy.viewport('iphone-se2').visit('/transfer/redeem', { login: true });
 
         cy.get('.modal-mobile .modal-plain:contains("QR code is wrong")').should('be.visible');
         cy.matchImage();
@@ -64,9 +56,7 @@ describe('Transfer', () => {
       it('scans invite', () => {
         cy.task('changeVideoSource', 'aepp-base-invite.y4m');
         cy.wrap(aeSdk.spend(1e15, inviteAddress));
-        cy
-          .viewport('iphone-se2')
-          .visit('/transfer/redeem', { login: true });
+        cy.viewport('iphone-se2').visit('/transfer/redeem', { login: true });
 
         cy.get('.page.redeem-balance').should('be.visible');
         cy.matchImage();

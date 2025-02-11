@@ -5,7 +5,7 @@
     :value="value"
     v-bind="$attrs"
     @input="$emit('input', $event.target.value)"
-  >
+  />
 </template>
 
 <script>

@@ -22,17 +22,20 @@ import './commands';
 // require('./commands')
 
 beforeEach(() => {
-  cy.intercept({
-    method: 'GET',
-    url: 'https://api.coingecko.com/api/v3/simple/price*',
-  }, {
-    aeternity: {
-      usd: 0.0200868,
-      eur: 0.01835634,
-      btc: 4.44868e-07,
-      gbp: 0.01578517,
-      aud: 0.02998522,
-      cny: 0.142835,
+  cy.intercept(
+    {
+      method: 'GET',
+      url: 'https://api.coingecko.com/api/v3/simple/price*',
     },
-  });
+    {
+      aeternity: {
+        usd: 0.0200868,
+        eur: 0.01835634,
+        btc: 4.44868e-7,
+        gbp: 0.01578517,
+        aud: 0.02998522,
+        cny: 0.142835,
+      },
+    },
+  );
 });

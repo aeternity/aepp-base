@@ -1,9 +1,5 @@
 <template>
-  <ButtonPlain
-    class="ae-menu-item"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
+  <ButtonPlain class="ae-menu-item" v-bind="$attrs" v-on="$listeners">
     <slot />
   </ButtonPlain>
 </template>

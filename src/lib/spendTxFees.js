@@ -4,7 +4,7 @@ import { MAGNITUDE, MAGNITUDE_MICRO } from './constants';
 
 const STUB_ADDRESS = 'ak_enAPooFqpTQKkhJmU47J16QZu9HbPQQPwWBVeGnzDbDnv9dxp';
 
-export const calculateMinSpendTxFee = (options) => (
+export const calculateMinSpendTxFee = (options) =>
   unpackTx(
     buildTx({
       ...options,
@@ -13,8 +13,7 @@ export const calculateMinSpendTxFee = (options) => (
       recipientId: STUB_ADDRESS,
     }),
     Tag.SpendTx,
-  ).fee
-);
+  ).fee;
 
 const MAX_UINT256 = BigNumber(2).exponentiatedBy(256).minus(1);
 const MIN_SPEND_TX_FEE_STRING = calculateMinSpendTxFee({

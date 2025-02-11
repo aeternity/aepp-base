@@ -6,9 +6,7 @@ const password = 'Aa0?!-';
 
 describe('Settings password', () => {
   it('sets password', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings/password', { state: stateCreated });
+    cy.viewport('iphone-se2').visit('/settings/password', { state: stateCreated });
     cy.matchImage();
 
     cy.get('.list-item').click();
@@ -30,9 +28,7 @@ describe('Settings password', () => {
   });
 
   it('logins and removes password', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings/password', { state: stateEncrypted });
+    cy.viewport('iphone-se2').visit('/settings/password', { state: stateEncrypted });
     cy.matchImage();
 
     cy.get('input[type=password]').type('test');
@@ -58,9 +54,7 @@ describe('Settings password', () => {
   });
 
   function login(path) {
-    cy
-      .viewport('iphone-se2')
-      .visit(path, { state: stateEncrypted });
+    cy.viewport('iphone-se2').visit(path, { state: stateEncrypted });
     cy.get('input[type=password]').type(password);
     cy.get('.ae-button').click();
   }
@@ -87,9 +81,7 @@ describe('Settings password', () => {
   });
 
   it('shows login at intro screen', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/', { state: stateEncrypted });
+    cy.viewport('iphone-se2').visit('/', { state: stateEncrypted });
     cy.location('pathname').should('equal', '/login');
     cy.get('.ae-link').click();
     cy.matchImage();
@@ -100,9 +92,7 @@ describe('Settings password', () => {
   });
 
   it('opens onboarding without password', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/onboarding', { state: stateEncrypted });
+    cy.viewport('iphone-se2').visit('/onboarding', { state: stateEncrypted });
     cy.location('pathname').should('equal', '/onboarding');
   });
 });

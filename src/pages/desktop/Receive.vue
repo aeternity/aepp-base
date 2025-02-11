@@ -1,36 +1,21 @@
 <template>
   <div class="receive">
-    <Guide
-      :template="$t('transfer.receive.guide-desktop')"
-      size="big"
-    />
+    <Guide :template="$t('transfer.receive.guide-desktop')" size="big" />
 
     <Note>
       {{ $t('transfer.receive.note') }}
     </Note>
 
     <AeCard fill="maximum">
-      <AeQrCode
-        :class="{ inactive: !account }"
-        :data="address"
-      />
+      <AeQrCode :class="{ inactive: !account }" :data="address" />
 
       <AeAddressPanel :address="address" />
 
-      <AeButton
-        v-copy-on-click="address"
-        :disabled="!account"
-        fill="secondary"
-      >
+      <AeButton v-copy-on-click="address" :disabled="!account" fill="secondary">
         {{ $t('transfer.receive.copy') }}
       </AeButton>
 
-      <AeButton
-        v-if="!account"
-        plain
-        class="connect-an-account"
-        @click="toggleSidebar"
-      >
+      <AeButton v-if="!account" plain class="connect-an-account" @click="toggleSidebar">
         {{ $t('transfer.receive.connect-account') }}
       </AeButton>
     </AeCard>
@@ -49,7 +34,12 @@ import AeAddressPanel from '../../components/desktop/AeAddressPanel.vue';
 
 export default {
   components: {
-    Guide, Note, AeButton, AeCard, AeQrCode, AeAddressPanel,
+    Guide,
+    Note,
+    AeButton,
+    AeCard,
+    AeQrCode,
+    AeAddressPanel,
   },
   directives: {
     copyOnClick,
@@ -73,7 +63,9 @@ export default {
     margin: 0 functions.rem(-15px);
     padding: functions.rem(60px);
 
-    .ae-qr-code, .ae-address-panel, .ae-button {
+    .ae-qr-code,
+    .ae-address-panel,
+    .ae-button {
       margin-left: auto;
       margin-right: auto;
     }

@@ -1,8 +1,5 @@
 <template>
-  <Transition
-    appear
-    name="fade"
-  >
+  <Transition appear name="fade">
     <div class="notification">
       <div class="content">
         <slot>{{ text }}</slot>
@@ -47,11 +44,13 @@ export default {
   box-shadow: 0 0 functions.rem(100px) functions.rem(30px) rgba(146, 156, 166, 0.4);
   @extend %face-sans-base;
 
-  &.fade-enter-active, &.fade-leave-active {
+  &.fade-enter-active,
+  &.fade-leave-active {
     transition: opacity 0.25s ease-out;
   }
 
-  &.fade-enter, &.fade-leave-to {
+  &.fade-enter,
+  &.fade-leave-to {
     opacity: 0;
   }
 

@@ -40,9 +40,7 @@
   },
   "apps": [],
   "mobile": {
-    "readSecurityCourses": [
-      "intro"
-    ],
+    "readSecurityCourses": ["intro"],
     "followers": {},
     "skipAddingToHomeScreen": true
   }

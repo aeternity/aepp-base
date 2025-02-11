@@ -1,12 +1,6 @@
 <template>
-  <Transition
-    appear
-    name="fade"
-  >
-    <Overlay
-      class="account-switcher-modal"
-      @click="resolve"
-    >
+  <Transition appear name="fade">
+    <Overlay class="account-switcher-modal" @click="resolve">
       <AeCard fill="maximum">
         <ListItemAccount
           v-for="(account, index) in accountsWithNamePending"
@@ -15,17 +9,11 @@
         >
           <template slot="right">
             <NamePending v-if="account.namePending" />
-            <AeRadio
-              :checked="index === activeIdx"
-              @change="setActiveIdx(index)"
-            />
+            <AeRadio :checked="index === activeIdx" @change="setActiveIdx(index)" />
           </template>
         </ListItemAccount>
 
-        <ListItem
-          :title="$t('account-switcher.create-account')"
-          @click="createHdWalletAccount"
-        >
+        <ListItem :title="$t('account-switcher.create-account')" @click="createHdWalletAccount">
           <ListItemCircle slot="icon">
             <Plus />
           </ListItemCircle>
@@ -41,18 +29,12 @@
           </ListItemCircle>
         </ListItem>
 
-        <Balance
-          :balance="totalBalance"
-          total
-        />
+        <Balance :balance="totalBalance" total />
       </AeCard>
 
       <div class="arrow" />
 
-      <TabBar
-        show-account-switcher
-        @click.native="resolve"
-      />
+      <TabBar show-account-switcher @click.native="resolve" />
     </Overlay>
   </Transition>
 </template>
@@ -126,13 +108,15 @@ export default {
   &.fade-enter-active {
     transition-duration: 0.25s;
 
-    .ae-card, .arrow {
+    .ae-card,
+    .arrow {
       transition: opacity 0.25s ease-out;
     }
   }
 
   &.fade-enter {
-    .ae-card, .arrow {
+    .ae-card,
+    .arrow {
       opacity: 0;
     }
   }

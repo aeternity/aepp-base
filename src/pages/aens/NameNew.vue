@@ -5,20 +5,11 @@
     :right-button-to="{ name: 'name-list' }"
   >
     <template slot="header">
-      <Guide
-        :template="$t('name.new.guide')"
-        fill="neutral"
-      >
-        <AccountInline
-          slot="inlineAccount"
-          :address="active.address"
-        />
+      <Guide :template="$t('name.new.guide')" fill="neutral">
+        <AccountInline slot="inlineAccount" :address="active.address" />
       </Guide>
 
-      <form
-        :id="_uid"
-        @submit.prevent="handleSubmit"
-      >
+      <form :id="_uid" @submit.prevent="handleSubmit">
         <AeInputName
           v-model="name"
           v-validate="'required|aens_name|aens_name_unregistered'"
@@ -69,7 +60,7 @@ export default {
   computed: mapGetters('accounts', ['active', 'activeColor']),
   methods: {
     async handleSubmit() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
       this.busy = true;
       let claimTxHash;
 
@@ -93,9 +84,8 @@ export default {
 
       try {
         const { salt } = await this.$store.state.sdk.aensPreclaim(this.name);
-        claimTxHash = (
-          await this.$store.state.sdk.aensClaim(this.name, salt, { waitMined: false })
-        ).hash;
+        claimTxHash = (await this.$store.state.sdk.aensClaim(this.name, salt, { waitMined: false }))
+          .hash;
 
         this.$store.dispatch('modals/open', {
           name: 'notification',
@@ -116,7 +106,8 @@ export default {
         const isAuction = MAX_AUCTION_NAME_LENGTH >= this.name.length;
         if (!isAuction) {
           await this.$store.dispatch('names/updatePointer', {
-            name: this.name, address: this.$store.getters['accounts/active'].address,
+            name: this.name,
+            address: this.$store.getters['accounts/active'].address,
           });
         }
         this.$store.dispatch('modals/open', {

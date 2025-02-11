@@ -1,11 +1,13 @@
 function ensureThrownError(message) {
-  cy.wrap(new Promise((resolve) => {
-    cy.on('uncaught:exception', (err) => {
-      expect(err.message).to.include(message);
-      resolve();
-      return false;
-    });
-  }));
+  cy.wrap(
+    new Promise((resolve) => {
+      cy.on('uncaught:exception', (err) => {
+        expect(err.message).to.include(message);
+        resolve();
+        return false;
+      });
+    }),
+  );
 }
 
 describe('Load error', () => {

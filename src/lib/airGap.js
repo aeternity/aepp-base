@@ -19,7 +19,8 @@ const urlToPayload = (urlBroken, expectedMessageType) => {
   const url = urlBroken.replace('airgap-wallet://?d=com/airgap?d=', AIR_GAP_CALLBACK);
   const raw = rlpDecode(decodeBase58Check(new URL(url).searchParams.get('d')));
   const version = raw[0].toString();
-  if (version !== AIR_GAP_VERSION) throw new Error(`Unsupported AirGap protocol version: ${version}`);
+  if (version !== AIR_GAP_VERSION)
+    throw new Error(`Unsupported AirGap protocol version: ${version}`);
   const type = raw[1].toString();
   if (type !== AIR_GAP_TYPE) throw new Error(`Unknown AirGap payload type: ${type}`);
   const [[magic1, messageType, currency, payload]] = raw[2];
@@ -55,14 +56,7 @@ export const generateSignRequestUrl = (networkId, transaction, publicKey) => {
         '1',
         '5',
         AIR_GAP_PROTOCOL,
-        [
-          AIR_GAP_CALLBACK,
-          publicKey,
-          [
-            networkId,
-            transaction,
-          ],
-        ],
+        [AIR_GAP_CALLBACK, publicKey, [networkId, transaction]],
         'session-id',
       ],
     ],

@@ -1,9 +1,5 @@
 <template>
-  <form
-    class="url-form"
-    novalidate
-    @submit.prevent="submitHandler"
-  >
+  <form class="url-form" novalidate @submit.prevent="submitHandler">
     <input
       :value="newUrl || currentUrl"
       :placeholder="$t('app.url-form-placeholder')"
@@ -11,7 +7,7 @@
       spellcheck="false"
       @input="inputHandler"
       @focus="focusHandler"
-    >
+    />
   </form>
 </template>
 

@@ -7,11 +7,7 @@
     :header="header"
     v-on="$listeners"
   >
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
+    <slot v-for="slot in Object.keys($slots)" :slot="slot" :name="slot" />
     <AeToolbarButton
       v-if="!hideRevealButton"
       slot="footer-right"
@@ -34,7 +30,9 @@ export default {
     value: { type: String, default: '' },
     header: {
       type: String,
-      default() { return this.$t('settings.password.set.password'); },
+      default() {
+        return this.$t('settings.password.set.password');
+      },
     },
     hideRevealButton: Boolean,
   },

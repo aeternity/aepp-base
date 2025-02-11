@@ -9,15 +9,8 @@
     hide-tab-bar
   >
     <Guide :template="$t('settings.mnemonic.confirm.guide')">
-      <AeFraction
-        slot="icon"
-        numerator="3"
-        denominator="4"
-      />
-      <img
-        slot="crossedFingersEmoji"
-        :src="crossedFingersEmoji"
-      >
+      <AeFraction slot="icon" numerator="3" denominator="4" />
+      <img slot="crossedFingersEmoji" :src="crossedFingersEmoji" />
     </Guide>
 
     <ButtonMnemonicWord
@@ -31,9 +24,9 @@
 
     <AeInputWrapper
       :error="error"
-      :header="error
-        ? $t('settings.mnemonic.confirm.error')
-        : $t('settings.mnemonic.confirm.mnemonic')"
+      :header="
+        error ? $t('settings.mnemonic.confirm.error') : $t('settings.mnemonic.confirm.mnemonic')
+      "
     >
       <template v-if="selectedWordIds.length">
         <ButtonMnemonicWord

@@ -1,10 +1,5 @@
 <template>
-  <AePopover
-    class="ae-menu"
-    v-bind="$attrs"
-    v-on="$listeners"
-    @click.native="$emit('close')"
-  >
+  <AePopover class="ae-menu" v-bind="$attrs" v-on="$listeners" @click.native="$emit('close')">
     <slot />
   </AePopover>
 </template>
@@ -23,7 +18,7 @@ export default {
 .ae-menu {
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 functions.rem(16px) rgba(#1B4479, 0.15);
+  box-shadow: 0 0 functions.rem(16px) rgba(#1b4479, 0.15);
   padding: functions.rem(12px) 0;
   min-width: auto;
 }

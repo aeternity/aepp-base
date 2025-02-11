@@ -10,6 +10,6 @@
 
 .details-item {
   padding: functions.rem(16px) 0;
-  border-top: functions.rem(2px) solid rgba(variables.$color-neutral-negative-1, .2);
+  border-top: functions.rem(2px) solid rgba(variables.$color-neutral-negative-1, 0.2);
 }
 </style>

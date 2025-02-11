@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="ledger-modal-note"
-    :class="[fill]"
-  >
+  <div class="ledger-modal-note" :class="[fill]">
     <slot />
   </div>
 </template>
@@ -12,10 +9,7 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: (value) => [
-        'neutral',
-        'dark',
-      ].includes(value),
+      validator: (value) => ['neutral', 'dark'].includes(value),
       default: 'neutral',
     },
   },

@@ -4,25 +4,21 @@
     :header-fill="activeColor"
     right-button-icon-name="close"
     :right-button-to="name ? { name: 'auction-details', params: { name } } : { name: 'name-list' }"
-    v-bind="amountStep && {
-      leftButtonIconName: 'back',
-      leftButtonTo: backTo,
-    }"
+    v-bind="
+      amountStep && {
+        leftButtonIconName: 'back',
+        leftButtonTo: backTo,
+      }
+    "
   >
     <template slot="header">
-      <Guide
-        :template="$t('name.bid.guide')"
-        fill="neutral"
-      >
+      <Guide :template="$t('name.bid.guide')" fill="neutral">
         <template slot="name">
           {{ internalName }}
         </template>
       </Guide>
 
-      <form
-        :id="_uid"
-        @submit.prevent="handleSubmit"
-      >
+      <form :id="_uid" @submit.prevent="handleSubmit">
         <AeInputName
           v-if="!amountStep"
           v-model="internalName"
@@ -44,7 +40,7 @@
             min_value_currency: highestBid ? highestBid.multipliedBy(1.05).toString() : 0,
           }"
           :error="errors.has('amount')"
-          :footer="errors.first('amount') && errors.first('amount').toString() || ' '"
+          :footer="(errors.first('amount') && errors.first('amount').toString()) || ' '"
           autofocus
           name="amount"
         />
@@ -140,7 +136,7 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
       const name = this.internalName;
       if (!this.amountStep) {
         this.$router.push({ name: 'auction-bid-amount', params: { name } });

@@ -1,9 +1,9 @@
 describe('Names', () => {
   it('shows initial screen', () => {
-    cy
-      .viewport('iphone-se2')
+    cy.viewport('iphone-se2')
       .visit('/names', { login: true })
-      .get('.list-item').should('length', 4)
+      .get('.list-item')
+      .should('length', 4)
       .should('be.visible');
     cy.matchImage();
 
@@ -17,34 +17,38 @@ describe('Names', () => {
   });
 
   [
-    'ending-soonest', 'character-length/6', 'character-length/3', 'max-bid', 'auction/engine.chain',
+    'ending-soonest',
+    'character-length/6',
+    'character-length/3',
+    'max-bid',
+    'auction/engine.chain',
   ].forEach((route) => {
     it(`shows ${route}`, () => {
-      cy
-        .viewport('iphone-se2')
+      cy.viewport('iphone-se2')
         .visit(`/names/${route}`, { login: true })
-        .get('.list-item').should('be.visible');
+        .get('.list-item')
+        .should('be.visible');
       cy.matchImage();
     });
   });
 
   it('shows personal name details', () => {
-    cy
-      .viewport('iphone-se2')
+    cy.viewport('iphone-se2')
       .visit('/names/personal/entertainment.chain', { login: true })
-      .get('.details-item').should('be.visible');
+      .get('.details-item')
+      .should('be.visible');
     cy.matchImage();
   });
 
   [
     'new',
-    'bid/engine.chain', 'bid/engine.chain/amount',
-    'personal/entertainment.chain/point', 'personal/entertainment.chain/transfer',
+    'bid/engine.chain',
+    'bid/engine.chain/amount',
+    'personal/entertainment.chain/point',
+    'personal/entertainment.chain/transfer',
   ].forEach((route) => {
     it(`shows ${route}`, () => {
-      cy
-        .viewport('iphone-se2')
-        .visit(`/names/${route}`, { login: true });
+      cy.viewport('iphone-se2').visit(`/names/${route}`, { login: true });
       cy.matchImage();
     });
   });

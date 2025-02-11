@@ -12,10 +12,10 @@ export const isNotFoundError = (error) => error.statusCode === 404;
 
 export const isInternalServerError = (error) => [500, 503].includes(error.statusCode);
 
-export const isAccountNotFoundError = (error) => isNotFoundError(error) && (
-  error.response?.body?.reason === 'Account not found'
-  || error.message.includes('Account not found')
-);
+export const isAccountNotFoundError = (error) =>
+  isNotFoundError(error) &&
+  (error.response?.body?.reason === 'Account not found' ||
+    error.message.includes('Account not found'));
 
 export class ConvertibleToString {
   constructor(toString) {
@@ -32,11 +32,15 @@ export class DOMRect {
     Object.freeze(this);
   }
 
-  get right() { return this.left + this.width; }
+  get right() {
+    return this.left + this.width;
+  }
 
-  get bottom() { return this.top + this.height; }
+  get bottom() {
+    return this.top + this.height;
+  }
 }
 
 // name entry returned by node, not middleware
-export const getAddressByNameEntry = (nameEntry) => ((nameEntry.pointers
-  && nameEntry.pointers.find(({ key }) => key === 'account_pubkey')) || {}).id;
+export const getAddressByNameEntry = (nameEntry) =>
+  ((nameEntry.pointers && nameEntry.pointers.find(({ key }) => key === 'account_pubkey')) || {}).id;

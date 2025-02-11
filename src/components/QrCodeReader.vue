@@ -7,18 +7,11 @@
       @left-button-click="cancelReading"
     />
 
-    <div
-      v-if="browserReader"
-      v-show="cameraAllowed"
-      class="video-wrapper"
-    >
+    <div v-if="browserReader" v-show="cameraAllowed" class="video-wrapper">
       <!-- eslint-disable-next-line vuejs-accessibility/media-has-caption -->
       <video ref="qrCodeVideo" />
     </div>
-    <div
-      v-if="!cameraAllowed"
-      class="permission-denied"
-    >
+    <div v-if="!cameraAllowed" class="permission-denied">
       {{ $t('remote-connection.settings.new.camera-not-allowed') }}
     </div>
   </div>
@@ -61,20 +54,24 @@ export default {
   async mounted() {
     if (process.env.VUE_APP_CORDOVA) {
       await new Promise((resolve, reject) => {
-        window.QRScanner
-          .prepare((error, status) => (!error && status.authorized
-            ? resolve() : reject(error || new Error('Denied to use the camera'))));
+        window.QRScanner.prepare((error, status) =>
+          !error && status.authorized
+            ? resolve()
+            : reject(error || new Error('Denied to use the camera')),
+        );
       });
       this.cameraAllowed = true;
       return;
     }
 
-    const status = navigator.permissions
-      && await navigator.permissions.query({ name: 'camera' }).catch((error) => {
-        const firefoxExceptionMessage = '\'name\' member of PermissionDescriptor \'camera\' is not a valid value for enumeration PermissionName.';
+    const status =
+      navigator.permissions &&
+      (await navigator.permissions.query({ name: 'camera' }).catch((error) => {
+        const firefoxExceptionMessage =
+          "'name' member of PermissionDescriptor 'camera' is not a valid value for enumeration PermissionName.";
         if (error.message !== firefoxExceptionMessage) handleUnknownError(error);
         return null;
-      });
+      }));
     if (status) {
       this.cameraAllowed = status.state !== 'denied';
       status.onchange = () => {
@@ -91,15 +88,16 @@ export default {
     async scan() {
       return process.env.VUE_APP_CORDOVA
         ? new Promise((resolve, reject) => {
-          window.QRScanner.scan((error, text) => (!error && text ? resolve(text) : reject(error)));
-          window.QRScanner.show();
-          document.body.style.background = 'transparent';
-          document.getElementById('app').style.background = 'transparent';
-        })
-        : (await this.browserReader.decodeOnceFromVideoDevice(
-          undefined,
-          this.$refs.qrCodeVideo,
-        )).getText();
+            window.QRScanner.scan((error, text) =>
+              !error && text ? resolve(text) : reject(error),
+            );
+            window.QRScanner.show();
+            document.body.style.background = 'transparent';
+            document.getElementById('app').style.background = 'transparent';
+          })
+        : (
+            await this.browserReader.decodeOnceFromVideoDevice(undefined, this.$refs.qrCodeVideo)
+          ).getText();
     },
     stopReading() {
       if (process.env.VUE_APP_CORDOVA) {

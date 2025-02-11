@@ -1,8 +1,5 @@
 <template>
-  <Page
-    fill="neutral"
-    class="auction-list"
-  >
+  <Page fill="neutral" class="auction-list">
     <NameListHeader />
 
     <h2>
@@ -12,12 +9,9 @@
     </h2>
 
     <template v-if="view === VIEW_CHARACTER_LENGTH">
-      <ButtonGroup
-        v-for="lineStartsWith in [1, 7]"
-        :key="lineStartsWith"
-      >
+      <ButtonGroup v-for="lineStartsWith in [1, 7]" :key="lineStartsWith">
         <ButtonFlat
-          v-for="l in times(6, idx => idx + lineStartsWith)"
+          v-for="l in times(6, (idx) => idx + lineStartsWith)"
           :key="l"
           :to="{ name: 'auction-list-character-length', params: { length: l } }"
         >
@@ -41,20 +35,14 @@
         />
       </AeCard>
 
-      <div
-        v-if="pagination.length > 1"
-        class="pagination"
-      >
+      <div v-if="pagination.length > 1" class="pagination">
         <Component
           :is="p.to ? 'RouterLink' : 'span'"
           v-for="p in pagination"
           :key="p.text"
           :to="p.to"
         >
-          <ArrowDouble
-            v-if="['first', 'last'].includes(p.text)"
-            :class="p.text"
-          />
+          <ArrowDouble v-if="['first', 'last'].includes(p.text)" :class="p.text" />
           <template v-else>
             {{ p.text }}
           </template>
@@ -121,10 +109,10 @@ export default {
       if (p < pc - 2) res.push({ text: 'last', to: pc });
       return res.map((i) => ({
         ...i,
-        to: i.to && ({
+        to: i.to && {
           name: this.$route.name,
           params: { ...this.$route.params, page: i.to },
-        }),
+        },
       }));
     },
     auctionsFiltered() {
@@ -143,8 +131,10 @@ export default {
     },
     auctions() {
       if (!this.auctionsFiltered) return null;
-      return this.auctionsFiltered
-        .slice((this.page - 1) * ITEMS_PER_PAGE, this.page * ITEMS_PER_PAGE);
+      return this.auctionsFiltered.slice(
+        (this.page - 1) * ITEMS_PER_PAGE,
+        this.page * ITEMS_PER_PAGE,
+      );
     },
     pageCount() {
       if (!this.auctionsFiltered) return 0;
@@ -191,7 +181,8 @@ export default {
     @extend %face-sans-base;
     text-align: center;
 
-    span, a {
+    span,
+    a {
       padding: 0 functions.rem(5px);
     }
 

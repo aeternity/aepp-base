@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="busy"
-    class="spinner"
-  >
+  <div v-if="busy" class="spinner">
     <AeSpinner />
   </div>
   <Page
@@ -12,10 +9,7 @@
     right-button-icon-name="close"
     class="redeem-balance"
   >
-    <Guide
-      slot="header"
-      :template="$t('transfer.redeem-balance.guide')"
-    />
+    <Guide slot="header" :template="$t('transfer.redeem-balance.guide')" />
 
     <div class="balance-row">
       <span>{{ $t('transfer.send.amount.balance') }}</span>
@@ -102,8 +96,7 @@ export default {
 
       const account = new MemoryAccount(privateKey);
       const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
-      this.balance = BigNumber(await sdk.getBalance(account.address))
-        .shiftedBy(-MAGNITUDE);
+      this.balance = BigNumber(await sdk.getBalance(account.address)).shiftedBy(-MAGNITUDE);
       if (this.balance < MIN_SPEND_TX_FEE) {
         await this.$store.dispatch('modals/open', {
           name: 'alert',
@@ -116,7 +109,10 @@ export default {
     },
     async sendToAccount(accountTo) {
       this.busy = true;
-      const { hash, tx: { amount } } = await transferFunds(1, accountTo, {
+      const {
+        hash,
+        tx: { amount },
+      } = await transferFunds(1, accountTo, {
         onAccount: this.inviteAccount,
         onNode: new Node(this.$store.state.sdkUrl),
       });

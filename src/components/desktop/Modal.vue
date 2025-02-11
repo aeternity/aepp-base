@@ -1,20 +1,11 @@
 <template>
-  <AeModal
-    class="modal"
-    @close="$emit('close')"
-  >
+  <AeModal class="modal" @close="$emit('close')">
     <header>
-      <slot
-        v-if="$slots.logo"
-        name="logo"
-      />
+      <slot v-if="$slots.logo" name="logo" />
       <div v-else />
       {{ title }}
       <div>
-        <ButtonPlain
-          v-if="closable"
-          @click="$emit('close')"
-        >
+        <ButtonPlain v-if="closable" @click="$emit('close')">
           <Close />
         </ButtonPlain>
       </div>

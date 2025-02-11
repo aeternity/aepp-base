@@ -1,9 +1,5 @@
 <template>
-  <ListItem
-    :subtitle="active.name"
-    v-bind="$attrs"
-    :title="$t('settings.language')"
-  >
+  <ListItem :subtitle="active.name" v-bind="$attrs" :title="$t('settings.language')">
     <ListItemCircle slot="icon">
       <Globe />
     </ListItemCircle>

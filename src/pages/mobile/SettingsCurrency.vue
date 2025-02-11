@@ -10,17 +10,9 @@
     <AeCard fill="maximum">
       <CurrencySwitcher />
     </AeCard>
-    <AeCard
-      class="use-as-main"
-      fill="maximum"
-    >
+    <AeCard class="use-as-main" fill="maximum">
       <ListItem :title="$t('settings.currency.use-as-main')">
-        <AeRadio
-          slot="right"
-          checkbox
-          :checked="swapped"
-          @change="swapCurrencies"
-        />
+        <AeRadio slot="right" checkbox :checked="swapped" @change="swapCurrencies" />
       </ListItem>
     </AeCard>
   </Page>

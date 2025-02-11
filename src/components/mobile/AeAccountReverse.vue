@@ -1,21 +1,11 @@
 <template>
-  <AeCard
-    fill="dark"
-    class="ae-account-reverse"
-  >
+  <AeCard fill="dark" class="ae-account-reverse">
     <main>
       <AeQrCode :data="address" />
-      <AeAddress
-        :address="address"
-        mode="three-columns"
-      />
+      <AeAddress :address="address" mode="three-columns" />
     </main>
 
-    <span
-      v-if="name"
-      slot="toolbar"
-      class="name"
-    >
+    <span v-if="name" slot="toolbar" class="name">
       {{ name }}
     </span>
   </AeCard>
@@ -39,7 +29,9 @@ export default {
     hideName: Boolean,
   },
   computed: mapState('accounts', {
-    name(state, { getName }) { return this.hideName ? '' : getName(this); },
+    name(state, { getName }) {
+      return this.hideName ? '' : getName(this);
+    },
   }),
 };
 </script>

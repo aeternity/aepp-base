@@ -1,16 +1,9 @@
 <template>
-  <Notification
-    v-bind="$attrs"
-    :resolve="resolve"
-    class="notification-update-available"
-  >
+  <Notification v-bind="$attrs" :resolve="resolve" class="notification-update-available">
     {{ $t('update-available.title') }}
 
     <template slot="footer">
-      <AeButton
-        plain
-        @click="resolve(true)"
-      >
+      <AeButton plain @click="resolve(true)">
         {{ $t('update-available.restart') }}
       </AeButton>
     </template>

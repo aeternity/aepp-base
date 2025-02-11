@@ -6,52 +6,23 @@
     right-button-icon-name="close"
     @right-button-click="denyHandler"
   >
-    <Guide
-      :template="guideTemplate"
-      fill="neutral"
-    >
-      <AeFraction
-        v-if="stepFraction"
-        slot="icon"
-        v-bind="stepFraction"
-      />
-      <AccountInline
-        slot="senderAddress"
-        :address="account.address"
-      />
-      <AccountInline
-        slot="recipientAddress"
-        :address="transaction.recipientId"
-      />
+    <Guide :template="guideTemplate" fill="neutral">
+      <AeFraction v-if="stepFraction" slot="icon" v-bind="stepFraction" />
+      <AccountInline slot="senderAddress" :address="account.address" />
+      <AccountInline slot="recipientAddress" :address="transaction.recipientId" />
     </Guide>
 
-    <DetailsAmountCurrency
-      v-if="transaction.amount"
-      :amount="transaction.amount"
-    />
+    <DetailsAmountCurrency v-if="transaction.amount" :amount="transaction.amount" />
 
-    <DetailsFeeInput
-      v-model="newFee"
-      :min="transaction.minFee"
-      :max="maxFee"
-    />
+    <DetailsFeeInput v-model="newFee" :min="transaction.minFee" :max="maxFee" />
 
-    <DetailsList
-      :object="transaction"
-      :field-renderers="fieldRenderers"
-    />
+    <DetailsList :object="transaction" :field-renderers="fieldRenderers" />
 
     <AeButtonGroup slot="footer">
-      <AeButton
-        fill="light"
-        @click="denyHandler"
-      >
+      <AeButton fill="light" @click="denyHandler">
         {{ $t('cancel') }}
       </AeButton>
-      <AeButton
-        fill="secondary"
-        @click="allowHandler"
-      >
+      <AeButton fill="secondary" @click="allowHandler">
         {{ $t('confirm') }}
       </AeButton>
     </AeButtonGroup>
@@ -69,8 +40,16 @@ import DetailsAmountCurrency from './DetailsAmountCurrency.vue';
 import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsList from './DetailsList.vue';
 import {
-  Payload, RecipientId, Code, CallData, ContractId,
-  CommitmentId, Name, NameSalt, NameId, NameFee,
+  Payload,
+  RecipientId,
+  Code,
+  CallData,
+  ContractId,
+  CommitmentId,
+  Name,
+  NameSalt,
+  NameId,
+  NameFee,
 } from './details-fields';
 import DetailsNamePointers from './DetailsNamePointers.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
@@ -125,14 +104,15 @@ export default {
         return this.$t('modal.confirm-transaction-sign.guide-name-bid');
       }
       return this.$t('modal.confirm-transaction-sign.guide', {
-        title: {
-          [Tag.ContractCreateTx]: this.$t('modal.confirm-transaction-sign.contract-create'),
-          [Tag.ContractCallTx]: this.$t('modal.confirm-transaction-sign.contract-call'),
-          [Tag.NamePreclaimTx]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
-          [Tag.NameClaimTx]: this.$t('modal.confirm-transaction-sign.name-claim'),
-          [Tag.NameUpdateTx]: this.$t('modal.confirm-transaction-sign.name-update'),
-          [Tag.NameTransferTx]: this.$t('modal.confirm-transaction-sign.name-transfer'),
-        }[tag] || '',
+        title:
+          {
+            [Tag.ContractCreateTx]: this.$t('modal.confirm-transaction-sign.contract-create'),
+            [Tag.ContractCallTx]: this.$t('modal.confirm-transaction-sign.contract-call'),
+            [Tag.NamePreclaimTx]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
+            [Tag.NameClaimTx]: this.$t('modal.confirm-transaction-sign.name-claim'),
+            [Tag.NameUpdateTx]: this.$t('modal.confirm-transaction-sign.name-update'),
+            [Tag.NameTransferTx]: this.$t('modal.confirm-transaction-sign.name-transfer'),
+          }[tag] || '',
       });
     },
     maxFee() {

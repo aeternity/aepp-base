@@ -1,20 +1,14 @@
 <template>
   <div class="app-browser">
     <header>
-      <UrlForm
-        :current-url="url"
-        @new-url="reload"
-      />
+      <UrlForm :current-url="url" @new-url="reload" />
 
       <template v-if="path">
         <ButtonPlain :to="{ name: 'app-browser' }">
           <Home />
         </ButtonPlain>
       </template>
-      <ButtonPlain
-        ref="menuButton"
-        @click="showMenu = true"
-      >
+      <ButtonPlain ref="menuButton" @click="showMenu = true">
         <More />
       </ButtonPlain>
     </header>
@@ -25,9 +19,7 @@
       :transform-origin="{ vertical: 'top', horizontal: 'right' }"
       @close="showMenu = false"
     >
-      <AeMenuItem @click="reload">
-        <Reload /> {{ $t('app.browser.refresh') }}
-      </AeMenuItem>
+      <AeMenuItem @click="reload"> <Reload /> {{ $t('app.browser.refresh') }} </AeMenuItem>
     </AeMenu>
 
     <ProgressFake v-if="loading" />
@@ -100,7 +92,9 @@ export default {
       3000,
     );
 
-    const handler = () => { this.showMenu = false; };
+    const handler = () => {
+      this.showMenu = false;
+    };
     window.addEventListener('blur', handler);
     this.$once('hook:destroyed', () => {
       window.removeEventListener('blur', handler);
@@ -132,7 +126,7 @@ export default {
     padding-top: env(safe-area-inset-top);
     height: functions.rem(54px);
     line-height: functions.rem(54px);
-    box-shadow: inset 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+    box-shadow: inset 0 0 functions.rem(8px) rgba(#1b4479, 0.1);
 
     .url-form {
       flex-grow: 1;

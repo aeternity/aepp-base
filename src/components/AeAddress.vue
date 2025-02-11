@@ -5,10 +5,7 @@
     class="ae-address"
     :class="mode"
   >
-    <div
-      v-for="(chunk, idx) in chunks"
-      :key="idx"
-    >
+    <div v-for="(chunk, idx) in chunks" :key="idx">
       {{ chunk }}
     </div>
   </div>
@@ -41,11 +38,7 @@ export default {
     chunks() {
       const chunks = formatAddress(this.address, 'full').split(' ');
       if (this.mode === 'three-columns-short') {
-        return [
-          ...chunks.slice(0, 3),
-          ...times(3, () => '···'),
-          ...chunks.slice(-3),
-        ];
+        return [...chunks.slice(0, 3), ...times(3, () => '···'), ...chunks.slice(-3)];
       }
       return chunks;
     },
@@ -69,7 +62,8 @@ export default {
   @extend %face-mono-base;
   letter-spacing: functions.rem(1.5px);
 
-  &.three-columns, &.three-columns-short {
+  &.three-columns,
+  &.three-columns-short {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: functions.rem(12px);
     letter-spacing: functions.rem(1.9px);

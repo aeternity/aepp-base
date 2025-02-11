@@ -9,11 +9,15 @@ export default (port, log = () => {}) => {
   const server = http.createServer((request, response) => {
     if (request.url === '/version' && request.method === 'GET') {
       response.setHeader('Content-Type', 'application/json');
-      const json = JSON.stringify({
-        version: pkg.version,
-        revision: process.env.REVISION || 'local',
-        ...getStats(),
-      }, null, 2);
+      const json = JSON.stringify(
+        {
+          version: pkg.version,
+          revision: process.env.REVISION || 'local',
+          ...getStats(),
+        },
+        null,
+        2,
+      );
       response.write(json);
       response.end();
       return;
@@ -53,19 +57,22 @@ export default (port, log = () => {}) => {
   io.on('connection', (socket) => {
     const { key, pushApiSubscription } = socket.handshake.auth;
 
-    socket.on('message-to-all', (message) => socket
-      .to(getGroupName(pushApiSubscription ? key : leaderKeys[key]))
-      .emit('message', message));
+    socket.on('message-to-all', (message) =>
+      socket.to(getGroupName(pushApiSubscription ? key : leaderKeys[key])).emit('message', message),
+    );
 
     if (pushApiSubscription) {
       leaderMessages[key] ??= [];
-      leaderMessages[key].forEach((messageToLeader) => socket
-        .emit('message-from-follower', messageToLeader.key, messageToLeader.message));
-      log([
-        `Connected leader with key ${key}`,
-        `push api ${pushApiSubscription.slice(0, 30)}`,
-        `sent ${leaderMessages[key].length} offline messages`,
-      ].join(', '));
+      leaderMessages[key].forEach((messageToLeader) =>
+        socket.emit('message-from-follower', messageToLeader.key, messageToLeader.message),
+      );
+      log(
+        [
+          `Connected leader with key ${key}`,
+          `push api ${pushApiSubscription.slice(0, 30)}`,
+          `sent ${leaderMessages[key].length} offline messages`,
+        ].join(', '),
+      );
       delete leaderMessages[key];
 
       const groupName = getGroupName(key);
@@ -104,8 +111,9 @@ export default (port, log = () => {}) => {
         fn(Object.fromEntries(entries));
       });
 
-      socket.on('message-to-follower', (fKey, message) => socket
-        .to(fKey).emit('message-from-leader', message));
+      socket.on('message-to-follower', (fKey, message) =>
+        socket.to(fKey).emit('message-from-leader', message),
+      );
 
       socket.on('disconnect', () => {
         socket.to(getGroupName(key)).emit('leader-disconnected');

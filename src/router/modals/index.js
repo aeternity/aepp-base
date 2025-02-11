@@ -18,10 +18,20 @@ export default async () => {
   });
   registerModal({ name: 'readQrCode', component: QrCodeReader, hidePage: true });
   registerModal({ name: 'notification', component: Notification, ...notificationOptions });
-  registerModal({ name: 'shouldApplyUpdate', component: NotificationUpdateAvailable, ...notificationOptions });
-  registerModal({ name: 'confirmTransactionSign', component: ConfirmTransactionSignModal, hidePage: ENV_MOBILE_DEVICE });
+  registerModal({
+    name: 'shouldApplyUpdate',
+    component: NotificationUpdateAvailable,
+    ...notificationOptions,
+  });
+  registerModal({
+    name: 'confirmTransactionSign',
+    component: ConfirmTransactionSignModal,
+    hidePage: ENV_MOBILE_DEVICE,
+  });
 
-  (await (ENV_MOBILE_DEVICE
-    ? import(/* webpackChunkName: "ui-mobile" */ './mobile')
-    : import(/* webpackChunkName: "ui-desktop" */ './desktop'))).default();
+  (
+    await (ENV_MOBILE_DEVICE
+      ? import(/* webpackChunkName: "ui-mobile" */ './mobile')
+      : import(/* webpackChunkName: "ui-desktop" */ './desktop'))
+  ).default();
 };

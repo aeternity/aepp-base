@@ -1,8 +1,5 @@
 <template>
-  <img
-    class="ledger-modal-nano-s"
-    src="../../assets/ledger-nano-s.svg"
-  >
+  <img class="ledger-modal-nano-s" src="../../assets/ledger-nano-s.svg" />
 </template>
 
 <style lang="scss" scoped>

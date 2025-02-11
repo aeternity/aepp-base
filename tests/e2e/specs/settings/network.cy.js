@@ -6,15 +6,16 @@ describe('Settings: Network', () => {
   };
 
   it('can be opened, changes network, adds custom network', () => {
-    cy
-      .viewport('iphone-se2')
+    cy.viewport('iphone-se2')
       .visit('/settings', {
         login: true,
         state: {
-          customNetworks: [{
-            name: 'Testnet',
-            url: 'https://testnet.aeternity.io',
-          }],
+          customNetworks: [
+            {
+              name: 'Testnet',
+              url: 'https://testnet.aeternity.io',
+            },
+          ],
         },
       })
       .get('.list-item.network')
@@ -22,8 +23,7 @@ describe('Settings: Network', () => {
       .url()
       .should('contain', '/settings/network');
 
-    cy
-      .getState()
+    cy.getState()
       .its('sdkUrl')
       .as('oldSdkUrl')
 
@@ -37,8 +37,7 @@ describe('Settings: Network', () => {
         expect(sdkUrl).not.equal(cy.get('@oldSdkUrl'));
       });
 
-    cy
-      .get('.list-item-button')
+    cy.get('.list-item-button')
       .contains('Connect to another node')
       .click()
       .url()

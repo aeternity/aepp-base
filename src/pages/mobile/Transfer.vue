@@ -7,7 +7,7 @@
     @right-button-click="showTooltips"
   >
     <template slot="header">
-      <Guide :template=" $t('transfer.guide')" />
+      <Guide :template="$t('transfer.guide')" />
 
       <AeAccount v-bind="activeAccount" />
     </template>
@@ -18,10 +18,7 @@
       :subtitle="$t('transfer.send.subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="moneyWithWingsEmoji"
-      >
+      <img slot="icon" :src="moneyWithWingsEmoji" />
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
@@ -30,10 +27,7 @@
       :subtitle="$t('transfer.receive.subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="manTippingHandEmoji"
-      >
+      <img slot="icon" :src="manTippingHandEmoji" />
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
@@ -42,10 +36,7 @@
       :subtitle="$t('transfer.transaction.subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="mantelpieceClockEmoji"
-      >
+      <img slot="icon" :src="mantelpieceClockEmoji" />
       <LeftMore slot="right" />
     </ListItem>
     <ListItem
@@ -55,10 +46,7 @@
       :subtitle="$t('transfer.redeem-balance.subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="mobilePhoneWithAnArrowEmoji"
-      >
+      <img slot="icon" :src="mobilePhoneWithAnArrowEmoji" />
       <LeftMore slot="right" />
     </ListItem>
   </Page>
@@ -101,19 +89,24 @@ export default {
       this.tooltipsVisible = true;
       await this.open({
         name: 'showTooltips',
-        tooltips: [{
-          selector: '.transfer .ae-account .ae-identicon',
-          ...this.$t('transfer.tooltips.identicon'),
-        }, {
-          selector: '.transfer .tab-bar .button-plain',
-          ...this.$t('transfer.tooltips.browser'),
-        }, {
-          selector: '.transfer .tab-bar .button-plain:nth-child(3)',
-          ...this.$t('transfer.tooltips.account-switcher'),
-        }, {
-          selector: '.transfer .wrapper .list-item.redeem-balance',
-          ...this.$t('transfer.tooltips.redeem-balance'),
-        }],
+        tooltips: [
+          {
+            selector: '.transfer .ae-account .ae-identicon',
+            ...this.$t('transfer.tooltips.identicon'),
+          },
+          {
+            selector: '.transfer .tab-bar .button-plain',
+            ...this.$t('transfer.tooltips.browser'),
+          },
+          {
+            selector: '.transfer .tab-bar .button-plain:nth-child(3)',
+            ...this.$t('transfer.tooltips.account-switcher'),
+          },
+          {
+            selector: '.transfer .wrapper .list-item.redeem-balance',
+            ...this.$t('transfer.tooltips.redeem-balance'),
+          },
+        ],
       });
       this.tooltipsVisible = false;
     },

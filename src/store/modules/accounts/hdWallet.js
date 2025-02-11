@@ -3,13 +3,14 @@
 import { pick } from 'lodash-es';
 import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
-import {
-  buildTx, unpackTx, Tag, encode, decode, Encoding, sign,
-} from '@aeternity/aepp-sdk-next';
+import { buildTx, unpackTx, Tag, encode, decode, Encoding, sign } from '@aeternity/aepp-sdk-next';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
-  derivePasswordKey, generateHdWallet, genRandomBuffer, getHdWalletAccount,
+  derivePasswordKey,
+  generateHdWallet,
+  genRandomBuffer,
+  getHdWalletAccount,
 } from '../../utils';
 import AES from '../../../lib/aes';
 import { i18n } from '../../plugins/ui/languages';
@@ -34,10 +35,9 @@ export default {
   },
 
   getters: {
-    nextIdx: (state, getters, rootState, rootGetters) => Math.max(
-      ...rootGetters['accounts/getByType'](type).map(({ source: { idx } }) => idx),
-      -1,
-    ) + 1,
+    nextIdx: (state, getters, rootState, rootGetters) =>
+      Math.max(...rootGetters['accounts/getByType'](type).map(({ source: { idx } }) => idx), -1) +
+      1,
     isWalletEncrypted: ({ encryptedWallet }) => encryptedWallet && !!encryptedWallet.mac,
   },
 
@@ -60,33 +60,34 @@ export default {
 
     setWallet(state, wallet) {
       state.wallet = wallet;
-      this.getters['accounts/getByType'](type)
-        .forEach((account) => {
-          const { address, ...source } = getHdWalletAccount(state.wallet, account.source.idx);
-          Vue.set(account, 'address', address);
-          Vue.set(account, 'source', { ...account.source, ...source });
-        });
+      this.getters['accounts/getByType'](type).forEach((account) => {
+        const { address, ...source } = getHdWalletAccount(state.wallet, account.source.idx);
+        Vue.set(account, 'address', address);
+        Vue.set(account, 'source', { ...account.source, ...source });
+      });
     },
 
     logout(state) {
       state.passwordDerivedKey = null;
       state.mnemonic = '';
       state.wallet = null;
-      this.getters['accounts/getByType'](type)
-        .forEach((account) => {
-          account.source = pick(account.source, ['type', 'idx']);
-        });
+      this.getters['accounts/getByType'](type).forEach((account) => {
+        account.source = pick(account.source, ['type', 'idx']);
+      });
     },
   },
 
   actions: {
     async isAccountUsed({ rootGetters: { node } }, address) {
-      return node.getAccountByPubkey(address).then(() => true, () => false);
+      return node.getAccountByPubkey(address).then(
+        () => true,
+        () => false,
+      );
     },
 
     async checkPreviousAndCreate({ dispatch, rootGetters }) {
       const { address } = rootGetters['accounts/getByType'](type).pop();
-      if (!await dispatch('isAccountUsed', address)) {
+      if (!(await dispatch('isAccountUsed', address))) {
         await dispatch(
           'modals/open',
           {
@@ -105,9 +106,7 @@ export default {
       handler: ({ commit }) => commit('logout'),
     },
 
-    async discover({
-      state, getters, commit, dispatch,
-    }) {
+    async discover({ state, getters, commit, dispatch }) {
       let account;
       do {
         if (account) {
@@ -118,17 +117,23 @@ export default {
       } while (await dispatch('isAccountUsed', account.address));
     },
 
-    handleUnlock: ({ state: { mnemonicBackedUp }, dispatch }, isCreate) => Promise.all([
-      dispatch('discover'),
-      type === 'hd-wallet' && (async () => {
-        if (isCreate) {
-          await dispatch('modals/open', { name: 'proposeToOpenSecurityCourses' }, { root: true });
-        }
-        if (!mnemonicBackedUp) {
-          await dispatch('modals/open', { name: 'notificationMnemonicBackup' }, { root: true });
-        }
-      })(),
-    ]),
+    handleUnlock: ({ state: { mnemonicBackedUp }, dispatch }, isCreate) =>
+      Promise.all([
+        dispatch('discover'),
+        type === 'hd-wallet' &&
+          (async () => {
+            if (isCreate) {
+              await dispatch(
+                'modals/open',
+                { name: 'proposeToOpenSecurityCourses' },
+                { root: true },
+              );
+            }
+            if (!mnemonicBackedUp) {
+              await dispatch('modals/open', { name: 'notificationMnemonicBackup' }, { root: true });
+            }
+          })(),
+      ]),
 
     async createWallet({ commit, dispatch }, mnemonic) {
       if (mnemonic) commit('markMnemonicAsBackedUp');
@@ -147,12 +152,14 @@ export default {
         commit('setPasswordDerivedKey', newPasswordDerivedKey);
         const aes = new AES(newPasswordDerivedKey);
         commit('setEncryptedWallet', {
-          ...mnemonic ? {
-            mnemonic: await aes.encrypt(Buffer.from(mnemonic)),
-          } : {
-            privateKey: await aes.encrypt(wallet.privateKey),
-            chainCode: await aes.encrypt(wallet.chainCode),
-          },
+          ...(mnemonic
+            ? {
+                mnemonic: await aes.encrypt(Buffer.from(mnemonic)),
+              }
+            : {
+                privateKey: await aes.encrypt(wallet.privateKey),
+                chainCode: await aes.encrypt(wallet.chainCode),
+              }),
           mac: await aes.encrypt(new Uint8Array(2)),
           salt,
         });
@@ -184,21 +191,24 @@ export default {
       return passwordDerivedKey;
     },
 
-    async unlockWallet({
-      state: { encryptedWallet }, getters: { isWalletEncrypted }, commit, dispatch,
-    }, password) {
+    async unlockWallet(
+      { state: { encryptedWallet }, getters: { isWalletEncrypted }, commit, dispatch },
+      password,
+    ) {
       let wallet;
       if (isWalletEncrypted) {
         const passwordDerivedKey = await dispatch('deriveAndCheckPasswordKey', password);
         const aes = new AES(passwordDerivedKey);
         commit('setPasswordDerivedKey', passwordDerivedKey);
 
-        wallet = encryptedWallet.mnemonic ? {
-          mnemonic: Buffer.from(await aes.decrypt(encryptedWallet.mnemonic)).toString(),
-        } : {
-          privateKey: await aes.decrypt(encryptedWallet.privateKey),
-          chainCode: await aes.decrypt(encryptedWallet.chainCode),
-        };
+        wallet = encryptedWallet.mnemonic
+          ? {
+              mnemonic: Buffer.from(await aes.decrypt(encryptedWallet.mnemonic)).toString(),
+            }
+          : {
+              privateKey: await aes.decrypt(encryptedWallet.privateKey),
+              chainCode: await aes.decrypt(encryptedWallet.chainCode),
+            };
       } else wallet = encryptedWallet;
       if (wallet.mnemonic) {
         commit('setMnemonic', wallet.mnemonic);
@@ -224,9 +234,15 @@ export default {
     },
 
     create({ state: { wallet }, getters: { nextIdx }, commit }) {
-      commit('accounts/add', {
-        ...getHdWalletAccount(wallet, nextIdx), active: true, type,
-      }, { root: true });
+      commit(
+        'accounts/add',
+        {
+          ...getHdWalletAccount(wallet, nextIdx),
+          active: true,
+          type,
+        },
+        { root: true },
+      );
     },
 
     signWithoutConfirmation({ rootGetters }, data) {
@@ -250,8 +266,13 @@ export default {
       }
 
       const SupportedTags = [
-        Tag.SpendTx, Tag.ContractCreateTx, Tag.ContractCallTx, Tag.NamePreclaimTx, Tag.NameClaimTx,
-        Tag.NameUpdateTx, Tag.NameTransferTx,
+        Tag.SpendTx,
+        Tag.ContractCreateTx,
+        Tag.ContractCallTx,
+        Tag.NamePreclaimTx,
+        Tag.NameClaimTx,
+        Tag.NameUpdateTx,
+        Tag.NameTransferTx,
       ];
       if (!SupportedTags.includes(txObject.tag)) {
         return encode(
@@ -275,8 +296,7 @@ export default {
 
       return buildTx({
         ...txObject,
-        fee: (await dispatch('modals/open', confirmProps, { root: true }))
-          .shiftedBy(MAGNITUDE),
+        fee: (await dispatch('modals/open', confirmProps, { root: true })).shiftedBy(MAGNITUDE),
       });
     },
 

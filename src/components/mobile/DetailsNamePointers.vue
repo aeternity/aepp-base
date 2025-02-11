@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="value"
-    class="details-name-pointers"
-  >
+  <div v-if="value" class="details-name-pointers">
     <template v-for="(pointer, idx) in value">
       <DetailsAddress
         v-if="pointer.key === 'account_pubkey'"

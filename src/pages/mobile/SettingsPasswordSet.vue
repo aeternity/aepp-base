@@ -6,20 +6,16 @@
     hide-tab-bar
   >
     <Guide
-      :template="isWalletEncrypted
-        ? $t('settings.password.set.change-guide')
-        : $t('settings.password.set.choose-guide')"
+      :template="
+        isWalletEncrypted
+          ? $t('settings.password.set.change-guide')
+          : $t('settings.password.set.choose-guide')
+      "
     >
-      <img
-        slot="keyEmoji"
-        :src="keyEmoji"
-      >
+      <img slot="keyEmoji" :src="keyEmoji" />
     </Guide>
 
-    <form
-      :id="_uid"
-      @submit.prevent="createHdWallet"
-    >
+    <form :id="_uid" @submit.prevent="createHdWallet">
       <PasswordPurpose />
       <AeInputPassword
         v-if="isWalletEncrypted"
@@ -63,12 +59,7 @@
       />
     </form>
 
-    <AeButton
-      slot="footer"
-      :form="_uid"
-      :disabled="errors.any() || wrongPassword"
-      fill="secondary"
-    >
+    <AeButton slot="footer" :form="_uid" :disabled="errors.any() || wrongPassword" fill="secondary">
       {{ $t('confirm') }}
     </AeButton>
   </Page>
@@ -85,7 +76,11 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, Guide, PasswordPurpose, AeInputPassword, AeButton,
+    Page,
+    Guide,
+    PasswordPurpose,
+    AeInputPassword,
+    AeButton,
   },
   data: () => ({
     password: '',
@@ -97,7 +92,7 @@ export default {
   computed: mapGetters('accounts/hdWallet', ['isWalletEncrypted']),
   methods: {
     async createHdWallet() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
 
       try {
         await this.$store.dispatch('accounts/hdWallet/changeWalletPassword', {

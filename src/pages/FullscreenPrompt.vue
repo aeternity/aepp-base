@@ -3,11 +3,7 @@
     <div>
       <p>{{ message }}</p>
 
-      <AeButton
-        v-if="buttonText"
-        fill="secondary"
-        @click="$emit('button-click')"
-      >
+      <AeButton v-if="buttonText" fill="secondary" @click="$emit('button-click')">
         {{ buttonText }}
       </AeButton>
     </div>

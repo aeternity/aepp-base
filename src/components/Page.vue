@@ -14,10 +14,7 @@
       <slot name="title" />
     </PageHeader>
 
-    <header
-      v-if="$slots.header"
-      :class="headerFill"
-    >
+    <header v-if="$slots.header" :class="headerFill">
       <div class="wrapper">
         <slot name="header" />
       </div>
@@ -49,25 +46,13 @@ export default {
   props: {
     headerFill: {
       type: String,
-      validator: (value) => [
-        'primary',
-        'alternative',
-        'neutral',
-        'dark',
-        'light',
-        '',
-      ].includes(value),
+      validator: (value) =>
+        ['primary', 'alternative', 'neutral', 'dark', 'light', ''].includes(value),
       default: '',
     },
     fill: {
       type: String,
-      validator: (value) => [
-        'primary',
-        'alternative',
-        'neutral',
-        'dark',
-        'light',
-      ].includes(value),
+      validator: (value) => ['primary', 'alternative', 'neutral', 'dark', 'light'].includes(value),
       default: 'light',
     },
     hideTabBar: Boolean,
@@ -78,11 +63,16 @@ export default {
       await new Promise((resolve) => {
         document.addEventListener('deviceready', resolve);
       });
-      this.$watch(({ headerFill, fill }) => headerFill || fill, (fill) => {
-        const style = ['primary', 'alternative', 'dark']
-          .includes(fill) ? 'LightContent' : 'Default';
-        window.StatusBar[`style${style}`]();
-      }, { immediate: true });
+      this.$watch(
+        ({ headerFill, fill }) => headerFill || fill,
+        (fill) => {
+          const style = ['primary', 'alternative', 'dark'].includes(fill)
+            ? 'LightContent'
+            : 'Default';
+          window.StatusBar[`style${style}`]();
+        },
+        { immediate: true },
+      );
       this.$once('hook:destroyed', () => window.StatusBar.styleDefault());
     }
   },
@@ -171,7 +161,8 @@ export default {
       }
 
       > {
-        h2, p {
+        h2,
+        p {
           @extend %face-sans-s;
         }
 

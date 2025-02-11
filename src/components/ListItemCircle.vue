@@ -8,8 +8,10 @@
 export default {
   computed: {
     hasIcon() {
-      return this.$slots.default[0]?.tag === 'svg'
-        && this.$slots.default[0]?.data?.staticClass.includes('icon');
+      return (
+        this.$slots.default[0]?.tag === 'svg' &&
+        this.$slots.default[0]?.data?.staticClass.includes('icon')
+      );
     },
   },
 };

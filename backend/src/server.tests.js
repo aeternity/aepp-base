@@ -1,6 +1,4 @@
-import {
-  describe, it, beforeEach, afterEach,
-} from 'mocha';
+import { describe, it, beforeEach, afterEach } from 'mocha';
 import { expect } from 'chai';
 import socketIoClient from 'socket.io-client';
 import createServer from './server.js';
@@ -35,17 +33,18 @@ afterEach(async () => {
   });
 });
 
-const getEvent = (socket, eventName) => new Promise((resolve) => {
-  socket.once(eventName, (...args) => resolve(args));
-});
+const getEvent = (socket, eventName) =>
+  new Promise((resolve) => {
+    socket.once(eventName, (...args) => resolve(args));
+  });
 
-it('can\'t connect without key', async () => {
+it("can't connect without key", async () => {
   const socket = io();
   const [error] = await getEvent(socket, 'connect_error');
   expect(error.message).to.be.equal('Key is missed');
 });
 
-it('can\'t connect with the same key', async () => {
+it("can't connect with the same key", async () => {
   io({ key: TEST_KEY });
   const socket = io({ key: TEST_KEY });
   const [error] = await getEvent(socket, 'connect_error');

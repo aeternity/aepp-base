@@ -1,8 +1,6 @@
 describe('Security courses', () => {
   it('walks through', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings/security-courses', { login: true });
+    cy.viewport('iphone-se2').visit('/settings/security-courses', { login: true });
     cy.matchImage();
 
     cy.get('.list-item.ae-link').first().click();
@@ -22,9 +20,7 @@ describe('Security courses', () => {
   });
 
   it('opens at specific step and skips', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings/security-courses', { login: true });
+    cy.viewport('iphone-se2').visit('/settings/security-courses', { login: true });
     cy.get('.list-item.ae-link:nth-child(2)').click();
     cy.location('pathname').should('eq', '/settings/security-courses/bank');
     cy.get('[data-cy="skip"]').click();

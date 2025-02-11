@@ -1,8 +1,5 @@
 <template>
-  <progress
-    class="progress"
-    v-bind="$attrs"
-  />
+  <progress class="progress" v-bind="$attrs" />
 </template>
 
 <style lang="scss" scoped>
@@ -15,19 +12,13 @@
   border: none;
   color: variables.$color-magenta;
 
-  @each $name in (
-    '',
-    '::-webkit-progress-bar',
-  ) {
+  @each $name in ('', '::-webkit-progress-bar') {
     &#{$name} {
       background-color: variables.$color-neutral-positive-1;
     }
   }
 
-  @each $name in (
-    -webkit-progress-value,
-    -moz-progress-bar,
-  ) {
+  @each $name in (-webkit-progress-value, -moz-progress-bar) {
     &::#{$name} {
       background-color: variables.$color-magenta;
     }

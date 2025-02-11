@@ -2,9 +2,9 @@
 
 ## How to get the Base æpp
 
-* [Google Play](https://play.google.com/store/apps/details?id=com.aeternity.base)
-* [App Store](https://apps.apple.com/app/base-æpp-wallet/id1458655724)
-* [Web version](https://base.aepps.com/)
+- [Google Play](https://play.google.com/store/apps/details?id=com.aeternity.base)
+- [App Store](https://apps.apple.com/app/base-æpp-wallet/id1458655724)
+- [Web version](https://base.aepps.com/)
 
 Also join our [Telegram channel](https://t.me/aeppbase) and our [Forum](https://forum.aeternity.com/t/base-aepp-wallet-we-would-like-your-feedback/3387).
 
@@ -54,33 +54,40 @@ npm test
 ## Contributing
 
 We use the [gitflow](https://danielkummer.github.io/git-flow-cheatsheet/) workflow [this is also helpful](https://gist.github.com/JamesMGreene/cdd0ac49f90c987e45ac).
-* Development of features happens in branches made from **develop** called feature/<the-feature> like feature/show-token-balance.
-* When development is finished a pull request to **develop** is created. At least one person has to review the PR and when everything is fine the PR gets merged.
-* The develop branch gets deployed to the [stage environment](https://base.stg.aepps.com) by travis.
-* To make a new release create a release branch called release/vX.X.X, also bump the version number in package.json in this branch.
-* Create a PR to master which then also has to be accepted.
-* Create a tag for this version and push the tag.
-* Also merge back the changes (like the version bump) into develop.
-* The master branch has to be deployed to the [production environment](https://base.aepps.com/) manually.
+
+- Development of features happens in branches made from **develop** called feature/<the-feature> like feature/show-token-balance.
+- When development is finished a pull request to **develop** is created. At least one person has to review the PR and when everything is fine the PR gets merged.
+- The develop branch gets deployed to the [stage environment](https://base.stg.aepps.com) by travis.
+- To make a new release create a release branch called release/vX.X.X, also bump the version number in package.json in this branch.
+- Create a PR to master which then also has to be accepted.
+- Create a tag for this version and push the tag.
+- Also merge back the changes (like the version bump) into develop.
+- The master branch has to be deployed to the [production environment](https://base.aepps.com/) manually.
 
 ## Deployment
 
 We have a stage (develop) and a production (master) branch and environments where these branches will be deployed to.
-* [stage environment](https://base.stg.aepps.com)
-* [production environment](https://base.aepps.com)
+
+- [stage environment](https://base.stg.aepps.com)
+- [production environment](https://base.aepps.com)
 
 ### stage
-* Is used to see changes to the code in effect in a "real" environment without the fear of breaking the production environment.
+
+- Is used to see changes to the code in effect in a "real" environment without the fear of breaking the production environment.
 
 ### production
-* Is the production environment, code lives in the "master" branch.
+
+- Is the production environment, code lives in the "master" branch.
 
 ### other branches
-* Every branch is auto-deployed on `https://pr-<id>-base.stg.aepps.com/`, where `<id>` is a number of PR.
+
+- Every branch is auto-deployed on `https://pr-<id>-base.stg.aepps.com/`, where `<id>` is a number of PR.
 
 ### unsigned .apk and .app file
-* Find `aetenity.app.tar.gz` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest)
-* Find `aeternity.apk` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest)
+
+- Find `aetenity.app.tar.gz` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest)
+- Find `aeternity.apk` file in the [latest release](https://github.com/aeternity/aepp-base/releases/latest)
 
 ### bundle analyzer report
-* Get bundle analyzer report on each domain by adding /report.html. Example [https://base.stg.aepps.com/report.html](https://base.stg.aepps.com/report.html).
+
+- Get bundle analyzer report on each domain by adding /report.html. Example [https://base.stg.aepps.com/report.html](https://base.stg.aepps.com/report.html).

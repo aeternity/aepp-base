@@ -1,8 +1,5 @@
 <template>
-  <Page
-    class="settings"
-    fill="neutral"
-  >
+  <Page class="settings" fill="neutral">
     <Guide>
       <em>{{ $t('settings.title') }}</em>
     </Guide>
@@ -149,7 +146,16 @@ import ListItemSettingsLanguage from '../../components/ListItemSettingsLanguage.
 import MnemonicBackupWarning from '../../components/mobile/MnemonicBackupWarning.vue';
 import SettingsVersion from '../../components/SettingsVersion.vue';
 import {
-  Network, Currency, LeftMore, Device, Grid, Key, Share, LockOpen, Shield, Info,
+  Network,
+  Currency,
+  LeftMore,
+  Device,
+  Grid,
+  Key,
+  Share,
+  LockOpen,
+  Shield,
+  Info,
 } from '../../components/icons';
 
 export default {
@@ -177,14 +183,19 @@ export default {
   },
   computed: mapState({
     networkName: (state, { currentNetwork }) => currentNetwork.name,
-    remoteConnectionsCount: ({ mobile }) => Object
-      .entries(mobile.followers).filter(([, f]) => f.connected).length,
-    appsAccountAccessCount: ({ apps }) => apps
-      .filter((app) => app.permissions.accessToAccounts.length).length,
-    mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
-    removableAccounts: ({ accounts: { list } }) => list
-      .map((account, idx) => ({ ...account, idx }))
-      .filter(({ source: { type } }) => type !== 'hd-wallet'),
+    remoteConnectionsCount: ({ mobile }) =>
+      Object.entries(mobile.followers).filter(([, f]) => f.connected).length,
+    appsAccountAccessCount: ({ apps }) =>
+      apps.filter((app) => app.permissions.accessToAccounts.length).length,
+    mnemonic: ({
+      accounts: {
+        hdWallet: { mnemonic },
+      },
+    }) => mnemonic,
+    removableAccounts: ({ accounts: { list } }) =>
+      list
+        .map((account, idx) => ({ ...account, idx }))
+        .filter(({ source: { type } }) => type !== 'hd-wallet'),
     isWalletEncrypted: (state, getters) => getters['accounts/hdWallet/isWalletEncrypted'],
   }),
   methods: {
@@ -201,19 +212,23 @@ export default {
 
 .settings {
   .list-item {
-    &.network, &.mnemonic {
+    &.network,
+    &.mnemonic {
       .list-item-circle {
         background-color: variables.$color-secondary;
       }
     }
 
-    &.remote-connection, &.password {
+    &.remote-connection,
+    &.password {
       .list-item-circle {
         background-color: #515ec8;
       }
     }
 
-    &.app-list, &.currency, &.info {
+    &.app-list,
+    &.currency,
+    &.info {
       .list-item-circle {
         background-color: #f8963d;
       }

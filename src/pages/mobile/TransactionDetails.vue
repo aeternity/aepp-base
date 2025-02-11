@@ -10,17 +10,19 @@
     <template slot="header">
       <Guide fill="neutral">
         <template v-if="transaction.tx.amount">
-          {{ transaction.received
-            ? $t('transfer.transaction.details.received')
-            : $t('transfer.transaction.details.sent') }}
+          {{
+            transaction.received
+              ? $t('transfer.transaction.details.received')
+              : $t('transfer.transaction.details.sent')
+          }}
           <em class="balance">{{ transaction.convertedAmount }}</em>
         </template>
         <template v-if="transaction.tx.senderId">
-          <br>{{ $t('transfer.transaction.details.from').toLowerCase() }}
+          <br />{{ $t('transfer.transaction.details.from').toLowerCase() }}
           <AccountInline :address="transaction.tx.senderId" />
         </template>
         <template v-if="transaction.tx.recipientId">
-          <br>{{ $t('transfer.transaction.details.to').toLowerCase() }}
+          <br />{{ $t('transfer.transaction.details.to').toLowerCase() }}
           <AccountInline :address="transaction.tx.recipientId" />
         </template>
       </Guide>
@@ -50,11 +52,7 @@
       :name="transaction.tx.amount ? $t('transfer.amount') : $t('transfer.fee')"
       short
     />
-    <DetailsAmountAndFee
-      v-else
-      :amount="transaction.tx.amount"
-      :fee="transaction.tx.fee"
-    />
+    <DetailsAmountAndFee v-else :amount="transaction.tx.amount" :fee="transaction.tx.fee" />
 
     <DetailsAddress
       v-if="transaction.tx.accountId"
@@ -70,8 +68,11 @@
 
     <DetailsAddress
       v-if="transaction.tx.recipientId"
-      :name="transaction.tx.type === 'NameTransferTx'
-        ? $t('transfer.transaction.details.name-owner') : $t('transfer.transaction.details.to')"
+      :name="
+        transaction.tx.type === 'NameTransferTx'
+          ? $t('transfer.transaction.details.name-owner')
+          : $t('transfer.transaction.details.to')
+      "
       :address="transaction.tx.recipientId"
     />
 
@@ -81,10 +82,7 @@
       :address="transaction.tx.ownerId"
     />
 
-    <DetailsAddress
-      :name="$t('transfer.transaction.details.hash')"
-      :address="transaction.hash"
-    />
+    <DetailsAddress :name="$t('transfer.transaction.details.hash')" :address="transaction.hash" />
 
     <AeButton
       slot="footer"
@@ -130,9 +128,9 @@ export default {
       return this.transaction.pending
         ? this.$t('transfer.transaction.pending')
         : this.$tc(
-          'transfer.transaction.details.confirmations',
-          this.transaction.confirmationCount,
-        );
+            'transfer.transaction.details.confirmations',
+            this.transaction.confirmationCount,
+          );
     },
   },
   subscriptions() {

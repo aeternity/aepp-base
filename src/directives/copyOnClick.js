@@ -11,10 +11,7 @@ export default (el, binding) => {
       if (!copyToClipboard(value)) return;
       el.dataset.copiedText = i18n.t('copied'); // eslint-disable-line no-param-reassign
       el.classList.add('v-copied');
-      setTimeout(
-        () => el.classList.remove('v-copied'),
-        500,
-      );
+      setTimeout(() => el.classList.remove('v-copied'), 500);
     });
   }
 

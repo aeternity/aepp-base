@@ -1,8 +1,5 @@
 <template>
-  <AeCard
-    :fill="fill"
-    class="ae-account"
-  >
+  <AeCard :fill="fill" class="ae-account">
     <div v-copy-on-click="address">
       <header>
         <AeIdenticon :address="address" />
@@ -10,19 +7,11 @@
       </header>
 
       <main>
-        <AeAddress
-          :address="address"
-          mode="three-columns-short"
-          disable-copy-on-click
-        />
+        <AeAddress :address="address" mode="three-columns-short" disable-copy-on-click />
       </main>
     </div>
 
-    <Balance
-      slot="toolbar"
-      :balance="balance"
-      invert
-    />
+    <Balance slot="toolbar" :balance="balance" invert />
   </AeCard>
 </template>
 
@@ -58,8 +47,12 @@ export default {
     },
   },
   computed: mapState('accounts', {
-    fill(state, { getColor }) { return getColor(this); },
-    name(state, { getName }) { return getName(this); },
+    fill(state, { getColor }) {
+      return getColor(this);
+    },
+    name(state, { getName }) {
+      return getName(this);
+    },
   }),
 };
 </script>

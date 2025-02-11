@@ -16,11 +16,16 @@ export const ensureLoggedIn = (to, from, next) => {
   next();
 };
 
-export const mergeEnterHandlers = (...handlers) => (to, from, next) => next(
-  handlers.reduce((nextRoute, handler) => {
-    if (nextRoute) return nextRoute;
-    let res;
-    handler(to, from, (r) => { res = r; });
-    return res;
-  }, undefined),
-);
+export const mergeEnterHandlers =
+  (...handlers) =>
+  (to, from, next) =>
+    next(
+      handlers.reduce((nextRoute, handler) => {
+        if (nextRoute) return nextRoute;
+        let res;
+        handler(to, from, (r) => {
+          res = r;
+        });
+        return res;
+      }, undefined),
+    );

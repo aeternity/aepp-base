@@ -5,10 +5,7 @@
     right-button-icon-name="close"
     :right-button-to="{ name: 'transfer' }"
   >
-    <div
-      slot="title"
-      class="header"
-    >
+    <div slot="title" class="header">
       <AccountInline :address="activeAccount.address" />
     </div>
 
@@ -25,10 +22,7 @@
     </div>
 
     <template v-for="(transactions, date) in spendTransactionsGroupedByDay">
-      <div
-        :key="date"
-        class="date"
-      >
+      <div :key="date" class="date">
         {{ date }}
       </div>
 
@@ -41,15 +35,14 @@
     </template>
 
     <AeSpinner v-if="transactions.status === 'loading'" />
-    <div
-      v-if="['ended', 'error'].includes(transactions.status)"
-      class="no-transactions"
-    >
-      {{ transactions.status === 'error'
-        ? $t('transfer.transaction.list.error')
-        : transactions.list.length
-          ? $t('transfer.transaction.list.loaded')
-          : $t('transfer.transaction.list.no-transactions') }}
+    <div v-if="['ended', 'error'].includes(transactions.status)" class="no-transactions">
+      {{
+        transactions.status === 'error'
+          ? $t('transfer.transaction.list.error')
+          : transactions.list.length
+            ? $t('transfer.transaction.list.loaded')
+            : $t('transfer.transaction.list.no-transactions')
+      }}
     </div>
   </Page>
 </template>
@@ -88,12 +81,12 @@ export default {
   computed: {
     spendTransactionsGroupedByDay() {
       return groupBy(
-        this.transactions.list
-          .filter((t) => (
-            (this.direction === 'incoming' && t.received)
-            || (this.direction === 'outgoing' && !t.received)
-            || this.direction === ''
-          )),
+        this.transactions.list.filter(
+          (t) =>
+            (this.direction === 'incoming' && t.received) ||
+            (this.direction === 'outgoing' && !t.received) ||
+            this.direction === '',
+        ),
         (tx) => {
           const dateString = tx.pending
             ? this.$t('transfer.transaction.list.pending-transactions')
@@ -115,10 +108,13 @@ export default {
     };
     window.addEventListener('scroll', checkLoadMore);
     this.$once('hook:destroyed', () => window.removeEventListener('scroll', checkLoadMore));
-    this.$watch(({ transactions, direction }) => [transactions, direction], ([transactions]) => {
-      if (transactions.status === 'ended') return;
-      checkLoadMore();
-    });
+    this.$watch(
+      ({ transactions, direction }) => [transactions, direction],
+      ([transactions]) => {
+        if (transactions.status === 'ended') return;
+        checkLoadMore();
+      },
+    );
   },
 };
 </script>
@@ -135,7 +131,8 @@ export default {
     align-items: center;
   }
 
-  .tabs, .date {
+  .tabs,
+  .date {
     margin-left: functions.rem(-48px);
     margin-right: functions.rem(-48px);
     padding-left: functions.rem(48px);

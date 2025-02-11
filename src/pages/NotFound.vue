@@ -1,16 +1,8 @@
 <template>
-  <Component
-    :is="wrapper"
-    class="not-found"
-    :hide-tab-bar="!loggedIn"
-  >
+  <Component :is="wrapper" class="not-found" :hide-tab-bar="!loggedIn">
     {{ $t('not-found.note') }}
 
-    <AeButton
-      v-if="!loggedIn && $globals.ENV_MOBILE_DEVICE"
-      slot="footer"
-      :to="{ name: 'intro' }"
-    >
+    <AeButton v-if="!loggedIn && $globals.ENV_MOBILE_DEVICE" slot="footer" :to="{ name: 'intro' }">
       {{ $t('not-found.to-home') }}
     </AeButton>
   </Component>

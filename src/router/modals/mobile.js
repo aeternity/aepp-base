@@ -12,12 +12,24 @@ import NotificationSpendSuccess from '../../components/NotificationSpendSuccess.
 
 export default () => {
   registerModal({ name: 'accountSwitcher', component: AccountSwitcherModal });
-  registerModal({ name: 'proposeToOpenSecurityCourses', component: SecurityCourseModal, allowRedirect: true });
+  registerModal({
+    name: 'proposeToOpenSecurityCourses',
+    component: SecurityCourseModal,
+    allowRedirect: true,
+  });
   registerModal({ name: 'confirmAccountAccess', component: ConfirmAccountAccessModal });
   registerModal({ name: 'confirmSign', component: ConfirmSignModal, hidePage: true });
   registerModal({ name: 'vaultSign', component: VaultSignModal, hidePage: true });
-  registerModal({ name: 'notificationMnemonicBackup', component: NotificationMnemonicBackup, ...notificationOptions });
+  registerModal({
+    name: 'notificationMnemonicBackup',
+    component: NotificationMnemonicBackup,
+    ...notificationOptions,
+  });
   registerModal({ name: 'ensureKnowPassword', component: PasswordModal, hidePage: true });
   registerModal({ name: 'showTooltips', component: TooltipsModal, dontGrayscalePage: true });
-  registerModal({ name: 'spendSuccess', component: NotificationSpendSuccess, ...notificationOptions });
+  registerModal({
+    name: 'spendSuccess',
+    component: NotificationSpendSuccess,
+    ...notificationOptions,
+  });
 };

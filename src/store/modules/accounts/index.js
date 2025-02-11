@@ -6,7 +6,10 @@ import hdWalletRemote from './hdWalletRemote';
 import ledger from './ledger';
 
 const modules = {
-  airGap, hdWallet, hdWalletRemote, ledger,
+  airGap,
+  hdWallet,
+  hdWalletRemote,
+  ledger,
 };
 
 export default {
@@ -21,20 +24,34 @@ export default {
   getters: {
     active: ({ list, activeIdx }) => list[activeIdx],
     activeColor: (state, { getColor, active }) => getColor(active),
-    getByType: ({ list }) => (type) => list.filter(({ source }) => source.type === type),
-    getModule: () => ({ source: { type } }) => {
-      const [name, module] = Object.entries(modules)
-        .find(([, { account }]) => account.type === type)
-        || (() => { throw new Error(`Unknown account type: ${type}`); })();
-      return { ...module, name };
-    },
-    getColor: (state, { getModule }) => (account) => getModule(account).account.color,
-    getName: (state, { getModule, getByType }, rootState, rootGetters) => (account) => (
-      rootGetters['names/get'](account.address, false) || [
-        getModule(account).account.getTypeVerbose(),
-        ' #',
-        getByType(account.source.type).findIndex(({ address }) => address === account.address) + 1,
-      ].join('')),
+    getByType:
+      ({ list }) =>
+      (type) =>
+        list.filter(({ source }) => source.type === type),
+    getModule:
+      () =>
+      ({ source: { type } }) => {
+        const [name, module] =
+          Object.entries(modules).find(([, { account }]) => account.type === type) ||
+          (() => {
+            throw new Error(`Unknown account type: ${type}`);
+          })();
+        return { ...module, name };
+      },
+    getColor:
+      (state, { getModule }) =>
+      (account) =>
+        getModule(account).account.color,
+    getName:
+      (state, { getModule, getByType }, rootState, rootGetters) =>
+      (account) =>
+        rootGetters['names/get'](account.address, false) ||
+        [
+          getModule(account).account.getTypeVerbose(),
+          ' #',
+          getByType(account.source.type).findIndex(({ address }) => address === account.address) +
+            1,
+        ].join(''),
   },
 
   mutations: {
