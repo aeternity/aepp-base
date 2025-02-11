@@ -1,5 +1,4 @@
 /* eslint-disable max-classes-per-file */
-import { get } from 'lodash-es';
 import { AENS_DOMAIN } from './constants';
 
 export const toUrl = (url) => new URL((/^\w+:\//.test(url) ? '' : 'http://') + url);
@@ -14,7 +13,7 @@ export const isNotFoundError = (error) => error.statusCode === 404;
 export const isInternalServerError = (error) => [500, 503].includes(error.statusCode);
 
 export const isAccountNotFoundError = (error) => isNotFoundError(error) && (
-  get(error, 'response.body.reason') === 'Account not found'
+  error.response?.body?.reason === 'Account not found'
   || error.message.includes('Account not found')
 );
 

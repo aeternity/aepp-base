@@ -1,4 +1,4 @@
-import { get, isEqual } from 'lodash-es';
+import { isEqual } from 'lodash-es';
 import { handleUnknownError } from '../../lib/utils';
 
 export default (store) => {
@@ -18,7 +18,7 @@ export default (store) => {
       }
 
       async #ensureCurrentAccountAccessPure() {
-        const accessToAccounts = get(store.getters.getApp(this.host), 'permissions.accessToAccounts', []);
+        const accessToAccounts = store.getters.getApp(this.host)?.permissions.accessToAccounts ?? [];
         if (accessToAccounts.includes(store.getters['accounts/active'].address)) return;
 
         const controller = new AbortController();

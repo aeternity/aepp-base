@@ -1,6 +1,5 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
-import { flatMap } from 'lodash-es';
 import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
 import { PROTOCOL_DEFAULT } from '../../../lib/constants';
@@ -22,10 +21,9 @@ export default (store) => store.registerModule('appsMetadata', {
         name: manifest.short_name || manifest.name || host,
       };
 
-      const icons = flatMap(
-        manifest.icons || [],
-        ({ sizes = '', ...icon }) => sizes.split(' ').map((size) => ({ ...icon, size })),
-      )
+      const icons = (manifest.icons || [])
+        .map(({ sizes = '', ...icon }) => sizes.split(' ').map((size) => ({ ...icon, size })))
+        .flat()
         .map(({ size, ...icon }) => ({ ...icon, side: Math.max(...size.split('x')) }));
       const icon = icons.reduce((p, i) => {
         if (!p) return i || p;
