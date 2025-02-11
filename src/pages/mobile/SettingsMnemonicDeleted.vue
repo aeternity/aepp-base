@@ -7,11 +7,7 @@
   >
     <Guide :template="$t('settings.mnemonic.deleted.guide')" />
 
-    <AeButton
-      slot="footer"
-      :to="{ name: 'settings' }"
-      fill="secondary"
-    >
+    <AeButton slot="footer" :to="{ name: 'settings' }" fill="secondary">
       {{ $t('settings.mnemonic.deleted.back') }}
     </AeButton>
   </Page>
@@ -24,7 +20,9 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, Guide, AeButton,
+    Page,
+    Guide,
+    AeButton,
   },
 };
 </script>

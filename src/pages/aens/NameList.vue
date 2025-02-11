@@ -16,10 +16,7 @@
           :to="{ name: 'name-details', params: { name: entry.name } }"
           subtitle="address"
         >
-          <NamePending
-            v-if="entry.status === 'pending'"
-            slot="right"
-          />
+          <NamePending v-if="entry.status === 'pending'" slot="right" />
         </ListItemAccount>
       </AeCard>
     </template>
@@ -87,11 +84,19 @@ export default {
             else acc.push(...arr);
           });
         }),
-        ...addresses.map((account) => this.$store.getters.middleware.getTxs({
-          direction: 'backward', account, limit: 100, type: ['name_claim'],
-        })),
+        ...addresses.map((account) =>
+          this.$store.getters.middleware.getTxs({
+            direction: 'backward',
+            account,
+            limit: 100,
+            type: ['name_claim'],
+          }),
+        ),
       ]);
-      const claimIdxs = claims.map(({ data }) => data).flat(1).map(({ txIndex }) => txIndex);
+      const claimIdxs = claims
+        .map(({ data }) => data)
+        .flat(1)
+        .map(({ txIndex }) => txIndex);
       this.auctions = auctions
         .filter((a) => a.info.bids.some((txId) => claimIdxs.includes(txId)))
         .map((a) => ({

@@ -6,32 +6,17 @@
     right-button-icon-name="close"
     @right-button-click="denyHandler"
   >
-    <Guide
-      :template="$t('modal.confirm-sign.guide')"
-      fill="neutral"
-    >
-      <AccountInline
-        slot="address"
-        :address="activeAccount.address"
-      />
+    <Guide :template="$t('modal.confirm-sign.guide')" fill="neutral">
+      <AccountInline slot="address" :address="activeAccount.address" />
     </Guide>
 
-    <DetailsRawData
-      :name="$t('modal.confirm-sign.data')"
-      :data="data"
-    />
+    <DetailsRawData :name="$t('modal.confirm-sign.data')" :data="data" />
 
     <AeButtonGroup slot="footer">
-      <AeButton
-        fill="light"
-        @click="denyHandler"
-      >
+      <AeButton fill="light" @click="denyHandler">
         {{ $t('cancel') }}
       </AeButton>
-      <AeButton
-        fill="secondary"
-        @click="allowHandler"
-      >
+      <AeButton fill="secondary" @click="allowHandler">
         {{ $t('confirm') }}
       </AeButton>
     </AeButtonGroup>

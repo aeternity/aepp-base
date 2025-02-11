@@ -28,8 +28,14 @@ export default new Vuex.Store({
     persistState(
       (state, store) => runMigrations(state, store),
       ({
-        migrations, sdkUrl, customNetworks,
-        apps, peerId, languages, currencies, names: { defaults } = {},
+        migrations,
+        sdkUrl,
+        customNetworks,
+        apps,
+        peerId,
+        languages,
+        currencies,
+        names: { defaults } = {},
         accounts: { list, activeIdx, hdWallet: { encryptedWallet, mnemonicBackedUp } = {} } = {},
         mobile: { readSecurityCourses, followers, skipAddingToHomeScreen } = {},
         desktop: { showGuideOnStartup } = {},
@@ -57,37 +63,41 @@ export default new Vuex.Store({
           hdWallet: { encryptedWallet, mnemonicBackedUp },
         },
         apps,
-        ...ENV_MOBILE_DEVICE ? {
-          mobile: {
-            readSecurityCourses,
-            followers: Object.fromEntries(
-              Object.entries(followers)
-                // this is needed to remove extra fields
-                .map(([k, { id, name, disconnectedAt }]) => ([k, { id, name, disconnectedAt }])),
-            ),
-            skipAddingToHomeScreen,
-          },
-        } : {
-          desktop: { showGuideOnStartup },
-        },
+        ...(ENV_MOBILE_DEVICE
+          ? {
+              mobile: {
+                readSecurityCourses,
+                followers: Object.fromEntries(
+                  Object.entries(followers)
+                    // this is needed to remove extra fields
+                    .map(([k, { id, name, disconnectedAt }]) => [k, { id, name, disconnectedAt }]),
+                ),
+                skipAddingToHomeScreen,
+              },
+            }
+          : {
+              desktop: { showGuideOnStartup },
+            }),
       }),
     ),
     initSdk,
-    ...RUNNING_IN_POPUP ? [] : [
-      remoteConnection,
-      registerServiceWorker,
-      reverseIframe,
-      ...ENV_MOBILE_DEVICE ? [] : [syncLedgerAccounts],
-      ...RUNNING_IN_FRAME ? [unlockWalletIfNotEncrypted] : [],
-    ],
+    ...(RUNNING_IN_POPUP
+      ? []
+      : [
+          remoteConnection,
+          registerServiceWorker,
+          reverseIframe,
+          ...(ENV_MOBILE_DEVICE ? [] : [syncLedgerAccounts]),
+          ...(RUNNING_IN_FRAME ? [unlockWalletIfNotEncrypted] : []),
+        ]),
   ],
 
   modules: {
-    ...RUNNING_IN_POPUP ? {} : {
-      ...ENV_MOBILE_DEVICE
-        ? { mobile: mobileModule }
-        : { desktop: desktopModule },
-    },
+    ...(RUNNING_IN_POPUP
+      ? {}
+      : {
+          ...(ENV_MOBILE_DEVICE ? { mobile: mobileModule } : { desktop: desktopModule }),
+        }),
     accounts: accountsModule,
   },
 

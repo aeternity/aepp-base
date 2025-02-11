@@ -1,8 +1,5 @@
 <template>
-  <Transition
-    appear
-    name="scale"
-  >
+  <Transition appear name="scale">
     <div class="modal-plain">
       <slot />
     </div>
@@ -15,7 +12,7 @@
 .modal-plain {
   margin: auto;
   border-radius: functions.rem(8px);
-  box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+  box-shadow: 0 0 functions.rem(8px) rgba(#1b4479, 0.1);
   background: #fff;
   overflow: hidden;
 

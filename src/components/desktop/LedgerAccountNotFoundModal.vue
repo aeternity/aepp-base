@@ -6,12 +6,7 @@
       {{ $t('ledger.modal.account-not-found.note') }}
     </LedgerModalNote>
 
-    <AeButton
-      slot="footer"
-      size="small"
-      plain
-      @click="resolve"
-    >
+    <AeButton slot="footer" size="small" plain @click="resolve">
       {{ $t('close') }}
     </AeButton>
   </LedgerModal>

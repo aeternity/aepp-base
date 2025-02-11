@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="overlay"
-    @click.self="$emit('click', $event)"
-  >
+  <div class="overlay" @click.self="$emit('click', $event)">
     <slot />
   </div>
 </template>
@@ -12,7 +9,9 @@ export default {
   mounted() {
     if (document.body.style.overflow) return;
     document.body.style.overflow = 'hidden';
-    this.$once('hook:destroyed', () => { document.body.style.overflow = ''; });
+    this.$once('hook:destroyed', () => {
+      document.body.style.overflow = '';
+    });
   },
 };
 </script>

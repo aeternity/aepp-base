@@ -464,7 +464,7 @@
       "subaccount": "Or point to subaccount",
       "confirm-pointing-to-same-account": "The account you are pointing to and the account, which the name currently points to, are the same account. Are you sure you would like to complete this transaction?",
 
-      "notification":{
+      "notification": {
         "succeed": "{name} was successfully pointed",
         "failed": "{name} was not pointed for unknown reason"
       }
@@ -475,7 +475,7 @@
       "subaccount": "Or transfer to subaccount",
       "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
 
-      "notification":{
+      "notification": {
         "succeed": "{name} was successfully transferred",
         "failed": "{name} was not transferred for unknown reason"
       }
@@ -495,7 +495,7 @@
       "register": "注册",
       "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
-      "notification":{
+      "notification": {
         "claim-sent": "为{name} 的名称已成功发送",
         "registered": "{name} 已成功注册",
         "bid": "You bid on {name} successfully",
@@ -560,7 +560,7 @@
       "connecting": "正在连接网络中...",
       "connected-to-testnet": "您已连接到测试网。",
       "middleware": {
-        "unavailable":  "Middleware is not available, some functionality may not work properly.",
+        "unavailable": "Middleware is not available, some functionality may not work properly.",
         "blocks-to-sync": "Blocks to sync {blocks}."
       }
     },

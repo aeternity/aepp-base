@@ -13,7 +13,15 @@ export default {
   },
 
   getters: {
-    loggedIn: (state, getters, { accounts: { hdWallet: { wallet } } }) => !!wallet,
+    loggedIn: (
+      state,
+      getters,
+      {
+        accounts: {
+          hdWallet: { wallet },
+        },
+      },
+    ) => !!wallet,
   },
 
   mutations: {
@@ -60,8 +68,8 @@ export default {
     async share(_, options) {
       await (process.env.VUE_APP_CORDOVA
         ? new Promise((resolve) => {
-          window.plugins.socialsharing.shareW3C(options, ({ app }) => app && resolve());
-        })
+            window.plugins.socialsharing.shareW3C(options, ({ app }) => app && resolve());
+          })
         : navigator.share(options));
     },
   },

@@ -9,22 +9,13 @@
   >
     <AeCard fill="maximum">
       <ListItemAccount v-bind="account">
-        <AeButton
-          slot="right"
-          fill="primary"
-          size="small"
-          plain
-          @click="disconnect"
-        >
+        <AeButton slot="right" fill="primary" size="small" plain @click="disconnect">
           {{ $t('settings.account-remove.disconnect') }}
         </AeButton>
       </ListItemAccount>
     </AeCard>
 
-    <AeAccountReverse
-      v-bind="account"
-      hide-name
-    />
+    <AeAccountReverse v-bind="account" hide-name />
   </Page>
 </template>
 

@@ -6,15 +6,8 @@
     subtitle-monospace
     v-on="$listeners"
   >
-    <AeIdenticon
-      slot="icon"
-      :address="address"
-    />
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
+    <AeIdenticon slot="icon" :address="address" />
+    <slot v-for="slot in Object.keys($slots)" :slot="slot" :name="slot" />
   </ListItem>
 </template>
 
@@ -47,19 +40,23 @@ export default {
       }
     },
     ...mapState('accounts', {
-      nameFromStore(state, { getName }) { return getName(this); },
+      nameFromStore(state, { getName }) {
+        return getName(this);
+      },
     }),
   },
   subscriptions() {
     return {
-      convertedBalance: this
-        .$watchAsObservable(() => this.balance && this.subtitle === 'balance', { immediate: true })
-        .pipe(
-          pluck('newValue'),
-          switchMap((shouldSubscribe) => (shouldSubscribe
+      convertedBalance: this.$watchAsObservable(() => this.balance && this.subtitle === 'balance', {
+        immediate: true,
+      }).pipe(
+        pluck('newValue'),
+        switchMap((shouldSubscribe) =>
+          shouldSubscribe
             ? this.$store.state.observables.convertAmount(() => this.balance)
-            : Promise.resolve(''))),
+            : Promise.resolve(''),
         ),
+      ),
     };
   },
 };

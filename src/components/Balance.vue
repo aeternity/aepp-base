@@ -1,9 +1,5 @@
 <template>
-  <span
-    :class="{ invert }"
-    class="balance"
-    @click="swapCurrencies"
-  >
+  <span :class="{ invert }" class="balance" @click="swapCurrencies">
     <span class="left">{{ prices[0] }}</span>
     <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
     <small> ⇄ </small>

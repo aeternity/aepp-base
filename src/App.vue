@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <RouterView
-      v-show="!hidePage"
-      :class="{ grayscale: grayscalePage }"
-    />
+    <RouterView v-show="!hidePage" :class="{ grayscale: grayscalePage }" />
 
     <Component
       :is="component"
@@ -42,7 +39,8 @@ export default {
 </style>
 
 <style lang="scss">
-html, body {
+html,
+body {
   height: var(--height);
 }
 

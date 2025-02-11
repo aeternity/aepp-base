@@ -1,18 +1,7 @@
 <template>
-  <AeInputWrapper
-    class="ae-input-amount"
-    v-bind="$attrs"
-  >
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
-    <div
-      slot-scope="{ setFocus, id }"
-      class="unit-amount"
-      :class="{ 'unit-reverse': unitReverse }"
-    >
+  <AeInputWrapper class="ae-input-amount" v-bind="$attrs">
+    <slot v-for="slot in Object.keys($slots)" :slot="slot" :name="slot" />
+    <div slot-scope="{ setFocus, id }" class="unit-amount" :class="{ 'unit-reverse': unitReverse }">
       <input
         :id="id"
         v-focus.lazy="autofocus"
@@ -26,11 +15,8 @@
         @focus="setFocus(true)"
         @blur="setFocus(false)"
         @input="$emit('input', $event.target.value)"
-      >
-      <label
-        :for="id"
-        @click="$emit('unit-click')"
-      >
+      />
+      <label :for="id" @click="$emit('unit-click')">
         {{ unit }}
       </label>
     </div>

@@ -7,20 +7,10 @@
   >
     <template slot="title">
       {{ $t('air-gap.setup.title') }}
-      <AeFraction
-        numerator="1"
-        denominator="3"
-      />
+      <AeFraction numerator="1" denominator="3" />
     </template>
-    <Guide
-      :template="$t('air-gap.setup.method-guide')"
-      fill="alternative"
-    >
-      <AeFraction
-        slot="icon"
-        numerator="1"
-        denominator="3"
-      />
+    <Guide :template="$t('air-gap.setup.method-guide')" fill="alternative">
+      <AeFraction slot="icon" numerator="1" denominator="3" />
     </Guide>
 
     <ListItemChoose
@@ -30,10 +20,7 @@
       :checked="maximumSecure"
       @click="maximumSecure = true"
     >
-      <img
-        slot="icon"
-        :src="mobilePhoneEmoji"
-      >
+      <img slot="icon" :src="mobilePhoneEmoji" />
     </ListItemChoose>
     <ListItemChoose
       :title="$t('air-gap.setup.same-device.title')"
@@ -42,10 +29,7 @@
       :checked="!maximumSecure"
       @click="maximumSecure = false"
     >
-      <img
-        slot="icon"
-        :src="lockEmoji"
-      >
+      <img slot="icon" :src="lockEmoji" />
     </ListItemChoose>
 
     <AeButton
@@ -69,7 +53,11 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, AeButton, Guide, AeFraction, ListItemChoose,
+    Page,
+    AeButton,
+    Guide,
+    AeFraction,
+    ListItemChoose,
   },
   data: () => ({
     mobilePhoneEmoji,

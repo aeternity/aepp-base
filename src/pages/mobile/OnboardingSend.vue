@@ -1,11 +1,8 @@
 <template>
   <div class="onboarding-page send">
-    <img src="../../assets/onboarding/send.svg">
+    <img src="../../assets/onboarding/send.svg" />
     <Guide :template="$t('onboarding.send.guide')">
-      <div
-        slot="note"
-        class="note"
-      >
+      <div slot="note" class="note">
         {{ $t('onboarding.send.note') }}
       </div>
     </Guide>

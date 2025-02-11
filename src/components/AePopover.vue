@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-if="anchor"
-    v-clickaway="emitClose"
-    :style="style"
-    class="ae-popover"
-  >
+  <div v-if="anchor" v-clickaway="emitClose" :style="style" class="ae-popover">
     <slot />
   </div>
 </template>
@@ -18,9 +13,9 @@ import { DOMRect } from '../lib/utils';
 const originProp = {
   type: Object,
   default: () => ({ vertical: 'top', horizontal: 'left' }),
-  validator: ({ vertical, horizontal }) => (
-    ['top', 'center', 'bottom'].includes(vertical)
-    && ['left', 'center', 'right'].includes(horizontal)),
+  validator: ({ vertical, horizontal }) =>
+    ['top', 'center', 'bottom'].includes(vertical) &&
+    ['left', 'center', 'right'].includes(horizontal),
 };
 
 export default {
@@ -56,13 +51,13 @@ export default {
         if (parentElPosition !== 'static') break;
         parentEl = parentEl.parentNode;
       }
-      const parentElRect = parentEl === document.body
-        ? new DOMRect(-window.scrollX, -window.scrollY) : parentEl.getBoundingClientRect();
+      const parentElRect =
+        parentEl === document.body
+          ? new DOMRect(-window.scrollX, -window.scrollY)
+          : parentEl.getBoundingClientRect();
 
       const anchorElRect = anchorEl.getBoundingClientRect();
-      const {
-        top, right, bottom, left,
-      } = new DOMRect(
+      const { top, right, bottom, left } = new DOMRect(
         anchorElRect.left - parentElRect.left,
         anchorElRect.top - parentElRect.top,
         anchorElRect.width,
@@ -85,13 +80,15 @@ export default {
       const { width, height } = this.$el.getBoundingClientRect();
       const popoverPoint = {
         x:
-          anchorPoint.x - {
+          anchorPoint.x -
+          {
             left: 0,
             center: width / 2,
             right: width,
           }[this.transformOrigin.horizontal],
         y:
-          anchorPoint.y - {
+          anchorPoint.y -
+          {
             top: 0,
             center: height / 2,
             bottom: height,
@@ -116,7 +113,7 @@ export default {
 
 .ae-popover {
   position: absolute;
-  box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+  box-shadow: 0 0 functions.rem(8px) rgba(#1b4479, 0.1);
   border-radius: 4px;
   min-width: 310px;
   background: #fff;

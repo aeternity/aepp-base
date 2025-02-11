@@ -69,8 +69,9 @@ describe('calls', () => {
       });
       const client = new RpcPeer(messageHandler);
       const controller = new AbortController();
-      expect(client.call({ method: testMethodName, signal: controller.signal }, ...testArgs))
-        .rejects.toThrow('Request aborted');
+      expect(
+        client.call({ method: testMethodName, signal: controller.signal }, ...testArgs),
+      ).rejects.toThrow('Request aborted');
       controller.abort();
     });
 
@@ -90,15 +91,15 @@ describe('calls', () => {
 
     it('throws error if response with invalid id', async () => {
       const client = new RpcPeer(noop);
-      expect(() => client.processMessage(testResponse))
-        .toThrow('Can\'t find request with id');
+      expect(() => client.processMessage(testResponse)).toThrow("Can't find request with id");
     });
 
     it('throws error if message type is invalid', async () => {
       const client = new RpcPeer(noop);
       client.call(testMethodName, ...testArgs);
-      expect(() => client.processMessage({ id: 1, type: 'invalid' }))
-        .toThrow('Invalid response message type');
+      expect(() => client.processMessage({ id: 1, type: 'invalid' })).toThrow(
+        'Invalid response message type',
+      );
     });
   });
 
@@ -160,7 +161,7 @@ describe('calls', () => {
       server.processMessage(testRequestCancel);
       expect(messageHandler).toHaveBeenCalledWith({
         id: testRequestCancel.id,
-        error: 'Can\'t cancel request: its abort controller not found',
+        error: "Can't cancel request: its abort controller not found",
       });
     });
   });

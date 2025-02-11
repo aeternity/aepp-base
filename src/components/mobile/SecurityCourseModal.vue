@@ -1,23 +1,15 @@
 <template>
   <Modal class="security-course-modal">
-    <img src="../../assets/account-card.svg">
+    <img src="../../assets/account-card.svg" />
     <Guide :template="$t('security-courses.modal.guide')" />
     <div class="note">
       {{ $t('security-courses.modal.note') }}
     </div>
     <div class="buttons">
-      <AeButton
-        fill="alternative"
-        data-cy="security-course"
-        @click="openSecurityCourse"
-      >
+      <AeButton fill="alternative" data-cy="security-course" @click="openSecurityCourse">
         {{ $t('security-courses.modal.to-security-course-1') }}
       </AeButton>
-      <AeButton
-        plain
-        data-cy="skip"
-        @click="resolve"
-      >
+      <AeButton plain data-cy="skip" @click="resolve">
         {{ $t('security-courses.modal.skip') }}
       </AeButton>
     </div>

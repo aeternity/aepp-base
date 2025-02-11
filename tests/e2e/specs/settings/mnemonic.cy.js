@@ -4,9 +4,7 @@ const stateCreatedMnemonicBackup = require('../../fixtures/state-created-mnemoni
 
 describe('Settings mnemonic', () => {
   it('goes to mnemonic confirm', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings', { state: stateCreatedMnemonic });
+    cy.viewport('iphone-se2').visit('/settings', { state: stateCreatedMnemonic });
     const notification = cy.get('.notification-mnemonic-backup').should('be.visible');
     cy.matchImage({ screenshotConfig: { capture: 'viewport' } });
     notification.invoke('remove');
@@ -30,14 +28,12 @@ describe('Settings mnemonic', () => {
   });
 
   it('goes to confirmed', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings/mnemonic/confirm', {
-        state: stateCreatedMnemonic,
-        onBeforeLoad(contentWindow) {
-          cy.stub(contentWindow.Math, 'random').callsFake(() => 0.3);
-        },
-      });
+    cy.viewport('iphone-se2').visit('/settings/mnemonic/confirm', {
+      state: stateCreatedMnemonic,
+      onBeforeLoad(contentWindow) {
+        cy.stub(contentWindow.Math, 'random').callsFake(() => 0.3);
+      },
+    });
     cy.get('.notification-mnemonic-backup').invoke('remove');
     cy.matchImage();
 
@@ -60,9 +56,9 @@ describe('Settings mnemonic', () => {
   });
 
   it('removes mnemonic phrase', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings/mnemonic/confirmed', { state: stateCreatedMnemonicBackup });
+    cy.viewport('iphone-se2').visit('/settings/mnemonic/confirmed', {
+      state: stateCreatedMnemonicBackup,
+    });
     cy.matchImage();
 
     cy.get('.ae-button[href="/settings"]').should('be.visible');
@@ -75,9 +71,7 @@ describe('Settings mnemonic', () => {
   });
 
   it('shows mnemonic deleted', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings', { state: stateCreated });
+    cy.viewport('iphone-se2').visit('/settings', { state: stateCreated });
 
     cy.get('.list-item[href="/settings/mnemonic/deleted"]').click();
     cy.matchImage();

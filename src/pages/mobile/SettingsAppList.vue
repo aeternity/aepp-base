@@ -16,11 +16,7 @@
         :title="app.name"
         :subtitle="app.subtitle"
       >
-        <img
-          slot="icon"
-          :src="app.icon"
-          :alt="app.name"
-        >
+        <img slot="icon" :src="app.icon" :alt="app.name" />
         <LeftMore slot="right" />
       </ListItem>
     </AeCard>

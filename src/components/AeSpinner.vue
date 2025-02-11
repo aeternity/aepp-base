@@ -1,23 +1,9 @@
 <template>
-  <svg
-    viewBox="0 0 100 100"
-    class="ae-spinner"
-  >
+  <svg viewBox="0 0 100 100" class="ae-spinner">
     <defs>
-      <radialGradient
-        id="grad"
-        cx="20%"
-        cy="0%"
-        r="50%"
-      >
-        <stop
-          offset="30%"
-          class="stop-start"
-        />
-        <stop
-          offset="100%"
-          class="stop-end"
-        />
+      <radialGradient id="grad" cx="20%" cy="0%" r="50%">
+        <stop offset="30%" class="stop-start" />
+        <stop offset="100%" class="stop-end" />
       </radialGradient>
     </defs>
 

@@ -1,17 +1,10 @@
 <template>
-  <Page
-    hide-tab-bar
-    right-button-icon-name="close"
-    @right-button-click="cancelHandler"
-  >
+  <Page hide-tab-bar right-button-icon-name="close" @right-button-click="cancelHandler">
     <Guide>
       {{ $t('settings.password.modal.guide') }}
     </Guide>
 
-    <form
-      :id="_uid"
-      @submit.prevent="continueHandler"
-    >
+    <form :id="_uid" @submit.prevent="continueHandler">
       <PasswordPurpose />
       <AeInputPassword
         v-model="password"
@@ -33,12 +26,7 @@
       </AeInputPassword>
     </form>
 
-    <AeButton
-      slot="footer"
-      :disabled="errors.any() || wrongPassword"
-      :form="_uid"
-      fill="secondary"
-    >
+    <AeButton slot="footer" :disabled="errors.any() || wrongPassword" :form="_uid" fill="secondary">
       {{ $t('settings.password.modal.continue') }}
     </AeButton>
   </Page>
@@ -53,7 +41,11 @@ import AeInputPassword from '../AeInputPassword.vue';
 
 export default {
   components: {
-    Page, PasswordPurpose, AeInputPassword, AeButton, Guide,
+    Page,
+    PasswordPurpose,
+    AeInputPassword,
+    AeButton,
+    Guide,
   },
   props: {
     resolve: { type: Function, required: true },
@@ -65,7 +57,7 @@ export default {
   }),
   methods: {
     async continueHandler() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
 
       try {
         await this.$store.dispatch('accounts/hdWallet/deriveAndCheckPasswordKey', this.password);

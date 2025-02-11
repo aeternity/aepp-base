@@ -1,15 +1,7 @@
 <template>
   <div>
-    <ListItem
-      v-for="currency in list"
-      :key="currency.code"
-      :title="currency.name"
-    >
-      <AeRadio
-        slot="right"
-        :checked="currency === active"
-        @change="setCurrency(currency)"
-      />
+    <ListItem v-for="currency in list" :key="currency.code" :title="currency.name">
+      <AeRadio slot="right" :checked="currency === active" @change="setCurrency(currency)" />
     </ListItem>
   </div>
 </template>

@@ -1,8 +1,5 @@
 <template>
-  <LedgerModal
-    :title="$t('ledger.modal.sign-transaction')"
-    class="ledger-sign-transaction"
-  >
+  <LedgerModal :title="$t('ledger.modal.sign-transaction')" class="ledger-sign-transaction">
     <LedgerModalNanoS />
 
     <AeSpinner />

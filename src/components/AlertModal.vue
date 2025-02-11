@@ -3,11 +3,7 @@
     {{ text }}
 
     <AeButtonGroup>
-      <AeButton
-        v-if="confirm"
-        fill="secondary"
-        @click="cancelHandler"
-      >
+      <AeButton v-if="confirm" fill="secondary" @click="cancelHandler">
         {{ $t('cancel') }}
       </AeButton>
       <AeButton @click="resolve">
@@ -28,7 +24,9 @@ export default {
     text: { type: String, required: true },
     primaryButtonText: {
       type: String,
-      default() { return this.$t('ok'); },
+      default() {
+        return this.$t('ok');
+      },
     },
     resolve: { type: Function, required: true },
     reject: { type: Function, required: true },

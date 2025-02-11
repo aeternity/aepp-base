@@ -5,15 +5,9 @@
     left-button-icon-name="back"
     :left-button-to="{ name: 'name-list' }"
   >
-    <DetailsList
-      :object="{ ...details, nameHash }"
-      :field-renderers="fieldRenderers"
-    />
+    <DetailsList :object="{ ...details, nameHash }" :field-renderers="fieldRenderers" />
 
-    <AeButton
-      :disabled="isDefaultName || !address"
-      @click="setAsDefaultName"
-    >
+    <AeButton :disabled="isDefaultName || !address" @click="setAsDefaultName">
       {{ $t('name.details.set-default') }}
     </AeButton>
 
@@ -42,7 +36,11 @@ import prefixedAmount from '../../filters/prefixedAmount';
 import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';
 import {
-  Name, NameId, OwnerId, CreatedAtHeight, ExpiresAtHeight,
+  Name,
+  NameId,
+  OwnerId,
+  CreatedAtHeight,
+  ExpiresAtHeight,
 } from '../../components/mobile/details-fields';
 import { getAddressByNameEntry } from '../../lib/utils';
 import DetailsNamePointers from '../../components/mobile/DetailsNamePointers.vue';
@@ -98,8 +96,9 @@ export default {
     },
     async extendName() {
       const initialAccountIdx = this.$store.state.accounts.activeIdx;
-      const requiredAccountIdx = this.$store.state.accounts.list
-        .findIndex(({ address }) => address === this.details.owner);
+      const requiredAccountIdx = this.$store.state.accounts.list.findIndex(
+        ({ address }) => address === this.details.owner,
+      );
       if (initialAccountIdx !== requiredAccountIdx) {
         this.$store.commit('accounts/setActiveIdx', requiredAccountIdx);
       }
@@ -110,9 +109,11 @@ export default {
     },
     async goToTransactionDetails() {
       const { hash } = await this.$store.getters.middleware.getTx(this.details.createdAtTxIdx);
-      await this.$router.push(ENV_MOBILE_DEVICE
-        ? { name: 'transaction-details', params: { hash } }
-        : `${this.currentNetwork.explorerUrl}/transactions/${hash}`);
+      await this.$router.push(
+        ENV_MOBILE_DEVICE
+          ? { name: 'transaction-details', params: { hash } }
+          : `${this.currentNetwork.explorerUrl}/transactions/${hash}`,
+      );
     },
   },
 };

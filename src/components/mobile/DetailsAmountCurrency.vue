@@ -1,13 +1,6 @@
 <template>
-  <DetailsField
-    class="details-amount-currency"
-    :name="name"
-  >
-    <Balance
-      slot="value"
-      v-bind="$attrs"
-      :balance="amount"
-    />
+  <DetailsField class="details-amount-currency" :name="name">
+    <Balance slot="value" v-bind="$attrs" :balance="amount" />
   </DetailsField>
 </template>
 
@@ -21,7 +14,9 @@ export default {
   props: {
     name: {
       type: String,
-      default() { return this.$t('transfer.amount'); },
+      default() {
+        return this.$t('transfer.amount');
+      },
     },
     amount: { type: BigNumber, required: true },
   },
@@ -32,7 +27,8 @@ export default {
 .details-amount-currency .balance {
   font-weight: inherit;
 
-  &, ::v-deep .left {
+  &,
+  ::v-deep .left {
     color: inherit;
     font-size: inherit;
   }

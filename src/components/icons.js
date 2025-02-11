@@ -1,8 +1,3 @@
-/* eslint import/extensions: "off" */
-
-// TODO: remove after fixing https://github.com/import-js/eslint-plugin-import/issues/1739
-/* eslint-disable import/no-unresolved */
-
 export { default as Active } from '../assets/icons/inline/active.svg?icon-component';
 export { default as AddContact } from '../assets/icons/inline/add-contact.svg?icon-component';
 export { default as ArrowChart } from '../assets/icons/inline/arrow-chart.svg?icon-component';

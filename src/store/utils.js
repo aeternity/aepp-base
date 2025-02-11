@@ -17,7 +17,10 @@ export const derivePasswordKey = async (password, salt) => {
   );
   return window.crypto.subtle.deriveKey(
     {
-      name: 'PBKDF2', salt, iterations: 15000, hash: 'SHA-256',
+      name: 'PBKDF2',
+      salt,
+      iterations: 15000,
+      hash: 'SHA-256',
     },
     passwordKey,
     { name: 'AES-CTR', length: 128 },

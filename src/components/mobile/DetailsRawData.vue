@@ -1,8 +1,5 @@
 <template>
-  <DetailsField
-    class="details-raw-data"
-    v-bind="$attrs"
-  >
+  <DetailsField class="details-raw-data" v-bind="$attrs">
     <code>
       {{ dataAsString }}
     </code>

@@ -1,9 +1,5 @@
 <template>
-  <span
-    v-copy-on-click="address"
-    class="account-inline"
-    :class="{ address: !nameFromStore }"
-  >
+  <span v-copy-on-click="address" class="account-inline" :class="{ address: !nameFromStore }">
     <AeIdenticon :address="addressFromStore" />
     {{ nameFromStore ? nameFromStore : formatAddress(addressFromStore, 'short') }}
   </span>

@@ -6,7 +6,7 @@
       :checked="checked"
       :type="checkbox ? 'checkbox' : 'radio'"
       @change="$emit('change')"
-    >
+    />
     <div slot="right">
       <Check />
     </div>

@@ -1,8 +1,6 @@
 describe('Long names', () => {
   it('extends', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/names/personal/investigation.chain', { login: 'wallet-2' });
+    cy.viewport('iphone-se2').visit('/names/personal/investigation.chain', { login: 'wallet-2' });
     cy.get('.ae-button').contains('Extend name').click();
 
     cy.get('.turtle-rabbit').should('be.visible');
@@ -11,16 +9,21 @@ describe('Long names', () => {
 
     let expiresOld;
     const selector = '.details-row:contains("Expires at height") .value';
-    cy.get(selector).then(($value) => { expiresOld = $value.text(); });
-    cy.get(selector).should(($value) => {
-      expect(+$value.text()).to.be.greaterThan(+expiresOld);
-    }, { timeout: 5000 });
+    cy.get(selector).then(($value) => {
+      expiresOld = $value.text();
+    });
+    cy.get(selector).should(
+      ($value) => {
+        expect(+$value.text()).to.be.greaterThan(+expiresOld);
+      },
+      { timeout: 5000 },
+    );
   });
 
   it('set pointer', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/names/personal/investigation.chain/point', { login: 'wallet-2' });
+    cy.viewport('iphone-se2').visit('/names/personal/investigation.chain/point', {
+      login: 'wallet-2',
+    });
     cy.get('.list-item').first().click();
 
     cy.get('.turtle-rabbit').should('be.visible');
@@ -31,9 +34,9 @@ describe('Long names', () => {
   });
 
   it('transfer', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/names/personal/investigation.chain/transfer', { login: 'wallet-2' });
+    cy.viewport('iphone-se2').visit('/names/personal/investigation.chain/transfer', {
+      login: 'wallet-2',
+    });
     cy.get('.list-item').first().click();
 
     cy.get('.turtle-rabbit').should('be.visible');
@@ -44,9 +47,7 @@ describe('Long names', () => {
   });
 
   it('sets default name', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/names/personal/investigation.chain', { login: 'wallet-2' });
+    cy.viewport('iphone-se2').visit('/names/personal/investigation.chain', { login: 'wallet-2' });
     cy.get('.ae-button:contains("Set as a default name")').click().should('be.disabled');
 
     cy.get('.ae-identicon').click();
@@ -55,9 +56,7 @@ describe('Long names', () => {
 
   it('register name', () => {
     const name = `test-${Date.now().toString().slice(0, -3)}`;
-    cy
-      .viewport('iphone-se2')
-      .visit('/names/new', { login: 'wallet-2' });
+    cy.viewport('iphone-se2').visit('/names/new', { login: 'wallet-2' });
     cy.get('input').type(name);
     cy.get('.ae-button').click();
 
@@ -71,6 +70,8 @@ describe('Long names', () => {
 
     cy.get('.turtle-rabbit').should('be.visible');
     cy.get('.ae-button-group .secondary').click();
-    cy.get('.notification').contains(`${name}.chain was successfully registered`).should('be.visible');
+    cy.get('.notification')
+      .contains(`${name}.chain was successfully registered`)
+      .should('be.visible');
   });
 });

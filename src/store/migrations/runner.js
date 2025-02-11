@@ -3,12 +3,14 @@ const migrations = [];
 export const registerMigration = (migration) => migrations.push(migration);
 
 export default (state, store) => {
-  let newState = state ? {
-    migrations: {},
-    ...state,
-  } : {
-    migrations: Object.fromEntries(migrations.map((m, id) => [id, true])),
-  };
+  let newState = state
+    ? {
+        migrations: {},
+        ...state,
+      }
+    : {
+        migrations: Object.fromEntries(migrations.map((m, id) => [id, true])),
+      };
 
   const asyncMigrations = [];
 

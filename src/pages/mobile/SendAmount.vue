@@ -8,29 +8,13 @@
     :header-fill="activeColor"
   >
     <template slot="header">
-      <Guide
-        :template="$t('transfer.send.amount.guide')"
-        fill="neutral"
-      >
-        <AeFraction
-          slot="icon"
-          numerator="2"
-          denominator="3"
-        />
-        <AccountInline
-          slot="senderAddress"
-          :address="activeAccount.address"
-        />
-        <AccountInline
-          slot="recipientAddress"
-          :address="to"
-        />
+      <Guide :template="$t('transfer.send.amount.guide')" fill="neutral">
+        <AeFraction slot="icon" numerator="2" denominator="3" />
+        <AccountInline slot="senderAddress" :address="activeAccount.address" />
+        <AccountInline slot="recipientAddress" :address="to" />
       </Guide>
 
-      <form
-        :id="_uid"
-        @submit.prevent="setAmount"
-      >
+      <form :id="_uid" @submit.prevent="setAmount">
         <AeInputAmountCurrency
           v-model="amount"
           v-validate="{
@@ -48,21 +32,14 @@
       </form>
     </template>
 
-    <DetailsAmount
-      :name="$t('transfer.send.amount.fee')"
-      :amount="minFee"
-    />
+    <DetailsAmount :name="$t('transfer.send.amount.fee')" :amount="minFee" />
 
     <DetailsAmountCurrency
       :name="$t('transfer.send.amount.balance')"
       :amount="activeAccount.balance"
     />
 
-    <AeButton
-      :disabled="errors.any()"
-      :form="_uid"
-      fill="secondary"
-    >
+    <AeButton :disabled="errors.any()" :form="_uid" fill="secondary">
       {{ $t('next') }}
     </AeButton>
   </Page>
@@ -109,7 +86,7 @@ export default {
   },
   methods: {
     async setAmount() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
       this.$router.push({ name: 'send-confirm', params: { to: this.to, amount: this.amount } });
     },
   },

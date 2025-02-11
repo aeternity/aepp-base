@@ -2,16 +2,15 @@
   <DetailsField
     class="details-fee-input"
     :name="$t('modal.confirm-transaction-sign.details-fee-input.title')"
-    :value="$t(
-      'modal.confirm-transaction-sign.details-fee-input.value',
-      { value: toMicroString(value) },
-    )"
+    :value="
+      $t('modal.confirm-transaction-sign.details-fee-input.value', { value: toMicroString(value) })
+    "
     value-monospace
   >
     <template v-if="min.isLessThan(max)">
       <DetailsRow class="turtle-rabbit">
-        <img src="../../assets/icons/turtle.svg">
-        <img src="../../assets/icons/rabbit.svg">
+        <img src="../../assets/icons/turtle.svg" />
+        <img src="../../assets/icons/rabbit.svg" />
       </DetailsRow>
 
       <AeInputRange

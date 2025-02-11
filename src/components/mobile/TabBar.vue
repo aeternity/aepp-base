@@ -36,9 +36,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import ButtonPlain from '../ButtonPlain.vue';
-import {
-  Grid, Transfer, Contacts, Settings,
-} from '../icons';
+import { Grid, Transfer, Contacts, Settings } from '../icons';
 import AeIdenticon from '../AeIdenticon.vue';
 import ConnectionStatus from '../ConnectionStatus.vue';
 import MnemonicBackupWarning from './MnemonicBackupWarning.vue';

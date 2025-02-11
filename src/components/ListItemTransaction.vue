@@ -3,25 +3,17 @@
     v-bind="$attrs"
     class="list-item-transaction"
     :class="{ pending }"
-    :title="peerName || peerAddress && formatAddress(peerAddress)"
+    :title="peerName || (peerAddress && formatAddress(peerAddress))"
     :title-monospace="!peerName"
-    :subtitle="pending
-      ? $t('transfer.transaction.pending')
-      : time.toLocaleTimeString()"
+    :subtitle="pending ? $t('transfer.transaction.pending') : time.toLocaleTimeString()"
     subtitle-monospace
     v-on="$listeners"
   >
     <template v-if="peerAddress">
-      <AeIdenticon
-        slot="icon"
-        :address="peerAddress"
-      />
+      <AeIdenticon slot="icon" :address="peerAddress" />
     </template>
 
-    <div
-      slot="right"
-      class="balance-change"
-    >
+    <div slot="right" class="balance-change">
       <template v-if="tx.amount">
         <span :class="received ? 'plus' : 'minus'" />&nbsp;{{ convertedAmount }}
       </template>

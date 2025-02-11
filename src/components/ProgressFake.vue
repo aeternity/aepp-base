@@ -16,7 +16,7 @@
     content: '';
     display: block;
     background-color: variables.$color-magenta;
-    transition: width 60s cubic-bezier(.05, .95, .05, .95);
+    transition: width 60s cubic-bezier(0.05, 0.95, 0.05, 0.95);
     width: 80%;
     height: 100%;
   }
@@ -26,10 +26,10 @@
   }
 
   &.v-leave-active {
-    transition-duration: .5s;
+    transition-duration: 0.5s;
 
     &::before {
-      transition: width .5s;
+      transition: width 0.5s;
     }
   }
 

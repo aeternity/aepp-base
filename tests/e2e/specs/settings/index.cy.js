@@ -1,8 +1,6 @@
 describe('Settings', () => {
   it('opens', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/settings', { login: true });
+    cy.viewport('iphone-se2').visit('/settings', { login: true });
     cy.matchImage();
 
     cy.get('[href="/settings/network"]');
@@ -23,13 +21,9 @@ describe('Settings', () => {
     cy.get('.note').should('be.visible'); // reloaded to desktop
   });
 
-  [
-    'currency', 'remote-connection', 'apps', 'language', 'info',
-  ].forEach((route) => {
+  ['currency', 'remote-connection', 'apps', 'language', 'info'].forEach((route) => {
     it(`opens ${route}`, () => {
-      cy
-        .viewport('iphone-se2')
-        .visit(`/settings/${route}`, { login: true });
+      cy.viewport('iphone-se2').visit(`/settings/${route}`, { login: true });
       cy.matchImage();
     });
   });

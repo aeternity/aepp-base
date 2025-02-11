@@ -1,8 +1,5 @@
 <template>
-  <LedgerModal
-    :title="$t('ledger.modal.request')"
-    class="ledger-request"
-  >
+  <LedgerModal :title="$t('ledger.modal.request')" class="ledger-request">
     <LedgerModalNanoS />
 
     <AeSpinner />

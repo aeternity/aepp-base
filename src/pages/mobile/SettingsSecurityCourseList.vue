@@ -17,20 +17,11 @@
       :checked="course.isRead"
       active
     >
-      <img
-        slot="icon"
-        :src="lockEmoji"
-      >
+      <img slot="icon" :src="lockEmoji" />
     </ListItemChoose>
 
-    <template
-      v-if="firstEnter"
-      slot="footer"
-    >
-      <AeButton
-        fill="secondary"
-        :to="$globals.ROUTE_MOBILE_LOGGED_IN"
-      >
+    <template v-if="firstEnter" slot="footer">
+      <AeButton fill="secondary" :to="$globals.ROUTE_MOBILE_LOGGED_IN">
         {{ $t('security-courses.settings.list.to-base-app') }}
       </AeButton>
       <Note>
@@ -61,10 +52,11 @@ export default {
   },
   data: () => ({ lockEmoji }),
   computed: mapState({
-    courses: ({ mobile: { readSecurityCourses } }) => getCourses().map((course) => ({
-      ...course,
-      isRead: readSecurityCourses.includes(course.name),
-    })),
+    courses: ({ mobile: { readSecurityCourses } }) =>
+      getCourses().map((course) => ({
+        ...course,
+        isRead: readSecurityCourses.includes(course.name),
+      })),
   }),
 };
 </script>

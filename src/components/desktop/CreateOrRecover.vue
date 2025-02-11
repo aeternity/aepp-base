@@ -1,16 +1,10 @@
 <template>
   <div class="create-or-restore">
     <Guide :template="$t('recover.guide')">
-      <img
-        slot="dizzySymbolEmoji"
-        :src="dizzySymbolEmoji"
-      >
+      <img slot="dizzySymbolEmoji" :src="dizzySymbolEmoji" />
     </Guide>
 
-    <form
-      :id="_uid"
-      @submit.prevent="setMnemonic"
-    >
+    <form :id="_uid" @submit.prevent="setMnemonic">
       <AeInputMnemonic
         v-model="mnemonic"
         v-validate="'required|mnemonic'"
@@ -21,19 +15,11 @@
       />
     </form>
 
-    <AeButton
-      slot="footer"
-      :disabled="errors.any()"
-      :form="_uid"
-      fill="secondary"
-    >
+    <AeButton slot="footer" :disabled="errors.any()" :form="_uid" fill="secondary">
       {{ $t('recover.button') }}
     </AeButton>
 
-    <AeButton
-      fill="primary"
-      @click="() => createWallet()"
-    >
+    <AeButton fill="primary" @click="() => createWallet()">
       {{ $t('intro.create-account') }}
     </AeButton>
   </div>

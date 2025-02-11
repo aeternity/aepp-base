@@ -20,8 +20,10 @@ class Middleware extends _Middleware {
     function mapKeysDeep(object, handler) {
       if (Array.isArray(object)) return object.map((el) => mapKeysDeep(el, handler));
       if (isPlainObject(object)) {
-        const entries = Object.entries(object)
-          .map(([key, value]) => [handler(key), mapKeysDeep(value, handler)]);
+        const entries = Object.entries(object).map(([key, value]) => [
+          handler(key),
+          mapKeysDeep(value, handler),
+        ]);
         return Object.fromEntries(entries);
       }
       return object;
@@ -50,11 +52,12 @@ export default {
       ...networksRegistry,
       ...customNetworks.map((network) => ({ ...networksRegistry[0], ...network, custom: true })),
     ],
-    currentNetwork: ({ sdkUrl }, { networks }) => networks.find(({ url }) => url === sdkUrl) || {
-      ...networksRegistry[0],
-      name: sdkUrl,
-      url: sdkUrl,
-    },
+    currentNetwork: ({ sdkUrl }, { networks }) =>
+      networks.find(({ url }) => url === sdkUrl) || {
+        ...networksRegistry[0],
+        name: sdkUrl,
+        url: sdkUrl,
+      },
     getApp: ({ apps }) => getAppByHost.bind(null, apps),
     node: (_, { currentNetwork }) => new Node(currentNetwork.url),
     middleware: (_, { currentNetwork }) => new Middleware(currentNetwork.middlewareUrl),
@@ -65,12 +68,13 @@ export default {
       const customizer = (objValue, srcValue) => {
         if (!Array.isArray(srcValue)) return undefined;
         if (!Array.isArray(objValue)) return srcValue;
-        return srcValue.map((el, idx) => (
-          el && typeof el === 'object' ? mergeWith({}, objValue[idx], el, customizer) : el
-        ));
+        return srcValue.map((el, idx) =>
+          el && typeof el === 'object' ? mergeWith({}, objValue[idx], el, customizer) : el,
+        );
       };
-      Object.entries(mergeWith({}, state, remoteState, customizer))
-        .forEach(([name, value]) => Vue.set(state, name, value));
+      Object.entries(mergeWith({}, state, remoteState, customizer)).forEach(([name, value]) =>
+        Vue.set(state, name, value),
+      );
     },
     markMigrationAsApplied(state, migrationId) {
       Vue.set(state.migrations, migrationId, true);
@@ -94,7 +98,9 @@ export default {
       if (!getAppByHost(apps, appHost)) {
         apps.push({ host: appHost, permissions: { accessToAccounts: [] } });
       }
-      const { permissions: { accessToAccounts } } = getAppByHost(apps, appHost);
+      const {
+        permissions: { accessToAccounts },
+      } = getAppByHost(apps, appHost);
       const idx = accessToAccounts.indexOf(accountAddress);
       if (idx === -1) accessToAccounts.push(accountAddress);
       else accessToAccounts.splice(idx, 1);

@@ -6,7 +6,7 @@
     v-bind="$attrs"
     type="range"
     @input="$emit($event.type, +$event.target.value)"
-  >
+  />
 </template>
 
 <script>
@@ -15,10 +15,7 @@ export default {
     value: { type: [String, Number], default: '' },
     fill: {
       type: String,
-      validator: (value) => [
-        'primary',
-        'light',
-      ].includes(value),
+      validator: (value) => ['primary', 'light'].includes(value),
       default: 'primary',
     },
   },
@@ -56,12 +53,7 @@ export default {
 
   @each $fill, $colors in $colors {
     &.#{$fill} {
-      @each $name in (
-        -webkit-slider-runnable-track,
-        -moz-range-track,
-        -ms-track,
-        -ms-fill-upper,
-      ) {
+      @each $name in (-webkit-slider-runnable-track, -moz-range-track, -ms-track, -ms-fill-upper) {
         &::#{$name} {
           @include range-track(map-get($colors, track-color));
         }

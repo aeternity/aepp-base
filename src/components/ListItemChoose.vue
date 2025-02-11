@@ -1,15 +1,6 @@
 <template>
-  <ListItem
-    v-bind="$attrs"
-    class="list-item-choose"
-    :class="{ active, checked }"
-    v-on="$listeners"
-  >
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
+  <ListItem v-bind="$attrs" class="list-item-choose" :class="{ active, checked }" v-on="$listeners">
+    <slot v-for="slot in Object.keys($slots)" :slot="slot" :name="slot" />
   </ListItem>
 </template>
 
@@ -40,7 +31,7 @@ export default {
 
   &.active {
     background-color: variables.$color-neutral-maximum;
-    box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.15);
+    box-shadow: 0 0 functions.rem(8px) rgba(#1b4479, 0.15);
     filter: none;
   }
 

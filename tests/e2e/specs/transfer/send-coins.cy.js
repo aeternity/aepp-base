@@ -5,8 +5,7 @@ describe('Transfer: Send coins', () => {
   it('sends coins', () => {
     const testAmount = '0.0001';
 
-    cy
-      .viewport('iphone-se2')
+    cy.viewport('iphone-se2')
       .visit('/transfer', { login: true })
       .get('.ae-account .balance')
       .invoke('text')
@@ -31,16 +30,16 @@ describe('Transfer: Send coins', () => {
     cy.get('.notification-spend-success')
       .contains(testAmount)
       .get('@oldBalance')
-      .then((oldBalance) => cy
-        .get('.ae-account .balance')
-        .invoke('text')
-        .should('not.equal', oldBalance));
+      .then((oldBalance) =>
+        cy.get('.ae-account .balance').invoke('text').should('not.equal', oldBalance),
+      );
   });
 
   it('sends all coins', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit(`/transfer/send/${account1}`, { login: true, state: { accounts: { activeIdx: 1 } } });
+    cy.viewport('iphone-se2').visit(`/transfer/send/${account1}`, {
+      login: true,
+      state: { accounts: { activeIdx: 1 } },
+    });
     cy.get('.ae-toolbar-button').click();
     cy.get('button').contains('Next').click();
 

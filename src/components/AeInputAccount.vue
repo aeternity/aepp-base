@@ -43,18 +43,11 @@
         </AePopover>
       </template>
 
-      <AeToolbarButton
-        v-if="clipboardReadSupported"
-        type="button"
-        @click="readValueFromClipboard"
-      >
+      <AeToolbarButton v-if="clipboardReadSupported" type="button" @click="readValueFromClipboard">
         <Paste />
         {{ $globals.ENV_MOBILE_DEVICE ? $t('transfer.send.to.paste') : '' }}
       </AeToolbarButton>
-      <AeToolbarButton
-        type="button"
-        @click="readValueFromQrCode"
-      >
+      <AeToolbarButton type="button" @click="readValueFromQrCode">
         <Camera />
         {{ $globals.ENV_MOBILE_DEVICE ? $t('transfer.send.to.scan') : '' }}
       </AeToolbarButton>
@@ -80,9 +73,7 @@ const ADDRESS_PREFIX = 'ak_';
 const FORMATTED_ADDRESS_REGEXP = /^ak_[1-9A-HJ-NP-Za-km-z ]+$/;
 const NOT_BASE58_CHARS = /[^1-9A-HJ-NP-Za-km-z]/g;
 const formatAddress = (address) => {
-  let res = address
-    .slice(ADDRESS_PREFIX.length)
-    .replace(NOT_BASE58_CHARS, '');
+  let res = address.slice(ADDRESS_PREFIX.length).replace(NOT_BASE58_CHARS, '');
 
   if (!res) return ADDRESS_PREFIX;
 
@@ -143,9 +134,11 @@ export default {
     },
   }),
   subscriptions() {
-    return !ENV_MOBILE_DEVICE && {
-      accounts: this.$store.state.observables.inactiveAccounts,
-    };
+    return (
+      !ENV_MOBILE_DEVICE && {
+        accounts: this.$store.state.observables.inactiveAccounts,
+      }
+    );
   },
   methods: {
     setValue(newValue) {
@@ -157,17 +150,21 @@ export default {
       this.showAccountsDropdown = false;
     },
     async readValueFromQrCode() {
-      this.setValue(await this.$store.dispatch('modals/open', {
-        name: 'readQrCode',
-        title: this.$t('transfer.send.to.scan-address'),
-      }));
+      this.setValue(
+        await this.$store.dispatch('modals/open', {
+          name: 'readQrCode',
+          title: this.$t('transfer.send.to.scan-address'),
+        }),
+      );
     },
     async readValueFromClipboard() {
-      this.setValue(await (process.env.VUE_APP_CORDOVA
-        ? new Promise((...args) => {
-          window.cordova.plugins.clipboard.paste(...args);
-        })
-        : navigator.clipboard.readText()));
+      this.setValue(
+        await (process.env.VUE_APP_CORDOVA
+          ? new Promise((...args) => {
+              window.cordova.plugins.clipboard.paste(...args);
+            })
+          : navigator.clipboard.readText()),
+      );
     },
   },
 };
@@ -178,6 +175,6 @@ export default {
 
 .ae-input-address .ae-identicon {
   height: functions.rem(20px);
-  vertical-align: -.4em;
+  vertical-align: -0.4em;
 }
 </style>

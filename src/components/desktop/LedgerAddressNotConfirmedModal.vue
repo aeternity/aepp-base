@@ -9,12 +9,7 @@
       {{ $t('ledger.modal.address-not-confirmed.note') }}
     </LedgerModalNote>
 
-    <AeButton
-      slot="footer"
-      size="small"
-      plain
-      @click="resolve"
-    >
+    <AeButton slot="footer" size="small" plain @click="resolve">
       {{ $t('close') }}
     </AeButton>
   </LedgerModal>

@@ -272,7 +272,6 @@ export default (store) => {
                     if (firstHash === data[0]?.hash) return [];
                     let next = nextI;
                     while (next) {
-                      // eslint-disable-next-line no-await-in-loop
                       const tx = await fetchMdwTransactions({ next });
                       if (firstHash === tx.data[0].hash) return data;
                       data.push(tx.data[0]);

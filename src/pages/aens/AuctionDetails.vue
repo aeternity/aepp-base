@@ -18,10 +18,7 @@
 
       <h2>{{ $t('name.details.current-bid') }}</h2>
       <AeCard fill="maximum">
-        <ListItemBid
-          v-bind="currentBid"
-          inactive
-        />
+        <ListItemBid v-bind="currentBid" inactive />
       </AeCard>
 
       <template v-if="previousBids.length">
@@ -99,10 +96,16 @@ export default {
       this.bids = data
         .filter(({ type }) => type === 'NameClaimEvent')
         .filter(({ payload: { sourceTxType } }) => sourceTxType === 'NameClaimTx')
-        .map(({ payload: { tx: { accountId, nameFee } } }) => ({
-          nameFee: new BigNumber(nameFee).shiftedBy(-MAGNITUDE),
-          accountId,
-        }));
+        .map(
+          ({
+            payload: {
+              tx: { accountId, nameFee },
+            },
+          }) => ({
+            nameFee: new BigNumber(nameFee).shiftedBy(-MAGNITUDE),
+            accountId,
+          }),
+        );
     },
     async updateAuctionEntry() {
       await Promise.all([this.updateEndsAt(), this.updateBids()]);

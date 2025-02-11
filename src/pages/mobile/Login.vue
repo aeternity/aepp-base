@@ -1,20 +1,10 @@
 <template>
-  <Page
-    :right-button-to="{ name: 'intro' }"
-    right-button-icon-name="close"
-    hide-tab-bar
-  >
+  <Page :right-button-to="{ name: 'intro' }" right-button-icon-name="close" hide-tab-bar>
     <Guide :template="$t('login.guide')">
-      <img
-        slot="wavingHandEmoji"
-        :src="wavingHandEmoji"
-      >
+      <img slot="wavingHandEmoji" :src="wavingHandEmoji" />
     </Guide>
 
-    <form
-      :id="_uid"
-      @submit.prevent="unlockHdWallet"
-    >
+    <form :id="_uid" @submit.prevent="unlockHdWallet">
       <PasswordPurpose />
       <AeInputPassword
         v-model="password"
@@ -35,22 +25,14 @@
               {{ $t('recover.button').toLowerCase() }}
             </RouterLink>
           </template>
-          <RouterLink
-            v-else
-            :to="{ name: 'recover' }"
-          >
+          <RouterLink v-else :to="{ name: 'recover' }">
             {{ $t('recover.button') }}
           </RouterLink>
         </template>
       </AeInputPassword>
     </form>
 
-    <AeButton
-      slot="footer"
-      :disabled="errors.any() || wrongPassword"
-      :form="_uid"
-      fill="secondary"
-    >
+    <AeButton slot="footer" :disabled="errors.any() || wrongPassword" :form="_uid" fill="secondary">
       {{ $t('login.button') }}
     </AeButton>
   </Page>
@@ -66,7 +48,11 @@ import AeInputPassword from '../../components/AeInputPassword.vue';
 
 export default {
   components: {
-    Page, PasswordPurpose, AeInputPassword, AeButton, Guide,
+    Page,
+    PasswordPurpose,
+    AeInputPassword,
+    AeButton,
+    Guide,
   },
   data() {
     return {
@@ -77,7 +63,7 @@ export default {
   },
   methods: {
     async unlockHdWallet() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
 
       try {
         await this.$store.dispatch('accounts/hdWallet/unlockWallet', this.password);

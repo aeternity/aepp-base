@@ -20,22 +20,30 @@ export default (async () => {
       }
       return { x: 0, y: 0 };
     },
-    routes: (await Promise.all([
-      import(/* webpackChunkName: "ui-common" */ './routes/common'),
-      ENV_MOBILE_DEVICE
-        ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
-        : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),
-    ])).reduce((p, module) => [...p, ...module.default], []),
+    routes: (
+      await Promise.all([
+        import(/* webpackChunkName: "ui-common" */ './routes/common'),
+        ENV_MOBILE_DEVICE
+          ? import(/* webpackChunkName: "ui-mobile" */ './routes/mobile')
+          : import(/* webpackChunkName: "ui-desktop" */ './routes/desktop'),
+      ])
+    ).reduce((p, module) => [...p, ...module.default], []),
   });
 
   if (
-    ENV_MOBILE_DEVICE && !process.env.VUE_APP_CORDOVA && !IS_PWA
-    && !store.state.mobile.skipAddingToHomeScreen
-  ) await router.replace({ name: 'add-to-home-screen' });
+    ENV_MOBILE_DEVICE &&
+    !process.env.VUE_APP_CORDOVA &&
+    !IS_PWA &&
+    !store.state.mobile.skipAddingToHomeScreen
+  )
+    await router.replace({ name: 'add-to-home-screen' });
 
   if (process.env.VUE_APP_CORDOVA) {
-    document.addEventListener('deviceready', () => window.IonicDeeplink
-      .onDeepLink((d) => router.push(((u) => u.pathname + u.search)(new URL(d.url)))));
+    document.addEventListener('deviceready', () =>
+      window.IonicDeeplink.onDeepLink((d) =>
+        router.push(((u) => u.pathname + u.search)(new URL(d.url))),
+      ),
+    );
   }
 
   store.watch(

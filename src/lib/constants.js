@@ -11,15 +11,18 @@ export const NAME_LIST_ROUTE_NAMES = ['name-list', 'auction-list', 'auction-list
 
 export const PROTOCOLS_ALLOWED = [
   'https:',
-  ...window.location.protocol === 'https:' ? [] : ['http:'],
+  ...(window.location.protocol === 'https:' ? [] : ['http:']),
 ];
-export const PROTOCOL_DEFAULT = window.location.protocol === 'https:'
-  || process.env.NODE_ENV === 'production' ? 'https:' : 'http:';
+export const PROTOCOL_DEFAULT =
+  window.location.protocol === 'https:' || process.env.NODE_ENV === 'production'
+    ? 'https:'
+    : 'http:';
 
 export const ROUTE_MOBILE_LOGGED_IN = { name: 'transfer' };
 
 // https://developers.google.com/web/fundamentals/app-install-banners/#detect-mode
-export const IS_PWA = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+export const IS_PWA =
+  matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 
 // https://stackoverflow.com/a/9039885
 export const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;

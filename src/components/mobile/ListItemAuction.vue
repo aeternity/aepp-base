@@ -1,19 +1,7 @@
 <template>
-  <ListItem
-    v-bind="$attrs"
-    :title="name"
-    :subtitle="subtitle"
-    v-on="$listeners"
-  >
-    <AeIdenticon
-      slot="icon"
-      :address="info.lastBid.tx.accountId"
-    />
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
+  <ListItem v-bind="$attrs" :title="name" :subtitle="subtitle" v-on="$listeners">
+    <AeIdenticon slot="icon" :address="info.lastBid.tx.accountId" />
+    <slot v-for="slot in Object.keys($slots)" :slot="slot" :name="slot" />
   </ListItem>
 </template>
 
@@ -36,19 +24,22 @@ export default {
     const { convertAmount, topBlockHeight } = this.$store.state.observables;
 
     return {
-      subtitle: this
-        .$watchAsObservable(
-          ({ subtitleLastBid, info }) => ({ subtitleLastBid, info }),
-          { immediate: true },
-        )
-        .pipe(
-          pluck('newValue'),
-          switchMap(({ subtitleLastBid, info }) => (subtitleLastBid
+      subtitle: this.$watchAsObservable(
+        ({ subtitleLastBid, info }) => ({ subtitleLastBid, info }),
+        { immediate: true },
+      ).pipe(
+        pluck('newValue'),
+        switchMap(({ subtitleLastBid, info }) =>
+          subtitleLastBid
             ? convertAmount(() => new BigNumber(info.lastBid.tx.nameFee).shiftedBy(-MAGNITUDE))
             : topBlockHeight.pipe(
-              map((value) => `${this.$t('name.expiration')} ${blocksToRelativeTime(info.auctionEnd - value)}`),
-            ))),
+                map(
+                  (value) =>
+                    `${this.$t('name.expiration')} ${blocksToRelativeTime(info.auctionEnd - value)}`,
+                ),
+              ),
         ),
+      ),
     };
   },
 };

@@ -1,13 +1,6 @@
 <template>
-  <ButtonPlain
-    v-bind="$attrs"
-    class="app-shortcut"
-    v-on="$listeners"
-  >
-    <img
-      :src="icon"
-      :alt="name"
-    >
+  <ButtonPlain v-bind="$attrs" class="app-shortcut" v-on="$listeners">
+    <img :src="icon" :alt="name" />
     {{ name }}
   </ButtonPlain>
 </template>

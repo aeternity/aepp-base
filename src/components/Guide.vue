@@ -1,53 +1,40 @@
 <template>
-  <div
-    class="guide"
-    :class="[fill, size, { 'has-icon': $slots.icon }]"
-  >
-    <span
-      v-if="$slots.icon"
-      class="icon"
-    >
+  <div class="guide" :class="[fill, size, { 'has-icon': $slots.icon }]">
+    <span v-if="$slots.icon" class="icon">
       <slot name="icon" />
     </span>
 
-    <TemplateRenderer
-      v-if="template"
-      class="content"
-      :node="templateRootNode"
-      :slots="$slots"
-    />
-    <div
-      v-else
-      class="content"
-    >
+    <TemplateRenderer v-if="template" class="content" :node="templateRootNode" :slots="$slots" />
+    <div v-else class="content">
       <slot />
     </div>
   </div>
 </template>
 
 <script>
-const renderNodeContent = (createElement, node, slots) => (!node.childNodes.length
-  ? node.textContent
-  : Array.from(node.childNodes)
-    .filter((n) => [Node.ELEMENT_NODE, Node.TEXT_NODE].includes(n.nodeType))
-    .map((n) => {
-      switch (n.tagName) {
-        case 'primary':
-          return createElement('em', renderNodeContent(createElement, n, slots));
-        case 'secondary':
-          return createElement('mark', renderNodeContent(createElement, n, slots));
-        case 'alternative':
-          return createElement('strong', renderNodeContent(createElement, n, slots));
-        case 'br':
-          return createElement('br');
-        case 'p':
-          return createElement('p', renderNodeContent(createElement, n, slots));
-        case undefined:
-          return n.textContent;
-        default:
-          return slots[n.tagName];
-      }
-    }));
+const renderNodeContent = (createElement, node, slots) =>
+  !node.childNodes.length
+    ? node.textContent
+    : Array.from(node.childNodes)
+        .filter((n) => [Node.ELEMENT_NODE, Node.TEXT_NODE].includes(n.nodeType))
+        .map((n) => {
+          switch (n.tagName) {
+            case 'primary':
+              return createElement('em', renderNodeContent(createElement, n, slots));
+            case 'secondary':
+              return createElement('mark', renderNodeContent(createElement, n, slots));
+            case 'alternative':
+              return createElement('strong', renderNodeContent(createElement, n, slots));
+            case 'br':
+              return createElement('br');
+            case 'p':
+              return createElement('p', renderNodeContent(createElement, n, slots));
+            case undefined:
+              return n.textContent;
+            default:
+              return slots[n.tagName];
+          }
+        });
 
 const TemplateRenderer = {
   functional: true,
@@ -69,11 +56,7 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: (value) => [
-        'primary',
-        'alternative',
-        'neutral',
-      ].includes(value),
+      validator: (value) => ['primary', 'alternative', 'neutral'].includes(value),
       default: 'primary',
     },
     size: {
@@ -88,8 +71,8 @@ export default {
   },
   computed: {
     templateRootNode() {
-      return new DOMParser()
-        .parseFromString(`<root>${this.template}</root>`, 'text/xml').childNodes[0];
+      return new DOMParser().parseFromString(`<root>${this.template}</root>`, 'text/xml')
+        .childNodes[0];
     },
   },
 };
@@ -134,7 +117,8 @@ export default {
       width: functions.rem(23px);
     }
 
-    img, .ae-identicon {
+    img,
+    .ae-identicon {
       vertical-align: middle;
     }
 
@@ -142,7 +126,8 @@ export default {
       font-style: normal;
     }
 
-    mark, strong {
+    mark,
+    strong {
       font-weight: 500;
     }
 

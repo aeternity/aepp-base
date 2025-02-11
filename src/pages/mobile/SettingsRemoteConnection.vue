@@ -11,9 +11,11 @@
         v-for="follower in followers"
         :key="follower.id"
         :title="follower.name"
-        :subtitle="follower.connected
-          ? $t('remote-connection.settings.list.connected')
-          : $t('remote-connection.settings.list.disconnected', { date: follower.disconnectedAt })"
+        :subtitle="
+          follower.connected
+            ? $t('remote-connection.settings.list.connected')
+            : $t('remote-connection.settings.list.disconnected', { date: follower.disconnectedAt })
+        "
         inactive
       >
         <AeButton
@@ -49,8 +51,8 @@ export default {
     AeButton,
   },
   computed: mapState({
-    followers: ({ mobile: { followers } }) => Object.values(followers)
-      .map((f) => ({
+    followers: ({ mobile: { followers } }) =>
+      Object.values(followers).map((f) => ({
         ...f,
         disconnectedAt: new Date(f.disconnectedAt).toLocaleString(),
       })),

@@ -2,9 +2,7 @@ describe('Auctions', () => {
   const name = `test-${Date.now().toString().slice(3, -3)}`;
 
   it('starts an auction', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/names/new', { login: 'wallet-2' });
+    cy.viewport('iphone-se2').visit('/names/new', { login: 'wallet-2' });
     cy.get('input').type(name);
     cy.get('.ae-button').click();
 
@@ -23,11 +21,10 @@ describe('Auctions', () => {
   });
 
   it('bids on auction', () => {
-    cy.viewport('iphone-se2')
-      .visit(
-        `/names/bid/${name}.chain/amount`,
-        { login: 'wallet-2', state: { accounts: { activeIdx: 1 } } },
-      );
+    cy.viewport('iphone-se2').visit(`/names/bid/${name}.chain/amount`, {
+      login: 'wallet-2',
+      state: { accounts: { activeIdx: 1 } },
+    });
     cy.get('input').type(4);
     cy.get('.ae-button').click();
 

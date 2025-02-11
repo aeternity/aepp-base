@@ -2,19 +2,12 @@ const stateCreatedMnemonic = require('../fixtures/state-created-mnemonic-not-bac
 const stateRecovered = require('../fixtures/state-recovered.json');
 
 function openRoot() {
-  cy
-    .viewport('iphone-se2')
-    .visit('/')
-    .get('[data-cy="skip"]')
-    .click();
+  cy.viewport('iphone-se2').visit('/').get('[data-cy="skip"]').click();
 }
 
 describe('Create or recover account', () => {
   it('creates new account, goes to security courses', () => {
-    cy
-      .viewport('iphone-se2')
-      .visit('/')
-      .matchImage();
+    cy.viewport('iphone-se2').visit('/').matchImage();
 
     cy.get('[data-cy="skip"]').click();
     cy.matchImage();
@@ -47,7 +40,9 @@ describe('Create or recover account', () => {
     cy.location('pathname').should('eq', '/');
     cy.get('[data-cy="recover"]').click();
 
-    cy.get('textarea').type('abandon amount liar amount expire adjust cage candy arch gather drum buyer');
+    cy.get('textarea').type(
+      'abandon amount liar amount expire adjust cage candy arch gather drum buyer',
+    );
     cy.get('.ae-button').click();
     cy.get('.security-course-modal > .modal-plain').should('be.visible');
     cy.matchImage();
@@ -62,9 +57,10 @@ describe('Create or recover account', () => {
 });
 
 describe('Onboarding', () => {
-  const ensureAnimationOver = () => cy
-    .get('.onboarding-page')
-    .should(($div) => expect($div.attr('class')).to.not.contain('active'));
+  const ensureAnimationOver = () =>
+    cy
+      .get('.onboarding-page')
+      .should(($div) => expect($div.attr('class')).to.not.contain('active'));
 
   it('walks through', () => {
     openRoot();

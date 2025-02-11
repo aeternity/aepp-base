@@ -9,7 +9,8 @@
     {{ ' ' }}
     (<AeLink :to="`https://github.com/aeternity/aepp-base/commit/${revision}`">{{
       revision.slice(0, 7)
-    }}</AeLink>)
+    }}</AeLink
+    >)
     <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
     <!-- eslint-enable vue/multiline-html-element-content-newline -->
   </div>
@@ -37,7 +38,8 @@ export default {
   @extend %face-sans-s;
   text-align: center;
 
-  &, a {
+  &,
+  a {
     color: variables.$color-neutral-negative-1;
   }
 }

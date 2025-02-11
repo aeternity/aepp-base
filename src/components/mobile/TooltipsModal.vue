@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="tooltips-modal"
-    @click.self="resolve"
-  >
+  <div class="tooltips-modal" @click.self="resolve">
     <div
       v-for="(t, idx) in tooltips"
       :key="idx"
@@ -62,12 +59,15 @@ export default {
       const padding = 5;
       this.anchorRects = this.tooltips
         .map(({ selector }) => document.querySelector(selector).getBoundingClientRect())
-        .map((rect) => new DOMRect(
-          rect.left - padding,
-          rect.top - padding,
-          rect.width + padding * 2,
-          rect.height + padding * 2,
-        ));
+        .map(
+          (rect) =>
+            new DOMRect(
+              rect.left - padding,
+              rect.top - padding,
+              rect.width + padding * 2,
+              rect.height + padding * 2,
+            ),
+        );
     };
     setTimeout(updateAnchorRects);
     window.addEventListener('resize', updateAnchorRects);

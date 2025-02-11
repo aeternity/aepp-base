@@ -18,10 +18,7 @@
       :subtitle="$t('transfer.receive.copy-subtitle')"
       border-dark
     >
-      <img
-        slot="icon"
-        :src="writingHandEmoji"
-      >
+      <img slot="icon" :src="writingHandEmoji" />
       <ListItemCircle slot="right">
         <Check />
       </ListItemCircle>
@@ -33,14 +30,8 @@
       border-dark
       @click="share"
     >
-      <img
-        slot="icon"
-        :src="envelopeEmoji"
-      >
-      <ListItemCircle
-        v-if="sharedChecked"
-        slot="right"
-      >
+      <img slot="icon" :src="envelopeEmoji" />
+      <ListItemCircle v-if="sharedChecked" slot="right">
         <Check />
       </ListItemCircle>
     </ListItem>
@@ -82,7 +73,9 @@ export default {
     async share() {
       await this.$store.dispatch('share', { text: this.activeAccount.address });
       this.sharedChecked = true;
-      setTimeout(() => { this.sharedChecked = false; }, 500);
+      setTimeout(() => {
+        this.sharedChecked = false;
+      }, 500);
     },
   },
 };

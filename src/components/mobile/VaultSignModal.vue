@@ -6,25 +6,13 @@
     right-button-icon-name="close"
     @right-button-click="closeHandler"
   >
-    <Guide
-      :template="$t('air-gap.modal.sign.guide')
-      "
-      fill="neutral"
-    >
-      <AeFraction
-        v-if="stepFraction"
-        slot="icon"
-        v-bind="stepFraction"
-      />
+    <Guide :template="$t('air-gap.modal.sign.guide')" fill="neutral">
+      <AeFraction v-if="stepFraction" slot="icon" v-bind="stepFraction" />
     </Guide>
 
     <AeQrCode :data="url" />
 
-    <AeButton
-      slot="footer"
-      fill="light"
-      @click="resolve"
-    >
+    <AeButton slot="footer" fill="light" @click="resolve">
       {{ $t('air-gap.modal.sign.done') }}
     </AeButton>
   </Page>

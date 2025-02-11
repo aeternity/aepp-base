@@ -6,25 +6,12 @@
     class="send"
   >
     <template slot="header">
-      <Guide
-        :template="$t('transfer.send.to.guide')"
-        fill="neutral"
-      >
-        <AeFraction
-          slot="icon"
-          numerator="1"
-          denominator="3"
-        />
-        <AccountInline
-          slot="account"
-          :address="activeAccount.address"
-        />
+      <Guide :template="$t('transfer.send.to.guide')" fill="neutral">
+        <AeFraction slot="icon" numerator="1" denominator="3" />
+        <AccountInline slot="account" :address="activeAccount.address" />
       </Guide>
 
-      <form
-        :id="_uid"
-        @submit.prevent="setAddress"
-      >
+      <form :id="_uid" @submit.prevent="setAddress">
         <AeInputAccount
           v-model="accountTo"
           v-validate="'required|account'"
@@ -37,18 +24,11 @@
       </form>
     </template>
 
-    <AeButton
-      :disabled="errors.any()"
-      :form="_uid"
-      fill="secondary"
-    >
+    <AeButton :disabled="errors.any()" :form="_uid" fill="secondary">
       {{ $t('next') }}
     </AeButton>
 
-    <div
-      v-if="inactiveAccounts.length"
-      class="own-account"
-    >
+    <div v-if="inactiveAccounts.length" class="own-account">
       {{ $t('transfer.send.to.subaccount') }}
     </div>
     <ListItemAccount
@@ -105,7 +85,7 @@ export default {
   },
   methods: {
     async setAddress() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
       if (this.activeAccount.address === this.accountToAddress) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',

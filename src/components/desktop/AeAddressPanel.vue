@@ -3,10 +3,7 @@
     <div class="title">
       {{ title }}
     </div>
-    <AeAddress
-      :address="address"
-      split-by="9"
-    />
+    <AeAddress :address="address" split-by="9" />
   </div>
 </template>
 
@@ -18,7 +15,9 @@ export default {
   props: {
     title: {
       type: String,
-      default() { return this.$t('components.address-panel.title-default'); },
+      default() {
+        return this.$t('components.address-panel.title-default');
+      },
     },
     address: {
       type: String,

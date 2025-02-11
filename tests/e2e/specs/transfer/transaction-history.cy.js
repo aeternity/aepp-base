@@ -1,14 +1,15 @@
 describe('Transfer: Transaction history', () => {
   it('shows list of transactions', () => {
-    cy
-      .viewport('iphone-se2')
+    cy.viewport('iphone-se2')
       .visit('/transfer', { login: true })
       .get('.list-item')
       .contains('Transactions')
       .click();
     cy.location('pathname').should('eq', '/transfer/transactions');
     cy.get('.list-item-transaction:not(.pending)').should('length', 15);
-    cy.matchImage({ screenshotConfig: { blackout: ['.list-item-transaction div.subtitle.monospace'] } });
+    cy.matchImage({
+      screenshotConfig: { blackout: ['.list-item-transaction div.subtitle.monospace'] },
+    });
   });
 
   it('shows transaction details', () => {
@@ -18,8 +19,8 @@ describe('Transfer: Transaction history', () => {
     cy.matchImage({
       screenshotConfig: {
         blackout: [
-          '.details-field:contains(\'Date\') .value',
-          '.details-field:contains(\'Transaction hash\') .ae-address',
+          ".details-field:contains('Date') .value",
+          ".details-field:contains('Transaction hash') .ae-address",
         ],
       },
     });
