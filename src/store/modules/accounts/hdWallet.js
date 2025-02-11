@@ -3,7 +3,15 @@
 import { pick } from 'lodash-es';
 import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
-import { buildTx, unpackTx, Tag, encode, decode, Encoding, sign } from '@aeternity/aepp-sdk-next';
+import {
+  buildTx,
+  unpackTx,
+  Tag,
+  encode,
+  decode,
+  Encoding,
+  MemoryAccount,
+} from '@aeternity/aepp-sdk-next';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
@@ -245,7 +253,9 @@ export default {
     },
 
     signWithoutConfirmation({ rootGetters }, data) {
-      return sign(data, rootGetters['accounts/active'].source.secretKey);
+      const sk = rootGetters['accounts/active'].source.secretKey;
+      const acc = new MemoryAccount(encode(sk.subarray(0, 32), Encoding.AccountSecretKey));
+      return acc.sign(data);
     },
 
     async confirmRawDataSigning({ dispatch }, { data, signal }) {

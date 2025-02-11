@@ -11,13 +11,11 @@ export async function resetConfirm() {
 
 export async function fetchAuctions(handler) {
   const { middleware } = this.$store.getters;
-  const res = await middleware.getNamesAuctions({ limit: 100 });
-  let { next } = res;
-  handler(res.data);
-  while (next) {
-    const r = middleware.getNamesAuctions({ overridePath: next });
-    handler(r.data);
-    next = r.next;
+  let page = await middleware.getNamesAuctions({ limit: 100 });
+  handler(page.data);
+  while (page.nextPath) {
+    page = await page.next();
+    handler(page.data);
   }
   handler();
 }

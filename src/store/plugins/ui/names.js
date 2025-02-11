@@ -81,7 +81,8 @@ export default (store) => {
         if (!force && state.names[id]) return;
         commit('set', { key: id });
         if (id.startsWith('ak_')) {
-          const nameEntry = (await middleware.getNamePointees(id)).active.accountPubkey?.[0];
+          const nameEntry = (await middleware.getAccountPointees(id, { limit: 100 }))
+            .data.find(({ active, key }) => active && key === 'account_pubkey');
           if (!nameEntry) return;
           commit('set', {
             address: id,
@@ -93,8 +94,8 @@ export default (store) => {
         if (id.startsWith('nm_')) {
           const entry = await middleware.getName(id);
           if (!entry.active) return;
-          const { name, hash, info: { pointers } } = entry;
-          commit('set', { address: pointers?.accountPubkey, name, hash });
+          const { name, hash } = entry;
+          commit('set', { address: getAddressByNameEntry(entry), name, hash });
           return;
         }
         if (isAensName(id)) {
@@ -132,9 +133,8 @@ export default (store) => {
          * @property {string} name - name ending with .chain
          * @property {string} owner - address
          * @property {array} pointers - array of objects with key and value
-         * @property {number | undefined} createdAt - block height
-         * @property {number | undefined} createdAtTxIdx - transaction index
-         * @property {number | undefined} expiresAt - block height
+         * @property {number | undefined} activeFrom - block height
+         * @property {number | undefined} expireHeight - block height
          * @property {'auction' | 'name' | 'pending'} status
          * @property {BigNumber | undefined} nameFee
          */
@@ -142,17 +142,12 @@ export default (store) => {
           rootState.accounts.list.map(({ address }) => Promise.all([
             getPendingNameClaimTransactions(address),
             middleware.getNames({ ownedBy: address, limit: 100, state: 'active' })
-              .then(({ data }) => data.map(({ name, info }) => ({
+              .then(({ data }) => data.map(({ name, pointers, activeFrom, expireHeight }) => ({
                 name,
                 owner: address,
-                pointers: Object.entries(info.pointers).map(([key, id]) => ({
-                  // TODO: remove with `mapKeysDeep`
-                  key: key === 'accountPubkey' ? 'account_pubkey' : key,
-                  id,
-                })),
-                createdAt: info.activeFrom,
-                createdAtTxIdx: info.claims[0],
-                expiresAt: info.expireHeight,
+                pointers: Object.values(pointers), // TODO: remove after updating sdk to 14.1.0
+                activeFrom,
+                expireHeight,
                 status: 'name',
               }))),
           ])),

@@ -120,11 +120,11 @@ export default {
       const all = [...this.allAuctions];
       switch (this.view) {
         case VIEW_ENDING_SOONEST:
-          return all.sort((a1, a2) => a1.info.auctionEnd - a2.info.auctionEnd);
+          return all.sort((a1, a2) => a1.auctionEnd - a2.auctionEnd);
         case VIEW_CHARACTER_LENGTH:
           return all.filter(({ name }) => name.length === this.length + AENS_DOMAIN.length);
         case VIEW_MAX_BID:
-          return all.sort((a1, a2) => a2.info.lastBid.tx.nameFee - a1.info.lastBid.tx.nameFee);
+          return all.sort((a1, a2) => a2.lastBid.tx.nameFee - a1.lastBid.tx.nameFee);
         default:
           throw new Error(`Invalid view: ${this.view}`);
       }
