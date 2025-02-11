@@ -8,9 +8,8 @@ services:
     stop_grace_period: 0s
 
   explorer:
-    # TODO: use upstream after merging https://github.com/aeternity/aescan/pull/774
-    image: davidyuk/temp:explorer
-    ports: [3070:80]
+    image: aeternity/aescan:0.20.0
+    ports: [3070:8080]
     environment:
       - NUXT_PUBLIC_NETWORK_NAME=Local network
       - NUXT_PUBLIC_NODE_URL=http://host.docker.internal:3013
