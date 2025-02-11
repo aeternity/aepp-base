@@ -121,6 +121,9 @@ export default {
         this.accountTo = '';
         this.amount = '';
         this.$validator.reset();
+      } catch (error) {
+        if (['Rejected by user', 'Cancelled by user'].includes(error.message)) return;
+        throw error;
       } finally {
         this.busy = false;
       }

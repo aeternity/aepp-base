@@ -152,9 +152,12 @@ export default {
       this.busy = true;
       await this.ensureNameFetched();
       try {
-        await (this.pointing
-          ? this.$store.dispatch('names/updatePointer', { name: this.name, address: this.accountTo })
-          : this.$store.state.sdk.aensTransfer(this.nameEntry.name, this.accountTo));
+        if (this.pointing) {
+          await this.$store.dispatch('names/updatePointer', { name: this.name, address: this.accountTo });
+        } else {
+          if (this.$store.state.sdk.then) await this.$store.state.sdk;
+          await this.$store.state.sdk.aensTransfer(this.nameEntry.name, this.accountTo);
+        }
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: this.pointing

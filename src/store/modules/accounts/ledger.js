@@ -4,6 +4,7 @@ import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Ae from '@aeternity/ledger-app-api';
 import { buildTx, decode, Tag } from '@aeternity/aepp-sdk-next';
 import { i18n } from '../../plugins/ui/languages';
+import { swallowModalAborted } from '../../plugins/ui/modals';
 import { RUNNING_IN_FRAME } from '../../../lib/constants';
 
 const signOnMobile = async ({ dispatch }) => {
@@ -34,7 +35,7 @@ export default {
     sign: signOnMobile,
     signTransaction: signOnMobile,
   } : {
-    async request({ dispatch }, { name, args }) {
+    async request({ dispatch }, { name, args, signal }) {
       const transport = await TransportWebUSB.create();
       const ledgerAppApi = new Ae(transport);
       if (RUNNING_IN_FRAME) return ledgerAppApi[name](...args);
@@ -43,18 +44,21 @@ export default {
       let error;
       try {
         do {
+          if (signal?.aborted) throw new Error('Request aborted');
           if (error) {
             // eslint-disable-next-line no-await-in-loop
-            await dispatch('modals/open', { name: 'retryLedgerRequest' }, { root: true });
+            await dispatch('modals/open', { name: 'retryLedgerRequest', signal }, { root: true });
           }
-          const modalPromise = dispatch('modals/open', { name: modalName }, { root: true });
+          const controller = new AbortController();
+          dispatch('modals/open', { name: modalName, signal: controller.signal }, { root: true })
+            .catch(swallowModalAborted);
           try {
             result = await ledgerAppApi[name](...args); // eslint-disable-line no-await-in-loop
             error = false;
           } catch (err) {
             error = true;
           } finally {
-            modalPromise.cancel();
+            controller.abort();
           }
         } while (error);
       } finally {
@@ -64,11 +68,13 @@ export default {
     },
 
     async create({ getters: { nextIdx }, commit, dispatch }) {
-      const modalPromise = dispatch('modals/open', {
+      const controller = new AbortController();
+      dispatch('modals/open', {
         name: 'confirmLedgerAddress',
+        signal: controller.signal,
         address: await dispatch('request', { name: 'getAddress', args: [nextIdx] }),
         create: true,
-      }, { root: true });
+      }, { root: true }).catch(swallowModalAborted);
       const transport = await TransportWebUSB.create();
       const ledgerAppApi = new Ae(transport);
       try {
@@ -78,7 +84,7 @@ export default {
         dispatch('modals/open', { name: 'ledgerAddressNotConfirmed' }, { root: true });
       } finally {
         await transport.close();
-        modalPromise.cancel();
+        controller.abort();
       }
     },
 
@@ -93,21 +99,24 @@ export default {
       }
     },
 
-    sign: () => Promise.reject(new Error('Not implemented yet')),
+    sign: () => {
+      throw new Error('Not implemented yet');
+    },
 
-    async signTransaction({ rootGetters, dispatch, rootState: { sdk } }, encodedTx) {
+    async signTransaction({ rootGetters, dispatch, rootState: { sdk } }, { transaction, signal }) {
       await dispatch('ensureCurrentAccountAvailable');
 
       const signatureHex = await dispatch('request', {
         name: 'signTransaction',
         args: [
           rootGetters['accounts/active'].source.idx,
-          decode(encodedTx),
+          decode(transaction),
           sdk.getNetworkId(),
         ],
+        signal,
       });
       const signature = Buffer.from(signatureHex, 'hex');
-      return buildTx({ tag: Tag.SignedTx, encodedTx, signatures: [signature] });
+      return buildTx({ tag: Tag.SignedTx, encodedTx: transaction, signatures: [signature] });
     },
   },
 };

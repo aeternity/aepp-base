@@ -167,7 +167,7 @@ export default (store) => {
       async updatePointer({
         rootState, state, commit, dispatch,
       }, { name, address }) {
-        const sdk = await Promise.resolve(rootState.sdk);
+        const sdk = await rootState.sdk;
         const nameEntry = await sdk.api.getNameEntryByName(name);
         await sdk.aensUpdate(
           name,

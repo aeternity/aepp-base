@@ -1,8 +1,6 @@
 import { noop } from 'lodash-es';
-import Promise from 'bluebird';
-import RPC from '../rpc';
+import RpcPeer, { markAbortable } from '../rpc';
 
-Promise.config({ cancellation: true });
 const testMethodName = 'test-method-name';
 const testArgs = ['test', 'args'];
 
@@ -15,14 +13,14 @@ describe('notifications', () => {
 
   it('sends', () => {
     const messageHandler = jest.fn();
-    const client = new RPC(messageHandler);
+    const client = new RpcPeer(messageHandler);
     client.notification(testMethodName, ...testArgs);
     expect(messageHandler).toHaveBeenCalledWith(testNotification);
   });
 
   it('processes', async () => {
     const notificationHandler = jest.fn();
-    const server = new RPC(noop, {
+    const server = new RpcPeer(noop, {
       [testMethodName]: notificationHandler,
     });
     await server.processMessage(testNotification);
@@ -57,7 +55,7 @@ describe('calls', () => {
   describe('client', () => {
     it('sends request', () => {
       const messageHandler = jest.fn();
-      const client = new RPC(messageHandler);
+      const client = new RpcPeer(messageHandler);
       client.call(testMethodName, ...testArgs);
       expect(messageHandler).toHaveBeenCalledWith(testRequest);
     });
@@ -69,33 +67,35 @@ describe('calls', () => {
         );
         if (messageHandler.mock.calls.length === 2) done();
       });
-      const client = new RPC(messageHandler);
-      const promise = client.call(testMethodName, ...testArgs);
-      promise.cancel();
+      const client = new RpcPeer(messageHandler);
+      const controller = new AbortController();
+      expect(client.call({ method: testMethodName, signal: controller.signal }, ...testArgs))
+        .rejects.toThrow('Request aborted');
+      controller.abort();
     });
 
     it('receives response', () => {
-      const client = new RPC(noop);
+      const client = new RpcPeer(noop);
       const promise = client.call(testMethodName, ...testArgs);
       client.processMessage(testResponse);
       expect(promise).resolves.toBe(testResult);
     });
 
     it('receives exception', () => {
-      const client = new RPC(noop);
+      const client = new RpcPeer(noop);
       const promise = client.call(testMethodName, ...testArgs);
       client.processMessage(testErrorResponse);
       expect(promise).rejects.toThrow(testError);
     });
 
     it('throws error if response with invalid id', async () => {
-      const client = new RPC(noop);
+      const client = new RpcPeer(noop);
       expect(() => client.processMessage(testResponse))
         .toThrow('Can\'t find request with id');
     });
 
     it('throws error if message type is invalid', async () => {
-      const client = new RPC(noop);
+      const client = new RpcPeer(noop);
       client.call(testMethodName, ...testArgs);
       expect(() => client.processMessage({ id: 1, type: 'invalid' }))
         .toThrow('Invalid response message type');
@@ -105,7 +105,7 @@ describe('calls', () => {
   describe('server', () => {
     it('process request', async () => {
       const requestHandler = jest.fn();
-      const server = new RPC(noop, {
+      const server = new RpcPeer(noop, {
         [testMethodName]: requestHandler,
       });
       await server.processMessage(testRequest);
@@ -113,18 +113,20 @@ describe('calls', () => {
     });
 
     it('cancels request', () => {
-      const requestPromise = new Promise(noop);
-      const server = new RPC(noop, {
-        [testMethodName]: () => requestPromise,
+      const abortHandler = jest.fn();
+      const server = new RpcPeer(noop, {
+        [testMethodName]: markAbortable((signal) => {
+          signal.addEventListener('abort', abortHandler);
+        }),
       });
       server.processMessage(testRequest);
       server.processMessage(testRequestCancel);
-      expect(requestPromise.isCancelled()).toBe(true);
+      expect(abortHandler).toHaveBeenCalledTimes(1);
     });
 
     it('sends response', async () => {
       const messageHandler = jest.fn();
-      const server = new RPC(messageHandler, {
+      const server = new RpcPeer(messageHandler, {
         [testMethodName]: () => testResult,
       });
       await server.processMessage(testRequest);
@@ -133,9 +135,9 @@ describe('calls', () => {
 
     it('sends exception', async () => {
       const messageHandler = jest.fn();
-      const server = new RPC(messageHandler, {
+      const server = new RpcPeer(messageHandler, {
         [testMethodName]() {
-          throw testError;
+          throw new Error(testError);
         },
       });
       await server.processMessage(testRequest);
@@ -144,7 +146,7 @@ describe('calls', () => {
 
     it('sends error if method not found', async () => {
       const messageHandler = jest.fn();
-      const server = new RPC(messageHandler);
+      const server = new RpcPeer(messageHandler);
       await server.processMessage(testRequest);
       expect(messageHandler).toHaveBeenCalledWith({
         id: 1,
@@ -154,11 +156,11 @@ describe('calls', () => {
 
     it('sends error if cancelling not existing request', () => {
       const messageHandler = jest.fn();
-      const server = new RPC(messageHandler);
+      const server = new RpcPeer(messageHandler);
       server.processMessage(testRequestCancel);
       expect(messageHandler).toHaveBeenCalledWith({
         id: testRequestCancel.id,
-        error: 'Can\'t cancel request: it\'s not found',
+        error: 'Can\'t cancel request: its abort controller not found',
       });
     });
   });

@@ -27,7 +27,6 @@
     "@ledgerhq/hw-transport-webusb": "6.28.6",
     "@zxing/library": "^0.21.0",
     "bignumber.js": "^9.1.2",
-    "bluebird": "^3.7.2",
     "buffer": "^6.0.3",
     "copy-to-clipboard": "^3.3.3",
     "emoji-datasource-apple": "^15.1.2",
@@ -50,13 +49,14 @@
     "vue-i18n": "^8.28.2",
     "vue-router": "^3.6.5",
     "vue-rx": "^6.2.0",
-    "vuex": "3.3.0",
+    "vuex": "^3.6.2",
     "vuex-router-sync": "^5.0.0",
     "workbox-precaching": "^7.1.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.6",
     "@babel/plugin-syntax-import-attributes": "^7.24.6",
+    "@babel/plugin-transform-private-methods": "^7.25.9",
     "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10",
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
     "@vue/cli-plugin-babel": "^5.0.8",

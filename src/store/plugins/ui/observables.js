@@ -112,7 +112,13 @@ export default (store) => {
         const url = new URL('https://api.coingecko.com/api/v3/simple/price');
         url.searchParams.set('ids', referenceCurrency);
         url.searchParams.set('vs_currencies', activeCode);
-        return (await fetchJson(url))[referenceCurrency][activeCode];
+        try {
+          return (await fetchJson(url))[referenceCurrency][activeCode];
+        } catch (error) {
+          // it is actually "429 (Too Many Requests)", but can't check because of missed CORS headers
+          if (error.message === 'Failed to fetch') return 0;
+          throw error;
+        }
       }),
       multicast(new BehaviorSubject(0)),
       refCountDelay(1000),

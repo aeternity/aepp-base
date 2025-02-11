@@ -52,12 +52,12 @@ export default {
   },
 
   actions: {
-    sign({ getters: { active, getModule }, dispatch }, data) {
-      return dispatch(`${getModule(active).name}/sign`, data);
+    sign({ getters: { active, getModule }, dispatch }, { data, signal }) {
+      return dispatch(`${getModule(active).name}/sign`, { data, signal });
     },
 
-    signTransaction({ getters: { active, getModule }, dispatch }, txBase64) {
-      return dispatch(`${getModule(active).name}/signTransaction`, txBase64);
+    signTransaction({ getters: { active, getModule }, dispatch }, { transaction, signal }) {
+      return dispatch(`${getModule(active).name}/signTransaction`, { transaction, signal });
     },
   },
 };

@@ -233,18 +233,18 @@ export default {
       return sign(data, rootGetters['accounts/active'].source.secretKey);
     },
 
-    async confirmRawDataSigning({ dispatch }, data) {
-      await dispatch('modals/open', { name: 'confirmSign', data }, { root: true });
+    async confirmRawDataSigning({ dispatch }, { data, signal }) {
+      await dispatch('modals/open', { name: 'confirmSign', data, signal }, { root: true });
       return data;
     },
 
-    async confirmTxSigning({ dispatch }, txEncoded) {
+    async confirmTxSigning({ dispatch }, { transaction, signal }) {
       let txObject;
       try {
-        txObject = unpackTx(txEncoded);
+        txObject = unpackTx(transaction);
       } catch (e) {
         return encode(
-          await dispatch('confirmRawDataSigning', decode(txEncoded)),
+          await dispatch('confirmRawDataSigning', { data: decode(transaction), signal }),
           Encoding.Transaction,
         );
       }
@@ -255,7 +255,7 @@ export default {
       ];
       if (!SupportedTags.includes(txObject.tag)) {
         return encode(
-          await dispatch('confirmRawDataSigning', decode(txEncoded)),
+          await dispatch('confirmRawDataSigning', { data: decode(transaction), signal }),
           Encoding.Transaction,
         );
       }
@@ -263,6 +263,7 @@ export default {
       const format = (value) => BigNumber(value).shiftedBy(-MAGNITUDE);
       const confirmProps = {
         name: 'confirmTransactionSign',
+        signal,
         transaction: {
           ...txObject,
           amount: txObject.amount && format(txObject.amount),
@@ -279,19 +280,19 @@ export default {
       });
     },
 
-    async sign({ dispatch }, data) {
-      await dispatch('confirmRawDataSigning', data);
+    async sign({ dispatch }, { data, signal }) {
+      await dispatch('confirmRawDataSigning', { data, signal });
       return dispatch('signWithoutConfirmation', data);
     },
 
-    async signTransaction({ dispatch, rootState }, txBase64) {
+    async signTransaction({ dispatch, rootState }, { transaction, signal }) {
       const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-      const encodedTx = await dispatch('confirmTxSigning', txBase64);
+      const txWithFee = await dispatch('confirmTxSigning', { transaction, signal });
       const signature = await dispatch(
         'signWithoutConfirmation',
-        Buffer.concat([Buffer.from(sdk.getNetworkId()), decode(encodedTx)]),
+        Buffer.concat([Buffer.from(sdk.getNetworkId()), decode(txWithFee)]),
       );
-      return buildTx({ tag: Tag.SignedTx, encodedTx, signatures: [signature] });
+      return buildTx({ tag: Tag.SignedTx, encodedTx: txWithFee, signatures: [signature] });
     },
   },
 };
