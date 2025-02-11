@@ -1,9 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 
 import Vue from 'vue';
-import {
-  update, mergeWith, isPlainObject, camelCase,
-} from 'lodash-es';
+import { mergeWith, isPlainObject, camelCase } from 'lodash-es';
 import { Node, _Middleware } from '@aeternity/aepp-sdk-next';
 import networksRegistry from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
@@ -93,15 +91,13 @@ export default {
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
     },
     toggleAccessToAccount({ apps }, { appHost, accountAddress }) {
-      if (!getAppByHost(apps, appHost)) apps.push({ host: appHost });
-      const app = getAppByHost(apps, appHost);
-      update(
-        app,
-        'permissions.accessToAccounts',
-        (arr = []) => (arr.includes(accountAddress)
-          ? arr.filter((address) => address !== accountAddress)
-          : [...arr, accountAddress]),
-      );
+      if (!getAppByHost(apps, appHost)) {
+        apps.push({ host: appHost, permissions: { accessToAccounts: [] } });
+      }
+      const { permissions: { accessToAccounts } } = getAppByHost(apps, appHost);
+      const idx = accessToAccounts.indexOf(accountAddress);
+      if (idx === -1) accessToAccounts.push(accountAddress);
+      else accessToAccounts.splice(idx, 1);
     },
     setOnLine(state, onLine) {
       state.onLine = onLine;

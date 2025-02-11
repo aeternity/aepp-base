@@ -1,5 +1,4 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import { get } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import Vue from 'vue';
 import { isAddressValid, produceNameId } from '@aeternity/aepp-sdk-next';
@@ -13,7 +12,7 @@ export default (store) => {
     namespaced: true,
     state: {
       names: {},
-      defaults: get(store.state, 'names.defaults', {}),
+      defaults: store.state.names?.defaults ?? {},
       owned: [],
     },
     getters: {

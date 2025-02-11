@@ -138,7 +138,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { get } from 'lodash-es';
 import AeCard from '../../components/AeCard.vue';
 import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -181,7 +180,7 @@ export default {
     remoteConnectionsCount: ({ mobile }) => Object
       .entries(mobile.followers).filter(([, f]) => f.connected).length,
     appsAccountAccessCount: ({ apps }) => apps
-      .filter((app) => get(app, 'permissions.accessToAccounts.length', 0)).length,
+      .filter((app) => app.permissions.accessToAccounts.length).length,
     mnemonic: ({ accounts: { hdWallet: { mnemonic } } }) => mnemonic,
     removableAccounts: ({ accounts: { list } }) => list
       .map((account, idx) => ({ ...account, idx }))
