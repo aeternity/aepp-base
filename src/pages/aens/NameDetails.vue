@@ -61,8 +61,8 @@ export default {
       name: Name,
       nameHash: NameId,
       owner: OwnerId,
-      createdAt: CreatedAtHeight,
-      expiresAt: ExpiresAtHeight,
+      activeFrom: CreatedAtHeight,
+      expireHeight: ExpiresAtHeight,
       pointers: DetailsNamePointers,
     },
   }),
@@ -108,7 +108,9 @@ export default {
       }
     },
     async goToTransactionDetails() {
-      const { hash } = await this.$store.getters.middleware.getTx(this.details.createdAtTxIdx);
+      const {
+        data: [{ sourceTxHash: hash }],
+      } = await this.$store.getters.middleware.getNameClaims(this.name, { limit: 1 });
       await this.$router.push(
         ENV_MOBILE_DEVICE
           ? { name: 'transaction-details', params: { hash } }

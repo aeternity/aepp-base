@@ -2,18 +2,15 @@
 
 import Vue from 'vue';
 import { mergeWith, isPlainObject, camelCase } from 'lodash-es';
-import { Node, _Middleware } from '@aeternity/aepp-sdk-next';
+import { Node, Middleware as MiddlewareOriginal } from '@aeternity/aepp-sdk-next';
 import networksRegistry from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
-class Middleware extends _Middleware {
+class Middleware extends MiddlewareOriginal {
   async sendOperationRequest(args, spec) {
     // TODO: remove after fixing https://github.com/aeternity/aepp-sdk-js/issues/1986
     if (args.options?.limit) this.limit = args.options?.limit;
-    const res = await super.sendOperationRequest(
-      args,
-      args.options?.overridePath ? { ...spec, path: args.options.overridePath } : spec,
-    );
+    const res = await super.sendOperationRequest(args, spec);
     delete this.limit;
 
     // TODO: remove after fixing https://github.com/aeternity/aepp-sdk-js/issues/1985
@@ -25,6 +22,10 @@ class Middleware extends _Middleware {
           mapKeysDeep(value, handler),
         ]);
         return Object.fromEntries(entries);
+      }
+      if (object?.data && object?.next && object?.prev) {
+        object.data = mapKeysDeep(object.data, handler);
+        return object;
       }
       return object;
     }

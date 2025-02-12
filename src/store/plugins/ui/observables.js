@@ -181,14 +181,14 @@ export default (store) => {
     );
 
   const fetchMdwTransactions = async ({ address, limit, next }) => {
-    const response = await store.getters.middleware.getTxs(
-      next ? { overridePath: next } : { direction: 'backward', account: address, limit },
-    );
-    const data = response.data
+    const page = await (next ? next() : store.getters.middleware.getTransactions(
+      { direction: 'backward', account: address, limit },
+    ));
+    const data = page.data
       .map(({ microTime, ...tx }) => ({ ...tx, time: microTime }))
       .map(normalizeTransaction);
     data.forEach(registerTx);
-    return { data, next: response.next };
+    return { data, next: page.nextPath && (() => page.next()) };
   };
 
   const fetchPendingTransactions = async (address) => (

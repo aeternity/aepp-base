@@ -28,8 +28,8 @@
           v-for="auction in auctions"
           :key="auction.name"
           :name="auction.name"
-          :balance="auction.nameFee"
-          :address="auction.accountId"
+          :balance="auction.highestBid"
+          :address="auction.highestBidder"
           :to="{ name: 'auction-details', params: { name: auction.name } }"
         />
       </AeCard>
@@ -42,13 +42,14 @@
 <script>
 import { mapState } from 'vuex';
 import BigNumber from 'bignumber.js';
+import { uniq } from 'lodash-es';
+import { isNameValid, isAuctionName, Node } from '@aeternity/aepp-sdk-next';
 import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
 import NamePending from '../../components/mobile/NamePending.vue';
 import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
-import { fetchAuctions } from '../../lib/methods';
 import { MAGNITUDE } from '../../lib/constants';
 
 export default {
@@ -60,7 +61,10 @@ export default {
     NamePending,
     ButtonAddFixed,
   },
-  data: () => ({ auctions: [] }),
+  data: () => ({
+    auctions: [],
+    height: null,
+  }),
   computed: mapState('names', ['owned']),
   async mounted() {
     const fetchNames = () => this.$store.dispatch('names/fetchOwned');
@@ -73,36 +77,42 @@ export default {
     this.$once('hook:destroyed', () => clearInterval(auctionInt));
   },
   methods: {
-    fetchAuctions,
     async fetchUserAuctions() {
       const addresses = this.$store.state.accounts.list.map(({ address }) => address);
-      const [auctions, ...claims] = await Promise.all([
-        new Promise((resolve) => {
-          const acc = [];
-          this.fetchAuctions((arr) => {
-            if (!arr) resolve(acc);
-            else acc.push(...arr);
-          });
-        }),
-        ...addresses.map((account) =>
-          this.$store.getters.middleware.getTxs({
+      // TODO: refactor after solving https://github.com/aeternity/ae_mdw/issues/1667
+      const claims = await Promise.all(
+        addresses.map((account) =>
+          this.$store.getters.middleware.getTransactions({
             direction: 'backward',
             account,
             limit: 100,
             type: ['name_claim'],
           }),
         ),
-      ]);
-      const claimIdxs = claims
-        .map(({ data }) => data)
-        .flat(1)
-        .map(({ txIndex }) => txIndex);
-      this.auctions = auctions
-        .filter((a) => a.info.bids.some((txId) => claimIdxs.includes(txId)))
-        .map((a) => ({
-          name: a.name,
-          accountId: a.info.lastBid.tx.accountId,
-          nameFee: BigNumber(a.info.lastBid.tx.nameFee).shiftedBy(-MAGNITUDE),
+      );
+      this.height ??= await this.$store.state.sdk.height();
+      const recentlyClaimedNames = uniq(
+        claims
+          .map(({ data }) => data)
+          .flat()
+          // max auction length is 29760 blocks, but it can be increased multiple times by 120
+          .filter(({ blockHeight }) => blockHeight > this.height - 40000)
+          .map(({ tx: { name } }) => name.toLowerCase())
+          .filter((name) => isNameValid(name) && isAuctionName(name)),
+      );
+      const nodeNoRetry = new Node(this.$store.state.sdkUrl, { retryCount: 0 });
+      this.auctions = (
+        await Promise.allSettled(
+          recentlyClaimedNames.map((name) =>
+            nodeNoRetry.getAuctionEntryByName(name).then((entry) => ({ ...entry, name })),
+          ),
+        )
+      )
+        .filter(({ status }) => status === 'fulfilled')
+        .map(({ value: { name, highestBidder, highestBid } }) => ({
+          name,
+          highestBidder,
+          highestBid: BigNumber(highestBid).shiftedBy(-MAGNITUDE),
         }));
     },
   },

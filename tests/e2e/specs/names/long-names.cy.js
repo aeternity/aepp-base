@@ -57,7 +57,7 @@ describe('Long names', () => {
   it('register name', () => {
     const name = `test-${Date.now().toString().slice(0, -3)}`;
     cy.viewport('iphone-se2').visit('/names/new', { login: 'wallet-2' });
-    cy.get('input').type(name);
+    cy.get('input').type(`${name}{moveToStart}${'{rightArrow}'.repeat(4)}-`);
     cy.get('.ae-button').click();
 
     cy.get('.turtle-rabbit').should('be.visible');
