@@ -51,6 +51,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import { defer } from 'lodash-es';
+import { Name } from '@aeternity/aepp-sdk-next';
 import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
 import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -149,8 +150,7 @@ export default {
             address: this.accountTo,
           });
         } else {
-          if (this.$store.state.sdk.then) await this.$store.state.sdk;
-          await this.$store.state.sdk.aensTransfer(this.nameEntry.name, this.accountTo);
+          await new Name(this.name, this.$store.getters.sdk.getContext()).transfer(this.accountTo);
         }
         this.$store.dispatch('modals/open', {
           name: 'notification',

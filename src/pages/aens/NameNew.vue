@@ -39,6 +39,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { Name } from '@aeternity/aepp-sdk-next';
 import { MAX_AUCTION_NAME_LENGTH } from '../../lib/constants';
 import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
@@ -62,7 +63,6 @@ export default {
     async handleSubmit() {
       if (!(await this.$validator.validateAll())) return;
       this.busy = true;
-      let claimTxHash;
 
       try {
         await this.$store.getters.node.getAuctionEntryByName(this.name);
@@ -82,11 +82,11 @@ export default {
         }
       }
 
+      const name = new Name(this.name, this.$store.getters.sdk.getContext());
+      let claimTxHash;
       try {
-        const { salt } = await this.$store.state.sdk.aensPreclaim(this.name);
-        claimTxHash = (await this.$store.state.sdk.aensClaim(this.name, salt, { waitMined: false }))
-          .hash;
-
+        await name.preclaim();
+        claimTxHash = (await name.claim({ waitMined: false })).hash;
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: this.$t('name.new.notification.claim-sent', { name: this.name }),
@@ -102,7 +102,7 @@ export default {
 
       try {
         this.$store.dispatch('names/fetchOwned');
-        await this.$store.state.sdk.poll(claimTxHash);
+        await this.$store.getters.sdk.poll(claimTxHash);
         const isAuction = MAX_AUCTION_NAME_LENGTH >= this.name.length;
         if (!isAuction) {
           await this.$store.dispatch('names/updatePointer', {

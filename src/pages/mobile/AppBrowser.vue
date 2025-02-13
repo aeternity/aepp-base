@@ -83,7 +83,7 @@ export default {
     },
   },
   async mounted() {
-    const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
+    const sdk = await this.$store.state.sdk;
 
     const connection = BrowserWindowMessageConnection({ target: this.$refs.iframe.contentWindow });
     sdk.addRpcClient(connection);

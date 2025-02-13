@@ -31,7 +31,7 @@
 <script>
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { encode, Encoding, MemoryAccount, Node, transferFunds } from '@aeternity/aepp-sdk-next';
+import { encode, Encoding, MemoryAccount, transferFunds } from '@aeternity/aepp-sdk-next';
 import { handleUnknownError } from '../../lib/utils';
 import AeSpinner from '../../components/AeSpinner.vue';
 import Page from '../../components/Page.vue';
@@ -97,7 +97,7 @@ export default {
       const account = new MemoryAccount(
         encode(privateKey.subarray(0, 32), Encoding.AccountSecretKey),
       );
-      const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
+      const { sdk } = this.$store.getters;
       this.balance = BigNumber(await sdk.getBalance(account.address)).shiftedBy(-MAGNITUDE);
       if (this.balance < MIN_SPEND_TX_FEE) {
         await this.$store.dispatch('modals/open', {
@@ -116,7 +116,7 @@ export default {
         tx: { amount },
       } = await transferFunds(1, accountTo, {
         onAccount: this.inviteAccount,
-        onNode: new Node(this.$store.state.sdkUrl),
+        onNode: this.$store.getters.node,
       });
       this.$router.push({ name: 'transfer' });
       this.$store.dispatch('modals/open', {

@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import BigNumber from 'bignumber.js';
 import Vue from 'vue';
-import { isAddressValid, produceNameId } from '@aeternity/aepp-sdk-next';
+import { isAddressValid, Name, produceNameId } from '@aeternity/aepp-sdk-next';
 import { MAGNITUDE } from '../../../lib/constants';
 import {
   handleUnknownError, isAccountNotFoundError, getAddressByNameEntry, isAensName,
@@ -40,8 +40,8 @@ export default (store) => {
         if (names[id].address) return names[id].address;
         return '';
       },
-      getDefault: ({ defaults }, getters, { sdk }) => (address) => (
-        sdk.then ? undefined : defaults[`${address}-${sdk.getNetworkId()}`]
+      getDefault: ({ defaults }, _getters, { sdkSync: { networkId } }) => (address) => (
+        defaults[`${address}-${networkId}`]
       ),
       isPending: ({ owned }) => (name) => (
         !!((owned.find((t) => t.name === name)) || {}).status === 'pending'
@@ -159,12 +159,10 @@ export default (store) => {
         commit('setDefault', { name, address, networkId: sdk.getNetworkId() });
       },
       async updatePointer({
-        rootState, state, commit, dispatch,
+        rootGetters, state, commit, dispatch,
       }, { name, address }) {
-        const sdk = await rootState.sdk;
-        const nameEntry = await sdk.api.getNameEntryByName(name);
-        await sdk.aensUpdate(
-          name,
+        const nameEntry = await rootGetters.node.getNameEntryByName(name);
+        await (new Name(name, rootGetters.sdk.getContext())).update(
           address ? { account_pubkey: address } : {},
           { extendPointers: true },
         );

@@ -314,12 +314,11 @@ export default {
       return dispatch('signWithoutConfirmation', data);
     },
 
-    async signTransaction({ dispatch, rootState }, { transaction, signal }) {
-      const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
+    async signTransaction({ dispatch, rootGetters: { node } }, { transaction, signal }) {
       const txWithFee = await dispatch('confirmTxSigning', { transaction, signal });
       const signature = await dispatch(
         'signWithoutConfirmation',
-        Buffer.concat([Buffer.from(sdk.getNetworkId()), decode(txWithFee)]),
+        Buffer.concat([Buffer.from(await node.getNetworkId()), decode(txWithFee)]),
       );
       return buildTx({ tag: Tag.SignedTx, encodedTx: txWithFee, signatures: [signature] });
     },

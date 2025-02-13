@@ -123,8 +123,8 @@ export default {
   }),
   computed: {
     ...mapGetters(['currentNetwork']),
-    ...mapState({
-      networkId: (state) => state.sdk && state.sdk.getNetworkId && state.sdk.getNetworkId(),
+    ...mapState('sdkSync', {
+      networkId: ({ networkId }) => (networkId.startsWith('_') ? null : networkId),
     }),
   },
   methods: {

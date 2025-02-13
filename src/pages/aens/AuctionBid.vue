@@ -75,6 +75,7 @@
 import { pick, debounce } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
+import { Name } from '@aeternity/aepp-sdk-next';
 import { MAGNITUDE } from '../../lib/constants';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';
@@ -144,7 +145,9 @@ export default {
       }
       this.busy = true;
       try {
-        await this.$store.state.sdk.aensBid(name, BigNumber(this.amount).shiftedBy(MAGNITUDE));
+        await new Name(name, this.$store.getters.sdk.getContext()).bid(
+          BigNumber(this.amount).shiftedBy(MAGNITUDE),
+        );
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: i18n.t('name.new.notification.bid', { name }),

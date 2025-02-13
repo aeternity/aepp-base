@@ -556,7 +556,7 @@
   "network": {
     "connection-status": {
       "offline": "Estás desconectado... Comprueba tu conexión",
-      "no-sdk": "No podemos conectarnos al nodo elegido",
+      "cant-connect": "No podemos conectarnos al nodo elegido",
       "connecting": "Conectando a la red...",
       "connected-to-testnet": "Está conectado a una red de prueba",
       "middleware": {

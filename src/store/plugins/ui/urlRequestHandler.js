@@ -41,7 +41,7 @@ export default (store) => {
       return;
     }
     try {
-      if (store.state.sdk.then) await store.state.sdk;
+      await store.state.sdk;
       reply({
         result: await store.state.sdk[method](
           ...params,

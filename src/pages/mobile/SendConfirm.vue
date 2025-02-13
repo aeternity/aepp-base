@@ -28,8 +28,7 @@ export default {
         denominator: 3,
       });
       const amount = BigNumber(this.amount);
-      if (this.$store.state.sdk.then) await this.$store.state.sdk;
-      const { hash } = await this.$store.state.sdk.spend(amount.shiftedBy(MAGNITUDE), this.to);
+      const { hash } = await this.$store.getters.sdk.spend(amount.shiftedBy(MAGNITUDE), this.to);
 
       this.$router.push({ name: 'transfer' });
       this.$store.dispatch('modals/open', {
