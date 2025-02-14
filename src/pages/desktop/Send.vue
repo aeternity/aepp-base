@@ -100,7 +100,7 @@ export default {
       const amount = BigNumber(this.amount);
       this.busy = true;
       try {
-        const { hash } = await this.$store.state.sdk.spend(
+        const { hash } = await this.$store.getters.sdk.spend(
           amount.shiftedBy(MAGNITUDE),
           this.accountTo,
         );

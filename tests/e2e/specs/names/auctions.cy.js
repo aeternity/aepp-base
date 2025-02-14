@@ -15,6 +15,12 @@ describe('Auctions', () => {
     cy.get('.ae-button-group .secondary').click();
 
     cy.get('.notification')
+      .contains('You bid on')
+      .contains('successfully')
+      .should('be.visible')
+      .invoke('remove');
+
+    cy.get('.notification')
       .contains('Claim for')
       .contains('name was successfully sent')
       .should('be.visible');

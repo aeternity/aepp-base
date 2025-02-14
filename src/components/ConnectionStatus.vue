@@ -15,9 +15,13 @@ export default {
   computed: mapState({
     message({ onLine, sdk }) {
       if (!onLine) return { text: this.$t('network.connection-status.offline') };
-      if (!sdk) return { text: this.$t('network.connection-status.no-sdk') };
-      if (sdk.then)
-        return { text: this.$t('network.connection-status.connecting'), className: 'connecting' };
+      const { networkId } = this.$store.state.sdkSync;
+      switch (networkId) {
+        case '_cant-connect':
+          return { text: this.$t('network.connection-status.cant-connect') };
+        case '_connecting':
+          return { text: this.$t('network.connection-status.connecting'), className: 'connecting' };
+      }
       if (!this.middlewareStatus) {
         return {
           text: this.$t('network.connection-status.middleware.unavailable'),
@@ -32,7 +36,7 @@ export default {
           className: 'connecting',
         };
       }
-      if (process.env.NODE_ENV === 'production' && sdk.getNetworkId() !== 'ae_mainnet') {
+      if (process.env.NODE_ENV === 'production' && networkId !== 'ae_mainnet') {
         return {
           text: this.$t('network.connection-status.connected-to-testnet'),
           className: 'test-net',

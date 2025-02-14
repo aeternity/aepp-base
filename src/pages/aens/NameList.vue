@@ -61,10 +61,7 @@ export default {
     NamePending,
     ButtonAddFixed,
   },
-  data: () => ({
-    auctions: [],
-    height: null,
-  }),
+  data: () => ({ auctions: [] }),
   computed: mapState('names', ['owned']),
   async mounted() {
     const fetchNames = () => this.$store.dispatch('names/fetchOwned');
@@ -90,17 +87,17 @@ export default {
           }),
         ),
       );
-      this.height ??= await this.$store.state.sdk.height();
+      const height = await this.$store.getters.sdk.getHeight({ cached: true });
       const recentlyClaimedNames = uniq(
         claims
           .map(({ data }) => data)
           .flat()
           // max auction length is 29760 blocks, but it can be increased multiple times by 120
-          .filter(({ blockHeight }) => blockHeight > this.height - 40000)
+          .filter(({ blockHeight }) => blockHeight > height - 40000)
           .map(({ tx: { name } }) => name.toLowerCase())
           .filter((name) => isNameValid(name) && isAuctionName(name)),
       );
-      const nodeNoRetry = new Node(this.$store.state.sdkUrl, { retryCount: 0 });
+      const nodeNoRetry = new Node(this.$store.getters.node.$host, { retryCount: 0 });
       this.auctions = (
         await Promise.allSettled(
           recentlyClaimedNames.map((name) =>

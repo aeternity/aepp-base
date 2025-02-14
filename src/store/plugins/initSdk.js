@@ -151,7 +151,7 @@ export default (store) => {
     async ([sdk, list]) => {
       syncAccountsPromise = (async () => {
         if (sdk == null) return;
-        if (sdk.then) await sdk.then;
+        await sdk;
         store.commit('setSdkAccounts', list);
       })();
       await syncAccountsPromise;
@@ -161,7 +161,7 @@ export default (store) => {
   store.watch(
     (_state, getters) => getters['accounts/active']?.address,
     async (address) => {
-      if (store.state.sdk.then) await store.state.sdk;
+      await store.state.sdk;
       await syncAccountsPromise;
       store.commit('selectSdkAccount', address);
     },
