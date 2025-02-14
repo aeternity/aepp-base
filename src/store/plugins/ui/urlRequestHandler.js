@@ -1,7 +1,7 @@
 import { times } from 'lodash-es';
 import { ensureLoggedIn, mergeEnterHandlers } from '../../../router/utils';
 
-const urlRequestMethods = ['address', 'addressAndNetworkUrl', 'sign', 'signTransaction'];
+const urlRequestMethods = ['address', 'sign', 'signTransaction'];
 
 export default (store) => {
   const handleUrlRequest = async (url) => {
@@ -10,7 +10,8 @@ export default (store) => {
     const lastParamIdx = Math.max(
       -1,
       ...Array.from(Object.keys(url.query))
-        .map((key) => key.startsWith('param') && +key.replace('param', '')),
+        .filter((key) => key.startsWith('param'))
+        .map((key) => +key.replace('param', '')),
     );
     const params = times(
       lastParamIdx + 1,
