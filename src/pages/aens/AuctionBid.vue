@@ -132,7 +132,7 @@ export default {
       this.endsAt = endsAt;
       this.highestBid = new BigNumber(highestBid).shiftedBy(-MAGNITUDE);
     };
-    this.$watch(({ internalName }) => internalName, debounce(fetchDetails, 300));
+    this.$watch(({ internalName }) => internalName, debounce(fetchDetails, 200));
     await fetchDetails(this.internalName);
   },
   methods: {
