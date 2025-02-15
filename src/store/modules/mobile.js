@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-
 import Vue from 'vue';
 import { i18n } from '../plugins/ui/languages';
 

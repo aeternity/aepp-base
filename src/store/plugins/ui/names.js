@@ -1,4 +1,3 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 import BigNumber from 'bignumber.js';
 import Vue from 'vue';
 import { isAddressValid, Name, produceNameId } from '@aeternity/aepp-sdk-next';

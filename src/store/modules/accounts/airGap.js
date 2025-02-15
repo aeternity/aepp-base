@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
-
 import { encode, Encoding } from '@aeternity/aepp-sdk-next';
 import { getDesktopRemoteSignAction } from './utils';
 import {

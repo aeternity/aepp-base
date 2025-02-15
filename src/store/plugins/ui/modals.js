@@ -1,4 +1,3 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
 const modals = {};
 
 export const registerModal = ({

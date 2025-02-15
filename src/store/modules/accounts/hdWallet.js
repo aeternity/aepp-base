@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
-
 import { pick } from 'lodash-es';
 import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
