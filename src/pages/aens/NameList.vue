@@ -15,9 +15,7 @@
           :name="entry.name"
           :to="{ name: 'name-details', params: { name: entry.name } }"
           subtitle="address"
-        >
-          <NamePending v-if="entry.status === 'pending'" slot="right" />
-        </ListItemAccount>
+        />
       </AeCard>
     </template>
 
@@ -48,7 +46,6 @@ import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
-import NamePending from '../../components/mobile/NamePending.vue';
 import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
 import { MAGNITUDE } from '../../lib/constants';
 
@@ -58,7 +55,6 @@ export default {
     NameListHeader,
     AeCard,
     ListItemAccount,
-    NamePending,
     ButtonAddFixed,
   },
   data: () => ({ auctions: [] }),

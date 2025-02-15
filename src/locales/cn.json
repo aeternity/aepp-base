@@ -496,7 +496,6 @@
       "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
       "notification": {
-        "claim-sent": "为{name} 的名称已成功发送",
         "registered": "{name} 已成功注册",
         "bid": "You bid on {name} successfully",
         "unknown-error": "因为未知原因，{name} 未注册"

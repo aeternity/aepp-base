@@ -61,10 +61,6 @@ describe('Long names', () => {
     cy.get('.ae-button').click();
 
     cy.get('.turtle-rabbit').should('be.visible');
-    cy.matchImage({ screenshotConfig: { blackout: ['.details-raw-data code'] } });
-    cy.get('.ae-button-group .secondary').click();
-
-    cy.get('.turtle-rabbit').should('be.visible');
     cy.matchImage();
     cy.get('.ae-button-group .secondary').click();
 

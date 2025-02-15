@@ -5,7 +5,6 @@ export const MAGNITUDE_MICRO = -6;
 export const MAGNITUDE_PICO = -12;
 
 export const AENS_DOMAIN = '.chain';
-export const MAX_AUCTION_NAME_LENGTH = 12 + AENS_DOMAIN.length;
 
 export const NAME_LIST_ROUTE_NAMES = ['name-list', 'auction-list', 'auction-list-character-length'];
 

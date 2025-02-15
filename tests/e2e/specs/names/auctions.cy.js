@@ -7,23 +7,10 @@ describe('Auctions', () => {
     cy.get('.ae-button').click();
 
     cy.get('.turtle-rabbit').should('be.visible');
-    cy.contains('Preclaim');
-    cy.get('.ae-button-group .secondary').click();
-
-    cy.get('.turtle-rabbit').should('be.visible');
     cy.matchImage();
     cy.get('.ae-button-group .secondary').click();
 
-    cy.get('.notification')
-      .contains('You bid on')
-      .contains('successfully')
-      .should('be.visible')
-      .invoke('remove');
-
-    cy.get('.notification')
-      .contains('Claim for')
-      .contains('name was successfully sent')
-      .should('be.visible');
+    cy.get('.notification').contains('You bid on').contains('successfully').should('be.visible');
   });
 
   it('bids on auction', () => {
