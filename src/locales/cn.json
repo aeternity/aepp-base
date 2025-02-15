@@ -132,6 +132,7 @@
 
     "list": {
       "featured-guide": "<primary>精选</primary>",
+      "browse-guide": "浏览",
       "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>浏览器</primary> (beta)",
       "note": "将运行在æternity区块链上的æpps添加到这里",

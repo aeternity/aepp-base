@@ -3,11 +3,12 @@
     <header>
       <UrlForm :current-url="url" @new-url="reload" />
 
-      <template v-if="path">
-        <ButtonPlain :to="{ name: 'app-browser' }">
-          <Home />
-        </ButtonPlain>
-      </template>
+      <ButtonPlain @click="toggleBookmarking">
+        <Component :is="bookmarked ? 'BookmarkFull' : 'Bookmark'" />
+      </ButtonPlain>
+      <ButtonPlain :to="{ name: 'app-list' }">
+        <Home />
+      </ButtonPlain>
       <ButtonPlain ref="menuButton" @click="showMenu = true">
         <More />
       </ButtonPlain>
@@ -39,11 +40,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
 import { PROTOCOLS_ALLOWED, PROTOCOL_DEFAULT } from '../../lib/constants';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
-import { Home, More, Reload } from '../../components/icons';
+import { Bookmark, BookmarkFull, Home, More, Reload } from '../../components/icons';
 import AeMenu from '../../components/AeMenu.vue';
 import AeMenuItem from '../../components/AeMenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
@@ -53,6 +55,8 @@ export default {
   components: {
     UrlForm,
     ButtonPlain,
+    Bookmark,
+    BookmarkFull,
     Home,
     More,
     Reload,
@@ -70,10 +74,10 @@ export default {
   },
   computed: {
     path() {
-      return this.$route.fullPath.replace(/\/browser\/?/, '');
+      return this.$route.fullPath.replace('/browser/', '');
     },
     url() {
-      const path = this.path || process.env.VUE_APP_HOME_PAGE_URL;
+      const path = this.path;
       const url = new URL(/^\w+:\D+/.test(path) ? path : `${PROTOCOL_DEFAULT}//${path}`);
       if (!PROTOCOLS_ALLOWED.includes(url.protocol)) url.protocol = PROTOCOL_DEFAULT;
       return url.toString();
@@ -81,6 +85,11 @@ export default {
     host() {
       return new URL(this.url).host;
     },
+    ...mapState({
+      bookmarked({ apps }) {
+        return apps.some(({ host, bookmarked }) => host === this.host && bookmarked);
+      },
+    }),
   },
   async mounted() {
     const sdk = await this.$store.state.sdk;
@@ -107,6 +116,9 @@ export default {
       this.loading = true;
       this.$refs.iframe.src += '';
       this.$refs.iframe.focus();
+    },
+    toggleBookmarking() {
+      this.$store.commit('toggleAppBookmarking', this.host);
     },
   },
 };

@@ -132,6 +132,7 @@
 
     "list": {
       "featured-guide": "<primary>æpps destacados</primary>",
+      "browse-guide": "Examinar æpps",
       "bookmarked-guide": "Mis æpps",
       "guide": "æpps <primary>explorador</primary> (beta)",
       "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación",

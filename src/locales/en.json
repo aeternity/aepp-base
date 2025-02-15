@@ -132,6 +132,7 @@
 
     "list": {
       "featured-guide": "<primary>Featured</primary>",
+      "browse-guide": "Browse",
       "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>browser</primary> (beta)",
       "note": "æpps running on the æternity blockchain will be added below.",

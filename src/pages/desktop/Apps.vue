@@ -7,12 +7,7 @@
     </Note>
 
     <div class="shortcuts">
-      <AppShortcut
-        v-for="(app, idx) in aeternityApps"
-        :key="idx"
-        v-bind="app"
-        :to="`https://${app.path}`"
-      />
+      <AppShortcut v-for="(app, idx) in apps" :key="idx" v-bind="app" :to="`https://${app.host}`" />
     </div>
   </div>
 </template>
@@ -23,21 +18,14 @@ import { fetchJson } from '../../store/utils';
 import Guide from '../../components/Guide.vue';
 import Note from '../../components/Note.vue';
 import AppShortcut from '../../components/AppShortcut.vue';
+import appsRegistry from '../../lib/appsRegistry';
 
 export default {
   components: { Guide, Note, AppShortcut },
-  data: () => ({ aeternityAppsPaths: [] }),
   computed: mapState({
-    aeternityApps(state, getters) {
-      return this.aeternityAppsPaths.map((path) => ({
-        ...getters['appsMetadata/get'](path),
-        path,
-      }));
-    },
+    apps: (state, getters) =>
+      appsRegistry.map((host) => ({ ...getters['appsMetadata/get'](host), host })),
   }),
-  async mounted() {
-    this.aeternityAppsPaths = await fetchJson(`${process.env.VUE_APP_HOME_PAGE_URL}/apps.json`);
-  },
 };
 </script>
 
