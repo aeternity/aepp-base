@@ -97,11 +97,12 @@ export default {
           .map(({ tx: { name } }) => name.toLowerCase())
           .filter((name) => isNameValid(name) && isAuctionName(name)),
       );
-      const nodeNoRetry = new Node(this.$store.getters.node.$host, { retryCount: 0 });
       this.auctions = (
         await Promise.allSettled(
           recentlyClaimedNames.map((name) =>
-            nodeNoRetry.getAuctionEntryByName(name).then((entry) => ({ ...entry, name })),
+            this.$store.getters.node
+              .getAuctionEntryByName(name)
+              .then((entry) => ({ ...entry, name })),
           ),
         )
       )

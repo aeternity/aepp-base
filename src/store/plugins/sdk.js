@@ -52,7 +52,7 @@ export default (store) => {
       networkId: '',
     },
     getters: {
-      node: (_, { currentNetwork }) => new Node(currentNetwork.url),
+      node: (_, { currentNetwork }) => new Node(currentNetwork.url, { retryCount: 0 }),
       middleware: (_, { currentNetwork }) => new Middleware(currentNetwork.middlewareUrl),
       sdk: (_, getters) => new AeSdkMethods({
         onNode: getters.node,
