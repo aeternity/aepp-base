@@ -42,7 +42,6 @@ describe('Names', () => {
 
   [
     'new',
-    'bid/engine.chain',
     'bid/engine.chain/amount',
     'personal/entertainment.chain/point',
     'personal/entertainment.chain/transfer',
@@ -51,5 +50,11 @@ describe('Names', () => {
       cy.viewport('iphone-se2').visit(`/names/${route}`, { login: true });
       cy.matchImage();
     });
+  });
+
+  it('shows bid/engine.chain', () => {
+    cy.viewport('iphone-se2').visit('/names/bid/engine.chain', { login: true });
+    cy.get('.ae-button').should('not.be.disabled');
+    cy.matchImage();
   });
 });
