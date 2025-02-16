@@ -4,6 +4,8 @@ import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
 import { PROTOCOL_DEFAULT } from '../../../lib/constants';
 
+const notPaddedIconAt = ['superhero.com', 'graffiti.aeternity.com', 'faucet.aepps.com'];
+
 export default (store) => store.registerModule('appsMetadata', {
   namespaced: true,
 
@@ -33,6 +35,7 @@ export default (store) => store.registerModule('appsMetadata', {
       }, null);
       if (icon) {
         metadata.icon = new URL(icon.src, `${PROTOCOL_DEFAULT}//${host}`).toString();
+        metadata.iconNotPadded = notPaddedIconAt.includes(host);
       }
 
       return metadata;
