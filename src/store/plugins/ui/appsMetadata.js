@@ -25,10 +25,11 @@ export default (store) => store.registerModule('appsMetadata', {
         .map(({ sizes = '', ...icon }) => sizes.split(' ').map((size) => ({ ...icon, size })))
         .flat()
         .map(({ size, ...icon }) => ({ ...icon, side: Math.max(...size.split('x')) }));
+      const optimalIconSide = 75 * window.devicePixelRatio;
       const icon = icons.reduce((p, i) => {
-        if (!p) return i || p;
-        if (p.side < 75) return i.side > p.side ? i : p;
-        return i.side > 75 && i.side < p.side ? i : p;
+        if (p == null) return i;
+        if (p.side < optimalIconSide) return i.side > p.side ? i : p;
+        return i.side > optimalIconSide && i.side < p.side ? i : p;
       }, null);
       if (icon) {
         metadata.icon = new URL(icon.src, `${PROTOCOL_DEFAULT}//${host}`).toString();
