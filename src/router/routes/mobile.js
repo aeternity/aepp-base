@@ -11,6 +11,8 @@ import OnboardingAepps from '../../pages/mobile/OnboardingAepps.vue';
 import OnboardingSubaccounts from '../../pages/mobile/OnboardingSubaccounts.vue';
 import Login from '../../pages/mobile/Login.vue';
 import Recover from '../../pages/mobile/Recover.vue';
+import AppList from '../../pages/mobile/AppList.vue';
+import AppDetails from '../../pages/mobile/AppDetails.vue';
 import AppBrowser from '../../pages/mobile/AppBrowser.vue';
 import VaultSetupMethod from '../../pages/mobile/VaultSetupMethod.vue';
 import VaultSetupAnotherDevice from '../../pages/mobile/VaultSetupAnotherDevice.vue';
@@ -128,9 +130,20 @@ export default [
     component: Recover,
   },
   {
-    name: 'app-browser',
+    name: 'app-list',
     path: '/browser',
-    alias: '/browser/*',
+    component: AppList,
+    beforeEnter: ensureLoggedIn,
+  },
+  {
+    name: 'app-details',
+    path: '/browser/details/:host',
+    component: AppDetails,
+    beforeEnter: ensureLoggedIn,
+  },
+  {
+    name: 'app-browser',
+    path: '/browser/*',
     component: AppBrowser,
     beforeEnter: ensureLoggedIn,
   },

@@ -4,6 +4,8 @@ import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
 import { PROTOCOL_DEFAULT } from '../../../lib/constants';
 
+const notPaddedIconAt = ['superhero.com', 'graffiti.aeternity.com', 'faucet.aepps.com'];
+
 export default (store) => store.registerModule('appsMetadata', {
   namespaced: true,
 
@@ -25,13 +27,15 @@ export default (store) => store.registerModule('appsMetadata', {
         .map(({ sizes = '', ...icon }) => sizes.split(' ').map((size) => ({ ...icon, size })))
         .flat()
         .map(({ size, ...icon }) => ({ ...icon, side: Math.max(...size.split('x')) }));
+      const optimalIconSide = 75 * window.devicePixelRatio;
       const icon = icons.reduce((p, i) => {
-        if (!p) return i || p;
-        if (p.side < 75) return i.side > p.side ? i : p;
-        return i.side > 75 && i.side < p.side ? i : p;
+        if (p == null) return i;
+        if (p.side < optimalIconSide) return i.side > p.side ? i : p;
+        return i.side > optimalIconSide && i.side < p.side ? i : p;
       }, null);
       if (icon) {
         metadata.icon = new URL(icon.src, `${PROTOCOL_DEFAULT}//${host}`).toString();
+        metadata.iconNotPadded = notPaddedIconAt.includes(host);
       }
 
       return metadata;

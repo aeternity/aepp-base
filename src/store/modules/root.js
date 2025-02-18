@@ -5,6 +5,10 @@ import { mergeWith } from 'lodash-es';
 import networksRegistry from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
+const getAppDefaults = () => ({
+  bookmarked: false,
+  permissions: { accessToAccounts: [] },
+});
 const getAppByHost = (apps, appHost) => apps.find(({ host }) => host === appHost);
 
 export default {
@@ -65,10 +69,13 @@ export default {
     removeNetwork(state, networkIdx) {
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
     },
+    toggleAppBookmarking({ apps }, appHost) {
+      if (!getAppByHost(apps, appHost)) apps.push({ ...getAppDefaults(), host: appHost });
+      const app = getAppByHost(apps, appHost);
+      app.bookmarked = !app.bookmarked;
+    },
     toggleAccessToAccount({ apps }, { appHost, accountAddress }) {
-      if (!getAppByHost(apps, appHost)) {
-        apps.push({ host: appHost, permissions: { accessToAccounts: [] } });
-      }
+      if (!getAppByHost(apps, appHost)) apps.push({ ...getAppDefaults(), host: appHost });
       const {
         permissions: { accessToAccounts },
       } = getAppByHost(apps, appHost);
