@@ -15,9 +15,7 @@
           :name="entry.name"
           :to="{ name: 'name-details', params: { name: entry.name } }"
           subtitle="address"
-        >
-          <NamePending v-if="entry.status === 'pending'" slot="right" />
-        </ListItemAccount>
+        />
       </AeCard>
     </template>
 
@@ -48,7 +46,6 @@ import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItemAccount from '../../components/ListItemAccount.vue';
-import NamePending from '../../components/mobile/NamePending.vue';
 import ButtonAddFixed from '../../components/ButtonAddFixed.vue';
 import { MAGNITUDE } from '../../lib/constants';
 
@@ -58,7 +55,6 @@ export default {
     NameListHeader,
     AeCard,
     ListItemAccount,
-    NamePending,
     ButtonAddFixed,
   },
   data: () => ({ auctions: [] }),
@@ -97,11 +93,12 @@ export default {
           .map(({ tx: { name } }) => name.toLowerCase())
           .filter((name) => isNameValid(name) && isAuctionName(name)),
       );
-      const nodeNoRetry = new Node(this.$store.getters.node.$host, { retryCount: 0 });
       this.auctions = (
         await Promise.allSettled(
           recentlyClaimedNames.map((name) =>
-            nodeNoRetry.getAuctionEntryByName(name).then((entry) => ({ ...entry, name })),
+            this.$store.getters.node
+              .getAuctionEntryByName(name)
+              .then((entry) => ({ ...entry, name })),
           ),
         )
       )

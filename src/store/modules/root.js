@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-
 import Vue from 'vue';
 import { mergeWith } from 'lodash-es';
 import networksRegistry from '../../lib/networksRegistry';

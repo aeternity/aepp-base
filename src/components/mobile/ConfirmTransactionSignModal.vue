@@ -31,7 +31,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { Tag } from '@aeternity/aepp-sdk-next';
+import { Tag, isAuctionName } from '@aeternity/aepp-sdk-next';
 import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
@@ -100,7 +100,7 @@ export default {
     guideTemplate() {
       const { tag } = this.transaction;
       if (tag === Tag.SpendTx) return this.$t('modal.confirm-transaction-sign.guide-spend');
-      if (tag === Tag.NameClaimTx && !+this.transaction.nameSalt) {
+      if (tag === Tag.NameClaimTx && isAuctionName(this.transaction.name)) {
         return this.$t('modal.confirm-transaction-sign.guide-name-bid');
       }
       return this.$t('modal.confirm-transaction-sign.guide', {

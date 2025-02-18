@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
-
 import { getDesktopRemoteSignAction } from './utils';
 import { i18n } from '../../plugins/ui/languages';
 

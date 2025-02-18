@@ -92,6 +92,8 @@ export default {
     async updateBids() {
       const { data } = await this.$store.getters.middleware
         // TODO: show more than 100 bids
+        // TODO: use /v3/names/auction.chain/claims instead
+        // TODO: remove previous bids after solving https://github.com/aeternity/ae_mdw/issues/2097
         .getAccountActivities(produceNameId(this.name), { limit: 100 });
       this.bids = data
         .filter(({ type }) => type === 'NameClaimEvent')

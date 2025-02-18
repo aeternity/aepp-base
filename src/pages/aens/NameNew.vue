@@ -39,8 +39,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { Name } from '@aeternity/aepp-sdk-next';
-import { MAX_AUCTION_NAME_LENGTH } from '../../lib/constants';
+import { Name, isAuctionName } from '@aeternity/aepp-sdk-next';
 import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import Page from '../../components/Page.vue';
@@ -83,27 +82,9 @@ export default {
       }
 
       const name = new Name(this.name, this.$store.getters.sdk.getContext());
-      let claimTxHash;
       try {
-        await name.preclaim();
-        claimTxHash = (await name.claim({ waitMined: false })).hash;
-        this.$store.dispatch('modals/open', {
-          name: 'notification',
-          text: this.$t('name.new.notification.claim-sent', { name: this.name }),
-        });
-        this.$router.push({ name: 'name-list' });
-      } catch (e) {
-        if (e.message === 'Rejected by user') return;
-        this.error = true;
-        handleUnknownError(e);
-      } finally {
-        this.busy = false;
-      }
-
-      try {
-        this.$store.dispatch('names/fetchOwned');
-        await this.$store.getters.sdk.poll(claimTxHash);
-        const isAuction = MAX_AUCTION_NAME_LENGTH >= this.name.length;
+        await name.claim();
+        const isAuction = isAuctionName(this.name);
         if (!isAuction) {
           await this.$store.dispatch('names/updatePointer', {
             name: this.name,
@@ -116,15 +97,17 @@ export default {
             ? i18n.t('name.new.notification.bid', { name: this.name })
             : i18n.t('name.new.notification.registered', { name: this.name }),
         });
+        this.$router.push({ name: 'name-list' });
       } catch (e) {
         if (e.message === 'Rejected by user') return;
+        this.error = true;
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: i18n.t('name.new.notification.unknown-error', { name: this.name }),
         });
         handleUnknownError(e);
       } finally {
-        this.$store.dispatch('names/fetchOwned');
+        this.busy = false;
       }
     },
   },

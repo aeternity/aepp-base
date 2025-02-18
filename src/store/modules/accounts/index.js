@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
-
 import airGap from './airGap';
 import hdWallet from './hdWallet';
 import hdWalletRemote from './hdWalletRemote';

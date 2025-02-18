@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-
 import Vue from 'vue';
 import { handleUnknownError } from '../../../lib/utils';
 import { PROTOCOL_DEFAULT } from '../../../lib/constants';

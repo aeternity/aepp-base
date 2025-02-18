@@ -1,11 +1,6 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import BigNumber from 'bignumber.js';
 import Vue from 'vue';
 import { isAddressValid, Name, produceNameId } from '@aeternity/aepp-sdk-next';
-import { MAGNITUDE } from '../../../lib/constants';
-import {
-  handleUnknownError, isAccountNotFoundError, getAddressByNameEntry, isAensName,
-} from '../../../lib/utils';
+import { getAddressByNameEntry, isAensName } from '../../../lib/utils';
 
 export default (store) => {
   store.registerModule('names', {
@@ -42,9 +37,6 @@ export default (store) => {
       },
       getDefault: ({ defaults }, _getters, { sdkSync: { networkId } }) => (address) => (
         defaults[`${address}-${networkId}`]
-      ),
-      isPending: ({ owned }) => (name) => (
-        !!((owned.find((t) => t.name === name)) || {}).status === 'pending'
       ),
     },
     mutations: {
@@ -110,24 +102,6 @@ export default (store) => {
         throw new Error(`Unknown id: ${id}`);
       },
       async fetchOwned({ rootState, rootGetters: { node, middleware }, commit }) {
-        const getPendingNameClaimTransactions = (address) => node
-          .getPendingAccountTransactionsByPubkey(address)
-          .then(
-            ({ transactions }) => transactions
-              .filter(({ tx: { type } }) => type === 'NameClaimTx')
-              .map(({ tx }) => ({
-                name: tx.name,
-                owner: address,
-                pointers: [],
-                status: 'pending',
-                nameFee: new BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-              })),
-            (error) => {
-              if (!isAccountNotFoundError(error)) handleUnknownError(error);
-              return [];
-            },
-          );
-
         /**
          * Name object structure
          * @property {string} name - name ending with .chain
@@ -135,12 +109,11 @@ export default (store) => {
          * @property {array} pointers - array of objects with key and value
          * @property {number | undefined} activeFrom - block height
          * @property {number | undefined} expireHeight - block height
-         * @property {'auction' | 'name' | 'pending'} status
+         * @property {'auction' | 'name'} status
          * @property {BigNumber | undefined} nameFee
          */
         const names = (await Promise.all(
-          rootState.accounts.list.map(({ address }) => Promise.all([
-            getPendingNameClaimTransactions(address),
+          rootState.accounts.list.map(({ address }) =>
             middleware.getNames({ ownedBy: address, limit: 100, state: 'active' })
               .then(({ data }) => data.map(({ name, pointers, activeFrom, expireHeight }) => ({
                 name,
@@ -149,9 +122,8 @@ export default (store) => {
                 activeFrom,
                 expireHeight,
                 status: 'name',
-              }))),
-          ])),
-        )).flat(2);
+              })))),
+        )).flat(1);
 
         commit('setOwned', names);
       },
