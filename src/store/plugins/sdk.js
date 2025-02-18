@@ -37,11 +37,11 @@ class AccountStore extends AccountBase {
     this.#store = store;
   }
 
-  sign(data, { signal }) {
+  sign(data, { signal } = {}) {
     return this.#store.dispatch('accounts/sign', { data, signal });
   }
 
-  signTransaction(transaction, { signal }) {
+  signTransaction(transaction, { signal } = {}) {
     return this.#store.dispatch('accounts/signTransaction', { transaction, signal });
   }
 }
@@ -54,10 +54,8 @@ export default (store) => {
     getters: {
       node: (_, { currentNetwork }) => new Node(currentNetwork.url, { retryCount: 0 }),
       middleware: (_, { currentNetwork }) => new Middleware(currentNetwork.middlewareUrl),
-      sdk: (_, getters) => new AeSdkMethods({
-        onNode: getters.node,
-        onAccount: new AccountStore(getters['accounts/active']?.address, store),
-      }),
+      account: (_, getters) => new AccountStore(getters['accounts/active']?.address, store),
+      sdk: (_, { node, account }) => new AeSdkMethods({ onNode: node, onAccount: account, }),
     },
     mutations: {
       setNetworkId(state, networkId) {
