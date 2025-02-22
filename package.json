@@ -39,7 +39,6 @@
     "rxjs-etc": "^10.6.2",
     "socket.io-client": "^4.7.5",
     "stream-browserify": "^3.0.0",
-    "swagger-client": "~3.19.7",
     "util": "^0.12.5",
     "vee-validate": "^2.2.15",
     "vue": "^2.7.16",
