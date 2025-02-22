@@ -11,7 +11,6 @@ import accountsModule from './modules/accounts';
 import runMigrations from './migrations';
 import persistState from './plugins/persistState';
 import remoteConnection from './plugins/remoteConnection';
-import initSdk from './plugins/initSdk';
 import sdk from './plugins/sdk';
 import registerServiceWorker from './plugins/registerServiceWorker';
 import reverseIframe from './plugins/reverseIframe';
@@ -80,7 +79,6 @@ export default new Vuex.Store({
             }),
       }),
     ),
-    initSdk,
     sdk,
     ...(RUNNING_IN_POPUP
       ? []

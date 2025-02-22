@@ -67,6 +67,11 @@ export default {
   },
 
   actions: {
+    setActiveIdx({ commit, state }, activeIdx) {
+      if (state.activeIdx === activeIdx) return;
+      commit('setActiveIdx', activeIdx);
+    },
+
     sign({ getters: { active, getModule }, dispatch }, { data, signal }) {
       return dispatch(`${getModule(active).name}/sign`, { data, signal });
     },

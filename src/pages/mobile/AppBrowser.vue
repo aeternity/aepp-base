@@ -41,7 +41,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import sdkWallet from '../../lib/sdkWallet';
 import { PROTOCOLS_ALLOWED, PROTOCOL_DEFAULT } from '../../lib/constants';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
@@ -92,23 +92,14 @@ export default {
     }),
   },
   async mounted() {
-    const sdk = await this.$store.state.sdk;
-
-    const connection = BrowserWindowMessageConnection({ target: this.$refs.iframe.contentWindow });
-    sdk.addRpcClient(connection);
-    const shareWalletInfoInterval = setInterval(
-      () => sdk.shareWalletInfo(connection.sendMessage.bind(connection)),
-      3000,
-    );
-
+    const unbind = sdkWallet(this.$store, this.$refs.iframe.contentWindow, this.host);
     const handler = () => {
       this.showMenu = false;
     };
     window.addEventListener('blur', handler);
     this.$once('hook:destroyed', () => {
       window.removeEventListener('blur', handler);
-      clearInterval(shareWalletInfoInterval);
-      Object.keys(sdk.rpcClients).forEach((id) => sdk.removeRpcClient(id));
+      unbind();
     });
   },
   methods: {

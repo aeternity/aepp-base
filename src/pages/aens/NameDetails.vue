@@ -99,12 +99,14 @@ export default {
       const requiredAccountIdx = this.$store.state.accounts.list.findIndex(
         ({ address }) => address === this.details.owner,
       );
-      if (initialAccountIdx !== requiredAccountIdx) {
-        this.$store.commit('accounts/setActiveIdx', requiredAccountIdx);
-      }
-      await this.$store.dispatch('names/updatePointer', { name: this.name, address: this.address });
-      if (initialAccountIdx !== requiredAccountIdx) {
-        this.$store.commit('accounts/setActiveIdx', initialAccountIdx);
+      await this.$store.dispatch('accounts/setActiveIdx', requiredAccountIdx);
+      try {
+        await this.$store.dispatch('names/updatePointer', {
+          name: this.name,
+          address: this.address,
+        });
+      } finally {
+        await this.$store.dispatch('accounts/setActiveIdx', initialAccountIdx);
       }
     },
     async goToTransactionDetails() {
