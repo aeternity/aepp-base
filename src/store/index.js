@@ -50,6 +50,7 @@ export default new Vuex.Store({
           list: list.map(({ address, source }) => {
             switch (source.type) {
               case 'hd-wallet':
+              case 'hd-wallet-desktop':
                 return {
                   address,
                   source: pick(source, ['type', 'idx']),
@@ -88,7 +89,7 @@ export default new Vuex.Store({
           registerServiceWorker,
           reverseIframe,
           ...(ENV_MOBILE_DEVICE ? [] : [syncLedgerAccounts]),
-          ...(RUNNING_IN_FRAME ? [unlockWalletIfNotEncrypted] : []),
+          ...(RUNNING_IN_FRAME || !ENV_MOBILE_DEVICE ? [unlockWalletIfNotEncrypted] : []),
         ]),
   ],
 
