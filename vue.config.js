@@ -22,7 +22,6 @@ module.exports = {
       fallback: {
         stream: require.resolve('stream-browserify'),
         buffer: require.resolve('buffer/'),
-        util: require.resolve('util/'),
       },
     },
     plugins: [new webpack.ProvidePlugin({ Buffer: ['buffer', 'Buffer'] })],
