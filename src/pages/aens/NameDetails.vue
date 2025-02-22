@@ -31,7 +31,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { produceNameId } from '@aeternity/aepp-sdk-next';
+import { produceNameId } from '@aeternity/aepp-sdk';
 import prefixedAmount from '../../filters/prefixedAmount';
 import Page from '../../components/Page.vue';
 import DetailsList from '../../components/mobile/DetailsList.vue';

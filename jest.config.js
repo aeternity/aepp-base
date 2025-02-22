@@ -1,7 +1,6 @@
 const packagesToTranspile = [
   'lodash-es',
   'emoji-datasource-apple',
-  '@aeternity/aepp-sdk',
   '@aeternity/hd-wallet',
   'register-service-worker',
 ];

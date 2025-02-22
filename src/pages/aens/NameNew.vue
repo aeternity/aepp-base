@@ -39,7 +39,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { Name, isAuctionName } from '@aeternity/aepp-sdk-next';
+import { Name, isAuctionName } from '@aeternity/aepp-sdk';
 import { handleUnknownError, isNotFoundError } from '../../lib/utils';
 import { i18n } from '../../store/plugins/ui/languages';
 import Page from '../../components/Page.vue';

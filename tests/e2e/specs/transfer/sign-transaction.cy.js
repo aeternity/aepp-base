@@ -8,7 +8,7 @@ import {
   Encoding,
   ORACLE_TTL_TYPES,
   oracleQueryId,
-} from '@aeternity/aepp-sdk-next';
+} from '@aeternity/aepp-sdk';
 
 describe('Sign transaction', () => {
   const nonce = 1;

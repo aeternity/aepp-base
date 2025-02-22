@@ -10,7 +10,7 @@ import {
   encode,
   Encoding,
   SUBSCRIPTION_TYPES,
-} from '@aeternity/aepp-sdk-next';
+} from '@aeternity/aepp-sdk';
 
 function isRejectedByUserError(error) {
   return ['Rejected by user', 'Cancelled by user'].includes(error.message);

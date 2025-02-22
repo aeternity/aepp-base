@@ -1,4 +1,4 @@
-import { decode, encode, Encoding } from '@aeternity/aepp-sdk-next';
+import { decode, encode, Encoding } from '@aeternity/aepp-sdk';
 import { decode as rlpDecode, encode as rlpEncode } from 'rlp';
 
 function encodeBase58Check(data) {

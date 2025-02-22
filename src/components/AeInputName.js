@@ -1,4 +1,4 @@
-import { isNameValid } from '@aeternity/aepp-sdk-next';
+import { isNameValid } from '@aeternity/aepp-sdk';
 import withFormatting from '../lib/withFormatting';
 import { AENS_DOMAIN } from '../lib/constants';
 import AeInput from './AeInput.vue';

@@ -1,6 +1,6 @@
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Ae from '@aeternity/ledger-app-api';
-import { buildTx, decode, Tag } from '@aeternity/aepp-sdk-next';
+import { buildTx, decode, Tag } from '@aeternity/aepp-sdk';
 import { i18n } from '../../plugins/ui/languages';
 import { swallowModalAborted } from '../../plugins/ui/modals';
 import { RUNNING_IN_FRAME } from '../../../lib/constants';
@@ -123,10 +123,7 @@ export default {
           throw new Error('Not implemented yet');
         },
 
-        async signTransaction(
-          { rootGetters, dispatch, rootState: { sdk } },
-          { transaction, signal },
-        ) {
+        async signTransaction({ rootGetters, dispatch }, { transaction, signal }) {
           await dispatch('ensureCurrentAccountAvailable');
 
           const signatureHex = await dispatch('request', {
@@ -134,7 +131,7 @@ export default {
             args: [
               rootGetters['accounts/active'].source.idx,
               decode(transaction),
-              sdk.getNetworkId(),
+              await rootGetters.node.getNetworkId(),
             ],
             signal,
           });

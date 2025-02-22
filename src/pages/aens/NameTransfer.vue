@@ -51,7 +51,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import { defer } from 'lodash-es';
-import { Name } from '@aeternity/aepp-sdk-next';
+import { Name } from '@aeternity/aepp-sdk';
 import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
 import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';

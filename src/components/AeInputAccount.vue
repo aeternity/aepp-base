@@ -57,7 +57,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { isAddressValid } from '@aeternity/aepp-sdk-next';
+import { isAddressValid } from '@aeternity/aepp-sdk';
 import { AENS_DOMAIN } from '../lib/constants';
 import withFormatting from '../lib/withFormatting';
 import removeSpacesOnCopy from '../directives/removeSpacesOnCopy';

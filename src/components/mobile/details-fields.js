@@ -1,4 +1,4 @@
-import { decode, Encoding } from '@aeternity/aepp-sdk-next';
+import { decode, Encoding } from '@aeternity/aepp-sdk';
 import { i18n } from '../../store/plugins/ui/languages';
 import DetailsRawData from './DetailsRawData.vue';
 import DetailsAddress from './DetailsAddress.vue';

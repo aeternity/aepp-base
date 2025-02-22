@@ -1,4 +1,4 @@
-import { encode, Encoding } from '@aeternity/aepp-sdk-next';
+import { encode, Encoding } from '@aeternity/aepp-sdk';
 import { getDesktopRemoteSignAction } from './utils';
 import {
   getPublicKeyByResponseUrl,
@@ -102,12 +102,9 @@ export default {
           );
         },
 
-        async signTransaction(
-          { rootState: { sdk }, rootGetters, dispatch },
-          { transaction, signal },
-        ) {
+        async signTransaction({ rootGetters, dispatch }, { transaction, signal }) {
           const requestUrl = generateSignRequestUrl(
-            sdk.getNetworkId(),
+            await rootGetters.node.getNetworkId(),
             transaction,
             rootGetters['accounts/active'].source.publicKey,
           );

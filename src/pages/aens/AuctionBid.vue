@@ -75,7 +75,7 @@
 import { pick, debounce } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
-import { Name } from '@aeternity/aepp-sdk-next';
+import { Name } from '@aeternity/aepp-sdk';
 import { MAGNITUDE } from '../../lib/constants';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { isAddressValid, Name, produceNameId } from '@aeternity/aepp-sdk-next';
+import { isAddressValid, Name, produceNameId } from '@aeternity/aepp-sdk';
 import { getAddressByNameEntry, isAensName } from '../../../lib/utils';
 
 export default (store) => {
@@ -127,8 +127,8 @@ export default (store) => {
 
         commit('setOwned', names);
       },
-      setDefault({ rootState: { sdk }, commit }, { name, address }) {
-        commit('setDefault', { name, address, networkId: sdk.getNetworkId() });
+      async setDefault({ rootGetters: { node }, commit }, { name, address }) {
+        commit('setDefault', { name, address, networkId: await node.getNetworkId() });
       },
       async updatePointer({
         rootGetters, state, commit, dispatch,

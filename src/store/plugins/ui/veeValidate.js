@@ -5,7 +5,7 @@ import {
 } from 'vee-validate/dist/rules.esm';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { isAddressValid } from '@aeternity/aepp-sdk-next';
+import { isAddressValid } from '@aeternity/aepp-sdk';
 import { validateMnemonic } from '@aeternity/bip39';
 import { i18n } from './languages';
 import {

@@ -41,7 +41,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
-import { produceNameId } from '@aeternity/aepp-sdk-next';
+import { produceNameId } from '@aeternity/aepp-sdk';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';

@@ -1,4 +1,4 @@
-import { verify } from '@aeternity/aepp-sdk-next';
+import { verify } from '@aeternity/aepp-sdk';
 
 describe('Deep links', () => {
   const signer = 'ak_2ujJ8N4GdKapdE2a7aEy4Da3pfPdV7EtJdaA7BUpJ8uqgkQdEB';
