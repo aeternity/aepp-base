@@ -30,13 +30,15 @@ export default {
   subscriptions() {
     return pick(this.$store.state.observables, ['activeAccount']);
   },
-  mounted() {
+  async mounted() {
+    const height = await this.$store.getters.sdk.getHeight({ cached: true });
     this.$watch(
       ({ activeAccount: { nonce }, amount }) => ({ nonce, amount }),
       async ({ nonce, amount }) => {
         const minFeeString = calculateMinSpendTxFee({
           amount: BigNumber(amount > 0 ? amount : 0).shiftedBy(MAGNITUDE),
           nonce: nonce + 1,
+          ttl: height + 3,
         });
         const minFee = BigNumber(minFeeString).shiftedBy(-MAGNITUDE);
         if (!minFee.isEqualTo(this.minFee)) this.minFee = minFee;
