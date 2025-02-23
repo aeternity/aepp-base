@@ -114,8 +114,8 @@ export default (store) => {
 
       const getRpcPeer = memoize((followerId) => new RpcPeer((response) => socket.emit('message-to-follower', followerId, response), {
         createAccount: () => store.dispatch('accounts/hdWallet/create'),
-        sign: markAbortable((data, options, signal) => store.getters.sdk.sign(data, { ...options, signal })),
-        signTransaction: markAbortable((transaction, options, signal) => store.getters.sdk.signTransaction(transaction, { ...options, signal })),
+        sign: markAbortable((data, options, signal) => store.getters.account.sign(data, { ...options, signal })),
+        signTransaction: markAbortable((transaction, options, signal) => store.getters.account.signTransaction(transaction, { ...options, signal })),
       }));
       socket.on(
         'message-from-follower',
