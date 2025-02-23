@@ -80,6 +80,13 @@ export default {
   }
 
   .progress {
+    height: 7px;
+    background: variables.$color-primary;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    animation: increase-width 6s linear forwards;
+
     @keyframes increase-width {
       from {
         width: 0;
@@ -88,13 +95,6 @@ export default {
         width: 100%;
       }
     }
-
-    height: 7px;
-    background: variables.$color-primary;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    animation: increase-width 6s linear forwards;
   }
 }
 </style>

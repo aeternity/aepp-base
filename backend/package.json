@@ -14,8 +14,8 @@
     "web-push": "^3.6.7"
   },
   "devDependencies": {
-    "chai": "^5.1.1",
-    "mocha": "^10.8.2",
-    "socket.io-client": "^4.7.5"
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0",
+    "socket.io-client": "^4.8.1"
   }
 }
