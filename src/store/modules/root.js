@@ -14,7 +14,6 @@ export default {
     migrations: {},
     loginTarget: '',
     sdkUrl: networksRegistry[0].url,
-    sdk: null,
     customNetworks: [],
     apps: [],
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
@@ -83,12 +82,6 @@ export default {
     },
     setOnLine(state, onLine) {
       state.onLine = onLine;
-    },
-    setSdkAccounts({ sdk }, list) {
-      sdk.accounts = Object.fromEntries(list.map(({ address }) => [address, {}]));
-    },
-    selectSdkAccount({ sdk }, address) {
-      sdk.selectAccount(address);
     },
     setNameListRoute(state, nameListRouteParams) {
       state.nameListRouteParams = nameListRouteParams;
