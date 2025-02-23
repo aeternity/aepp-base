@@ -31,7 +31,7 @@
 <script>
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import { encode, Encoding, MemoryAccount, transferFunds } from '@aeternity/aepp-sdk-next';
+import { encode, Encoding, MemoryAccount, transferFunds } from '@aeternity/aepp-sdk';
 import { handleUnknownError } from '../../lib/utils';
 import AeSpinner from '../../components/AeSpinner.vue';
 import Page from '../../components/Page.vue';

@@ -9,7 +9,7 @@ import {
   decode,
   Encoding,
   MemoryAccount,
-} from '@aeternity/aepp-sdk-next';
+} from '@aeternity/aepp-sdk';
 import BigNumber from 'bignumber.js';
 import { MAGNITUDE } from '../../../lib/constants';
 import {

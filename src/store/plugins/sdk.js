@@ -1,5 +1,5 @@
 import { isPlainObject, camelCase } from 'lodash-es';
-import { Node, Middleware as MiddlewareOriginal, AeSdkMethods, AccountBase } from '@aeternity/aepp-sdk-next';
+import { Node, Middleware as MiddlewareOriginal, AeSdkMethods, AccountBase } from '@aeternity/aepp-sdk';
 
 class Middleware extends MiddlewareOriginal {
   async sendOperationRequest(args, spec) {

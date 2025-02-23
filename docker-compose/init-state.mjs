@@ -9,7 +9,7 @@ import {
   encode,
   Encoding,
   Name,
-} from '@aeternity/aepp-sdk-next';
+} from '@aeternity/aepp-sdk';
 
 // TODO: remove after merging https://github.com/aeternity/ae_mdw/issues/1758
 try {

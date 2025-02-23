@@ -11,7 +11,6 @@ import accountsModule from './modules/accounts';
 import runMigrations from './migrations';
 import persistState from './plugins/persistState';
 import remoteConnection from './plugins/remoteConnection';
-import initSdk from './plugins/initSdk';
 import sdk from './plugins/sdk';
 import registerServiceWorker from './plugins/registerServiceWorker';
 import reverseIframe from './plugins/reverseIframe';
@@ -50,6 +49,7 @@ export default new Vuex.Store({
           list: list.map(({ address, source }) => {
             switch (source.type) {
               case 'hd-wallet':
+              case 'hd-wallet-desktop':
                 return {
                   address,
                   source: pick(source, ['type', 'idx']),
@@ -79,7 +79,6 @@ export default new Vuex.Store({
             }),
       }),
     ),
-    initSdk,
     sdk,
     ...(RUNNING_IN_POPUP
       ? []
@@ -88,7 +87,7 @@ export default new Vuex.Store({
           registerServiceWorker,
           reverseIframe,
           ...(ENV_MOBILE_DEVICE ? [] : [syncLedgerAccounts]),
-          ...(RUNNING_IN_FRAME ? [unlockWalletIfNotEncrypted] : []),
+          ...(RUNNING_IN_FRAME || !ENV_MOBILE_DEVICE ? [unlockWalletIfNotEncrypted] : []),
         ]),
   ],
 

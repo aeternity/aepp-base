@@ -1,4 +1,4 @@
-import { AeSdk, Node, MemoryAccount } from '@aeternity/aepp-sdk-next';
+import { AeSdk, Node, MemoryAccount } from '@aeternity/aepp-sdk';
 
 export const aeSdk = new AeSdk({
   nodes: [

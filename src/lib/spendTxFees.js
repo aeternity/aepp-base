@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { buildTx, unpackTx, Tag } from '@aeternity/aepp-sdk-next';
+import { buildTx, unpackTx, Tag } from '@aeternity/aepp-sdk';
 import { MAGNITUDE, MAGNITUDE_MICRO } from './constants';
 
 const STUB_ADDRESS = 'ak_enAPooFqpTQKkhJmU47J16QZu9HbPQQPwWBVeGnzDbDnv9dxp';

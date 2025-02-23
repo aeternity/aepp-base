@@ -1,4 +1,5 @@
-import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import { defer } from 'lodash-es';
+import sdkWallet from '../../lib/sdkWallet';
 import { RUNNING_IN_FRAME } from '../../lib/constants';
 
 const modals = {
@@ -7,18 +8,8 @@ const modals = {
   confirmSign: true,
 };
 
-export default (store) => {
+export default async (store) => {
   if (!RUNNING_IN_FRAME) return;
-  const unsubscribe = store.watch(
-    ({ sdk }, getters) => [sdk && !sdk.then && getters['accounts/active'], sdk],
-    ([ready, sdk]) => {
-      if (!ready) return;
-      const connection = BrowserWindowMessageConnection({ target: window.parent });
-      sdk.addRpcClient(connection);
-      sdk.shareWalletInfo(connection.sendMessage.bind(connection));
-      unsubscribe();
-    },
-  );
 
   store.registerModule('modals', {
     namespaced: true,
@@ -34,4 +25,19 @@ export default (store) => {
       },
     },
   });
+
+  await new Promise((resolve) => {
+    const unsubscribe = store.watch(
+      (_store, getters) => getters['accounts/active'],
+      async (ready) => {
+        if (!ready) return;
+        await new Promise((resolve) => defer(resolve));
+        unsubscribe();
+        resolve();
+      },
+      { immediate: true },
+    );
+  });
+
+  sdkWallet(store, window.parent);
 };

@@ -41,7 +41,7 @@
 import { mapState } from 'vuex';
 import BigNumber from 'bignumber.js';
 import { uniq } from 'lodash-es';
-import { isNameValid, isAuctionName, Node } from '@aeternity/aepp-sdk-next';
+import { isNameValid, isAuctionName, Node } from '@aeternity/aepp-sdk';
 import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import AeCard from '../../components/AeCard.vue';

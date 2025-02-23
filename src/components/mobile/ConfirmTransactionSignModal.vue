@@ -31,7 +31,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { Tag, isAuctionName } from '@aeternity/aepp-sdk-next';
+import { Tag, isAuctionName } from '@aeternity/aepp-sdk';
 import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
