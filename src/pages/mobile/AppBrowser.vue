@@ -65,13 +65,12 @@ export default {
     ProgressFake,
     TabBar,
   },
-  data() {
-    return {
-      loading: true,
-      newUrl: '',
-      showMenu: false,
-    };
-  },
+  data: () => ({
+    loading: true,
+    newUrl: '',
+    showMenu: false,
+    sdkWalletUnbind: null,
+  }),
   computed: {
     path() {
       return this.$route.fullPath.replace('/browser/', '');
@@ -91,15 +90,27 @@ export default {
       },
     }),
   },
-  async mounted() {
-    const unbind = sdkWallet(this.$store, this.$refs.iframe.contentWindow, this.host);
+  watch: {
+    host: {
+      immediate: true,
+      handler(host) {
+        function recreateSdk() {
+          this.sdkWalletUnbind?.();
+          this.sdkWalletUnbind = sdkWallet(this.$store, this.$refs.iframe.contentWindow, host);
+        }
+        if (this.$el) recreateSdk.call(this);
+        else this.$once('hook:mounted', recreateSdk);
+      },
+    },
+  },
+  mounted() {
     const handler = () => {
       this.showMenu = false;
     };
     window.addEventListener('blur', handler);
     this.$once('hook:destroyed', () => {
       window.removeEventListener('blur', handler);
-      unbind();
+      this.sdkWalletUnbind();
     });
   },
   methods: {

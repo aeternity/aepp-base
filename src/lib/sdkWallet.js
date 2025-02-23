@@ -243,7 +243,7 @@ export default (store, target, host) => {
     },
     onDisconnect: (aeppId, params) => {
       unbindConnection();
-      unbindAccounts();
+      unbindAccounts?.();
       [authAeppId, unbindConnection] = setupConnection(target, sdk);
     },
   });
