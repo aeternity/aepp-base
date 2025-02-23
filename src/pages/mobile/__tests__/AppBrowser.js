@@ -1,6 +1,8 @@
 import { shallowMount } from '@vue/test-utils';
 import AppBrowser from '../AppBrowser.vue';
 
+jest.mock('../../../lib/sdkWallet');
+
 describe('AppBrowser', () =>
   [
     {
@@ -31,12 +33,8 @@ describe('AppBrowser', () =>
           $store: {
             state: {
               apps: [],
-              sdk: {
-                addRpcClient: () => {},
-              },
             },
           },
-          $globals: { IS_IOS: false },
           $t: () => 'locale-specific-text',
         },
       });
