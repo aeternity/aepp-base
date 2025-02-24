@@ -1,6 +1,6 @@
 <template>
   <div class="onboarding-page aepps">
-    <img src="../../assets/onboarding/aepps.svg">
+    <img src="../../assets/onboarding/aepps.svg" />
     <Guide>
       <em>{{ $t('onboarding.aepps.guide') }}</em>
       <div class="note">

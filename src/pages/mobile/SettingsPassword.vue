@@ -9,20 +9,17 @@
   >
     <AeCard fill="maximum">
       <ListItem
-        :title="isWalletEncrypted
-          ? $t('settings.password.change')
-          : $t('settings.password.choose')"
-        :subtitle="isWalletEncrypted
-          ? $t('settings.password.change-subtitle')
-          : $t('settings.password.choose-subtitle')"
+        :title="isWalletEncrypted ? $t('settings.password.change') : $t('settings.password.choose')"
+        :subtitle="
+          isWalletEncrypted
+            ? $t('settings.password.change-subtitle')
+            : $t('settings.password.choose-subtitle')
+        "
         :to="{ name: 'settings-password-set' }"
       >
         <LeftMore slot="right" />
       </ListItem>
-      <ListItemButton
-        v-if="isWalletEncrypted"
-        @click="() => changeWalletPassword()"
-      >
+      <ListItemButton v-if="isWalletEncrypted" @click="() => changeWalletPassword()">
         {{ $t('settings.password.remove') }}
       </ListItemButton>
     </AeCard>

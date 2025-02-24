@@ -4,7 +4,7 @@ export default (store) => {
   store.watch(
     ({ route }) => route,
     ({ name, fullPath, params } = {}) => {
-      if (name === 'app-browser') {
+      if (['app-list', 'app-details', 'app-browser'].includes(name)) {
         store.commit('setBrowserPath', fullPath);
       } else if (NAME_LIST_ROUTE_NAMES.includes(name)) {
         store.commit('setNameListRoute', { name, params });

@@ -1,8 +1,5 @@
 <template>
-  <Notification
-    v-bind="$attrs"
-    class="notification-spend-success"
-  >
+  <Notification v-bind="$attrs" class="notification-spend-success">
     <ListItem
       :title="$t('transfer.send.resolved.title')"
       :subtitle="$t('transfer.send.resolved.subtitle', { amount: convertedAmount })"
@@ -21,12 +18,7 @@
       >
         {{ $t('transfer.send.resolved.to-history') }}
       </AeButton>
-      <AeButton
-        v-copy-on-click="transactionHash"
-        fill="dark"
-        size="small"
-        plain
-      >
+      <AeButton v-copy-on-click="transactionHash" fill="dark" size="small" plain>
         {{ $t('transfer.send.resolved.copy') }}
       </AeButton>
     </template>

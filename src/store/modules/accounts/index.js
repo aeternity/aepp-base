@@ -1,12 +1,13 @@
-/* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
-
 import airGap from './airGap';
 import hdWallet from './hdWallet';
 import hdWalletRemote from './hdWalletRemote';
 import ledger from './ledger';
 
 const modules = {
-  airGap, hdWallet, hdWalletRemote, ledger,
+  airGap,
+  hdWallet,
+  hdWalletRemote,
+  ledger,
 };
 
 export default {
@@ -21,20 +22,34 @@ export default {
   getters: {
     active: ({ list, activeIdx }) => list[activeIdx],
     activeColor: (state, { getColor, active }) => getColor(active),
-    getByType: ({ list }) => (type) => list.filter(({ source }) => source.type === type),
-    getModule: () => ({ source: { type } }) => {
-      const [name, module] = Object.entries(modules)
-        .find(([, { account }]) => account.type === type)
-        || (() => { throw new Error(`Unknown account type: ${type}`); })();
-      return { ...module, name };
-    },
-    getColor: (state, { getModule }) => (account) => getModule(account).account.color,
-    getName: (state, { getModule, getByType }, rootState, rootGetters) => (account) => (
-      rootGetters['names/get'](account.address, false) || [
-        getModule(account).account.getTypeVerbose(),
-        ' #',
-        getByType(account.source.type).findIndex(({ address }) => address === account.address) + 1,
-      ].join('')),
+    getByType:
+      ({ list }) =>
+      (type) =>
+        list.filter(({ source }) => source.type === type),
+    getModule:
+      () =>
+      ({ source: { type } }) => {
+        const [name, module] =
+          Object.entries(modules).find(([, { account }]) => account.type === type) ||
+          (() => {
+            throw new Error(`Unknown account type: ${type}`);
+          })();
+        return { ...module, name };
+      },
+    getColor:
+      (state, { getModule }) =>
+      (account) =>
+        getModule(account).account.color,
+    getName:
+      (state, { getModule, getByType }, rootState, rootGetters) =>
+      (account) =>
+        rootGetters['names/get'](account.address, false) ||
+        [
+          getModule(account).account.getTypeVerbose(),
+          ' #',
+          getByType(account.source.type).findIndex(({ address }) => address === account.address) +
+            1,
+        ].join(''),
   },
 
   mutations: {
@@ -52,12 +67,17 @@ export default {
   },
 
   actions: {
-    sign({ getters: { active, getModule }, dispatch }, data) {
-      return dispatch(`${getModule(active).name}/sign`, data);
+    setActiveIdx({ commit, state }, activeIdx) {
+      if (state.activeIdx === activeIdx) return;
+      commit('setActiveIdx', activeIdx);
     },
 
-    signTransaction({ getters: { active, getModule }, dispatch }, txBase64) {
-      return dispatch(`${getModule(active).name}/signTransaction`, txBase64);
+    sign({ getters: { active, getModule }, dispatch }, { data, signal }) {
+      return dispatch(`${getModule(active).name}/sign`, { data, signal });
+    },
+
+    signTransaction({ getters: { active, getModule }, dispatch }, { transaction, signal }) {
+      return dispatch(`${getModule(active).name}/signTransaction`, { transaction, signal });
     },
   },
 };

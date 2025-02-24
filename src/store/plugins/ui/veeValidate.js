@@ -5,7 +5,7 @@ import {
 } from 'vee-validate/dist/rules.esm';
 import BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { Crypto } from '@aeternity/aepp-sdk';
+import { isAddressValid } from '@aeternity/aepp-sdk';
 import { validateMnemonic } from '@aeternity/bip39';
 import { i18n } from './languages';
 import {
@@ -21,7 +21,7 @@ Validator.extend('excluded', excluded);
 Validator.extend('min', min);
 Validator.extend('required', required);
 
-Validator.extend('address', (value) => Crypto.isAddressValid(value));
+Validator.extend('address', (value) => isAddressValid(value));
 Validator.extend('max_value', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('max_value_currency', (value, [arg]) => BigNumber(value).isLessThanOrEqualTo(arg));
 Validator.extend('min_value', (value, [arg]) => BigNumber(value).isGreaterThanOrEqualTo(arg));
@@ -78,7 +78,7 @@ export default (store) => {
   const checkNameDebounced = debounce(
     async (name, expectedNameState) => {
       try {
-        const nameEntry = await store.state.sdk.api.getNameEntryByName(name);
+        const nameEntry = await store.getters.node.getNameEntryByName(name);
         lastPromiseCallback.resolve(({
           [NAME_STATES.REGISTERED]: true,
           [NAME_STATES.REGISTERED_ADDRESS]: !!getAddressByNameEntry(nameEntry),
@@ -93,16 +93,14 @@ export default (store) => {
     300,
   );
   const checkName = (expectedNameState) => (name) => new Promise((resolve, reject) => {
-    if (lastPromiseCallback) {
-      lastPromiseCallback.reject(new Error('Request will not be resolved due to another request made later.'));
-    }
+    if (lastPromiseCallback) lastPromiseCallback.resolve(false);
     lastPromiseCallback = { resolve, reject };
     checkNameDebounced(name, expectedNameState);
   });
   const checkNameRegisteredAddress = checkName(NAME_STATES.REGISTERED_ADDRESS);
 
   Validator.extend('aens_name_unregistered', checkName(NAME_STATES.UNREGISTERED));
-  Validator.extend('account', (value) => Crypto.isAddressValid(value) || (isAensName(value) && checkNameRegisteredAddress(value)));
+  Validator.extend('account', (value) => isAddressValid(value) || (isAensName(value) && checkNameRegisteredAddress(value)));
 
   const genMaxMinValueCurrencyMessageGenerator = (isMax) => (field, [amountAe]) => (
     new ConvertibleToString(() => {

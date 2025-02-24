@@ -1,17 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Base æpp</title>
 
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" sizes="any">
-    <link rel="icon" href="<%= BASE_URL %>icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="<%= BASE_URL %>apple-touch-icon.png">
-    <link rel="mask-icon" href="<%= BASE_URL %>icon-mask-safari.svg" color="#ff0d6a">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" sizes="any" />
+    <link rel="icon" href="<%= BASE_URL %>icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="<%= BASE_URL %>apple-touch-icon.png" />
+    <link rel="mask-icon" href="<%= BASE_URL %>icon-mask-safari.svg" color="#ff0d6a" />
 
-    <meta name="description" content="The æternity blockchain wallet allows users to store, send, and receive æternity coins. The wallet also features an æpps (applications running on the æternity blockchain) browser.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="The æternity blockchain wallet allows users to store, send, and receive æternity coins. The wallet also features an æpps (applications running on the æternity blockchain) browser."
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
 
     <script>
       window.overrideNetwork = {
@@ -23,11 +29,18 @@
       window.overrideBackendUrl = '$VUE_APP_BACKEND_URL';
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <% googleFontsUrl = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap' %>
-    <link rel="preload" href="<%= googleFontsUrl %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="<%= googleFontsUrl %>"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <% googleFontsUrl =
+    'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap'
+    %>
+    <link
+      rel="preload"
+      href="<%= googleFontsUrl %>"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="<%= googleFontsUrl %>" /></noscript>
     <style>
       body > noscript > p.fullscreen-error-message,
       body > p.fullscreen-error-message {
@@ -36,7 +49,9 @@
         padding-left: 20px;
         padding-right: 20px;
         max-width: 400px;
-        font: 23px/28px 'Inter', sans-serif;
+        font:
+          23px/28px 'Inter',
+          sans-serif;
         text-align: center;
       }
     </style>
@@ -44,8 +59,7 @@
   <body>
     <noscript>
       <p class="fullscreen-error-message">
-        Base æpp doesn't work without JavaScript enabled.
-        Please enable it to continue.
+        Base æpp doesn't work without JavaScript enabled. Please enable it to continue.
       </p>
     </noscript>
 
@@ -59,10 +73,11 @@
           return;
         }
 
-        document.body.innerHTML = '<p class="fullscreen-error-message">'
-          + 'Base app has failed to run in this browser.'
-          + '</p>';
-      }
+        document.body.innerHTML =
+          '<p class="fullscreen-error-message">' +
+          'Base app has failed to run in this browser.' +
+          '</p>';
+      };
     </script>
     <% if (process.env.VUE_APP_CORDOVA) { %>
     <script type="text/javascript" src="cordova.js"></script>

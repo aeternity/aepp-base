@@ -1,13 +1,6 @@
 <template>
-  <Page
-    class="intro"
-    fill="primary"
-    hide-tab-bar
-  >
-    <Guide
-      :template="$t('intro.guide')"
-      fill="neutral"
-    />
+  <Page class="intro" fill="primary" hide-tab-bar>
+    <Guide :template="$t('intro.guide')" fill="neutral" />
 
     <template slot="footer">
       <!-- TODO: login state seems to be inaccessible -->
@@ -22,17 +15,12 @@
         fill="light"
         plain
         :data-cy="encryptedWallet ? 'reset' : 'create'"
-        @click="() => encryptedWallet ? resetConfirm() : createWallet()"
+        @click="() => (encryptedWallet ? resetConfirm() : createWallet())"
       >
         {{ encryptedWallet ? $t('settings.reset.title') : $t('intro.create-account') }}
       </AeButton>
-      <hr>
-      <AeButton
-        :to="{ name: 'onboarding' }"
-        fill="light"
-        plain
-        data-cy="onboarding"
-      >
+      <hr />
+      <AeButton :to="{ name: 'onboarding' }" fill="light" plain data-cy="onboarding">
         {{ $t('intro.onboarding') }}
       </AeButton>
     </template>

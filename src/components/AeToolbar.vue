@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="[fill]"
-    class="ae-toolbar"
-  >
+  <div :class="[fill]" class="ae-toolbar">
     <slot />
   </div>
 </template>
@@ -12,13 +9,7 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: (value) => [
-        '',
-        'primary',
-        'secondary',
-        'dark',
-        'alternative',
-      ].includes(value),
+      validator: (value) => ['', 'primary', 'secondary', 'dark', 'alternative'].includes(value),
       default: '',
     },
   },
@@ -35,7 +26,10 @@ export default {
   background: variables.$color-neutral-positive-2;
   color: variables.$color-neutral-negative-1;
 
-  &.primary, &.secondary, &.neutral, &.alternative {
+  &.primary,
+  &.secondary,
+  &.neutral,
+  &.alternative {
     color: #fff;
   }
 

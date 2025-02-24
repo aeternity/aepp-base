@@ -9,10 +9,9 @@
     <template slot="header">
       <h1>{{ course.title }}</h1>
       <p>
-        {{ $t(
-          'security-courses.settings.details.subtitle',
-          { n: course.idx, count: courses.length },
-        ) }}
+        {{
+          $t('security-courses.settings.details.subtitle', { n: course.idx, count: courses.length })
+        }}
       </p>
     </template>
 
@@ -78,7 +77,9 @@ export default {
     }
 
     header {
-      background: var(--title-image) no-repeat, variables.$color-alternative;
+      background:
+        var(--title-image) no-repeat,
+        variables.$color-alternative;
     }
 
     main .wrapper {
@@ -86,7 +87,9 @@ export default {
         margin-top: 0;
       }
 
-      h2, p, ul {
+      h2,
+      p,
+      ul {
         margin: 0;
         @extend %face-sans-base;
         color: #000;
@@ -134,7 +137,8 @@ export default {
   }
 
   header {
-    h1, p {
+    h1,
+    p {
       margin: functions.rem(10px) 0;
       color: #fff;
     }

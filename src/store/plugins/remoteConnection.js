@@ -1,7 +1,7 @@
 import {
   pick, cloneDeep, isEqual, throttle, memoize,
 } from 'lodash-es';
-import RpcPeer from '../../lib/rpc';
+import RpcPeer, { markAbortable } from '../../lib/rpc';
 import { IS_IOS } from '../../lib/constants';
 import { handleUnknownError } from '../../lib/utils';
 
@@ -114,8 +114,8 @@ export default (store) => {
 
       const getRpcPeer = memoize((followerId) => new RpcPeer((response) => socket.emit('message-to-follower', followerId, response), {
         createAccount: () => store.dispatch('accounts/hdWallet/create'),
-        sign: (...args) => store.state.sdk.sign(...args),
-        signTransaction: (...args) => store.state.sdk.signTransaction(...args),
+        sign: markAbortable((data, options, signal) => store.getters.account.sign(data, { ...options, signal })),
+        signTransaction: markAbortable((transaction, options, signal) => store.getters.account.signTransaction(transaction, { ...options, signal })),
       }));
       socket.on(
         'message-from-follower',
@@ -147,8 +147,8 @@ export default (store) => {
       store.registerModule('remoteConnection', {
         namespaced: true,
         actions: {
-          call(_, { name, args = [] }) {
-            return leader.call(name, ...args);
+          call(_, { name, args = [], signal }) {
+            return leader.call({ method: name, signal }, ...args);
           },
         },
       });

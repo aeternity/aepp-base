@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="{ focus, error }"
-    class="ae-input-wrapper"
-  >
+  <div :class="{ focus, error }" class="ae-input-wrapper">
     <label :for="_uid">
       <span>
         {{ header }}
@@ -14,15 +11,14 @@
       </span>
     </label>
     <main>
-      <slot
-        :id="_uid"
-        :set-focus="f => focus = f"
-      />
+      <slot :id="_uid" :set-focus="(f) => (focus = f)" />
     </main>
     <AeToolbar
       v-if="
-        defaultBottom || $slots['default-bottom']
-          || defaultBottomRight || $slots['default-bottom-right']
+        defaultBottom ||
+        $slots['default-bottom'] ||
+        defaultBottomRight ||
+        $slots['default-bottom-right']
       "
       class="default-bottom"
     >

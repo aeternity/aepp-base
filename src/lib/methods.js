@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export async function resetConfirm() {
   await this.$store.dispatch('modals/open', {
     name: 'confirm',
@@ -8,4 +7,15 @@ export async function resetConfirm() {
     primaryButtonText: this.$t('settings.reset.button'),
   });
   await this.$store.dispatch('reset');
+}
+
+export async function fetchAuctions(handler) {
+  const { middleware } = this.$store.getters;
+  let page = await middleware.getNamesAuctions({ limit: 100 });
+  handler(page.data);
+  while (page.nextPath) {
+    page = await page.next();
+    handler(page.data);
+  }
+  handler();
 }

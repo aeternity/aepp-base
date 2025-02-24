@@ -23,10 +23,7 @@
         :header="$t('network.settings.new.node-url')"
         name="url"
       />
-      <AeButton
-        :disabled="errors.any()"
-        fill="secondary"
-      >
+      <AeButton :disabled="errors.any()" fill="secondary">
         {{ $t('network.settings.new.connect') }}
       </AeButton>
       <AeButton
@@ -64,7 +61,7 @@ export default {
   computed: mapGetters(['networks']),
   methods: {
     async addNetwork() {
-      if (!await this.$validator.validateAll()) {
+      if (!(await this.$validator.validateAll())) {
         return;
       }
 

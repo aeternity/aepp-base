@@ -1,33 +1,18 @@
 <template>
-  <Notification
-    v-bind="$attrs"
-    class="notification-mnemonic-backup"
-  >
+  <Notification v-bind="$attrs" class="notification-mnemonic-backup">
     <ListItem
       :title="$t('settings.mnemonic.notification.title')"
       :subtitle="$t('settings.mnemonic.notification.subtitle')"
     >
       <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-      <ListItemCircle slot="icon">
-        !
-      </ListItemCircle>
+      <ListItemCircle slot="icon">!</ListItemCircle>
     </ListItem>
 
     <template slot="footer">
-      <AeButton
-        :to="{ name: 'settings-security-course-intro' }"
-        fill="dark"
-        size="small"
-        plain
-      >
+      <AeButton :to="{ name: 'settings-security-course-intro' }" fill="dark" size="small" plain>
         {{ $t('settings.mnemonic.notification.to-security-course') }}
       </AeButton>
-      <AeButton
-        :to="{ name: 'settings-mnemonic' }"
-        fill="primary"
-        size="small"
-        plain
-      >
+      <AeButton :to="{ name: 'settings-mnemonic' }" fill="primary" size="small" plain>
         {{ $t('settings.mnemonic.notification.to-mnemonic') }}
       </AeButton>
     </template>

@@ -18,18 +18,20 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
-  event.waitUntil((async () => {
-    const clientList = await clients.matchAll({
-      includeUncontrolled: true,
-      type: 'window',
-    });
-    if (clientList.length) {
-      await clientList[0].focus();
-      return;
-    }
+  event.waitUntil(
+    (async () => {
+      const clientList = await clients.matchAll({
+        includeUncontrolled: true,
+        type: 'window',
+      });
+      if (clientList.length) {
+        await clientList[0].focus();
+        return;
+      }
 
-    await clients.openWindow('/');
-  })());
+      await clients.openWindow('/');
+    })(),
+  );
 });
 
 self.addEventListener('message', (event) => {
@@ -38,5 +40,4 @@ self.addEventListener('message', (event) => {
   }
 });
 
-self.addEventListener('activate', (event) => event
-  .waitUntil(self.clients.claim()));
+self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()));

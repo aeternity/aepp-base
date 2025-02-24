@@ -6,16 +6,10 @@
     hide-tab-bar
   >
     <Guide :template="$t('recover.guide')">
-      <img
-        slot="dizzySymbolEmoji"
-        :src="dizzySymbolEmoji"
-      >
+      <img slot="dizzySymbolEmoji" :src="dizzySymbolEmoji" />
     </Guide>
 
-    <form
-      :id="_uid"
-      @submit.prevent="setMnemonic"
-    >
+    <form :id="_uid" @submit.prevent="setMnemonic">
       <AeInputMnemonic
         v-model="mnemonic"
         v-validate="'required|mnemonic'"
@@ -26,12 +20,7 @@
       />
     </form>
 
-    <AeButton
-      slot="footer"
-      :disabled="errors.any()"
-      :form="_uid"
-      fill="secondary"
-    >
+    <AeButton slot="footer" :disabled="errors.any()" :form="_uid" fill="secondary">
       {{ $t('recover.button') }}
     </AeButton>
   </Page>
@@ -46,7 +35,10 @@ import AeInputMnemonic from '../../components/AeInputMnemonic.vue';
 
 export default {
   components: {
-    Page, Guide, AeButton, AeInputMnemonic,
+    Page,
+    Guide,
+    AeButton,
+    AeInputMnemonic,
   },
   mixins: [RecoverMixin],
 };

@@ -1,10 +1,7 @@
 <template>
   <div :class="['ae-card', fill]">
     <slot />
-    <AeToolbar
-      v-if="$slots['toolbar']"
-      :fill="fill"
-    >
+    <AeToolbar v-if="$slots['toolbar']" :fill="fill">
       <slot name="toolbar" />
     </AeToolbar>
   </div>
@@ -18,14 +15,8 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: (value) => [
-        '',
-        'primary',
-        'secondary',
-        'dark',
-        'alternative',
-        'maximum',
-      ].includes(value),
+      validator: (value) =>
+        ['', 'primary', 'secondary', 'dark', 'alternative', 'maximum'].includes(value),
       default: '',
     },
   },

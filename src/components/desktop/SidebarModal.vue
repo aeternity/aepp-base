@@ -1,9 +1,6 @@
 <template>
   <Transition>
-    <Overlay
-      class="sidebar-modal"
-      @click="$emit('close')"
-    >
+    <Overlay class="sidebar-modal" @click="$emit('close')">
       <div class="modal">
         <slot />
       </div>
@@ -37,15 +34,17 @@ export default {
     overflow-x: hidden;
   }
 
-  &.v-enter-active, &.v-leave-active {
-    transition: background-color .5s;
+  &.v-enter-active,
+  &.v-leave-active {
+    transition: background-color 0.5s;
 
     .modal {
-      transition: right .5s;
+      transition: right 0.5s;
     }
   }
 
-  &.v-enter, &.v-leave-to {
+  &.v-enter,
+  &.v-leave-to {
     background-color: rgba(variables.$color-neutral-minimum, 0);
 
     .modal {

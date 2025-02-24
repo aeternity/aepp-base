@@ -1,15 +1,7 @@
 <template>
   <div>
-    <ListItem
-      v-for="language in list"
-      :key="language.code"
-      :title="language.name"
-    >
-      <AeRadio
-        slot="right"
-        :checked="language === active"
-        @change="setLanguage(language)"
-      />
+    <ListItem v-for="language in list" :key="language.code" :title="language.name">
+      <AeRadio slot="right" :checked="language === active" @change="setLanguage(language)" />
     </ListItem>
   </div>
 </template>

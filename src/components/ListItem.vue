@@ -1,14 +1,6 @@
 <template>
-  <Component
-    :is="renderAs"
-    :to="to"
-    class="list-item"
-    @click="$emit('click', $event)"
-  >
-    <div
-      :class="{ 'border-dark': borderDark, 'has-icon': $slots.icon }"
-      class="content"
-    >
+  <Component :is="renderAs" :to="to" class="list-item" @click="$emit('click', $event)">
+    <div :class="{ 'border-dark': borderDark, 'has-icon': $slots.icon }" class="content">
       <slot name="icon" />
 
       <div
@@ -16,26 +8,17 @@
         class="label"
         :class="{ 'has-content-after': $slots.default || $slots.right }"
       >
-        <div
-          class="title"
-          :class="{ monospace: titleMonospace }"
-        >
+        <div class="title" :class="{ monospace: titleMonospace }">
           {{ title }}
         </div>
-        <div
-          class="subtitle"
-          :class="{ monospace: subtitleMonospace }"
-        >
+        <div class="subtitle" :class="{ monospace: subtitleMonospace }">
           {{ subtitle }}
         </div>
       </div>
 
       <slot />
 
-      <div
-        v-if="$slots.right"
-        class="space"
-      />
+      <div v-if="$slots.right" class="space" />
       <slot name="right" />
     </div>
   </Component>
@@ -70,7 +53,8 @@ export default {
 @use '../styles/functions';
 @use '../styles/typography';
 
-a, label {
+a,
+label {
   .list-item:hover {
     background-color: variables.$color-neutral-positive-3;
   }
@@ -104,7 +88,9 @@ a, label {
         margin-right: functions.rem(4px);
       }
 
-      &, .title, .subtitle {
+      &,
+      .title,
+      .subtitle {
         overflow: hidden;
         text-overflow: ellipsis;
 
@@ -136,7 +122,8 @@ a, label {
   }
 
   & + .list-item {
-    &, &:visited {
+    &,
+    &:visited {
       .content {
         border-top: 2px solid variables.$color-neutral-positive-2;
 

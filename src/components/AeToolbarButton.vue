@@ -1,10 +1,5 @@
 <template>
-  <ButtonPlain
-    class="ae-toolbar-button"
-    :class="{ active }"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
+  <ButtonPlain class="ae-toolbar-button" :class="{ active }" v-bind="$attrs" v-on="$listeners">
     <slot />
   </ButtonPlain>
 </template>
@@ -37,7 +32,7 @@ export default {
 
   ::v-deep .icon {
     height: functions.rem(14px);
-    vertical-align: -.2em;
+    vertical-align: -0.2em;
   }
 }
 </style>

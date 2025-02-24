@@ -5,11 +5,7 @@
     </header>
 
     <main>
-      <ListItemAccount
-        v-for="account in accounts"
-        :key="account.address"
-        v-bind="account"
-      >
+      <ListItemAccount v-for="account in accounts" :key="account.address" v-bind="account">
         <AeRadio
           slot="right"
           :checked="account.address === actualActiveAccount.address"
@@ -17,20 +13,14 @@
         />
       </ListItemAccount>
 
-      <ListItem
-        :title="$t('account-switcher.create-account-desktop')"
-        @click="createAccount"
-      >
+      <ListItem :title="$t('account-switcher.create-account-desktop')" @click="createAccount">
         <ListItemCircle slot="icon">
           <Plus />
         </ListItemCircle>
       </ListItem>
     </main>
 
-    <Balance
-      :balance="totalBalance"
-      total
-    />
+    <Balance :balance="totalBalance" total />
   </div>
 </template>
 
@@ -48,7 +38,13 @@ import prefixedAmount from '../../filters/prefixedAmount';
 
 export default {
   components: {
-    AeAccount, ListItem, ListItemCircle, Plus, ListItemAccount, AeRadio, Balance,
+    AeAccount,
+    ListItem,
+    ListItemCircle,
+    Plus,
+    ListItemAccount,
+    AeRadio,
+    Balance,
   },
   mixins: [AccountTypeMixin],
   subscriptions() {
@@ -66,18 +62,23 @@ export default {
     },
     activeAccount() {
       return this.isAccountToShow(this.actualActiveAccount)
-        ? this.actualActiveAccount : this.accounts[0];
+        ? this.actualActiveAccount
+        : this.accounts[0];
     },
   },
   methods: {
     prefixedAmount,
     ...mapMutations({ setActiveIdx: 'accounts/setActiveIdx' }),
     createAccount() {
-      this.$store.dispatch(`accounts/${{
-        'hd-wallet-desktop': 'hdWallet/checkPreviousAndCreate',
-        'hd-wallet': 'hdWalletRemote/checkPreviousAndCreate',
-        ledger: 'ledger/create',
-      }[this.accountType]}`);
+      this.$store.dispatch(
+        `accounts/${
+          {
+            'hd-wallet-desktop': 'hdWallet/checkPreviousAndCreate',
+            'hd-wallet': 'hdWalletRemote/checkPreviousAndCreate',
+            ledger: 'ledger/create',
+          }[this.accountType]
+        }`,
+      );
     },
     isAccountToShow({ source: { type } }) {
       return type === this.accountType;

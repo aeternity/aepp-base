@@ -1,10 +1,5 @@
 <template>
-  <ButtonPlain
-    :class="[fill, size, { plain }]"
-    v-bind="$attrs"
-    class="ae-button"
-    v-on="$listeners"
-  >
+  <ButtonPlain :class="[fill, size, { plain }]" v-bind="$attrs" class="ae-button" v-on="$listeners">
     <AeSpinner v-if="spinner" />
     <slot v-else />
   </ButtonPlain>
@@ -19,13 +14,8 @@ export default {
   props: {
     fill: {
       type: String,
-      validator: (value) => [
-        'primary',
-        'secondary',
-        'alternative',
-        'dark',
-        'light',
-      ].includes(value),
+      validator: (value) =>
+        ['primary', 'secondary', 'alternative', 'dark', 'light'].includes(value),
       default() {
         if ([true, ''].includes(this.$options.propsData.plain)) return 'dark';
         return 'primary';

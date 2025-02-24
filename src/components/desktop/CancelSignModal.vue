@@ -1,13 +1,10 @@
 <template>
   <AeModal class="cancel-sign-modal">
-    <Guide
-      :template="$t('remote-connection.modal.cancel-sign.guide')"
-      size="big"
-    />
+    <Guide :template="$t('remote-connection.modal.cancel-sign.guide')" size="big" />
     <div class="note">
       {{ $t('remote-connection.modal.cancel-sign.note') }}
     </div>
-    <img src="../../assets/base-aepp-confirm.svg">
+    <img src="../../assets/base-aepp-confirm.svg" />
     <AeButton @click="resolve">
       {{ $t('remote-connection.modal.cancel-sign.cancel') }}
     </AeButton>

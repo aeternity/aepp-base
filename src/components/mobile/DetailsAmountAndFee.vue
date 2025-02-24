@@ -24,10 +24,7 @@
         {{ $t('transfer.transaction.details.total') }}
       </span>
       <span class="value">
-        <Balance
-          :balance="amount.plus(fee)"
-          short
-        />
+        <Balance :balance="amount.plus(fee)" short />
       </span>
     </DetailsRow>
   </DetailsItem>

@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-
 import { i18n } from './languages';
 
 const currencies = {
@@ -35,7 +33,7 @@ const currencies = {
   },
 };
 
-export default async (store) => {
+export default (store) => {
   const preferredCurrencyCode = 'eur';
 
   store.registerModule('currencies', {

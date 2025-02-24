@@ -16,11 +16,7 @@
         :title="app.name"
         :subtitle="app.subtitle"
       >
-        <img
-          slot="icon"
-          :src="app.icon"
-          :alt="app.name"
-        >
+        <img slot="icon" :src="app.icon" :alt="app.name" />
         <LeftMore slot="right" />
       </ListItem>
     </AeCard>
@@ -29,7 +25,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { get } from 'lodash-es';
 import Page from '../../components/Page.vue';
 import AeCard from '../../components/AeCard.vue';
 import ListItem from '../../components/ListItem.vue';
@@ -46,7 +41,7 @@ export default {
   computed: mapState({
     apps({ apps }, getters) {
       return apps
-        .filter((app) => get(app, 'permissions.accessToAccounts.length', 0))
+        .filter((app) => app.permissions.accessToAccounts.length)
         .map((app) => {
           const c = app.permissions.accessToAccounts.length;
           return {

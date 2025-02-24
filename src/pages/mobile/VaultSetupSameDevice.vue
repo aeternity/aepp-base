@@ -9,33 +9,17 @@
   >
     <template slot="title">
       {{ $t('air-gap.setup.title') }}
-      <AeFraction
-        numerator="2"
-        denominator="3"
-      />
+      <AeFraction numerator="2" denominator="3" />
     </template>
-    <Guide
-      :template="$t('air-gap.setup.same-device.install.guide')"
-      fill="alternative"
-    >
-      <AeFraction
-        slot="icon"
-        numerator="2"
-        denominator="3"
-      />
+    <Guide :template="$t('air-gap.setup.same-device.install.guide')" fill="alternative">
+      <AeFraction slot="icon" numerator="2" denominator="3" />
     </Guide>
 
     <template slot="footer">
-      <AeButton
-        fill="alternative"
-        :to="{ name: 'vault-setup-same-device-sync' }"
-      >
+      <AeButton fill="alternative" :to="{ name: 'vault-setup-same-device-sync' }">
         {{ $t('next') }}
       </AeButton>
-      <AeButton
-        :to="INSTALL_URL"
-        plain
-      >
+      <AeButton :to="INSTALL_URL" plain>
         {{ $t('air-gap.setup.same-device.install.button') }}
       </AeButton>
     </template>
@@ -51,7 +35,10 @@ import { INSTALL_URL } from '../../lib/airGap';
 
 export default {
   components: {
-    Page, AeButton, Guide, AeFraction,
+    Page,
+    AeButton,
+    Guide,
+    AeFraction,
   },
   data: () => ({ INSTALL_URL }),
 };

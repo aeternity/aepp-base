@@ -15,15 +15,9 @@
         <ListItemCircle slot="icon">
           <Network />
         </ListItemCircle>
-        <div
-          slot="right"
-          class="value"
-        >
+        <div slot="right" class="value">
           {{ currentNetwork.name }}
-          <ButtonPlain
-            ref="networkButton"
-            @click="networkMode = 'switch'"
-          >
+          <ButtonPlain ref="networkButton" @click="networkMode = 'switch'">
             <LeftMore />
           </ButtonPlain>
         </div>
@@ -37,20 +31,13 @@
         <ListItemCircle slot="icon">
           <Currency />
         </ListItemCircle>
-        <ButtonPlain
-          slot="right"
-          ref="currencyButton"
-          @click="showCurrencySwitcher = true"
-        >
+        <ButtonPlain slot="right" ref="currencyButton" @click="showCurrencySwitcher = true">
           <LeftMore />
         </ButtonPlain>
       </ListItem>
 
       <ListItemSettingsLanguage>
-        <ButtonPlain
-          ref="languageButton"
-          @click="showLanguageSwitcher = true"
-        >
+        <ButtonPlain ref="languageButton" @click="showLanguageSwitcher = true">
           <LeftMore />
         </ButtonPlain>
       </ListItemSettingsLanguage>
@@ -67,10 +54,7 @@
         @network-add-button-click="networkMode = 'add'"
         @switch="networkMode = false"
       />
-      <NetworkAdd
-        v-else-if="networkMode === 'add'"
-        @finally="networkMode = 'switch'"
-      />
+      <NetworkAdd v-else-if="networkMode === 'add'" @finally="networkMode = 'switch'" />
     </AePopover>
 
     <AePopover
@@ -139,13 +123,15 @@ export default {
   }),
   computed: {
     ...mapGetters(['currentNetwork']),
-    ...mapState({
-      networkId: (state) => state.sdk && state.sdk.getNetworkId && state.sdk.getNetworkId(),
+    ...mapState('sdkSync', {
+      networkId: ({ networkId }) => (networkId.startsWith('_') ? null : networkId),
     }),
   },
   methods: {
     closeNetworkPopover() {
-      defer(() => { this.networkMode = false; });
+      defer(() => {
+        this.networkMode = false;
+      });
     },
   },
 };

@@ -20,10 +20,7 @@
         @change="setSdkUrl(network.url)"
       />
     </ListItem>
-    <ListItemButton
-      :to="networkAddButtonTo"
-      @click="$emit('network-add-button-click')"
-    >
+    <ListItemButton :to="networkAddButtonTo" @click="$emit('network-add-button-click')">
       {{ $t('network.settings.new.title') }}
     </ListItemButton>
 

@@ -1,5 +1,5 @@
-import Promise from 'bluebird';
-import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import { defer } from 'lodash-es';
+import sdkWallet from '../../lib/sdkWallet';
 import { RUNNING_IN_FRAME } from '../../lib/constants';
 
 const modals = {
@@ -8,26 +8,16 @@ const modals = {
   confirmSign: true,
 };
 
-export default (store) => {
+export default async (store) => {
   if (!RUNNING_IN_FRAME) return;
-  const unsubscribe = store.watch(
-    ({ sdk }, getters) => [sdk && !sdk.then && getters['accounts/active'], sdk],
-    ([ready, sdk]) => {
-      if (!ready) return;
-      const connection = BrowserWindowMessageConnection({ target: window.parent });
-      sdk.addRpcClient(connection);
-      sdk.shareWalletInfo(connection.sendMessage.bind(connection));
-      unsubscribe();
-    },
-  );
 
   store.registerModule('modals', {
     namespaced: true,
     actions: {
       open(_, { name, ...props }) {
-        if (!modals[name]) return Promise.reject(new Error(`Modal with name "${name}" not registered`));
+        if (!modals[name]) throw new Error(`Modal with name "${name}" not registered`);
         const popupWindow = window.open('/', 'popup', 'width=530,height=730');
-        if (!popupWindow) return Promise.reject(new Error('Can\'t show popup window'));
+        if (!popupWindow) throw new Error('Can\'t show popup window');
         popupWindow.modalName = name;
         return new Promise((resolve, reject) => {
           popupWindow.modalProps = { ...props, resolve, reject };
@@ -35,4 +25,19 @@ export default (store) => {
       },
     },
   });
+
+  await new Promise((resolve) => {
+    const unsubscribe = store.watch(
+      (_store, getters) => getters['accounts/active'],
+      async (ready) => {
+        if (!ready) return;
+        await new Promise((resolve) => defer(resolve));
+        unsubscribe();
+        resolve();
+      },
+      { immediate: true },
+    );
+  });
+
+  sdkWallet(store, window.parent);
 };

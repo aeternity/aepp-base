@@ -6,7 +6,7 @@
     v-bind="$attrs"
     type="range"
     @input="$emit($event.type, +$event.target.value)"
-  >
+  />
 </template>
 
 <script>
@@ -15,10 +15,7 @@ export default {
     value: { type: [String, Number], default: '' },
     fill: {
       type: String,
-      validator: (value) => [
-        'primary',
-        'light',
-      ].includes(value),
+      validator: (value) => ['primary', 'light'].includes(value),
       default: 'primary',
     },
   },
@@ -26,6 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:map';
 @use '../styles/variables';
 @use '../styles/functions';
 
@@ -56,20 +54,15 @@ export default {
 
   @each $fill, $colors in $colors {
     &.#{$fill} {
-      @each $name in (
-        -webkit-slider-runnable-track,
-        -moz-range-track,
-        -ms-track,
-        -ms-fill-upper,
-      ) {
+      @each $name in (-webkit-slider-runnable-track, -moz-range-track, -ms-track, -ms-fill-upper) {
         &::#{$name} {
-          @include range-track(map-get($colors, track-color));
+          @include range-track(map.get($colors, track-color));
         }
       }
 
       @each $name in -moz-range-progress -ms-fill-lower {
         &::#{$name} {
-          @include range-track(map-get($colors, progress-color));
+          @include range-track(map.get($colors, progress-color));
         }
       }
 
@@ -78,7 +71,7 @@ export default {
           height: functions.rem(15px);
           width: functions.rem(15px);
           border-radius: functions.rem(48px);
-          background: map-get($colors, thumb-color);
+          background: map.get($colors, thumb-color);
           box-shadow: 0 0 functions.rem(8px) variables.$color-shadow-alpha-15;
           cursor: pointer;
         }

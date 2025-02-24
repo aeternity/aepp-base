@@ -1,5 +1,5 @@
 import { derivePathFromKey, getKeyPair } from '@aeternity/hd-wallet/src/hd-key';
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { encode, Encoding } from '@aeternity/aepp-sdk';
 
 export const genRandomBuffer = (size) => {
   const key = new ArrayBuffer(size);
@@ -17,7 +17,10 @@ export const derivePasswordKey = async (password, salt) => {
   );
   return window.crypto.subtle.deriveKey(
     {
-      name: 'PBKDF2', salt, iterations: 15000, hash: 'SHA-256',
+      name: 'PBKDF2',
+      salt,
+      iterations: 15000,
+      hash: 'SHA-256',
     },
     passwordKey,
     { name: 'AES-CTR', length: 128 },
@@ -38,6 +41,6 @@ export const getHdWalletAccount = (wallet, accountIdx) => {
   return {
     ...keyPair,
     idx: accountIdx,
-    address: TxBuilderHelper.encode(keyPair.publicKey, 'ak'),
+    address: encode(keyPair.publicKey, Encoding.AccountAddress),
   };
 };

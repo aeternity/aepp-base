@@ -7,11 +7,7 @@
     hide-tab-bar
   >
     <Guide :template="$t('settings.mnemonic.confirmed.guide')">
-      <AeFraction
-        slot="icon"
-        numerator="4"
-        denominator="4"
-      />
+      <AeFraction slot="icon" numerator="4" denominator="4" />
     </Guide>
 
     <template slot="footer">
@@ -19,10 +15,7 @@
         {{ $t('settings.mnemonic.confirmed.delete') }}
       </AeButton>
 
-      <AeButton
-        :to="{ name: 'settings' }"
-        fill="secondary"
-      >
+      <AeButton :to="{ name: 'settings' }" fill="secondary">
         {{ $t('settings.mnemonic.confirmed.keep') }}
       </AeButton>
     </template>
@@ -37,7 +30,10 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, Guide, AeFraction, AeButton,
+    Page,
+    Guide,
+    AeFraction,
+    AeButton,
   },
   methods: {
     async deleteMnemonic() {

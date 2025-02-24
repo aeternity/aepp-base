@@ -6,52 +6,23 @@
     right-button-icon-name="close"
     @right-button-click="denyHandler"
   >
-    <Guide
-      :template="guideTemplate"
-      fill="neutral"
-    >
-      <AeFraction
-        v-if="stepFraction"
-        slot="icon"
-        v-bind="stepFraction"
-      />
-      <AccountInline
-        slot="senderAddress"
-        :address="account.address"
-      />
-      <AccountInline
-        slot="recipientAddress"
-        :address="transaction.recipientId"
-      />
+    <Guide :template="guideTemplate" fill="neutral">
+      <AeFraction v-if="stepFraction" slot="icon" v-bind="stepFraction" />
+      <AccountInline slot="senderAddress" :address="account.address" />
+      <AccountInline slot="recipientAddress" :address="transaction.recipientId" />
     </Guide>
 
-    <DetailsAmountCurrency
-      v-if="transaction.amount"
-      :amount="transaction.amount"
-    />
+    <DetailsAmountCurrency v-if="transaction.amount" :amount="transaction.amount" />
 
-    <DetailsFeeInput
-      v-model="newFee"
-      :min="transaction.minFee"
-      :max="maxFee"
-    />
+    <DetailsFeeInput v-model="newFee" :min="transaction.minFee" :max="maxFee" />
 
-    <DetailsList
-      :object="transaction"
-      :field-renderers="TX_FIELDS"
-    />
+    <DetailsList :object="transaction" :field-renderers="fieldRenderers" />
 
     <AeButtonGroup slot="footer">
-      <AeButton
-        fill="light"
-        @click="denyHandler"
-      >
+      <AeButton fill="light" @click="denyHandler">
         {{ $t('cancel') }}
       </AeButton>
-      <AeButton
-        fill="secondary"
-        @click="allowHandler"
-      >
+      <AeButton fill="secondary" @click="allowHandler">
         {{ $t('confirm') }}
       </AeButton>
     </AeButtonGroup>
@@ -60,7 +31,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { SCHEMA } from '@aeternity/aepp-sdk';
+import { Tag, isAuctionName } from '@aeternity/aepp-sdk';
 import Page from '../Page.vue';
 import Guide from '../Guide.vue';
 import AeFraction from '../AeFraction.vue';
@@ -69,8 +40,16 @@ import DetailsAmountCurrency from './DetailsAmountCurrency.vue';
 import DetailsFeeInput from './DetailsFeeInput.vue';
 import DetailsList from './DetailsList.vue';
 import {
-  Payload, RecipientId, Code, CallData, ContractId,
-  CommitmentId, Name, NameSalt, NameId, NameFee,
+  Payload,
+  RecipientId,
+  Code,
+  CallData,
+  ContractId,
+  CommitmentId,
+  Name,
+  NameSalt,
+  NameId,
+  NameFee,
 } from './details-fields';
 import DetailsNamePointers from './DetailsNamePointers.vue';
 import AeButtonGroup from '../AeButtonGroup.vue';
@@ -96,8 +75,7 @@ export default {
   data() {
     return {
       newFee: this.transaction.fee,
-      TX_TYPE: SCHEMA.TX_TYPE,
-      TX_FIELDS: {
+      fieldRenderers: {
         payload: Payload,
         recipientId: RecipientId,
         code: Code,
@@ -119,23 +97,22 @@ export default {
     ...mapState({
       stepFraction: (state) => (ENV_MOBILE_DEVICE ? state.mobile.stepFraction : null),
     }),
-    txType() {
-      return SCHEMA.OBJECT_ID_TX_TYPE[this.transaction.tag];
-    },
     guideTemplate() {
-      if (this.txType === SCHEMA.TX_TYPE.spend) return this.$t('modal.confirm-transaction-sign.guide-spend');
-      if (this.txType === SCHEMA.TX_TYPE.nameClaim && !+this.transaction.nameSalt) {
+      const { tag } = this.transaction;
+      if (tag === Tag.SpendTx) return this.$t('modal.confirm-transaction-sign.guide-spend');
+      if (tag === Tag.NameClaimTx && isAuctionName(this.transaction.name)) {
         return this.$t('modal.confirm-transaction-sign.guide-name-bid');
       }
       return this.$t('modal.confirm-transaction-sign.guide', {
-        title: {
-          [SCHEMA.TX_TYPE.contractCreate]: this.$t('modal.confirm-transaction-sign.contract-create'),
-          [SCHEMA.TX_TYPE.contractCall]: this.$t('modal.confirm-transaction-sign.contract-call'),
-          [SCHEMA.TX_TYPE.namePreClaim]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
-          [SCHEMA.TX_TYPE.nameClaim]: this.$t('modal.confirm-transaction-sign.name-claim'),
-          [SCHEMA.TX_TYPE.nameUpdate]: this.$t('modal.confirm-transaction-sign.name-update'),
-          [SCHEMA.TX_TYPE.nameTransfer]: this.$t('modal.confirm-transaction-sign.name-transfer'),
-        }[this.txType] || '',
+        title:
+          {
+            [Tag.ContractCreateTx]: this.$t('modal.confirm-transaction-sign.contract-create'),
+            [Tag.ContractCallTx]: this.$t('modal.confirm-transaction-sign.contract-call'),
+            [Tag.NamePreclaimTx]: this.$t('modal.confirm-transaction-sign.name-pre-claim'),
+            [Tag.NameClaimTx]: this.$t('modal.confirm-transaction-sign.name-claim'),
+            [Tag.NameUpdateTx]: this.$t('modal.confirm-transaction-sign.name-update'),
+            [Tag.NameTransferTx]: this.$t('modal.confirm-transaction-sign.name-transfer'),
+          }[tag] || '',
       });
     },
     maxFee() {

@@ -11,16 +11,10 @@
         :template="pointing ? $t('name.point.guide') : $t('name.transfer.guide')"
         fill="neutral"
       >
-        <AccountInline
-          slot="account"
-          :address="activeAccount.address"
-        />
+        <AccountInline slot="account" :address="activeAccount.address" />
       </Guide>
 
-      <form
-        :id="_uid"
-        @submit.prevent="transfer"
-      >
+      <form :id="_uid" @submit.prevent="transfer">
         <AeInputAccount
           v-model="accountTo"
           v-validate="'required|account'"
@@ -33,12 +27,7 @@
       </form>
     </template>
 
-    <AeButton
-      :disabled="busy || errors.any()"
-      :spinner="busy"
-      :form="_uid"
-      fill="secondary"
-    >
+    <AeButton :disabled="busy || errors.any()" :spinner="busy" :form="_uid" fill="secondary">
       {{ $t('next') }}
     </AeButton>
 
@@ -61,6 +50,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import { defer } from 'lodash-es';
+import { Name } from '@aeternity/aepp-sdk';
 import { handleUnknownError, getAddressByNameEntry } from '../../lib/utils';
 import Page from '../../components/Page.vue';
 import Guide from '../../components/Guide.vue';
@@ -88,39 +79,60 @@ export default {
   computed: {
     ...mapState('names', {
       nameEntry({ owned }) {
-        return owned && owned.names.find(({ name }) => name === this.name);
+        return owned.find(({ name }) => name === this.name);
       },
     }),
     ...mapGetters('accounts', { activeAccount: 'active', activeColor: 'activeColor' }),
     currentAccountAddress() {
-      return this.pointing ? getAddressByNameEntry(this.nameEntry) : this.activeAccount.address;
+      return this.pointing
+        ? this.nameEntry && getAddressByNameEntry(this.nameEntry)
+        : this.activeAccount.address;
     },
   },
   subscriptions() {
     return {
-      accountsToChoose: this.$store.state.observables.getAccounts(
-        ({ accounts: { list } }) => list
-          .filter(({ address }) => address !== this.currentAccountAddress),
+      accountsToChoose: this.$store.state.observables.getAccounts(({ accounts: { list } }) =>
+        list.filter(({ address }) => address !== this.currentAccountAddress),
       ),
     };
   },
   mounted() {
-    const initialAccountIdx = this.$store.state.accounts.activeIdx;
-    const requredAccountIdx = this.$store.state.accounts.list
-      .findIndex(({ address }) => address === this.nameEntry.owner);
-    if (initialAccountIdx !== requredAccountIdx) {
-      this.$store.commit('accounts/setActiveIdx', requredAccountIdx);
-      this.$once('hook:destroyed', () => this.$store
-        .commit('accounts/setActiveIdx', initialAccountIdx));
-    }
+    this.$store.dispatch('names/fetchOwned');
+    this.selectNameOwner();
   },
   methods: {
+    async ensureNameFetched() {
+      await new Promise((resolve) => {
+        const unwatch = this.$watch(
+          ({ nameEntry }) => nameEntry?.owner,
+          (owner) =>
+            defer((o) => {
+              if (o == null) return;
+              unwatch();
+              resolve();
+            }, owner),
+          { immediate: true },
+        );
+      });
+    },
+    async selectNameOwner() {
+      const initialAccountIdx = this.$store.state.accounts.activeIdx;
+      await this.ensureNameFetched();
+      const requiredAccountIdx = this.$store.state.accounts.list.findIndex(
+        ({ address }) => address === this.nameEntry.owner,
+      );
+      if (initialAccountIdx === requiredAccountIdx) return;
+      this.$store.commit('accounts/setActiveIdx', requiredAccountIdx);
+      this.$once('hook:destroyed', () =>
+        this.$store.commit('accounts/setActiveIdx', initialAccountIdx),
+      );
+    },
     transferToAccount(address) {
       this.accountTo = address;
       this.transfer();
     },
     async transfer() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
       if (this.currentAccountAddress === this.accountTo) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
@@ -130,10 +142,16 @@ export default {
         });
       }
       this.busy = true;
+      await this.ensureNameFetched();
       try {
-        await (this.pointing
-          ? this.$store.dispatch('names/updatePointer', { name: this.name, address: this.accountTo })
-          : this.$store.state.sdk.aensTransfer(this.nameEntry.name, this.accountTo));
+        if (this.pointing) {
+          await this.$store.dispatch('names/updatePointer', {
+            name: this.name,
+            address: this.accountTo,
+          });
+        } else {
+          await new Name(this.name, this.$store.getters.sdk.getContext()).transfer(this.accountTo);
+        }
         this.$store.dispatch('modals/open', {
           name: 'notification',
           text: this.pointing

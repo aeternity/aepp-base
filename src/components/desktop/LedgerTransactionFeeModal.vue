@@ -5,10 +5,7 @@
     closable
     @close="handleClose"
   >
-    <form
-      :id="_uid"
-      @submit.prevent="handleSubmit"
-    >
+    <form :id="_uid" @submit.prevent="handleSubmit">
       <AeInputAmount
         v-model="fee"
         v-validate="{
@@ -38,12 +35,7 @@
       {{ $t('ledger.modal.transaction-fee.note') }}
     </LedgerModalNote>
 
-    <AeButton
-      slot="footer"
-      size="small"
-      plain
-      :form="_uid"
-    >
+    <AeButton slot="footer" size="small" plain :form="_uid">
       {{ $t('next') }}
     </AeButton>
   </LedgerModal>
@@ -79,7 +71,7 @@ export default {
   }),
   methods: {
     async handleSubmit() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
 
       this.resolve(BigNumber(this.fee).shiftedBy(MAGNITUDE_MICRO));
     },

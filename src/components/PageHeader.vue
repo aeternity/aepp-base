@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="page-header"
-    :class="[fill, { shadow: shadow || (!empty && scrolled), empty }]"
-  >
+  <div class="page-header" :class="[fill, { shadow: shadow || (!empty && scrolled), empty }]">
     <header :class="{ padded }">
       <ButtonPlain
         v-if="leftButtonIconName"
@@ -14,9 +11,7 @@
         <Component :is="leftButtonIconName" />
       </ButtonPlain>
 
-      <span class="title">
-        {{ title }}<slot />
-      </span>
+      <span class="title"> {{ title }}<slot /> </span>
 
       <ButtonPlain
         v-if="rightButtonIconName"
@@ -33,9 +28,7 @@
 
 <script>
 import ButtonPlain from './ButtonPlain.vue';
-import {
-  Back, Close, CloseCircle, QuestionCircle,
-} from './icons';
+import { Back, Close, CloseCircle, QuestionCircle } from './icons';
 
 const buttonColorType = {
   type: String,
@@ -45,7 +38,11 @@ const buttonColorType = {
 
 export default {
   components: {
-    ButtonPlain, Back, Close, CloseCircle, QuestionCircle,
+    ButtonPlain,
+    Back,
+    Close,
+    CloseCircle,
+    QuestionCircle,
   },
   props: {
     leftButtonIconName: { type: String, default: null },
@@ -57,14 +54,8 @@ export default {
     rightButtonColor: buttonColorType,
     fill: {
       type: String,
-      validator: (value) => [
-        'primary',
-        'secondary',
-        'alternative',
-        'dark',
-        'neutral',
-        'light',
-      ].includes(value),
+      validator: (value) =>
+        ['primary', 'secondary', 'alternative', 'dark', 'neutral', 'light'].includes(value),
       default: 'light',
     },
     shadow: Boolean,
@@ -73,14 +64,18 @@ export default {
   data: () => ({ scrolled: false }),
   computed: {
     empty() {
-      return !(this.title
-        || this.$slots.default
-        || this.leftButtonIconName
-        || this.rightButtonIconName);
+      return !(
+        this.title ||
+        this.$slots.default ||
+        this.leftButtonIconName ||
+        this.rightButtonIconName
+      );
     },
   },
   mounted() {
-    const scrollHandler = () => { this.scrolled = window.scrollY > 0; };
+    const scrollHandler = () => {
+      this.scrolled = window.scrollY > 0;
+    };
     scrollHandler();
     window.addEventListener('scroll', scrollHandler);
     this.$once('hook:destroyed', () => window.removeEventListener('scroll', scrollHandler));
@@ -97,7 +92,7 @@ export default {
   position: sticky;
   top: 0;
   padding-top: env(safe-area-inset-top);
-  transition: box-shadow .5s;
+  transition: box-shadow 0.5s;
 
   &.empty {
     position: static;
@@ -138,7 +133,7 @@ export default {
   }
 
   &.shadow {
-    box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+    box-shadow: 0 0 functions.rem(8px) rgba(#1b4479, 0.1);
   }
 
   header {
@@ -163,7 +158,8 @@ export default {
 
     $button-width: functions.rem(48px);
 
-    .left, .right {
+    .left,
+    .right {
       width: $button-width;
       text-align: center;
     }

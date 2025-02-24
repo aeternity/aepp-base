@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="busy"
-    class="spinner"
-  >
+  <div v-if="busy" class="spinner">
     <AeSpinner />
   </div>
   <Page
@@ -12,10 +9,7 @@
     right-button-icon-name="close"
     class="redeem-balance"
   >
-    <Guide
-      slot="header"
-      :template="$t('transfer.redeem-balance.guide')"
-    />
+    <Guide slot="header" :template="$t('transfer.redeem-balance.guide')" />
 
     <div class="balance-row">
       <span>{{ $t('transfer.send.amount.balance') }}</span>
@@ -37,9 +31,7 @@
 <script>
 import { pick } from 'lodash-es';
 import BigNumber from 'bignumber.js';
-import {
-  Ae, Transaction, Crypto, TxBuilderHelper,
-} from '@aeternity/aepp-sdk';
+import { encode, Encoding, MemoryAccount, transferFunds } from '@aeternity/aepp-sdk';
 import { handleUnknownError } from '../../lib/utils';
 import AeSpinner from '../../components/AeSpinner.vue';
 import Page from '../../components/Page.vue';
@@ -60,7 +52,7 @@ export default {
     LeftMore,
   },
   data: () => ({
-    keypair: null,
+    inviteAccount: null,
     balance: 0,
     busy: true,
   }),
@@ -68,9 +60,9 @@ export default {
     return pick(this.$store.state.observables, ['accounts']);
   },
   async mounted() {
-    while (!this.keypair) {
+    while (!this.inviteAccount) {
       try {
-        await this.readQrCode(); // eslint-disable-line no-await-in-loop
+        await this.readQrCode();
       } catch (error) {
         this.$router.push({ name: 'transfer' });
         if (error.message !== 'Cancelled by user') handleUnknownError(error);
@@ -102,9 +94,11 @@ export default {
         return;
       }
 
-      const address = TxBuilderHelper.encode(Crypto.generateKeyPairFromSecret(privateKey).publicKey, 'ak');
-      this.balance = BigNumber(await this.$store.state.sdk.getBalance(address))
-        .shiftedBy(-MAGNITUDE);
+      const account = new MemoryAccount(
+        encode(privateKey.subarray(0, 32), Encoding.AccountSecretKey),
+      );
+      const { sdk } = this.$store.getters;
+      this.balance = BigNumber(await sdk.getBalance(account.address)).shiftedBy(-MAGNITUDE);
       if (this.balance < MIN_SPEND_TX_FEE) {
         await this.$store.dispatch('modals/open', {
           name: 'alert',
@@ -113,19 +107,17 @@ export default {
         return;
       }
 
-      this.keypair = { address, privateKey };
+      this.inviteAccount = account;
     },
     async sendToAccount(accountTo) {
       this.busy = true;
-      const { hash, tx: { amount } } = await (
-        await Ae.compose(Transaction, {
-          methods: {
-            sign: (data) => Promise.resolve(Crypto.sign(data, this.keypair.privateKey)),
-            address: () => Promise.resolve(this.keypair.address),
-          },
-        })({ url: this.$store.state.sdkUrl })
-      )
-        .transferFunds(1, accountTo);
+      const {
+        hash,
+        tx: { amount },
+      } = await transferFunds(1, accountTo, {
+        onAccount: this.inviteAccount,
+        onNode: this.$store.getters.node,
+      });
       this.$router.push({ name: 'transfer' });
       this.$store.dispatch('modals/open', {
         name: 'spendSuccess',

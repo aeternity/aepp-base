@@ -7,10 +7,7 @@
   >
     <template slot="title">
       {{ $t('air-gap.setup.title') }}
-      <AeFraction
-        numerator="3"
-        denominator="3"
-      />
+      <AeFraction numerator="3" denominator="3" />
     </template>
 
     <Guide
@@ -26,11 +23,7 @@
       />
     </Guide>
 
-    <AeButton
-      slot="footer"
-      fill="alternative"
-      @click="readValueFromQrCode"
-    >
+    <AeButton slot="footer" fill="alternative" @click="readValueFromQrCode">
       {{ $t('air-gap.link-vault') }}
     </AeButton>
   </Page>
@@ -44,7 +37,10 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, AeButton, Guide, AeFraction,
+    Page,
+    AeButton,
+    Guide,
+    AeFraction,
   },
   methods: {
     async readValueFromQrCode() {

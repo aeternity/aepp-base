@@ -10,7 +10,11 @@ export default {
     address: { type: String, required: true },
   },
   mounted() {
-    this.$watch(({ address }) => address, () => this.render(), { immediate: true });
+    this.$watch(
+      ({ address }) => address,
+      () => this.render(),
+      { immediate: true },
+    );
   },
   methods: {
     render() {

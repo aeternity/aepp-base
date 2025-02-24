@@ -132,6 +132,7 @@
 
     "list": {
       "featured-guide": "<primary>Featured</primary>",
+      "browse-guide": "Browse",
       "bookmarked-guide": "Bookmarks",
       "guide": "æpps <primary>browser</primary> (beta)",
       "note": "æpps running on the æternity blockchain will be added below.",
@@ -440,7 +441,7 @@
       "personal-explanation": "Tap the “+” button below to claim a name and associate it with one of your accounts.",
       "no-auctions": "There are no auctions matching these criteria.",
       "registered": "Registered Names",
-      "active-bids": "Active Bids"
+      "active-auctions": "Active Auctions"
     },
 
     "details": {
@@ -464,7 +465,7 @@
       "subaccount": "Or point to subaccount",
       "confirm-pointing-to-same-account": "The account you are pointing to and the account, which the name currently points to, are the same account. Are you sure you would like to complete this transaction?",
 
-      "notification":{
+      "notification": {
         "succeed": "{name} was successfully pointed",
         "failed": "{name} was not pointed for unknown reason"
       }
@@ -475,9 +476,9 @@
       "subaccount": "Or transfer to subaccount",
       "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
 
-      "notification":{
-        "succeed": "{name} was successfully transfered",
-        "failed": "{name} was not transfered for unknown reason"
+      "notification": {
+        "succeed": "{name} was successfully transferred",
+        "failed": "{name} was not transferred for unknown reason"
       }
     },
 
@@ -495,8 +496,7 @@
       "register": "Register",
       "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
-      "notification":{
-        "claim-sent": "Claim for {name} name was successfully sent",
+      "notification": {
         "registered": "{name} was successfully registered",
         "bid": "You bid on {name} successfully",
         "unknown-error": "{name} was not registered for unknown reason"
@@ -556,11 +556,11 @@
   "network": {
     "connection-status": {
       "offline": "You are offline... Please check your connection.",
-      "no-sdk": "We are unable to connect to the chosen node.",
+      "cant-connect": "We are unable to connect to the chosen node.",
       "connecting": "Connecting to the network...",
       "connected-to-testnet": "You are connected to a testnet.",
       "middleware": {
-        "unavailable":  "Middleware is not available, some functionality may not work properly.",
+        "unavailable": "Middleware is not available, some functionality may not work properly.",
         "blocks-to-sync": "Blocks to sync {blocks}."
       }
     },

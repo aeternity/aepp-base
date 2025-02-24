@@ -1,31 +1,18 @@
 <template>
-  <Transition
-    appear
-    name="fade"
-  >
-    <Overlay
-      class="account-switcher-modal"
-      @click="resolve"
-    >
+  <Transition appear name="fade">
+    <Overlay class="account-switcher-modal" @click="resolve">
       <AeCard fill="maximum">
         <ListItemAccount
-          v-for="(account, index) in accountsWithNamePending"
+          v-for="(account, index) in accounts"
           :key="account.address"
           v-bind="account"
         >
           <template slot="right">
-            <NamePending v-if="account.namePending" />
-            <AeRadio
-              :checked="index === activeIdx"
-              @change="setActiveIdx(index)"
-            />
+            <AeRadio :checked="index === activeIdx" @change="setActiveIdx(index)" />
           </template>
         </ListItemAccount>
 
-        <ListItem
-          :title="$t('account-switcher.create-account')"
-          @click="createHdWalletAccount"
-        >
+        <ListItem :title="$t('account-switcher.create-account')" @click="createHdWalletAccount">
           <ListItemCircle slot="icon">
             <Plus />
           </ListItemCircle>
@@ -41,18 +28,12 @@
           </ListItemCircle>
         </ListItem>
 
-        <Balance
-          :balance="totalBalance"
-          total
-        />
+        <Balance :balance="totalBalance" total />
       </AeCard>
 
       <div class="arrow" />
 
-      <TabBar
-        show-account-switcher
-        @click.native="resolve"
-      />
+      <TabBar show-account-switcher @click.native="resolve" />
     </Overlay>
   </Transition>
 </template>
@@ -63,7 +44,6 @@ import { pick } from 'lodash-es';
 import Overlay from '../Overlay.vue';
 import ListItem from '../ListItem.vue';
 import ListItemAccount from '../ListItemAccount.vue';
-import NamePending from './NamePending.vue';
 import ListItemCircle from '../ListItemCircle.vue';
 import { Plus } from '../icons';
 import AeCard from '../AeCard.vue';
@@ -76,7 +56,6 @@ export default {
     Overlay,
     ListItem,
     ListItemAccount,
-    NamePending,
     ListItemCircle,
     Plus,
     AeCard,
@@ -87,17 +66,7 @@ export default {
   props: {
     resolve: { type: Function, required: true },
   },
-  computed: {
-    ...mapState('accounts', ['activeIdx']),
-    ...mapState('names', {
-      accountsWithNamePending(state, { get, isPending }) {
-        return this.accounts.map((account) => ({
-          ...account,
-          namePending: isPending(get(account.address)),
-        }));
-      },
-    }),
-  },
+  computed: mapState('accounts', ['activeIdx']),
   subscriptions() {
     return pick(this.$store.state.observables, ['accounts', 'totalBalance']);
   },
@@ -126,13 +95,15 @@ export default {
   &.fade-enter-active {
     transition-duration: 0.25s;
 
-    .ae-card, .arrow {
+    .ae-card,
+    .arrow {
       transition: opacity 0.25s ease-out;
     }
   }
 
   &.fade-enter {
-    .ae-card, .arrow {
+    .ae-card,
+    .arrow {
       opacity: 0;
     }
   }
@@ -145,10 +116,6 @@ export default {
     @include mixins.abovePhone {
       width: 100%;
       align-self: center;
-    }
-
-    .name-pending {
-      margin-right: functions.rem(8px);
     }
 
     .list-item.vault-new .list-item-circle {

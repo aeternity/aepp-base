@@ -9,26 +9,13 @@
   >
     <template slot="title">
       {{ $t('air-gap.setup.title') }}
-      <AeFraction
-        numerator="3"
-        denominator="3"
-      />
+      <AeFraction numerator="3" denominator="3" />
     </template>
-    <Guide
-      :template="$t('air-gap.setup.same-device.sync.guide')"
-      fill="alternative"
-    >
-      <AeFraction
-        slot="icon"
-        numerator="3"
-        denominator="3"
-      />
+    <Guide :template="$t('air-gap.setup.same-device.sync.guide')" fill="alternative">
+      <AeFraction slot="icon" numerator="3" denominator="3" />
     </Guide>
 
-    <form
-      :id="_uid"
-      @submit.prevent="createAccount"
-    >
+    <form :id="_uid" @submit.prevent="createAccount">
       <AeTextarea
         v-model="responseUrl"
         v-validate="'required|air_gap_response_url'"
@@ -41,12 +28,7 @@
       />
     </form>
 
-    <AeButton
-      slot="footer"
-      :disabled="errors.any()"
-      :form="_uid"
-      fill="alternative"
-    >
+    <AeButton slot="footer" :disabled="errors.any()" :form="_uid" fill="alternative">
       {{ $t('air-gap.setup.same-device.sync.button') }}
     </AeButton>
   </Page>
@@ -61,14 +43,20 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, AeFraction, Guide, AeTextarea, AeButton,
+    Page,
+    AeFraction,
+    Guide,
+    AeTextarea,
+    AeButton,
   },
   data: () => ({ responseUrl: '' }),
   methods: {
     async createAccount() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
 
-      this.$store.dispatch('accounts/airGap/createByResponseUrl', { responseUrl: this.responseUrl });
+      this.$store.dispatch('accounts/airGap/createByResponseUrl', {
+        responseUrl: this.responseUrl,
+      });
       this.$router.push({ name: 'vault-setup-completed' });
     },
   },

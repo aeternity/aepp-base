@@ -5,12 +5,7 @@
     :button-text="deferredPrompt ? $t('add-to-home-screen.button') : ''"
     @button-click="() => deferredPrompt.prompt()"
   >
-    <AeButton
-      fill="light"
-      plain
-      data-cy="skip"
-      @click="skipAddingToHomeScreen"
-    >
+    <AeButton fill="light" plain data-cy="skip" @click="skipAddingToHomeScreen">
       {{ $t('add-to-home-screen.skip') }}
     </AeButton>
   </FullscreenPrompt>

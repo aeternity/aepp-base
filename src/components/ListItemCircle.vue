@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import { get } from 'lodash-es';
-
 export default {
   computed: {
     hasIcon() {
-      return get(this.$slots.default, '[0].tag', '') === 'svg'
-        && get(this.$slots.default, '[0].data.staticClass', '').includes('icon');
+      return (
+        this.$slots.default[0]?.tag === 'svg' &&
+        this.$slots.default[0]?.data?.staticClass.includes('icon')
+      );
     },
   },
 };

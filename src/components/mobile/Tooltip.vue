@@ -1,12 +1,6 @@
 <template>
-  <div
-    class="tooltip"
-    :style="style"
-  >
-    <div
-      ref="content"
-      class="content"
-    >
+  <div class="tooltip" :style="style">
+    <div ref="content" class="content">
       <ButtonPlain @click="$emit('close')">
         <Close />
       </ButtonPlain>
@@ -45,7 +39,7 @@ export default {
 
       return this.showBelow
         ? { top: `${bottom + arrowSize}px` }
-        : { bottom: `${document.documentElement.clientHeight - top + arrowSize}px` };
+        : { bottom: `${this.$parent.$el.clientHeight - top + arrowSize}px` };
     },
     arrowStyle() {
       if (!this.anchorRect || !this.isMounted) return {};
@@ -83,10 +77,11 @@ export default {
     padding: functions.rem(16px);
     border-radius: functions.rem(8px);
     background-color: variables.$color-neutral-negative-3;
-    box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+    box-shadow: 0 0 functions.rem(8px) rgba(#1b4479, 0.1);
     color: variables.$color-neutral-positive-1;
 
-    &, h1 {
+    &,
+    h1 {
       @extend %face-sans-base;
     }
 
@@ -99,7 +94,8 @@ export default {
       float: right;
     }
 
-    h1, .button-plain {
+    h1,
+    .button-plain {
       color: #fff;
     }
 

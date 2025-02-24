@@ -23,7 +23,7 @@ export default {
 <style lang="scss" scoped>
 .ae-fraction {
   font-weight: 500;
-  font-size: .9em;
+  font-size: 0.9em;
   font-feature-settings: 'frac' 1;
 }
 </style>

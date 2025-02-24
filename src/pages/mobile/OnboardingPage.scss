@@ -6,11 +6,12 @@
   margin: auto 0;
   text-align: center;
 
-  &.v-enter-active, &.v-leave-active {
-    transition-duration: .25s;
+  &.v-enter-active,
+  &.v-leave-active {
+    transition-duration: 0.25s;
 
     img {
-      transition: opacity .25s ease-out;
+      transition: opacity 0.25s ease-out;
     }
   }
 
@@ -18,7 +19,8 @@
     transition-timing-function: ease-in;
   }
 
-  &.v-enter, &.v-leave-to {
+  &.v-enter,
+  &.v-leave-to {
     img {
       opacity: 0;
     }

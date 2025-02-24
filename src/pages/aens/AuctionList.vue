@@ -1,8 +1,5 @@
 <template>
-  <Page
-    fill="neutral"
-    class="auction-list"
-  >
+  <Page fill="neutral" class="auction-list">
     <NameListHeader />
 
     <h2>
@@ -12,12 +9,9 @@
     </h2>
 
     <template v-if="view === VIEW_CHARACTER_LENGTH">
-      <ButtonGroup
-        v-for="lineStartsWith in [1, 7]"
-        :key="lineStartsWith"
-      >
+      <ButtonGroup v-for="lineStartsWith in [1, 7]" :key="lineStartsWith">
         <ButtonFlat
-          v-for="l in times(6, idx => idx + lineStartsWith)"
+          v-for="l in times(6, (idx) => idx + lineStartsWith)"
           :key="l"
           :to="{ name: 'auction-list-character-length', params: { length: l } }"
         >
@@ -41,20 +35,14 @@
         />
       </AeCard>
 
-      <div
-        v-if="pagination.length > 1"
-        class="pagination"
-      >
+      <div v-if="pagination.length > 1" class="pagination">
         <Component
           :is="p.to ? 'RouterLink' : 'span'"
           v-for="p in pagination"
           :key="p.text"
           :to="p.to"
         >
-          <ArrowDouble
-            v-if="['first', 'last'].includes(p.text)"
-            :class="p.text"
-          />
+          <ArrowDouble v-if="['first', 'last'].includes(p.text)" :class="p.text" />
           <template v-else>
             {{ p.text }}
           </template>
@@ -67,9 +55,9 @@
 </template>
 
 <script>
-import Swagger from 'swagger-client';
 import { times } from 'lodash-es';
 import { AENS_DOMAIN } from '../../lib/constants';
+import { fetchAuctions } from '../../lib/methods';
 import Page from '../../components/Page.vue';
 import NameListHeader from '../../components/mobile/NameListHeader.vue';
 import ButtonGroup from '../../components/mobile/ButtonGroup.vue';
@@ -121,10 +109,10 @@ export default {
       if (p < pc - 2) res.push({ text: 'last', to: pc });
       return res.map((i) => ({
         ...i,
-        to: i.to && ({
+        to: i.to && {
           name: this.$route.name,
           params: { ...this.$route.params, page: i.to },
-        }),
+        },
       }));
     },
     auctionsFiltered() {
@@ -132,19 +120,21 @@ export default {
       const all = [...this.allAuctions];
       switch (this.view) {
         case VIEW_ENDING_SOONEST:
-          return all.sort((a1, a2) => a1.info.auctionEnd - a2.info.auctionEnd);
+          return all.sort((a1, a2) => a1.auctionEnd - a2.auctionEnd);
         case VIEW_CHARACTER_LENGTH:
           return all.filter(({ name }) => name.length === this.length + AENS_DOMAIN.length);
         case VIEW_MAX_BID:
-          return all.sort((a1, a2) => a2.info.lastBid.tx.nameFee - a1.info.lastBid.tx.nameFee);
+          return all.sort((a1, a2) => a2.lastBid.tx.nameFee - a1.lastBid.tx.nameFee);
         default:
           throw new Error(`Invalid view: ${this.view}`);
       }
     },
     auctions() {
       if (!this.auctionsFiltered) return null;
-      return this.auctionsFiltered
-        .slice((this.page - 1) * ITEMS_PER_PAGE, this.page * ITEMS_PER_PAGE);
+      return this.auctionsFiltered.slice(
+        (this.page - 1) * ITEMS_PER_PAGE,
+        this.page * ITEMS_PER_PAGE,
+      );
     },
     pageCount() {
       if (!this.auctionsFiltered) return 0;
@@ -152,24 +142,16 @@ export default {
     },
   },
   async mounted() {
-    const { state: { sdk: sdkPromise }, getters: { currentNetwork } } = this.$store;
-    const sdk = sdkPromise.then ? await sdkPromise : sdkPromise;
-    const res = await sdk.middleware.api.getAllAuctions({ limit: 100 });
-    let { next } = res;
-    this.allAuctions = res.data;
-    // TODO: simplify UI or add additional options in getAllAuctions to query only necessary info
-    while (next) {
-      const url = currentNetwork.middlewareUrl + next;
-      const r = sdk.middleware.responseInterceptor(
-        // eslint-disable-next-line no-await-in-loop
-        await Swagger.serializeRes(await fetch(url), url),
-      ).body;
-      this.allAuctions.push(...r.data);
-      next = r.next;
-    }
+    // TODO: simplify UI or add additional options in getNamesAuctions to query only necessary info
+    await this.fetchAuctions((auctions) => {
+      if (!auctions) return;
+      this.allAuctions ??= [];
+      this.allAuctions.push(...auctions);
+    });
   },
   methods: {
     times,
+    fetchAuctions,
   },
 };
 </script>
@@ -199,7 +181,8 @@ export default {
     @extend %face-sans-base;
     text-align: center;
 
-    span, a {
+    span,
+    a {
       padding: 0 functions.rem(5px);
     }
 

@@ -1,24 +1,14 @@
 <template>
   <div class="onboarding">
-    <Transition
-      mode="out-in"
-      appear
-    >
+    <Transition mode="out-in" appear>
       <RouterView />
     </Transition>
 
     <footer>
-      <AeButton
-        :to="{ name: 'intro' }"
-        size="small"
-        plain
-      >
+      <AeButton :to="{ name: 'intro' }" size="small" plain>
         {{ $t('onboarding.skip') }}
       </AeButton>
-      <TransitionGroup
-        name="step-dots"
-        class="step-dots"
-      >
+      <TransitionGroup name="step-dots" class="step-dots">
         <RouterLink
           v-for="(name, idx) in stepRouteNames"
           :key="name === $route.name ? 'active' : idx - (currentStepIdx < idx ? 1 : 0)"
@@ -40,17 +30,11 @@
 
 <script>
 import AeButton from '../../components/AeButton.vue';
-import { DISABLED_BROWSER } from '../../lib/constants';
 
 export default {
   components: { AeButton },
   data: () => ({
-    stepRouteNames: [
-      'onboarding',
-      'onboarding-send',
-      ...DISABLED_BROWSER ? [] : ['onboarding-aepps'],
-      'onboarding-subaccounts',
-    ],
+    stepRouteNames: ['onboarding', 'onboarding-send', 'onboarding-aepps', 'onboarding-subaccounts'],
   }),
   computed: {
     currentStepIdx() {
@@ -91,7 +75,7 @@ export default {
       transform: translate(-50%);
 
       &-move {
-        transition: transform .2s;
+        transition: transform 0.2s;
       }
 
       a {

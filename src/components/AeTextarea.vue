@@ -1,13 +1,6 @@
 <template>
-  <AeInputWrapper
-    class="ae-textarea"
-    v-bind="$attrs"
-  >
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
+  <AeInputWrapper class="ae-textarea" v-bind="$attrs">
+    <slot v-for="slot in Object.keys($slots)" :slot="slot" :name="slot" />
     <textarea
       :id="id"
       v-focus.lazy="autofocus"

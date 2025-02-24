@@ -1,8 +1,4 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import Promise from 'bluebird';
-
 const modals = {};
-let modalCounter = 0;
 
 export const registerModal = ({
   name, component, hidePage = false, allowRedirect = false, dontGrayscalePage = false,
@@ -11,6 +7,11 @@ export const registerModal = ({
   modals[name] = {
     component, hidePage, allowRedirect, grayscalePage: !dontGrayscalePage,
   };
+};
+
+export const swallowModalAborted = (error) => {
+  if (error.message === 'Modal aborted') return;
+  throw error;
 };
 
 export default (store) => {
@@ -23,6 +24,7 @@ export default (store) => {
       },
       closeByKey(state, key) {
         const idx = state.opened.findIndex((modal) => modal.key === key);
+        if (idx === -1) throw new Error(`Modal not found by key ${key.toString()}`);
         state.opened.splice(idx, 1);
       },
     },
@@ -34,16 +36,20 @@ export default (store) => {
       grayscalePage: (state, { opened }) => opened.some(({ grayscalePage }) => grayscalePage),
     },
     actions: {
-      open({ commit }, { name, allowRedirect, ...props }) {
-        if (!modals[name]) return Promise.reject(new Error(`Modal with name "${name}" not registered`));
-        const key = modalCounter;
-        modalCounter += 1;
-        return new Promise(
-          (resolve, reject) => commit('open', {
+      open({ commit }, { name, signal, allowRedirect, ...props }) {
+        if (!modals[name]) throw new Error(`Modal with name "${name}" not registered`);
+        const key = Symbol(`modal-${name}-${Date.now() % 1e4}`);
+        let abort;
+        return new Promise((resolve, reject) => {
+          abort = () => reject(new Error('Modal aborted'));
+          signal?.addEventListener('abort', abort);
+          commit('open', {
             name, key, allowRedirect, props: { ...props, resolve, reject },
-          }),
-        )
-          .finally(() => commit('closeByKey', key));
+          });
+        }).finally(() => {
+          signal?.removeEventListener('abort', abort);
+          commit('closeByKey', key);
+        });
       },
     },
   });

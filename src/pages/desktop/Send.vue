@@ -1,13 +1,7 @@
 <template>
   <div class="send">
-    <Guide
-      :template="$t('transfer.send.guide')"
-      size="big"
-    >
-      <AccountInline
-        slot="senderAddress"
-        :address="activeAccount.address"
-      />
+    <Guide :template="$t('transfer.send.guide')" size="big">
+      <AccountInline slot="senderAddress" :address="activeAccount.address" />
     </Guide>
 
     <Note>
@@ -39,20 +33,14 @@
         name="amount"
       />
 
-      <DetailsAmount
-        :name="$t('transfer.send.amount.fee')"
-        :amount="minFee"
-      />
+      <DetailsAmount :name="$t('transfer.send.amount.fee')" :amount="minFee" />
 
       <DetailsAmountCurrency
         :name="$t('transfer.send.amount.balance')"
         :amount="activeAccount.balance"
       />
 
-      <AeButton
-        :disabled="errors.any() || busy"
-        :spinner="busy"
-      >
+      <AeButton :disabled="errors.any() || busy" :spinner="busy">
         {{ $t('transfer.send.transfer') }}
       </AeButton>
     </form>
@@ -101,7 +89,7 @@ export default {
   }),
   methods: {
     async send() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
       if (this.activeAccount.address === this.accountToAddress) {
         await this.$store.dispatch('modals/open', {
           name: 'confirm',
@@ -112,15 +100,22 @@ export default {
       const amount = BigNumber(this.amount);
       this.busy = true;
       try {
-        const { hash } = await this.$store.state.sdk.spend(
+        const { hash } = await this.$store.getters.sdk.spend(
           amount.shiftedBy(MAGNITUDE),
           this.accountTo,
         );
 
-        await this.$store.dispatch('modals/open', { name: 'spendSuccess', transactionHash: hash, amount });
+        await this.$store.dispatch('modals/open', {
+          name: 'spendSuccess',
+          transactionHash: hash,
+          amount,
+        });
         this.accountTo = '';
         this.amount = '';
         this.$validator.reset();
+      } catch (error) {
+        if (['Rejected by user', 'Cancelled by user'].includes(error.message)) return;
+        throw error;
       } finally {
         this.busy = false;
       }

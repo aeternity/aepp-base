@@ -1,9 +1,5 @@
 <template>
-  <ButtonPlain
-    v-bind="$attrs"
-    class="button-mnemonic-word"
-    v-on="$listeners"
-  >
+  <ButtonPlain v-bind="$attrs" class="button-mnemonic-word" v-on="$listeners">
     <slot />
     <Close v-if="iconClose" />
   </ButtonPlain>

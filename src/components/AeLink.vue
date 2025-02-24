@@ -1,18 +1,8 @@
 <template>
-  <RouterLink
-    v-if="useRouterLink"
-    class="ae-link"
-    :to="to"
-  >
+  <RouterLink v-if="useRouterLink" class="ae-link" :to="to">
     <slot />
   </RouterLink>
-  <a
-    v-else
-    class="ae-link"
-    :href="to"
-    :target="target"
-    @click="clickHandler"
-  >
+  <a v-else class="ae-link" :href="to" :target="target" @click="clickHandler">
     <slot />
   </a>
 </template>
@@ -26,8 +16,10 @@ export default {
   },
   computed: {
     isLinkOnSameHost() {
-      return typeof this.to === 'object'
-        || (new URL(this.to, window.location)).host === window.location.host;
+      return (
+        typeof this.to === 'object' ||
+        new URL(this.to, window.location).host === window.location.host
+      );
     },
     useRouterLink() {
       return this.$options.components.RouterLink && this.isLinkOnSameHost;

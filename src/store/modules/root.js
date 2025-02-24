@@ -1,10 +1,12 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-
 import Vue from 'vue';
-import { update, mergeWith } from 'lodash-es';
+import { mergeWith } from 'lodash-es';
 import networksRegistry from '../../lib/networksRegistry';
 import { genRandomBuffer } from '../utils';
 
+const getAppDefaults = () => ({
+  bookmarked: false,
+  permissions: { accessToAccounts: [] },
+});
 const getAppByHost = (apps, appHost) => apps.find(({ host }) => host === appHost);
 
 export default {
@@ -12,7 +14,6 @@ export default {
     migrations: {},
     loginTarget: '',
     sdkUrl: networksRegistry[0].url,
-    sdk: null,
     customNetworks: [],
     apps: [],
     peerId: Buffer.from(genRandomBuffer(15)).toString('base64'),
@@ -25,11 +26,12 @@ export default {
       ...networksRegistry,
       ...customNetworks.map((network) => ({ ...networksRegistry[0], ...network, custom: true })),
     ],
-    currentNetwork: ({ sdkUrl }, { networks }) => networks.find(({ url }) => url === sdkUrl) || {
-      ...networksRegistry[0],
-      name: sdkUrl,
-      url: sdkUrl,
-    },
+    currentNetwork: ({ sdkUrl }, { networks }) =>
+      networks.find(({ url }) => url === sdkUrl) || {
+        ...networksRegistry[0],
+        name: sdkUrl,
+        url: sdkUrl,
+      },
     getApp: ({ apps }) => getAppByHost.bind(null, apps),
   },
 
@@ -38,12 +40,13 @@ export default {
       const customizer = (objValue, srcValue) => {
         if (!Array.isArray(srcValue)) return undefined;
         if (!Array.isArray(objValue)) return srcValue;
-        return srcValue.map((el, idx) => (
-          el && typeof el === 'object' ? mergeWith({}, objValue[idx], el, customizer) : el
-        ));
+        return srcValue.map((el, idx) =>
+          el && typeof el === 'object' ? mergeWith({}, objValue[idx], el, customizer) : el,
+        );
       };
-      Object.entries(mergeWith({}, state, remoteState, customizer))
-        .forEach(([name, value]) => Vue.set(state, name, value));
+      Object.entries(mergeWith({}, state, remoteState, customizer)).forEach(([name, value]) =>
+        Vue.set(state, name, value),
+      );
     },
     markMigrationAsApplied(state, migrationId) {
       Vue.set(state.migrations, migrationId, true);
@@ -63,25 +66,22 @@ export default {
     removeNetwork(state, networkIdx) {
       state.customNetworks.splice(networkIdx - networksRegistry.length, 1);
     },
-    toggleAccessToAccount({ apps }, { appHost, accountAddress }) {
-      if (!getAppByHost(apps, appHost)) apps.push({ host: appHost });
+    toggleAppBookmarking({ apps }, appHost) {
+      if (!getAppByHost(apps, appHost)) apps.push({ ...getAppDefaults(), host: appHost });
       const app = getAppByHost(apps, appHost);
-      update(
-        app,
-        'permissions.accessToAccounts',
-        (arr = []) => (arr.includes(accountAddress)
-          ? arr.filter((address) => address !== accountAddress)
-          : [...arr, accountAddress]),
-      );
+      app.bookmarked = !app.bookmarked;
+    },
+    toggleAccessToAccount({ apps }, { appHost, accountAddress }) {
+      if (!getAppByHost(apps, appHost)) apps.push({ ...getAppDefaults(), host: appHost });
+      const {
+        permissions: { accessToAccounts },
+      } = getAppByHost(apps, appHost);
+      const idx = accessToAccounts.indexOf(accountAddress);
+      if (idx === -1) accessToAccounts.push(accountAddress);
+      else accessToAccounts.splice(idx, 1);
     },
     setOnLine(state, onLine) {
       state.onLine = onLine;
-    },
-    setSdkAccounts({ sdk }, list) {
-      sdk.accounts = Object.fromEntries(list.map(({ address }) => [address, {}]));
-    },
-    selectSdkAccount({ sdk }, address) {
-      sdk.selectAccount(address);
     },
     setNameListRoute(state, nameListRouteParams) {
       state.nameListRouteParams = nameListRouteParams;

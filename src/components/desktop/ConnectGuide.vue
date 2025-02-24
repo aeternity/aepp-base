@@ -1,10 +1,7 @@
 <template>
   <div class="connect-guide">
     <template v-if="accountType !== 'ledger'">
-      <Guide
-        :template="$t('remote-connection.connect-guide.title')"
-        size="small"
-      />
+      <Guide :template="$t('remote-connection.connect-guide.title')" size="small" />
 
       <Guide
         v-for="(step, idx) in $t('remote-connection.connect-guide.steps')"
@@ -17,14 +14,8 @@
           :numerator="idx + 1"
           :denominator="$t('remote-connection.connect-guide.steps').length"
         />
-        <span
-          slot="icon-settings"
-          class="icon-wrapper settings"
-        ><Settings /></span>
-        <span
-          slot="icon-device"
-          class="icon-wrapper device"
-        >
+        <span slot="icon-settings" class="icon-wrapper settings"><Settings /></span>
+        <span slot="icon-device" class="icon-wrapper device">
           <Device />
         </span>
       </Guide>
@@ -33,10 +24,7 @@
     </template>
 
     <template v-else-if="ledgerSupported">
-      <Guide
-        :template="$t('ledger.connect-guide.title')"
-        size="small"
-      />
+      <Guide :template="$t('ledger.connect-guide.title')" size="small" />
 
       <Guide
         v-for="(step, idx) in $t('ledger.connect-guide.steps')"
@@ -51,21 +39,15 @@
         />
       </Guide>
 
-      <ListItem
-        :title="$t('account-switcher.create-account-desktop')"
-        @click="create"
-      >
+      <ListItem :title="$t('account-switcher.create-account-desktop')" @click="create">
         <ListItemCircle slot="icon">
           <Plus />
         </ListItemCircle>
       </ListItem>
     </template>
 
-    <div
-      v-else
-      class="no-ledger-support"
-    >
-      <img src="../../assets/switch-to-chrome.svg">
+    <div v-else class="no-ledger-support">
+      <img src="../../assets/switch-to-chrome.svg" />
       <Guide :template="$t('ledger.not-supported.guide')" />
       <Note>
         {{ $t('ledger.not-supported.note') }}

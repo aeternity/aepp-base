@@ -1,20 +1,14 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-import { get } from 'lodash-es';
-import BigNumber from 'bignumber.js';
 import Vue from 'vue';
-import { Crypto, TxBuilderHelper } from '@aeternity/aepp-sdk';
-import { MAGNITUDE } from '../../../lib/constants';
-import {
-  handleUnknownError, isAccountNotFoundError, getAddressByNameEntry, isAensName,
-} from '../../../lib/utils';
+import { isAddressValid, Name, produceNameId } from '@aeternity/aepp-sdk';
+import { getAddressByNameEntry, isAensName } from '../../../lib/utils';
 
 export default (store) => {
   store.registerModule('names', {
     namespaced: true,
     state: {
       names: {},
-      defaults: get(store.state, 'names.defaults', {}),
-      owned: null,
+      defaults: store.state.names?.defaults ?? {},
+      owned: [],
     },
     getters: {
       get: ({ names }, { getDefault }, rootState, rootGetters) => (id, local = true) => {
@@ -36,16 +30,13 @@ export default (store) => {
         return '';
       },
       getAddress: ({ names }) => (id) => {
-        if (Crypto.isAddressValid(id)) return id;
+        if (isAddressValid(id)) return id;
         store.dispatch('names/fetch', { id });
         if (names[id].address) return names[id].address;
         return '';
       },
-      getDefault: ({ defaults }, getters, { sdk }) => (address) => (
-        sdk.then ? undefined : defaults[`${address}-${sdk.getNetworkId()}`]
-      ),
-      isPending: ({ owned }) => (name) => (
-        !!((owned && owned.names.find((t) => t.name === name)) || {}).status === 'pending'
+      getDefault: ({ defaults }, _getters, { sdkSync: { networkId } }) => (address) => (
+        defaults[`${address}-${networkId}`]
       ),
     },
     mutations: {
@@ -65,7 +56,7 @@ export default (store) => {
       },
       reset(state) {
         state.names = {};
-        state.owned = null;
+        state.owned = [];
       },
     },
     actions: {
@@ -78,30 +69,29 @@ export default (store) => {
         subscription.unsubscribe();
         return height;
       },
-      async fetch({ rootState, state, commit }, { id, force }) {
+      async fetch({ rootGetters: { node, middleware }, state, commit }, { id, force }) {
         if (!force && state.names[id]) return;
         commit('set', { key: id });
-        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
         if (id.startsWith('ak_')) {
-          const nameEntry = (await sdk.middleware.api.getNamePointees(id))
-            .active.accountPubkey?.[0];
+          const nameEntry = (await middleware.getAccountPointees(id, { limit: 100 }))
+            .data.find(({ active, key }) => active && key === 'account_pubkey');
           if (!nameEntry) return;
           commit('set', {
             address: id,
             name: nameEntry.name,
-            hash: TxBuilderHelper.produceNameId(nameEntry.name),
+            hash: produceNameId(nameEntry.name),
           });
           return;
         }
         if (id.startsWith('nm_')) {
-          const entry = await sdk.middleware.api.getNameById(id);
+          const entry = await middleware.getName(id);
           if (!entry.active) return;
-          const { name, hash, info: { pointers } } = entry;
-          commit('set', { address: pointers?.accountPubkey, name, hash });
+          const { name, hash } = entry;
+          commit('set', { address: getAddressByNameEntry(entry), name, hash });
           return;
         }
         if (isAensName(id)) {
-          const nameEntry = await sdk.api.getNameEntryByName(id);
+          const nameEntry = await node.getNameEntryByName(id);
           commit('set', {
             address: getAddressByNameEntry(nameEntry),
             name: id,
@@ -111,83 +101,40 @@ export default (store) => {
         }
         throw new Error(`Unknown id: ${id}`);
       },
-      async fetchOwned({ rootState, commit }) {
-        const sdk = rootState.sdk.then ? await rootState.sdk : rootState.sdk;
-
-        const getPendingNameClaimTransactions = (address) => sdk.api
-          .getPendingAccountTransactionsByPubkey(address)
-          .then(
-            ({ transactions }) => transactions
-              .filter(({ tx: { type } }) => type === 'NameClaimTx')
-              .map(({ tx }) => ({
-                name: tx.name,
-                owner: address,
-                pointers: [],
-                status: 'pending',
-                nameFee: new BigNumber(tx.nameFee).shiftedBy(-MAGNITUDE),
-              })),
-            (error) => {
-              if (!isAccountNotFoundError(error)) handleUnknownError(error);
-              return [];
-            },
-          );
-
+      async fetchOwned({ rootState, rootGetters: { node, middleware }, commit }) {
         /**
          * Name object structure
          * @property {string} name - name ending with .chain
          * @property {string} owner - address
          * @property {array} pointers - array of objects with key and value
-         * @property {number | undefined} createdAt - block height
-         * @property {number | undefined} createdAtTxIdx - transaction index
-         * @property {number | undefined} expiresAt - block height
-         * @property {'auction' | 'name' | 'pending'} status
+         * @property {number | undefined} activeFrom - block height
+         * @property {number | undefined} expireHeight - block height
+         * @property {'auction' | 'name'} status
          * @property {BigNumber | undefined} nameFee
          */
         const names = (await Promise.all(
-          rootState.accounts.list.map(({ address }) => Promise.all([
-            getPendingNameClaimTransactions(address),
-            sdk.middleware.api.getNamesOwnedBy(address)
-              .then(({ active, topBid }) => [
-                ...active.map(({ name, info }) => ({
-                  name,
-                  owner: address,
-                  pointers: Object.entries(info.pointers).map(([key, id]) => ({
-                    // TODO: find a better wrapper for mdw api
-                    key: key === 'accountPubkey' ? 'account_pubkey' : key,
-                    id,
-                  })),
-                  createdAt: info.activeFrom,
-                  createdAtTxIdx: info.claims[0],
-                  expiresAt: info.expireHeight,
-                  status: 'name',
-                })),
-                ...topBid.map(({ name, info }) => ({
-                  name,
-                  owner: address,
-                  pointers: [],
-                  createdAt: info.lastBid.blockHeight,
-                  createdAtTxIdx: info.lastBid.txIndex,
-                  status: 'auction',
-                  nameFee: new BigNumber(info.lastBid.tx.nameFee).shiftedBy(-MAGNITUDE),
-                })),
-              ]),
-          ])),
-        )).flat(2);
+          rootState.accounts.list.map(({ address }) =>
+            middleware.getNames({ ownedBy: address, limit: 100, state: 'active' })
+              .then(({ data }) => data.map(({ name, pointers, activeFrom, expireHeight }) => ({
+                name,
+                owner: address,
+                pointers: Object.values(pointers), // TODO: remove after updating sdk to 14.1.0
+                activeFrom,
+                expireHeight,
+                status: 'name',
+              })))),
+        )).flat(1);
 
-        commit('setOwned', {
-          names: names.filter(({ status }) => status !== 'auction'),
-          bids: names.filter(({ status }) => status === 'auction'),
-        });
+        commit('setOwned', names);
       },
-      setDefault({ rootState: { sdk }, commit }, { name, address }) {
-        commit('setDefault', { name, address, networkId: sdk.getNetworkId() });
+      async setDefault({ rootGetters: { node }, commit }, { name, address }) {
+        commit('setDefault', { name, address, networkId: await node.getNetworkId() });
       },
       async updatePointer({
-        rootState: { sdk }, state, commit, dispatch,
+        rootGetters, state, commit, dispatch,
       }, { name, address }) {
-        const nameEntry = await sdk.api.getNameEntryByName(name);
-        await sdk.aensUpdate(
-          name,
+        const nameEntry = await rootGetters.node.getNameEntryByName(name);
+        await (new Name(name, rootGetters.sdk.getContext())).update(
           address ? { account_pubkey: address } : {},
           { extendPointers: true },
         );

@@ -21,19 +21,22 @@ describe('migration runner', () => {
 
   it('applies the thirst migration', () => {
     expect(runMigrations({ migrations: { 1: true } })).toEqual({
-      test: 1, migrations: { 0: true, 1: true },
+      test: 1,
+      migrations: { 0: true, 1: true },
     });
   });
 
   it('applies the second migration', () => {
     expect(runMigrations({ migrations: { 0: true } })).toEqual({
-      test: 2, migrations: { 0: true, 1: true },
+      test: 2,
+      migrations: { 0: true, 1: true },
     });
   });
 
   it('applies both migrations', () => {
-    expect(runMigrations({ })).toEqual({
-      test: 2, migrations: { 0: true, 1: true },
+    expect(runMigrations({})).toEqual({
+      test: 2,
+      migrations: { 0: true, 1: true },
     });
   });
 
@@ -51,26 +54,29 @@ describe('migration runner', () => {
     });
 
     registerMigration({
-      migrate: (state, store) => new Promise((r) => {
-        setTimeout(() => {
-          store.commit('setTest');
-          r();
-        });
-      }),
+      migrate: (state, store) =>
+        new Promise((r) => {
+          setTimeout(() => {
+            store.commit('setTest');
+            r();
+          });
+        }),
     });
 
     const state = runMigrations(testStore.state, testStore);
     testStore.replaceState(state);
 
     expect(state).toEqual({
-      test: 2, migrations: { 0: true, 1: true },
+      test: 2,
+      migrations: { 0: true, 1: true },
     });
 
     await new Promise((resolve) => {
       testStore.subscribe(({ type }) => {
         if (type === 'markMigrationAsApplied') {
           expect(testStore.state).toEqual({
-            test: 3, migrations: { 0: true, 1: true, 2: true },
+            test: 3,
+            migrations: { 0: true, 1: true, 2: true },
           });
           resolve();
         }

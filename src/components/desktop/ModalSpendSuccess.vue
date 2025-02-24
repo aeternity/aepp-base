@@ -16,11 +16,7 @@
       <AeButton :to="`${currentNetwork.explorerUrl}/transactions/${transactionHash}`">
         {{ $t('transfer.send.resolved.to-explorer') }}
       </AeButton>
-      <AeButton
-        v-copy-on-click="transactionHash"
-        fill="dark"
-        plain
-      >
+      <AeButton v-copy-on-click="transactionHash" fill="dark" plain>
         {{ $t('transfer.send.resolved.copy') }}
       </AeButton>
     </template>
@@ -38,7 +34,9 @@ import copyOnClick from '../../directives/copyOnClick';
 
 export default {
   components: {
-    Modal, ModalHeader, AeButton,
+    Modal,
+    ModalHeader,
+    AeButton,
   },
   directives: { copyOnClick },
   props: {

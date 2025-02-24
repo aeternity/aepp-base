@@ -12,19 +12,11 @@
     </LedgerModalNote>
 
     <template slot="footer">
-      <AeButton
-        size="small"
-        plain
-        @click="handleCancel"
-      >
+      <AeButton size="small" plain @click="handleCancel">
         {{ $t('cancel') }}
       </AeButton>
 
-      <AeButton
-        size="small"
-        plain
-        @click="resolve"
-      >
+      <AeButton size="small" plain @click="resolve">
         {{ $t('ledger.modal.request-retry.try') }}
       </AeButton>
     </template>
@@ -50,7 +42,7 @@ export default {
   },
   methods: {
     handleCancel() {
-      this.reject(new Error('Canceled by user'));
+      this.reject(new Error('Cancelled by user'));
     },
   },
 };

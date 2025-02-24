@@ -132,6 +132,7 @@
 
     "list": {
       "featured-guide": "<primary>æpps destacados</primary>",
+      "browse-guide": "Examinar æpps",
       "bookmarked-guide": "Mis æpps",
       "guide": "æpps <primary>explorador</primary> (beta)",
       "note": "æpps que se ejecutan en la blockchain de  æternity se agregarán a continuación",
@@ -440,7 +441,7 @@
       "personal-explanation": "Toque el botón “+” a continuación para reclamar un nombre y asociarlo con una de sus cuentas",
       "no-auctions": "There are no auctions matching these criteria.",
       "registered": "Nombres registrados",
-      "active-bids": "Active Bids"
+      "active-auctions": "Active Auctions"
     },
 
     "details": {
@@ -464,7 +465,7 @@
       "subaccount": "Or point to subaccount",
       "confirm-pointing-to-same-account": "The account you are pointing to and the account, which the name currently points to, are the same account. Are you sure you would like to complete this transaction?",
 
-      "notification":{
+      "notification": {
         "succeed": "{name} was successfully pointed",
         "failed": "{name} was not pointed for unknown reason"
       }
@@ -475,9 +476,9 @@
       "subaccount": "Or transfer to subaccount",
       "confirm-transfering-to-same-account": "The account you are transferring to and the account, which owns the name you are transferring, are the same account. Are you sure you would like to complete this transaction?",
 
-      "notification":{
-        "succeed": "{name} was successfully transfered",
-        "failed": "{name} was not transfered for unknown reason"
+      "notification": {
+        "succeed": "{name} was successfully transferred",
+        "failed": "{name} was not transferred for unknown reason"
       }
     },
 
@@ -496,7 +497,6 @@
       "confirm-bidding": "An auction for the name {name} has already started. Would you like to make a bid?",
 
       "notification": {
-        "claim-sent":"La solicitud de {name} nombre se envió correctamente",
         "registered": "{name} se registró correctamente",
         "bid": "You bid on {name} successfully",
         "unknown-error": "{name} no se registró por un motivo desconocido"
@@ -556,11 +556,11 @@
   "network": {
     "connection-status": {
       "offline": "Estás desconectado... Comprueba tu conexión",
-      "no-sdk": "No podemos conectarnos al nodo elegido",
+      "cant-connect": "No podemos conectarnos al nodo elegido",
       "connecting": "Conectando a la red...",
       "connected-to-testnet": "Está conectado a una red de prueba",
       "middleware": {
-        "unavailable":  "Middleware is not available, some functionality may not work properly.",
+        "unavailable": "Middleware is not available, some functionality may not work properly.",
         "blocks-to-sync": "Blocks to sync {blocks}."
       }
     },
@@ -615,7 +615,7 @@
         "Vaya a Configuración <icon-settings />",
         "Toca Conexiones remotas <icon-device /> y toca ‘+’",
         "Escanee el código QR a continuación con Base æpp"
-       ]
+      ]
     },
 
     "modal": {

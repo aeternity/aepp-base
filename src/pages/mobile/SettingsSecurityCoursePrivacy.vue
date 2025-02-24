@@ -3,9 +3,7 @@
   <SettingsSecurityCourseWrapper name="privacy">
     <template v-if="$i18n.locale === 'cn'">
       <h2>æternity高度重视隐私</h2>
-      <p>
-        Base æpp不会询问、接收、发送或者存储您的：
-      </p>
+      <p>Base æpp不会询问、接收、发送或者存储您的：</p>
 
       <ul>
         <li>姓名</li>
@@ -20,9 +18,7 @@
     <template v-else-if="$i18n.locale === 'ru'">
       <h2>æternity ценит конфиденциальность</h2>
 
-      <p>
-        Base æpp не будет запрашивать, получать, передавать или хранить ваши:
-      </p>
+      <p>Base æpp не будет запрашивать, получать, передавать или хранить ваши:</p>
 
       <ul>
         <li>ФИО</li>
@@ -37,9 +33,7 @@
     <template v-else>
       <h2>æternity values privacy</h2>
 
-      <p>
-        The Base æpp will not ask, receive, transmit or store your:
-      </p>
+      <p>The Base æpp will not ask, receive, transmit or store your:</p>
 
       <ul>
         <li>First and last name</li>

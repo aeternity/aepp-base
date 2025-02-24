@@ -1,15 +1,17 @@
-/* eslint no-param-reassign: ['error', { 'ignorePropertyModificationsFor': ['state'] }] */
-
 import { getDesktopRemoteSignAction } from './utils';
 import { i18n } from '../../plugins/ui/languages';
 
 const type = `hd-wallet${ENV_MOBILE_DEVICE ? '-desktop' : ''}`;
 
 const signOnMobile = async ({ dispatch }) => {
-  await dispatch('modals/open', {
-    name: 'alert',
-    text: i18n.t('remote-connection.modal.mobile-not-supported'),
-  }, { root: true });
+  await dispatch(
+    'modals/open',
+    {
+      name: 'alert',
+      text: i18n.t('remote-connection.modal.mobile-not-supported'),
+    },
+    { root: true },
+  );
   throw new Error('Not implemented yet');
 };
 
@@ -23,14 +25,16 @@ export default {
   },
 
   actions: {
-    async isAccountUsed({ rootState: { sdk } }, address) {
-      const { api } = sdk.then ? await sdk : sdk;
-      return api.getAccountByPubkey(address).then(() => true, () => false);
+    async isAccountUsed({ rootGetters: { node } }, address) {
+      return node.getAccountByPubkey(address).then(
+        () => true,
+        () => false,
+      );
     },
 
     async checkPreviousAndCreate({ dispatch, rootGetters }) {
       const { address } = rootGetters['accounts/getByType'](type).pop();
-      if (!await dispatch('isAccountUsed', address)) {
+      if (!(await dispatch('isAccountUsed', address))) {
         await dispatch(
           'modals/open',
           {
@@ -47,12 +51,14 @@ export default {
     create({ dispatch }) {
       return dispatch('remoteConnection/call', { name: 'createAccount' }, { root: true });
     },
-    ...ENV_MOBILE_DEVICE ? {
-      sign: signOnMobile,
-      signTransaction: signOnMobile,
-    } : {
-      sign: getDesktopRemoteSignAction('sign'),
-      signTransaction: getDesktopRemoteSignAction('signTransaction'),
-    },
+    ...(ENV_MOBILE_DEVICE
+      ? {
+          sign: signOnMobile,
+          signTransaction: signOnMobile,
+        }
+      : {
+          sign: getDesktopRemoteSignAction('sign', 'data'),
+          signTransaction: getDesktopRemoteSignAction('signTransaction', 'transaction'),
+        }),
   },
 };

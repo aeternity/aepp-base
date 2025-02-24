@@ -3,10 +3,7 @@
     <ConnectionStatus />
 
     <div class="wrapper">
-      <ButtonPlain
-        v-if="!$globals.DISABLED_BROWSER"
-        :to="browserPath"
-      >
+      <ButtonPlain :to="browserPath">
         <Grid />
         <div>{{ $t('app.title') }}</div>
       </ButtonPlain>
@@ -14,14 +11,6 @@
       <ButtonPlain :to="{ name: 'transfer' }">
         <Transfer />
         <div>{{ $t('transfer.title') }}</div>
-      </ButtonPlain>
-
-      <ButtonPlain
-        v-if="$globals.DISABLED_BROWSER"
-        :to="{ name: 'transaction-list' }"
-      >
-        <List />
-        <div>{{ $t('transfer.transaction.title') }}</div>
       </ButtonPlain>
 
       <ButtonPlain
@@ -47,9 +36,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import ButtonPlain from '../ButtonPlain.vue';
-import {
-  Grid, Transfer, List, Contacts, Settings,
-} from '../icons';
+import { Grid, Transfer, Contacts, Settings } from '../icons';
 import AeIdenticon from '../AeIdenticon.vue';
 import ConnectionStatus from '../ConnectionStatus.vue';
 import MnemonicBackupWarning from './MnemonicBackupWarning.vue';
@@ -60,7 +47,6 @@ export default {
     ButtonPlain,
     Grid,
     Transfer,
-    List,
     Contacts,
     Settings,
     ConnectionStatus,

@@ -20,7 +20,8 @@
       }
     }
 
-    h2, p {
+    h2,
+    p {
       margin: 8px 0;
     }
 
@@ -38,7 +39,7 @@
         font-weight: 500;
         text-transform: uppercase;
         margin: 18px 0 0 0;
-        letter-spacing: .3px;
+        letter-spacing: 0.3px;
       }
     }
   }

@@ -1,13 +1,6 @@
 <template>
-  <AeInputWrapper
-    class="ae-input"
-    v-bind="$attrs"
-  >
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
+  <AeInputWrapper class="ae-input" v-bind="$attrs">
+    <slot v-for="slot in Object.keys($slots)" :slot="slot" :name="slot" />
     <input
       :id="id"
       v-focus.lazy="autofocus"
@@ -17,7 +10,7 @@
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       @input="$emit('input', $event.target.value)"
-    >
+    />
   </AeInputWrapper>
 </template>
 

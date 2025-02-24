@@ -1,17 +1,25 @@
 import BigNumber from 'bignumber.js';
-import { TxBuilder } from '@aeternity/aepp-sdk';
+import { buildTx, unpackTx, Tag } from '@aeternity/aepp-sdk';
 import { MAGNITUDE, MAGNITUDE_MICRO } from './constants';
 
 const STUB_ADDRESS = 'ak_enAPooFqpTQKkhJmU47J16QZu9HbPQQPwWBVeGnzDbDnv9dxp';
+
+export const calculateMinSpendTxFee = (options) =>
+  unpackTx(
+    buildTx({
+      ...options,
+      tag: Tag.SpendTx,
+      senderId: STUB_ADDRESS,
+      recipientId: STUB_ADDRESS,
+    }),
+    Tag.SpendTx,
+  ).fee;
+
 const MAX_UINT256 = BigNumber(2).exponentiatedBy(256).minus(1);
-const MIN_SPEND_TX_FEE_STRING = TxBuilder.calculateMinFee('spendTx', {
-  params: {
-    senderId: STUB_ADDRESS,
-    recipientId: STUB_ADDRESS,
-    amount: MAX_UINT256,
-    ttl: MAX_UINT256,
-    nonce: MAX_UINT256,
-  },
+const MIN_SPEND_TX_FEE_STRING = calculateMinSpendTxFee({
+  amount: MAX_UINT256,
+  ttl: MAX_UINT256,
+  nonce: MAX_UINT256,
 });
 
 export const MIN_SPEND_TX_FEE = BigNumber(MIN_SPEND_TX_FEE_STRING).shiftedBy(-MAGNITUDE);

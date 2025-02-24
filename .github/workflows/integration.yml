@@ -2,24 +2,23 @@ name: integration
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   validate:
     uses: ./.github/workflows/_validate-npm.yml
   publish:
-    uses: aeternity/github-actions/.github/workflows/_publish-docker.yml@v2.1.0
-    needs: [ validate ]
+    uses: aeternity/github-actions/.github/workflows/_publish-ecr.yml@v2.3.1
+    needs: [validate]
     secrets: inherit
     with:
-      DOCKERHUB_REPO: "aeternitybot/${{ github.event.repository.name }}"
       BUILD_ARGS: REVISION=${{ github.sha }}
   deploy:
-    uses: aeternity/github-actions/.github/workflows/_deploy-gitops.yml@v2.1.0
+    uses: aeternity/github-actions/.github/workflows/_deploy-gitops.yml@v2.3.1
     needs: [publish]
     secrets: inherit
     with:
       DEPLOY_ENV: stg
-      DEPLOY_APP: "${{ github.event.repository.name }}"
+      DEPLOY_APP: '${{ github.event.repository.name }}'
       DEPLOY_VERSION: develop
-      DEPLOY_SUBDOMAIN: "base"
+      DEPLOY_SUBDOMAIN: 'base'

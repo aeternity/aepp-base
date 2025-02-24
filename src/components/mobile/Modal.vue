@@ -1,8 +1,5 @@
 <template>
-  <Overlay
-    class="modal-mobile"
-    v-on="$listeners"
-  >
+  <Overlay class="modal-mobile" v-on="$listeners">
     <ModalPlain>
       <slot />
     </ModalPlain>

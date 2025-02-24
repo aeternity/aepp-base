@@ -13,15 +13,12 @@
     <template v-else>
       <h2>
         {{ $t('name.expiration') }}
-        {{ blocksToRelativeTime(auctionEnd - topBlockHeight) }}
+        {{ blocksToRelativeTime(endsAt - topBlockHeight) }}
       </h2>
 
       <h2>{{ $t('name.details.current-bid') }}</h2>
       <AeCard fill="maximum">
-        <ListItemBid
-          v-bind="currentBid"
-          inactive
-        />
+        <ListItemBid v-bind="currentBid" inactive />
       </AeCard>
 
       <template v-if="previousBids.length">
@@ -44,7 +41,7 @@
 <script>
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
-import { TxBuilderHelper } from '@aeternity/aepp-sdk';
+import { produceNameId } from '@aeternity/aepp-sdk';
 import blocksToRelativeTime from '../../filters/blocksToRelativeTime';
 import Page from '../../components/Page.vue';
 import AeSpinner from '../../components/AeSpinner.vue';
@@ -65,7 +62,7 @@ export default {
     name: { type: String, required: true },
   },
   data: () => ({
-    auctionEnd: 0,
+    endsAt: 0,
     bids: null,
   }),
   computed: {
@@ -89,19 +86,31 @@ export default {
     );
   },
   methods: {
-    async updateAuctionEntry() {
-      const sdk = await Promise.resolve(this.$store.state.sdk);
-      const { info: { auctionEnd } } = await sdk.middleware.api.getNameById(this.name);
-      this.auctionEnd = auctionEnd;
-      const nameId = TxBuilderHelper.produceNameId(this.name);
-      // TODO: show more than 100 bids
-      this.bids = (await sdk.middleware2.api.getAccountActivities(nameId, { limit: 100 })).data
+    async updateEndsAt() {
+      this.endsAt = (await this.$store.getters.node.getAuctionEntryByName(this.name)).endsAt;
+    },
+    async updateBids() {
+      const { data } = await this.$store.getters.middleware
+        // TODO: show more than 100 bids
+        // TODO: use /v3/names/auction.chain/claims instead
+        // TODO: remove previous bids after solving https://github.com/aeternity/ae_mdw/issues/2097
+        .getAccountActivities(produceNameId(this.name), { limit: 100 });
+      this.bids = data
         .filter(({ type }) => type === 'NameClaimEvent')
         .filter(({ payload: { sourceTxType } }) => sourceTxType === 'NameClaimTx')
-        .map(({ payload: { tx: { accountId, nameFee } } }) => ({
-          nameFee: new BigNumber(nameFee).shiftedBy(-MAGNITUDE),
-          accountId,
-        }));
+        .map(
+          ({
+            payload: {
+              tx: { accountId, nameFee },
+            },
+          }) => ({
+            nameFee: new BigNumber(nameFee).shiftedBy(-MAGNITUDE),
+            accountId,
+          }),
+        );
+    },
+    async updateAuctionEntry() {
+      await Promise.all([this.updateEndsAt(), this.updateBids()]);
     },
     blocksToRelativeTime,
   },

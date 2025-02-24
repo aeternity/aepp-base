@@ -1,16 +1,19 @@
-/* eslint no-param-reassign: ["error", { "ignorePropertyModificationsFor": ["state"] }] */
-
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Ae from '@aeternity/ledger-app-api';
-import { TxBuilder, SCHEMA } from '@aeternity/aepp-sdk';
+import { buildTx, decode, Tag } from '@aeternity/aepp-sdk';
 import { i18n } from '../../plugins/ui/languages';
+import { swallowModalAborted } from '../../plugins/ui/modals';
 import { RUNNING_IN_FRAME } from '../../../lib/constants';
 
 const signOnMobile = async ({ dispatch }) => {
-  await dispatch('modals/open', {
-    name: 'alert',
-    text: i18n.t('ledger.mobile-not-supported'),
-  }, { root: true });
+  await dispatch(
+    'modals/open',
+    {
+      name: 'alert',
+      text: i18n.t('ledger.mobile-not-supported'),
+    },
+    { root: true },
+  );
   throw new Error('Not implemented yet');
 };
 
@@ -23,98 +26,117 @@ export default {
     color: 'dark',
   },
 
-  getters: ENV_MOBILE_DEVICE ? {} : {
-    nextIdx: (state, getters, rootState, rootGetters) => Math.max(
-      ...rootGetters['accounts/getByType']('ledger').map(({ source: { idx } }) => idx),
-      -1,
-    ) + 1,
-  },
+  getters: ENV_MOBILE_DEVICE
+    ? {}
+    : {
+        nextIdx: (state, getters, rootState, rootGetters) =>
+          Math.max(
+            ...rootGetters['accounts/getByType']('ledger').map(({ source: { idx } }) => idx),
+            -1,
+          ) + 1,
+      },
 
-  actions: ENV_MOBILE_DEVICE ? {
-    sign: signOnMobile,
-    signTransaction: signOnMobile,
-  } : {
-    async request({ dispatch }, { name, args }) {
-      const transport = await TransportWebUSB.create();
-      const ledgerAppApi = new Ae(transport);
-      if (RUNNING_IN_FRAME) return ledgerAppApi[name](...args);
-      const modalName = { signTransaction: 'ledgerSignTransaction' }[name] || 'ledgerRequest';
-      let result;
-      let error;
-      try {
-        do {
-          if (error) {
-            // eslint-disable-next-line no-await-in-loop
-            await dispatch('modals/open', { name: 'retryLedgerRequest' }, { root: true });
-          }
-          const modalPromise = dispatch('modals/open', { name: modalName }, { root: true });
+  actions: ENV_MOBILE_DEVICE
+    ? {
+        sign: signOnMobile,
+        signTransaction: signOnMobile,
+      }
+    : {
+        async request({ dispatch }, { name, args, signal }) {
+          const transport = await TransportWebUSB.create();
+          const ledgerAppApi = new Ae(transport);
+          if (RUNNING_IN_FRAME) return ledgerAppApi[name](...args);
+          const modalName = { signTransaction: 'ledgerSignTransaction' }[name] || 'ledgerRequest';
+          let result;
+          let error;
           try {
-            result = await ledgerAppApi[name](...args); // eslint-disable-line no-await-in-loop
-            error = false;
-          } catch (err) {
-            error = true;
+            do {
+              if (signal?.aborted) throw new Error('Request aborted');
+              if (error) {
+                await dispatch(
+                  'modals/open',
+                  { name: 'retryLedgerRequest', signal },
+                  { root: true },
+                );
+              }
+              const controller = new AbortController();
+              dispatch(
+                'modals/open',
+                { name: modalName, signal: controller.signal },
+                { root: true },
+              ).catch(swallowModalAborted);
+              try {
+                result = await ledgerAppApi[name](...args);
+                error = false;
+              } catch (err) {
+                error = true;
+              } finally {
+                controller.abort();
+              }
+            } while (error);
           } finally {
-            modalPromise.cancel();
+            await transport.close();
           }
-        } while (error);
-      } finally {
-        await transport.close();
-      }
-      return result;
-    },
+          return result;
+        },
 
-    async create({ getters: { nextIdx }, commit, dispatch }) {
-      const modalPromise = dispatch('modals/open', {
-        name: 'confirmLedgerAddress',
-        address: await dispatch('request', { name: 'getAddress', args: [nextIdx] }),
-        create: true,
-      }, { root: true });
-      const transport = await TransportWebUSB.create();
-      const ledgerAppApi = new Ae(transport);
-      try {
-        const address = await ledgerAppApi.getAddress(nextIdx, true);
-        commit('accounts/add', { address, type: 'ledger', idx: nextIdx }, { root: true });
-      } catch (error) {
-        dispatch('modals/open', { name: 'ledgerAddressNotConfirmed' }, { root: true });
-      } finally {
-        await transport.close();
-        modalPromise.cancel();
-      }
-    },
+        async create({ getters: { nextIdx }, commit, dispatch }) {
+          const controller = new AbortController();
+          dispatch(
+            'modals/open',
+            {
+              name: 'confirmLedgerAddress',
+              signal: controller.signal,
+              address: await dispatch('request', { name: 'getAddress', args: [nextIdx] }),
+              create: true,
+            },
+            { root: true },
+          ).catch(swallowModalAborted);
+          const transport = await TransportWebUSB.create();
+          const ledgerAppApi = new Ae(transport);
+          try {
+            const address = await ledgerAppApi.getAddress(nextIdx, true);
+            commit('accounts/add', { address, type: 'ledger', idx: nextIdx }, { root: true });
+          } catch (error) {
+            dispatch('modals/open', { name: 'ledgerAddressNotConfirmed' }, { root: true });
+          } finally {
+            await transport.close();
+            controller.abort();
+          }
+        },
 
-    async ensureCurrentAccountAvailable({ rootGetters, dispatch }) {
-      const account = rootGetters['accounts/active'];
-      const address = await dispatch('request', { name: 'getAddress', args: [account.source.idx] });
-      if (account.address !== address) {
-        if (!RUNNING_IN_FRAME) {
-          dispatch('modals/open', { name: 'ledgerAccountNotFound' }, { root: true });
-        }
-        throw new Error('Account not found');
-      }
-    },
+        async ensureCurrentAccountAvailable({ rootGetters, dispatch }) {
+          const account = rootGetters['accounts/active'];
+          const address = await dispatch('request', {
+            name: 'getAddress',
+            args: [account.source.idx],
+          });
+          if (account.address !== address) {
+            if (!RUNNING_IN_FRAME) {
+              dispatch('modals/open', { name: 'ledgerAccountNotFound' }, { root: true });
+            }
+            throw new Error('Account not found');
+          }
+        },
 
-    sign: () => Promise.reject(new Error('Not implemented yet')),
+        sign: () => {
+          throw new Error('Not implemented yet');
+        },
 
-    async signTransaction({ rootGetters, dispatch, rootState: { sdk } }, txBase64) {
-      await dispatch('ensureCurrentAccountAvailable');
+        async signTransaction({ rootGetters, dispatch }, { transaction, signal }) {
+          await dispatch('ensureCurrentAccountAvailable');
 
-      const txObject = TxBuilder.unpackTx(txBase64).tx;
-      const binaryTx = TxBuilder.buildTx(
-        txObject,
-        SCHEMA.OBJECT_ID_TX_TYPE[txObject.tag],
-        { vsn: txObject.VSN },
-      ).rlpEncoded;
-
-      const signature = Buffer.from(await dispatch('request', {
-        name: 'signTransaction',
-        args: [
-          rootGetters['accounts/active'].source.idx,
-          binaryTx,
-          sdk.getNetworkId(),
-        ],
-      }), 'hex');
-      return TxBuilder
-        .buildTx({ encodedTx: binaryTx, signatures: [signature] }, SCHEMA.TX_TYPE.signed).tx;
-    },
-  },
+          const signatureHex = await dispatch('request', {
+            name: 'signTransaction',
+            args: [
+              rootGetters['accounts/active'].source.idx,
+              decode(transaction),
+              await rootGetters.node.getNetworkId(),
+            ],
+            signal,
+          });
+          const signature = Buffer.from(signatureHex, 'hex');
+          return buildTx({ tag: Tag.SignedTx, encodedTx: transaction, signatures: [signature] });
+        },
+      },
 };

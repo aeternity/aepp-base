@@ -1,8 +1,5 @@
 <template>
-  <Overlay
-    class="ae-modal"
-    @click="$emit('close')"
-  >
+  <Overlay class="ae-modal" @click="$emit('close')">
     <ModalPlain>
       <slot />
     </ModalPlain>

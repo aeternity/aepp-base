@@ -1,20 +1,15 @@
 <template>
   <div class="app-browser">
     <header>
-      <UrlForm
-        :current-url="url"
-        @new-url="reload"
-      />
+      <UrlForm :current-url="url" @new-url="reload" />
 
-      <template v-if="path">
-        <ButtonPlain :to="{ name: 'app-browser' }">
-          <Home />
-        </ButtonPlain>
-      </template>
-      <ButtonPlain
-        ref="menuButton"
-        @click="showMenu = true"
-      >
+      <ButtonPlain @click="toggleBookmarking">
+        <Component :is="bookmarked ? 'BookmarkFull' : 'Bookmark'" />
+      </ButtonPlain>
+      <ButtonPlain :to="{ name: 'app-list' }">
+        <Home />
+      </ButtonPlain>
+      <ButtonPlain ref="menuButton" @click="showMenu = true">
         <More />
       </ButtonPlain>
     </header>
@@ -25,9 +20,7 @@
       :transform-origin="{ vertical: 'top', horizontal: 'right' }"
       @close="showMenu = false"
     >
-      <AeMenuItem @click="reload">
-        <Reload /> {{ $t('app.browser.refresh') }}
-      </AeMenuItem>
+      <AeMenuItem @click="reload"> <Reload /> {{ $t('app.browser.refresh') }} </AeMenuItem>
     </AeMenu>
 
     <ProgressFake v-if="loading" />
@@ -36,7 +29,6 @@
       ref="iframe"
       :src="url"
       :title="url"
-      :scrolling="$globals.IS_IOS && 'no'"
       importance="high"
       sandbox="allow-scripts allow-same-origin allow-forms allow-modals"
       allow="camera; microphone"
@@ -48,11 +40,12 @@
 </template>
 
 <script>
-import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message';
+import { mapState } from 'vuex';
+import sdkWallet from '../../lib/sdkWallet';
 import { PROTOCOLS_ALLOWED, PROTOCOL_DEFAULT } from '../../lib/constants';
 import UrlForm from '../../components/mobile/UrlForm.vue';
 import ButtonPlain from '../../components/ButtonPlain.vue';
-import { Home, More, Reload } from '../../components/icons';
+import { Bookmark, BookmarkFull, Home, More, Reload } from '../../components/icons';
 import AeMenu from '../../components/AeMenu.vue';
 import AeMenuItem from '../../components/AeMenuItem.vue';
 import ProgressFake from '../../components/ProgressFake.vue';
@@ -62,6 +55,8 @@ export default {
   components: {
     UrlForm,
     ButtonPlain,
+    Bookmark,
+    BookmarkFull,
     Home,
     More,
     Reload,
@@ -70,19 +65,18 @@ export default {
     ProgressFake,
     TabBar,
   },
-  data() {
-    return {
-      loading: true,
-      newUrl: '',
-      showMenu: false,
-    };
-  },
+  data: () => ({
+    loading: true,
+    newUrl: '',
+    showMenu: false,
+    sdkWalletUnbind: null,
+  }),
   computed: {
     path() {
-      return this.$route.fullPath.replace(/\/browser\/?/, '');
+      return this.$route.fullPath.replace('/browser/', '');
     },
     url() {
-      const path = this.path || process.env.VUE_APP_HOME_PAGE_URL;
+      const path = this.path;
       const url = new URL(/^\w+:\D+/.test(path) ? path : `${PROTOCOL_DEFAULT}//${path}`);
       if (!PROTOCOLS_ALLOWED.includes(url.protocol)) url.protocol = PROTOCOL_DEFAULT;
       return url.toString();
@@ -90,23 +84,33 @@ export default {
     host() {
       return new URL(this.url).host;
     },
+    ...mapState({
+      bookmarked({ apps }) {
+        return apps.some(({ host, bookmarked }) => host === this.host && bookmarked);
+      },
+    }),
   },
-  async mounted() {
-    const sdk = this.$store.state.sdk.then ? await this.$store.state.sdk : this.$store.state.sdk;
-
-    const connection = BrowserWindowMessageConnection({ target: this.$refs.iframe.contentWindow });
-    sdk.addRpcClient(connection);
-    const shareWalletInfoInterval = setInterval(
-      () => sdk.shareWalletInfo(connection.sendMessage.bind(connection)),
-      3000,
-    );
-
-    const handler = () => { this.showMenu = false; };
+  watch: {
+    host: {
+      immediate: true,
+      handler(host) {
+        function recreateSdk() {
+          this.sdkWalletUnbind?.();
+          this.sdkWalletUnbind = sdkWallet(this.$store, this.$refs.iframe.contentWindow, host);
+        }
+        if (this.$el) recreateSdk.call(this);
+        else this.$once('hook:mounted', recreateSdk);
+      },
+    },
+  },
+  mounted() {
+    const handler = () => {
+      this.showMenu = false;
+    };
     window.addEventListener('blur', handler);
     this.$once('hook:destroyed', () => {
       window.removeEventListener('blur', handler);
-      clearInterval(shareWalletInfoInterval);
-      Object.keys(sdk.rpcClients).forEach((id) => sdk.removeRpcClient(id));
+      this.sdkWalletUnbind();
     });
   },
   methods: {
@@ -114,6 +118,9 @@ export default {
       this.loading = true;
       this.$refs.iframe.src += '';
       this.$refs.iframe.focus();
+    },
+    toggleBookmarking() {
+      this.$store.commit('toggleAppBookmarking', this.host);
     },
   },
 };
@@ -133,7 +140,7 @@ export default {
     padding-top: env(safe-area-inset-top);
     height: functions.rem(54px);
     line-height: functions.rem(54px);
-    box-shadow: inset 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+    box-shadow: inset 0 0 functions.rem(8px) rgba(#1b4479, 0.1);
 
     .url-form {
       flex-grow: 1;
@@ -151,7 +158,6 @@ export default {
 
   iframe {
     flex-grow: 1;
-    width: 100vw;
     border: none;
   }
 }

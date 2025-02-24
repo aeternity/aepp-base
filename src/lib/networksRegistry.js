@@ -1,24 +1,15 @@
 const mainNetwork = {
-  name: `${Date.now() < 1715072400000 ? 'Iris' : 'Ceres'}-net`,
+  name: 'Ceres-net',
   url: 'https://mainnet.aeternity.io',
   middlewareUrl: 'https://mainnet.aeternity.io/mdw',
   explorerUrl: 'https://aescan.io',
 };
 
 const testNetwork = {
-  name: `Testnet${Date.now() < 1713947400000 ? ' (Iris)' : ''}`,
+  name: 'Testnet',
   url: 'https://testnet.aeternity.io',
   middlewareUrl: 'https://testnet.aeternity.io/mdw',
   explorerUrl: 'https://testnet.aescan.io',
-};
-
-// Source https://forum.aeternity.com/t/the-proposed-changes-in-ceres-protocol/12056/33
-const testCeresNetworkHideAt = new Date('2024-04-30');
-const testCeresNetwork = {
-  name: `Testnet Ceres (till ${testCeresNetworkHideAt.toLocaleDateString()})`,
-  url: 'https://next.aeternity.io',
-  middlewareUrl: 'https://next.aeternity.io:8443',
-  explorerUrl: 'https://explorer.ceres.aepps.com',
 };
 
 const envNetwork = {
@@ -33,10 +24,9 @@ const networks = (() => {
     return [window.overrideNetwork];
   }
   if (envNetwork.name) return [envNetwork];
-  const list = process.env.NODE_ENV === 'production'
-    ? [mainNetwork, testNetwork] : [testNetwork, mainNetwork];
-  if (Date.now() < testCeresNetworkHideAt) list.push(testCeresNetwork);
-  return list;
+  return process.env.NODE_ENV === 'production'
+    ? [mainNetwork, testNetwork]
+    : [testNetwork, mainNetwork];
 })();
 
 export default Object.freeze(networks.map(Object.freeze));

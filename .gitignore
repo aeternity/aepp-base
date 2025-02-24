@@ -2,6 +2,7 @@
 node_modules
 /dist
 __image_snapshots_local__
+tests/e2e/fixtures/qr-code-videos/video.y4m
 
 # Cordova files
 /www

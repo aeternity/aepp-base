@@ -4,10 +4,7 @@
       <span class="name">
         {{ name }}
       </span>
-      <span
-        class="value"
-        :class="{ monospace: valueMonospace }"
-      >
+      <span class="value" :class="{ monospace: valueMonospace }">
         {{ value }}
         <slot name="value" />
       </span>

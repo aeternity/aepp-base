@@ -17,7 +17,9 @@ export default {
   props: {
     name: {
       type: String,
-      default() { return this.$t('transfer.amount'); },
+      default() {
+        return this.$t('transfer.amount');
+      },
     },
     amount: { type: BigNumber, required: true },
   },

@@ -10,7 +10,7 @@ export default {
   },
   methods: {
     async setMnemonic() {
-      if (!await this.$validator.validateAll()) return;
+      if (!(await this.$validator.validateAll())) return;
 
       await this.$store.dispatch('accounts/hdWallet/createWallet', this.mnemonic);
     },

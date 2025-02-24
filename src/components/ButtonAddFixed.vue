@@ -34,7 +34,7 @@ export default {
   position: fixed;
   right: functions.rem(31px);
   bottom: functions.rem(34px);
-  box-shadow: 0 0 functions.rem(8px) rgba(#1B4479, 0.1);
+  box-shadow: 0 0 functions.rem(8px) rgba(#1b4479, 0.1);
 
   &.mobile {
     right: functions.rem(23px);

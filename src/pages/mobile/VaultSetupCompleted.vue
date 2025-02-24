@@ -1,32 +1,15 @@
 <template>
-  <Page
-    class="vault-setup-completed"
-    hide-tab-bar
-  >
+  <Page class="vault-setup-completed" hide-tab-bar>
     <template slot="title">
       {{ $t('air-gap.setup.title') }}
-      <AeFraction
-        numerator="3"
-        denominator="3"
-      />
+      <AeFraction numerator="3" denominator="3" />
     </template>
 
-    <Guide
-      :template="$t('air-gap.setup.completed.guide')"
-      fill="alternative"
-    >
-      <AeFraction
-        slot="icon"
-        numerator="3"
-        denominator="3"
-      />
+    <Guide :template="$t('air-gap.setup.completed.guide')" fill="alternative">
+      <AeFraction slot="icon" numerator="3" denominator="3" />
     </Guide>
 
-    <AeButton
-      slot="footer"
-      fill="alternative"
-      :to="$globals.ROUTE_MOBILE_LOGGED_IN"
-    >
+    <AeButton slot="footer" fill="alternative" :to="$globals.ROUTE_MOBILE_LOGGED_IN">
       {{ $t('air-gap.setup.completed.finish') }}
     </AeButton>
   </Page>
@@ -40,7 +23,10 @@ import AeButton from '../../components/AeButton.vue';
 
 export default {
   components: {
-    Page, AeButton, Guide, AeFraction,
+    Page,
+    AeButton,
+    Guide,
+    AeFraction,
   },
 };
 </script>

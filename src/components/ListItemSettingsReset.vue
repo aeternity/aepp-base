@@ -1,11 +1,13 @@
 <template>
   <ListItem
-    :title="$globals.ENV_MOBILE_DEVICE
-      ? $t('settings.reset.title')
-      : $t('settings.reset.title-desktop')"
-    :subtitle="$globals.ENV_MOBILE_DEVICE
-      ? $t('settings.reset.subtitle')
-      : $t('settings.reset.subtitle-desktop')"
+    :title="
+      $globals.ENV_MOBILE_DEVICE ? $t('settings.reset.title') : $t('settings.reset.title-desktop')
+    "
+    :subtitle="
+      $globals.ENV_MOBILE_DEVICE
+        ? $t('settings.reset.subtitle')
+        : $t('settings.reset.subtitle-desktop')
+    "
     data-cy="reset"
     @click="resetConfirm"
   >
