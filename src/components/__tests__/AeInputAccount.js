@@ -105,7 +105,7 @@ describe('AeInputAccount', () => {
       },
     },
     {
-      name: "can't break domain by removing char from the beginning of doamin",
+      name: "can't break domain by removing char from the beginning of domain",
       value: testName,
       input: {
         value: 'testchain',
