@@ -79,7 +79,7 @@
     "prettier": "^3.5.2",
     "sass": "^1.85.0",
     "sass-loader": "^16.0.5",
-    "serve": "^14.2.4",
+    "serve": "^14.2.5",
     "svg-url-loader": "^8.0.0",
     "svgo": "^3.3.2",
     "svgo-loader": "^4.0.0",
