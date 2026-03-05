@@ -81,7 +81,7 @@
     "sass-loader": "^16.0.5",
     "serve": "^14.2.5",
     "svg-url-loader": "^8.0.0",
-    "svgo": "^3.3.2",
+    "svgo": "^3.3.3",
     "svgo-loader": "^4.0.0",
     "vue-cli-plugin-i18n": "^2.3.2",
     "vue-i18n-extract": "2.0.7",
