@@ -16,10 +16,6 @@ chain:
   genesis_accounts:
     ak_21A27UVVt3hDkBE5J7rhhqnH5YNb4Y1dqo4PnSybrH85pnWo7E: 1000000000000000000000000
 
-# TODO: remove after solving https://github.com/aeternity/ae_mdw/issues/1760
-fork_management:
-  network_id: ae_dev
-
-# TODO remove after solving https://github.com/aeternity/ae_mdw/issues/1760#issuecomment-2102872638
+# TODO remove after solving https://github.com/aeternity/ae_mdw/issues/2165
 mining:
   beneficiary: ak_21A27UVVt3hDkBE5J7rhhqnH5YNb4Y1dqo4PnSybrH85pnWo7E
