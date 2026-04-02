@@ -31,7 +31,7 @@
     "copy-to-clipboard": "^3.3.3",
     "emoji-datasource-apple": "^15.1.2",
     "focus-visible": "^5.2.1",
-    "lodash-es": "^4.17.23",
+    "lodash-es": "^4.18.1",
     "normalize.css": "^8.0.1",
     "register-service-worker": "^1.7.2",
     "rlp": "^3.0.0",
