@@ -1,4 +1,5 @@
 import 'normalize.css';
+import { t } from './test';
 import Vue from 'vue';
 import './lib/setGlobalPolyfills';
 import store from './store';
@@ -14,3 +15,5 @@ if (process.env.NODE_ENV === 'development') {
 if (RUNNING_IN_POPUP) import(/* webpackChunkName: "popup" */ './popup');
 else if (!RUNNING_IN_FRAME) import(/* webpackChunkName: "ui" */ './ui');
 /* eslint-enable no-unused-expressions */
+
+console.log(t);
