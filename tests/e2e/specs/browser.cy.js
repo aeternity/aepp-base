@@ -16,7 +16,7 @@ describe('Browser', () => {
         })),
       },
     });
-    cy.get('.ae-card img').should('be.visible').and('length', 1).and(ensureImagesLoaded);
+    cy.get('.ae-card img').should('be.visible').and('length', 2).and(ensureImagesLoaded);
     cy.get('.shortcuts img:not([src^="data:image"])')
       .should('be.visible')
       .and('length', 1)
@@ -58,7 +58,7 @@ describe('Browser', () => {
     cy.visit('/', { isDesktop: true });
     cy.get('.apps img:not([src^="data:image"])')
       .should('be.visible')
-      .and('length', 1)
+      .and('length', 2)
       .and(ensureImagesLoaded);
     cy.matchImage();
     cy.get('a').contains('Faucet Aepp').should('have.attr', 'href', 'https://faucet.aepps.com');

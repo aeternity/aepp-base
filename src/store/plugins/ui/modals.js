@@ -38,6 +38,10 @@ export default (store) => {
     actions: {
       open({ commit }, { name, signal, allowRedirect, ...props }) {
         if (!modals[name]) throw new Error(`Modal with name "${name}" not registered`);
+        // the listener below fires only for an abort that is still to come, so a signal aborted
+        // while the caller was awaiting something would open a modal that nothing can close.
+        // Before the promise below so that nothing is opened, and nothing has to be closed
+        if (signal?.aborted) return Promise.reject(new Error('Modal aborted'));
         const key = Symbol(`modal-${name}-${Date.now() % 1e4}`);
         let abort;
         return new Promise((resolve, reject) => {
