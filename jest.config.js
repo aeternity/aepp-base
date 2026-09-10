@@ -17,6 +17,11 @@ module.exports = {
   transformIgnorePatterns: [`node_modules/(?!(${packagesToTranspile.join('|')})/)`],
   moduleNameMapper: {
     '^.*\\.svg\\?icon-component$': '<rootDir>/config/jest/EmptySvg.vue',
+    // `@azure/logger` (via the sdk) reaches these through the "exports" field, which the
+    // jest-resolve nested in @vue/cli-plugin-unit-jest is too old to read
+    // TODO: remove after @vue/cli-plugin-unit-jest starts using jest-resolve>=28
+    '^@typespec/ts-http-runtime/internal/(.*)$':
+      '<rootDir>/node_modules/@typespec/ts-http-runtime/dist/commonjs/$1/internal.js',
   },
   snapshotSerializers: ['jest-serializer-vue'],
   testMatch: ['**/tests/unit/**/*.spec.(js|jsx|ts|tsx)', '**/__tests__/*.(js|jsx|ts|tsx)'],
