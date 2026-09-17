@@ -3,6 +3,7 @@ import Vue from 'vue';
 import { generateMnemonic, mnemonicToSeed } from '@aeternity/bip39';
 import {
   buildTx,
+  rebuildUnpackedTx,
   unpackTx,
   Tag,
   encode,
@@ -19,6 +20,7 @@ import {
   getHdWalletAccount,
 } from '../../utils';
 import AES from '../../../lib/aes';
+import getProtocolParameters from '../../../lib/protocolParameters';
 import { i18n } from '../../plugins/ui/languages';
 
 const type = `hd-wallet${ENV_MOBILE_DEVICE ? '' : '-desktop'}`;
@@ -261,7 +263,7 @@ export default {
       return data;
     },
 
-    async confirmTxSigning({ dispatch }, { transaction, signal }) {
+    async confirmTxSigning({ dispatch, rootGetters: { node } }, { transaction, signal }) {
       let txObject;
       try {
         txObject = unpackTx(transaction);
@@ -288,6 +290,11 @@ export default {
         );
       }
 
+      // the transaction was priced by the node the aepp built it for, so the minimum offered here
+      // has to come from the same parameters — the ones of this SDK release would put the bound
+      // orders of magnitude off on a hyperchain, a devnet, or after a hard fork reprices the network
+      const protocolParameters = await getProtocolParameters(node);
+
       const format = (value) => BigNumber(value).shiftedBy(-MAGNITUDE);
       const confirmProps = {
         name: 'confirmTransactionSign',
@@ -296,12 +303,20 @@ export default {
           ...txObject,
           amount: txObject.amount && format(txObject.amount),
           fee: format(txObject.fee),
-          minFee: format(unpackTx(buildTx({ ...txObject, fee: undefined })).fee),
+          // `rebuildUnpackedTx` for the same reason as below: dropping `fee` makes it recalculate
+          // the minimum, while the rest of the transaction is serialized as it arrived, so a node
+          // running a lower minimum gas price than this SDK release doesn't make it throw
+          minFee: format(
+            unpackTx(rebuildUnpackedTx({ ...txObject, fee: undefined, protocolParameters })).fee,
+          ),
           nameFee: txObject.nameFee && format(txObject.nameFee),
         },
       };
 
-      return buildTx({
+      // `rebuildUnpackedTx` instead of `buildTx` because the transaction is already built: it
+      // belongs to the protocol parameters of the node it was made for, and re-pricing it here
+      // would fail for a node running a lower minimum gas price than this SDK release
+      return rebuildUnpackedTx({
         ...txObject,
         fee: (await dispatch('modals/open', confirmProps, { root: true })).shiftedBy(MAGNITUDE),
       });

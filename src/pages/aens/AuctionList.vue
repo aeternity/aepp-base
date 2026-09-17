@@ -124,7 +124,13 @@ export default {
         case VIEW_CHARACTER_LENGTH:
           return all.filter(({ name }) => name.length === this.length + AENS_DOMAIN.length);
         case VIEW_MAX_BID:
-          return all.sort((a1, a2) => a2.lastBid.tx.nameFee - a1.lastBid.tx.nameFee);
+          // compared rather than subtracted because `nameFee` is a bigint, and a sort
+          // comparator can't return one
+          return all.sort((a1, a2) => {
+            const [f1, f2] = [a1.lastBid.tx.nameFee, a2.lastBid.tx.nameFee];
+            if (f2 > f1) return 1;
+            return f2 < f1 ? -1 : 0;
+          });
         default:
           throw new Error(`Invalid view: ${this.view}`);
       }

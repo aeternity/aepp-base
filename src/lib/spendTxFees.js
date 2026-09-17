@@ -4,13 +4,20 @@ import { MAGNITUDE, MAGNITUDE_MICRO } from './constants';
 
 const STUB_ADDRESS = 'ak_enAPooFqpTQKkhJmU47J16QZu9HbPQQPwWBVeGnzDbDnv9dxp';
 
-export const calculateMinSpendTxFee = (options) =>
+/**
+ * @param options - Spend transaction fields the fee depends on
+ * @param protocolParameters - Parameters of the node the transaction is going to be built for, as
+ * returned by `lib/protocolParameters`. Defaults to the ones of this SDK release, which is what a
+ * caller with no node connection at hand gets.
+ */
+export const calculateMinSpendTxFee = (options, protocolParameters) =>
   unpackTx(
     buildTx({
       ...options,
       tag: Tag.SpendTx,
       senderId: STUB_ADDRESS,
       recipientId: STUB_ADDRESS,
+      ...(protocolParameters != null && { protocolParameters }),
     }),
     Tag.SpendTx,
   ).fee;
